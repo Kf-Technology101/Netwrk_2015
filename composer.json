@@ -1,0 +1,45 @@
+{
+    "name": "githubjeka/rest-yii2",
+    "description": "Yii 2 Rest Api Template",
+    "keywords": ["yii2", "rest", "application template", "api"],
+    "homepage": "https://github.com/githubjeka/yii2-rest",
+    "type": "project",
+    "license": "BSD-4-Clause",
+    "authors": [
+        {
+            "name": "Evgeniy Tkachenko",
+            "email": "et.coder@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/githubjeka/yii2-rest/issues",
+        "source": "https://github.com/githubjeka/yii2-rest"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",
+        "amnah/yii2-user": "~3.0",
+        "mdmsoft/yii2-admin": "~2.0",
+        "dmstr/yii2-adminlte-asset": "2.*"
+    },
+    "require-dev": {
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*",
+        "mootensai/yii2-enhanced-gii": "*",
+        "warrence/yii2-kartikgii": "dev-master"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}
