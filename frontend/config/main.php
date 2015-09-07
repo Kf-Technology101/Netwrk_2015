@@ -7,30 +7,33 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-backend',
+    'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'controllerNamespace' => 'backend\controllers',
+    'controllerNamespace' => 'frontend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-        'admin' => [
-            'class' => 'mdm\admin\Module',
-            'layout' => 'right-menu',
-            'mainLayout' => '@app/views/layouts/main.php',
-            'menus' => [
-                'assignment' => [
-                    'label' => 'Grant Access' // change label
-                ],
-                'route' => null, // disable menu
-            ],
-        ],
-        'gridview' => [
-            'class' => '\kartik\grid\Module',
+        // 'admin' => [
+        //     'class' => 'mdm\admin\Module',
+        //     'layout' => 'right-menu',
+        //     'mainLayout' => '@app/views/layouts/main.php',
+        //     'menus' => [
+        //         'assignment' => [
+        //             'label' => 'Grant Access' // change label
+        //         ],
+        //         'route' => null, // disable menu
+        //     ],
+        // ],
+        // 'gridview' => [
+        //     'class' => '\kartik\grid\Module',
+        // ],
+        'netwrk' => [
+            'class' => 'frontend\modules\netwrk\Module',
         ],
     ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -53,9 +56,9 @@ return [
         // ],
         'assetManager' => [
             'bundles' => [
-                'dmstr\web\AdminLteAsset' => [
-                    'skin' => 'skin-purple',
-                ],
+                // 'dmstr\web\AdminLteAsset' => [
+                //     'skin' => 'skin-purple',
+                // ],
             ],
         ],
         // 'as access' => [
@@ -71,6 +74,18 @@ return [
         //         // otherwise you may not even take a first step.
         //     ]
         // ],
+        'urlManager' => [
+           'enablePrettyUrl' => true,
+           'showScriptName' => false,
+           'rules' => [
+                '/' => 'netwrk/default/index',
+                'login' => 'site/login',
+                'logout' => 'site/logout',
+                'signup' => 'site/signup',
+                'request-password-reset' => 'site/request-password-reset',
+                'reset-password' => 'site/reset-password',
+            ]
+        ],
     ],
     'params' => $params,
 ];

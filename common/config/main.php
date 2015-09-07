@@ -9,6 +9,15 @@ return [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
             // 'defaultRoles' => ['guest'],
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'css' => ['css/bootstrap.css']
+                ],
+            ],
+        ],
     ],
     // 'as access' => [
     //     'class' => 'mdm\admin\components\AccessControl',

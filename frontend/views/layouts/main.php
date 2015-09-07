@@ -33,16 +33,18 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'Menu', 'url' => ['/site/menu']],
+                ['label' => 'Talking', 'url' => ['/site/talking']],
             ];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-            } else {
-                $menuItems[] = [
-                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                    'url' => ['/site/logout'],
-                    'linkOptions' => ['data-method' => 'post']
-                ];
-            }
+            // if (Yii::$app->user->isGuest) {
+            //     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+            // } else {
+            //     $menuItems[] = [
+            //         'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+            //         'url' => ['/site/logout'],
+            //         'linkOptions' => ['data-method' => 'post']
+            //     ];
+            // }
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => $menuItems,
@@ -58,12 +60,12 @@ AppAsset::register($this);
         </div>
     </div>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
         <div class="container">
         <p class="pull-left">&copy; Netwrk <?= date('Y') ?></p>
         <p class="pull-right"><?php //Yii::powered() ?></p>
         </div>
-    </footer>
+    </footer> -->
 
     <?php $this->endBody() ?>
 </body>
