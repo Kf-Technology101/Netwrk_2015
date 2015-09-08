@@ -10,7 +10,9 @@ module.exports = function(grunt) {
           optimization: 2
         },
         files: {
-          "frontend/web/css/bootstrap.css": "frontend/web/less/bootstrap/bootstrap.less" // destination file and source file
+          "frontend/web/css/bootstrap.css": "frontend/web/less/bootstrap/bootstrap.less", // destination file and source file
+          "frontend/web/css/landing.css": "frontend/web/less/landing.less",
+          "frontend/web/css/mobile.css": "frontend/web/less/mobile.less"
         }
       }
     },
