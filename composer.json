@@ -1,8 +1,8 @@
 {
-    "name": "githubjeka/rest-yii2",
-    "description": "Yii 2 Rest Api Template",
+    "name": "netwrk_larion/netwrk",
+    "description": "Network - LARION",
     "keywords": ["yii2", "rest", "application template", "api"],
-    "homepage": "https://github.com/githubjeka/yii2-rest",
+    "homepage": "https://bitbucket.org/netwrk_larion/netwrk",
     "type": "project",
     "license": "BSD-4-Clause",
     "authors": [
@@ -13,8 +13,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/githubjeka/yii2-rest/issues",
-        "source": "https://github.com/githubjeka/yii2-rest"
+        "issues": "https://bitbucket.org/netwrk_larion/netwrk",
+        "source": "https://bitbucket.org/netwrk_larion/netwrk"
     },
     "minimum-stability": "dev",
     "require": {
