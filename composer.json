@@ -16,11 +16,12 @@
         "issues": "https://bitbucket.org/netwrk_larion/netwrk",
         "source": "https://bitbucket.org/netwrk_larion/netwrk"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "*",
+        "yiisoft/yii2": "2.0.x-dev",
         "yiisoft/yii2-bootstrap": "*",
+        "fxp/composer-asset-plugin": "~1.0",
         "amnah/yii2-user": "~3.0",
         "mdmsoft/yii2-admin": "~2.0",
         "dmstr/yii2-adminlte-asset": "2.*"
@@ -30,15 +31,9 @@
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
         "yiisoft/yii2-faker": "*",
-        "mdmsoft/yii2-gii": "~1.0",
+        "mdmsoft/yii2-gii": "~1.0"
     },
     "config": {
         "process-timeout": 1800
-    },
-    "extra": {
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
-        }
     }
 }
