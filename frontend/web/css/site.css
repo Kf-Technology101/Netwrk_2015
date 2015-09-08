@@ -89,3 +89,32 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+.googleMap{
+  z-index: 5;
+}
+.map_content{
+  position: relative;
+  width: 1024px;
+  margin: auto ;
+}
+#btn_meet{
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  z-index: 10;
+  background-color: #5486b0;
+  border-color: #426c8f;
+  border-radius: 100%;
+  display: table;
+  top: 500px;
+  left: 920px;
+  cursor: pointer;
+}
+#btn_meet span{
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  display: table-cell;
+  vertical-align: middle;
+}

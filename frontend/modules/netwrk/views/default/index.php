@@ -1,12 +1,18 @@
-<div class="netwrk-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
+<ul class="indiana_marker" style="display:none;" >
+  <?php
+    if($cities){
+      foreach($cities as $key => $city){
+  ?>
+  <li num-city="<?php print $key + 1 ?>" lat="<?php print $city->lat ?>" lng="<?php print $city->lng ?>"> <?php print $city->name?></li>
+  <?php
+      }
+    }
+  ?>
+</ul>
+
+<div class="map_content">
+  <div id="btn_meet"><span>Meet</span></div>
+  <div id="googleMap" style="width:1024px;height:600px;"></div>
 </div>
+
+<script src="http://maps.googleapis.com/maps/api/js"></script>

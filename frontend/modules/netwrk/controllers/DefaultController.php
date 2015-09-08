@@ -2,12 +2,15 @@
 
 namespace frontend\modules\netwrk\controllers;
 
-use yii\web\Controller;
+use frontend\components\BaseController;
+use frontend\modules\netwrk\models\City;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render($this->getIsMobile() ? 'mobile/index' : 'index', [
+            'cities' => City::find()->all()
+        ]);
     }
 }
