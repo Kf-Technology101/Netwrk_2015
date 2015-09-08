@@ -12,7 +12,7 @@
 
 <div class="map_content">
   <div id="btn_meet"><span>Meet</span></div>
-  <div id="googleMap" style="width:1024px;height:600px;"></div>
+  <div id="googleMap" style=""></div>
 </div>
 
 <script src="http://maps.googleapis.com/maps/api/js"></script>

@@ -28,13 +28,16 @@ AppAsset::register($this);
                 'brandLabel' => 'Netwrk',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
+                    'class' => 'navbar-inverse navbar-fixed-top menu_top',
                 ],
             ]);
             $menuItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'Menu', 'url' => ['/site/menu']],
-                ['label' => 'Talking', 'url' => ['/site/talking']],
+                // ['label' => 'Home', 'url' => ['/site/index']],
+                // ['label' => 'Menu', 'href' => ['/site/menu']],
+                ['label' => 'Menu'],
+                // ['label' => 'Talking', 'url' => ['/site/talking']],
+                ['label' => 'Talking'],
+                
             ];
             // if (Yii::$app->user->isGuest) {
             //     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -52,7 +55,7 @@ AppAsset::register($this);
             NavBar::end();
         ?>
 
-        <div class="container">
+        <div class="container-fluid map-padding">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

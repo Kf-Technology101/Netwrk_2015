@@ -1,4 +1,34 @@
 $(document).ready(function(){
+
+  function get_size_window(){
+    return [$(window).width(),$(window).height()];
+  }
+
+  function set_size_map(w,h){
+    var menu_h = $('.menu_top').height();
+    $('#googleMap').css('height',h - menu_h);
+  }
+
+  function set_position_btn_meet(w,h){
+    var menu_h = $('.menu_top').height();
+    var hp = h - 100 - menu_h;
+    var wp = w - 100;
+    
+    $('#btn_meet').css({'top': hp,'left': wp});
+  }
+
+  function _event_window_resize(){
+    $(window).resize(function(){
+      window_resize();
+    });
+  }
+
+  function window_resize(){
+    var size = get_size_window();
+    set_size_map(size[0],size[1]);
+    set_position_btn_meet(size[0],size[1]);
+  }
+
   function get_city(){
     var cities = $('.indiana_marker').find("li[num-city]");
     var data=[];
@@ -38,5 +68,13 @@ $(document).ready(function(){
     });
   }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+  function _main(){
+    google.maps.event.addDomListener(window, 'load', initialize);
+    window_resize();
+    _event_window_resize();
+  }
+
+  // run main();
+  _main();
+
 });
