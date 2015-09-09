@@ -49,9 +49,14 @@ $(document).ready(function(){
       mapTypeId:google.maps.MapTypeId.ROADMAP
     };
 
-    var infowindow = new google.maps.InfoWindow();
     var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-    var marker;
+
+    show_marker(map);
+    min_max_zoom(map);
+  }
+
+  function show_marker(map){
+    var marker,infowindow = new google.maps.InfoWindow();
 
     $.each(get_city(),function(i,e){
       marker = new google.maps.Marker({
@@ -66,6 +71,28 @@ $(document).ready(function(){
         }
       })(marker, i));
     });
+  }
+
+  function min_max_zoom(map){
+    google.maps.event.addListenerOnce(map, "projection_changed", function(){
+      map.setMapTypeId(google.maps.MapTypeId.HYBRID);  //Changes the MapTypeId in short time.
+      setZoomLimit(map, google.maps.MapTypeId.ROADMAP);
+      setZoomLimit(map, google.maps.MapTypeId.HYBRID);
+      setZoomLimit(map, google.maps.MapTypeId.SATELLITE);
+      setZoomLimit(map, google.maps.MapTypeId.TERRAIN);
+      map.setMapTypeId(google.maps.MapTypeId.ROADMAP);  //Sets the MapTypeId to original.
+    });
+  }
+
+  function setZoomLimit(map, mapTypeId){
+    //Gets MapTypeRegistry
+    var mapTypeRegistry = map.mapTypes;
+    
+    //Gets the specified MapType
+    var mapType = mapTypeRegistry.get(mapTypeId);
+    //Sets limits to MapType
+    mapType.maxZoom = 9;  //It doesn't work with SATELLITE and HYBRID maptypes.
+    mapType.minZoom = 7;
   }
 
   function _main(){
