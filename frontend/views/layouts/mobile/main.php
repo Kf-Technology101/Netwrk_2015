@@ -80,5 +80,6 @@ AppAsset::register($this);
 
   <?php $this->endBody() ?>
 </body>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
 </html>
 <?php $this->endPage() ?>
