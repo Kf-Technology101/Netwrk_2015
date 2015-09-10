@@ -18,4 +18,4 @@ if ($cities) {
   <div id="googleMap" style=""></div>
 </div>
 
-<script src="http://maps.googleapis.com/maps/api/js"></script>
+

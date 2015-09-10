@@ -1,5 +1,6 @@
 <?php
 use frontend\assets\AppAsset;
+use frontend\assets\TopicAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -9,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 /* @var $content string */
 
 AppAsset::register($this);
+TopicAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -72,5 +74,6 @@ AppAsset::register($this);
 
     <?php $this->endBody() ?>
 </body>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
 </html>
 <?php $this->endPage() ?>

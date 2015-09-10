@@ -14,5 +14,3 @@
   <div id="btn_meet"><span>Meet</span></div>
   <div id="googleMap" style=""></div>
 </div>
-
-<script src="http://maps.googleapis.com/maps/api/js"></script>
