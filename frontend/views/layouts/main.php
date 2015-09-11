@@ -1,6 +1,5 @@
 <?php
 use frontend\assets\AppAsset;
-use frontend\assets\TopicAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -10,7 +9,6 @@ use yii\widgets\Breadcrumbs;
 /* @var $content string */
 
 AppAsset::register($this);
-TopicAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -21,6 +19,7 @@ TopicAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
 </head>
 <body>
     <?php $this->beginBody() ?>
@@ -75,5 +74,6 @@ TopicAsset::register($this);
     <?php $this->endBody() ?>
 </body>
 <script src="http://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript">var isMobile = false;</script>
 </html>
 <?php $this->endPage() ?>

@@ -1,5 +1,5 @@
 <?php
-use frontend\assets\AppAsset;
+use frontend\assets\MobileAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -8,7 +8,7 @@ use yii\widgets\Breadcrumbs;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-AppAsset::register($this);
+MobileAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -19,6 +19,7 @@ AppAsset::register($this);
   <?= Html::csrfMetaTags() ?>
   <title><?= Html::encode($this->title) ?></title>
   <?php $this->head() ?>
+  <script type="text/javascript">var isMobile = true;</script>
 </head>
 <body>
   <?php $this->beginBody() ?>
@@ -81,5 +82,6 @@ AppAsset::register($this);
   <?php $this->endBody() ?>
 </body>
 <script src="http://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript">var isMobile = true;</script>
 </html>
 <?php $this->endPage() ?>

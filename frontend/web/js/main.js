@@ -1,4 +1,3 @@
-
 function get_size_window(){
   return [$(window).width(),$(window).height()];
 }
@@ -36,6 +35,7 @@ function get_city(){
     city.push($(e).text());
     city.push($(e).attr('lat'));
     city.push($(e).attr('lng'));
+    city.push($(e).attr('num-city'));
     data.push(city);
   });
   return data;
@@ -60,14 +60,17 @@ function show_marker(map){
   $.each(get_city(),function(i,e){
     marker = new google.maps.Marker({
       position: new google.maps.LatLng(e[1], e[2]),
-      map: map
+      map: map,
+      city_id: parseInt(e[3])
     });
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
       return function(){
-        infowindow.setContent(e[0]);
-        infowindow.open(map, marker);
-        // get_all_topic()
+        // console.log(marker);
+        // console.log(i);
+        // infowindow.setContent(e[0]);
+        // infowindow.open(map, marker);
+        Topic.init(marker.city_id);
       };
     })(marker, i));
   });

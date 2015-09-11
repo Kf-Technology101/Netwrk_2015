@@ -13,14 +13,22 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class TopicAsset extends AssetBundle
+class MobileAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [''];
-    public $js = ['js/topic.js'];
+    public $css = [
+      'css/site.css',
+      'css/mobile/landing.css',
+      'css/mobile/topic.css'
+    ];
+    public $js = [
+      'js/main.js',
+      'js/ajax/get.js',
+      'js/controller/topic.js'];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'rmrevin\yii\fontawesome\AssetBundle',
     ];
 }

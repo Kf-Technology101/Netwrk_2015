@@ -3,7 +3,7 @@
     if($cities){
       foreach($cities as $key => $city){
   ?>
-  <li num-city="<?php print $key + 1 ?>" lat="<?php print $city->lat ?>" lng="<?php print $city->lng ?>"> <?php print $city->name?></li>
+  <li num-city="<?php print $city->id ?>" lat="<?php print $city->lat ?>" lng="<?php print $city->lng ?>"> <?php print $city->name?></li>
   <?php
       }
     }
@@ -13,4 +13,7 @@
 <div class="map_content">
   <div id="btn_meet"><span>Meet</span></div>
   <div id="googleMap" style=""></div>
+</div>
+<div class="modal">
+  <?= $this->render('partial/topic');?>
 </div>
