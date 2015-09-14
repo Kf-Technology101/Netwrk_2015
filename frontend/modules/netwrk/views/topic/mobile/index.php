@@ -11,7 +11,14 @@
         </div>
     </div>
     <div class="sidebar">
-       <span>Topics</span> 
+       <span class="title">Topics</span>
+       <table class="filter_sidebar">
+            <tr>
+                <td class="active">Most posts</td>
+                <td>Most viewed</td>
+                <td>My Topics</td>
+            </tr>
+       </table> 
     </div>
     <div class="containt">
         
