@@ -13,7 +13,8 @@ var Topic = {
     },
 
     show_modal_topic: function(city){
-        Ajax.show_topic(city).then(function(data){
+        var filter = 'post';
+        Ajax.show_topic(city,filter).then(function(data){
             console.log(data);
         })
     },

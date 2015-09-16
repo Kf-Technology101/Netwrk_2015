@@ -1,3 +1,4 @@
+<?php use yii\helpers\Url; ?>
 <ul class="indiana_marker" style="display:none;" >
   <?php
     if($cities){
@@ -11,7 +12,7 @@
 </ul>
 
 <div class="map_content">
-  <div id="btn_meet"><span>Meet</span></div>
+  <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div>
   <div id="googleMap" style=""></div>
 </div>
 <div class="modal">

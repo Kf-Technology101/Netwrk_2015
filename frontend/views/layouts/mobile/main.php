@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -26,7 +27,7 @@ MobileAsset::register($this);
   <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>">
     <nav class="navbar-mobile navbar-fixed-bottom">
       <div class="menu_bottom">
-        <div id="btn_meet_mobile"><span>Meet</span></div>
+        <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div>
         <a href="javascript:void(0)" class='left'>Menu</a>
         <a href="javascript:void(0)" class="right">Talking</a>
 <!--         <ul class="list-menu-mobile">
