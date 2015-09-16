@@ -17,5 +17,7 @@ if ($cities) {
 <div class="map_content_mobile">
   <div id="googleMap" style=""></div>
 </div>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+
 
 

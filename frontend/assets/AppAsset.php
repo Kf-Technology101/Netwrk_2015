@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
         'css/desktop/landing.css'
     ];
     public $js = [
+        'js/lib/underscore.js',
         'js/main.js',
         'js/ajax/get.js',
         'js/controller/topic.js'

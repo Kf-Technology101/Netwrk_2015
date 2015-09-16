@@ -23,7 +23,7 @@ MobileAsset::register($this);
 </head>
 <body>
   <?php $this->beginBody() ?>
-  <div class="wrap-moblie">
+  <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>">
     <nav class="navbar-mobile navbar-fixed-bottom">
       <div class="menu_bottom">
         <div id="btn_meet_mobile"><span>Meet</span></div>
@@ -81,7 +81,6 @@ MobileAsset::register($this);
 
   <?php $this->endBody() ?>
 </body>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript">var isMobile = true;</script>
 </html>
 <?php $this->endPage() ?>

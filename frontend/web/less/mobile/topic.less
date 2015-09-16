@@ -58,8 +58,8 @@
             color: #eee;
             font-size: 14px;
             padding: 10px;
-            display: table-cell;
-            vertical-align: middle;
+            // display: table-cell;
+            // vertical-align: middle;
             float: left; 
         }
         .filter_sidebar{
@@ -75,7 +75,7 @@
                 border: 1px solid #eee;
                 padding: 6px;
                 &.active{
-                   background: #89c642; 
+                   background: #7cb65e; 
                 }
             }
             td:first-child{
@@ -87,6 +87,68 @@
                 border-left: none;
                 border-top-right-radius: 15px;
                 border-bottom-right-radius: 15px;
+            }
+        }
+    }
+    .container{
+        padding: 0 5px;
+        margin: 10px 0;
+        #item_list{
+            width: 100%;
+            margin: auto;
+            .item{
+                background: #fff;
+                width: 100%;
+                height: 45px;
+                margin-bottom: 10px;
+                border: 1px solid #eee;
+                box-shadow: 1px 2px 1px #888;
+                .name_topic{
+                    font-size: 15px;
+                    width: 70%;
+                    padding: 10px 10px;
+                    float: left;
+                    overflow: hidden;
+                }
+                .time_ago{
+                    width: 15%;
+                    float: left;
+                    margin: 5px 0px 5px 8px;
+                    img{
+                        width: 15px;
+                        height: 15px;
+                    }
+                    span{
+                        font-size: 10px;
+                        width: 30px;
+                    }
+                }
+                .num_count{
+                    width: 13%;
+                    float: left;
+                    margin-top: 5px;
+                    .most_post{
+                        width: 25px;
+                        background: #b2da83;
+                        border-radius: 100%;
+                        margin: auto;
+                        p{
+                            font-size: 11px;
+                            font-weight: bold;
+                            color: #eee;
+                            padding: 5px 2px 5px 0;
+                            margin: 0;
+                            text-align: center;
+                        }
+
+                    }
+                    p{
+                        font-size: 10px;
+                        text-align: center;
+                        margin: 0;
+                    }
+                }
+                
             }
         }
     }

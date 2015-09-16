@@ -1,10 +1,10 @@
 <?php use yii\helpers\Url; ?>
-<div id="show-topic">
+<div id="show-topic" data-city="<?= $city ?>">
     <div class="header">
         <div class="back_page"><i class="fa fa-arrow-left"></i></div>
         <div class="title_page">
             <img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>">
-            <span class="title"><?php echo $title ?></span>
+            <span class="title">Indianapolis</span>
         </div>
         <div class="create_topic">
             <span>Create a topic +</span>
@@ -20,7 +20,46 @@
             </tr>
        </table> 
     </div>
-    <div class="containt">
+    <div class="container">
+        <div id="item_list" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>"> 
+            <!-- <div class="item"> 
+                <div class="name_topic">
+                    <span>DOGS</span>
+                </div>
+                <div class="time_ago">
+                    <img src=""/>
+                    <span>5 days</span>
+                </div>
+                <div class="num_count">
+                    <div class="most_post">
+                        <p>15k</p>
+                    </div>
+                    <p>posts</p>
+                </div>     
+                
+            </div> -->
+            <!-- <div class="item"> </div> -->
+        </div>
+
+        <script id="topic_list" type="text/x-underscore-template" >
+            <% _.each(topices,function(topic){ %>
+                <div class="item"> 
+                    <div class="name_topic">
+                        <span><%= topic.title %></span>
+                    </div>
+                    <div class="time_ago">
+                        <img src="<%= topic.img%>"/>
+                        <span><%= topic.created_at%></span>
+                    </div>
+                    <div class="num_count">
+                        <div class="most_post">
+                            <p><%= topic.view_count%></p>
+                        </div>
+                        <p>posts</p>
+                    </div>     
+                </div>
+            <% }); %>
+        </script>
         
     </div>
 </div>

@@ -66,10 +66,6 @@ function show_marker(map){
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
       return function(){
-        // console.log(marker);
-        // console.log(i);
-        // infowindow.setContent(e[0]);
-        // infowindow.open(map, marker);
         Topic.init(marker.city_id);
       };
     })(marker, i));
@@ -98,12 +94,35 @@ function setZoomLimit(map, mapTypeId){
   mapType.minZoom = 7;
 }
 
+function show_page(){
+  var page;
+  if (isMobile) {
+    page = $('.wrap-mobile').attr('id');
+  } else {
+    page = $('wrap').attr('id');
+  }
+  return page;
+}
+
 function _main(){
-  google.maps.event.addDomListener(window, 'load', initialize);
+  if (typeof google !== "undefined") {
+    google.maps.event.addDomListener(window, 'load', initialize);
+  }
   window_resize();
   _event_window_resize();
 }
 
+function _addListenEventPage(){
+  var page = this.show_page();
+  var Page = eval(page);
+  switch(page){
+    case 'Topic':
+      Page.initialize();
+      break;
+  }
+}
+
 $(document).ready(function(){
   _main();
+  _addListenEventPage();
 });

@@ -23,7 +23,7 @@ AppAsset::register($this);
 </head>
 <body>
     <?php $this->beginBody() ?>
-    <div class="wrap">
+    <div class="wrap" id="<?= ucfirst(Yii::$app->controller->id) ?>">
         <?php
             NavBar::begin([
                 'brandLabel' => 'Netwrk',
