@@ -24,13 +24,14 @@ class m150910_020101_init_topic_table extends \yii\db\Migration
 
         $current_date = date('Y-m-d H:i:s');
         $this->execute("INSERT INTO {{%topic}} (city_id, user_id, title,post_count,view_count,created_at,updated_at)
-            VALUES (1,1,'Topics Example 1',15, 20, '2015-1-31 15:30:00', '{$current_date}'),
-            (1,1,'Topics Example 1',15, 20, '2014-1-31 1:30:00','{$current_date}'),
-            (1,1,'Topics Example 1',150, 200,'2015-1-31 15:30:00','{$current_date}'),
-            (1,1,'Topics Example 1.1',1500, 2000,'2013-1-31 2:30:00','{$current_date}'),
-            (1,1,'Topics Example 1.2',1500, 2000,'2007-1-31 15:30:00','{$current_date}'),
-            (1,1,'Topics Example 1.3',150, 200,'2008-1-31 15:30:00','{$current_date}'),
-            (2,1,'Topics Example 1.4',150, 200,'2012-1-31 21:30:00','{$current_date}');");
+            VALUES (1,1,'Topics Example 1',15, 20000, '2015-1-31 15:30:00', '{$current_date}'),
+            (1,1,'Topics Example 1',150, 2000, '2014-1-31 1:30:00','{$current_date}'),
+            (1,1,'Topics Example 1',1500, 200,'2015-1-31 15:30:00','{$current_date}'),
+            (1,1,'Topics Example 1.1',15000, 20,'2013-1-31 2:30:00','{$current_date}'),
+            (1,1,'Topics Example 1.2',150000, 2,'2007-1-31 15:30:00','{$current_date}'),
+            (1,1,'Topics Example 1.3',1500000, 1,'2008-1-31 15:30:00','{$current_date}'),
+            (2,1,'Topics Example 1.4',15000000, 1,'2012-1-31 21:30:00','{$current_date}'),
+            (2,2,'Topics Example 1.4',1, 0,'2012-1-31 21:30:00','{$current_date}');");
     }
 
     public function down()

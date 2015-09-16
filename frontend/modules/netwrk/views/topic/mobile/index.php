@@ -14,33 +14,14 @@
        <span class="title">Topics</span>
        <table class="filter_sidebar">
             <tr>
-                <td class="active">Most posts</td>
-                <td>Most viewed</td>
-                <td>My Topics</td>
+                <td class="active post">Most posts</td>
+                <td class="view">Most viewed</td>
+                <td class="topic">My Topics</td>
             </tr>
        </table> 
     </div>
     <div class="container">
-        <div id="item_list" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>"> 
-            <!-- <div class="item"> 
-                <div class="name_topic">
-                    <span>DOGS</span>
-                </div>
-                <div class="time_ago">
-                    <img src=""/>
-                    <span>5 days</span>
-                </div>
-                <div class="num_count">
-                    <div class="most_post">
-                        <p>15k</p>
-                    </div>
-                    <p>posts</p>
-                </div>     
-                
-            </div> -->
-            <!-- <div class="item"> </div> -->
-        </div>
-
+        <div id="item_list" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>"> </div>
         <script id="topic_list" type="text/x-underscore-template" >
             <% _.each(topices,function(topic){ %>
                 <div class="item"> 
@@ -55,7 +36,7 @@
                         <div class="most_post">
                             <p><%= topic.view_count%></p>
                         </div>
-                        <p>posts</p>
+                        <p>views</p>
                     </div>     
                 </div>
             <% }); %>

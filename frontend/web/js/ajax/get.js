@@ -1,8 +1,8 @@
 var Ajax ={
 
-  show_topic: function(id){
+  show_topic: function(id,filter){
     var defer = $.Deferred(),
-        url = "get-topic?param="+id;
+        url = "get-topic?city="+id+"&filter="+filter;
 
     $.ajax({
       url: url,

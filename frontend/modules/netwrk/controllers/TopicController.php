@@ -5,18 +5,33 @@ namespace frontend\modules\netwrk\controllers;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use yii\helpers\Url;
+use yii\db\Query;
 
-class TopicController extends BaseController{
+class TopicController extends BaseController
+{
 
-  public function actionGetTopic($param){
-    $topices = Topic::find()->where(['city_id'=>$param])->All();
+  public function actionGetTopic($city,$filter)
+  {
+    $userId = 1;
+    switch ($filter) {
+      case 'post':
+        $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['post_count'=> SORT_DESC])->all();
+        break;
+      case 'view':
+        $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['view_count'=> SORT_DESC])->all();
+        break;
+      case 'topic':
+        $topices = Topic::find()->where(['city_id'=>$city,'user_id'=>$userId])->orderBy(['created_at'=> SORT_DESC])->all();
+        break;
+    }
     $data = [];
-    foreach($topices as $key=>$value){
+    foreach ($topices as $key => $value) {
       $num_view = $this->ChangeFormatNumber($value->view_count);
       // $num_view = $this->ChangeFormatNumber(23213122);
       $num_date = $this->FormatDateTime($value->created_at);
       $topic = array(
         'id'=> $value->id,
+        // 'user_id'=> $value->user_id,
         'city_id'=>$value->city_id,
         'title'=>$value->title,
         'post_count' => $value->post_count,
@@ -36,7 +51,8 @@ class TopicController extends BaseController{
     return $this->render('mobile/index', ['city' =>$city]);
   }
   
-  public function ChangeFormatNumber($num){
+  public function changeFormatNumber($num)
+  {
     $fnum = $num;
     if($fnum >=1000 && $fnum < 99999 ){
       $fnum = intval($fnum/1000);
@@ -51,7 +67,8 @@ class TopicController extends BaseController{
     return $fnum;
   }
 
-  public function GetDateTime($date){
+  public function getDateTime($date)
+  {
     $current_date = date('Y-m-d H:i:s');
 
     // for test
@@ -74,7 +91,12 @@ class TopicController extends BaseController{
     $dhours = $time1->diff($time2)->h;
 
 
-    $time = array('total_days'=>$diff_days,'hours'=>$dhours,'minutes'=>$dminutes,'second'=>$dsecond);
+    $time = array(
+      'total_days' => $diff_days,
+      'hours' => $dhours,
+      'minutes' => $dminutes,
+      'second' => $dsecond
+    );
 
     return $time;
   }
