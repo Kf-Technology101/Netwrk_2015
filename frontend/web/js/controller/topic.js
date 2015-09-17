@@ -125,8 +125,6 @@ var Topic = {
         var params = {'city': self.data.city, 'filter': self.data.filter,'size': 12,'page':self.list[self.data.filter].paging};
 
         parent.show();
-        console.log(self.list[self.data.filter].paging);
-        console.log(self.list[self.data.filter].loaded);
 
         if (self.list[self.data.filter].paging != self.list[self.data.filter].loaded){
             Ajax.show_topic(params).then(function(data){

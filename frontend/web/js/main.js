@@ -69,6 +69,15 @@ function show_marker(map){
         Topic.init(marker.city_id);
       };
     })(marker, i));
+
+    google.maps.event.addListener(marker, 'mouseover', function(marker, i) {
+      infowindow.setContent(e[0]);
+      infowindow.open(map, this);
+    });
+
+    google.maps.event.addListener(marker, 'mouseout', function() {
+      infowindow.close();
+    });
   });
 }
 
