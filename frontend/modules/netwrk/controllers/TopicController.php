@@ -6,24 +6,48 @@ use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use yii\helpers\Url;
 use yii\db\Query;
+use yii\data\Pagination;
 
 class TopicController extends BaseController
 {
+  public function actionIndex()
+  { 
+    // $query = Topic::find()->where(['city_id'=>1])->orderBy(['post_count'=> SORT_DESC]);
+    // $countQuery = clone $query;
+    // $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>10, 'page'=>1]);
+    // $models = $query->offset($pages->offset)
+    //     ->limit($pages->pageSize)
+    //     ->all();
 
-  public function actionGetTopic($city,$filter)
+    return $this->render('index');
+  }
+
+  public function actionGetTopicMobile()
   {
     $userId = 1;
+    $city = $_GET['city'];
+    $filter = $_GET['filter'];
+    $pageSize = $_GET['size'];
+    $page = $_GET['page'];
+
     switch ($filter) {
       case 'post':
-        $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['post_count'=> SORT_DESC])->all();
+        $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['post_count'=> SORT_DESC]);
         break;
       case 'view':
-        $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['view_count'=> SORT_DESC])->all();
+        $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['view_count'=> SORT_DESC]);
         break;
       case 'topic':
-        $topices = Topic::find()->where(['city_id'=>$city,'user_id'=>$userId])->orderBy(['created_at'=> SORT_DESC])->all();
+        $topices = Topic::find()->where(['city_id'=>$city,'user_id'=>$userId])->orderBy(['created_at'=> SORT_DESC]);
         break;
     }
+
+    $countQuery = clone $topices;
+    $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+    $topices = $topices->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+
     $data = [];
     foreach ($topices as $key => $value) {
       $num_view = $this->ChangeFormatNumber($value->view_count);
@@ -41,6 +65,7 @@ class TopicController extends BaseController
       );
       array_push($data,$topic);
     }
+
     $hash = json_encode($data);
 
     return $hash;

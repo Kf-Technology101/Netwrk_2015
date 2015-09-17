@@ -1,11 +1,17 @@
 var Ajax ={
 
-  show_topic: function(id,filter){
-    var defer = $.Deferred(),
-        url = "get-topic?city="+id+"&filter="+filter;
+  show_topic: function(param){
+    var url,defer = $.Deferred();
+
+    if (isMobile) {
+      url = "get-topic-mobile";
+    }else{
+      url = "netwrk/topic/get-topic";
+    }
 
     $.ajax({
       url: url,
+      data: param,
       type: 'GET',
       success: defer.resolve,
       error: defer.reject

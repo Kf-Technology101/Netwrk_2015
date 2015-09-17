@@ -6,8 +6,6 @@
         <h4 class="modal-title">Fazer login</h4>
       </div>
       <div class="modal-body">
-
-      
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

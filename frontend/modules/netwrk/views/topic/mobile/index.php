@@ -21,7 +21,9 @@
        </table> 
     </div>
     <div class="container">
-        <div id="item_list" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>"> </div>
+        <div id="item_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>"></div>
+        <div id="item_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>"></div>
+        <div id="item_list_topic" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>"></div>
         <script id="topic_list" type="text/x-underscore-template" >
             <% _.each(topices,function(topic){ %>
                 <div class="item"> 
@@ -39,7 +41,7 @@
                         <p>views</p>
                     </div>     
                 </div>
-            <% }); %>
+            <% }); %>            
         </script>
         
     </div>
