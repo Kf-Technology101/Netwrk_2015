@@ -1,10 +1,10 @@
 <?php use yii\helpers\Url; ?>
-<div id="show-topic" data-city="<?= $city ?>">
+<div id="show-topic" data-city="<?php print $city->id ;?>">
     <div class="header">
         <div class="back_page"><i class="fa fa-arrow-left"></i></div>
         <div class="title_page">
             <img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>">
-            <span class="title">Indianapolis</span>
+            <span class="title"><?php print $city->name;?></span>
         </div>
         <div class="create_topic">
             <span>Create a topic +</span>

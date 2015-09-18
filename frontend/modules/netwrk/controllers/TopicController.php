@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\controllers;
 
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
+use frontend\modules\netwrk\models\City;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -73,7 +74,10 @@ class TopicController extends BaseController
 
   public function actionTopicPage($city) {
     // $topices = Topic::find()->where(['city_id'=> $param])->All();
-    return $this->render('mobile/index', ['city' =>$city]);
+    // $cty = City::find()->where(['id'=>$city])->one();
+    $cty = City::findOne($city);
+    // print_r($cty);die;
+    return $this->render('mobile/index', ['city' =>$cty]);
   }
   
   public function changeFormatNumber($num)
