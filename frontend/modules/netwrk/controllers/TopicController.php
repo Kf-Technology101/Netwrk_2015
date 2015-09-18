@@ -30,7 +30,7 @@ class TopicController extends BaseController
     $filter = $_GET['filter'];
     $pageSize = $_GET['size'];
     $page = $_GET['page'];
-
+    $cty = City::findOne($city);
     switch ($filter) {
       case 'post':
         $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['post_count'=> SORT_DESC]);
@@ -66,8 +66,8 @@ class TopicController extends BaseController
       );
       array_push($data,$topic);
     }
-
-    $hash = json_encode($data);
+    $temp = array ('data'=> $data ,'city' => $cty->name);
+    $hash = json_encode($temp);
 
     return $hash;
   }
@@ -154,19 +154,19 @@ class TopicController extends BaseController
       }elseif ($diff['hours'] == 1){
         $count_time = "{$diff['hours']} hr";
       }else{
-        $count_time = "{$diff['hours']} hrs";
+        $count_time = "{$diff['hours']} hr";
       }
     }elseif($ddays <= 99){
       $marray = array($mweek,$mmonth);
       $darray = array($dweek,$dmonth);
       if($ddays == 1){
-        $count_time = "{$ddays} day";
+        $count_time = "{$ddays} da";
       }elseif($mweek < $mmonth && $mweek == 0 ){
         $count_time = "{$dweek} wks";
       }elseif($mweek > $mmonth && $mmonth == 0){
         $count_time = "{$dmonth} mo";
       }else{
-        $count_time = "{$ddays} days";
+        $count_time = "{$ddays} da";
       }
     }elseif($ddays > 100 && $ddays < 730){
       if($mweek < $mmonth && $mweek < $myear ){

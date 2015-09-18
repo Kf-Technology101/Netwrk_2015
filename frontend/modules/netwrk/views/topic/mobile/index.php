@@ -28,7 +28,7 @@
             <% _.each(topices,function(topic){ %>
                 <div class="item"> 
                     <div class="name_topic">
-                        <span><%= topic.title %></span>
+                        <p><%= topic.title %></p>
                     </div>
                     <div class="time_ago">
                         <img src="<%= topic.img%>"/>
@@ -38,7 +38,7 @@
                         <div class="most_post">
                             <p><%= topic.view_count%></p>
                         </div>
-                        <p>views</p>
+                        <p>Views</p>
                     </div>     
                 </div>
             <% }); %>            

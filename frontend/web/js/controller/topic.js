@@ -37,21 +37,89 @@ var Topic = {
 
     scroll_bot: function(){
         var self = this;
-        $(window).scroll(function() {   
-            if( $(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 ) {
-                setTimeout(function(){
-                    self.load_topic_more();
-                },700);
-            }
-        });
+        var containt = $('.containt');
+        if (isMobile) {
+            $(window).scroll(function() {   
+                if( $(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 ) {
+                    setTimeout(function(){
+                        self.load_topic_more();
+                    },700);
+                }
+            });
+        }else{
+            containt.scroll(function(){
+                var parent = $('#item_list_'+self.data.filter);
+                var hp;
+                if(self.data.filter == 'post'){
+                    hp = parent.height()+ 40;
+                }else{
+                    hp = parent.height()+ 30;
+                }
+
+                if(containt.scrollTop() + containt.height() == hp && self.list[self.data.filter].status_paging == 1){
+                    setTimeout(function(){
+                        self.load_topic_more();
+                    },700);
+                }
+            });
+        }
     },
     show_modal_topic: function(city){
+        console.log(city);
+        var self = this;
+        var parent = $('#item_list_'+self.data.filter);
+        var sidebar = $('.sidebar');
+        self.data.city = city;
+        var params = {'city': self.data.city, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
-        var filter = 'post';
-        var params = {'city': city, 'filter': filter,'size': 5,'page':1};
+        parent.show();
+
+        $('#modal_topic').modal({
+            backdrop: true,
+            keyboard: false
+        });
+        sidebar.show();
         Ajax.show_topic(params).then(function(data){
-            console.log(data);
-        })
+            self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+            self.getTemplate(parent,data);
+
+            self.getTemplateModal(sidebar,data);
+            self.scroll_bot();
+            self.filter_topic();
+
+            $('.modal-backdrop.in').click(function(e) {
+                self.reset_modal();
+            });
+        });
+    },
+
+    reset_modal: function(){
+        var self = this;
+        var parent = $("div[id^='item_list']");
+        var target = $('.filter_sidebar').find('td');
+        var filter = ['post','view','topic'];
+
+        self.data.filter = 'post';
+        parent.hide();
+        
+        $.each(filter,function(i,e){
+            self.list[e].paging = 1;
+            self.list[e].status_paging = 1; 
+            self.list[e].loaded = 0; 
+        });
+
+        $.each(parent,function(i,e){
+            $(e).find('.item').remove();
+        });
+
+        $.each(target,function(i,s){
+            if($(s).hasClass('active')){
+                $(s).removeClass('active');
+            }
+        });
+        $(target[0]).addClass('active');
+
+        $('#modal_topic').modal('hide');
     },
 
     show_page_topic: function(city){
@@ -94,18 +162,17 @@ var Topic = {
 
     filter_topic: function(){
         var target = $('.filter_sidebar').find('td');
-        var city = $('#show-topic').data('city');
         var self = this;
         target.on('click',function(e){
+            console.log(self.data.city);
             var filter = $(e.currentTarget).attr('class');
             if(!$(e.currentTarget).hasClass('active')){
                 $("div[id^='item_list']").hide();
                 $(window).scrollTop(0);
-                self.data.city = city;
                 self.data.filter = filter;
 
-                self.change_button_active(target,$(e.currentTarget),city,filter);
-                self.load_topic_filter($(e.currentTarget),city,filter);
+                self.change_button_active(target,$(e.currentTarget),self.data.city,self.data.filter);
+                self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
             }
         });
     },
@@ -140,11 +207,20 @@ var Topic = {
 
         var json = $.parseJSON(data); 
         var list_template = _.template($( "#topic_list" ).html());
-        var append_html = list_template({topices: json});
+        var append_html = list_template({topices: json.data});
         parent.append(append_html); 
 
         if(json.length == 0 || json.length < 12){
             self.list[self.data.filter].status_paging = 0;
         }
+    },
+    getTemplateModal: function(parent,data){
+        console.log(data.city);
+        var self = this;
+        var json = $.parseJSON(data); 
+        var list_template = _.template($( "#city_name" ).html());
+        var append_html = list_template({city: json.city});
+        parent.find('.container').append(append_html); 
+        
     },
 };

@@ -12,9 +12,13 @@
 </ul>
 
 <div class="map_content">
+  <div class="sidebar">
+    <div class="container">
+      <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
+    </div>
+  </div>
   <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div>
   <div id="googleMap" style=""></div>
 </div>
-<div class="modal">
-  <?= $this->render('partial/topic');?>
-</div>
+<?= $this->render('partial/topic');?>
+

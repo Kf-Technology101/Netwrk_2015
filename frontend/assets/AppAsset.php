@@ -19,7 +19,8 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        'css/desktop/landing.css'
+        'css/desktop/landing.css',
+        'css/desktop/topic.css',
     ];
     public $js = [
         'js/lib/underscore.js',

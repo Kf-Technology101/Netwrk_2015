@@ -6,7 +6,7 @@ var Ajax ={
     if (isMobile) {
       url = "get-topic-mobile";
     }else{
-      url = "netwrk/topic/get-topic";
+      url = "netwrk/topic/get-topic-mobile";
     }
 
     $.ajax({
