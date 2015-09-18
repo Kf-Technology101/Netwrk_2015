@@ -101,7 +101,8 @@ var Topic = {
 
         self.data.filter = 'post';
         parent.hide();
-        
+        $('.sidebar').hide();
+        $('.sidebar .container').find('span').remove();
         $.each(filter,function(i,e){
             self.list[e].paging = 1;
             self.list[e].status_paging = 1; 
