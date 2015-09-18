@@ -70,14 +70,18 @@ function show_marker(map){
       };
     })(marker, i));
 
-    google.maps.event.addListener(marker, 'mouseover', function(marker, i) {
-      infowindow.setContent(e[0]);
-      infowindow.open(map, this);
-    });
+    if (!isMobile) {
+      google.maps.event.addListener(marker, 'mouseover', function(marker, i) {
+        infowindow.setContent(e[0]);
+        infowindow.open(map, this);
+      });
 
-    google.maps.event.addListener(marker, 'mouseout', function() {
-      infowindow.close();
-    });
+      google.maps.event.addListener(marker, 'mouseout', function() {
+        infowindow.close();
+      });
+    }
+       
+    
   });
 }
 
