@@ -2,21 +2,30 @@
     opacity: 0;
 }
 #modal_topic{
-    width: 60%;
-    min-width: 700px;
     height: auto;
     max-height: 500px;
-    margin: auto;
-    background: rgba(192, 222, 156, 0.66);
-    // display: block;
-    border-radius: 5px;
-    box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
+    top: 120px;
     overflow-y: hidden;
-    .header{
+    .modal-dialog{
+        width: 60%;
+        min-width: 700px;
+        height: auto;
+        max-height: 500px;
+        margin: auto;
+        background: rgba(192, 222, 156, 0.66);
+        border-radius: 5px;
+        box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
+    }
+    .modal-content{
+        background: rgba(192, 222, 156, 0.66);
+    }
+    .modal-header{
+        padding: 0;
         height: 40px;
         width: 100%;
         background: #49b14c;
         box-shadow: 0px 3px 5px #888;
+        border: none;
         .name_modal{
             width: 20%;
             padding: 9px;
@@ -44,7 +53,7 @@
                 td{ 
                     font-size: 12px;
                     border: 1px solid #eee;
-                    padding: 6px;
+                    padding: 5px;
                     cursor: pointer;
                     text-align: center;
                     &.active{
@@ -80,21 +89,18 @@
             }
         }
     }
-    .containt{
+    .modal-body{
         overflow-y: scroll;
-        height: 415px;
-        min-height: 460px;
+        height: auto;
+        max-height: 450px;
+        width: 100%;
+        padding: 0;
         #item_list_post,#item_list_view,#item_list_topic{
-            // &::-webkit-scrollbar{
-            //     display: none;
-            // }
-                        width: 90%;
-            margin: 20px auto 10px;
             .item{
                 background: #fff;
-                width: 100%;
+                width: 90%;
                 height: 70px;
-                margin-bottom: 10px;
+                margin: 0 auto 10px;
                 border: 1px solid #eee;
                 box-shadow: -1px 4px 10px rgba(136,136,136,0.5);
                 .topic_post{
@@ -105,8 +111,7 @@
                         font-size: 16px;
                         width: 100%;
                         padding: 5px 10px 5px 15px;
-                        // float: left;
-                        // overflow: hidden;
+
                         p,span{
                             margin: 0;
                             overflow: hidden;
@@ -119,8 +124,6 @@
                         font-weight: 200;
                         width: 80%;
                         padding: 0px 6px 5px 30px;
-                        // float: left;
-                        // overflow: hidden;
                         p,span{
                             overflow: hidden;
                             text-overflow: ellipsis;

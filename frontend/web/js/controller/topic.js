@@ -49,15 +49,12 @@ var Topic = {
         }else{
             containt.scroll(function(){
                 var parent = $('#item_list_'+self.data.filter);
-                var hp;
-                if(self.data.filter == 'post'){
-                    hp = parent.height()+ 40;
-                }else{
-                    hp = parent.height()+ 30;
-                }
-
+                var  hp = parent.height() + 10;
+                
                 if(containt.scrollTop() + containt.height() == hp && self.list[self.data.filter].status_paging == 1){
+                    self.list[self.data.filter].status_paging == 0;
                     setTimeout(function(){
+                        self.list[self.data.filter].status_paging == 1;
                         self.load_topic_more();
                     },700);
                 }
@@ -87,7 +84,7 @@ var Topic = {
             self.scroll_bot();
             self.filter_topic();
 
-            $('.modal-backdrop.in').click(function(e) {
+            $('#modal_topic').on('hidden.bs.modal',function() {
                 self.reset_modal();
             });
         });
@@ -216,7 +213,6 @@ var Topic = {
         }
     },
     getTemplateModal: function(parent,data){
-        console.log(data.city);
         var self = this;
         var json = $.parseJSON(data); 
         var list_template = _.template($( "#city_name" ).html());
