@@ -3,8 +3,7 @@
     <div class="header">
         <div class="back_page"><i class="fa fa-arrow-left"></i></div>
         <div class="title_page">
-            <img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>">
-            <span class="title"><?php print $city->name;?></span>
+            <span class="title"><img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>"><?php print $city->name;?></span>
         </div>
         <div class="create_topic">
             <span>Create a topic +</span>
