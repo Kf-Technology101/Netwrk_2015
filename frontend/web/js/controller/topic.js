@@ -104,7 +104,6 @@ var Topic = {
 
         $.each(parent,function(i,e){
             $(e).find('.item').remove();
-            $(e).find('.no-data').remove();
         });
 
         $.each(target,function(i,s){
@@ -206,12 +205,13 @@ var Topic = {
         parent.append(append_html); 
 
         if(json.data.length == 0){
+            $('.no-data').show();
             self.list[self.data.filter].status_paging = 0;
-        }else if(json.data.length < 12){
-            $('.no-data').remove();
+        }else if(json.data.length < 12 && json.data.length > 0){
+            $('.no-data').hide();
             self.list[self.data.filter].status_paging = 0;
         }else{
-            $('.no-data').remove();
+            $('.no-data').hide();
             self.list[self.data.filter].status_paging = 1;
         }
     },
