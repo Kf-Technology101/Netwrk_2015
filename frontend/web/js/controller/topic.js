@@ -43,7 +43,7 @@ var Topic = {
                 if( $(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 ) {
                     setTimeout(function(){
                         self.load_topic_more();
-                    },700);
+                    },300);
                 }
             });
         }else{
@@ -54,7 +54,7 @@ var Topic = {
                     self.list[self.data.filter].status_paging = 0;
                     setTimeout(function(){
                         self.load_topic_more();
-                    },700);
+                    },300);
                 }
             });
         }
@@ -211,6 +211,9 @@ var Topic = {
         if(json.data.length == 0){
             $('.no-data').show();
             self.list[self.data.filter].status_paging = 0;
+            // self.reset_modal();
+            $()
+
         }else if(json.data.length < 12 && json.data.length > 0){
             $('.no-data').hide();
             self.list[self.data.filter].status_paging = 0;
