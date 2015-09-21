@@ -209,10 +209,9 @@ var Topic = {
         parent.append(append_html); 
 
         if(json.data.length == 0){
-            $('.no-data').show();
+            $('#item_list_'+self.data.filter).find('.no-data').show();
             self.list[self.data.filter].status_paging = 0;
             // self.reset_modal();
-            $()
 
         }else if(json.data.length < 12 && json.data.length > 0){
             $('.no-data').hide();
