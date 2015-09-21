@@ -84,6 +84,9 @@ var Topic = {
             $('#modal_topic').on('hidden.bs.modal',function() {
                 self.reset_modal();
             });
+            $('.modal-backdrop.in').click(function(e) {
+                self.reset_modal();
+            });
         });
     },
 
