@@ -51,7 +51,6 @@ var Topic = {
                 var parent = $('#item_list_'+self.data.filter);
                 var  hp = parent.height() + 20;
                 if(containt.scrollTop() + containt.height() == hp && self.list[self.data.filter].status_paging == 1){
-                    self.list[self.data.filter].status_paging == 0;
                     setTimeout(function(){
                         self.load_topic_more();
                     },200);
@@ -203,11 +202,16 @@ var Topic = {
         var json = $.parseJSON(data); 
         var list_template = _.template($( "#topic_list" ).html());
         var append_html = list_template({topices: json.data});
+
         parent.append(append_html); 
 
-        if(json.data.length == 0 || json.data.length < 12){
+        if(json.data.length == 0){
+            self.list[self.data.filter].status_paging = 0;
+        }else if(json.data.length < 12){
+            $('.no-data').remove();
             self.list[self.data.filter].status_paging = 0;
         }else{
+            $('.no-data').remove();
             self.list[self.data.filter].status_paging = 1;
         }
     },

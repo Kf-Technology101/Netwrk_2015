@@ -17,9 +17,15 @@
              </div>
       </div>
       <div class="modal-body containt">
-           <div id="item_list_post"></div>
-           <div id="item_list_view"></div>
-           <div id="item_list_topic"></div>
+           <div id="item_list_post">
+             <p class="no-data">There is no data available yet</p>
+           </div>
+           <div id="item_list_view">
+             <p class="no-data">There is no data available yet</p>
+           </div>
+           <div id="item_list_topic">
+             <p class="no-data">There is no data available yet</p>
+           </div>
       </div>
     </div>
   </div>
@@ -29,7 +35,6 @@
     <span><%= city %></span>
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
-    <% if (topices.length > 0){ %> 
       <% _.each(topices,function(topic){ %>
           <div class="item">
             <div class="topic_post">
@@ -57,8 +62,5 @@
             </div>
         </div>
     <% }); %>  
-    <% }else{%> 
-      <p class="no-data">There is no data available yet</p>
-    <% }%> 
     </script>
 </div>
