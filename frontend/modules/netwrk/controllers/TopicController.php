@@ -162,7 +162,7 @@ class TopicController extends BaseController
       if($ddays == 1){
         $count_time = "{$ddays} da";
       }elseif($mweek < $mmonth && $mweek == 0 ){
-        $count_time = "{$dweek} wks";
+        $count_time = "{$dweek} wk";
       }elseif($mweek > $mmonth && $mmonth == 0){
         $count_time = "{$dmonth} mo";
       }else{
@@ -170,7 +170,7 @@ class TopicController extends BaseController
       }
     }elseif($ddays > 100 && $ddays < 730){
       if($mweek < $mmonth && $mweek < $myear ){
-        $count_time = "{$dweek} wks";
+        $count_time = "{$dweek} wk";
       }elseif($mweek > $mmonth && $mmonth < $myear){
         $count_time = "{$dmonth} mo";
       }elseif($mweek > $myear && $mmonth > $myear){
