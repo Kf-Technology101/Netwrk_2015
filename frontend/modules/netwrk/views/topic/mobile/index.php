@@ -37,7 +37,11 @@
                         <div class="most_post">
                             <p><%= topic.view_count%></p>
                         </div>
-                        <p>Views</p>
+                        <% if (topic.view_count == 1) {%>
+                            <p>View</p>
+                        <%}else{ %> 
+                            <p>Views</p>
+                        <% } %>    
                     </div>     
                 </div>
             <% }); %>            

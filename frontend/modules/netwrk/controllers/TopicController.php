@@ -101,9 +101,9 @@ class TopicController extends BaseController
     $current_date = date('Y-m-d H:i:s');
 
     // for test
-    // $date1 = strtotime('2015-1-31 15:30:00');
+    // $date1 = strtotime('2013-1-31 15:30:00');
     // $date2 = strtotime('2015-1-31 15:30:00');
-    // $time1 = date_create('2015-1-31 15:30:00');
+    // $time1 = date_create('2013-1-31 15:30:00');
     // $time2 = date_create('2015-1-31 15:30:00');
 
     $date1 = strtotime($date);
@@ -152,7 +152,7 @@ class TopicController extends BaseController
           $count_time = "{$diff['minutes']} min";
         }
       }elseif ($diff['hours'] == 1){
-        $count_time = "{$diff['hours']} hr";
+        $count_time = "{$diff['hours']} hrs";
       }else{
         $count_time = "{$diff['hours']} hr";
       }
@@ -160,30 +160,36 @@ class TopicController extends BaseController
       $marray = array($mweek,$mmonth);
       $darray = array($dweek,$dmonth);
       if($ddays == 1){
-        $count_time = "{$ddays} da";
-      }elseif($mweek < $mmonth && $mweek == 0 ){
+        $count_time = "{$ddays} day";
+      }elseif($mweek < $mmonth && $mweek == 0 && $dweek == 1 ){
         $count_time = "{$dweek} wk";
-      }elseif($mweek > $mmonth && $mmonth == 0){
+      }elseif($mweek < $mmonth && $mweek == 0 && $dweek != 1){
+        $count_time = "{$dweek} wks";
+      }elseif($mweek > $mmonth && $mmonth == 0 && $mmonth == 1){
         $count_time = "{$dmonth} mo";
+      }elseif($mweek > $mmonth && $mmonth == 0 && $mmonth != 1){
+        $count_time = "{$dmonth} mos";
       }else{
-        $count_time = "{$ddays} da";
+        $count_time = "{$ddays} days";
       }
+    }elseif($ddays == 365){
+      $count_time = "{$dyear} yr";
     }elseif($ddays > 100 && $ddays < 730){
       if($mweek < $mmonth && $mweek < $myear ){
-        $count_time = "{$dweek} wk";
+        $count_time = "{$dweek} wks";
       }elseif($mweek > $mmonth && $mmonth < $myear){
-        $count_time = "{$dmonth} mo";
+        $count_time = "{$dmonth} mos";
       }elseif($mweek > $myear && $mmonth > $myear){
-        $count_time = "{$dyear} yr";
+        $count_time = "{$dyear} yrs";
       }
     }elseif ($ddays >= 730 && $ddays < 2000) {
       if($myear > $mmonth){
         $count_time = "{$dmonth} mo";
       }else{
-        $count_time = "{$dyear} yr";
+        $count_time = "{$dyear} yrs";
       }
     }else{
-      $count_time = "{$dyear} yr";
+      $count_time = "{$dyear} yrs";
     }
     return $count_time;
   }
