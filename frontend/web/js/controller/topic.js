@@ -43,20 +43,18 @@ var Topic = {
                 if( $(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 ) {
                     setTimeout(function(){
                         self.load_topic_more();
-                    },700);
+                    },300);
                 }
             });
         }else{
-            containt.scroll(function(){
+            containt.scroll(function(e){
                 var parent = $('#item_list_'+self.data.filter);
                 var  hp = parent.height() + 20;
-                
                 if(containt.scrollTop() + containt.height() == hp && self.list[self.data.filter].status_paging == 1){
                     self.list[self.data.filter].status_paging == 0;
                     setTimeout(function(){
-                        self.list[self.data.filter].status_paging == 1;
                         self.load_topic_more();
-                    },700);
+                    },200);
                 }
             });
         }
@@ -202,14 +200,15 @@ var Topic = {
 
     getTemplate: function(parent,data){
         var self = this;
-
         var json = $.parseJSON(data); 
         var list_template = _.template($( "#topic_list" ).html());
         var append_html = list_template({topices: json.data});
         parent.append(append_html); 
 
-        if(json.length == 0 || json.length < 12){
+        if(json.data.length == 0 || json.data.length < 12){
             self.list[self.data.filter].status_paging = 0;
+        }else{
+            self.list[self.data.filter].status_paging = 1;
         }
     },
     getTemplateModal: function(parent,data){

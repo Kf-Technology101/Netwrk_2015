@@ -58,7 +58,6 @@
         </div>
     <% }); %>  
     <% }else{%> 
-      <br/>
       <p class="no-data">There is no data available yet</p>
     <% }%> 
     </script>
