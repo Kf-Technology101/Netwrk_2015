@@ -184,7 +184,7 @@ class TopicController extends BaseController
       }
     }elseif ($ddays >= 730 && $ddays < 2000) {
       if($myear > $mmonth){
-        $count_time = "{$dmonth} mo";
+        $count_time = "{$dmonth} mos";
       }else{
         $count_time = "{$dyear} yrs";
       }
