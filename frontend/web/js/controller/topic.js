@@ -43,7 +43,7 @@ var Topic = {
                 if( $(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 ) {
                     setTimeout(function(){
                         self.load_topic_more();
-                    },300);
+                    },700);
                 }
             });
         }else{
@@ -51,9 +51,10 @@ var Topic = {
                 var parent = $('#item_list_'+self.data.filter);
                 var  hp = parent.height() + 20;
                 if(containt.scrollTop() + containt.height() == hp && self.list[self.data.filter].status_paging == 1){
+                    self.list[self.data.filter].status_paging = 0;
                     setTimeout(function(){
                         self.load_topic_more();
-                    },200);
+                    },700);
                 }
             });
         }
