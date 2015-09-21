@@ -49,7 +49,7 @@ var Topic = {
         }else{
             containt.scroll(function(){
                 var parent = $('#item_list_'+self.data.filter);
-                var  hp = parent.height() + 10;
+                var  hp = parent.height() + 20;
                 
                 if(containt.scrollTop() + containt.height() == hp && self.list[self.data.filter].status_paging == 1){
                     self.list[self.data.filter].status_paging == 0;
@@ -62,7 +62,6 @@ var Topic = {
         }
     },
     show_modal_topic: function(city){
-        console.log(city);
         var self = this;
         var parent = $('#item_list_'+self.data.filter);
         var sidebar = $('.sidebar');
@@ -108,6 +107,7 @@ var Topic = {
 
         $.each(parent,function(i,e){
             $(e).find('.item').remove();
+            $(e).find('.no-data').remove();
         });
 
         $.each(target,function(i,s){

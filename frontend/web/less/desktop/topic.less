@@ -92,17 +92,24 @@
     .modal-body{
         overflow-y: scroll;
         height: auto;
+        min-height: 300px;
         max-height: 450px;
         width: 100%;
         padding: 0;
         #item_list_post,#item_list_view,#item_list_topic{
+            // margin:10px; 
+            .no-data{
+                text-align: center;
+                font-size: 16px;
+            }
             .item{
                 background: #fff;
                 width: 90%;
                 height: 70px;
-                margin: 0 auto 10px;
+                margin: 10px auto 10px;
                 border: 1px solid #eee;
                 box-shadow: -1px 4px 10px rgba(136,136,136,0.5);
+                
                 .topic_post{
                     width: 70%;
                     float: left;

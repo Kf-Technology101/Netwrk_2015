@@ -29,8 +29,9 @@
     <span><%= city %></span>
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
-    <% _.each(topices,function(topic){ %>
-      <div class="item">
+    <% if (topices.length > 0){ %> 
+      <% _.each(topices,function(topic){ %>
+          <div class="item">
             <div class="topic_post">
                 <div class="name_topic">
                     <p><%= topic.title %></p>
@@ -56,5 +57,8 @@
             </div>
         </div>
     <% }); %>  
+    <% }else{%> 
+      <p class="no-data">There is no data available yet</p>
+    <% }%> 
     </script>
 </div>
