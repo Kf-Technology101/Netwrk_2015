@@ -101,10 +101,10 @@ class TopicController extends BaseController
     $current_date = date('Y-m-d H:i:s');
 
     // for test
-    // $date1 = strtotime('2013-1-31 15:30:00');
-    // $date2 = strtotime('2015-1-31 15:30:00');
-    // $time1 = date_create('2013-1-31 15:30:00');
-    // $time2 = date_create('2015-1-31 15:30:00');
+    // $date1 = strtotime('2014-5-30 15:30:00');
+    // $date2 = strtotime('2014-5-30 15:30:29');
+    // $time1 = date_create('2014-5-30 15:30:00');
+    // $time2 = date_create('2014-5-30 15:30:29');
 
     $date1 = strtotime($date);
     $date2 = strtotime($current_date);
@@ -152,9 +152,9 @@ class TopicController extends BaseController
           $count_time = "{$diff['minutes']} min";
         }
       }elseif ($diff['hours'] == 1){
-        $count_time = "{$diff['hours']} hrs";
-      }else{
         $count_time = "{$diff['hours']} hr";
+      }else{
+        $count_time = "{$diff['hours']} hrs";
       }
     }elseif($ddays <= 99){
       $marray = array($mweek,$mmonth);
@@ -165,9 +165,9 @@ class TopicController extends BaseController
         $count_time = "{$dweek} wk";
       }elseif($mweek < $mmonth && $mweek == 0 && $dweek != 1){
         $count_time = "{$dweek} wks";
-      }elseif($mweek > $mmonth && $mmonth == 0 && $mmonth == 1){
+      }elseif($mweek > $mmonth && $mmonth == 0 && $dmonth == 1){
         $count_time = "{$dmonth} mo";
-      }elseif($mweek > $mmonth && $mmonth == 0 && $mmonth != 1){
+      }elseif($mweek > $mmonth && $mmonth == 0 && $dmonth != 1){
         $count_time = "{$dmonth} mos";
       }else{
         $count_time = "{$ddays} days";
