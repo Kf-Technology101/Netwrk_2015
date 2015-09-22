@@ -73,10 +73,7 @@ class TopicController extends BaseController
   }
 
   public function actionTopicPage($city) {
-    // $topices = Topic::find()->where(['city_id'=> $param])->All();
-    // $cty = City::find()->where(['id'=>$city])->one();
     $cty = City::findOne($city);
-    // print_r($cty);die;
     return $this->render('mobile/index', ['city' =>$cty]);
   }
   

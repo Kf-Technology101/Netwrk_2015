@@ -24,7 +24,7 @@ var Topic = {
     initialize: function(){
         this._onclickBack();
         this.load_topic();
-        this.filter_topic();
+        this.filter_topic($(window));
         this.scroll_bot();
     },  
     init: function(city){
@@ -74,12 +74,13 @@ var Topic = {
         });
         sidebar.show();
         Ajax.show_topic(params).then(function(data){
+            parent.scrollTop(0);
             self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
             self.getTemplate(parent,data);
 
             self.getTemplateModal(sidebar,data);
             self.scroll_bot();
-            self.filter_topic();
+            self.filter_topic(parent);
 
             $('#modal_topic').on('hidden.bs.modal',function() {
                 self.reset_modal();
@@ -144,8 +145,6 @@ var Topic = {
                 self.getTemplate(parent,data);
             });
         }
-        
-
     },
 
     load_topic_more: function(){
@@ -158,15 +157,14 @@ var Topic = {
         });
     },
 
-    filter_topic: function(){
+    filter_topic: function(contain){
         var target = $('.filter_sidebar').find('td');
         var self = this;
         target.on('click',function(e){
-            console.log(self.data.city);
             var filter = $(e.currentTarget).attr('class');
             if(!$(e.currentTarget).hasClass('active')){
                 $("div[id^='item_list']").hide();
-                $(window).scrollTop(0);
+                contain.scrollTop(0);
                 self.data.filter = filter;
 
                 self.change_button_active(target,$(e.currentTarget),self.data.city,self.data.filter);
@@ -206,13 +204,16 @@ var Topic = {
         var list_template = _.template($( "#topic_list" ).html());
         var append_html = list_template({topices: json.data});
 
+        self.onTemplate(json);
         parent.append(append_html); 
+    },
+
+    onTemplate: function(json){
+        var self = this;
 
         if(json.data.length == 0){
             $('#item_list_'+self.data.filter).find('.no-data').show();
             self.list[self.data.filter].status_paging = 0;
-            // self.reset_modal();
-
         }else if(json.data.length < 12 && json.data.length > 0){
             $('.no-data').hide();
             self.list[self.data.filter].status_paging = 0;
@@ -221,6 +222,7 @@ var Topic = {
             self.list[self.data.filter].status_paging = 1;
         }
     },
+
     getTemplateModal: function(parent,data){
         var self = this;
         var json = $.parseJSON(data); 
