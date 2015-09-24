@@ -73,7 +73,6 @@ AppAsset::register($this);
 
     <?php $this->endBody() ?>
 </body>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript">var isMobile = false;</script>
 </html>
 <?php $this->endPage() ?>

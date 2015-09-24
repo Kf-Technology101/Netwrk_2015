@@ -21,12 +21,14 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'css/desktop/landing.css',
         'css/desktop/topic.css',
+        'css/desktop/meet.css',
     ];
     public $js = [
         'js/lib/underscore.js',
         'js/main.js',
         'js/ajax/get.js',
-        'js/controller/topic.js'
+        'js/controller/topic.js',
+        'js/controller/template.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -21,4 +21,5 @@
   <div id="googleMap" style=""></div>
 </div>
 <?= $this->render('partial/topic');?>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
 
