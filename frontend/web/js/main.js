@@ -132,6 +132,8 @@ function _addListenEventPage(){
     case 'Topic':
       Page.initialize();
       break;
+    default:
+      Default.initialize();
   }
 }
 

@@ -27,7 +27,9 @@ class AppAsset extends AssetBundle
         'js/lib/underscore.js',
         'js/main.js',
         'js/ajax/get.js',
+        'js/controller/default.js',
         'js/controller/topic.js',
+        'js/controller/meet.js',
         'js/controller/template.js'
     ];
     public $depends = [

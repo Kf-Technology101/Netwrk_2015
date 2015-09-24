@@ -28,11 +28,11 @@ class m150923_030103_profile_example extends \yii\db\Migration
         $current_date = date('Y-m-d H:i:s');
 
         $this->execute("INSERT INTO {{%profile}} (user_id, first_name, last_name, dob, work, photo, about, gender, zip_code, lat, lng) VALUES
-            (1,'AAAAA','AAAAA','{$current_date}','Development','no_avatar.png','This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (2,'BBBBB','BBBBB','{$current_date}','Development','no_avatar.png','This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (3,'CCCCC','CCCCC','{$current_date}','Development','no_avatar.png','This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (4,'DDDDD','DDDDD','{$current_date}','Development','no_avatar.png','This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (5,'EEEEE','AAAAA','{$current_date}','Development','no_avatar.png','This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286);
+            (1,'AAAAA','AAAAA','{$current_date}','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (2,'BBBBB','BBBBB','{$current_date}','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (3,'CCCCC','CCCCC','{$current_date}','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (4,'DDDDD','DDDDD','{$current_date}','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (5,'EEEEE','AAAAA','{$current_date}','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286);
         ");
     }
 

@@ -1,18 +1,18 @@
 #modal_meet{
     height: auto;
-    max-height: 650px;
-    top: 90px;
+    max-height: 580px;
+    top: 60px;
     overflow-y: hidden;
-    display: block;
+    display: none;
     .modal-dialog{
         width: 450px;
-        height: 600px;
+        height: 550px;
         margin: auto;
         border-radius: 5px;
         box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
     }
     .modal-content{
-        height: 600px;
+        height: 580px;
         background: rgba(26, 92, 136, 0.6);
     }
     .modal-header{
@@ -88,7 +88,7 @@
     }
     .modal-body{
         overflow-y: auto;
-        height: 600px;
+        height: 580px;
         width: 100%;
         padding: 0;
         // #item_list_post,#item_list_view,#item_list_topic{
@@ -184,7 +184,7 @@
                 
         //     }
         // }
-        #user_list{
+        .user_item{
             .avatar-image{
                 width: 100%;
                 height: auto;
@@ -215,9 +215,12 @@
                     .text{
                         padding: 0 5px 0 40px;
                         span{
+                            cursor: pointer;
                             margin-right: 5px;
                             text-decoration: underline;
                             color: #4141BD;
+                            display: block;
+                            float: left;
                         }
                     }
                 }
@@ -245,9 +248,11 @@
                 }
             }
 
-            .control-btn{
+            
+        }
+        .control-btn{
                 width: 90%;
-                margin: 20px auto;
+                margin: 15px auto;
                 color: #fff;
 
                 .back,.next,.meet{
@@ -282,6 +287,16 @@
                     .fa{
                         font-size: 25px;
                     }
+                    img{
+                        width: 25px;
+                        height: 25px;
+                        margin-right: 10px;
+                    }
+                    span{
+                        font-size: 25px;
+                        padding: 0;
+                        font-weight: bold;      
+                    }
                 }
                 span{
                     font-size: 25px;
@@ -290,6 +305,5 @@
                 }
                 
             }
-        }
     }
 }   
