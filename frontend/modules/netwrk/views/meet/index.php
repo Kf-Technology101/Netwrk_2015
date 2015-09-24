@@ -32,6 +32,10 @@
                 </tr>
               </tbody>
             </table>
+            <div class="brillant">
+              <div class="count"><span>1</span></div>
+              <p>Brillant</p>
+            </div>
           </div>
 
           <div class="control-btn">
