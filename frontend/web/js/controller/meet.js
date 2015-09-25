@@ -16,13 +16,13 @@ var Meet ={
         var self = this;
 
         self.ShowModalMeet();
-        self.eventClickdiscover();
+        
     },
 
     eventClickdiscover: function(){
         var self = this,
             target = $('#btn_discover');
-
+        target.unbind();
         target.on('click',function(){
             self.reset_modal();
             self.ShowModalMeet();
@@ -125,6 +125,7 @@ var Meet ={
 
         self.eventMeet();
         self.eventMet();
+        self.eventClickdiscover();
     },
 
     disableUser: function(num){
