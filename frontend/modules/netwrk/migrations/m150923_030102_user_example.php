@@ -29,6 +29,15 @@ class m150923_030102_user_example extends \yii\db\Migration
             'ban_time' => Schema::TYPE_TIMESTAMP,
             'ban_reason' => Schema::TYPE_STRING . '(255)',
         ], $tableOptions);
+
+        $security = Yii::$app->security;
+        $this->execute("INSERT INTO {{%user}} (role_id, status, email, username, password, auth_key,api_key,create_time,update_time) VALUES
+            ('1', '1', 'aaa@gmail.com','AAAAAAA', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'bbb@gmail.com','BBBBBBB', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'ccc@gmail.com','CCCCCCC', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'ddd@gmail.com','DDDDDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'eee@gmail.com','EEEEEEE', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46');
+        ");
     }
 
     public function down()

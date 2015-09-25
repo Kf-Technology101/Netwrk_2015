@@ -254,10 +254,15 @@
                 width: 90%;
                 margin: 15px auto;
                 color: #fff;
-
-                .back,.next,.meet{
+                .met{
+                    display: none;
+                }
+                .back,.next,.meet,.met{
                     cursor: pointer;
                     box-shadow: 4px 4px 5px #888;
+                    &.disable{
+                        opacity: 0.8;
+                    }
                 }
                 .back{
                     float: left;
@@ -275,8 +280,9 @@
                         font-size: 18px;
                     }
                     
+                    
                 }
-                .meet{
+                .meet,.met{
                     width: 35%;
                     margin: auto;
                     border: 1px solid #48A24A;
@@ -295,7 +301,9 @@
                     span{
                         font-size: 25px;
                         padding: 0;
-                        font-weight: bold;      
+                        font-weight: bold;  
+                        display: block;
+                        text-align: center;    
                     }
                 }
                 span{

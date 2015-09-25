@@ -38,7 +38,26 @@ var Ajax ={
         });
 
         return defer.promise();
-    }
+    },
 
+    usermeet: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = "get-topic-mobile";
+        }else{
+            url = "netwrk/meet/user-meet";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    }
 }
 
