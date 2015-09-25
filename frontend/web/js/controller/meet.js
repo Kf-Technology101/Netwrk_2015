@@ -24,6 +24,7 @@ var Meet ={
             target = $('#btn_discover');
         target.unbind();
         target.on('click',function(){
+            target.bind();
             self.reset_modal();
             self.ShowModalMeet();
             console.log('asdasd');

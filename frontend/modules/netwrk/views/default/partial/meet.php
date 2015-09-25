@@ -57,7 +57,7 @@
               <td class="text"><%= user.about %></td>
             </tr>
             <tr class="post">
-              <td class="title">Post:</td>
+              <td class="title">Posts:</td>
               <td class="text">
                 <% _.each(user.post,function(p){ %>
                   <span><%= p %></span>
