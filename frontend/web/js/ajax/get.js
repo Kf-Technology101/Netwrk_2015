@@ -13,6 +13,7 @@ var Ajax ={
             url: url,
             data: params,
             type: 'GET',
+            async: true,
             success: defer.resolve,
             error: defer.reject
         });
@@ -32,6 +33,7 @@ var Ajax ={
         $.ajax({
             url: url,
             data: params,
+            async: false,
             type: 'GET',
             success: defer.resolve,
             error: defer.reject
@@ -39,7 +41,7 @@ var Ajax ={
 
         return defer.promise();
     },
-
+    
     usermeet: function(params){
         var url,defer = $.Deferred();
 
@@ -53,6 +55,7 @@ var Ajax ={
             url: url,
             data: params,
             type: 'GET',
+            async: true,
             success: defer.resolve,
             error: defer.reject
         });
@@ -73,6 +76,7 @@ var Ajax ={
             url: url,
             data: params,
             type: 'GET',
+            async: true,
             success: defer.resolve,
             error: defer.reject
         });

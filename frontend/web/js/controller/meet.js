@@ -22,12 +22,11 @@ var Meet ={
     eventClickdiscover: function(){
         var self = this,
             target = $('#btn_discover');
-        target.unbind();
-        target.on('click',function(){
+            target.unbind();
+            target.on('click',function(){
             target.bind();
             self.reset_modal();
             self.ShowModalMeet();
-            console.log('asdasd');
         });
     },
 
@@ -43,19 +42,18 @@ var Meet ={
         $('#btn_discover').show();
 
         Ajax.getUserMeeting(self.params).then(function(data){
+            console.log(data);
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
-            self.json = json;
-            self.showUserMeet(json);
-
+            self.json = shuffle_array(json.data);
+            self.showUserMeet();
+            
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
             });
             $('.modal-backdrop.in').click(function(e) {
                 self.reset_modal();
             });
-
-            
         });
     },
 
@@ -81,7 +79,7 @@ var Meet ={
 
     onControlTemplate: function(){
         var self = this,
-            data = self.json.data,
+            data = self.json,
             len = self.user_list.len,
             btn_meet = $('.control-btn').find('.meet'),
             btn_met = $('.control-btn').find('.met'),
@@ -150,7 +148,7 @@ var Meet ={
     },
     eventMeet: function(){
         var self = this,
-            data = self.json.data;
+            data = self.json;
             btn_meet = $('.control-btn').find('.meet'),
             btn_met = $('.control-btn').find('.met'),
             btn_next = $('.control-btn').find('.next'),
@@ -168,7 +166,6 @@ var Meet ={
                 btn_meet.hide();
                 btn_met.show();
                 Ajax.usermeet({user_id: data[self.user_list.vt].user_id }).then(function(res){
-                    console.log(data[self.user_list.vt].user_id);
                     self.eventMet();
                 });
             });
@@ -176,7 +173,7 @@ var Meet ={
     },
     eventMet: function(){
         var self = this,
-            data = self.json.data;
+            data = self.json;
             btn_meet = $('.control-btn').find('.meet'),
             btn_met = $('.control-btn').find('.met');
         btn_met.unbind();
@@ -193,9 +190,10 @@ var Meet ={
         var self = this;
         var name = $('.name_user'),
             info = $('.user_list');
+            
         var vt = self.user_list.vt;
-        var data = self.json.data[vt];
-
+        var data = self.json[vt];
+        console.log(data);
         self.getTemplateUserName(name,data,vt);
         self.getTemplateInfo(info,data,vt);
         self.onControlTemplate();
@@ -216,4 +214,4 @@ var Meet ={
 
         parent.append(append_html); 
     }
-};
+}; 
