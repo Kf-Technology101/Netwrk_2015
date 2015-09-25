@@ -12,7 +12,6 @@ class MeetController extends BaseController
 {
     public function actionIndex() 
     {   
-        
         return $this->render('index');
     }
 
@@ -85,14 +84,17 @@ class MeetController extends BaseController
         $Auth = $_GET['user_id'];
 
         $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
-        if($usermeet && $usermeet->status == 1){
+
             
-        }else{
+        if($usermeet == null){
             $meet = new UserMeet;
             $meet->user_id_1 = $userCurrent;
             $meet->user_id_2 = $Auth;
             $meet->status = 1;
             $meet->save();
+        }else{
+            $usermeet->status = 1;
+            $usermeet->update();
         }
     }
 
