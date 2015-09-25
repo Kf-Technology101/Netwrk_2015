@@ -16,6 +16,18 @@ var Meet ={
         var self = this;
 
         self.ShowModalMeet();
+        self.eventClickdiscover();
+    },
+
+    eventClickdiscover: function(){
+        var self = this,
+            target = $('#btn_discover');
+
+        target.on('click',function(){
+            self.reset_modal();
+            self.ShowModalMeet();
+            console.log('asdasd');
+        });
     },
 
     ShowModalMeet: function(){
@@ -26,6 +38,8 @@ var Meet ={
             backdrop: true,
             keyboard: false
         });   
+        $('#btn_meet').hide();
+        $('#btn_discover').show();
 
         Ajax.getUserMeeting(self.params).then(function(data){
             var json = $.parseJSON(data);
@@ -51,6 +65,8 @@ var Meet ={
             btn_next = $('.control-btn').find('.next'),
             btn_back = $('.control-btn').find('.back');
 
+        $('#btn_meet').show();
+        $('#btn_discover').hide();
         name.find('p').remove();
         info.find('.user_item').remove();
         btn_next.removeClass('disable');
@@ -58,6 +74,8 @@ var Meet ={
         self.user_list.vt = 0;
         self.user_list.num = 1;
         self.user_list.len = 0;  
+
+        $('#modal_meet').modal('hide');
     },
 
     onControlTemplate: function(){

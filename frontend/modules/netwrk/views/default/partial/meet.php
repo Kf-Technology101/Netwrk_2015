@@ -1,5 +1,6 @@
 <?php use yii\helpers\Url; ?>
 <div class="modal" id='modal_meet'>
+  <div id="btn_discover"><img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>"/></div>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -32,6 +33,7 @@
       </div>
     </div>
   </div>
+
 </div>
 <script id="name_user" type="text/x-underscore-template">
     <p class="user_meet_<%= vt %>" data-meet="<%= user.met %>"><%= user.username %></p>
