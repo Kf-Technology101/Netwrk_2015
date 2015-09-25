@@ -13,7 +13,7 @@ function set_position_btn_meet(w,h){
   var wp = w - 100;
   
   $('#btn_meet').css({'top': hp,'left': wp});
-  $('#btn_discover').css({'top': hp - 10 ,'left': wp});
+  $('#btn_discover').css({'top': hp - 30 ,'left': wp});
 }
 
 function _event_window_resize(){

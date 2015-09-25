@@ -68,7 +68,7 @@
         </table>
         <div class="brillant">
           <div class="count"><span>1</span></div>
-          <p>Brillant</p>
+          <p>Brilliant</p>
         </div>
       </div>
   </div>
