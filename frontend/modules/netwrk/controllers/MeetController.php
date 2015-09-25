@@ -45,7 +45,7 @@ class MeetController extends BaseController
                 array_push($post_data,'#'.$post->title);
             }
             $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$value->id)->one();
-            if($usermeet){
+            if($usermeet && $usermeet->status == 1){
                 $meet = 1;
             }else{
                 $meet = 0;
@@ -84,10 +84,25 @@ class MeetController extends BaseController
         $userCurrent = 1;
         $Auth = $_GET['user_id'];
 
-        $meet = new UserMeet;
-        $meet->user_id_1 = $userCurrent;
-        $meet->user_id_2 = $Auth;
-        $meet->save();
+        $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
+        if($usermeet && $usermeet->status == 1){
+            
+        }else{
+            $meet = new UserMeet;
+            $meet->user_id_1 = $userCurrent;
+            $meet->user_id_2 = $Auth;
+            $meet->status = 1;
+            $meet->save();
+        }
+    }
+
+    public function actionUserMet()
+    {
+        $userCurrent = 1;
+        $Auth = $_GET['user_id'];
+        $meet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
+        $meet->status = 0;
+        $meet->update();
     }
 }
 

@@ -74,7 +74,7 @@ var Meet ={
         self.user_list.vt = 0;
         self.user_list.num = 1;
         self.user_list.len = 0;  
-
+        self.json = {};
         $('#modal_meet').modal('hide');
     },
 
@@ -124,6 +124,7 @@ var Meet ={
         });
 
         self.eventMeet();
+        self.eventMet();
     },
 
     disableUser: function(num){
@@ -158,16 +159,33 @@ var Meet ={
             btn_met.show();
         }else{
             btn_meet.show();
-            btn_met.hide()
+            btn_met.hide();
+            btn_meet.unbind();
             btn_meet.on('click',function(){
                 data[self.user_list.vt].met = 1;
                 btn_meet.hide();
                 btn_met.show();
                 Ajax.usermeet({user_id: data[self.user_list.vt].user_id }).then(function(res){
                     console.log(data[self.user_list.vt].user_id);
+                    self.eventMet();
                 });
             });
         }
+    },
+    eventMet: function(){
+        var self = this,
+            data = self.json.data;
+            btn_meet = $('.control-btn').find('.meet'),
+            btn_met = $('.control-btn').find('.met');
+        btn_met.unbind();
+        btn_met.on('click',function(){
+            data[self.user_list.vt].met = 0;
+            btn_meet.show();
+            btn_met.hide();
+            Ajax.usermet({user_id: data[self.user_list.vt].user_id }).then(function(res){
+                console.log(data[self.user_list.vt].user_id);
+            });
+        });
     },
     showUserMeet: function(){
         var self = this;

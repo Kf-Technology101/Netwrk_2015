@@ -15,6 +15,7 @@ class m150925_090101_user_meet extends \yii\db\Migration
             'id' => Schema::TYPE_PK . '(11) NOT NULL',
             'user_id_1' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'user_id_2' => Schema::TYPE_INTEGER . '(11) NOT NULL',
+            'status' => Schema::TYPE_BOOLEAN,
         ], $tableOptions);
     }
 

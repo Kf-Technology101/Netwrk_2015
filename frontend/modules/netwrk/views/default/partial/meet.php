@@ -25,7 +25,7 @@
               <!-- <i class="fa fa-user"></i> -->
               <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>meet</span>
             </div>
-            <div class="met disable">
+            <div class="met">
               <!-- <i class="fa fa-user"></i> -->
               <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>met</span>
             </div>
