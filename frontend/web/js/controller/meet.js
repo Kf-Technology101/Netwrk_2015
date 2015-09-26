@@ -20,6 +20,7 @@ var Meet ={
             $('#btn_discover_mobile').show();
 
             Meet.GetUserMeet();
+            Meet._onclickBack();
         }else{
 
             $('#btn_meet').hide();
@@ -27,6 +28,12 @@ var Meet ={
 
             self.ShowModalMeet();
         }
+    },
+    
+    _onclickBack: function(){
+        $('.back_page i').click(function(){
+            window.history.back();
+        })
     },
 
     showUserMeetMobile: function(){
