@@ -133,8 +133,12 @@ function _addListenEventPage(){
     case 'Topic':
       Page.initialize();
       break;
+    case 'Meet':
+      Page.initialize();
+      break;
     default:
       Default.initialize();
+      break;
   }
 }
 

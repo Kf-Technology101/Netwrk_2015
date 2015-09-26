@@ -25,7 +25,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "get-topic-mobile";
+            url = "get-user-meet";
         }else{
             url = "netwrk/meet/get-user-meet";
         }
@@ -47,7 +47,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "get-topic-mobile";
+            url = "user-meet";
         }else{
             url = "netwrk/meet/user-meet";
         }
@@ -68,7 +68,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "get-topic-mobile";
+            url = "user-met";
         }else{
             url = "netwrk/meet/user-met";
         }

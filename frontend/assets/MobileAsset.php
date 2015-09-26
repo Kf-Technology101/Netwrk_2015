@@ -20,13 +20,18 @@ class MobileAsset extends AssetBundle
     public $css = [
       'css/site.css',
       'css/mobile/landing.css',
-      'css/mobile/topic.css'
+      'css/mobile/topic.css',
+      'css/mobile/meet.css',
     ];
     public $js = [
       'js/lib/underscore.js',
       'js/main.js',
       'js/ajax/get.js',
-      'js/controller/topic.js'];
+      'js/controller/default.js',
+      'js/controller/topic.js',
+      'js/controller/meet.js',
+      'js/controller/template.js'
+    ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',

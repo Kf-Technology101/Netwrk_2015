@@ -15,8 +15,48 @@ var Meet ={
     initialize: function() {
         var self = this;
 
-        self.ShowModalMeet();
-        
+        if(isMobile){
+            $('#btn_meet_mobile').hide();
+            $('#btn_discover_mobile').show();
+
+            Meet.GetUserMeet();
+        }else{
+
+            $('#btn_meet').hide();
+            $('#btn_discover').show();
+
+            self.ShowModalMeet();
+        }
+    },
+
+    showUserMeetMobile: function(){
+        window.location.href = "netwrk/meet/get-user-meet-mobile"; 
+    },
+
+    GetUserMeet: function(){
+         Ajax.getUserMeeting(Meet.params).then(function(data){
+            var json = $.parseJSON(data);
+            Meet.user_list.len = json.data.length;
+            Meet.json = json.data;
+            Meet.showUserMeet();
+            
+            // $('#modal_meet').on('hidden.bs.modal',function() {
+            //     self.reset_modal();
+            // });
+            // $('.modal-backdrop.in').click(function(e) {
+            //     self.reset_modal();
+            // });
+        });
+    },
+
+    eventClickdiscoverMobile: function(){
+        var target = $('#btn_discover_mobile');
+        target.unbind();
+        target.on('click',function(){
+            target.bind();
+            Meet.reset_page();
+            Meet.ShowModalMeet();
+        });
     },
 
     eventClickdiscover: function(){
@@ -33,14 +73,12 @@ var Meet ={
     ShowModalMeet: function(){
         var modal = $('#modal_meet'),
             self = this;
-         
-        modal.modal({
-            backdrop: true,
-            keyboard: false
-        });   
-        $('#btn_meet').hide();
-        $('#btn_discover').show();
-
+        if(!isMobile){
+            modal.modal({
+                backdrop: true,
+                keyboard: false
+            });   
+        }
         Ajax.getUserMeeting(self.params).then(function(data){
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
@@ -63,8 +101,8 @@ var Meet ={
             btn_next = $('.control-btn').find('.next'),
             btn_back = $('.control-btn').find('.back');
 
-        $('#btn_meet').show();
-        $('#btn_discover').hide();
+        // $('#btn_meet').show();
+        // $('#btn_discover').hide();
         name.find('p').remove();
         info.find('.user_item').remove();
         btn_next.removeClass('disable');
@@ -74,6 +112,26 @@ var Meet ={
         self.user_list.len = 0;  
         self.json = {};
         $('#modal_meet').modal('hide');
+    },
+
+    reset_page: function(){
+        var self = this,
+            name = $('.name_user'),
+            info = $('.user_list'),
+            btn_next = $('.control-btn').find('.next'),
+            btn_back = $('.control-btn').find('.back');
+
+        // $('#btn_meet').show();
+        // $('#btn_discover').hide();
+        name.find('span').remove();
+        info.find('.user_item').remove();
+        btn_next.removeClass('disable');
+        btn_back.addClass('disable');
+        self.user_list.vt = 0;
+        self.user_list.num = 1;
+        self.user_list.len = 0;  
+        self.json = {};
+
     },
 
     onControlTemplate: function(){
@@ -123,7 +181,12 @@ var Meet ={
 
         self.eventMeet();
         self.eventMet();
-        self.eventClickdiscover();
+
+        if(isMobile){
+             self.eventClickdiscoverMobile();
+        }else{
+            self.eventClickdiscover();
+        }
     },
 
     disableUser: function(num){
@@ -134,7 +197,6 @@ var Meet ={
     showUser: function(num){
         var user = $('.user_meet_'+num),
             self = this;
-        console.log(num);
         if(user.length > 0){
             user.show();
             self.eventMeet();
@@ -192,7 +254,7 @@ var Meet ={
             
         var vt = self.user_list.vt;
         var data = self.json[vt];
-        console.log(data);
+        // console.log(data);
         self.getTemplateUserName(name,data,vt);
         self.getTemplateInfo(info,data,vt);
         self.onControlTemplate();

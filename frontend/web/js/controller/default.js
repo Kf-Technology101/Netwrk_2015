@@ -2,7 +2,7 @@ var Default ={
     initialize: function() {
         var self = this;
         if(isMobile){
-
+            self._eventClickMeetBtnMobile();
         }else{
             self._eventClickMeetBtn();
         }
@@ -17,5 +17,11 @@ var Default ={
         });
     },
 
+    _eventClickMeetBtnMobile: function(){
+        var target = $('#btn_meet_mobile');
 
+        target.on('click',function(){
+            Meet.showUserMeetMobile();
+        });
+    }
 };

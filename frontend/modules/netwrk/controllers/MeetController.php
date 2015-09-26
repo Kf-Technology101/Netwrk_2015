@@ -10,9 +10,9 @@ use yii\helpers\Url;
 
 class MeetController extends BaseController
 {
-    public function actionIndex() 
+    public function actionGetUserMeetMobile() 
     {   
-        return $this->render('index');
+        return $this->render('mobile/index');
     }
 
     public function actionGetUserMeet()

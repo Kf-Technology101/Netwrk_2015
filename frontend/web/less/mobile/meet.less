@@ -1,0 +1,198 @@
+#show_meet{
+    height: auto;
+    .header{
+        background: #08263a;
+        padding: 7px 5px 3px;
+        width: 100%;
+        position: fixed;
+        top:0;
+        z-index: 10;
+        .back_page{
+            width: 25px;
+            float: left;
+            i{
+                font-size: 25px;
+                color: #eee;
+            }
+        }
+        .name_user{
+            width: 45%;
+            margin: auto;
+            text-align: center;
+            img{
+                width: 25px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+            }
+            .name{
+                color: #eee;
+                font-size: 20px;
+                text-align: center;
+                margin: 0;
+            }
+        }
+        // .create_topic{
+        //     width: 90px;
+        //     float: right;
+        //     background: #89c642;
+        //     padding: 5px 0;
+        //     // margin-right: 2px;
+        //     border-radius: 10px;
+        //     span{
+        //         font-weight: bold;
+        //         color: #fff;
+        //         font-size: 10px;
+        //         display: block;
+        //         text-align: center;
+        //     }
+        // }
+    }
+
+    .container_meet{
+        // overflow-y: auto;
+        height: auto;
+        width: 100%;
+        padding: 0;
+        margin: 40px auto 80px;
+        z-index: 5;
+        .user_item{
+            .avatar-image{
+                width: 90%;
+                height: auto;
+                margin: auto;
+                position: relative;
+                img{
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    margin: auto;
+                }
+                .control-btn{
+                    width: 100%;
+                    margin: 15px auto;
+                    color: #fff;
+                    position: absolute;
+                    top: 90%;
+                    left: 0%;
+                    .met{
+                        display: none;
+                    }
+                    .back,.next,.meet,.met{
+                        cursor: pointer;
+                        box-shadow: 4px 4px 5px #888;
+                        &.disable{
+                            opacity: 0.8;
+                        }
+                    }
+                    .back{
+                        float: left;
+                    }
+                    .next{
+                        float: right;
+                    }
+                    .back,.next{
+                        width: 30%;
+                        border: 1px solid #D07B41;
+                        background: #f1904d;
+                        padding: 5px;
+                        border-radius: 10px;
+                        text-align: center;
+                        .fa{
+                            font-size: 18px;
+                        }
+                        
+                        
+                    }
+                    .meet,.met{
+                        width: 35%;
+                        margin: auto;
+                        border: 1px solid #48A24A;
+                        background: #49b14c;
+                        padding: 5px 14px;
+                        border-radius: 10px;
+
+                        .fa{
+                            font-size: 20px;
+                        }
+                        img{
+                            width: 17px;
+                            height: 17px;
+                            margin-right: 5px;
+                            display: initial;
+                        }
+                        span{
+                            font-size: 18px;
+                            padding: 0;
+                            font-weight: bold;  
+                            display: block;
+                            text-align: center;    
+                        }
+                    }
+                    span{
+                        font-size: 18px;
+                        padding: 0 5px;
+                        font-weight: bold;      
+                    }
+                    
+                }
+            }
+            .box-infomation{
+                width: 90%;
+                height: auto;
+                min-height: 150px;
+                padding: 10px;
+                margin: 25px auto 10px;
+                overflow-y: auto;
+                background: #fff;
+                position: relative;
+                table{
+                    font-size: 15px;
+                    margin: 0;
+                    td{
+                        border: none;
+                        padding: 5px 5px 0;
+                    }
+                    .title{
+                        font-weight: bold;
+                    }
+                    .text{
+                        padding: 5px 5px 0 40px;
+                        span{
+                            cursor: pointer;
+                            margin-right: 5px;
+                            text-decoration: underline;
+                            color: #4141BD;
+                            display: block;
+                            float: left;
+                        }
+                    }
+                }
+                .brillant{
+                    width: 40px;
+                    position: absolute;
+                    top: 5px;
+                    right: 0;
+                    .count{
+                        width: 40px;
+                        background: url('../../img/icon/brilliant_on.png') no-repeat;
+                        background-size: 40px 35px;
+                        display: block;
+                        span{
+                            display: block;
+                            text-align: center;
+                            font-size: 11px;
+                            padding: 14px 0 5px 0;
+                        }
+                    }
+                    p{
+                        font-size: 11px;
+                        text-align: center;
+                    }
+                }
+            }
+
+            
+        }
+
+    }
+}   

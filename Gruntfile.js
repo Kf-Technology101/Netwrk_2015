@@ -16,6 +16,7 @@ module.exports = function(grunt) {
           "frontend/web/css/desktop/meet.css": "frontend/web/less/desktop/meet.less",
           "frontend/web/css/mobile/landing.css": "frontend/web/less/mobile/landing.less",
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
+          "frontend/web/css/mobile/meet.css": "frontend/web/less/mobile/meet.less",
         }
       }
     },
