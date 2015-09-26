@@ -34,6 +34,7 @@ var Ajax ={
             url: url,
             data: params,
             async: false,
+            cache: false,
             type: 'GET',
             success: defer.resolve,
             error: defer.reject

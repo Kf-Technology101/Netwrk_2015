@@ -42,10 +42,9 @@ var Meet ={
         $('#btn_discover').show();
 
         Ajax.getUserMeeting(self.params).then(function(data){
-            console.log(data);
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
-            self.json = shuffle_array(json.data);
+            self.json = json.data;
             self.showUserMeet();
             
             $('#modal_meet').on('hidden.bs.modal',function() {

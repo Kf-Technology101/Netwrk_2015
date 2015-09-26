@@ -137,6 +137,7 @@ function _addListenEventPage(){
       Default.initialize();
   }
 }
+
 function shuffle_array(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
 
@@ -155,6 +156,7 @@ function shuffle_array(array) {
 
   return array;
 }
+
 $(document).ready(function(){
   _main();
   _addListenEventPage();
