@@ -39,7 +39,7 @@
     <p class="user_meet_<%= vt %>" data-meet="<%= user.met %>"><%= user.username %></p>
 </script>
 <script id="list_user" type="text/x-underscore-template">
-  <div class="user_item user_meet_<%= vt %>">
+  <div class="user_item user_meet_<%= vt %> active">
       <div class="avatar-image"><img src="<%= user.image %>"/></div>
       <div class="box-infomation table-responsive">
         <table class="table">

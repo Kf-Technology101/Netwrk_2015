@@ -43,7 +43,24 @@
         </div>
       </div> -->
     </div>
-    
+    <div class="control-btn">
+      <div class="back disable">
+        <i class="fa fa-chevron-left"></i>
+        <span>back</span>
+      </div>
+      <div class="next">
+        <span>next</span>
+        <i class="fa fa-chevron-right"></i>
+      </div>
+      <div class="meet">
+        <!-- <i class="fa fa-user"></i> -->
+        <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>meet</span>
+      </div>
+      <div class="met">
+        <!-- <i class="fa fa-user"></i> -->
+        <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>met</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -53,27 +70,7 @@
 
 <script id="list_user" type="text/x-underscore-template">
   <div class="user_item user_meet_<%= vt %>">
-      <div class="avatar-image">
-        <img src="<%= user.image %>"/>
-        <div class="control-btn">
-          <div class="back disable">
-            <i class="fa fa-chevron-left"></i>
-            <span>back</span>
-          </div>
-          <div class="next">
-            <span>next</span>
-            <i class="fa fa-chevron-right"></i>
-          </div>
-          <div class="meet">
-            <!-- <i class="fa fa-user"></i> -->
-            <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>meet</span>
-          </div>
-          <div class="met">
-            <!-- <i class="fa fa-user"></i> -->
-            <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>met</span>
-          </div>
-        </div>
-      </div>
+      <div class="avatar-image"><img src="<%= user.image %>"/></div>
       <div class="box-infomation">
         <table class="table">
           <tbody>

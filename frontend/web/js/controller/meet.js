@@ -18,9 +18,8 @@ var Meet ={
         if(isMobile){
             $('#btn_meet_mobile').hide();
             $('#btn_discover_mobile').show();
-
-            Meet.GetUserMeet();
             Meet._onclickBack();
+            Meet.GetUserMeet();
         }else{
 
             $('#btn_meet').hide();
@@ -29,7 +28,7 @@ var Meet ={
             self.ShowModalMeet();
         }
     },
-    
+
     _onclickBack: function(){
         $('.back_page i').click(function(){
             window.history.back();
@@ -186,18 +185,19 @@ var Meet ={
             }
         });
 
-        self.eventMeet();
-        self.eventMet();
-
         if(isMobile){
-             self.eventClickdiscoverMobile();
+            self.eventClickdiscoverMobile();
+
         }else{
             self.eventClickdiscover();
         }
+        self.eventMeet();
+        self.eventMet();
     },
 
     disableUser: function(num){
         var user = $('.user_meet_'+num);
+        user.removeClass('active');
         user.hide();
     },
 
@@ -207,8 +207,8 @@ var Meet ={
         if(user.length > 0){
             user.show();
             self.eventMeet();
+            user.addClass('active');
         }else{
-
             self.user_list.num ++ ;
             self.showUserMeet();
         }
