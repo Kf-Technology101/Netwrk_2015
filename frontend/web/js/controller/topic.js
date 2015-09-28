@@ -127,7 +127,7 @@ var Topic = {
     },
 
     _onclickBack: function(){
-        $('.back_page i').click(function(){
+        $('.back_page img').click(function(){
             window.history.back();
         })
     },

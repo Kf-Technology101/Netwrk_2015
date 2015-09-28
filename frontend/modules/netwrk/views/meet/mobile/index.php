@@ -2,9 +2,12 @@
 
 <div id="show_meet">
   <div class="header">
-      <div class="back_page"><i class="fa fa-arrow-left"></i></div>
+      <div class="back_page">
+        <!-- <i class="fa fa-arrow-left"></i> -->
+        <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
+      </div>
       <div class="name_user">
-          <img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>">
+          <img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>">
       </div>
   </div>
  
