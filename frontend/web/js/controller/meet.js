@@ -107,8 +107,8 @@ var Meet ={
             btn_next = $('.control-btn').find('.next'),
             btn_back = $('.control-btn').find('.back');
 
-        // $('#btn_meet').show();
-        // $('#btn_discover').hide();
+        $('#btn_meet').show();
+        $('#btn_discover').hide();
         name.find('p').remove();
         info.find('.user_item').remove();
         btn_next.removeClass('disable');
