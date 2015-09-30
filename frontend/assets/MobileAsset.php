@@ -22,6 +22,7 @@ class MobileAsset extends AssetBundle
       'css/mobile/landing.css',
       'css/mobile/topic.css',
       'css/mobile/meet.css',
+      'css/mobile/setting.css',
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -30,11 +31,13 @@ class MobileAsset extends AssetBundle
       'js/controller/default.js',
       'js/controller/topic.js',
       'js/controller/meet.js',
+      'js/controller/profile.js',
       'js/controller/template.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
         'rmrevin\yii\fontawesome\AssetBundle',
     ];
 }

@@ -11,6 +11,7 @@ use Yii;
  * @property string $first_name
  * @property string $last_name
  * @property string $dob
+ * @property integer $age
  * @property string $work
  * @property string $photo
  * @property string $about
@@ -36,7 +37,7 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'first_name', 'last_name'], 'required'],
-            [['user_id', 'zip_code'], 'integer'],
+            [['user_id', 'age', 'zip_code'], 'integer'],
             [['dob'], 'safe'],
             [['about'], 'string'],
             [['lat', 'lng'], 'number'],
@@ -55,6 +56,7 @@ class Profile extends \yii\db\ActiveRecord
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
             'dob' => 'Dob',
+            'age' => 'Age',
             'work' => 'Work',
             'photo' => 'Photo',
             'about' => 'About',

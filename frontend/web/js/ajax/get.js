@@ -83,6 +83,50 @@ var Ajax ={
         });
 
         return defer.promise();
+    },
+
+    userprofile: function(){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = "load-profile";
+        }else{
+            url = "netwrk/meet/get-user-meet";
+        }
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    update_profile: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = "update-profile";
+        }else{
+            url = "netwrk/meet/get-user-meet";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 }
 

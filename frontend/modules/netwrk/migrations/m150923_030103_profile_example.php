@@ -12,10 +12,12 @@ class m150923_030103_profile_example extends \yii\db\Migration
         }
         
         $this->createTable('{{%profile}}', [
+            'id' => Schema::TYPE_PK,
             'user_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'first_name' => Schema::TYPE_STRING . '(45) NOT NULL',
             'last_name' => Schema::TYPE_STRING . '(45) NOT NULL',
             'dob' => Schema::TYPE_DATETIME,
+            'age' => Schema::TYPE_INTEGER,
             'work' => Schema::TYPE_STRING . '(45)',
             'photo' => Schema::TYPE_STRING . '(255)',
             'about' => Schema::TYPE_TEXT,
@@ -27,12 +29,12 @@ class m150923_030103_profile_example extends \yii\db\Migration
 
         $current_date = date('Y-m-d H:i:s');
 
-        $this->execute("INSERT INTO {{%profile}} (user_id, first_name, last_name, dob, work, photo, about, gender, zip_code, lat, lng) VALUES
-            (1,'AAAAA','AAAAA','2000-09-24 09:55:21','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (2,'BBBBB','BBBBB','1998-09-24 09:55:21','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (3,'CCCCC','CCCCC','1992-09-24 09:55:21','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (4,'DDDDD','DDDDD','2002-09-24 09:55:21','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
-            (5,'EEEEE','AAAAA','1999-09-24 09:55:21','Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286);
+        $this->execute("INSERT INTO {{%profile}} (user_id, first_name, last_name, dob, age , work, photo, about, gender, zip_code, lat, lng) VALUES
+            (1,'AAAAA','AAAAA','2000-09-24 09:55:21',18,'Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (2,'BBBBB','BBBBB','1998-09-24 09:55:21',15,'Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (3,'CCCCC','CCCCC','1992-09-24 09:55:21',13,'Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (4,'DDDDD','DDDDD','2002-09-24 09:55:21',12,'Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286),
+            (5,'EEEEE','AAAAA','1999-09-24 09:55:21',25,'Development',null,'This is Photoshop version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet','Male',123, 39.13212, -86.523286);
         ");
     }
 

@@ -136,6 +136,9 @@ function _addListenEventPage(){
     case 'Meet':
       Page.initialize();
       break;
+    case 'Setting':
+      Profile.initialize();
+      break;
     default:
       Default.initialize();
       break;

@@ -52,11 +52,11 @@ class MeetController extends BaseController
             if ($value->profile->photo == null){
                 $image = Url::to('@web/img/icon/no_avatar.jpg');
             }
-            $years = $value->profile->dob;
+            $years = $value->profile->age;
 
-            $time1 = date_create($years);
-            $time2 = date_create($current_date);
-            $year_old = $time1->diff($time2)->y;
+            // $time1 = date_create($years);
+            // $time2 = date_create($current_date);
+            // $year_old = $time1->diff($time2)->y;
 
             $user = array(
                 'user_id' => $value->id,
@@ -64,7 +64,7 @@ class MeetController extends BaseController
                 'met' => $meet,
                 'information'=> array(
                     'image'=> $image,
-                    'year_old'=> $year_old,
+                    'year_old'=> $years,
                     'work'=> $value->profile->work,
                     'about'=> $value->profile->about,
                     'post'=> $post_data,
