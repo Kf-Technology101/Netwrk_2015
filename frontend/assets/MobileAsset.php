@@ -23,10 +23,12 @@ class MobileAsset extends AssetBundle
       'css/mobile/topic.css',
       'css/mobile/meet.css',
       'css/mobile/setting.css',
+      'css/bootstrap-datepicker.min.css'
     ];
     public $js = [
       'js/lib/underscore.js',
       'js/main.js',
+      'js/bootstrap-datepicker.min.js',
       'js/ajax/get.js',
       'js/controller/default.js',
       'js/controller/topic.js',
@@ -38,6 +40,7 @@ class MobileAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
+        // 'kartik\date\DatePickerAsset',
         'rmrevin\yii\fontawesome\AssetBundle',
     ];
 }

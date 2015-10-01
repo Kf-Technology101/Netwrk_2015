@@ -20,7 +20,10 @@ MobileAsset::register($this);
   <?= Html::csrfMetaTags() ?>
   <title><?= Html::encode($this->title) ?></title>
   <?php $this->head() ?>
-  <script type="text/javascript">var isMobile = true;</script>
+  <script type="text/javascript">
+    var baseUrl = '<?php echo Url::base(true); ?>';
+    var isMobile = true;
+  </script>
 </head>
 <body>
   <?php $this->beginBody() ?>

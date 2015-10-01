@@ -4,7 +4,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "get-topic-mobile";
+            url = baseUrl +"/netwrk/topic/get-topic-mobile";
         }else{
             url = "netwrk/topic/get-topic-mobile";
         }
@@ -25,7 +25,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "get-user-meet";
+            url = baseUrl +"/netwrk/meet/get-user-meet";
         }else{
             url = "netwrk/meet/get-user-meet";
         }
@@ -47,7 +47,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "user-meet";
+            url = baseUrl +"/netwrk/meet/user-meet";
         }else{
             url = "netwrk/meet/user-meet";
         }
@@ -68,7 +68,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "user-met";
+            url = baseUrl + "/netwrk/meet/user-met";
         }else{
             url = "netwrk/meet/user-met";
         }
@@ -89,7 +89,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "load-profile";
+            url = baseUrl + "/netwrk/setting/load-profile";
         }else{
             url = "netwrk/meet/get-user-meet";
         }
@@ -111,7 +111,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = "update-profile";
+            url = baseUrl +"/netwrk/setting/update-profile";
         }else{
             url = "netwrk/meet/get-user-meet";
         }
@@ -121,6 +121,30 @@ var Ajax ={
             data: params,
             async: false,
             cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    upload_image:function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/setting/upload-image";
+        }else{
+            url = "netwrk/meet/get-user-meet";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
             type: 'POST',
             success: defer.resolve,
             error: defer.reject

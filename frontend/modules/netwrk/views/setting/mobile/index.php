@@ -1,4 +1,5 @@
 <?php use yii\helpers\Url; ?>
+
 <div id="show-meetting">
     <div class="header">
         <div class="back_page">
@@ -32,8 +33,9 @@
            <div class="modal-body container_chagne_avatar">
                <div class="image-preview">
                    <p>IMAGE PREVIEW</p>
+                   <img class="preview_image" src="" />
                </div>
-               <div class="btn-control">
+               <div class="btn-control-modal">
                     <div class="cancel">
                         <p>Cancel</p>
                     </div>
@@ -42,9 +44,19 @@
                         <span>Save</span>
                     </div>
                     <div class="browse">
-<!--                         <i class="fa fa-check"></i>
-                        <span>browse</span> -->
-                        <input type="file" class="input_image">
+                        <?php 
+                            $form = \yii\widgets\ActiveForm::begin([
+                                'action' => Url::to(['/netwrk/setting/upload-image']),
+                                'options' => [
+                                    'id' => 'upload_image',
+                                    'enctype' => 'multipart/form-data',
+                                ]
+                            ]);
+                        ?>
+                        <!-- <form id="upload_image" method="post" action="<?= Url::to(['/netwrk/setting/upload-image']) ?>" enctype="multipart/form-data"> -->
+                            <input type="file" class="input_image" name='image' accept="image/jpg,image/png,image/jpeg,image/gif">
+                        <!-- </form> -->
+                        <?php \yii\widgets\ActiveForm::end(); ?>
                         <p>Browse</p>
                     </div>
                     
@@ -63,8 +75,12 @@
     </div>
     <div class="user_information">
         <div class="field_info">
-            <p> Age: </p>
-            <input type="text" class="age" maxlength="4" value="<%= data.age %>" />
+            <p> Birthday: </p>
+            <input type="text" name='birthday' class="age" value="<%= data.age %>" />
+        </div>
+        <div class="field_info">
+            <p> Zip Home: </p>
+            <input type="text" class="zip_code" maxlength="10" value="<%= data.zip %>" />
         </div>
         <div class="field_info">
             <p> Work: </p>
@@ -77,7 +93,7 @@
     </div>
     <div class="btn-control">
         <div class="cancel">
-            <p>Cancel</p>
+            <p>Reset</p>
         </div>
         <div class="save">
             <i class="fa fa-check"></i>

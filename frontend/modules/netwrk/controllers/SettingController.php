@@ -31,13 +31,18 @@ class SettingController extends BaseController
                 $image = Url::to('@web/img/icon/no_avatar.jpg');
             }else{
                 //get avatar
+                $image = Url::to('@web/uploads/'.$currentUser.'/'.$user->profile->photo);
             }
+
+            $birthday = new \DateTime($user->profile->dob);
+            $birthday = $birthday->format('Y-m-d');
 
             $info = array(
                 'status' => 1,
-                'age'=> $years,
+                'age'=> $birthday,
                 'work'=> $user->profile->work,
                 'image' => $image,
+                'zip'=> $user->profile->zip_code,
                 'about'=> $user->profile->about,
             );
             
@@ -58,14 +63,60 @@ class SettingController extends BaseController
         $age = $_POST['age'];
         $work = $_POST['work'];
         $about = $_POST['about'];
+        $zipcode = $_POST['zipcode'];
         $user = User::find()->where('id ='.$currentUser)->one();
         $profile = $user->profile;
 
-        $user->profile->age = $age;
+        $user->profile->dob = $age;
         $user->profile->work = $work;
         $user->profile->about = $about;
+        $user->profile->zip_code = $zipcode;
 
         $user->profile->update();
+    }
+
+    public function actionUploadImage()
+    {
+        $currentUser = 1;
+
+        $image = $_FILES[ 'image' ];
+        // echo"<pre>";var_dump($image);die;
+
+        if (!isset($_FILES[ 'image' ])) {
+
+            return;
+        }
+
+        $postdata = fopen( $_FILES[ 'image' ][ 'tmp_name' ], "r" );
+        //  Get file extension 
+        $extension = substr( $_FILES[ 'image' ][ 'name' ], strrpos( $_FILES[ 'image' ][ 'name' ], '.' ) );
+
+        // Generate unique name /
+        $filename = $currentUser . '-' . time() . $extension;
+        
+        $upload_path = \Yii::getAlias('@frontend') . "/web/uploads/".$currentUser."/";
+        if (!is_dir($upload_path)) {
+            mkdir( $upload_path, 0777, true);
+        }
+        // Open a file for writing /
+        $fp = fopen( $upload_path . $filename, "w" );
+
+        /* Read the data 1 KB at a time
+          and write to the file */
+        while( $data = fread( $postdata, 1024 ) )
+            fwrite( $fp, $data );
+
+        // Close the streams /
+        fclose( $fp );
+        fclose( $postdata );   
+
+        $user = User::find()->where('id ='.$currentUser)->one();
+        $user->profile->photo = $filename;
+        $user->profile->update();
+
+        $image = Url::to('@web/uploads/'.$currentUser.'/'.$user->profile->photo);
+        $hash = json_encode(array('data_image'=>$image));
+        return $hash;
     }
 }
 

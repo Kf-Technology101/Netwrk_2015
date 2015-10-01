@@ -13,38 +13,6 @@
  
   <div class="container_meet">
     <div class="user_list">
-      <!-- <div class="user_item">
-        <div class="avatar-image">
-          <img src="<?= Url::to('@web/img/icon/no_avatar.jpg'); ?>"/>
-        </div>
-
-        <div class="box-infomation">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td class="title">Age:</td>
-                <td class="text">22</td>
-              </tr>
-              <tr>
-                <td class="title">Work:</td>
-                <td class="text">Dentist</td>
-              </tr>
-              <tr class="about">
-                <td class="title">About:</td>
-                <td class="text">I'm also studying nursing.In my free time i love short walk of long piese</td>
-              </tr>
-              <tr>
-                <td class="title">Post:</td>
-                <td class="text"><span>#abc</span><span>#abc</span><span>#abc</span><span>#abc</span><span>#abc</span></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="brillant">
-            <div class="count"><span>1</span></div>
-            <p>Brilliant</p>
-          </div>
-        </div>
-      </div> -->
     </div>
     <div class="control-btn">
       <div class="back disable">
