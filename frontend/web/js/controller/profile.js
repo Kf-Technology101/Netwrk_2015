@@ -4,33 +4,98 @@ var Profile = {
         age: 0,
         work: '',
         about: '',
-        zipcode:'',
+        zipcode:0,
+        lat:'',
+        lng:''
     },
     img:{
         image:''
     },
+    zipcode: false,
+    state: 'Indiana',
     initialize: function(){
+        Profile.reset_page();
         Profile.get_profile();
         Profile.setDatePicker();
+        Profile.validateZipcode();
+    },
+
+    validateZipcode: function(){
+        Profile.apiZipcode();
+        $('input.zip_code').on('keyup',function(){
+            Profile.params.zipcode = parseInt($('input.zip_code').val());
+            Profile.apiZipcode();
+        });
+    },
+
+    apiZipcode: function(){
+        var zipcode = Profile.params.zipcode;
+        // var zipcode = 46601;
+        $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+            if (data.places[0].state == Profile.state){
+                Profile.zipcode = true;
+                Profile.validZip();
+            }
+        }).fail(function(jqXHR) {
+            if (jqXHR.status == 404) {
+                Profile.invalidZip();
+            } 
+        });
+    },
+
+    invalidZip: function(){
+        Profile.zipcode = false;
+
+        var parent = $('input.zip_code').parent();
+        parent.addClass('alert_validate');
+        if(parent.find('span').size() == 0){
+            parent.append('<span>*Invalid zip code</span>');
+        }
+        
+    },
+
+    validZip: function(){
+        var parent = $('input.zip_code').parent();
+        if(parent.hasClass('alert_validate')){
+            parent.removeClass('alert_validate');
+        }
+        Profile.zipcode = true;
     },
 
     setDatePicker: function(){
-        var wh=
-        $('input.age').datepicker({
+        $('input.birthday').datepicker({
             format: 'yyyy-mm-dd',
             startDate: '-3d',
         });
         $('.datepicker-dropdown').css('top',75)
-        $('input.age').on('changeDate',function(){
-            $( "input.age" ).datepicker('hide');
-        })
+        $('input.birthday').on('changeDate',function(e){
+            $( "input.birthday" ).datepicker('hide');
+            $('input.birthday').parent().removeClass('alert_validate');
+        });
+
+        $('input.birthday').on('change',function(e){
+            Profile.checkDate(e.target.value);
+        });
+    },
+
+    checkDate: function(value){
+        if (isDate(value)) {
+            $('input.birthday').parent().removeClass('alert_validate');
+        }else{
+            $('input.birthday').parent().addClass('alert_validate');        
+        }
     },
 
     get_profile: function(){
         var self = this,
+            container = $('.container_meet'),
             user_setting = $('#user_setting'),
-            user_data = $('#user_info');
+            user_data = $('#user_info'),
+            user_name_data = $('.name_user'),
+            user_name_current = $("#user_name_current");
 
+        container.find('.page').hide();
+        user_setting.show();
         Ajax.userprofile().then(function(data){
             var json = $.parseJSON(data);
             Profile.data = json;
@@ -44,8 +109,21 @@ var Profile = {
                 Profile.getTemplateUserInfo(user_setting,user_data,function(){
                     Profile.OnTemplate();
                 });
+
+                Profile.getTemplateTitle(user_name_data,user_name_current,function(){
+                    console.log('Check name');
+                });
             }
         });
+    },
+
+    reset_page: function(){
+        var target = $('#user_setting');
+
+        $('.name_user').find('span').remove();
+        target.find('.user_avatar').remove();
+        target.find('.user_information').remove();
+        target.find('.btn-control').remove();
     },
 
     OnTemplate: function(){
@@ -58,16 +136,16 @@ var Profile = {
     onclicksave: function(){
         var btn_save = $('.btn-control').find('.save');
         btn_save.on('click',function(){
-            Profile.getDataUpLoad();
-            Ajax.update_profile(Profile.params).then(function(data){
-                console.log('update complete');
-            });
+            if(Profile.zipcode){
+                Profile.getDataUpLoad();
+                Ajax.update_profile(Profile.params);
+            }
         });
     },
 
     getDataUpLoad: function(){
         
-        var age = $('input.age').val(),
+        var age = $('input.birthday').val(),
         work = $('input.work').val(),
         about = $('textarea.about').val(),
         zipcode = $('input.zip_code').val();
@@ -79,7 +157,7 @@ var Profile = {
     },
 
     getDataDefaultUpLoad: function(){
-        $('input.age').val(Profile.params.age);
+        $('input.birthday').val(Profile.params.age);
         $('input.work').val(Profile.params.work);
         $('input.zip_code').val(Profile.params.zipcode);
         $('textarea.about').val(Profile.params.about);
@@ -204,8 +282,14 @@ var Profile = {
         $('.user_avatar').find('img').attr('src',Profile.img.images);
     },
 
-    getTemplateTitle: function(){
+    getTemplateTitle: function(parent,target,callback){
+        var template = _.template(target.html());
+        var append_html = template({data: Profile.data});
+        parent.append(append_html); 
 
+        if(_.isFunction(callback)){
+            callback();
+        }
     },
 
     getTemplateUserInfo: function(parent,target,callback){
@@ -218,7 +302,4 @@ var Profile = {
         }
     },
 
-    eventOnTemplate: function(){
-
-    }
 };

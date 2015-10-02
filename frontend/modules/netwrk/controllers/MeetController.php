@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 class MeetController extends BaseController
 {
-    public function actionGetUserMeetMobile() 
+    public function actionIndex() 
     {   
         return $this->render('mobile/index');
     }
@@ -51,7 +51,10 @@ class MeetController extends BaseController
             }
             if ($value->profile->photo == null){
                 $image = Url::to('@web/img/icon/no_avatar.jpg');
+            }else{
+                $image = Url::to('@web/uploads/'.$value->id.'/'.$value->profile->photo);
             }
+
             $years = $value->profile->age;
 
             // $time1 = date_create($years);

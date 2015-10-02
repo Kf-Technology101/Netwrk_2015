@@ -10,23 +10,78 @@ var Meet ={
         num: 1,
         len: 0
     },
-    json:{},
-    
-    initialize: function() {
-        var self = this;
+    filter:{
+        active:'meeting',
+    },
+    json:{
 
+    },
+    
+    initialize: function() {  
+        if(Meet.filter.active == 'meeting'){
+            console.log('vao meeting');
+            Meet._init();
+        }else if(Meet.filter.active == 'profile'){
+            console.log('vao profile');
+            Profile.initialize();
+        }else{
+            console.log('asdadsdads');
+        }    
+    },
+
+    _init: function(){
         if(isMobile){
+            var currentTarget = $('#meeting_page'),
+                container = $('.container_meet');
+
+            container.find('.page').hide();    
             $('#btn_meet_mobile').hide();
             $('#btn_discover_mobile').show();
+            currentTarget.show();
+
+            Meet.reset_page();
             Meet._onclickBack();
             Meet.GetUserMeet();
+            Meet.changefilter(currentTarget);
         }else{
 
             $('#btn_meet').hide();
             $('#btn_discover').show();
 
-            self.ShowModalMeet();
+            Meet.ShowModalMeet();
         }
+    },
+
+    changefilter: function(containt){
+        var target = $('.filter_sidebar').find('td');
+        var self = this;
+        target.unbind();
+        target.on('click',function(e){
+            // target.bind();
+            var filter = $(e.currentTarget).attr('class');
+            if(!$(e.currentTarget).hasClass('active')){
+                $("div[id^='item_list']").hide();
+                containt.scrollTop(0);
+                self.filter.active = $.trim(filter);
+
+                self.change_button_active(target,$(e.currentTarget),containt);
+                Meet.initialize();
+                // self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
+            }
+        });
+    },
+    change_button_active:function(target,parent,current){
+        $.each(target,function(i,s){
+            if($(s).hasClass('active')){
+                $(s).removeClass('active');
+                current.hide();
+                parent.addClass('active');
+                // Meet.initialize();
+            }
+        });
+    },
+    clear_data_filter: function(target){
+
     },
 
     _onclickBack: function(){
@@ -36,7 +91,7 @@ var Meet ={
     },
 
     showUserMeetMobile: function(){
-        window.location.href = "netwrk/meet/get-user-meet-mobile"; 
+        window.location.href = "netwrk/meet"; 
     },
 
     GetUserMeet: function(){
@@ -61,7 +116,7 @@ var Meet ={
         target.on('click',function(){
             target.bind();
             Meet.reset_page();
-            Meet.initialize();
+            Meet._init();
         });
     },
 
@@ -72,7 +127,7 @@ var Meet ={
             target.on('click',function(){
             target.bind();
             self.reset_modal();
-            self.initialize();
+            self._init();
         });
     },
 
@@ -249,9 +304,7 @@ var Meet ={
             data[self.user_list.vt].met = 0;
             btn_meet.show();
             btn_met.hide();
-            Ajax.usermet({user_id: data[self.user_list.vt].user_id }).then(function(res){
-                console.log(data[self.user_list.vt].user_id);
-            });
+            Ajax.usermet({user_id: data[self.user_list.vt].user_id });
         });
     },
     showUserMeet: function(){
@@ -261,7 +314,6 @@ var Meet ={
             
         var vt = self.user_list.vt;
         var data = self.json[vt];
-        // console.log(data);
         self.getTemplateUserName(name,data,vt);
         self.getTemplateInfo(info,data,vt);
         self.onControlTemplate();

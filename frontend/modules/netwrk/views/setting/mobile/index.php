@@ -14,16 +14,21 @@
     <div class="sidebar">
        <table class="filter_sidebar">
             <tr>
-                <td class="meet">Meeting</td>
+                <td class="meeting">Meeting</td>
                 <td class="setting">Setting</td>
-                <td class="profile active">Profile</td>
+                <td class="profile ">Profile</td>
             </tr>
        </table> 
     </div>
     <div class="container_meet_setting">
         <div id="meet_page"></div>
-        <div id="meet_setting"></div>
-        <div id="user_setting"></div>
+        <div id="meet_setting">
+            <div class="show_me">
+                <p>Show me:</p>
+                
+            </div>
+        </div>
+        <!-- <div id="user_setting"></div> -->
     </div>
 </div>
 
@@ -66,38 +71,3 @@
    </div> 
 </div>
 
-<script id="user_info" type="text/x-underscore-template">
-    <div class="user_avatar">
-        <img src="<%= data.image %>">
-        <div class="change_avatar">
-            <i class="fa fa-cog"></i>
-        </div>
-    </div>
-    <div class="user_information">
-        <div class="field_info">
-            <p> Birthday: </p>
-            <input type="text" name='birthday' class="age" value="<%= data.age %>" />
-        </div>
-        <div class="field_info">
-            <p> Zip Home: </p>
-            <input type="text" class="zip_code" maxlength="10" value="<%= data.zip %>" />
-        </div>
-        <div class="field_info">
-            <p> Work: </p>
-            <input type="text" class="work" maxlength="100" value="<%= data.work %>"/>
-        </div>
-        <div class="field_info">
-            <p> About: </p>
-            <textarea class="about" maxlength="2000"><%= data.about %></textarea>
-        </div>
-    </div>
-    <div class="btn-control">
-        <div class="cancel">
-            <p>Reset</p>
-        </div>
-        <div class="save">
-            <i class="fa fa-check"></i>
-            <span>Save</span>
-        </div>
-    </div>
-</script>

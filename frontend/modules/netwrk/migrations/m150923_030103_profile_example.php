@@ -22,7 +22,7 @@ class m150923_030103_profile_example extends \yii\db\Migration
             'photo' => Schema::TYPE_STRING . '(255)',
             'about' => Schema::TYPE_TEXT,
             'gender' => Schema::TYPE_STRING,
-            'zip_code' => Schema::TYPE_SMALLINT . '(4)',
+            'zip_code' => Schema::TYPE_INTEGER . '(4)',
             'lat' => Schema::TYPE_FLOAT,
             'lng' => Schema::TYPE_FLOAT,
         ], $tableOptions);

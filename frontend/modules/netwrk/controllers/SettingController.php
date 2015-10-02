@@ -39,6 +39,7 @@ class SettingController extends BaseController
 
             $info = array(
                 'status' => 1,
+                'username'=> $user->username,
                 'age'=> $birthday,
                 'work'=> $user->profile->work,
                 'image' => $image,
