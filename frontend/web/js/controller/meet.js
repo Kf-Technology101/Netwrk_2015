@@ -61,7 +61,7 @@ var Meet ={
         target.on('click',function(){
             target.bind();
             Meet.reset_page();
-            Meet.ShowModalMeet();
+            Meet.initialize();
         });
     },
 
@@ -72,7 +72,7 @@ var Meet ={
             target.on('click',function(){
             target.bind();
             self.reset_modal();
-            self.ShowModalMeet();
+            self.initialize();
         });
     },
 
