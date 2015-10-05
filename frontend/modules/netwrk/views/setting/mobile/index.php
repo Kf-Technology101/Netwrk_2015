@@ -25,13 +25,40 @@
         <div id="meet_setting">
             <div class="show_me">
                 <p>Show me:</p>
+                <div class="radio_gender">
+                        <input type="radio" class="input_radio" name='sex' id="all" checked><label for='all'> All</label>
+                        <input type="radio" class="input_radio" name='sex'id="female"><label for="female"> Female</label>
+                        <input type="radio" class="input_radio" name='sex' id="male"> <label for="male"> Male </label>
+                </div>
+            </div>
+            <div class="search_area">
+                <div class="head">
+                    <p class="title">Limit search Area To:</p>
+                    <p class="value">50 mi</p>
+                </div>
                 
+                <div id="circles-slider"></div>
+            </div>
+            <div class="search_years">
+                <div class="head">
+                    <p class="title">Limit search Age:</p>
+                    <p class="value">20 yrs</p>
+                </div>
+                
+                <div id="circles-slider"></div>
             </div>
         </div>
         <!-- <div id="user_setting"></div> -->
     </div>
 </div>
-
+<script type="text/javascript">
+    jQuery("#circles-slider")
+    .slider({
+        max: 10,
+        value: 5
+    })
+    .slider("pips");
+</script>
 <div class="modal" id='modal_change_avatar'>
    <div class="modal-dialog">
        <div class="modal-content">

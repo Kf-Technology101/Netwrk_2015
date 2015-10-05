@@ -12,9 +12,10 @@ class m150928_070101_user_settings extends \yii\db\Migration
         }
         
         $this->createTable('{{%user_settings}}', [
+            'id' => Schema::TYPE_PK ,
             'user_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
-            'distance' => Schema::TYPE_FLOAT,
-            'age' => Schema::TYPE_SMALLINT . '(4)',
+            'distance' => Schema::TYPE_INTEGER,
+            'age' => Schema::TYPE_INTEGER . '(4)',
             'gender' => Schema::TYPE_STRING,
         ], $tableOptions);
     }

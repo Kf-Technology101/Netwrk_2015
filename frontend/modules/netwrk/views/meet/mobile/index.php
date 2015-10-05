@@ -42,7 +42,42 @@
         </div>
       </div>
     </div>
-    <div class='page' id="meet_setting"></div>
+    <div class='page' id="meet_setting">
+        <div class="show_me">
+            <p>Show me:</p>
+            <div class="radio_gender">
+                <input type="radio" class="input_radio" name='sex' id="all" value='All'><label for='all'> All</label>
+                <input type="radio" class="input_radio" name='sex'id="female" value='Female'><label for="female"> Female</label>
+                <input type="radio" class="input_radio" name='sex' id="male" value='Male'> <label for="male"> Male </label>
+            </div>
+        </div>
+        <div class="search_area">
+            <div class="head">
+                <p class="title">Limit search Area To:</p>
+                <p class="value"></p>
+            </div>
+            
+            <div id="circles-slider-area"></div>
+        </div>
+        <div class="search_age">
+            <div class="head">
+                <p class="title">Limit search Age:</p>
+                <p class="value"></p>
+            </div>
+            
+            <div id="circles-slider-age"></div>
+            <div class="btn-control">
+                <div class="cancel">
+                    <p>Reset</p>
+                </div>
+                <div class="save">
+                    <i class="fa fa-check"></i>
+                    <span>Save</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
     <div class='page' id="user_setting">
         <div class="modal" id='modal_change_avatar'>
            <div class="modal-dialog">

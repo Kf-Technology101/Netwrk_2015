@@ -24,15 +24,11 @@ class MeetController extends BaseController
         $age = $_GET['age'];
         $current_date = date('Y-m-d H:i:s');
 
-        if($Auth > 0){
-
-        }else{
-            $users = User::find()
-                            ->addSelect(["*", "RAND() order_num"])
-                            ->where('id !='.$userCurrent)
-                            ->orderBy(['order_num'=> SORT_DESC])
-                            ->all();
-        }
+        $users = User::find()
+                        ->addSelect(["*", "RAND() order_num"])
+                        ->where('id !='.$userCurrent)
+                        ->orderBy(['order_num'=> SORT_DESC])
+                        ->all();
 
         $data = [];
         foreach ($users as $key => $value) {

@@ -151,6 +151,54 @@ var Ajax ={
         });
 
         return defer.promise();
+    },
+
+    get_setting: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/setting/get-user-setting";
+        }else{
+            url = "netwrk/meet/get-user-meet";
+        }
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    update_setting: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/setting/update-user-setting";
+        }else{
+            url = "netwrk/meet/get-user-meet";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 }
 

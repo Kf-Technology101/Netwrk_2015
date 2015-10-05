@@ -5,12 +5,21 @@ use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\UserMeet;
+use frontend\modules\netwrk\models\UserSettings;
 use yii\helpers\Url;
 
 class SettingController extends BaseController
 {
-    public function actionIndex()
-    {
+    public function actionIndex()   
+    {   
+        $us = new UserSettings;
+        $us->user_id = 1;
+        $us->distance = 1;
+        $us->age = 0;
+        $us->gender = 25;
+        $us->save();
+        echo"<pre>";print_r($us);die;
+        $array = array('status'=> 1); 
         return $this->render('mobile/index');
     }
 
@@ -117,6 +126,70 @@ class SettingController extends BaseController
 
         $image = Url::to('@web/uploads/'.$currentUser.'/'.$user->profile->photo);
         $hash = json_encode(array('data_image'=>$image));
+        return $hash;
+    }
+
+    public function actionGetUserSetting()
+    {
+        $currentUser = 1;
+
+        $setting = UserSettings::find()->where('user_id ='.$currentUser)->one();
+
+        if($setting){
+            $array= array(
+                'distance'=> $setting->distance == 0 ? 'All' : $setting->distance,
+                'age'=> $setting->age == 0 ? 'All' : $setting->age,
+                'gender'=> $setting->gender 
+            );
+        }else{
+            $array= array(
+                'distance'=> 'All',
+                'age'=> 'All',
+                'gender'=> 'All'
+            );
+        }
+
+        $hash = json_encode($array);
+
+        return $hash;
+    }
+
+    public function actionUpdateUserSetting()
+    {
+        $currentUser = 1;
+
+        $age = $_POST['age'];
+        $distance = $_POST['distance'];
+        $gender = $_POST['gender'];
+
+        if($age == 'All'){
+            $age = 0;
+        }
+        if($distance == 'All'){
+            $distance = 0;
+        }
+
+
+        $setting = UserSettings::find()->where('user_id ='.$currentUser)->one();
+        $array = array('status'=> 0);  
+        if($setting){
+            $setting->distance = $distance;
+            $setting->age = $age;
+            $setting->gender = $gender;
+            $setting->update();
+            $array = array('status'=> 1);  
+        }else{
+            $us = new UserSettings;
+            $us->user_id = $currentUser;
+            $us->distance = $distance;
+            $us->age = $age;
+            $us->gender = $gender;
+            $us->save();
+            $array = array('status'=> 1);  
+        }
+
+        $hash = json_encode($array);
+        
         return $hash;
     }
 }

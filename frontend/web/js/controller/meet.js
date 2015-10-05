@@ -1,6 +1,6 @@
 var Meet ={
     params:{
-        user_id: 0,
+        user_id: 1,
         gender: 'All',
         distance: '',
         age: ''
@@ -19,13 +19,11 @@ var Meet ={
     
     initialize: function() {  
         if(Meet.filter.active == 'meeting'){
-            console.log('vao meeting');
             Meet._init();
         }else if(Meet.filter.active == 'profile'){
-            console.log('vao profile');
             Profile.initialize();
         }else{
-            console.log('asdadsdads');
+            Meet_setting.initialize();
         }    
     },
 

@@ -23,8 +23,12 @@ var Profile = {
     validateZipcode: function(){
         Profile.apiZipcode();
         $('input.zip_code').on('keyup',function(){
-            Profile.params.zipcode = parseInt($('input.zip_code').val());
-            Profile.apiZipcode();
+            var zipcode_current = parseInt($('input.zip_code').val());
+            if (zipcode_current > 9999){
+                Profile.params.zipcode = zipcode_current;
+                Profile.apiZipcode();
+            }
+            
         });
     },
 
@@ -138,6 +142,7 @@ var Profile = {
         btn_save.on('click',function(){
             if(Profile.zipcode){
                 Profile.getDataUpLoad();
+                console.log(Profile.params)
                 Ajax.update_profile(Profile.params);
             }
         });
