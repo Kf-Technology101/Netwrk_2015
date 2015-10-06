@@ -9,15 +9,23 @@ var Meet_setting={
         gender: 'All',
         distance: 'All',
     },
+    status_change: {
+        age: false,
+        gender: false,
+        distance: false,
+        total: false
+    },
 
     initialize: function(){
         Meet_setting._init();
         Meet_setting.get_setting();
-        
-        Meet_setting.onClickReset();
-        Meet_setting.onClickSave();
     },
 
+    _onControl: function(){
+        Meet_setting.check_status_change();
+        Meet_setting.onClickSave();
+        Meet_setting.onClickReset();
+    },
     _init: function(){
         $('.page').hide();
         $('.name_user').find('p.default').hide();
@@ -27,7 +35,6 @@ var Meet_setting={
         }else{
              var title = $('.name_user').find('p.name');
         }
-        
         if(title.size() > 0){
             title.text('Meet Settings');
         }else{
@@ -37,38 +44,54 @@ var Meet_setting={
         $('#meet_setting').show();
     },
 
+    set_default_btn: function(){
+        $('#meet_setting').find('.btn-control .cancel').addClass('disable');
+        $('#meet_setting').find('.btn-control .save').addClass('disable');
+    },
+
+    check_status_change: function(){
+        if(Meet_setting.status_change.age || Meet_setting.status_change.gender || Meet_setting.status_change.distance){
+            Meet_setting.status_change.total = true;
+        }else if(Meet_setting.status_change.age == false && Meet_setting.status_change.gender == false && Meet_setting.status_change.distance == false){
+            Meet_setting.status_change.total = false;
+        }
+    },
+
     onClickSave: function(){
         var btn = $('#meet_setting').find('.btn-control .save');
         btn.unbind();
-
-        btn.on('click',function(){
-            // Meet_setting.initialize();
-            
-            // Meet_setting.setting.age = Meet_setting.params.age;
-            // Meet_setting.setting.gender = Meet_setting.params.gender;
-            // Meet_setting.setting.distance = Meet_setting.params.distance;
-
-            console.log(Meet_setting.params);
-            Ajax.update_setting(Meet_setting.params).then(function(data){
-
+        if(Meet_setting.status_change.total){
+            btn.removeClass('disable');
+            btn.on('click',function(){
+                Ajax.update_setting(Meet_setting.params);
+                Meet_setting.set_default_btn();
             });
-        });
+        }else{
+            btn.addClass('disable');
+        }
+        
     },
 
     onClickReset: function(){
         var btn = $('#meet_setting').find('.btn-control .cancel');
 
         btn.unbind();
-
-        btn.on('click',function(){
-            Meet_setting.initialize();
-        });
+        if(Meet_setting.status_change.total){
+            btn.removeClass('disable');
+            btn.on('click',function(){
+                Meet_setting.initialize();
+                Meet_setting.set_default_btn();
+            });
+        }else{
+            btn.addClass('disable');
+        }
+        
     },
 
     get_setting: function(){
         Ajax.get_setting().then(function(data){
             var json = $.parseJSON(data);
-            console.log(json);
+
             Meet_setting.setting.age = json.age;
             Meet_setting.setting.gender = json.gender;
             Meet_setting.setting.distance = json.distance;
@@ -84,18 +107,24 @@ var Meet_setting={
     },
 
     gender_radio: function(){
-
         $.each($('input.input_radio'),function(i,e){
-            console.log(Meet_setting.setting.gender);
             if (Meet_setting.setting.gender == $(e).val()) {
                 $(e).prop("checked", true);
             }
 
             $(e).unbind();
             $(e).on('click',function(){
+
+                if (Meet_setting.setting.gender != $(e).val()) {
+                    Meet_setting.status_change.gender = true;
+                }else if(Meet_setting.setting.gender == $(e).val()){
+                    Meet_setting.status_change.gender = false;
+                }
+
                 $(e).bind();
                 Meet_setting.params.gender = $(e).val();
-                console.log(Meet_setting.params.gender);
+                
+                Meet_setting._onControl();
             })
         });
     },
@@ -129,11 +158,19 @@ var Meet_setting={
         $("#circles-slider-area").on("slidechange", function(e,ui) {
             Meet_setting.params.distance = distances[ui.value];
 
+            if(Meet_setting.setting.distance != distances[ui.value]){
+                Meet_setting.status_change.distance = true;
+            }else{
+                Meet_setting.status_change.distance = false;
+            }
+
             if(distances[ui.value] == "All"){
                 $(".search_area").find('.value').text( distances[ui.value]);
             }else{
                 $(".search_area").find('.value').text( distances[ui.value] + " mi");
             }
+
+            Meet_setting._onControl();
         });
     },
 
@@ -165,12 +202,19 @@ var Meet_setting={
 
         $("#circles-slider-age").on("slidechange", function(e,ui) {
             Meet_setting.params.age = Ages[ui.value];
+
+            if(Meet_setting.setting.age != Ages[ui.value]){
+                Meet_setting.status_change.age = true;
+            }else{
+                Meet_setting.status_change.age = false;
+            }
+
             if(Ages[ui.value] == "All"){
                 $(".search_age").find('.value').text( Ages[ui.value]);
             }else{
                 $(".search_age").find('.value').text( Ages[ui.value] + "+ yrs");
             }
-            console.log(Meet_setting.params.age);
+             Meet_setting._onControl();
         });
     }
 };

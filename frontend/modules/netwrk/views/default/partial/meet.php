@@ -69,10 +69,10 @@
               
             </div>
             <div class="btn-control">
-                  <div class="cancel">
+                  <div class="cancel disable">
                       <p>Reset</p>
                   </div>
-                  <div class="save">
+                  <div class="save disable">
                       <i class="fa fa-check"></i>
                       <span>Save</span>
                   </div>
@@ -189,10 +189,10 @@
         </div>
     </div>
     <div class="btn-control">
-        <div class="cancel">
+        <div class="cancel disable">
             <p>Reset</p>
         </div>
-        <div class="save">
+        <div class="save disable">
             <i class="fa fa-check"></i>
             <span>Save</span>
         </div>

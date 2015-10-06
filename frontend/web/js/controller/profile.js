@@ -12,6 +12,13 @@ var Profile = {
         image:''
     },
     zipcode: false,
+    status:{
+        age:false,
+        zipcode: false,
+        work: false,
+        about:false,
+        total:false
+    },
     state: 'Indiana',
     initialize: function(){
         Profile.reset_page();
@@ -74,11 +81,14 @@ var Profile = {
 
     setDatePicker: function(){
         $('input.birthday').datepicker({
-            format: 'yyyy-mm-dd',
-            startDate: '-3d',
+            dateFormat: 'yy-mm-dd',
+            // startDate: '-3d',
         });
+
         $('.datepicker-dropdown').css('top',75)
+
         $('input.birthday').on('changeDate',function(e){
+            console.log(e);
             $( "input.birthday" ).datepicker('hide');
             $('input.birthday').parent().removeClass('alert_validate');
         });

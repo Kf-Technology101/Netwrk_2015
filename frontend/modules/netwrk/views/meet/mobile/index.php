@@ -67,10 +67,10 @@
             
             <div id="circles-slider-age"></div>
             <div class="btn-control">
-                <div class="cancel">
+                <div class="cancel disable">
                     <p>Reset</p>
                 </div>
-                <div class="save">
+                <div class="save disable">
                     <i class="fa fa-check"></i>
                     <span>Save</span>
                 </div>
@@ -172,11 +172,11 @@
     <div class="user_information">
         <div class="field_info">
             <p> Birthday: </p>
-            <input type="text" name='birthday' class="birthday" maxlength="10" value="<%= data.age %>" />
+            <input type="text" class="birthday" maxlength="10" value="<%= data.age %>" />
         </div>
         <div class="field_info">
             <p> Zip Home: </p>
-            <input type="text" class="zip_code" maxlength="10" value="<%= data.zip %>" />
+            <input type="text" class="zip_code" maxlength="5" value="<%= data.zip %>" />
         </div>
         <div class="field_info">
             <p> Work: </p>
@@ -188,10 +188,10 @@
         </div>
     </div>
     <div class="btn-control">
-        <div class="cancel">
+        <div class="cancel disable">
             <p>Reset</p>
         </div>
-        <div class="save">
+        <div class="save disable">
             <i class="fa fa-check"></i>
             <span>Save</span>
         </div>
