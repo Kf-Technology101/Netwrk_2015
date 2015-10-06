@@ -185,7 +185,7 @@ class SettingController extends BaseController
             $array = array('status'=> 1);  
         }else{
             $us = new UserSettings;
-            $us->user_id = $currentUser;
+            $us->user_id = $this->currentUser;
             $us->distance = $distance;
             $us->age = $age;
             $us->gender = $gender;
