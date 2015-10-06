@@ -177,7 +177,7 @@
         </div>
         <div class="field_info">
             <p> Zip Home: </p>
-            <input type="text" class="zip_code" maxlength="10" value="<%= data.zip %>" />
+            <input type="text" class="zip_code" maxlength="5" value="<%= data.zip %>" />
         </div>
         <div class="field_info">
             <p> Work: </p>
