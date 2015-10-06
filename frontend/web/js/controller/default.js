@@ -4,6 +4,7 @@ var Default ={
         if(isMobile){
             self._eventClickMeetBtnMobile();
         }else{
+            $('#btn_meet').show();
             self._eventClickMeetBtn();
         }
     },
