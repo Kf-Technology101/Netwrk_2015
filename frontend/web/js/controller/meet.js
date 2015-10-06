@@ -19,6 +19,7 @@ var Meet ={
     
     initialize: function() {  
         if(Meet.filter.active == 'meeting'){
+            console.log('aaaa');
             Meet._init();
         }else if(Meet.filter.active == 'profile'){
             Profile.initialize();
@@ -43,12 +44,18 @@ var Meet ={
             Meet.GetUserMeet();
             Meet.changefilter(currentTarget);
         }else{
-            var currentTarget = $('#meeting');
+            var currentTarget = $('#meeting'),
+                container = $('.container_meet');
+
+            container.find('.page').hide();
             $('#btn_meet').hide();
             $('#btn_discover').show();
-            Meet.reset_page();
+             currentTarget.show();
+
+            Meet.reset_modal();
             Meet.changefilter(currentTarget);
             Meet.ShowModalMeet();
+
         }
     },
 
@@ -154,8 +161,12 @@ var Meet ={
             self.user_list.len = json.data.length;
             if(self.user_list.len > 0){
                 $('.control-btn').show();
+                $('p.default').hide();
                 self.json = json.data;
                 self.showUserMeet();
+            }else{
+                $('.control-btn').hide();
+                $('p.default').show();
             }
             
             $('#modal_meet').on('hidden.bs.modal',function() {
@@ -176,7 +187,8 @@ var Meet ={
 
         $('#btn_meet').show();
         $('#btn_discover').hide();
-        name.find('p').remove();
+        name.find('p.name').remove();
+        name.find('span').remove();
         info.find('.user_item').remove();
         btn_next.removeClass('disable');
         btn_back.addClass('disable');

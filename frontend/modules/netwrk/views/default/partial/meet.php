@@ -5,7 +5,7 @@
     <div class="modal-content">
       <div class="modal-header">
           <div class="name_user">
-            <p class="name"> NO DATA</p>
+            <p class="default"> NO DATA</p>
           </div>
           <div class="sidebar">
             <table class="filter_sidebar">
@@ -124,12 +124,8 @@
    </div> 
 </div>
 <script id="name_user" type="text/x-underscore-template">
-    <% if(user){ %>
-        <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>"><%= user.username %></p>
-    <% }else{ %>
-        <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>">NO DATA</p>
-    <% } %>
     
+    <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>"><%= user.username %></p>
 </script>
 <script id="list_user" type="text/x-underscore-template">
   <div class="user_item user_meet_<%= vt %> active">

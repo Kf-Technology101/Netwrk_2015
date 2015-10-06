@@ -67,6 +67,7 @@ var Profile = {
         var parent = $('input.zip_code').parent();
         if(parent.hasClass('alert_validate')){
             parent.removeClass('alert_validate');
+            parent.find('span').remove();
         }
         Profile.zipcode = true;
     },
@@ -131,7 +132,8 @@ var Profile = {
         var target = $('#user_setting');
 
         $('.name_user').find('span').remove();
-        $('.name_user').find('p').remove();
+        $('.name_user').find('p.name').remove();
+        $('.name_user').find('p.default').hide();
         target.find('.user_avatar').remove();
         target.find('.user_information').remove();
         target.find('.btn-control').remove();
