@@ -22,6 +22,8 @@ class AppAsset extends AssetBundle
         'css/desktop/landing.css',
         'css/desktop/topic.css',
         'css/desktop/meet.css',
+        'css/jquery.ui.css',
+        'css/jquery.ui.pips.css',
     ];
     public $js = [
         'js/lib/underscore.js',
@@ -30,7 +32,12 @@ class AppAsset extends AssetBundle
         'js/controller/default.js',
         'js/controller/topic.js',
         'js/controller/meet.js',
-        'js/controller/template.js'
+        'js/controller/template.js',
+        'js/controller/profile.js',
+        'js/controller/meet_setting.js',
+        'js/lib/jquery.ui.js',
+        'js/lib/jquery.ui.pips.js',
+        'js/lib/jquery.ui.touch_punch.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

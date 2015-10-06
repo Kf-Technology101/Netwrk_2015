@@ -43,10 +43,11 @@ var Meet ={
             Meet.GetUserMeet();
             Meet.changefilter(currentTarget);
         }else{
-
+            var currentTarget = $('#meeting');
             $('#btn_meet').hide();
             $('#btn_discover').show();
-
+            Meet.reset_page();
+            Meet.changefilter(currentTarget);
             Meet.ShowModalMeet();
         }
     },
@@ -151,8 +152,11 @@ var Meet ={
         Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
-            self.json = json.data;
-            self.showUserMeet();
+            if(self.user_list.len > 0){
+                $('.control-btn').show();
+                self.json = json.data;
+                self.showUserMeet();
+            }
             
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();

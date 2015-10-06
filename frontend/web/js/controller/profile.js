@@ -102,6 +102,7 @@ var Profile = {
             user_data = $('#user_info'),
             user_name_data = $('.name_user'),
             user_name_current = $("#user_name_current");
+
         user_name_data.find('img').show();
         container.find('.page').hide();
         user_setting.show();
@@ -130,6 +131,7 @@ var Profile = {
         var target = $('#user_setting');
 
         $('.name_user').find('span').remove();
+        $('.name_user').find('p').remove();
         target.find('.user_avatar').remove();
         target.find('.user_information').remove();
         target.find('.btn-control').remove();
@@ -183,6 +185,7 @@ var Profile = {
         var target = $('#modal_change_avatar');
 
         target.modal('show');
+
     },
     edit_avatar: function(){
         var btn = $('.change_avatar').find('.fa');
@@ -197,6 +200,7 @@ var Profile = {
     },
 
     onchangeModalUpload: function(){
+        $('.modal-backdrop.in').last().addClass('active');
         Profile.onbrowse();
         Profile.onCancel();
         Profile.onBackdrop();

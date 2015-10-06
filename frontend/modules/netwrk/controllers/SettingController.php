@@ -13,14 +13,7 @@ class SettingController extends BaseController
     private $currentUser = 1;
     public function actionIndex()   
     {   
-        $us = new UserSettings;
-        $us->user_id = 1;
-        $us->distance = 1;
-        $us->age = 0;
-        $us->gender = 25;
-        $us->save();
-        echo"<pre>";print_r($us);die;
-        $array = array('status'=> 1); 
+
         return $this->render('mobile/index');
     }
 
@@ -49,7 +42,7 @@ class SettingController extends BaseController
 
             $info = array(
                 'status' => 1,
-                'username'=> $user->username,
+                'username'=> $user->profile->first_name ." ". $user->profile->last_name,
                 'age'=> $birthday,
                 'work'=> $user->profile->work,
                 'image' => $image,
@@ -125,11 +118,11 @@ class SettingController extends BaseController
         fclose( $fp );
         fclose( $postdata );   
 
-        $user = User::find()->where('id ='.$currentUser)->one();
+        $user = User::find()->where('id ='.$this->currentUser)->one();
         $user->profile->photo = $filename;
         $user->profile->update();
 
-        $image = Url::to('@web/uploads/'.$currentUser.'/'.$user->profile->photo);
+        $image = Url::to('@web/uploads/'.$this->currentUser.'/'.$user->profile->photo);
         $hash = json_encode(array('data_image'=>$image));
         return $hash;
     }

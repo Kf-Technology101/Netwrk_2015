@@ -20,12 +20,18 @@ var Meet_setting={
 
     _init: function(){
         $('.page').hide();
-        $('.name_user').find('img').hide();
-        var title = $('.name_user').find('span');
-        if(title.size() > 0){
-            $('.name_user').find('span').text('Meet Settings');
+        
+        if(isMobile){
+            $('.name_user').find('img').hide();
+            var title = $('.name_user').find('span');
         }else{
-            $('.name_user').append('<span class="name">Meet Settings</span>');
+             var title = $('.name_user').find('p');
+        }
+        
+        if(title.size() > 0){
+            title.text('Meet Settings');
+        }else{
+            title.append('<span class="name">Meet Settings</span>');
         }
         
         $('#meet_setting').show();

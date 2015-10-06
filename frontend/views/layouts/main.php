@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -73,6 +74,9 @@ AppAsset::register($this);
 
     <?php $this->endBody() ?>
 </body>
-<script type="text/javascript">var isMobile = false;</script>
+<script type="text/javascript">
+    var baseUrl = '<?php echo Url::base(true); ?>';
+    var isMobile = false;
+</script>
 </html>
 <?php $this->endPage() ?>

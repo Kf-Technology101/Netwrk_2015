@@ -88,11 +88,11 @@ var Ajax ={
     userprofile: function(){
         var url,defer = $.Deferred();
 
-        if (isMobile) {
+        // if (isMobile) {
             url = baseUrl + "/netwrk/setting/load-profile";
-        }else{
-            url = "netwrk/meet/get-user-meet";
-        }
+        // }else{
+        //     url = "netwrk/meet/get-user-meet";
+        // }
 
         $.ajax({
             url: url,
@@ -110,11 +110,11 @@ var Ajax ={
     update_profile: function(params){
         var url,defer = $.Deferred();
 
-        if (isMobile) {
+        // if (isMobile) {
             url = baseUrl +"/netwrk/setting/update-profile";
-        }else{
-            url = "netwrk/meet/get-user-meet";
-        }
+        // }else{
+            // url = "netwrk/meet/get-user-meet";
+        // }
 
         $.ajax({
             url: url,
@@ -131,12 +131,12 @@ var Ajax ={
 
     upload_image:function(params){
         var url,defer = $.Deferred();
-
-        if (isMobile) {
+// 
+        // if (isMobile) {
             url = baseUrl +"/netwrk/setting/upload-image";
-        }else{
-            url = "netwrk/meet/get-user-meet";
-        }
+        // }else{
+            // url = "netwrk/meet/get-user-meet";
+        // }
 
         $.ajax({
             url: url,
@@ -156,11 +156,11 @@ var Ajax ={
     get_setting: function(params){
         var url,defer = $.Deferred();
 
-        if (isMobile) {
+        // if (isMobile) {
             url = baseUrl +"/netwrk/setting/get-user-setting";
-        }else{
-            url = "netwrk/meet/get-user-meet";
-        }
+        // }else{
+            // url = "netwrk/meet/get-user-meet";
+        // }
 
         $.ajax({
             url: url,
@@ -180,11 +180,11 @@ var Ajax ={
     update_setting: function(params){
         var url,defer = $.Deferred();
 
-        if (isMobile) {
+        // if (isMobile) {
             url = baseUrl +"/netwrk/setting/update-user-setting";
-        }else{
-            url = "netwrk/meet/get-user-meet";
-        }
+        // }else{
+            // url = "netwrk/meet/get-user-meet";
+        // }//
 
         $.ajax({
             url: url,
