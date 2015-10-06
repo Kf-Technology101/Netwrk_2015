@@ -194,6 +194,7 @@ var Meet ={
         info.find('.user_item').remove();
         btn_next.removeClass('disable');
         btn_back.addClass('disable');
+        $('.control-btn').hide();
         self.user_list.vt = 0;
         self.user_list.num = 1;
         self.user_list.len = 0;  
