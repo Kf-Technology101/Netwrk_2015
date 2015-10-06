@@ -13,8 +13,8 @@
   <div class="sidebar">
      <table class="filter_sidebar">
           <tr>
-              <td class="meeting active">Meeting</td>
-              <td class="setting">Setting</td>
+              <td class="meeting active">Meet</td>
+              <td class="setting">Settings</td>
               <td class="profile ">Profile</td>
           </tr>
      </table> 
