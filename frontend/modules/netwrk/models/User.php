@@ -80,6 +80,10 @@ class User extends \yii\db\ActiveRecord
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
+    public function getSetting()
+    {
+        return $this->hasOne(UserSettings::className(), ['user_id' => 'id']);
+    }
     // public function getPostes()
     // {
     //     return $this->hasMany(Post::className(), ['user_id' => 'id']);

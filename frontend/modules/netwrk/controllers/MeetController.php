@@ -18,17 +18,20 @@ class MeetController extends BaseController
     public function actionGetUserMeet()
     {
         $userCurrent = 1;
-        $Auth = $_GET['user_id'];
-        $gender = $_GET['gender'];
-        $distance = $_GET['distance'];
-        $age = $_GET['age'];
-        $current_date = date('Y-m-d H:i:s');
 
+        $current_date = date('Y-m-d H:i:s');
+        $userLogin = User::findOne($userCurrent);
         $users = User::find()
                         ->addSelect(["*", "RAND() order_num"])
                         ->where('id !='.$userCurrent)
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
+
+        if($userLogin->setting){
+            $filter = true;
+        }else{
+            $filter = false;
+        }
 
         $data = [];
         foreach ($users as $key => $value) {
@@ -51,30 +54,84 @@ class MeetController extends BaseController
                 $image = Url::to('@web/uploads/'.$value->id.'/'.$value->profile->photo);
             }
 
-            $years = $value->profile->age;
+            $years = $value->profile->dob;
 
-            // $time1 = date_create($years);
-            // $time2 = date_create($current_date);
-            // $year_old = $time1->diff($time2)->y;
+            $time1 = date_create($years);
+            $time2 = date_create($current_date);
+            $year_old = $time1->diff($time2)->y;
 
+            $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
+            
             $user = array(
                 'user_id' => $value->id,
-                'username'=> $value->username,
+                'username'=> $value->profile->first_name ." ". $value->profile->last_name,
                 'met' => $meet,
+                'distance'=> $distance,
                 'information'=> array(
                     'image'=> $image,
-                    'year_old'=> $years,
+                    'year_old'=> $year_old,
                     'work'=> $value->profile->work,
                     'about'=> $value->profile->about,
                     'post'=> $post_data,
                 ),
             );
-            array_push($data,$user);
+
+            
+
+            if($userLogin->setting->gender == 'All'){
+                $gender = true;
+            }elseif($value->profile->gender == $userLogin->setting->gender){
+                $gender = true;
+            }else{
+                $gender = false;
+            }
+
+            if($userLogin->setting->age == 0){
+                $age = true;
+            }elseif($year_old >= $userLogin->setting->age){
+                $age = true;
+            }else{
+                $age = false;
+            }
+
+            if($userLogin->setting->distance == 0){
+                $status_distance = true;
+            }elseif($distance <=  $userLogin->setting->distance){
+                $status_distance = true;
+            }else{
+                $status_distance = false;
+            }
+
+            if($filter && $gender && $age && $status_distance ){
+                array_push($data,$user);
+            }elseif (!$filter){
+                array_push($data,$user); 
+            }
         }
 
         $temp = array ('data'=> $data);
         $hash = json_encode($temp);
         return $hash;
+    }
+
+    public function get_distance($lat1, $lon1, $lat2, $lon2) {
+
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        // $unit = strtoupper($unit);
+
+        // if ($unit == "K") {
+        //     return ($miles * 1.609344);
+        // } else if ($unit == "N") {
+        //     return ($miles * 0.8684);
+        // } else {
+        //     return $miles;
+        // }
+
+        return $miles;
     }
 
     public function actionUserMeet()

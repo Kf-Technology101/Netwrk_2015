@@ -32,7 +32,8 @@ var Meet ={
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
 
-            container.find('.page').hide();    
+            container.find('.page').hide(); 
+            $('.name_user').find('img').show();   
             $('#btn_meet_mobile').hide();
             $('#btn_discover_mobile').show();
             currentTarget.show();
@@ -93,11 +94,18 @@ var Meet ={
     },
 
     GetUserMeet: function(){
-         Ajax.getUserMeeting(Meet.params).then(function(data){
+         Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
-            Meet.user_list.len = json.data.length;
-            Meet.json = json.data;
-            Meet.showUserMeet();
+            console.log(json.data);
+            if(json.data.length >0){
+                Meet.user_list.len = json.data.length;
+                Meet.json = json.data;
+                Meet.showUserMeet();
+                $('.control-btn').show();
+            }else{
+                console.log('No Data');
+            }
+            
             
             // $('#modal_meet').on('hidden.bs.modal',function() {
             //     self.reset_modal();
@@ -138,7 +146,7 @@ var Meet ={
                 keyboard: false
             });   
         }
-        Ajax.getUserMeeting(self.params).then(function(data){
+        Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
             self.json = json.data;
@@ -202,7 +210,10 @@ var Meet ={
             btn_next = $('.control-btn').find('.next'),
             btn_back = $('.control-btn').find('.back');
 
-        
+        if (self.user_list.len == 1){
+            btn_next.addClass('disable');
+        }
+
         btn_next.unbind();
         btn_next.on('click',function(){
             btn_next.bind();

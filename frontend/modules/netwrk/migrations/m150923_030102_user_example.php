@@ -35,7 +35,12 @@ class m150923_030102_user_example extends \yii\db\Migration
             ('1', '1', 'aaa@gmail.com','AAAAAAA', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
             ('1', '1', 'bbb@gmail.com','BBBBBBB', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
             ('1', '1', 'ccc@gmail.com','CCCCCCC', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'ddd@gmail.com','DDDDDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'ddd@gmail.com','DasDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'asdas@gmail.com','DaasDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'ddsadd@gmail.com','DdsaDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'dasddd@gmail.com','DDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'ddasdd@gmail.com','eeeDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+            ('1', '1', 'dd213d@gmail.com','asdsdD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
             ('1', '1', 'eee@gmail.com','EEEEEEE', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46');
         ");
     }

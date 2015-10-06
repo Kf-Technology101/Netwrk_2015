@@ -32,7 +32,7 @@ var Ajax ={
 
         $.ajax({
             url: url,
-            data: params,
+            // data: params,
             async: false,
             cache: false,
             type: 'GET',

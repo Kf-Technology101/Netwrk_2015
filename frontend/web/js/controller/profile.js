@@ -37,6 +37,8 @@ var Profile = {
         // var zipcode = 46601;
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
             if (data.places[0].state == Profile.state){
+                Profile.params.lat = data.places[0].latitude;
+                Profile.params.lng = data.places[0].longitude;
                 Profile.zipcode = true;
                 Profile.validZip();
             }
@@ -97,7 +99,7 @@ var Profile = {
             user_data = $('#user_info'),
             user_name_data = $('.name_user'),
             user_name_current = $("#user_name_current");
-
+        user_name_data.find('img').show();
         container.find('.page').hide();
         user_setting.show();
         Ajax.userprofile().then(function(data){

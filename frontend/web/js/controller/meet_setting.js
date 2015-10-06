@@ -20,6 +20,14 @@ var Meet_setting={
 
     _init: function(){
         $('.page').hide();
+        $('.name_user').find('img').hide();
+        var title = $('.name_user').find('span');
+        if(title.size() > 0){
+            $('.name_user').find('span').text('Meet Settings');
+        }else{
+            $('.name_user').append('<span class="name">Meet Settings</span>');
+        }
+        
         $('#meet_setting').show();
     },
 
