@@ -27,6 +27,9 @@ var Profile = {
             if (zipcode_current > 9999){
                 Profile.params.zipcode = zipcode_current;
                 Profile.apiZipcode();
+            }else{
+                Profile.zipcode = false;
+                Profile.invalidZip();
             }
             
         });
