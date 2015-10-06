@@ -76,31 +76,33 @@ class MeetController extends BaseController
                 ),
             );
 
+            if( $filter ){
+                if($userLogin->setting->gender == 'All'){
+                    $gender = true;
+                }elseif($value->profile->gender == $userLogin->setting->gender){
+                    $gender = true;
+                }else{
+                    $gender = false;
+                }
+
+                if($userLogin->setting->age == 0){
+                    $age = true;
+                }elseif($year_old >= $userLogin->setting->age){
+                    $age = true;
+                }else{
+                    $age = false;
+                }
+
+                if($userLogin->setting->distance == 0){
+                    $status_distance = true;
+                }elseif($distance <=  $userLogin->setting->distance){
+                    $status_distance = true;
+                }else{
+                    $status_distance = false;
+                }
+            }
+
             
-
-            if($userLogin->setting->gender == 'All'){
-                $gender = true;
-            }elseif($value->profile->gender == $userLogin->setting->gender){
-                $gender = true;
-            }else{
-                $gender = false;
-            }
-
-            if($userLogin->setting->age == 0){
-                $age = true;
-            }elseif($year_old >= $userLogin->setting->age){
-                $age = true;
-            }else{
-                $age = false;
-            }
-
-            if($userLogin->setting->distance == 0){
-                $status_distance = true;
-            }elseif($distance <=  $userLogin->setting->distance){
-                $status_distance = true;
-            }else{
-                $status_distance = false;
-            }
 
             if($filter && $gender && $age && $status_distance ){
                 array_push($data,$user);
