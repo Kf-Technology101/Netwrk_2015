@@ -85,7 +85,7 @@ var Meet ={
 
     _onclickBack: function(){
         $('.back_page img').click(function(){
-            window.history.back();
+            window.location.href = baseUrl; 
         })
     },
 
@@ -121,8 +121,9 @@ var Meet ={
         target.unbind();
         target.on('click',function(){
             target.bind();
-            Meet.reset_page();
-            Meet._init();
+            window.location.href = baseUrl; 
+            // Meet.reset_page();
+            // Meet._init();
         });
     },
 
@@ -131,10 +132,11 @@ var Meet ={
             target = $('#btn_discover');
             target.unbind();
             target.on('click',function(){
-            target.bind();
-            self.reset_modal();
-            self._init();
-        });
+                // target.bind();
+                self.reset_modal();
+                // self._init();
+                // location.href.reload ;
+            });
     },
 
     ShowModalMeet: function(){
