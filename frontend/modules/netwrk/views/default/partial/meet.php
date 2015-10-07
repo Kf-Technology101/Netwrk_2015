@@ -176,7 +176,7 @@
             <input type="text" name='birthday' class="birthday" maxlength="10" value="<%= data.age %>" />
         </div>
         <div class="field_info">
-            <p> Zip Home: </p>
+            <p>Home Zip: </p>
             <input type="text" class="zip_code" maxlength="5" value="<%= data.zip %>" />
         </div>
         <div class="field_info">

@@ -52,7 +52,9 @@ var Profile = {
                 Profile.params.lat = data.places[0].latitude;
                 Profile.params.lng = data.places[0].longitude;
                 Profile.validZip();
+                
                 if(zipcode != Profile.data.zip){
+                    Profile.status_change.zipcode = true;
                     Profile.OnTemplate();
                 }else{
                     Profile.set_default_btn();
@@ -73,7 +75,7 @@ var Profile = {
         if(parent.find('span').size() == 0){
             parent.append('<span>*Invalid zip code</span>');
         }
-        
+        Profile.OnTemplate();
     },
 
     validZip: function(){
@@ -82,7 +84,6 @@ var Profile = {
             parent.removeClass('alert_validate');
             parent.find('span').remove();
         }
-        Profile.status_change.zipcode = true;
     },
 
     setDatePicker: function(){
@@ -170,6 +171,7 @@ var Profile = {
 
     onclicksave: function(){
         var btn_save = $('.btn-control').find('.save');
+        console.log(Profile.status_change);
         if(Profile.status_change.total){
             btn_save.removeClass('disable');
             btn_save.on('click',function(){
@@ -202,20 +204,17 @@ var Profile = {
         $('input.work').val(Profile.data.work);
         $('input.zip_code').val(Profile.data.zip);
         $('textarea.about').val(Profile.data.about);
+        Profile.validZip();
     },
 
     onclickcancel: function(){
         var btn_cancel = $('.btn-control').find('.cancel');
-        if (Profile.status_change.total){
-            btn_cancel.removeClass('disable');
-            btn_cancel.on('click',function(){
-                Profile.getDataDefaultUpLoad();
-                Profile.set_default_btn();
-            });
-        }else{
-            btn_cancel.addClass('disable');
-        }
         
+        btn_cancel.removeClass('disable');
+        btn_cancel.on('click',function(){
+            Profile.getDataDefaultUpLoad();
+            Profile.set_default_btn();
+        });
     },
 
     set_default_btn: function(){
@@ -230,8 +229,9 @@ var Profile = {
 
     },
     edit_avatar: function(){
-        var btn = $('.change_avatar').find('.fa');
+        var btn = $('.change_avatar');
 
+        btn.unbind();
         btn.on('click',function(){
             $('#modal_change_avatar').modal({
                 backdrop: true,
@@ -253,6 +253,7 @@ var Profile = {
             $('img.preview_image').attr('src','');
             $('img.preview_image').hide();
             $('.image-preview').find('p').show();
+            $('.btn-control-modal').find('.save').addClass('disable');
         });
     },
 
