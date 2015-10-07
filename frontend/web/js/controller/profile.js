@@ -123,6 +123,7 @@ var Profile = {
             user_name_data = $('.name_user'),
             user_name_current = $("#user_name_current");
 
+        $('.log_out').show();
         user_name_data.find('img').show();
         container.find('.page').hide();
         user_setting.show();
@@ -145,6 +146,7 @@ var Profile = {
     reset_page: function(){
         var target = $('#user_setting');
 
+        $('.log_out').hide();
         $('.name_user').find('span').remove();
         $('.name_user').find('p.name').remove();
         $('.name_user').find('p.default').hide();
@@ -176,8 +178,11 @@ var Profile = {
             btn_save.removeClass('disable');
             btn_save.on('click',function(){
                 Profile.getDataUpLoad();
-                Ajax.update_profile(Profile.params);
-                Profile.set_default_btn();
+                Ajax.update_profile(Profile.params).then(function(data){
+                    var json = $.parseJSON(data);
+                    Profile.data = json;
+                    Profile.set_default_btn();
+                });
             });
         }else{
             btn_save.addClass('disable');

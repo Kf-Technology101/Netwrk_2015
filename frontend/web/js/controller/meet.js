@@ -19,7 +19,6 @@ var Meet ={
     
     initialize: function() {  
         if(Meet.filter.active == 'meeting'){
-            console.log('aaaa');
             Meet._init();
         }else if(Meet.filter.active == 'profile'){
             Profile.initialize();
@@ -37,6 +36,8 @@ var Meet ={
             $('.name_user').find('img').show();   
             $('#btn_meet_mobile').hide();
             $('#btn_discover_mobile').show();
+            $('.log_out').hide();
+
             currentTarget.show();
 
             Meet.reset_page();
@@ -208,7 +209,7 @@ var Meet ={
 
         // $('#btn_meet').show();
         // $('#btn_discover').hide();
-        name.find('span').remove();
+        name.find('p').remove();
         info.find('.user_item').remove();
         btn_next.removeClass('disable');
         btn_back.addClass('disable');

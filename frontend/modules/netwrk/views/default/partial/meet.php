@@ -53,7 +53,7 @@
             </div>
             <div class="search_area">
                 <div class="head">
-                    <p class="title">Limit search Area To:</p>
+                    <p class="title">Limit Search Area To:</p>
                     <p class="value"></p>
                 </div>
                 
@@ -61,7 +61,7 @@
             </div>
             <div class="search_age">
               <div class="head">
-                  <p class="title">Limit search Age:</p>
+                  <p class="title">Limit Search Age:</p>
                   <p class="value"></p>
               </div>
             
@@ -124,7 +124,6 @@
    </div> 
 </div>
 <script id="name_user" type="text/x-underscore-template">
-    
     <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>"><%= user.username %></p>
 </script>
 <script id="list_user" type="text/x-underscore-template">

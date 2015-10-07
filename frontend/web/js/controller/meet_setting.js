@@ -31,6 +31,7 @@ var Meet_setting={
         $('.name_user').find('p.default').hide();
         if(isMobile){
             $('.name_user').find('img').hide();
+            $('.log_out').hide();
             var title = $('.name_user').find('span');
         }else{
              var title = $('.name_user').find('p.name');

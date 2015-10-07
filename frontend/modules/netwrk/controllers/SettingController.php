@@ -81,6 +81,27 @@ class SettingController extends BaseController
         $user->profile->lng = $lng;
 
         $user->profile->update();
+        $birthday = new \DateTime($user->profile->dob);
+        $birthday = $birthday->format('Y-m-d');
+
+        if ($user->profile->photo == null){
+            $image = Url::to('@web/img/icon/no_avatar.jpg');
+        }else{
+            //get avatar
+            $image = Url::to('@web/uploads/'.$this->currentUser.'/'.$user->profile->photo);
+        }
+        
+        $data = array(
+            'status' => 1,
+            'username'=> $user->profile->first_name ." ". $user->profile->last_name,
+            'age'=> $birthday,
+            'work'=> $user->profile->work,
+            'image' => $image,
+            'zip'=> $user->profile->zip_code,
+            'about'=> $user->profile->about,
+        );
+        $hash = json_encode($data);
+        return $hash;
     }
 
     public function actionUploadImage()
