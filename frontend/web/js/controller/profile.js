@@ -12,7 +12,7 @@ var Profile = {
         image:''
     },
     zipcode: false,
-    status:{
+    status_change:{
         age:false,
         zipcode: false,
         work: false,
@@ -25,6 +25,8 @@ var Profile = {
         Profile.get_profile();
         Profile.setDatePicker();
         Profile.validateZipcode();
+        Profile.onChangeWork();
+        Profile.onChangeAbout();
     },
 
     validateZipcode: function(){
@@ -49,8 +51,12 @@ var Profile = {
             if (data.places[0].state == Profile.state){
                 Profile.params.lat = data.places[0].latitude;
                 Profile.params.lng = data.places[0].longitude;
-                Profile.zipcode = true;
                 Profile.validZip();
+                if(zipcode != Profile.data.zip){
+                    Profile.OnTemplate();
+                }else{
+                    Profile.set_default_btn();
+                }
             }
         }).fail(function(jqXHR) {
             if (jqXHR.status == 404) {
@@ -60,7 +66,7 @@ var Profile = {
     },
 
     invalidZip: function(){
-        Profile.zipcode = false;
+        Profile.status_change.zipcode = false;
 
         var parent = $('input.zip_code').parent();
         parent.addClass('alert_validate');
@@ -76,7 +82,7 @@ var Profile = {
             parent.removeClass('alert_validate');
             parent.find('span').remove();
         }
-        Profile.zipcode = true;
+        Profile.status_change.zipcode = true;
     },
 
     setDatePicker: function(){
@@ -88,20 +94,22 @@ var Profile = {
         $('.datepicker-dropdown').css('top',75)
 
         $('input.birthday').on('changeDate',function(e){
-            console.log(e);
             $( "input.birthday" ).datepicker('hide');
             $('input.birthday').parent().removeClass('alert_validate');
         });
 
         $('input.birthday').on('change',function(e){
             Profile.checkDate(e.target.value);
+            Profile.OnTemplate();
         });
     },
 
     checkDate: function(value){
         if (isDate(value)) {
             $('input.birthday').parent().removeClass('alert_validate');
+            Profile.status_change.age = true;
         }else{
+            Profile.status_change.age = false;
             $('input.birthday').parent().addClass('alert_validate');        
         }
     },
@@ -127,13 +135,8 @@ var Profile = {
             Profile.params.zipcode = json.zip;
 
             if(Profile.data.status == 1){
-                Profile.getTemplateUserInfo(user_setting,user_data,function(){
-                    Profile.OnTemplate();
-                });
-
-                Profile.getTemplateTitle(user_name_data,user_name_current,function(){
-                    console.log('Check name');
-                });
+                Profile.getTemplateUserInfo(user_setting,user_data);
+                Profile.getTemplateTitle(user_name_data,user_name_current);
             }
         });
     },
@@ -151,20 +154,33 @@ var Profile = {
 
     OnTemplate: function(){
         var self = this;
+        self.check_status_change();
         self.onclicksave();
         self.onclickcancel();
         self.edit_avatar();
     },
 
+    check_status_change: function(){
+        if(Profile.status_change.age || Profile.status_change.zipcode || Profile.status_change.work || Profile.status_change.about){
+            Profile.status_change.total = true;
+        }else if(Profile.status_change.age == false && Profile.status_change.zipcode == false && Profile.status_change.work == false && Profile.status_change.about == false){
+            Profile.status_change.total = false;
+        }
+    },
+
     onclicksave: function(){
         var btn_save = $('.btn-control').find('.save');
-        btn_save.on('click',function(){
-            if(Profile.zipcode){
+        if(Profile.status_change.total){
+            btn_save.removeClass('disable');
+            btn_save.on('click',function(){
                 Profile.getDataUpLoad();
-                console.log(Profile.params)
                 Ajax.update_profile(Profile.params);
-            }
-        });
+                Profile.set_default_btn();
+            });
+        }else{
+            btn_save.addClass('disable');
+        }
+        
     },
 
     getDataUpLoad: function(){
@@ -181,18 +197,32 @@ var Profile = {
     },
 
     getDataDefaultUpLoad: function(){
-        $('input.birthday').val(Profile.params.age);
-        $('input.work').val(Profile.params.work);
-        $('input.zip_code').val(Profile.params.zipcode);
-        $('textarea.about').val(Profile.params.about);
+        console.log(Profile.params);
+        $('input.birthday').val(Profile.data.age);
+        $('input.work').val(Profile.data.work);
+        $('input.zip_code').val(Profile.data.zip);
+        $('textarea.about').val(Profile.data.about);
     },
 
     onclickcancel: function(){
         var btn_cancel = $('.btn-control').find('.cancel');
-        btn_cancel.on('click',function(){
-            Profile.getDataDefaultUpLoad();
-        });
+        if (Profile.status_change.total){
+            btn_cancel.removeClass('disable');
+            btn_cancel.on('click',function(){
+                Profile.getDataDefaultUpLoad();
+                Profile.set_default_btn();
+            });
+        }else{
+            btn_cancel.addClass('disable');
+        }
+        
     },
+
+    set_default_btn: function(){
+        $('#user_setting').find('.btn-control .cancel').addClass('disable');
+        $('#user_setting').find('.btn-control .save').addClass('disable');
+    },
+
     showModalPhoto: function(){
         var target = $('#modal_change_avatar');
 
@@ -233,6 +263,7 @@ var Profile = {
             $('img.preview_image').attr('src','');
             $('img.preview_image').hide();
             $('.image-preview').find('p').show();
+            $('.btn-control-modal').find('.save').addClass('disable');
         });
     },
     onbrowse: function(){
@@ -250,8 +281,32 @@ var Profile = {
                 Profile.readURL(this);
             });
         });
+    },
 
+    onChangeWork: function(){
+        $('input.work').on('keyup',function(){
+            if($('input.work').val() != Profile.data.work){
+                Profile.status_change.work = true;
+                Profile.OnTemplate();
+            }else{
+                Profile.status_change.work = false;
+                Profile.set_default_btn();
+            }
 
+        });
+    },
+
+    onChangeAbout: function(){
+        $('textarea.about').on('keyup',function(){
+            if($('textarea.about').val() != Profile.data.about){
+                Profile.status_change.about = true;
+                Profile.OnTemplate();
+            }else{
+                Profile.status_change.about = false;
+                Profile.set_default_btn();
+            }
+
+        });
     },
 
     readURL: function(input) {
