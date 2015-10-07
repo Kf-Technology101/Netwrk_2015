@@ -141,6 +141,7 @@ var Profile = {
             if(Profile.data.status == 1){
                 Profile.getTemplateUserInfo(user_setting,user_data);
                 Profile.getTemplateTitle(user_name_data,user_name_current);
+                Profile.edit_avatar();
             }
         });
     },
@@ -162,7 +163,7 @@ var Profile = {
         self.check_status_change();
         self.onclicksave();
         self.onclickcancel();
-        self.edit_avatar();
+        
     },
 
     check_status_change: function(){
@@ -175,7 +176,6 @@ var Profile = {
 
     onclicksave: function(){
         var btn_save = $('.btn-control').find('.save');
-        console.log(Profile.status_change);
         if(Profile.status_change.total){
             btn_save.removeClass('disable');
             btn_save.on('click',function(){
@@ -236,9 +236,7 @@ var Profile = {
 
     },
     edit_avatar: function(){
-        var btn = $('.change_avatar');
-
-        btn.unbind();
+        var btn = $('.change_avatar .fa');
         btn.on('click',function(){
             $('#modal_change_avatar').modal({
                 backdrop: true,
