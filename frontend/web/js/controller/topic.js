@@ -94,13 +94,13 @@ var Topic = {
     reset_modal: function(){
         var self = this;
         var parent = $("div[id^='item_list']");
-        var target = $('.filter_sidebar').find('td');
+        var target = $('.modal_topic .filter_sidebar').find('td');
         var filter = ['post','view','topic'];
 
         self.data.filter = 'post';
         parent.hide();
-        $('.sidebar').hide();
-        $('.sidebar .container').find('span').remove();
+        $('.map_content .sidebar').hide();
+        $('.map_content .sidebar .container').find('span').remove();
         $.each(filter,function(i,e){
             self.list[e].paging = 1;
             self.list[e].status_paging = 1; 
