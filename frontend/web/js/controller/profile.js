@@ -19,6 +19,7 @@ var Profile = {
         about:false,
         total:false
     },
+    isCheckingZipCode: false,
     state: 'Indiana',
     initialize: function(){
         console.log(Profile.status_change);
@@ -32,17 +33,20 @@ var Profile = {
     },
 
     validateZipcode: function(){
-        Profile.apiZipcode();
-        $('input.zip_code').on('keyup',function(){
+        // Profile.apiZipcode();
+        $('input.zip_code').on('keyup',function(e){
             var zipcode_current = parseInt($('input.zip_code').val());
-            if (zipcode_current > 9999){
-                Profile.params.zipcode = zipcode_current;
-                Profile.apiZipcode();
+            if (zipcode_current > 9999 && zipcode_current != null ){
+                if(zipcode_current != Profile.params.zipcode){
+                    Profile.params.zipcode = zipcode_current;
+                    Profile.isCheckingZipCode = true;
+                    Profile.apiZipcode();
+                    Profile.validZip();     
+                }
             }else{
                 Profile.zipcode = false;
                 Profile.invalidZip();
-            }
-            
+            }            
         });
     },
 
@@ -78,8 +82,8 @@ var Profile = {
             }
         }).fail(function(jqXHR) {
             if (jqXHR.status == 404) {
-                Profile.invalidZip();
-            } 
+                Profile.invalidZip();                
+            }            
         });
     },
 

@@ -149,7 +149,7 @@ var Meet_setting={
                 if(e == "All"){
                     $(".search_area").find('.value').text(e);
                 }else{
-                    $(".search_area").find('.value').text(e + 'mi');
+                    $(".search_area").find('.value').text(e + ' mi');
                 }
             }
         });
