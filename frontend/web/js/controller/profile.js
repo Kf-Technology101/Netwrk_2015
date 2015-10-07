@@ -79,6 +79,8 @@ var Profile = {
                 }else{
                     Profile.set_default_btn();
                 }
+            }else{
+                Profile.invalidZip();
             }
         }).fail(function(jqXHR) {
             if (jqXHR.status == 404) {
