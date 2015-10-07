@@ -105,7 +105,6 @@ var Meet ={
     GetUserMeet: function(){
          Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
-            console.log(json.data);
             if(json.data.length >0){
                 Meet.user_list.len = json.data.length;
                 Meet.json = json.data;
@@ -209,7 +208,8 @@ var Meet ={
 
         // $('#btn_meet').show();
         // $('#btn_discover').hide();
-        name.find('p').remove();
+        name.find('span').remove();
+        name.find('p.name').remove();
         info.find('.user_item').remove();
         btn_next.removeClass('disable');
         btn_back.addClass('disable');

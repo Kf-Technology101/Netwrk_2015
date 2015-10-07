@@ -17,6 +17,8 @@ var Meet_setting={
     },
 
     initialize: function(){
+        Meet_setting.reset_page();
+        console.log(Meet_setting.status_change);
         Meet_setting._init();
         Meet_setting.get_setting();
     },
@@ -25,6 +27,13 @@ var Meet_setting={
         Meet_setting.check_status_change();
         Meet_setting.onClickSave();
         Meet_setting.onClickReset();
+    },
+    reset_page: function(){
+        Meet_setting.status_change.age = false;
+        Meet_setting.status_change.gender = false;
+        Meet_setting.status_change.distance = false;
+        Meet_setting.status_change.total = false;
+        Meet_setting.set_default_btn();
     },
     _init: function(){
         $('.page').hide();

@@ -21,6 +21,7 @@ var Profile = {
     },
     state: 'Indiana',
     initialize: function(){
+        console.log(Profile.status_change);
         Profile.reset_page();
         Profile.get_profile();
         Profile.setDatePicker();
@@ -101,7 +102,6 @@ var Profile = {
 
         $('input.birthday').on('change',function(e){
             Profile.checkDate(e.target.value);
-            Profile.OnTemplate();
         });
     },
 
@@ -109,8 +109,10 @@ var Profile = {
         if (isDate(value)) {
             $('input.birthday').parent().removeClass('alert_validate');
             Profile.status_change.age = true;
+            Profile.OnTemplate();
         }else{
             Profile.status_change.age = false;
+            Profile.OnTemplate();
             $('input.birthday').parent().addClass('alert_validate');        
         }
     },
