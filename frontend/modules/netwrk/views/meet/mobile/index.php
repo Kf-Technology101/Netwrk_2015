@@ -26,7 +26,7 @@
   <div class="container_meet">
     <div class='page' id="meeting_page">
       <div class="user_list"></div>
-    
+      <p class="no_data">There is no relevant user. Try broadening your Meet Settings.</p>
       <div class="control-btn">
         <div class="back disable">
           <i class="fa fa-chevron-left"></i>

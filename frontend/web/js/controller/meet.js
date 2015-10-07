@@ -28,6 +28,7 @@ var Meet ={
     },
 
     _init: function(){
+
         if(isMobile){
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
@@ -44,6 +45,7 @@ var Meet ={
             Meet._onclickBack();
             Meet.GetUserMeet();
             Meet.changefilter(currentTarget);
+            Meet.eventClickdiscoverMobile();
         }else{
             var currentTarget = $('#meeting'),
                 container = $('.container_meet');
@@ -57,7 +59,7 @@ var Meet ={
             
             Meet.changefilter(currentTarget);
             Meet.ShowModalMeet();
-
+            Meet.eventClickdiscover();
         }
     },
 
@@ -107,12 +109,13 @@ var Meet ={
          Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
             if(json.data.length >0){
+                $('p.no_data').hide();
                 Meet.user_list.len = json.data.length;
                 Meet.json = json.data;
                 Meet.showUserMeet();
                 $('.control-btn').show();
             }else{
-                console.log('No Data');
+                $('p.no_data').show();
             }
             
             
@@ -161,6 +164,7 @@ var Meet ={
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
             if(self.user_list.len > 0){
+                $('p.no_data').hide();
                 $('.control-btn').show();
                 $('p.default').hide();
                 self.json = json.data;
@@ -168,6 +172,7 @@ var Meet ={
             }else{
                 $('.control-btn').hide();
                 $('p.default').show();
+                $('p.no_data').show();
             }
             
             $('#modal_meet').on('hidden.bs.modal',function() {
@@ -270,12 +275,7 @@ var Meet ={
             }
         });
 
-        if(isMobile){
-            self.eventClickdiscoverMobile();
-
-        }else{
-            self.eventClickdiscover();
-        }
+        
         self.eventMeet();
         self.eventMet();
     },

@@ -20,7 +20,9 @@
       <div class="modal-body container_meet">
 
         <div class="page" id="meeting">
-          <div class="user_list"></div>
+          <div class="user_list">
+            <p class="no_data">There is no relevant user. Try broadening your Meet Settings.</p>
+          </div>
           <div class="control-btn">
             <div class="back disable">
               <i class="fa fa-chevron-left"></i>

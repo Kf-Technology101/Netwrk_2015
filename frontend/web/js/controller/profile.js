@@ -13,8 +13,8 @@ var Profile = {
     },
     zipcode: false,
     status_change:{
-        age:false,
-        zipcode: false,
+        age:true,
+        zipcode: true,
         work: false,
         about:false,
         total:false
@@ -54,16 +54,16 @@ var Profile = {
 
     eventClickSave: function(){
         var btn_save = $('.btn-control').find('.save');
-        if(btn_save.hasClass('disable')){
-            btn_save.on('click',function(){
+        btn_save.on('click',function(){
+            if(!btn_save.hasClass('disable')){
                 Profile.getDataUpLoad();
                 Ajax.update_profile(Profile.params).then(function(data){
                     var json = $.parseJSON(data);
                     Profile.data = json;
                     Profile.set_default_btn();
                 });
-            });
-        }
+            }
+        });
     },
 
     apiZipcode: function(){
@@ -103,6 +103,7 @@ var Profile = {
     },
 
     validZip: function(){
+        Profile.status_change.zipcode = true;
         var parent = $('input.zip_code').parent();
         if(parent.hasClass('alert_validate')){
             parent.removeClass('alert_validate');
@@ -190,11 +191,13 @@ var Profile = {
     },
 
     check_status_change: function(){
-        if(Profile.status_change.age || Profile.status_change.zipcode || Profile.status_change.work || Profile.status_change.about){
+
+        if(Profile.status_change.age && Profile.status_change.zipcode &&(Profile.status_change.work || Profile.status_change.about) ){
             Profile.status_change.total = true;
-        }else if(Profile.status_change.age == false && Profile.status_change.zipcode == false && Profile.status_change.work == false && Profile.status_change.about == false){
+        }else {
             Profile.status_change.total = false;
         }
+        console.log(Profile.status_change);
     },
 
     onclicksave: function(){
