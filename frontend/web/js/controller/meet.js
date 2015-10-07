@@ -49,11 +49,12 @@ var Meet ={
                 container = $('.container_meet');
 
             container.find('.page').hide();
+            Meet.reset_modal();
             $('#btn_meet').hide();
             $('#btn_discover').show();
              currentTarget.show();
 
-            Meet.reset_modal();
+            
             Meet.changefilter(currentTarget);
             Meet.ShowModalMeet();
 

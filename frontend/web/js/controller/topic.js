@@ -94,7 +94,7 @@ var Topic = {
     reset_modal: function(){
         var self = this;
         var parent = $("div[id^='item_list']");
-        var target = $('.modal_topic .filter_sidebar').find('td');
+        var target = $('#modal_topic .filter_sidebar').find('td');
         var filter = ['post','view','topic'];
 
         self.data.filter = 'post';

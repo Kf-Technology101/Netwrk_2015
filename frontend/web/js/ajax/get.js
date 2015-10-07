@@ -47,9 +47,9 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         if (isMobile) {
-            url = baseUrl +"/netwrk/meet/";
+            url = baseUrl +"/netwrk/meet/user-meet";
         }else{
-            url = baseUrl +"netwrk/meet/";
+            url = baseUrl +"/netwrk/meet/user-meet";
         }
 
         $.ajax({
@@ -70,7 +70,7 @@ var Ajax ={
         if (isMobile) {
             url = baseUrl + "/netwrk/meet/user-met";
         }else{
-            url = "netwrk/meet/user-met";
+            url = baseUrl +"/netwrk/meet/user-met";
         }
 
         $.ajax({

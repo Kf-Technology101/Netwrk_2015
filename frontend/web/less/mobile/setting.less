@@ -284,15 +284,27 @@
         margin: auto;
         border: 1px dashed #888;
         overflow: hidden;
+        display: table;
         p{
             text-align: center;
             margin: 0;
             line-height: 135px;
         }
-        img{
-            width: 150px;
-            height: 150px;
-            display: none;
+        .preview_img{
+            height: auto;
+            max-width: 150px;
+            max-height: 150px;
+            width: auto;
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+            img{
+                margin: auto;
+                max-width: 150px;
+                width: auto;
+                height: auto;
+                max-height: 150px;
+            }
         }
     }
     .btn-control-modal{

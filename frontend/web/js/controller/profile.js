@@ -28,6 +28,7 @@ var Profile = {
         Profile.validateZipcode();
         Profile.onChangeWork();
         Profile.onChangeAbout();
+        Profile.eventClickSave();
     },
 
     validateZipcode: function(){
@@ -43,6 +44,20 @@ var Profile = {
             }
             
         });
+    },
+
+    eventClickSave: function(){
+        var btn_save = $('.btn-control').find('.save');
+        if(btn_save.hasClass('disable')){
+            btn_save.on('click',function(){
+                Profile.getDataUpLoad();
+                Ajax.update_profile(Profile.params).then(function(data){
+                    var json = $.parseJSON(data);
+                    Profile.data = json;
+                    Profile.set_default_btn();
+                });
+            });
+        }
     },
 
     apiZipcode: function(){
@@ -178,14 +193,14 @@ var Profile = {
         var btn_save = $('.btn-control').find('.save');
         if(Profile.status_change.total){
             btn_save.removeClass('disable');
-            btn_save.on('click',function(){
-                Profile.getDataUpLoad();
-                Ajax.update_profile(Profile.params).then(function(data){
-                    var json = $.parseJSON(data);
-                    Profile.data = json;
-                    Profile.set_default_btn();
-                });
-            });
+            // btn_save.one('click',function(){
+            //     Profile.getDataUpLoad();
+            //     Ajax.update_profile(Profile.params).then(function(data){
+            //         var json = $.parseJSON(data);
+            //         Profile.data = json;
+            //         Profile.set_default_btn();
+            //     });
+            // });
         }else{
             btn_save.addClass('disable');
         }

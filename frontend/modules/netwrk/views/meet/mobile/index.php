@@ -70,7 +70,8 @@
             </div>
             
             <div id="circles-slider-age"></div>
-            <div class="btn-control">
+        </div>
+        <div class="btn-control">
                 <div class="cancel disable">
                     <p>Reset</p>
                 </div>
@@ -79,8 +80,6 @@
                     <span>Save</span>
                 </div>
             </div>
-        </div>
-        
     </div>
     <div class='page' id="user_setting">
         <div class="modal" id='modal_change_avatar'>
@@ -89,7 +88,7 @@
                    <div class="modal-body container_chagne_avatar">
                        <div class="image-preview">
                            <p>IMAGE PREVIEW</p>
-                           <img class="preview_image" src="" />
+                           <div class="preview_img"><img class="preview_image" src="" /></div>
                        </div>
                        <div class="btn-control-modal">
                             <div class="cancel">
@@ -168,7 +167,7 @@
 
 <script id="user_info" type="text/x-underscore-template">
     <div class="user_avatar">
-        <img src="<%= data.image %>">
+        <div class="img_user"><img src="<%= data.image %>"></div>
         <div class="change_avatar">
             <i class="fa fa-cog"></i>
         </div>
