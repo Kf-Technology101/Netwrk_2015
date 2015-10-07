@@ -181,7 +181,7 @@
         </div>
         <div class="field_info">
             <p> Work: </p>
-            <input type="text" class="work" maxlength="100" value="<%= data.work %>"/>
+            <input type="text" class="work" maxlength="128" value="<%= data.work %>"/>
         </div>
         <div class="field_info">
             <p> About: </p>
