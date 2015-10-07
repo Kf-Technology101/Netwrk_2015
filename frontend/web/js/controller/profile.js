@@ -37,11 +37,13 @@ var Profile = {
         $('input.zip_code').on('keyup',function(e){
             var zipcode_current = parseInt($('input.zip_code').val());
             if (zipcode_current > 9999 && zipcode_current != null ){
-                if(zipcode_current != Profile.params.zipcode){
+                if(zipcode_current != Profile.params.zipcode ){
                     Profile.params.zipcode = zipcode_current;
                     Profile.isCheckingZipCode = true;
                     Profile.apiZipcode();
-                    Profile.validZip();     
+                    if(Profile.status_change.zipcode){
+                        Profile.invalidZip(); 
+                    }
                 }
             }else{
                 Profile.zipcode = false;
