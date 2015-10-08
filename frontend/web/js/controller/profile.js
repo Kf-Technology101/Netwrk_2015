@@ -48,17 +48,19 @@ var Profile = {
     validateZipcode: function(){
         // Profile.apiZipcode();
         $('input.zip_code').on('keyup',function(e){
+            console.log(Profile.status_change);
             console.log(Profile.params.zipcode);
             var zipcode_current = parseInt($('input.zip_code').val());
             if (zipcode_current > 9999 && zipcode_current != null ){
-                if(zipcode_current != Profile.params.zipcode && !Profile.zipcode){
+                if(zipcode_current != Profile.data.zip && !Profile.zipcode){
                     // Profile.params.zipcode = zipcode_current;
                     Profile.zipcode = true;
                     Profile.apiZipcode(zipcode_current);
                     if(Profile.status_change.zipcode){
                         Profile.invalidZip(); 
                     }
-                }else if(zipcode_current == Profile.params.zipcode && !Profile.zipcode){
+                }else if(zipcode_current == Profile.data.zip && !Profile.zipcode){
+                    Profile.set_default_btn();
                    Profile.validZip(); 
                 }
             }else{
@@ -202,7 +204,6 @@ var Profile = {
         }else {
             Profile.status_change.total = false;
         }
-        console.log(Profile.status_change);
     },
 
     onclicksave: function(){
@@ -309,14 +310,14 @@ var Profile = {
         var btn = $('#modal_change_avatar').find('.browse');
         btn.unbind();
         btn.on('click',function(){
-            btn.bind();
-            $('.input_image').val('').clone(true);
+            // btn.bind();
+            // $('.input_image').val('').clone(true);
             
             $('.input_image')[0].click();
 
             $('.input_image').unbind();
             $('.input_image').change(function(e) {
-                $('.input_image').bind();
+                // $('.input_image').bind();
                 Profile.readURL(this);
             });
         });
@@ -351,28 +352,32 @@ var Profile = {
     readURL: function(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
-            Profile.img.image = input.files;
-            reader.onload = function (e) {
-                Profile.getPreviewImage(e);
-                Profile.onEventSaveImage();
+            if (typeof (FileReader) != "undefined") {
+                Profile.img.image = input.files;
+                reader.onload = function (e) {
+                    Profile.getPreviewImage(e);
+                    Profile.onEventSaveImage();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }else{
+                alert(1);
             }
-
-            reader.readAsDataURL(input.files[0]);
         }
     },
 
     getPreviewImage: function(e){
-        var target = $('img.preview_image'),
+        var target = $('.preview_img'),
             parent_text = $('.image-preview').find('p'),
             btn_control_save = $('.btn-control-modal').find('.save') ;
 
+        target.find('img').remove();
         btn_control_save.removeClass('disable');
         parent_text.hide();
         $('.preview_img').addClass('active');
         // target.attr('src','');
-        target.show();
-        target.attr('src', e.target.result);
+        $("<img />", {"src": e.target.result,"class": "preview_image"}).appendTo(target);
+
+        target.find('img').css('display','block');
     },
 
     onEventSaveImage:function(){
