@@ -53,14 +53,14 @@ var Meet ={
 
             container.find('.page').hide();
             Meet.reset_modal();
-            $('#btn_meet').hide();
-            $('#btn_discover').show();
-             currentTarget.show();
+            currentTarget.show();
 
             
             Meet.changefilter(currentTarget);
             Meet.ShowModalMeet();
             Meet.eventClickdiscover();
+            $('#btn_meet').hide();
+            $('#btn_discover').show();
         }
     },
 
@@ -157,15 +157,11 @@ var Meet ={
     ShowModalMeet: function(){
         var modal = $('#modal_meet'),
             self = this;
-        if(!isMobile){
-            modal.modal({
-                backdrop: true,
-                keyboard: false
-            });   
-        }
+        
         Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
+
             if(self.user_list.len > 0){
                 $('p.no_data').hide();
                 $('.control-btn').show();
@@ -177,7 +173,14 @@ var Meet ={
                 $('p.default').show();
                 $('p.no_data').show();
             }
-            
+
+            if(!isMobile){
+                modal.modal({
+                    backdrop: true,
+                    keyboard: false
+                });   
+            }
+
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
             });

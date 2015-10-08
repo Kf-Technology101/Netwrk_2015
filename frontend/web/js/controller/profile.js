@@ -19,7 +19,6 @@ var Profile = {
         about:false,
         total:false
     },
-    isCheckingZipCode: false,
     state: 'Indiana',
     initialize: function(){
         console.log(Profile.status_change);
@@ -30,26 +29,6 @@ var Profile = {
         Profile.onChangeWork();
         Profile.onChangeAbout();
         Profile.eventClickSave();
-    },
-
-    validateZipcode: function(){
-        // Profile.apiZipcode();
-        $('input.zip_code').on('keyup',function(e){
-            var zipcode_current = parseInt($('input.zip_code').val());
-            if (zipcode_current > 9999 && zipcode_current != null ){
-                if(zipcode_current != Profile.params.zipcode ){
-                    Profile.params.zipcode = zipcode_current;
-                    Profile.isCheckingZipCode = true;
-                    Profile.apiZipcode();
-                    if(Profile.status_change.zipcode){
-                        Profile.invalidZip(); 
-                    }
-                }
-            }else{
-                Profile.zipcode = false;
-                Profile.invalidZip();
-            }            
-        });
     },
 
     eventClickSave: function(){
@@ -66,21 +45,47 @@ var Profile = {
         });
     },
 
-    apiZipcode: function(){
-        var zipcode = Profile.params.zipcode;
+    validateZipcode: function(){
+        // Profile.apiZipcode();
+        $('input.zip_code').on('keyup',function(e){
+            console.log(Profile.params.zipcode);
+            var zipcode_current = parseInt($('input.zip_code').val());
+            if (zipcode_current > 9999 && zipcode_current != null ){
+                if(zipcode_current != Profile.params.zipcode && !Profile.zipcode){
+                    // Profile.params.zipcode = zipcode_current;
+                    Profile.zipcode = true;
+                    Profile.apiZipcode(zipcode_current);
+                    if(Profile.status_change.zipcode){
+                        Profile.invalidZip(); 
+                    }
+                }else if(zipcode_current == Profile.params.zipcode && !Profile.zipcode){
+                   Profile.validZip(); 
+                }
+            }else{
+                Profile.zipcode = false;
+                Profile.invalidZip();
+            }            
+        });
+    },
+
+    apiZipcode: function(zipcode){
+        // var zipcode = Profile.params.zipcode;
         // var zipcode = 46601;
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
             if (data.places[0].state == Profile.state){
                 Profile.params.lat = data.places[0].latitude;
                 Profile.params.lng = data.places[0].longitude;
+                Profile.params.zipcode = zipcode;
                 Profile.validZip();
-                
+
                 if(zipcode != Profile.data.zip){
                     Profile.status_change.zipcode = true;
                     Profile.OnTemplate();
+
                 }else{
                     Profile.set_default_btn();
                 }
+                Profile.zipcode = false;
             }else{
                 Profile.invalidZip();
             }
@@ -232,7 +237,6 @@ var Profile = {
     },
 
     getDataDefaultUpLoad: function(){
-        console.log(Profile.params);
         $('input.birthday').val(Profile.data.age);
         $('input.work').val(Profile.data.work);
         $('input.zip_code').val(Profile.data.zip);
@@ -244,6 +248,7 @@ var Profile = {
         var btn_cancel = $('.btn-control').find('.cancel');
         
         btn_cancel.removeClass('disable');
+        btn_cancel.unbind();
         btn_cancel.on('click',function(){
             Profile.getDataDefaultUpLoad();
             Profile.set_default_btn();
@@ -285,6 +290,7 @@ var Profile = {
             $('img.preview_image').hide();
             $('.image-preview').find('p').show();
             $('.btn-control-modal').find('.save').addClass('disable');
+            $('.preview_img').removeClass('active');
         });
     },
 
@@ -296,6 +302,7 @@ var Profile = {
             $('img.preview_image').hide();
             $('.image-preview').find('p').show();
             $('.btn-control-modal').find('.save').addClass('disable');
+            $('.preview_img').removeClass('active');
         });
     },
     onbrowse: function(){
@@ -362,6 +369,7 @@ var Profile = {
 
         btn_control_save.removeClass('disable');
         parent_text.hide();
+        $('.preview_img').addClass('active');
         // target.attr('src','');
         target.show();
         target.attr('src', e.target.result);

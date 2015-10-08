@@ -79,7 +79,16 @@ var Meet_setting={
         if(Meet_setting.status_change.total){
             btn.removeClass('disable');
             btn.on('click',function(){
-                Ajax.update_setting(Meet_setting.params);
+                Ajax.update_setting(Meet_setting.params).then(function(data){
+                    var json = $.parseJSON(data);
+
+                    Meet_setting.setting.age = json.age;
+                    Meet_setting.setting.gender = json.gender;
+                    Meet_setting.setting.distance = json.distance;
+                    Meet_setting.params.age = json.age;
+                    Meet_setting.params.gender = json.gender;
+                    Meet_setting.params.distance = json.distance;
+                });
                 Meet_setting.set_default_btn();
             });
         }else{

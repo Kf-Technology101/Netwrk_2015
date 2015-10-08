@@ -42,6 +42,11 @@ function get_city(){
   return data;
 }
 
+function set_heigth_modal(){
+  var size = get_size_window();
+  console.log(size);
+}
+
 function initialize() {
   var map_andiana = {
     center:new google.maps.LatLng(39.7662195,-86.441277),

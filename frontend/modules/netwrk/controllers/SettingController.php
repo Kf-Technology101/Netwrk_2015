@@ -90,7 +90,7 @@ class SettingController extends BaseController
             //get avatar
             $image = Url::to('@web/uploads/'.$this->currentUser.'/'.$user->profile->photo);
         }
-        
+
         $data = array(
             'status' => 1,
             'username'=> $user->profile->first_name ." ". $user->profile->last_name,
@@ -196,7 +196,12 @@ class SettingController extends BaseController
             $setting->age = $age;
             $setting->gender = $gender;
             $setting->update();
-            $array = array('status'=> 1);  
+            $array = array(
+                'status'=> 1,
+                'distance'=> $setting->distance == 0 ? 'All' : $setting->distance,
+                'age'=> $setting->age == 0 ? 'All' : $setting->age,
+                'gender'=> $setting->gender
+            );  
         }else{
             $us = new UserSettings;
             $us->user_id = $this->currentUser;
@@ -204,7 +209,12 @@ class SettingController extends BaseController
             $us->age = $age;
             $us->gender = $gender;
             $us->save();
-            $array = array('status'=> 1);  
+            $array = array(
+                'status'=> 1,
+                'distance'=> $us->distance == 0 ? 'All' : $us->distance,
+                'age'=> $us->age == 0 ? 'All' : $us->age,
+                'gender'=> $us->gender
+                );  
         }
 
         $hash = json_encode($array);
