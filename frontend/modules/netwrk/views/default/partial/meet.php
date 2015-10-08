@@ -98,7 +98,7 @@
            <div class="modal-body container_chagne_avatar">
                <div class="image-preview">
                    <p>IMAGE PREVIEW</p>
-                   <div class="preview_img"></div>
+                   <div class="preview_img"><img class="preview_image" src="" /></div>
                </div>
                <div class="btn-control-modal">
                     <div class="cancel">

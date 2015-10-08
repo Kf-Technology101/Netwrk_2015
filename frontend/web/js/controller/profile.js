@@ -11,7 +11,8 @@ var Profile = {
     img:{
         image:''
     },
-    zipcode: false,
+    num_len:true,
+    zipcode: true,
     status_change:{
         age:true,
         zipcode: true,
@@ -21,7 +22,6 @@ var Profile = {
     },
     state: 'Indiana',
     initialize: function(){
-        console.log(Profile.status_change);
         Profile.reset_page();
         Profile.get_profile();
         Profile.setDatePicker();
@@ -48,53 +48,46 @@ var Profile = {
     validateZipcode: function(){
         // Profile.apiZipcode();
         $('input.zip_code').on('keyup',function(e){
-            console.log(Profile.status_change);
-            console.log(Profile.params.zipcode);
+            
             var zipcode_current = parseInt($('input.zip_code').val());
-            if (zipcode_current > 9999 && zipcode_current != null ){
-                if(zipcode_current != Profile.data.zip && !Profile.zipcode){
-                    // Profile.params.zipcode = zipcode_current;
-                    Profile.zipcode = true;
-                    Profile.apiZipcode(zipcode_current);
-                    if(Profile.status_change.zipcode){
-                        Profile.invalidZip(); 
-                    }
-                }else if(zipcode_current == Profile.data.zip && !Profile.zipcode){
-                    Profile.set_default_btn();
-                   Profile.validZip(); 
-                }
-            }else{
+            if (zipcode_current > 9999 && Profile.params.zipcode == Profile.data.zip && !Profile.zipcode){
+                Profile.params.zipcode = zipcode_current;
+                Profile.apiZipcode(zipcode_current);
+            }else if (zipcode_current > 9999 && Profile.params.zipcode != Profile.data.zip && !Profile.zipcode){
+                Profile.params.zipcode = zipcode_current;
+                Profile.apiZipcode(zipcode_current);
+            }else if(zipcode_current < 9999){
                 Profile.zipcode = false;
                 Profile.invalidZip();
-            }            
+                Profile.status_change.zipcode = false;
+                Profile.OnTemplate();
+            }    
         });
     },
 
     apiZipcode: function(zipcode){
         // var zipcode = Profile.params.zipcode;
         // var zipcode = 46601;
+        Profile.zipcode = true;
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
             if (data.places[0].state == Profile.state){
+                
                 Profile.params.lat = data.places[0].latitude;
                 Profile.params.lng = data.places[0].longitude;
-                Profile.params.zipcode = zipcode;
                 Profile.validZip();
-
-                if(zipcode != Profile.data.zip){
-                    Profile.status_change.zipcode = true;
-                    Profile.OnTemplate();
-
-                }else{
-                    Profile.OnTemplate();
-                    Profile.set_default_btn();
-                }
-                Profile.zipcode = false;
-            }else{
+                Profile.status_change.zipcode = true;
+                
                 Profile.OnTemplate();
+            }else{
+                
                 Profile.invalidZip();
+                Profile.status_change.zipcode = false;
+                Profile.OnTemplate();
             }
         }).fail(function(jqXHR) {
             if (jqXHR.status == 404) {
+
+                Profile.status_change.zipcode = false;
                 Profile.OnTemplate();
                 Profile.invalidZip();                
             }            
@@ -201,12 +194,32 @@ var Profile = {
     },
 
     check_status_change: function(){
+        // console.log(Profile.status_change);
+        // console.log(Profile.zipcode);
+        // if(Profile.zipcode && Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about)){
+        //     Profile.status_change.total = true;
+        // // }else if(Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about)){
+        // //     Profile.status_change.total = true;
+        // }else if(!Profile.zipcode && Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about)){
+        //      Profile.status_change.total = false;
+        // }else{
+        //     Profile.status_change.total = false;
+        // }
 
-        if(Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about) ){
-            Profile.status_change.total = true;
+        // console.log(Profile.status_change.total);
+        console.log(Profile.status_change);
+        console.log(Profile.zipcode);
+        if(Profile.status_change.age && Profile.status_change.zipcode && Profile.zipcode){
+            if(Profile.status_change.work || Profile.status_change.about){
+                Profile.status_change.total = true;
+            }else if(Profile.status_change.work == false && Profile.status_change.about == false){
+                Profile.status_change.total = true;
+            }
+            
         }else {
             Profile.status_change.total = false;
         }
+        console.log(Profile.status_change.total);
     },
 
     onclicksave: function(){
@@ -309,19 +322,19 @@ var Profile = {
             $('.preview_img').removeClass('active');
         });
     },
-    onbrowse: function(){
+onbrowse: function(){
         var btn = $('#modal_change_avatar').find('.browse');
         btn.unbind();
         btn.on('click',function(){
-            // btn.bind();
-            // $('.input_image').val('').clone(true);
+            btn.bind();
+            $('.input_image').val('').clone(true);
             
             $('.input_image')[0].click();
 
             $('.input_image').unbind();
             $('.input_image').change(function(e) {
-                // $('.input_image').bind();
-                $('.preview_img').find('img').remove();
+                $('.input_image').bind();
+
                 Profile.readURL(this);
             });
         });
@@ -356,21 +369,21 @@ var Profile = {
     readURL: function(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            if (typeof (FileReader) != "undefined") {
-                Profile.img.image = input.files;
-                reader.onload = function (e) {
-                    Profile.getPreviewImage(e);
-                    Profile.onEventSaveImage();
-                }
-                reader.readAsDataURL(input.files[0]);
-            }else{
-                // alert(1);
+
+            Profile.img.image = input.files;
+            reader.onload = function (e) {
+                Profile.getPreviewImage(e);
+                Profile.onEventSaveImage();
             }
+
+            reader.readAsDataURL(input.files[0]);
+
+
         }
     },
 
     getPreviewImage: function(e){
-        var target = $('.preview_img'),
+        var target = $('img.preview_image'),
             parent_text = $('.image-preview').find('p'),
             btn_control_save = $('.btn-control-modal').find('.save') ;
 
@@ -379,9 +392,9 @@ var Profile = {
         parent_text.hide();
         $('.preview_img').addClass('active');
         // target.attr('src','');
-        $("<img />", {"src": e.target.result,"class": "preview_image"}).appendTo(target);
+        target.show();
+        target.attr('src', e.target.result);
 
-        target.find('img').css('display','block');
     },
 
     onEventSaveImage:function(){
