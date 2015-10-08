@@ -18,7 +18,6 @@ var Meet_setting={
 
     initialize: function(){
         Meet_setting.reset_page();
-        console.log(Meet_setting.status_change);
         Meet_setting._init();
         Meet_setting.get_setting();
     },
@@ -36,19 +35,26 @@ var Meet_setting={
         Meet_setting.set_default_btn();
     },
     _init: function(){
+        var span,text ;
         $('.page').hide();
         $('.name_user').find('p.default').hide();
+
         if(isMobile){
             $('.name_user').find('img').hide();
             $('.log_out').hide();
             var title = $('.name_user').find('span');
+            span = '<p class="name">Meet Settings</p>';
+            text = 'Meet Settings';
         }else{
              var title = $('.name_user').find('p.name');
+             span = '<p class="name">Settings</p>';
+             text = 'Settings';
         }
+
         if(title.size() > 0){
-            title.text('Meet Settings');
+            title.text(text);
         }else{
-            $('.name_user').append('<p class="name">Meet Settings</p>');
+            $('.name_user').append(span);
         }
         
         $('#meet_setting').show();

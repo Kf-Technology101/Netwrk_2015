@@ -18,12 +18,13 @@ var Meet ={
     },
     
     initialize: function() {  
-        if(Meet.filter.active == 'meeting'){
-            Meet._init();
-        }else if(Meet.filter.active == 'profile'){
-            Profile.initialize();
-        }else{
+        console.log(Meet.filter.active);
+        if(Meet.filter.active === 'setting'){
             Meet_setting.initialize();
+        }else if(Meet.filter.active === 'profile'){
+            Profile.initialize();
+        }else if(Meet.filter.active === 'meeting'){
+            Meet._init();
         }    
     },
 
@@ -64,14 +65,16 @@ var Meet ={
     },
 
     changefilter: function(containt){
-        var target = $('.filter_sidebar').find('td');
+        console.log(containt);
+        var target = $('#modal_meet,#show_meet').find('.filter_sidebar td');
         var self = this;
         target.unbind();
         target.on('click',function(e){
             // target.bind();
+
             var filter = $(e.currentTarget).attr('class');
             if(!$(e.currentTarget).hasClass('active')){
-                $("div[id^='item_list']").hide();
+                $('#modal_meet,#show_meet').find("div[id^='item_list']").hide();
                 containt.scrollTop(0);
                 self.filter.active = $.trim(filter);
 
@@ -202,6 +205,9 @@ var Meet ={
         self.user_list.num = 1;
         self.user_list.len = 0;  
         self.json = {};
+        Meet.filter.active = 'meeting';
+        $('#modal_meet').find('.sidebar td').removeClass('active');
+        $('#modal_meet').find('.sidebar td').first().addClass('active');
         $('#modal_meet').modal('hide');
     },
 

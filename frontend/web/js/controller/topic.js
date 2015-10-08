@@ -66,6 +66,7 @@ var Topic = {
         self.data.city = city;
         var params = {'city': self.data.city, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
+        $('#modal_topic .filter_sidebar').find('td').first().addClass('active');
         parent.show();
 
         $('#modal_topic').modal({
@@ -158,12 +159,12 @@ var Topic = {
     },
 
     filter_topic: function(contain){
-        var target = $('.filter_sidebar').find('td');
+        var target = $('#modal_topic,#show-topic').find('.filter_sidebar td');
         var self = this;
         target.on('click',function(e){
             var filter = $(e.currentTarget).attr('class');
             if(!$(e.currentTarget).hasClass('active')){
-                $("div[id^='item_list']").hide();
+                $("#modal_topic,#show-topic").find("div[id^='item_list']").hide();
                 contain.scrollTop(0);
                 self.data.filter = filter;
 
@@ -184,7 +185,7 @@ var Topic = {
 
     load_topic_filter: function(){
         var self = this;
-        var parent = $('#item_list_'+self.data.filter);
+        var parent = $('#modal_topic,#show-topic').find('#item_list_'+self.data.filter);
         var params = {'city': self.data.city, 'filter': self.data.filter,'size': 12,'page':self.list[self.data.filter].paging};
 
         parent.show();
