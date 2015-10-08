@@ -85,14 +85,17 @@ var Profile = {
                     Profile.OnTemplate();
 
                 }else{
+                    Profile.OnTemplate();
                     Profile.set_default_btn();
                 }
                 Profile.zipcode = false;
             }else{
+                Profile.OnTemplate();
                 Profile.invalidZip();
             }
         }).fail(function(jqXHR) {
             if (jqXHR.status == 404) {
+                Profile.OnTemplate();
                 Profile.invalidZip();                
             }            
         });
@@ -199,7 +202,7 @@ var Profile = {
 
     check_status_change: function(){
 
-        if(Profile.status_change.age && Profile.status_change.zipcode || (Profile.status_change.work || Profile.status_change.about) ){
+        if(Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about) ){
             Profile.status_change.total = true;
         }else {
             Profile.status_change.total = false;
@@ -318,6 +321,7 @@ var Profile = {
             $('.input_image').unbind();
             $('.input_image').change(function(e) {
                 // $('.input_image').bind();
+                $('.preview_img').find('img').remove();
                 Profile.readURL(this);
             });
         });
@@ -360,7 +364,7 @@ var Profile = {
                 }
                 reader.readAsDataURL(input.files[0]);
             }else{
-                alert(1);
+                // alert(1);
             }
         }
     },
@@ -370,7 +374,7 @@ var Profile = {
             parent_text = $('.image-preview').find('p'),
             btn_control_save = $('.btn-control-modal').find('.save') ;
 
-        target.find('img').remove();
+
         btn_control_save.removeClass('disable');
         parent_text.hide();
         $('.preview_img').addClass('active');
