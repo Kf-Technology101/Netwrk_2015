@@ -4,10 +4,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-          <div class="name_modal"><p> Meet</p></div>
-          <div class="name_user">
-            <p class="default"> NO DATA</p>
+          <div class="head">
+            <div class="name_modal"><p> Meet</p></div>
+            <div class="name_user">
+              <p class="default"> NO DATA</p>
+            </div>
           </div>
+          
           <div class="sidebar">
             <table class="filter_sidebar">
                 <tr>

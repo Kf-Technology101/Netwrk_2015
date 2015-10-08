@@ -183,9 +183,11 @@ var Meet ={
 
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
+                $('#modal_meet').modal('hide');
             });
             $('.modal-backdrop.in').click(function(e) {
                 self.reset_modal();
+                $('#modal_meet').modal('hide');
             });
         });
     },
@@ -209,9 +211,10 @@ var Meet ={
         self.user_list.len = 0;  
         self.json = {};
         Meet.filter.active = 'meeting';
+        $('.control-btn').hide();
         $('#modal_meet').find('.sidebar td').removeClass('active');
         $('#modal_meet').find('.sidebar td').first().addClass('active');
-        $('#modal_meet').modal('hide');
+        // $('#modal_meet').modal('hide');
     },
 
     reset_page: function(){

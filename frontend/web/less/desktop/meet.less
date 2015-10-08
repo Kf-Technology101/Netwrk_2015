@@ -22,34 +22,38 @@
         box-shadow: 0px 3px 5px #888;
         border: none;
         display: block;
-        .name_modal{
-            width: 20%;
-            padding: 5px;
-            float: left;
-            p{
-                color: #eee;
-                font-size: 18px;
-                font-weight: 600;
-                margin: 0;
+        .head{
+            height: 46px;
+            .name_modal{
+                width: 20%;
                 padding: 5px;
-                text-align: center;
+                float: left;
+                p{
+                    color: #eee;
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin: 0;
+                    padding: 5px;
+                    text-align: center;
+                }
+            }
+            .name_user{
+                width: 60%;
+                color:#fff;
+                font-size: 25px;
+                margin: auto;
+                p{
+                    text-align: center;
+                    padding: 5px;
+                    margin: 0;
+                    font-weight: bold;
+                }
+                .default{
+                    display: none;
+                }
             }
         }
-        .name_user{
-            width: 60%;
-            color:#fff;
-            font-size: 25px;
-            margin: auto;
-            p{
-                text-align: center;
-                padding: 5px;
-                margin: 0;
-                font-weight: bold;
-            }
-            .default{
-                display: none;
-            }
-        }
+        
         .sidebar{
             width: 100%;
             background: #5486b0;
@@ -185,7 +189,7 @@
                     box-shadow: 4px 4px 5px #888;
                     &.disable{
                         opacity: 0.8;
-                        cursor: initial;
+                        cursor: default;
                     }
                 }
                 .back{
@@ -475,7 +479,7 @@
                     }
                     &.disable{
                         opacity: 0.6;
-                        cursor: initial;
+                        cursor: default;
                     }
                 }
                 .save{
@@ -493,7 +497,7 @@
                     }
                     &.disable{
                         opacity: 0.6;
-                        cursor: initial;
+                        cursor: default;
                     }
                 }
             }
@@ -615,7 +619,7 @@
                     }
                     &.disable{
                         opacity: 0.6;
-                        cursor: initial;
+                        cursor: default;
                     }
                 }
                 .save{
@@ -632,7 +636,7 @@
                         font-size: 18px;
                     }
                     &.disable{
-                        cursor: initial;
+                        cursor: default;
                         opacity: 0.6;
                     }
                 }
@@ -712,7 +716,7 @@
             }
             &.disable{
                 opacity: 0.6;
-                cursor: initial;
+                cursor: default;
             }
         }
         .browse{
