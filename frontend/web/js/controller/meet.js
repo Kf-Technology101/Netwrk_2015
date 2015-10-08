@@ -149,6 +149,7 @@ var Meet ={
             target.on('click',function(){
                 // target.bind();
                 self.reset_modal();
+                $('#modal_meet').modal('hide');
                 // self._init();
                 // location.href.reload ;
             });
@@ -182,7 +183,7 @@ var Meet ={
             }
 
             set_heigth_modal($('#modal_meet'));
-            
+
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
                 $('#modal_meet').modal('hide');
