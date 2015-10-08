@@ -42,9 +42,22 @@ function get_city(){
   return data;
 }
 
-function set_heigth_modal(){
+function set_heigth_modal(target){
+  console.log(target);
   var size = get_size_window();
-  console.log(size);
+  var wh = size[1] - 100;
+  target.find('.modal-dialog').css('height',wh);
+  target.find('.modal-content').css('height',wh);
+  target.find('.modal-body').css('height',wh - 90);
+ 
+  
+  $(window).resize(function(){
+    size = get_size_window();
+    wh = size[1] - 100;
+    target.find('.modal-dialog').css('height',wh);
+    target.find('.modal-content').css('height',wh);
+    target.find('.modal-body').css('height',wh -90);
+  });
 }
 
 function initialize() {

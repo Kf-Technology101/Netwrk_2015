@@ -181,6 +181,8 @@ var Meet ={
                 });   
             }
 
+            set_heigth_modal($('#modal_meet'));
+            
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
                 $('#modal_meet').modal('hide');

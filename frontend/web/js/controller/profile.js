@@ -197,7 +197,7 @@ var Profile = {
 
     check_status_change: function(){
 
-        if(Profile.status_change.age && Profile.status_change.zipcode &&(Profile.status_change.work || Profile.status_change.about) ){
+        if(Profile.status_change.age && Profile.status_change.zipcode || (Profile.status_change.work || Profile.status_change.about) ){
             Profile.status_change.total = true;
         }else {
             Profile.status_change.total = false;
