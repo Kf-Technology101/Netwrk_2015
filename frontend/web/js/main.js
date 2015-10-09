@@ -104,6 +104,31 @@ function show_marker(map){
   });
 }
 
+function ieVersion() {
+    var ua = window.navigator.userAgent;
+    if (ua.indexOf("Trident/7.0") > 0)
+        return 11;
+    else if (ua.indexOf("Trident/6.0") > 0)
+        return 10;
+    else if (ua.indexOf("Trident/5.0") > 0)
+        return 9;
+    else if (ua.indexOf("Edge") > 0)
+        return 'Edge';
+    else
+        return 0;  // not IE9, 10 or 11
+}
+
+function isonIE(){
+    var status = ieVersion();
+    if(status == 0) {
+        return false;
+    }else if (status == 'Edge'){
+        return true;
+    }else{
+        return true;
+    }
+}
+
 function min_max_zoom(map){
   google.maps.event.addListenerOnce(map, "projection_changed", function(){
     map.setMapTypeId(google.maps.MapTypeId.HYBRID);  //Changes the MapTypeId in short time.

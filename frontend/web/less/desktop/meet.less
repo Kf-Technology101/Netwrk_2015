@@ -648,7 +648,7 @@
     }
 }
 #modal_change_avatar{
-    width: 400px;
+    width: 600px;
     z-index: 1070;
     margin: auto;
     .modal-dialog{
@@ -657,35 +657,53 @@
         margin: auto;
     }
     .image-preview{
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         margin: auto;
         border: 1px dashed #888;
-        overflow: hidden;
+        // overflow: hidden;
         display: table;
         p{
             text-align: center;
             margin: 0;
-            line-height: 135px;
+            line-height: 190px;
+        }
+        
+        .preview_img_ie{
+            height: auto;
+            max-width: 200px;
+            max-height: 200px;
+            width: auto;
+            display: table-cell;
+            text-align: center;
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);
+            // vertical-align: middle;
+            img{
+                width: auto;
+                height: auto;
+                max-width: 200px;
+                max-height: 200px;
+            }
         }
         .preview_img{
             height: auto;
-            max-width: 150px;
-            max-height: 150px;
+            max-width: 200px;
+            max-height: 200px;
             width: auto;
             text-align: center;
             vertical-align: middle;
-            display: none;
+            display: block;
             &.active{
                 display: table-cell;
             }
             img{
                 margin: auto;
-                max-width: 150px;
+                max-width: 200px;
                 width: auto;
                 height: auto;
-                max-height: 150px;
+                max-height: 200px;
             }
+
         }
     }
     .btn-control-modal{

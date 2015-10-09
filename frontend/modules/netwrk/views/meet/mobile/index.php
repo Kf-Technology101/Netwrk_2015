@@ -88,7 +88,7 @@
                    <div class="modal-body container_chagne_avatar">
                        <div class="image-preview">
                            <p>IMAGE PREVIEW</p>
-                           <div class="preview_img"><img class="preview_image" src="" /></div>
+                           <div class="preview_img"></div>
                        </div>
                        <div class="btn-control-modal">
                             <div class="cancel">
@@ -109,7 +109,7 @@
                                     ]);
                                 ?>
                                 <!-- <form id="upload_image" method="post" action="<?= Url::to(['/netwrk/setting/upload-image']) ?>" enctype="multipart/form-data"> -->
-                                    <input type="file" class="input_image" name='image' accept="image/jpg,image/png,image/jpeg,image/gif">
+                                    <input type="file" id="input_image" name='image' accept="image/jpg,image/png,image/jpeg,image/gif">
                                 <!-- </form> -->
                                 <?php \yii\widgets\ActiveForm::end(); ?>
                                 <p>Browse</p>
