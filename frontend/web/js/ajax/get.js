@@ -199,6 +199,26 @@ var Ajax ={
         });
 
         return defer.promise();
+    },
+
+    new_topic: function(params){
+        var url,defer = $.Deferred();
+     
+        url = baseUrl +"/netwrk/topic/new-topic";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 }
 

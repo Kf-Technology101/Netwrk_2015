@@ -24,7 +24,7 @@ AppAsset::register($this);
 </head>
 <body>
     <?php $this->beginBody() ?>
-    <div class="wrap" id="<?= ucfirst(Yii::$app->controller->id) ?>">
+    <div class="wrap" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
         <?php
             NavBar::begin([
                 'brandLabel' => 'Netwrk',

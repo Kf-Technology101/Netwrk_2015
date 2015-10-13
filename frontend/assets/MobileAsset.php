@@ -34,6 +34,7 @@ class MobileAsset extends AssetBundle
       'js/ajax/get.js',
       'js/controller/default.js',
       'js/controller/topic.js',
+      'js/controller/create_topic.js',
       'js/controller/meet.js',
       'js/controller/profile.js',
       'js/controller/template.js',

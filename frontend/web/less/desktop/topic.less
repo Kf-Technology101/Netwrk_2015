@@ -86,6 +86,7 @@
             border-radius: 15px;
             border: 1px solid #fff;
             margin: 3px 0 0 0px;
+            cursor: pointer;
             span{
                 font-weight: bold;
                 color: #eee;
@@ -140,11 +141,23 @@
                         font-weight: 200;
                         width: 80%;
                         padding: 0px 6px 5px 30px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                         p,span{
                             overflow: hidden;
                             text-overflow: ellipsis;
                             white-space: nowrap;
                             margin-right: 3px;
+                            min-width: 70px;
+                            max-width: 20%;
+                            display: block;
+                            float: left;
+                        }
+                        .more{
+                            color: #615BAD;
+                            margin-left: 10px;
+                            max-width: 40%;
                         }
                     }
                 }
@@ -196,4 +209,169 @@
             }
         }
     }
-}   
+}
+
+#create_topic{
+    height: auto;
+    top: 80px;
+    overflow-y: hidden;
+    .modal-dialog{
+        width: 450px;
+        max-height: 600px;
+        min-height: 300px;
+        margin: auto;
+        border-radius: 5px;
+        box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
+    }
+    .modal-content{
+        max-height: 620px;
+        min-height: 300px;
+        background: #e2e3e4;
+    }
+    .modal-header{
+        padding: 0;
+        // height: 40px;
+        width: 100%;
+        background: #265c7f;
+        box-shadow: 0px 3px 5px #888;
+        border: none;
+        display: block;
+        .head{
+            height: 45px;
+            .name_user{
+                width: 60%;
+                color:#fff;
+                font-size: 25px;
+                margin: auto;
+                p{
+                    text-align: center;
+                    padding: 5px;
+                    margin: 0;
+                    font-weight: bold;
+                }
+                .default{
+                    display: none;
+                }
+            }
+            .back_page{
+                padding: 10px;
+                width: 15%;
+                float: left;
+                img{
+                    width: 25px;
+                }
+                i{
+                    font-size: 25px;
+                    color: #eee;
+                }
+            }
+        }
+    }
+    .modal-body{
+        overflow-y: auto;
+        max-height: 530px;
+        min-height: 300px;
+        width: 100%;
+        padding: 0;
+        #create_topic{
+            width: 90%;
+            margin: auto;
+            .topic{
+                width: 100%;
+                padding: 10px 15px;
+                background: #fff;
+                box-shadow: 0px 3px 5px #888;
+                border: none;
+                margin-bottom: 10px;
+                .name_topic{
+                    width: 80%;
+                }
+            }
+            .post{
+                width: 100%;
+                padding: 10px 15px;
+                background: #fff;
+                box-shadow: 0px 3px 5px #888;
+                border: none; 
+                .input-group{
+                    width: 80%;
+                    border-radius: 5px;
+                    border: 1px solid #eee;
+                    margin-bottom: 10px;
+                    .input-group-addon{
+                        padding: 0 3px;
+                        background: #fff;
+                        border: none;
+                        font-weight: bold;
+                    }
+                    input{
+                        border: none;
+                        padding: 0;
+                    }
+                }
+                textarea.message{
+                    width: 90%;
+                    border: 1px solid #eee;
+                    height: 100px;
+                }
+            }
+
+            .btn-control{
+                width: 100%;
+                margin: 10px auto;
+                float: left;
+                .cancel{
+                    width: 40%;
+                    float: left;
+                    background: #265c7f;
+                    border-radius: 10px;
+                    border: 1px solid #245879;
+                    color: #fff;
+                    cursor: pointer;
+                    p{
+                        margin: 0;
+                        text-align: center;
+                        padding: 10px 5px;
+                    }
+                    &.disable{
+                        opacity: 0.6;
+                        cursor: default;
+                    }
+                }
+                .save{
+                    width: 40%;
+                    float: right;
+                    border: 1px solid #245879;
+                    background: #265c7f;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 10px;
+                    padding: 10px 5px;
+                    cursor: pointer;
+                    .fa{
+                        font-size: 18px;
+                    }
+                    &.disable{
+                        opacity: 0.6;
+                        cursor: default;
+                    }
+                }
+            }
+            textarea{
+                font-size: 12px;
+                resize: none;
+            }
+            p{
+                font-weight: bold;
+            }
+            input{
+                font-size: 12px;
+                border-radius: 7px;
+                border: 1px solid #eee;
+                outline: none;
+                text-align: left;
+                padding: 0 10px;
+            }
+        }
+    }
+}

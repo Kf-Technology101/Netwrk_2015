@@ -27,7 +27,7 @@ MobileAsset::register($this);
 </head>
 <body>
   <?php $this->beginBody() ?>
-  <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>">
+  <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
     <nav class="navbar-mobile navbar-fixed-bottom">
       <div class="menu_bottom">
         <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div>

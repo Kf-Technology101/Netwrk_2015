@@ -24,6 +24,7 @@ var Topic = {
     initialize: function(){
         this._onclickBack();
         this.load_topic();
+        this.create_topic();
         this.filter_topic($(window));
         this.scroll_bot();
     },  
@@ -32,6 +33,24 @@ var Topic = {
             Topic.show_page_topic(city);
         } else {
             Topic.show_modal_topic(city);
+        }
+    },
+
+    create_topic: function(){
+        var btn;
+        if(isMobile){
+            btn = $('#show-topic').find('.create_topic');
+            btn.unbind();
+            btn.on('click',function(){
+                window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city;
+            });
+        }else{
+            btn = $('#modal_topic').find('.create_topic');
+            btn.unbind();
+            btn.on('click',function(){
+                Topic.reset_modal();
+                Create_Topic.initialize(Topic.data.city);
+            });
         }
     },
 
@@ -128,8 +147,8 @@ var Topic = {
     },
 
     _onclickBack: function(){
-        $('.back_page img').click(function(){
-            window.history.back();
+        $('#show-topic .back_page img').click(function(){
+            window.location.href = baseUrl;
         })
     },
 
@@ -139,12 +158,14 @@ var Topic = {
         var params = {'city': city, 'filter': self.data.filter,'size': 12,'page':self.list[self.data.filter].paging};
         self.data.city = city;
         $(window).scrollTop(0);
-        if(self.list[self.data.filter].status_paging == 1){
-            Ajax.show_topic(params).then(function(data){
-                var parent = $('#item_list_'+self.data.filter);
-                self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
-                self.getTemplate(parent,data);
-            });
+        if($('#Topic').attr('data-action') == 'topic-page'){
+            if(self.list[self.data.filter].status_paging == 1){
+                Ajax.show_topic(params).then(function(data){
+                    var parent = $('#item_list_'+self.data.filter);
+                    self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+                    self.getTemplate(parent,data);
+                });
+            }
         }
     },
 
@@ -222,6 +243,7 @@ var Topic = {
             $('.no-data').hide();
             self.list[self.data.filter].status_paging = 1;
         }
+        this.create_topic();
     },
 
     getTemplateModal: function(parent,data){

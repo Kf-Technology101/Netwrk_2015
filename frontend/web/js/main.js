@@ -214,6 +214,7 @@ function _addListenEventPage(){
   switch(page){
     case 'Topic':
       Page.initialize();
+      Create_Topic.initialize();
       break;
     case 'Meet':
       Page.initialize();

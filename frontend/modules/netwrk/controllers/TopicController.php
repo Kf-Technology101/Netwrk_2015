@@ -5,12 +5,14 @@ namespace frontend\modules\netwrk\controllers;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
+use frontend\modules\netwrk\models\Post;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
 
 class TopicController extends BaseController
-{
+{ 
+  private $currentUser = 1; 
   public function actionIndex()
   { 
     // $query = Topic::find()->where(['city_id'=>1])->orderBy(['post_count'=> SORT_DESC]);
@@ -19,8 +21,54 @@ class TopicController extends BaseController
     // $models = $query->offset($pages->offset)
     //     ->limit($pages->pageSize)
     //     ->all();
+    $posts = Post::find()->where('topic_id = 1')->orderBy(['created_at'=> SORT_DESC])->all();
+    $num_post = count($posts);
+    $data = [];
 
+    foreach ($posts as $key => $post){
+      if($key < 3){
+        array_push($data,'#'.$post->title);
+      }
+    }
+    $post_data = array(
+      'data'=> $data,
+      'num_post'=> $num_post - 3
+    );
+    echo "pre"; print_r($post_data); die;
     return $this->render('index');
+  }
+
+  public function actionCreateTopic($city) {
+    $cty = City::findOne($city);
+    return $this->render('mobile/create');
+  }
+
+  public function actionNewTopic() {
+    $city = $_POST['city'];
+    $topic = $_POST['topic'];
+    $post = $_POST['post'];
+    $message = $_POST['message'];
+    $current_date = date('Y-m-d H:i:s');
+
+    $Topic = new Topic;
+    $Topic->user_id = $this->currentUser;
+    $Topic->city_id = $city;
+    $Topic->title = $topic;
+    $Topic->created_at = $current_date;
+    $Topic->updated_at = $current_date;
+    $Topic->save();
+
+    $Post = new Post;
+    $Post->title = $post;
+    $Post->content = $message;
+    $Post->topic_id = $Topic->id;
+    $Post->user_id = $this->currentUser;
+    $Post->created_at = $current_date;
+    $Post->updated_at = $current_date;
+    $Post->save();
+
+    $Topic->post_count = 1;
+    $Topic->update();
   }
 
   public function actionGetTopicMobile()
@@ -52,17 +100,30 @@ class TopicController extends BaseController
     $data = [];
     foreach ($topices as $key => $value) {
       $num_view = $this->ChangeFormatNumber($value->view_count);
-      // $num_view = $this->ChangeFormatNumber(23213122);
+      $num_post = $this->ChangeFormatNumber($value->post_count - 3);
       $num_date = $this->FormatDateTime($value->created_at);
+      $posts = Post::find()->where('topic_id ='.$value->id)->orderBy(['created_at'=> SORT_DESC])->all();
+      $data_post = [];
+
+      foreach ($posts as $key => $post){
+        if($key < 3){
+          array_push($data_post,'#'.$post->title);
+        }
+      }
+      $post_data = array(
+        'data_post'=> $data_post,
+      );
+
       $topic = array(
         'id'=> $value->id,
-        // 'user_id'=> $value->user_id,
         'city_id'=>$value->city_id,
         'title'=>$value->title,
-        'post_count' => $value->post_count,
-        'view_count'=> $num_view,
+        'post_count' => $value->post_count > 0 ? $value->post_count: 0,
+        'post_count_format' => $num_post,
+        'view_count'=> $num_view > 0 ? $num_view : 0,
         'img'=> Url::to('@web/img/icon/timehdpi.png'),
-        'created_at'=>$num_date
+        'created_at'=>$num_date,
+        'post'=> $post_data
       );
       array_push($data,$topic);
     }

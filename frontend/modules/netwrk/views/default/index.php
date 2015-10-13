@@ -21,7 +21,7 @@
   <div id="googleMap" style=""></div>
 </div>
 <?= $this->render('partial/topic');?>
-    
+<?= $this->render('partial/create_topic');?>    
 <?= $this->render('partial/meet');?>
 
 <script src="http://maps.googleapis.com/maps/api/js"></script>

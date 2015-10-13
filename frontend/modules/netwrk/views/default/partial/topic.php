@@ -42,9 +42,17 @@
                     <p><%= topic.title %></p>
                 </div>
                 <div class="name_post">
-                    <span>#First post</span>
-                    <span>#Second post</span>
-                    <span>#Third post</span>
+                  <% _.each(topic.post.data_post,function(post){ %>
+                    <span><%= post %></span>
+                  <% }); %>
+
+                  <% 
+                    var more_topice = topic.post_count -3
+                    if ( more_topice > 0){ 
+                  %>
+                    <span class='more'> + <%= topic.post_count_format %> more posts</span>
+                  <% } %>
+
                 </div> 
             </div>
             <div class="time_ago">
