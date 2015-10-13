@@ -18,6 +18,8 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
           "frontend/web/css/mobile/meet.css": "frontend/web/less/mobile/meet.less",
           "frontend/web/css/mobile/setting.css": "frontend/web/less/mobile/setting.less",
+          "frontend/web/css/mobile/post.css": "frontend/web/less/mobile/post.less",
+          "frontend/web/css/desktop/post.css": "frontend/web/less/desktop/post.less",
         }
       }
     },

@@ -36,7 +36,7 @@
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
       <% _.each(topices,function(topic){ %>
-          <div class="item">
+          <div class="item" data-item="<%= topic.id %>">
             <div class="topic_post">
                 <div class="name_topic">
                     <p><%= topic.title %></p>

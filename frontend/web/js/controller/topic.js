@@ -24,7 +24,6 @@ var Topic = {
     initialize: function(){
         this._onclickBack();
         this.load_topic();
-        this.create_topic();
         this.filter_topic($(window));
         this.scroll_bot();
     },  
@@ -33,6 +32,26 @@ var Topic = {
             Topic.show_page_topic(city);
         } else {
             Topic.show_modal_topic(city);
+        }
+    },
+
+    create_post: function(){
+        var btn;
+        if(isMobile){
+            btn = $('#show-topic').find('.item .num_count');
+            btn.unbind();
+            btn.on('click',function(e){
+                var topic_id = $(e.currentTarget).parents('.item').eq(0).attr('data-item');
+                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Topic.data.city +"&topic="+topic_id;
+            });
+        }else{
+            btn = $('#modal_topic').find('.item .num_count');
+            btn.unbind();
+            btn.on('click',function(e){
+                var topic_id = $(e.currentTarget).parents('.item').eq(0).attr('data-item');
+                Topic.reset_modal();
+                Create_Post.initialize(Topic.data.city,topic_id);
+            });
         }
     },
 
@@ -226,8 +245,8 @@ var Topic = {
         var list_template = _.template($( "#topic_list" ).html());
         var append_html = list_template({topices: json.data});
 
-        self.onTemplate(json);
-        parent.append(append_html); 
+        parent.append(append_html);
+        self.onTemplate(json); 
     },
 
     onTemplate: function(json){
@@ -244,6 +263,7 @@ var Topic = {
             self.list[self.data.filter].status_paging = 1;
         }
         this.create_topic();
+        this.create_post();
     },
 
     getTemplateModal: function(parent,data){

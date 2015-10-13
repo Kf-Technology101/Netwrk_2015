@@ -222,6 +222,9 @@ function _addListenEventPage(){
     case 'Setting':
       Profile.initialize();
       break;
+    case 'Post':
+      Create_Post.initialize();
+      break;
     default:
       Default.initialize();
       break;

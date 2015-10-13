@@ -12,12 +12,13 @@ var Create_Topic={
         total: false
     },
 
-    initialize: function(city){
-        Create_Topic.params.city = city;
+    initialize: function(city){        
         if(isMobile){
+            Create_Topic.params.city = $('#create_topic').attr('data-city');
             this.changeData();
             this.onclickBack();
         }else{
+            Create_Topic.params.city = city;
             this.showModalCreateTopic();
             this.onCloseModalCreateTopic();
             this.changeData();

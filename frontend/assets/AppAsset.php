@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
         'css/desktop/landing.css',
         'css/desktop/topic.css',
         'css/desktop/meet.css',
+        'css/desktop/post.css',
         'css/jquery.ui.css',
         'css/jquery.ui.pips.css',
     ];
@@ -36,6 +37,7 @@ class AppAsset extends AssetBundle
         'js/controller/template.js',
         'js/controller/profile.js',
         'js/controller/meet_setting.js',
+        'js/controller/create_post.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',
         'js/lib/jquery.ui.touch_punch.js',

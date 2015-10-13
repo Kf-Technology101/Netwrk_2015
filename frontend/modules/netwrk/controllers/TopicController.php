@@ -40,7 +40,7 @@ class TopicController extends BaseController
 
   public function actionCreateTopic($city) {
     $cty = City::findOne($city);
-    return $this->render('mobile/create');
+    return $this->render('mobile/create',['city' =>$cty]);
   }
 
   public function actionNewTopic() {

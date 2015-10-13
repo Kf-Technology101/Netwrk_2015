@@ -23,6 +23,7 @@
 <?= $this->render('partial/topic');?>
 <?= $this->render('partial/create_topic');?>    
 <?= $this->render('partial/meet');?>
+<?= $this->render('partial/create_post');?> 
 
 <script src="http://maps.googleapis.com/maps/api/js"></script>
 
