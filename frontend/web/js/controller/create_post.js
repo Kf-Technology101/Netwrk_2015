@@ -58,8 +58,11 @@ var Create_Post={
         var parent = $('#create_post');
 
         if(isMobile){
-            $('#btn_meet_mobile').hide();
-            $('#btn_discover_mobile').show();
+            if($('#create_post').size()>0){
+                $('#btn_meet_mobile').hide();
+                $('#btn_discover_mobile').show();
+            }
+            
         }else{
             $('#btn_meet').hide();
             set_position_btn(parent.find('#btn_discover'));

@@ -59,8 +59,10 @@ var Create_Topic={
     showNetWrkBtn: function(){
         var parent = $('#create_topic');
         if(isMobile){
-            $('#btn_meet_mobile').hide();
-            $('#btn_discover_mobile').show();
+            if($('#create_topic').size()>0){
+                $('#btn_meet_mobile').hide();
+                $('#btn_discover_mobile').show();
+            }
         }else{
             $('#btn_meet').hide();
             set_position_btn(parent.find('#btn_discover'));
