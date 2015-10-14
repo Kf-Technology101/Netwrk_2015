@@ -29,13 +29,13 @@ var Create_Post={
     },
 
     showNetWrkBtn: function(){
-        $('#btn_meet_mobile').hide();
-        $('#btn_discover_mobile').show();
+        $('#btn_meet').hide();
+        $('#btn_discover').show();
     },
 
     hideNetWrkBtn: function(){
-        $('#btn_meet_mobile').show();
-        $('#btn_discover_mobile').hide();
+        $('#btn_meet').show();
+        $('#btn_discover').hide();
     },
 
     showSideBar:function(city,topic){

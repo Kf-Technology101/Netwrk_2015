@@ -16,6 +16,16 @@ function set_position_btn_meet(w,h){
   $('#btn_discover').css({'top': hp - 30 ,'left': wp});
 }
 
+function set_position_btn(target){
+  var menu_h = $('.menu_top').height();
+  var size = get_size_window();
+  var hp = size[1] - 100 - menu_h;
+  var wp = size[0] - 100;
+
+  target.css({'top': hp - 30 ,'left': wp});
+  target.show();
+}
+
 function _event_window_resize(){
   $(window).resize(function(){
     window_resize();

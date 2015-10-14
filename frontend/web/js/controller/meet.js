@@ -48,8 +48,9 @@ var Meet ={
             Meet.changefilter(currentTarget);
             Meet.eventClickdiscoverMobile();
         }else{
-            var currentTarget = $('#meeting'),
-                container = $('.container_meet');
+            var parent = $('#modal_meet');
+                currentTarget = parent.find('#meeting'),
+                container = parent.find('.container_meet');
 
             container.find('.page').hide();
             Meet.reset_modal();
@@ -60,7 +61,7 @@ var Meet ={
             Meet.ShowModalMeet();
             Meet.eventClickdiscover();
             $('#btn_meet').hide();
-            $('#btn_discover').show();
+            set_position_btn(parent.find('#btn_discover'));
         }
     },
 
@@ -144,7 +145,7 @@ var Meet ={
 
     eventClickdiscover: function(){
         var self = this,
-            target = $('#btn_discover');
+            target = $('#modal_meet #btn_discover');
             target.unbind();
             target.on('click',function(){
                 // target.bind();
@@ -203,7 +204,7 @@ var Meet ={
             btn_back = $('.control-btn').find('.back');
 
         $('#btn_meet').show();
-        $('#btn_discover').hide();
+        $('#modal_meet #btn_discover').hide();
         name.find('p.name').remove();
         name.find('span').remove();
         info.find('.user_item').remove();
