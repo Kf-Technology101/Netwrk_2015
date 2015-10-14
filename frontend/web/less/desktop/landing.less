@@ -20,6 +20,9 @@
       position: fixed;
       z-index: 2;
       display: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       img{
         width: 65px;
         height: 45px;
@@ -28,6 +31,11 @@
         color: #fff;
         font-size: 16px;
         margin: 0 10px;
+        min-width: 5%;
+        max-width: 20%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .fa{
         font-size: 15px;
