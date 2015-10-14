@@ -6,7 +6,7 @@
         </div>
 
         <div class="title_page">
-            <span class="title"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>"><?php print $city->name;?></span>
+            <span class="title"><a href="<?php echo Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>"></a><?php print $city->name;?></span>
         </div>
         <div class="create_topic">
             <span>Create a topic +</span>

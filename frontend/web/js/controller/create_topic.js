@@ -18,6 +18,8 @@ var Create_Topic={
             Create_Topic.params.city = $('#create_topic').attr('data-city');
             this.changeData();
             Create_Topic.onclickBack();
+            Create_Topic.showNetWrkBtn();
+            Create_Topic.eventClickdiscoverMobile();
         }else{
             Create_Topic.params.city = city;
             Create_Topic.params.city_name = name;
@@ -42,16 +44,40 @@ var Create_Topic={
                 // location.href.reload ;
             });
     },
+
+    eventClickdiscoverMobile: function(){
+        var target = $('#btn_discover_mobile');
+        target.unbind();
+        target.on('click',function(){
+            target.bind();
+            window.location.href = baseUrl; 
+            // Meet.reset_page();
+            // Meet._init();
+        });
+    },
+    
     showNetWrkBtn: function(){
         var parent = $('#create_topic');
-        $('#btn_meet').hide();
-        set_position_btn(parent.find('#btn_discover'));
+        if(isMobile){
+            $('#btn_meet_mobile').hide();
+            $('#btn_discover_mobile').show();
+        }else{
+            $('#btn_meet').hide();
+            set_position_btn(parent.find('#btn_discover'));
+        }
+        
     },
 
     hideNetWrkBtn: function(){
         var parent = $('#create_topic');
-        $('#btn_meet').show();
-        parent.find('#btn_discover').hide();
+        if(isMobile){
+            $('#btn_meet_mobile').show();
+            $('#btn_discover_mobile').hide();
+        }else{
+            $('#btn_meet').show();
+            parent.find('#btn_discover').hide();
+        }
+
     },
 
     showSideBar: function(){

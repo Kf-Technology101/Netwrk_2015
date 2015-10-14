@@ -16,6 +16,8 @@ var Create_Post={
             Create_Post.params.city = $('#create_post').attr('data-city');
             Create_Post.changeData();
             Create_Post.onclickBack();
+            Create_Post.showNetWrkBtn();
+            Create_Post.eventClickdiscoverMobile();
         }else{
             Create_Post.params.city = city;
             Create_Post.params.topic = topic;
@@ -41,16 +43,40 @@ var Create_Post={
             });
     },
 
+    eventClickdiscoverMobile: function(){
+        var target = $('#btn_discover_mobile');
+        target.unbind();
+        target.on('click',function(){
+            target.bind();
+            window.location.href = baseUrl; 
+            // Meet.reset_page();
+            // Meet._init();
+        });
+    },
+
     showNetWrkBtn: function(){
         var parent = $('#create_post');
-        $('#btn_meet').hide();
-        set_position_btn(parent.find('#btn_discover'));
+
+        if(isMobile){
+            $('#btn_meet_mobile').hide();
+            $('#btn_discover_mobile').show();
+        }else{
+            $('#btn_meet').hide();
+            set_position_btn(parent.find('#btn_discover'));
+        }
     },
 
     hideNetWrkBtn: function(){
         var parent = $('#create_post');
-        $('#btn_meet').show();
-        parent.find('#btn_discover').hide();
+
+        if(isMobile){
+            $('#btn_meet_mobile').show();
+            $('#btn_discover_mobile').hide();
+        }else{
+            $('#btn_meet').show();
+            parent.find('#btn_discover').hide();
+        }
+
     },
 
     showSideBar:function(city,topic){

@@ -5,7 +5,7 @@
             <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
         </div>
         <div class="title_page">
-            <span class="title"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>">Create a Post</span>
+            <span class="title"><a href="<?php echo Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>"></a>Create a Post</span>
         </div>
     </div>
     <div class="container">
