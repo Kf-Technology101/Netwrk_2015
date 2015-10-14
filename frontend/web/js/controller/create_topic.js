@@ -3,7 +3,8 @@ var Create_Topic={
         topic:'',
         post: '',
         message:'',
-        city:null
+        city:null,
+        city_name:'',
     },
     status_change:{
         topic:false,
@@ -12,18 +13,35 @@ var Create_Topic={
         total: false
     },
 
-    initialize: function(city){        
+    initialize: function(city,name){        
         if(isMobile){
             Create_Topic.params.city = $('#create_topic').attr('data-city');
             this.changeData();
-            this.onclickBack();
+            Create_Topic.onclickBack();
         }else{
             Create_Topic.params.city = city;
-            this.showModalCreateTopic();
-            this.onCloseModalCreateTopic();
-            this.changeData();
+            Create_Topic.params.city_name = name;
+            Create_Topic.showModalCreateTopic();
+            Create_Topic.showSideBar();
+            Create_Topic.onCloseModalCreateTopic();
+            Create_Topic.changeData();
+            Create_Topic.onclickBack();
         }
-        
+    },
+
+    showSideBar: function(){
+        var sidebar = $('.map_content .sidebar');
+        var city_name = "<span>"+ Create_Topic.params.city_name +"</span>";
+
+        sidebar.find('.container').append(city_name);
+        sidebar.show();
+    },
+
+    hideSideBar: function(){
+        var sidebar = $('.map_content .sidebar');
+
+        sidebar.find('.container span').remove();
+        sidebar.hide();
     },
 
     showModalCreateTopic: function(){
@@ -45,19 +63,22 @@ var Create_Topic={
 
     hideModalCreateTopic:function(){
         var parent = $('#create_topic');
-        parent.modal('hide');
         Create_Topic.reset_data();
         Create_Topic.setDefaultBtn();
+        Create_Topic.hideSideBar();
+        parent.modal('hide');
     },
 
     onclickBack: function(){
         var parent = $('#create_topic');
+        var city = Create_Topic.params.city;
         parent.find('.back_page img').click(function(){
             if(isMobile){
                 Create_Topic.redirect();
             }else{
-                this.showModalCreateTopic();
-                this.changeData();
+                Create_Topic.hideModalCreateTopic();
+                // this.changeData();
+                Topic.init(city);
             }
         });
     },
@@ -98,23 +119,23 @@ var Create_Topic={
     },
 
     OnBtnTemplate: function(){
-        Create_Topic.OnshowBack();
+        Create_Topic.OnshowReset();
         Create_Topic.OnshowSave();
     },
 
-    OnshowBack: function(){
+    OnshowReset: function(){
         var status = Create_Topic.status_change,
             parent = $('#create_topic'),
             btn = parent.find('.cancel');
         if(status.topic || status.post || status.message){
             btn.removeClass('disable');
-            Create_Topic.OnclickBack();
+            Create_Topic.OnclickReset();
         }else if(!status.topic && !status.post && !status.message){
             btn.addClass('disable');
         }
     },
 
-    OnclickBack: function(){
+    OnclickReset: function(){
         var parent = $('#create_topic'),
             btn = parent.find('.cancel');
 
@@ -170,6 +191,7 @@ var Create_Topic={
         btn.unbind();
         btn.on('click',function(){
             if(!btn.hasClass('disable')){
+                console.log(city);
                 Ajax.new_topic(Create_Topic.params).then(function(){
                     Create_Topic.reset_data();
                     Create_Topic.setDefaultBtn();

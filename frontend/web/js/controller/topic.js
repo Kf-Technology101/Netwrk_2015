@@ -3,6 +3,7 @@ var Topic = {
         filter: 'post',
         city: '',
         size: 12,
+        city_name:''
     },
     list:{
         post:{
@@ -26,11 +27,12 @@ var Topic = {
         this.load_topic();
         this.filter_topic($(window));
         this.scroll_bot();
-    },  
+    },
+
     init: function(city){
         if (isMobile) {
             Topic.show_page_topic(city);
-        } else {
+        }else {
             Topic.show_modal_topic(city);
         }
     },
@@ -48,9 +50,12 @@ var Topic = {
             btn = $('#modal_topic').find('.item .num_count');
             btn.unbind();
             btn.on('click',function(e){
-                var topic_id = $(e.currentTarget).parents('.item').eq(0).attr('data-item');
+                var target = $(e.currentTarget).parents('.item').eq(0),
+                    topic_id = target.attr('data-item');
+                    toptic_name = target.find('.name_topic p').text();
+                    console.log(toptic_name);
                 Topic.reset_modal();
-                Create_Post.initialize(Topic.data.city,topic_id);
+                Create_Post.initialize(Topic.data.city,topic_id,Topic.data.city_name,toptic_name);
             });
         }
     },
@@ -68,7 +73,7 @@ var Topic = {
             btn.unbind();
             btn.on('click',function(){
                 Topic.reset_modal();
-                Create_Topic.initialize(Topic.data.city);
+                Create_Topic.initialize(Topic.data.city,Topic.data.city_name);
             });
         }
     },
@@ -100,7 +105,7 @@ var Topic = {
     show_modal_topic: function(city){
         var self = this;
         var parent = $('#item_list_'+self.data.filter);
-        var sidebar = $('.sidebar');
+        var sidebar = $('.map_content .sidebar');
         self.data.city = city;
         var params = {'city': self.data.city, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
@@ -116,8 +121,10 @@ var Topic = {
             parent.scrollTop(0);
             self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
             self.getTemplate(parent,data);
-
-            self.getTemplateModal(sidebar,data);
+            if (sidebar.find('.container span').size() == 0){
+                self.getTemplateModal(sidebar,data);
+            }
+            
             self.scroll_bot();
             self.filter_topic(parent);
 
@@ -271,7 +278,7 @@ var Topic = {
         var json = $.parseJSON(data); 
         var list_template = _.template($( "#city_name" ).html());
         var append_html = list_template({city: json.city});
+        Topic.data.city_name = json.city;
         parent.find('.container').append(append_html); 
-        
     },
 };

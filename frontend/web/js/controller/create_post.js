@@ -10,7 +10,7 @@ var Create_Post={
         total: false
     },
 
-    initialize: function(city,topic){
+    initialize: function(city,topic,name_city,name_topic){
         if(isMobile){
             Create_Post.params.topic = $('#create_post').attr('data-topic');
             Create_Post.params.city = $('#create_post').attr('data-city');
@@ -21,10 +21,27 @@ var Create_Post={
             Create_Post.params.topic = topic;
             Create_Post.showModalCreatePost();
             Create_Post.onCloseModalCreatePost();
+            Create_Post.showSideBar(name_city,name_topic)
             Create_Post.changeData();
+            Create_Post.onclickBack();
         }
     },
 
+    showSideBar:function(city,topic){
+        var sidebar = $('.map_content .sidebar');
+        var city_name = "<span>"+ city +"</span> <i class='fa fa-angle-right'></i><span>"+ topic +"</span>";
+
+        sidebar.find('.container').append(city_name);
+        sidebar.show();
+    },
+
+    hideSideBar:function(city,topic){
+        var sidebar = $('.map_content .sidebar');
+        var city_name = "<span>"+ city +"</span> <i class='fa fa-angle-right'></i><span>"+ topic +"</span>";
+
+        sidebar.find('.container').find('span,.fa').remove();
+        sidebar.hide();
+    },
     showModalCreatePost: function(){
         var parent = $('#create_post');
         parent.modal({
@@ -44,6 +61,7 @@ var Create_Post={
     hideModalCreatePost:function(){
         var parent = $('#create_post');
         parent.modal('hide');
+        Create_Post.hideSideBar();
         Create_Post.reset_data();
         Create_Post.setDefaultBtn();
     },
@@ -80,23 +98,23 @@ var Create_Post={
     },
 
     OnBtnTemplate: function(){
-        Create_Post.OnshowBack();
+        Create_Post.OnshowReset();
         Create_Post.OnshowSave();
     },
 
-    OnshowBack: function(){
+    OnshowReset: function(){
         var status = Create_Post.status_change,
             parent = $('#create_post'),
             btn = parent.find('.cancel');
         if(status.post || status.message){
             btn.removeClass('disable');
-            Create_Post.OnclickBack();
+            Create_Post.OnclickReset();
         }else if(!status.post && !status.message){
             btn.addClass('disable');
         }
     },
 
-    OnclickBack: function(){
+    OnclickReset: function(){
         var parent = $('#create_post'),
             btn = parent.find('.cancel');
 
@@ -132,12 +150,13 @@ var Create_Post={
 
     onclickBack: function(){
         var parent = $('#create_post');
+        var city = Create_Post.params.city;
         parent.find('.back_page img').click(function(){
             if(isMobile){
                 Create_Post.redirect();
             }else{
-                this.showModalCreateTopic();
-                this.changeData();
+                Create_Post.hideModalCreatePost();
+                Topic.init(city);
             }
         });
     },
