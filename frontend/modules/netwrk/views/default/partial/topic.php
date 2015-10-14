@@ -56,7 +56,12 @@
                 </div> 
             </div>
             <div class="time_ago">
-                <span><img src="<%= topic.img%>"/><%= topic.created_at%></span>
+              <% if (topic.created_at == 'Just now') {%>
+                  <span><%= topic.created_at%></span>
+              <%}else{ %> 
+                  <img src="<%= topic.img%>"/>
+                  <span><%= topic.created_at%></span>
+              <% } %>    
             </div>
             <div class="num_count">
                 <div class="most_post">

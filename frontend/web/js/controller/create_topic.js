@@ -70,9 +70,10 @@ var Create_Topic={
     },
 
     onclickBack: function(){
-        var parent = $('#create_topic');
+        var parent = $('#create_topic').find('.back_page img');
         var city = Create_Topic.params.city;
-        parent.find('.back_page img').click(function(){
+        parent.unbind();
+        parent.click(function(){
             if(isMobile){
                 Create_Topic.redirect();
             }else{

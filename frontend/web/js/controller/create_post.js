@@ -20,11 +20,22 @@ var Create_Post={
             Create_Post.params.city = city;
             Create_Post.params.topic = topic;
             Create_Post.showModalCreatePost();
+            Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
             Create_Post.showSideBar(name_city,name_topic)
             Create_Post.changeData();
             Create_Post.onclickBack();
         }
+    },
+
+    showNetWrkBtn: function(){
+        $('#btn_meet_mobile').hide();
+        $('#btn_discover_mobile').show();
+    },
+
+    hideNetWrkBtn: function(){
+        $('#btn_meet_mobile').show();
+        $('#btn_discover_mobile').hide();
     },
 
     showSideBar:function(city,topic){
@@ -62,6 +73,7 @@ var Create_Post={
         var parent = $('#create_post');
         parent.modal('hide');
         Create_Post.hideSideBar();
+        Create_Post.hideNetWrkBtn();
         Create_Post.reset_data();
         Create_Post.setDefaultBtn();
     },
@@ -149,9 +161,11 @@ var Create_Post={
     },
 
     onclickBack: function(){
-        var parent = $('#create_post');
+        var parent = $('#create_post').find('.back_page img');
         var city = Create_Post.params.city;
-        parent.find('.back_page img').click(function(){
+
+        parent.unbind();
+        parent.click(function(){
             if(isMobile){
                 Create_Post.redirect();
             }else{
