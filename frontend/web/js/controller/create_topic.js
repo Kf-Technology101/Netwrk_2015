@@ -26,7 +26,32 @@ var Create_Topic={
             Create_Topic.onCloseModalCreateTopic();
             Create_Topic.changeData();
             Create_Topic.onclickBack();
+            Create_Topic.showNetWrkBtn();
+            Create_Topic.eventClickdiscover();
         }
+    },
+    eventClickdiscover: function(){
+        var parent = $('#create_topic'),
+            target = parent.find('#btn_discover');
+            target.unbind();
+            target.on('click',function(){
+                // target.bind();
+
+                parent.modal('hide');
+                // self._init();
+                // location.href.reload ;
+            });
+    },
+    showNetWrkBtn: function(){
+        var parent = $('#create_topic');
+        $('#btn_meet').hide();
+        set_position_btn(parent.find('#btn_discover'));
+    },
+
+    hideNetWrkBtn: function(){
+        var parent = $('#create_topic');
+        $('#btn_meet').show();
+        parent.find('#btn_discover').hide();
     },
 
     showSideBar: function(){
@@ -66,6 +91,7 @@ var Create_Topic={
         Create_Topic.reset_data();
         Create_Topic.setDefaultBtn();
         Create_Topic.hideSideBar();
+        Create_Topic.hideNetWrkBtn();
         parent.modal('hide');
     },
 

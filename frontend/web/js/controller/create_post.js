@@ -25,17 +25,32 @@ var Create_Post={
             Create_Post.showSideBar(name_city,name_topic)
             Create_Post.changeData();
             Create_Post.onclickBack();
+            Create_Post.eventClickdiscover();
         }
+    },
+    eventClickdiscover: function(){
+        var parent = $('#create_post'),
+            target = parent.find('#btn_discover');
+            target.unbind();
+            target.on('click',function(){
+                // target.bind();
+
+                parent.modal('hide');
+                // self._init();
+                // location.href.reload ;
+            });
     },
 
     showNetWrkBtn: function(){
+        var parent = $('#create_post');
         $('#btn_meet').hide();
-        $('#btn_discover').show();
+        set_position_btn(parent.find('#btn_discover'));
     },
 
     hideNetWrkBtn: function(){
+        var parent = $('#create_post');
         $('#btn_meet').show();
-        $('#btn_discover').hide();
+        parent.find('#btn_discover').hide();
     },
 
     showSideBar:function(city,topic){

@@ -61,7 +61,7 @@ var Meet ={
             Meet.ShowModalMeet();
             Meet.eventClickdiscover();
             $('#btn_meet').hide();
-            set_position_btn(parent.find('#btn_discover'));
+            parent.find('#btn_discover').show();
         }
     },
 

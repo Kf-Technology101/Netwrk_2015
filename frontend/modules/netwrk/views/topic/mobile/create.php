@@ -21,7 +21,7 @@
                 <input type="text" class="name_post" maxlength="128" placeholder="Post title">
             </div>
             <p class="title"> Message </p>
-            <textarea class="message" placeholder="Message..."></textarea>
+            <textarea class="message" placeholder="Message..." maxlength="1024"></textarea>
         </div>
         <div class="btn-control">
             <div class="cancel disable">

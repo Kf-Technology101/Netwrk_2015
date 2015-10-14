@@ -13,7 +13,7 @@ function set_position_btn_meet(w,h){
   var wp = w - 100;
   
   $('#btn_meet').css({'top': hp,'left': wp});
-  $('#btn_discover').css({'top': hp - 30 ,'left': wp});
+  $('#modal_meet #btn_discover').css({'top': hp - 30 ,'left': wp});
 }
 
 function set_position_btn(target){
@@ -22,7 +22,7 @@ function set_position_btn(target){
   var hp = size[1] - 100 - menu_h;
   var wp = size[0] - 100;
 
-  target.css({'top': hp - 30 ,'left': wp});
+  target.css({'top': hp - 70 ,'left': wp});
   target.show();
 }
 
