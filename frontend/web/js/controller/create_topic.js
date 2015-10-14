@@ -55,7 +55,7 @@ var Create_Topic={
             // Meet._init();
         });
     },
-    
+
     showNetWrkBtn: function(){
         var parent = $('#create_topic');
         if(isMobile){
@@ -64,6 +64,7 @@ var Create_Topic={
         }else{
             $('#btn_meet').hide();
             set_position_btn(parent.find('#btn_discover'));
+            set_position_btn_resize(parent.find('#btn_discover'));
         }
         
     },

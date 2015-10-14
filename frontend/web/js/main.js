@@ -26,6 +26,12 @@ function set_position_btn(target){
   target.show();
 }
 
+function set_position_btn_resize(target){
+  $(window).resize(function(){
+    set_position_btn(target)
+  });
+}
+
 function _event_window_resize(){
   $(window).resize(function(){
     window_resize();
