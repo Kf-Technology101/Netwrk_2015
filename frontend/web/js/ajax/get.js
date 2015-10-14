@@ -13,7 +13,8 @@ var Ajax ={
             url: url,
             data: params,
             type: 'GET',
-            async: true,
+            async: false,
+            cache: false,
             success: defer.resolve,
             error: defer.reject
         });
