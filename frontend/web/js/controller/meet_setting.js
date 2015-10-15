@@ -36,7 +36,7 @@ var Meet_setting={
     },
     _init: function(){
         var span,text ;
-        $('.page').hide();
+        $('#modal_meet .page').hide();
         $('.name_user').find('p.default').hide();
 
         if(isMobile){
