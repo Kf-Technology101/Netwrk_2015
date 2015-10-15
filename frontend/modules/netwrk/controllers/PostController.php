@@ -44,6 +44,7 @@ class PostController extends BaseController
         $num_top = Post::find()->where('topic_id ='.$topic)->all();
         $top = Topic::findOne($topic);
         $top->post_count = count($num_top);
+        $top->updated_at = $current_date;
         $top->update();
     }
 }

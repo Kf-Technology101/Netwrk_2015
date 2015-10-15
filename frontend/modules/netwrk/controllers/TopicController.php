@@ -101,7 +101,7 @@ class TopicController extends BaseController
     foreach ($topices as $key => $value) {
       $num_view = $this->ChangeFormatNumber($value->view_count);
       $num_post = $this->ChangeFormatNumber($value->post_count - 3);
-      $num_date = $this->FormatDateTime($value->created_at);
+      $num_date = $this->FormatDateTime($value->updated_at);
       $posts = Post::find()->where('topic_id ='.$value->id)->orderBy(['created_at'=> SORT_DESC])->all();
       $data_post = [];
 
