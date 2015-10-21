@@ -5,6 +5,10 @@ var Create_Topic={
         message:'',
         city:null,
         city_name:'',
+        netwrk_name:'',
+        zip_code:'',
+        lat:'',
+        lng:''
     },
     status_change:{
         topic:false,
@@ -13,7 +17,7 @@ var Create_Topic={
         total: false
     },
 
-    initialize: function(city,name){        
+    initialize: function(city,name){       
         if(isMobile){
             Create_Topic.params.city = $('#create_topic').attr('data-city');
             this.changeData();
@@ -37,11 +41,7 @@ var Create_Topic={
             target = parent.find('#btn_discover');
             target.unbind();
             target.on('click',function(){
-                // target.bind();
-
                 parent.modal('hide');
-                // self._init();
-                // location.href.reload ;
             });
     },
 
@@ -247,8 +247,8 @@ var Create_Topic={
         btn.unbind();
         btn.on('click',function(){
             if(!btn.hasClass('disable')){
-                console.log(city);
-                Ajax.new_topic(Create_Topic.params).then(function(){
+                Ajax.new_topic(Create_Topic.params).then(function(data){
+                    Create_Topic.params.city = data;
                     Create_Topic.reset_data();
                     Create_Topic.setDefaultBtn();
                     setTimeout(function(){
@@ -256,7 +256,7 @@ var Create_Topic={
                             Create_Topic.redirect();
                         }else{
                             Create_Topic.hideModalCreateTopic();
-                            Topic.init(city);
+                            Topic.init(Create_Topic.params.city);
                         }
                     },700);
                 });

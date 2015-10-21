@@ -9,6 +9,21 @@ var Default ={
         }
     },
 
+    getMarkerDefault: function(){
+        var parent = $('.indiana_marker');
+        Ajax.get_marker_default().then(function(data){
+            Default.getTemplate(parent,data);
+        });
+    },
+
+    getMarkerZoom: function(){
+        var parent = $('.indiana_marker');
+        Ajax.get_marker_zoom().then(function(data){
+            Default.getTemplate(parent,data);
+        });
+
+    },
+
     _eventClickMeetBtn: function() {
         var target = $('#btn_meet'),
             self = this;
@@ -24,5 +39,14 @@ var Default ={
         target.on('click',function(){
             Meet.showUserMeetMobile();
         });
-    }
+    },
+
+    getTemplate: function(parent,data){
+        var self = this;
+        var json = $.parseJSON(data); 
+        var list_template = _.template($("#netwrk_place").html());
+        var append_html = list_template({cities: json});
+
+        parent.append(append_html);
+    },
 };

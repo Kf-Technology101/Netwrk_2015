@@ -18,10 +18,6 @@ class m150904_100101_initial_cities extends \yii\db\Migration
             'lng' => Schema::TYPE_FLOAT,
         ], $tableOptions);
 
-        // $this->batchInsert('{{%city}}', ['name', 'lat', 'lng'], [
-        //     [ 'Bloomington', 39.165325, -86.526386 ],
-        //     [ 'Evansville', 37.971559, -87.571090 ],
-        // ]);
         $this->execute("INSERT INTO {{%city}} (name, lat, lng)
             VALUES ('Bloomington', 39.165325, -86.526386),
             ('Evansville', 37.971559, -87.571090),

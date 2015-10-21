@@ -11,6 +11,8 @@ use Yii;
  * @property string $name
  * @property double $lat
  * @property double $lng
+ * @property integer $post_count
+ * @property integer $user_count
  *
  * @property Topic[] $topics
  */
@@ -31,7 +33,7 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['lat', 'lng'], 'number'],
+            [['lat', 'lng', 'post_count', 'user_count'], 'number'],
             [['name'], 'string', 'max' => 45],
         ];
     }

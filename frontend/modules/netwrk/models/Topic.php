@@ -55,4 +55,32 @@ class Topic extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCity()
+    {   
+        return $this->hasOne(City::className(), ['id' => 'city_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosts()
+    {
+        return $this->hasMany(Post::className(), ['topic_id' => 'id']);
+    }
+
+    public function beforeSave($insert){
+        if ($insert) {
+            $user_exits = Topic::find()->where(['user_id'=> 1,'city_id'=>$this->city_id])->one();
+            if(!$user_exits){
+                $this->city->updateAttributes([
+                    'user_count' =>  $this->city->user_count + 1
+                ]);
+            }
+        }
+        return parent::beforeSave($insert);
+    }
 }

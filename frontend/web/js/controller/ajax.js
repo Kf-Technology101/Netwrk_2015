@@ -1,5 +1,61 @@
 var Ajax ={
 
+    check_zipcode_exist: function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/default/check-exist-zipcode";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    
+    get_marker_default: function(){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/default/get-maker-default-zoom";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+
+    },
+
+    get_marker_zoom: function(){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/default/get-maker-max-zoom";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+
+    },
+
     show_topic: function(params){
         var url,defer = $.Deferred();
 

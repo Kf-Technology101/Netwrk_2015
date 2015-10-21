@@ -165,6 +165,7 @@ var Topic = {
         $(target[0]).addClass('active');
 
         $('#modal_topic').modal('hide');
+        Map.get_data_marker();
     },
 
     show_page_topic: function(city){
@@ -259,7 +260,7 @@ var Topic = {
     onTemplate: function(json){
         var self = this;
 
-        if(json.data.length == 0){
+        if(json.data.length == 0){ 
             $('#item_list_'+self.data.filter).find('.no-data').show();
             self.list[self.data.filter].status_paging = 0;
         }else if(json.data.length < 12 && json.data.length > 0){

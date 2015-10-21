@@ -29,7 +29,8 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/lib/underscore.js',
         'js/main.js',
-        'js/ajax/get.js',
+        'js/controller/ajax.js',
+        'js/controller/map.js',
         'js/controller/default.js',
         'js/controller/topic.js',
         'js/controller/create_topic.js',

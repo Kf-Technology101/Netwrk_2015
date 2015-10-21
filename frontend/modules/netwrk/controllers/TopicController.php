@@ -48,11 +48,32 @@ class TopicController extends BaseController
     $topic = $_POST['topic'];
     $post = $_POST['post'];
     $message = $_POST['message'];
+
+    $zipcode = $_POST['zip_code'];
+    $city_name = $_POST['netwrk_name'];
+    $lat = $_POST['lat'];
+    $lng = $_POST['lng'];
+
     $current_date = date('Y-m-d H:i:s');
+
+    $cty = City::findOne($city);
+    $city_id = 0;
+
+    if($cty){
+      $city_id = $cty->id;
+    }else{
+      $netwrk = new City;
+      $netwrk->name = $city_name;
+      $netwrk->lat = $lat;
+      $netwrk->lng = $lng;
+      $netwrk->zip_code = $zipcode;
+      $netwrk->save();
+      $city_id = $netwrk->id;
+    }
 
     $Topic = new Topic;
     $Topic->user_id = $this->currentUser;
-    $Topic->city_id = $city;
+    $Topic->city_id = $city_id;
     $Topic->title = $topic;
     $Topic->created_at = $current_date;
     $Topic->updated_at = $current_date;
@@ -69,6 +90,8 @@ class TopicController extends BaseController
 
     $Topic->post_count = 1;
     $Topic->update();
+
+    return $city_id;
   }
 
   public function actionGetTopicMobile()
@@ -127,7 +150,7 @@ class TopicController extends BaseController
       );
       array_push($data,$topic);
     }
-    $temp = array ('data'=> $data ,'city' => $cty->name);
+    $temp = array ('data'=> $data ,'city' => $cty ? $cty->name : 'new');
     $hash = json_encode($temp);
 
     return $hash;
