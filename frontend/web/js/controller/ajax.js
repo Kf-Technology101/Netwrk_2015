@@ -1,4 +1,21 @@
 var Ajax ={
+    get_top_post: function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/default/get-top-post";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     check_zipcode_exist: function(params){
         var url,defer = $.Deferred();
@@ -17,7 +34,7 @@ var Ajax ={
 
         return defer.promise();
     },
-    
+
     get_marker_default: function(){
         var url,defer = $.Deferred();
 

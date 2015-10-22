@@ -40,7 +40,16 @@ class TopicController extends BaseController
 
   public function actionCreateTopic($city) {
     $cty = City::findOne($city);
-    return $this->render('mobile/create',['city' =>$cty]);
+    if ($cty){
+      $city_id = $cty->id;
+      $name = $cty->name;
+
+    }else{
+      $city_id = $city;
+      $name = "New Netwrk";
+      $status = 0;
+    }
+    return $this->render('mobile/create',['city_id' =>$city_id,'status'=>$status]);
   }
 
   public function actionNewTopic() {
@@ -150,7 +159,7 @@ class TopicController extends BaseController
       );
       array_push($data,$topic);
     }
-    $temp = array ('data'=> $data ,'city' => $cty ? $cty->name : 'new');
+    $temp = array ('data'=> $data ,'city' => $cty ? $cty->name : 'New Netwrk');
     $hash = json_encode($temp);
 
     return $hash;
@@ -158,7 +167,14 @@ class TopicController extends BaseController
 
   public function actionTopicPage($city) {
     $cty = City::findOne($city);
-    return $this->render('mobile/index', ['city' =>$cty]);
+    if ($cty){
+      $city_id = $cty->id;
+      $name = $cty->name;
+    }else{
+      $city_id = $city;
+      $name = "New Netwrk";
+    }
+    return $this->render('mobile/index', ['city_id' =>$city_id,'city_name'=> $name]);
   }
   
   public function changeFormatNumber($num)

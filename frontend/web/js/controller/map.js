@@ -8,6 +8,7 @@ var Map ={
 	latLng: '',
 	markers:[],
 	data_map:'',
+	infowindow:[],
 	initialize: function() {
 		var map_andiana = {
 			center:new google.maps.LatLng(39.7662195,-86.441277),
@@ -26,6 +27,7 @@ var Map ={
 		Map.show_marker(map);
 		Map.min_max_zoom(map);
 		Map.eventOnclick(map);
+		
 		Map.eventZoom(map);
 	},
 
@@ -82,23 +84,12 @@ var Map ={
 	},
 
 	show_marker: function(map){
-	  	var marker;
+	  	var marker,json;
 
 	 	var data_marker = Map.get_netwrk();
 
 		$.each(data_marker,function(i,e){
-			var content = '<div id="iw-container">' +
-                    '<div class="iw-title"><span class="toppost">Top Post</span><span class="zipcode">44231</span></div>' +
-                    '<div class="iw-content">' +
-                      '<div class="iw-subTitle">#History</div>' +
-                      '<p>VISTA ALEGRE ATLANTIS, SA 3830-292 Ílhavo - Portugal</p>'+
-                    '</div>' +
-                    '<div class="iw-bottom-gradient"></div>' +
-                  '</div>';
-            var infowindow = new google.maps.InfoWindow({
-            	content: content,
-            	maxWidth: 350
-            });
+
 
 			marker = new google.maps.Marker({
 				position: new google.maps.LatLng(e[1], e[2]),
@@ -108,66 +99,88 @@ var Map ={
 
 			google.maps.event.addListener(marker, 'click', (function(marker, i) {
 				return function(){
-					// infowindow.close();
+					if(!isMobile){
+						infowindow.close();
+					}
 					Topic.init(marker.city_id);
 				};
 			})(marker, i));
 
-			if (!isMobile) {
-				google.maps.event.addListener(marker, 'mouseover', function(marker, i) {
+			if(!isMobile){
+				Ajax.get_top_post({city_id: e[3]}).then(function(data){
+	 				json = $.parseJSON(data); 
+				});
+				var content = '<div id="iw-container" >' +
+			                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ json.city_id +'" onclick="Map.eventOnClickZipcode('+json.city_id +')"><span class="zipcode">'+ json.zipcode + '</span></a></div>' +
+			                '<div class="iw-content">' +
+			                  '<div class="iw-subTitle">#'+json.name_post+'</div>' +
+			                  '<p>'+json.content+'</p>'+
+			                '</div>' +
+			                '<div class="iw-bottom-gradient"></div>' +
+			              '</div>';
+	            var infowindow = new google.maps.InfoWindow({
+	            	content: content,
+	            	city_id: json.city_id,
+	            	maxWidth: 350
+	            });
+	            
+	            Map.infowindow.push(infowindow);
+
+				google.maps.event.addListener(marker, 'mouseover', function(d) {
 					// infowindow.setContent(e[0]);
 					infowindow.open(map, this);
+					Map.onhoverInfoWindow(e[3],marker);
 				});
 
 				google.maps.event.addListener(marker, 'mouseout', function() {
 					// infowindow.close();
 				});
+			  	google.maps.event.addListener(infowindow, 'domready', function() {
+
+				    // Reference to the DIV that wraps the bottom of infowindow
+				    var iwOuter = $('.gm-style-iw');
+
+				    /* Since this div is in a position prior to .gm-div style-iw.
+				     * We use jQuery and create a iwBackground variable,
+				     * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+				    */
+				    var iwBackground = iwOuter.prev();
+
+				    // Removes background shadow DIV
+				    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+				    // Removes white background DIV
+				    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+				    // Moves the infowindow 115px to the right.
+				    iwOuter.parent().parent().css({left: '115px'});
+
+				    // Moves the shadow of the arrow 76px to the left margin.
+				    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 76px !important;'});
+
+				    // Moves the arrow 76px to the left margin.
+				    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 76px !important;'});
+
+				    // Changes the desired tail shadow color.
+				    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+
+				    // Reference to the div that groups the close button elements.
+				    var iwCloseBtn = iwOuter.next();
+
+				    // Apply the desired effect to the close button
+				    iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499'});
+
+				    // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
+				    if($('.iw-content').height() < 140){
+				      $('.iw-bottom-gradient').css({display: 'none'});
+				    }
+
+				    // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+				    iwCloseBtn.mouseout(function(){
+				      $(this).css({opacity: '0'});
+				    });
+		  		});
 			}
-		  	google.maps.event.addListener(infowindow, 'domready', function() {
-
-			    // Reference to the DIV that wraps the bottom of infowindow
-			    var iwOuter = $('.gm-style-iw');
-
-			    /* Since this div is in a position prior to .gm-div style-iw.
-			     * We use jQuery and create a iwBackground variable,
-			     * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-			    */
-			    var iwBackground = iwOuter.prev();
-
-			    // Removes background shadow DIV
-			    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-
-			    // Removes white background DIV
-			    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-
-			    // Moves the infowindow 115px to the right.
-			    iwOuter.parent().parent().css({left: '115px'});
-
-			    // Moves the shadow of the arrow 76px to the left margin.
-			    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 164px !important;left: 76px !important;'});
-
-			    // Moves the arrow 76px to the left margin.
-			    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 164px !important;left: 76px !important;'});
-
-			    // Changes the desired tail shadow color.
-			    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
-
-			    // Reference to the div that groups the close button elements.
-			    var iwCloseBtn = iwOuter.next();
-
-			    // Apply the desired effect to the close button
-			    iwCloseBtn.css({opacity: '1', right: '38px', top: '3px', border: '7px solid #48b5e9', 'border-radius': '13px', 'box-shadow': '0 0 5px #3990B9'});
-
-			    // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
-			    if($('.iw-content').height() < 140){
-			      $('.iw-bottom-gradient').css({display: 'none'});
-			    }
-
-			    // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-			    iwCloseBtn.mouseout(function(){
-			      $(this).css({opacity: '1'});
-			    });
-		  	});
 
 			Map.markers.push(marker);
 		});
@@ -220,11 +233,38 @@ var Map ={
 
 	eventOnclick: function(map){
 	  	google.maps.event.addListener(map, 'click', function(e) {
+	  		console.log(e);
+	  		Map.closeInfoWindow();
 	  		Map.reset_data();
 			Map.geocoder(e.latLng);
-			// console.log(e);
 			Map.latLng = e.latLng;
-			// alert( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng() ); 
+		});
+	},
+
+	eventOnclickMarker: function(){
+
+	},
+
+	eventOnClickZipcode: function(city){
+		console.log(Map.infowindow);
+		$.each(Map.infowindow,function(i,e){
+			e.close();
+			Map.infowindow=[];
+		});
+		Topic.init(city);
+	},
+
+	onhoverInfoWindow: function(city,marker){
+		$.each(Map.infowindow,function(i,e){
+			if(e.open && e.city_id != city){
+				e.close();
+			}
+		});
+	},
+
+	closeInfoWindow:function(){
+		$.each(Map.infowindow,function(i,e){
+			e.close();
 		});
 	},
 
@@ -232,6 +272,7 @@ var Map ={
 		var geo = new google.maps.Geocoder();
 
 		geo.geocode({'latLng': data},function(value,status){
+			console.log(value);
 			if(status == google.maps.GeocoderStatus.OK){
 				Map.get_zipcode(value[0].address_components);
 			}
@@ -263,8 +304,6 @@ var Map ={
             			Topic.init(json.city);
             		}
             	});
-
-            	
             }
         });
 	},

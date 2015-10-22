@@ -14,6 +14,22 @@ class DefaultController extends BaseController
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 
+    public function actionGetTopPost()
+    {	
+    	$city_id = $_POST['city_id'];
+    	$city = City::findOne($city_id);
+    	$post = $city->topics[0]->posts[0];
+
+    	$data =[
+    		'city_id'=> $city->id,
+    		'zipcode'=> $city->zip_code,
+    		'name_post'=> $post->title,
+    		'content' => substr($post->content,0,140),
+    	];
+    	$hash = json_encode($data);
+    	return $hash;
+    }
+
     public function actionCheckExistZipcode()
     {
     	$zipcode = $_POST['zipcode'];

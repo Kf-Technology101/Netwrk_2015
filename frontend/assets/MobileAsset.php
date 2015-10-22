@@ -33,6 +33,7 @@ class MobileAsset extends AssetBundle
       'js/main.js',
       'js/bootstrap-datepicker.min.js',
       'js/controller/ajax.js',
+      'js/controller/map.js',
       'js/controller/default.js',
       'js/controller/topic.js',
       'js/controller/create_topic.js',
