@@ -108,6 +108,7 @@ var Map ={
 			})(marker, i));
 
 			if(!isMobile){
+				var json = null;
 				Ajax.get_top_post({city_id: e[3]}).then(function(data){
 	 				json = $.parseJSON(data); 
 				});

@@ -71,11 +71,6 @@ class TopicController extends BaseController
     $post = $_POST['post'];
     $message = $_POST['message'];
 
-    $zipcode = $_POST['zip_code'];
-    $city_name = $_POST['netwrk_name'];
-    $lat = $_POST['lat'];
-    $lng = $_POST['lng'];
-
     $current_date = date('Y-m-d H:i:s');
 
     $cty = City::findOne($city);
@@ -84,6 +79,11 @@ class TopicController extends BaseController
     if($cty){
       $city_id = $cty->id;
     }else{
+      $zipcode = $_POST['zip_code'];
+      $city_name = $_POST['netwrk_name'];
+      $lat = $_POST['lat'];
+      $lng = $_POST['lng'];
+      
       $netwrk = new City;
       $netwrk->name = $city_name;
       $netwrk->lat = $lat;
@@ -120,6 +120,7 @@ class TopicController extends BaseController
   {
     $userId = 1;
     $city = $_GET['city'];
+    $zipcode = $_GET['zipcode'];
     $filter = $_GET['filter'];
     $pageSize = $_GET['size'];
     $page = $_GET['page'];
@@ -172,7 +173,7 @@ class TopicController extends BaseController
       );
       array_push($data,$topic);
     }
-    $temp = array ('data'=> $data ,'city' => $cty ? $cty->name : 'New Netwrk');
+    $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode);
     $hash = json_encode($temp);
 
     return $hash;
@@ -189,6 +190,7 @@ class TopicController extends BaseController
       $name = $cty->name;
       $object = array(
         'city_name'=> $name,
+        'zipcode'=> $cty->zip_code,
         'status'=> 1
       );
     }else{

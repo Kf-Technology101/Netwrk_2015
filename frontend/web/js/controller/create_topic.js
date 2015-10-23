@@ -151,7 +151,12 @@ var Create_Topic={
     },
 
     redirect: function(){
-        window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;;
+        console.log(Create_Topic.params.zip_code);
+        if(Create_Topic.params.zip_code){
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;;
+        }else{
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city;
+        }
     },
 
     onChangeData: function(target,filter){
@@ -257,7 +262,7 @@ var Create_Topic={
                     Create_Topic.setDefaultBtn();
                     setTimeout(function(){
                         if(isMobile){
-                            Create_Topic.redirect();
+                            Create_Topic.redirect(Create_Topic.params.city);
                         }else{
                             Create_Topic.hideModalCreateTopic();
                             Topic.init(Create_Topic.params.city);

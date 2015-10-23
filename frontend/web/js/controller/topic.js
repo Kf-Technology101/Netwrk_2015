@@ -3,7 +3,9 @@ var Topic = {
         filter: 'post',
         city: '',
         size: 12,
-        city_name:''
+        city_name:'',
+        zipcode:''
+
     },
     list:{
         post:{
@@ -40,7 +42,7 @@ var Topic = {
         if (isMobile) {
             Topic.show_page_topic(city,params);
         }else {
-            Topic.show_modal_topic(city);
+            Topic.show_modal_topic(city,params);
         }
     },
 
@@ -84,7 +86,11 @@ var Topic = {
             btn = $('#show-topic').find('.create_topic');
             btn.unbind();
             btn.on('click',function(){
-                window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city+"&zipcode="+Topic.params.zipcode+"&name="+Topic.params.name+"&lat="+Topic.params.lat+"&lng="+Topic.params.lng;
+                if(Topic.params.zipcode){
+                    window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city+"&zipcode="+Topic.params.zipcode+"&name="+Topic.params.name+"&lat="+Topic.params.lat+"&lng="+Topic.params.lng;
+                }else{
+                    window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city;
+                }
             });
         }else{
             btn = $('#modal_topic').find('.create_topic');
@@ -120,12 +126,20 @@ var Topic = {
             });
         }
     },
-    show_modal_topic: function(city){
+
+    show_modal_topic: function(city,new_params){
         var self = this;
         var parent = $('#item_list_'+self.data.filter);
         var sidebar = $('.map_content .sidebar');
         self.data.city = city;
-        var params = {'city': self.data.city, 'filter': self.data.filter,'size': self.data.size,'page':1};
+
+        if(new_params){
+            self.data.zipcode = new_params.zipcode;
+        }else{
+            self.data.zipcode = '';
+        }
+
+        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
         $('#modal_topic .filter_sidebar').find('td').first().addClass('active');
         parent.show();
@@ -204,8 +218,15 @@ var Topic = {
     load_topic: function(){
         var self = this;
         var city = $('#show-topic').data('city');
-        var params = {'city': city, 'filter': self.data.filter,'size': 12,'page':self.list[self.data.filter].paging};
+        var zipcode = $('#show-topic').data('zipcode');
+        if(zipcode){
+            self.data.zipcode = zipcode;
+        }else{
+            self.data.zipcode = '';
+        }
+        var params = {'city': city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': 12,'page':self.list[self.data.filter].paging};
         self.data.city = city;
+        
         $(window).scrollTop(0);
         if($('#Topic').attr('data-action') == 'topic-page'){
             if(self.list[self.data.filter].status_paging == 1){
