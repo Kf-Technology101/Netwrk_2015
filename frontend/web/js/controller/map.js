@@ -1,7 +1,7 @@
 var Map ={
 	params:{
 		name:'',
-		zip_code:'',
+		zipcode:'',
 		lat:'',
 		lng:''
 	},
@@ -29,6 +29,7 @@ var Map ={
 		Map.eventOnclick(map);
 		
 		Map.eventZoom(map);
+		Map.eventClickMyLocation(map);
 	},
 
 	main: function(){
@@ -186,6 +187,18 @@ var Map ={
 		});
 		
 	},
+
+	eventClickMyLocation: function(map){
+		var btn = $('#btn_my_location');
+
+		btn.on('click',function(){
+			Ajax.get_position_user().then(function(data){
+				var json = $.parseJSON(data);
+				map.setCenter(new google.maps.LatLng(json.lat, json.lng));
+			});
+		});
+	},
+
 	eventZoom: function(map){
 		var zoom_current = 7;
 	  	map.addListener('zoom_changed', function() {
@@ -226,14 +239,14 @@ var Map ={
 	},
 
 	reset_data: function(){
-		Map.params.zip_code = null;
+		Map.params.name = null;
+		Map.params.zipcode = null;
 		Map.params.lat = null;
 		Map.params.lng = null;
 	},
 
 	eventOnclick: function(map){
 	  	google.maps.event.addListener(map, 'click', function(e) {
-	  		console.log(e);
 	  		Map.closeInfoWindow();
 	  		Map.reset_data();
 			Map.geocoder(e.latLng);
@@ -272,7 +285,6 @@ var Map ={
 		var geo = new google.maps.Geocoder();
 
 		geo.geocode({'latLng': data},function(value,status){
-			console.log(value);
 			if(status == google.maps.GeocoderStatus.OK){
 				Map.get_zipcode(value[0].address_components);
 			}
@@ -290,7 +302,10 @@ var Map ={
 	checkzipcode: function(zipcode){
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
             if (data.places[0].state == "Indiana"){
+            	Map.params.name = data.places[0]['place name'],
             	Map.params.zipcode = zipcode;
+            	Map.params.lat = data.places[0].latitude;
+            	Map.params.lng = data.places[0].longitude;
             	Create_Topic.params.zip_code = zipcode;
             	Create_Topic.params.lat = Map.latLng.lat();
             	Create_Topic.params.lng = Map.latLng.lng();
@@ -299,7 +314,7 @@ var Map ={
             	Ajax.check_zipcode_exist(Map.params).then(function(data){
             		var json = $.parseJSON(data);
             		if (json.status == 0){
-            			Topic.init($.now());
+            			Topic.init($.now(),Map.params);
             		}else{
             			Topic.init(json.city);
             		}

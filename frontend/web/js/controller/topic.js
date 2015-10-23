@@ -22,18 +22,36 @@ var Topic = {
             loaded: 0
         }
     },
+    params:{
+        zipcode:'',
+        name:'',
+        lat: '',
+        lng:'',
+    },
     initialize: function(){
         this._onclickBack();
         this.load_topic();
+        this.get_data_new_netwrk();
         this.filter_topic($(window));
         this.scroll_bot();
     },
 
-    init: function(city){
+    init: function(city,params){
         if (isMobile) {
-            Topic.show_page_topic(city);
+            Topic.show_page_topic(city,params);
         }else {
             Topic.show_modal_topic(city);
+        }
+    },
+
+    get_data_new_netwrk: function(){
+        var parent = $('#show-topic');
+
+        if (parent.attr('data-zipcode')){
+            Topic.params.zipcode = parent.attr('data-zipcode');
+            Topic.params.lat = parent.attr('data-lat');
+            Topic.params.lng = parent.attr('data-lng');
+            Topic.params.name = parent.attr('data-name');
         }
     },
 
@@ -66,7 +84,7 @@ var Topic = {
             btn = $('#show-topic').find('.create_topic');
             btn.unbind();
             btn.on('click',function(){
-                window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city;
+                window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city+"&zipcode="+Topic.params.zipcode+"&name="+Topic.params.name+"&lat="+Topic.params.lat+"&lng="+Topic.params.lng;
             });
         }else{
             btn = $('#modal_topic').find('.create_topic');
@@ -168,9 +186,13 @@ var Topic = {
         Map.get_data_marker();
     },
 
-    show_page_topic: function(city){
-        var self = this;
-        window.location.href = "netwrk/topic/topic-page?city="+city;   
+    show_page_topic: function(city,params){
+        console.log(params);
+        if (params){
+            window.location.href = "netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng; 
+        }else{
+            window.location.href = "netwrk/topic/topic-page?city="+city;
+        }
     },
 
     _onclickBack: function(){

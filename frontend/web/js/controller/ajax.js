@@ -1,4 +1,22 @@
 var Ajax ={
+    get_position_user: function(){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/default/get-user-position";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     get_top_post: function(params){
         var url,defer = $.Deferred();
 

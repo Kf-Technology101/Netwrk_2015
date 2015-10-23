@@ -2,6 +2,9 @@
 </ul>
 
 <div class="map_content_mobile">
+  <div id="btn_my_location">
+    <i class="fa fa-crosshairs"></i>
+  </div>
   <div id="googleMap" style=""></div>
 </div>
 <script src="http://maps.googleapis.com/maps/api/js"></script>

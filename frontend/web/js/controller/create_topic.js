@@ -20,6 +20,10 @@ var Create_Topic={
     initialize: function(city,name){       
         if(isMobile){
             Create_Topic.params.city = $('#create_topic').attr('data-city');
+            Create_Topic.params.netwrk_name = $('#create_topic').attr('data-name-city');
+            Create_Topic.params.zip_code = $('#create_topic').attr('data-zipcode');
+            Create_Topic.params.lat = $('#create_topic').attr('data-lat');
+            Create_Topic.params.lng = $('#create_topic').attr('data-lng');
             this.changeData();
             Create_Topic.onclickBack();
             Create_Topic.showNetWrkBtn();
@@ -147,7 +151,7 @@ var Create_Topic={
     },
 
     redirect: function(){
-        window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city;
+        window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;;
     },
 
     onChangeData: function(target,filter){

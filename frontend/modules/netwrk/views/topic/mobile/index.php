@@ -1,12 +1,14 @@
-<?php use yii\helpers\Url; ?>
-<div id="show-topic" data-city="<?= $city_id ?>">
+<?php use yii\helpers\Url;
+    // var_dump($data);die;
+?>
+<div id="show-topic" data-city="<?= $city_id ?>" <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'" data-name="'.$data->city_name.'"'; } ?>>
     <div class="header">
         <div class="back_page">
             <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
         </div>
 
         <div class="title_page">
-            <span class="title"><a href="<?php echo Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>"></a><?php print $city_name?></span>
+            <span class="title"><a href="<?php echo Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>"></a><?php print $data->city_name?></span>
         </div>
         <div class="create_topic">
             <span>Create a topic +</span>

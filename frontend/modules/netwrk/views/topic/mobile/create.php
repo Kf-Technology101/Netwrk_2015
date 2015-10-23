@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="create_topic" data-city="<?php echo $city_id ?>">
+<div id="create_topic" data-city="<?php echo $city_id ?>" <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'" data-name-city="'.$data->city_name.'"'; } ?>>
     <div class="header">
         <div class="back_page">
             <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">

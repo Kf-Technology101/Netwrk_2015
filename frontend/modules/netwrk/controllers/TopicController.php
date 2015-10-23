@@ -34,22 +34,35 @@ class TopicController extends BaseController
       'data'=> $data,
       'num_post'=> $num_post - 3
     );
-    echo "pre"; print_r($post_data); die;
     return $this->render('index');
   }
 
-  public function actionCreateTopic($city) {
+  public function actionCreateTopic() {
+    $city = $_GET['city'];
     $cty = City::findOne($city);
     if ($cty){
       $city_id = $cty->id;
       $name = $cty->name;
-
+      $object = array(
+        'city_name'=> $name,
+        'status'=> 1
+      );
     }else{
+      $name = $_GET['name'];
+      $zip_code = $_GET['zipcode'];
+      $lat = $_GET['lat'];
+      $lng = $_GET['lng'];
       $city_id = $city;
-      $name = "New Netwrk";
-      $status = 0;
+      $object = array(
+        'status'=> 0,
+        'city_name'=> $name,
+        'zipcode'=> $zip_code,
+        'lat'=> $lat,
+        'lng'=> $lng,
+        'city_id' => $city_id
+      );
     }
-    return $this->render('mobile/create',['city_id' =>$city_id,'status'=>$status]);
+    return $this->render('mobile/create',['city_id' =>$city_id,'data'=> (object)$object]);
   }
 
   public function actionNewTopic() {
@@ -165,16 +178,36 @@ class TopicController extends BaseController
     return $hash;
   }
 
-  public function actionTopicPage($city) {
+  public function actionTopicPage() {
+    $city = $_GET['city'];
+
+    $object = array();
+
     $cty = City::findOne($city);
     if ($cty){
       $city_id = $cty->id;
       $name = $cty->name;
+      $object = array(
+        'city_name'=> $name,
+        'status'=> 1
+      );
     }else{
+      
+      $name = $_GET['name'];
+      $zip_code = $_GET['zipcode'];
+      $lat = $_GET['lat'];
+      $lng = $_GET['lng'];
       $city_id = $city;
-      $name = "New Netwrk";
+      $object = array(
+        'status'=> 0,
+        'city_name'=> $name,
+        'zipcode'=> $zip_code,
+        'lat'=> $lat,
+        'lng'=> $lng,
+        'city_id' => $city_id
+      );
     }
-    return $this->render('mobile/index', ['city_id' =>$city_id,'city_name'=> $name]);
+    return $this->render('mobile/index', ['city_id' =>$city_id,'data'=> (object)$object]);
   }
   
   public function changeFormatNumber($num)

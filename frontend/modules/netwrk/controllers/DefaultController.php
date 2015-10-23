@@ -6,12 +6,26 @@ use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
+use frontend\modules\netwrk\models\User;
 
 class DefaultController extends BaseController
-{
+{	
+	private $currentUser = 1; 
+
     public function actionIndex()
     {
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
+    }
+
+    public function actionGetUserPosition(){
+    	$user = User::find()->where('id ='.$this->currentUser)->one();
+		$data =[
+    		'lat'=> $user->profile->lat,
+    		'lng'=> $user->profile->lng,
+    	];
+
+    	$hash = json_encode($data);
+    	return $hash;
     }
 
     public function actionGetTopPost()

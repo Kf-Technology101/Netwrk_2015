@@ -4,6 +4,9 @@
 </ul>
 
 <div class="map_content">
+  <div id="btn_my_location">
+    <i class="fa fa-crosshairs"></i>
+  </div>
   <div class="sidebar">
     <div class="container">
       <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
