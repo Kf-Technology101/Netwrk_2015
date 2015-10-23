@@ -18,9 +18,18 @@ var Map ={
 			streetViewControl: false,
 			mapTypeId:google.maps.MapTypeId.ROADMAP,
 		};
+		var remove_poi = [
+   			{
+     			featureType: "poi",
+ 				stylers: [
+      				{ visibility: "off" }
+ 				]   
+    		}
+		];
 
+		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false, disableDoubleClickZoom: true});
+		map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		
 		Map.data_map = map;
 		Default.getMarkerDefault();
