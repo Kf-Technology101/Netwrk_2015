@@ -130,8 +130,8 @@ var Map ={
 			 //                '<div class="iw-bottom-gradient"></div>' +
 			 //              '</div>';
 	            var infowindow = new google.maps.InfoWindow({
-	            	content: '12313232',
-	            	// city_id: json.city_id,y
+	            	content: content,
+	            	city_id: json.city_id,
 	            	maxWidth: 350
 	            });
 	            
