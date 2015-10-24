@@ -43,6 +43,7 @@ var Topic = {
             Topic.show_page_topic(city,params);
         }else {
             Topic.show_modal_topic(city,params);
+            Topic.close_modal();
         }
     },
 
@@ -73,7 +74,8 @@ var Topic = {
                 var target = $(e.currentTarget).parents('.item').eq(0),
                     topic_id = target.attr('data-item');
                     toptic_name = target.find('.name_topic p').text();
-                Topic.reset_modal();
+                $('#modal_topic').modal('hide');
+                // Topic.reset_modal();
                 Create_Post.initialize(Topic.data.city,topic_id,Topic.data.city_name,toptic_name);
             });
         }
@@ -95,7 +97,8 @@ var Topic = {
             btn = $('#modal_topic').find('.create_topic');
             btn.unbind();
             btn.on('click',function(){
-                Topic.reset_modal();
+                $('#modal_topic').modal('hide');
+                // Topic.reset_modal();
                 Create_Topic.initialize(Topic.data.city,Topic.data.city_name);
             });
         }
@@ -158,13 +161,15 @@ var Topic = {
             
             self.scroll_bot();
             self.filter_topic(parent);
+            
 
-            $('#modal_topic').on('hidden.bs.modal',function() {
-                self.reset_modal();
-            });
-            $('.modal-backdrop.in').click(function(e) {
-                self.reset_modal();
-            });
+        });
+    },
+
+    close_modal: function(){
+        $('#modal_topic').on('hidden.bs.modal',function(e) {
+            $(e.currentTarget).unbind(); // or $(this)        
+            Topic.reset_modal();
         });
     },
 
@@ -194,8 +199,6 @@ var Topic = {
             }
         });
         $(target[0]).addClass('active');
-
-        $('#modal_topic').modal('hide');
         Map.get_data_marker();
     },
 

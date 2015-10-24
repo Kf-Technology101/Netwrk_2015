@@ -83,7 +83,7 @@ class TopicController extends BaseController
       $city_name = $_POST['netwrk_name'];
       $lat = $_POST['lat'];
       $lng = $_POST['lng'];
-      
+
       $netwrk = new City;
       $netwrk->name = $city_name;
       $netwrk->lat = $lat;
@@ -120,11 +120,14 @@ class TopicController extends BaseController
   {
     $userId = 1;
     $city = $_GET['city'];
-    $zipcode = $_GET['zipcode'];
+    
     $filter = $_GET['filter'];
     $pageSize = $_GET['size'];
     $page = $_GET['page'];
     $cty = City::findOne($city);
+    if(!$cty){
+      $zipcode = $_GET['zipcode'];
+    }
     switch ($filter) {
       case 'post':
         $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['post_count'=> SORT_DESC]);

@@ -48,8 +48,8 @@ var Map ={
 	},
 
 	get_data_marker: function(){
+		console.log('aaaaa');
 		var map = Map.data_map;
-		// console.log('adasd');
 		var current = map.getZoom();
 		$('.indiana_marker').find("li[num-city]").remove();
 		Map.deleteNetwrk(map);
