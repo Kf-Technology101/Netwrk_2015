@@ -4,7 +4,7 @@
 </ul>
 
 <div class="map_content">
-  <div id="btn_my_location">
+  <div id="btn_my_location" data-toggle="tooltip" title="Show My Local Netwrk">
     <i class="fa fa-crosshairs"></i>
   </div>
   <div class="sidebar">
