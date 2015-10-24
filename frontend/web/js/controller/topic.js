@@ -73,7 +73,6 @@ var Topic = {
                 var target = $(e.currentTarget).parents('.item').eq(0),
                     topic_id = target.attr('data-item');
                     toptic_name = target.find('.name_topic p').text();
-                    console.log(toptic_name);
                 Topic.reset_modal();
                 Create_Post.initialize(Topic.data.city,topic_id,Topic.data.city_name,toptic_name);
             });
