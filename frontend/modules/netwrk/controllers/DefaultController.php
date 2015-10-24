@@ -34,11 +34,17 @@ class DefaultController extends BaseController
     	$city = City::findOne($city_id);
     	$post = $city->topics[0]->posts[0];
 
+    	$content = $post->content;
+    	if(strlen($content) > 140){
+    		$content = substr($post->content,0,140) ;
+    		$content = $content."...";
+    	}
+
     	$data =[
     		'city_id'=> $city->id,
     		'zipcode'=> $city->zip_code,
     		'name_post'=> $post->title,
-    		'content' => substr($post->content,0,140),
+    		'content' => $content,
     	];
     	$hash = json_encode($data);
     	return $hash;
