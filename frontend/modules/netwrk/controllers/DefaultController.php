@@ -71,13 +71,26 @@ class DefaultController extends BaseController
     	$data = [];
 
     	foreach ($cities as $key => $value) {
+    		$post = $value->topics[0]->posts[0];
+	    	$content = $post->content;
+
+	    	if(strlen($content) > 140){
+	    		$content = substr($post->content,0,140) ;
+	    		$content = $content."...";
+	    	}
+
     		$netwrk = array(
     			'id'=> $value->id,
     			'name'=> $value->name,
     			'lat'=> $value->lat,
     			'lng'=>$value->lng,
-    			'zip_code'=> $value->zip_code
+    			'zip_code'=> $value->zip_code,
+    			'post'=> array(
+		    		'name_post'=> $post->title,
+    				'content' => $content,
+    			)
     		);
+
     		array_push($data,$netwrk);
     	}
 
@@ -92,12 +105,24 @@ class DefaultController extends BaseController
     	$data = [];
 
     	foreach ($cities as $key => $value) {
+    		$post = $value->topics[0]->posts[0];
+	    	$content = $post->content;
+
+	    	if(strlen($content) > 140){
+	    		$content = substr($post->content,0,140) ;
+	    		$content = $content."...";
+	    	}
+
     		$netwrk = array(
     			'id'=> $value->id,
     			'name'=> $value->name,
     			'lat'=> $value->lat,
     			'lng'=>$value->lng,
-    			'zip_code'=> $value->zip_code
+    			'zip_code'=> $value->zip_code,
+    			'post'=> array(
+		    		'name_post'=> $post->title,
+    				'content' => $content,
+				)
     		);
     		array_push($data,$netwrk);
     	}

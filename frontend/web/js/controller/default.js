@@ -11,16 +11,16 @@ var Default ={
 
     getMarkerDefault: function(){
         var parent = $('.indiana_marker');
-        Ajax.get_marker_default().then(function(data){
-            Default.getTemplate(parent,data);
-        });
+        // Ajax.get_marker_default().then(function(data){
+        //     Default.getTemplate(parent,data);
+        // });
     },
 
     getMarkerZoom: function(){
         var parent = $('.indiana_marker');
-        Ajax.get_marker_zoom().then(function(data){
-            Default.getTemplate(parent,data);
-        });
+        // Ajax.get_marker_zoom().then(function(data){
+        //     Default.getTemplate(parent,data);
+        // });
 
     },
 
