@@ -117,18 +117,18 @@ var Map ={
 			})(marker, i));
 
 			if(!isMobile){
-				// var json = null;
-				// Ajax.get_top_post({city_id: e[3]}).then(function(data){
-	 		// 		json = $.parseJSON(data); 
-				// });
-				// var content = '<div id="iw-container" >' +
-			 //                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ json.city_id +'" onclick="Map.eventOnClickZipcode('+json.city_id +')"><span class="zipcode">'+ json.zipcode + '</span></a></div>' +
-			 //                '<div class="iw-content">' +
-			 //                  '<div class="iw-subTitle">#'+json.name_post+'</div>' +
-			 //                  '<p>'+json.content+'</p>'+
-			 //                '</div>' +
-			 //                '<div class="iw-bottom-gradient"></div>' +
-			 //              '</div>';
+				var json = null;
+				Ajax.get_top_post({city_id: e[3]}).then(function(data){
+	 				json = $.parseJSON(data); 
+				});
+				var content = '<div id="iw-container" >' +
+			                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ json.city_id +'" onclick="Map.eventOnClickZipcode('+json.city_id +')"><span class="zipcode">'+ json.zipcode + '</span></a></div>' +
+			                '<div class="iw-content">' +
+			                  '<div class="iw-subTitle">#'+json.name_post+'</div>' +
+			                  '<p>'+json.content+'</p>'+
+			                '</div>' +
+			                '<div class="iw-bottom-gradient"></div>' +
+			              '</div>';
 	            var infowindow = new google.maps.InfoWindow({
 	            	content: content,
 	            	city_id: json.city_id,
