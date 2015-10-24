@@ -31,4 +31,4 @@
 <?= $this->render('partial/meet');?>
 <?= $this->render('partial/create_post');?> 
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBwtMfRoTRtnoteBkWCJ-uFrT6_UFWzr9g"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
