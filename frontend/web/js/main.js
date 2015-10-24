@@ -4,7 +4,7 @@ function get_size_window(){
 
 function set_size_map(w,h){
   var menu_h = $('.menu_top').height();
-  $('#googleMap').css({'height': h - menu_h,'width': w});
+  $('#googleMap').css({'height': h - menu_h,'width': w,'min-heigth': h -menu_h});
   // $('.map_content').css({'height': h - menu_h,'width': w});
 }
 
