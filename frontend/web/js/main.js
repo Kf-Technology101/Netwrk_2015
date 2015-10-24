@@ -140,9 +140,9 @@ function show_page(){
 }
 
 function _main(){
-	Map.main();
 	window_resize();
 	_event_window_resize();
+	Map.main();
 }
 
 function _addListenEventPage(){
