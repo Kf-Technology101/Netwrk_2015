@@ -60,7 +60,7 @@ class DefaultController extends BaseController
 
     public function actionGetMakerDefaultZoom()
     {
-    	$cities = City::find()->orderBy(['user_count'=> SORT_DESC])->limit(10)->all();
+    	$cities = City::find()->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
     	
     	$data = [];
 
