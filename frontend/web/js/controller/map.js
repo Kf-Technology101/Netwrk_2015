@@ -117,21 +117,21 @@ var Map ={
 			})(marker, i));
 
 			if(!isMobile){
-				var json = null;
-				Ajax.get_top_post({city_id: e[3]}).then(function(data){
-	 				json = $.parseJSON(data); 
-				});
-				var content = '<div id="iw-container" >' +
-			                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ json.city_id +'" onclick="Map.eventOnClickZipcode('+json.city_id +')"><span class="zipcode">'+ json.zipcode + '</span></a></div>' +
-			                '<div class="iw-content">' +
-			                  '<div class="iw-subTitle">#'+json.name_post+'</div>' +
-			                  '<p>'+json.content+'</p>'+
-			                '</div>' +
-			                '<div class="iw-bottom-gradient"></div>' +
-			              '</div>';
+				// var json = null;
+				// Ajax.get_top_post({city_id: e[3]}).then(function(data){
+	 		// 		json = $.parseJSON(data); 
+				// });
+				// var content = '<div id="iw-container" >' +
+			 //                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ json.city_id +'" onclick="Map.eventOnClickZipcode('+json.city_id +')"><span class="zipcode">'+ json.zipcode + '</span></a></div>' +
+			 //                '<div class="iw-content">' +
+			 //                  '<div class="iw-subTitle">#'+json.name_post+'</div>' +
+			 //                  '<p>'+json.content+'</p>'+
+			 //                '</div>' +
+			 //                '<div class="iw-bottom-gradient"></div>' +
+			 //              '</div>';
 	            var infowindow = new google.maps.InfoWindow({
-	            	content: content,
-	            	city_id: json.city_id,
+	            	content: '12313232',
+	            	// city_id: json.city_id,y
 	            	maxWidth: 350
 	            });
 	            
@@ -202,6 +202,12 @@ var Map ={
 		var btn = $('#btn_my_location');
 
 		btn.on('click',function(){
+			var zoom_current = map.getZoom();
+
+			if (zoom_current == 7) {
+				map.setZoom(12);
+			}
+			
 			Ajax.get_position_user().then(function(data){
 				var json = $.parseJSON(data);
 				map.setCenter(new google.maps.LatLng(json.lat, json.lng));
