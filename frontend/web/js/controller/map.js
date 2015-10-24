@@ -98,6 +98,7 @@ var Map ={
 
 	 	var current_zoom = map.getZoom();
 
+
 	 	if(current_zoom == 7){
 	 		Ajax.get_marker_default().then(function(data){
 	 			data_marker = $.parseJSON(data);
@@ -108,100 +109,100 @@ var Map ={
 	 		});
 	 	}
 
-		$.each(data_marker,function(i,e){
+		// $.each(data_marker,function(i,e){
 
-			marker = new google.maps.Marker({
-				position: new google.maps.LatLng(e.lat, e.lng),
-				map: map,
-				city_id: parseInt(e.id)
-			});
-
-			if(!isMobile){
-				var content = '<div id="iw-container" >' +
-			                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ e.id +'" onclick="Map.eventOnClickZipcode('+e.id +')"><span class="zipcode">'+ e.zip_code + '</span></a></div>' +
-			                '<div class="iw-content">' +
-			                  '<div class="iw-subTitle">#'+e.post.name_post+'</div>' +
-			                  '<p>'+e.post.content+'</p>'+
-			                '</div>' +
-			                '<div class="iw-bottom-gradient"></div>' +
-			              '</div>';
-	            var infowindow = new google.maps.InfoWindow({
-	            	content: content,
-	            	city_id: e.id,
-	            	maxWidth: 350
-	            });
+		// 	marker = new google.maps.Marker({
+		// 		position: new google.maps.LatLng(e.lat, e.lng),
+		// 		map: map,
+		// 		city_id: parseInt(e.id)
+		// 	});
+  //           var infowindow = new google.maps.InfoWindow({
+  //           	content: '',
+  //           	city_id: e.id,
+  //           	maxWidth: 350
+  //           });
 	            
-	            Map.infowindow.push(infowindow);
+		// 	google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		// 			return function(){
+		// 				if(!isMobile){
+		// 					infowindow.close();
+		// 				}
+		// 				Topic.init(marker.city_id);
+		// 			};
+		// 	})(marker, i));
 
-				google.maps.event.addListener(marker, 'mouseover', function() {
-					// infowindow.setContent(e[0]);
-					infowindow.open(map, this);
-					Map.onhoverInfoWindow(e.id,marker);
-				});
+		// 	if(!isMobile){
+		// 		var content = '<div id="iw-container" >' +
+		// 	                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ e.id +'" onclick="Map.eventOnClickZipcode('+e.id +')"><span class="zipcode">'+ e.zip_code + '</span></a></div>' +
+		// 	                '<div class="iw-content">' +
+		// 	                  '<div class="iw-subTitle">#'+e.post.name_post+'</div>' +
+		// 	                  '<p>'+e.post.content+'</p>'+
+		// 	                '</div>' +
+		// 	                '<div class="iw-bottom-gradient"></div>' +
+		// 	              '</div>';
+		// 	    infowindow.content = content; 
+			             
+	 //            Map.infowindow.push(infowindow);
 
-				google.maps.event.addListener(marker, 'mouseout', function() {
-					// infowindow.close();
-				});
+		// 		google.maps.event.addListener(marker, 'mouseover', function() {
+		// 			// infowindow.setContent(e[0]);
+		// 			infowindow.open(map, this);
+		// 			Map.onhoverInfoWindow(e.id,marker);
+		// 		});
 
-				google.maps.event.addListener(marker, 'click', (function(marker, i) {
-					return function(){
-						if(!isMobile){
-							infowindow.close();
-						}
-						Topic.init(marker.city_id);
-					};
-				})(marker, i));
-
+		// 		google.maps.event.addListener(marker, 'mouseout', function() {
+		// 			// infowindow.close();
+		// 		});
 				
-			  	// google.maps.event.addListener(infowindow, 'domready', function() {
+		// 	  	google.maps.event.addListener(infowindow, 'domready', function() {
 
-				  // //   // Reference to the DIV that wraps the bottom of infowindow
-				  //   var iwOuter = $('.gm-style-iw');
+		// 		  //   // Reference to the DIV that wraps the bottom of infowindow
+		// 		    var iwOuter = $('.gm-style-iw');
 
-				  // //    // Since this div is in a position prior to .gm-div style-iw.
-				  // //    // * We use jQuery and create a iwBackground variable,
-				  // //    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+		// 		  //    // Since this div is in a position prior to .gm-div style-iw.
+		// 		  //    // * We use jQuery and create a iwBackground variable,
+		// 		  //    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 				    
-				  //   var iwBackground = iwOuter.prev();
-				  //   iwOuter.children(':nth-child(1)').css({'max-width' : '400px'});
-				  // // Removes background shadow DIV
-				  //   iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+		// 		    var iwBackground = iwOuter.prev();
+		// 		    iwOuter.children(':nth-child(1)').css({'max-width' : '400px'});
+		// 		  // Removes background shadow DIV
+		// 		    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
-				  //  // Removes white background DIV
-				  //   iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+		// 		  //   // Removes white background DIV
+		// 		    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
-				  // //   // Moves the infowindow 115px to the right.
-				  //   // iwOuter.parent().parent().css({left: '115px'});
+		// 		  //   // Moves the infowindow 115px to the right.
+		// 		    // iwOuter.parent().parent().css({left: '115px'});
 
-				  // //   // Moves the shadow of the arrow 76px to the left margin.
-				  //   iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+		// 		  //   // Moves the shadow of the arrow 76px to the left margin.
+		// 		    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
 
-				  // //   // Moves the arrow 76px to the left margin.
-				  //   iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+		// 		  //   // Moves the arrow 76px to the left margin.
+		// 		    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
 
-				  // //   // Changes the desired tail shadow color.
-				  //   iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+		// 		  //   // Changes the desired tail shadow color.
+		// 		    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
 
-				  // //   // Reference to the div that groups the close button elements.
-				  //   var iwCloseBtn = iwOuter.next();
+		// 		  //   // Reference to the div that groups the close button elements.
+		// 		    var iwCloseBtn = iwOuter.next();
 
-				  // //   // Apply the desired effect to the close button
-				  //   iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+		// 		  //   // Apply the desired effect to the close button
+		// 		    iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
 
-				  // //   // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
-				  // //   if($('.iw-content').height() < 140){
-				  // //     $('.iw-bottom-gradient').css({display: 'none'});
-				  // //   }
+		// 		  //   // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
+		// 		  //   if($('.iw-content').height() < 140){
+		// 		  //     $('.iw-bottom-gradient').css({display: 'none'});
+		// 		  //   }
 
-				  // //   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-				  //   iwCloseBtn.mouseout(function(){
-				  //     $(this).css({opacity: '0'});
-				  //   });
-		  		// });
-			}
+		// 		  //   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+		// 		    iwCloseBtn.mouseout(function(){
+		// 		      $(this).css({opacity: '0'});
+		// 		    });
+		//   		});
+		// 	}
 
-			Map.markers.push(marker);
-		});
+		// 	Map.markers.push(marker);
+		// });
 		
 	},
 

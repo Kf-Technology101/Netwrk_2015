@@ -109,7 +109,6 @@ class SettingController extends BaseController
         // $currentUser = 4;
 
         $image = $_FILES[ 'image' ];
-        // echo"<pre>";var_dump($image);die;
 
         if (!isset($_FILES[ 'image' ])) {
 
