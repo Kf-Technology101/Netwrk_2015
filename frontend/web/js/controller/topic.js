@@ -44,7 +44,13 @@ var Topic = {
         }else {
             Topic.show_modal_topic(city,params);
             Topic.close_modal();
+            Topic.OnClickBackdrop();
         }
+    },
+    OnClickBackdrop: function(){
+        $('.modal-backdrop.in').click(function(e) {
+            $('#modal_topic').modal('hide');
+        });
     },
 
     get_data_new_netwrk: function(){
