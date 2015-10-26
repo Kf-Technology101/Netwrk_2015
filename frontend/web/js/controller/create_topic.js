@@ -131,14 +131,14 @@ var Create_Topic={
     onclickBack: function(){
         var parent = $('#create_topic').find('.back_page img');
         var city = Create_Topic.params.city;
+        var params = {zipcode: Create_Topic.params.city_name};
         parent.unbind();
         parent.click(function(){
             if(isMobile){
                 Create_Topic.redirect();
             }else{
                 Create_Topic.hideModalCreateTopic();
-                // this.changeData();
-                Topic.init(city);
+                Topic.init(city,params);
             }
         });
     },
