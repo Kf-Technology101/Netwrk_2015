@@ -36,16 +36,17 @@ var Meet_setting={
     },
     _init: function(){
         var span,text ;
-        $('#modal_meet .page').hide();
         $('.name_user').find('p.default').hide();
 
         if(isMobile){
+            $('#show_meet .page').hide();
             $('.name_user').find('img').hide();
             $('.log_out').hide();
             var title = $('.name_user').find('span');
             span = '<p class="name">Meet Settings</p>';
             text = 'Meet Settings';
         }else{
+            $('#modal_meet .page').hide();
              var title = $('.name_user').find('p.name');
              span = '<p class="name">Settings</p>';
              text = 'Settings';
