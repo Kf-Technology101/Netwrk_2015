@@ -12,6 +12,7 @@ use yii\data\Pagination;
 class PostController extends BaseController
 {   
     private $currentUser = 1;
+    
     public function actionIndex()
     {
         return $this->render('mobile/index');

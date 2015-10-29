@@ -71,8 +71,7 @@ var Create_Topic={
             $('#btn_meet').hide();
             set_position_btn(parent.find('#btn_discover'));
             set_position_btn_resize(parent.find('#btn_discover'));
-        }
-        
+        } 
     },
 
     hideNetWrkBtn: function(){
