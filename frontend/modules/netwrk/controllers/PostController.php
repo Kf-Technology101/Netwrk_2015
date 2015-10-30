@@ -15,7 +15,7 @@ class PostController extends BaseController
     
     public function actionIndex()
     {
-        return $this->render('mobile/index');
+        return $this->render($this->getIsMobile() ? 'mobile/index':'');
     } 
 
     public function actionCreatePost($city,$topic)
