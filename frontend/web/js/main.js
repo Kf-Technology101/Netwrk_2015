@@ -160,7 +160,8 @@ function _addListenEventPage(){
 		Profile.initialize();
 		break;
 	case 'Post':
-		Create_Post.initialize();
+    Post.initialize();
+		
 		break;
 	default:
 		Default.initialize();

@@ -34,6 +34,7 @@ var Topic = {
         this._onclickBack();
         this.load_topic();
         this.get_data_new_netwrk();
+        this.RedirectPostList();
         this.filter_topic($(window));
         this.scroll_bot();
     },
@@ -47,6 +48,16 @@ var Topic = {
             Topic.OnClickBackdrop();
         }
     },
+
+    RedirectPostList: function(){
+        $('.item').on('click',function(e){
+            var topic = $(e.currentTarget).attr('data-item');
+            Ajax.update_view_topic({topic: topic}).then(function(){
+                Post.RedirectPostPage(Topic.data.city,topic);
+            });
+        })
+    },
+
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').click(function(e) {
             $('#modal_topic').modal('hide');
@@ -209,7 +220,6 @@ var Topic = {
     },
 
     show_page_topic: function(city,params){
-        console.log(params);
         if (params){
             window.location.href = "netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng; 
         }else{
@@ -322,7 +332,7 @@ var Topic = {
             self.list[self.data.filter].status_paging = 1;
         }
         this.create_topic();
-        this.create_post();
+        // this.create_post();
     },
 
     getTemplateModal: function(parent,data){

@@ -1,4 +1,41 @@
 var Ajax ={
+
+    update_view_topic: function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/topic/update-view-topic";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    get_post_by_topic:function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/post/get-all-post";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     get_position_user: function(){
         var url,defer = $.Deferred();
 

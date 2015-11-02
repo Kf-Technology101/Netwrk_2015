@@ -42,6 +42,7 @@ class MobileAsset extends AssetBundle
       'js/controller/template.js',
       'js/controller/meet_setting.js',
       'js/controller/create_post.js',
+      'js/controller/post.js',
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',

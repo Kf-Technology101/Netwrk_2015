@@ -3,6 +3,7 @@ var Create_Post={
         topic: null,
         post:'',
         message: '',
+        city:''
     },
     status_change:{
         post: false,
@@ -221,7 +222,7 @@ var Create_Post={
     },
 
     redirect: function(){
-        window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Post.params.city;
+        window.location.href = baseUrl + "/netwrk/post?city="+Create_Post.params.city+"&topic="+Create_Post.params.topic;
     },
 
     OnshowSave: function(){
