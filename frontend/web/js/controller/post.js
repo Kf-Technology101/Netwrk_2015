@@ -2,7 +2,9 @@ var Post ={
 	params:{
 		filter:'post',
 		city:'',
+		city_name:'',
 		topic:'',
+		topic_name:'',
 		size: 12,
 		page: 1
 	},
@@ -25,20 +27,52 @@ var Post ={
     },
 	tab_current:'feed',
 	initialize: function(){
-		
-		if(isMobile && $('#list_post').size() > 0){
+		if(isMobile){
 			Post.GetDefaultValue();
 			Post.GetDataOnTab();
 			Post.FilterTabPost($('body'));
-			Post.OnChangeTab();
-			Post.OnclickBack();
-			Post.OnclickCreate();
-			Post.LazyLoading();
+			Create_Post.initialize();
 		}else{
+			Post.ShowModalPost();
+			Post.OnShowModalPost();
+			Post.GetDataOnTab();
+			Post.OnHideModal();
+			Post.FilterTabPost($('.container_post'));
+			Post.getNameTopic();
+		}	
+		
+		Post.OnclickBack();
+		Post.OnclickCreate();
+		Post.LazyLoading();
+		Post.OnChangeTab();
+	},
 
-		}
-		Post.getNameTopic();
-		Create_Post.initialize();
+	ShowModalPost: function(){
+		var parent = $('#list_post');
+
+		parent.modal({
+            backdrop: true,
+            keyboard: false
+        });
+	},
+
+	OnShowModalPost: function(){
+        $('#list_post').on('shown.bs.modal',function(e) {
+        	$(e.currentTarget).unbind();
+            Post.GetDataOnTab();
+        });
+	},
+
+	OnHideModal: function(){
+        $('#list_post').on('hidden.bs.modal',function(e) {
+        	$(e.currentTarget).unbind();
+            Post.ResetModal();
+        });
+	},
+
+	ResetModal: function(){
+		var name = $('#list_post').find('.header .title_page');
+		name.find('span.title').remove();
 	},
 
 	getNameTopic: function(){
@@ -50,7 +84,7 @@ var Post ={
 
     LazyLoading: function(){
         var self = this;
-        var containt = $('.containt');
+        var containt = $('.container_post');
         if (isMobile) {
             $(window).scroll(function() {   
                 if( $(window).scrollTop() + $(window).height() == $(document).height() && Post.list[Post.params.filter].status_paging == 1) {
@@ -60,7 +94,16 @@ var Post ={
                 }
             });
         }else{
-
+            containt.scroll(function(e){
+                var parent = $('#filter_'+self.params.filter);
+                var  hp = parent.height();
+                if(containt.scrollTop() + containt.height() == hp && Post.list[Post.params.filter].status_paging == 1){
+                    Post.list[Post.params.filter].status_paging = 0;
+                    setTimeout(function(){
+                        self.GetTabPost();
+                    },300);
+                }
+            });
         }
     },
 
@@ -94,21 +137,27 @@ var Post ={
 
 	OnclickBack: function(){
         $('#list_post').find('.back_page img').click(function(){
-            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city; 
+        	if(isMobile){
+        		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city; 
+        	}else{
+        		$('#list_post').modal('hide');
+        		Topic.init(Post.params.city);
+        	}
         })
 	},
 
 	OnclickCreate: function(){
-        var btn;
-        if(isMobile){
-            btn = $('#list_post').find('.create_post');
-            btn.unbind();
-            btn.on('click',function(e){
+        var btn = $('#list_post').find('.create_post');
+        btn.unbind();
+        btn.on('click',function(){
+	        if(isMobile){
                 window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
-            });
-        }else{
+	        }else{
+	        	$('#list_post').modal('hide');
+	        	Create_Post.initialize(Post.params.city,Post.params.topic,Post.params.city_name,Post.params.topic_name);
+	        }
+        });
 
-        }
 	},
 
 	FilterTabPost: function(body){

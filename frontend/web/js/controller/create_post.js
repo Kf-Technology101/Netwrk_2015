@@ -216,7 +216,7 @@ var Create_Post={
                 Create_Post.redirect();
             }else{
                 Create_Post.hideModalCreatePost();
-                Topic.init(city);
+                Post.initialize();
             }
         });
     },
@@ -253,7 +253,7 @@ var Create_Post={
                             Create_Post.redirect();
                         }else{
                             Create_Post.hideModalCreatePost();
-                            Topic.init(city);
+                            Post.initialize();
                         }
                     },700);
                 });

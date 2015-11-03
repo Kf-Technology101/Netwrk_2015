@@ -1,50 +1,52 @@
 <?php use yii\helpers\Url; ?>
 <div class="modal" id="list_post">
-    <div class="header">
-        <div class="back_page">
-            <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
-        </div>
-        <div class="create_post">
-            <span><i class="fa fa-plus"></i> create</span>
-        </div>
-        <div class="title_page">
-            
-        </div>
-    </div>
-    <div class="sidebar">
-        <div class="dropdown">
-            <select class="form-control">
-                <option value="post">Most post</option>
-                <option value="brilliant">Most brilliant</option>
-                <option value="view">Most view</option>
-            </select>    
-        </div>
-        <table class="filter_sidebar">
-            <tr>
-                <td class="feed active">Feed</td>
-                <td class="post">Post</td>
-            </tr>
-        </table> 
-    </div>
-    <div class="container_post">
-        <div id="tab_feed" class="tab">
-            <p class="no-data">There is no data available yet</p>
-        </div>
-        <div id="tab_post" class="tab">
-            <div class="filter_page" id="filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                <p class="no-data">There is no data available yet</p>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="header">
+                    <div class="back_page">
+                        <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
+                    </div>
+                    <div class="create_post">
+                        <span><i class="fa fa-plus"></i> create</span>
+                    </div>
+                    <div class="title_page">
+                        
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="dropdown">
+                        <select class="form-control">
+                            <option value="post">Most post</option>
+                            <option value="brilliant">Most brilliant</option>
+                            <option value="view">Most view</option>
+                        </select>    
+                    </div>
+                    <table class="filter_sidebar">
+                        <tr>
+                            <td class="feed active">Feed</td>
+                            <td class="post">Post</td>
+                        </tr>
+                    </table> 
+                </div>
             </div>
-            <div class="filter_page" id="filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                <p class="no-data">There is no data available yet</p>
-            </div>
-            <div class="filter_page" id="filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                <p class="no-data">There is no data available yet</p>
+           <div class="modal-body container_post">
+                <div id="tab_feed" class="tab">
+                    <p class="no-data">There is no data available yet</p>
+                </div>
+                <div id="tab_post" class="tab">
+                    <div class="filter_page" id="filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                        <p class="no-data">There is no data available yet</p>
+                    </div>
+                    <div class="filter_page" id="filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                        <p class="no-data">There is no data available yet</p>
+                    </div>
+                    <div class="filter_page" id="filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                        <p class="no-data">There is no data available yet</p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- <div id="list_post_recent" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>"> -->
-            <!-- <p class="no-data">There is no data available yet</p> -->
-        <!-- </div>  -->
     </div>
 </div>
 <script id="name_post_list" type="text/x-underscore-template" >

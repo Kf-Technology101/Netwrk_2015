@@ -14,10 +14,15 @@ use yii\data\Pagination;
 class PostController extends BaseController
 {   
     private $currentUser = 1;
-    
+
+    public function actionDesktop()
+    {
+        return $this->render('index');
+    }
     public function actionIndex($city,$topic)
     {
-        return $this->render($this->getIsMobile() ? 'mobile/index':'',['topic' =>$topic,'city' =>$city]);
+        $top = Topic::findOne($topic);
+        return $this->render($this->getIsMobile() ? 'mobile/index':'',['topic' =>$top,'city' =>$city]);
     } 
 
     public function actionCreatePost($city,$topic)

@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="list_post" data-topic="<?= $topic ?>" data-city="<?= $city ?>">
+<div id="list_post" data-topic="<?= $topic->id ?>" data-city="<?= $city ?>">
     <div class="header">
         <div class="back_page">
             <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
@@ -8,7 +8,7 @@
             <span><i class="fa fa-plus"></i> create</span>
         </div>
         <div class="title_page">
-            
+            <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>"></a><?= $topic->title ?></span>
         </div>
     </div>
     <div class="sidebar">
