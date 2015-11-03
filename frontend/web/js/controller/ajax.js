@@ -1,4 +1,21 @@
 var Ajax ={
+    get_topic: function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/topic/get-topic";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     update_view_topic: function(params){
         var url,defer = $.Deferred();

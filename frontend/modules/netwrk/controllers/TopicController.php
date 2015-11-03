@@ -223,4 +223,12 @@ class TopicController extends BaseController
     $topic->view_count ++;
     $topic->update();
   }
+
+  public function actionGetTopic(){
+    $id = $_POST['topic'];
+
+    $topic = Topic::findOne($id);
+
+    return $topic->title;
+  }
 }

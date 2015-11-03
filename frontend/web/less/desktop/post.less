@@ -167,5 +167,277 @@
 }
 
 #list_post{
+    overflow-y: hidden;
+    .header{
+        background: #08263a;
+        padding: 7px 5px 3px;
+        width: 100%;
+        position: fixed;
+        top:0;
+        .back_page{
+            width: 10%;
+            float: left;
+            img{
+                width: 25px;
+            }
+            i{
+                font-size: 25px;
+                color: #eee;
+            }
+        }
+        .title_page{
+            width: 70%;
+            margin: auto;
+            img{
+                width: 25px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+            }
+            .title{
+                color: #eee;
+                display: inherit;
+                text-align: center;
+                font-size: 17px;
+            }
+        }
+        .create_post{
+            float: right;
+            width: 7%;
+            cursor: pointer;
+            margin-right: 5px;
+            span{
+                color: #fff;
+                font-size: 11px;
+                display: block;
+                text-align: center;
+                i{
+                    color: #fff;
+                }
+            }
 
+
+        }
+    }
+    .sidebar{
+        width: 100%;
+        background: #5486b0;
+        display: table;
+        position: fixed;
+        top: 40px;
+        z-index: 20;
+        .dropdown{
+            float: right;
+            width: 28%;
+            padding: 5px;
+            .form-control{
+                padding: 5px;
+                font-size: 11px;
+                width: 100%;
+                height: 25px;
+            }
+            &.visible{
+                visibility: hidden;
+            }
+        }
+        .title{
+            color: #eee;
+            font-size: 14px;
+            padding: 10px;
+            // display: table-cell;
+            // vertical-align: middle;
+            float: left; 
+        }
+        .filter_sidebar{
+            color: #eee;
+            border-radius: 15px;
+            padding: 5px;
+            border-collapse: separate;
+            margin: auto;
+            width: 45%;
+            float: right;
+            td{ 
+                width: 50px;
+                font-size: 10px;
+                border: 1px solid #eee;
+                padding: 4px;
+                cursor: pointer;
+                text-align: center;
+                &.active{
+                   background: #8FB2D0; 
+                }
+            }
+            td:first-child{
+                border-right: none;
+                border-top-left-radius: 15px;
+                border-bottom-left-radius: 15px;
+            }
+            td:last-child{
+                border-left: none;
+                border-top-right-radius: 15px;
+                border-bottom-right-radius: 15px;
+            }
+        }
+    }
+    .container_post{
+        height: auto;
+        width: 100%;
+        padding: 10px 5px;
+        margin: 70px auto 40px;
+        z-index: 5;
+        overflow-y: auto;
+        .tab{
+            display: none; 
+            .no-data{
+                text-align: center;
+                font-size: 16px;
+                padding-top: 20px;  
+            }
+        }
+        #filter_post,#filter_view,#filter_brilliant{
+            display: none;
+            width: 100%;
+            .item_post{
+                background: #fff;
+                width: 100%;
+                height: auto;
+                margin-bottom: 5px;
+                border: 1px solid #eee;
+                box-shadow: 0px 0px 10px #888;
+                float: left;
+                .users_avatar{
+                    width: 75px;
+                    height: auto;
+                    padding: 5px;
+                    max-width: 20%;
+                    float: left;
+                    img{
+                        width: 100%;
+                    }
+                }
+                .information{
+                    width: 50%;
+                    float: left;
+                    p{
+                        width: 100%;
+                        word-break: break-all;
+                    }
+                    .post_name{
+                        font-size: 16px;
+                        font-weight: bold;
+                        margin: 0 0 3px;
+                        &::before{
+                            content:"#";
+                        }
+                    }
+                    .post_massage{
+                        font-size: 8px;
+                        margin: 0px;
+                        // overflow: hidden;
+                        // text-overflow: ellipsis;
+                        // white-space: nowrap;
+                    }
+                }
+                .icon_information{
+                    width: 30%;
+                    float: left;
+                    // padding: 0 5px;
+                    .icon_duration{
+                        width: 30%;
+                        float: left;
+                        margin-top: 6px;
+                        p{
+                            font-size: 9px;
+                            display: block;
+                            text-align: center;
+                            margin: 0;
+                        }
+                        img{
+                            width: 18px;
+                            display: block;
+                            margin: auto;
+                        }
+                    }
+                    .icon_view{
+                        width: 30%;
+                        float: left;
+                        margin-top: 5px;
+                        .num_view{
+                            width: 20px;
+                            background: #b2da83;
+                            border-radius: 100%;
+                            margin: auto;
+                            p{
+                                font-size: 9px;
+                                font-weight: bold;
+                                color: #eee;
+                                padding: 3px 0;
+                                margin: 0;
+                                text-align: center;
+                            }
+
+                        }
+                        p{
+                            font-size: 9px;
+                            text-align: center;
+                            margin: 0;
+                        }
+                    }
+                    .icon_brillant{
+                        width: 40%;
+                        float: left;
+                        margin-top: 1px;
+                        .count{
+                            width: 100%;
+                            background: url('../../img/icon/brilliant_on.png') no-repeat center;
+                            background-size: 25px 25px;
+                            display: block;
+                            text-align: center;
+                            font-size: 9px;
+                            padding: 7px 0 3px;
+                            p{
+                                text-align: center;
+                                font-size: 9px;
+                                padding: 5px 0 5px 0;
+                            }
+                        }
+                        p{
+                            font-size: 9px;
+                            text-align: center;
+                            width: 100%;
+                            margin: 0;
+
+                        }
+                    }
+                    .btn_comment{
+                        width: 95%;
+                        float: left;
+                        border: 1px solid #5486b0;
+                        border-radius: 15px;
+                        padding: 2px;
+                        .num_comment{
+                            width: 20px;
+                            color: #fff;
+                            background: #5486b0;
+                            border-radius: 15px;
+                            // display: table;
+                            float: left;
+                            p{  
+                                font-size: 9px;
+                                margin: 0;
+                                text-align: center;
+                                padding: 3px 0;
+                            }
+                        }
+                        p{
+                            // float: left;
+                            margin: 0;
+                            font-size: 10px;
+                            padding: 2px;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

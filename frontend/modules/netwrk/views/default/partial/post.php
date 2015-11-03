@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="list_post" data-topic="<?= $topic ?>" data-city="<?= $city ?>">
+<div class="modal" id="list_post">
     <div class="header">
         <div class="back_page">
             <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">

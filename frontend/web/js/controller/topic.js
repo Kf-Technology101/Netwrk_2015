@@ -34,7 +34,7 @@ var Topic = {
         this._onclickBack();
         this.load_topic();
         this.get_data_new_netwrk();
-        this.RedirectPostList();
+        
         this.filter_topic($(window));
         this.scroll_bot();
     },
@@ -53,7 +53,12 @@ var Topic = {
         $('.item').on('click',function(e){
             var topic = $(e.currentTarget).attr('data-item');
             Ajax.update_view_topic({topic: topic}).then(function(){
-                Post.RedirectPostPage(Topic.data.city,topic);
+                if(isMobile){
+                    Post.RedirectPostPage(Topic.data.city,topic);
+                }else{
+                    $('#modal_topic').modal('hide');
+                }
+                
             });
         })
     },
@@ -332,7 +337,7 @@ var Topic = {
             self.list[self.data.filter].status_paging = 1;
         }
         this.create_topic();
-        // this.create_post();
+        this.RedirectPostList();
     },
 
     getTemplateModal: function(parent,data){

@@ -99,6 +99,7 @@ class PostController extends BaseController
 
             $post = array(
                 'id'=> $value->id,
+                'topic_name'=> $value->topic->title,
                 'topic_id'=>$value->topic_id,
                 'title'=>$value->title,
                 'content'=>$content,
