@@ -8,7 +8,7 @@
                         <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
                     </div>
                     <div class="create_post">
-                        <span><i class="fa fa-plus"></i> create</span>
+                        <span><i class="fa fa-plus"></i> Create Post</span>
                     </div>
                     <div class="title_page">
                         
