@@ -21,8 +21,8 @@
         </div>
         <table class="filter_sidebar">
             <tr>
-                <td class="feed active">Feed</td>
-                <td class="post">Post</td>
+                <td class="feed">Feed</td>
+                <td class="post active">Posts</td>
             </tr>
         </table> 
     </div>

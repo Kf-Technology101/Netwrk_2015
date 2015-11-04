@@ -46,8 +46,7 @@ var Topic = {
             Topic.OnShowModalPost();
             Topic.show_modal_topic(city,params);
             Topic.close_modal();
-            Topic.OnClickBackdrop();
-            Topic.RedirectPostList();
+            Topic.OnClickBackdrop();  
         }
     },
 
@@ -60,7 +59,6 @@ var Topic = {
                 if(isMobile){
                     Post.RedirectPostPage(Topic.data.city,topic);
                 }else{
-                    console.log('ClickPostList');
                     Post.params.topic = topic;
                     Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();;
                     Post.params.city = Topic.data.city;
@@ -217,7 +215,6 @@ var Topic = {
     close_modal: function(){
         $('#modal_topic').unbind();
         $('#modal_topic').on('hidden.bs.modal',function(e) {
-            console.log('event close modal');
             $(e.currentTarget).unbind(); // or $(this)        
             Topic.reset_modal();
             Map.get_data_marker();
@@ -365,6 +362,7 @@ var Topic = {
             self.list[self.data.filter].status_paging = 1;
         }
         this.create_topic();
+        Topic.RedirectPostList();
         // this.create_post();
     },
 

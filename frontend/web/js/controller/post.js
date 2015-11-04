@@ -25,7 +25,7 @@ var Post ={
             loaded: 0
         }
     },
-	tab_current:'feed',
+	tab_current:'post',
 	initialize: function(){
 		if(isMobile){
 			Post.GetDefaultValue();
@@ -39,12 +39,17 @@ var Post ={
 			Post.OnHideModal();
 			Post.FilterTabPost($('.container_post'));
 			Post.getNameTopic();
+			Post.ShowSideBar();
 		}	
 		
 		Post.OnclickBack();
 		Post.OnclickCreate();
 		Post.LazyLoading();
 		Post.OnChangeTab();
+	},
+
+	ShowSideBar: function(){
+
 	},
 
 	OnclickVote: function(){
@@ -121,11 +126,12 @@ var Post ={
 
 	GetDataOnTab: function(){
 		switch(Post.tab_current) {
+		    case 'feed':
+		        Post.ShowFeedPage();
+		        break;
 		    case 'post':
 		        Post.ShowPostPage();
 		        break;
-		    default:
-		        Post.ShowFeedPage();
 		}
 	},
 
