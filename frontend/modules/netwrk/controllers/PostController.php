@@ -7,6 +7,7 @@ use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\Vote;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -15,10 +16,6 @@ class PostController extends BaseController
 {   
     private $currentUser = 1;
 
-    public function actionDesktop()
-    {
-        return $this->render('index');
-    }
     public function actionIndex($city,$topic)
     {
         $top = Topic::findOne($topic);
@@ -83,7 +80,7 @@ class PostController extends BaseController
         foreach ($posts as $key => $value) {
 
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count ? $value->view_count : 0);
-            $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count : 0);
+            $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
             $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value->brilliant_count ? $value->brilliant_count : 0);
             $num_date = UtilitiesFunc::FormatDateTime($value->updated_at);
 
@@ -101,6 +98,13 @@ class PostController extends BaseController
             }else{
                 $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
             }
+            $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$value->id)->all();
+            
+            if($currentVote){
+                $isVote = 1;
+            }else{
+                $isVote = 0;
+            }
 
             $post = array(
                 'id'=> $value->id,
@@ -113,6 +117,7 @@ class PostController extends BaseController
                 'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                 'avatar'=> $image,
                 'update_at'=>$num_date,
+                'is_vote'=> $isVote
             );
 
             array_push($data,$post);
@@ -120,6 +125,24 @@ class PostController extends BaseController
 
         $temp = array ('status'=> 1 ,'data'=> $data);
         $hash = json_encode($temp);
+        return $hash;
+    }
+
+    public function actionVotePost(){
+        $post_id = $_POST['post_id'];
+        
+        $current_date = date('Y-m-d H:i:s');
+
+        $vote = new Vote;
+        $vote->post_id = $post_id;
+        $vote->user_id = $this->currentUser;
+        $vote->created_at = $current_date;
+        $vote->save();
+
+        $post = Post::findOne($post_id);
+        $temp = array ('status'=> 1 ,'data'=> $post->brilliant_count);
+        $hash = json_encode($temp);
+
         return $hash;
     }
 }

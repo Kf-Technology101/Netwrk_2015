@@ -47,6 +47,18 @@ var Post ={
 		Post.OnChangeTab();
 	},
 
+	OnclickVote: function(){
+		var parent = $('#list_post').find('.item_post');
+		var btn = parent.find('.icon_brillant');
+
+		btn.unbind();
+		btn.on('click',function(e){
+			var post_id = $(e.currentTarget).parent().parent().attr('data-item');
+			var target = $(e.currentTarget);
+			Vote.SetVote(target,post_id);
+		});
+	},
+
 	ShowModalPost: function(){
 		var parent = $('#list_post');
 
@@ -189,12 +201,12 @@ var Post ={
 				parent.show();
 				parent.find('.no-data').hide();
 				Post.getTemplate(parent,json.data);
+				Post.OnclickVote();
 			}
 		});
 	},
 
 	checkStatus: function(data){
-		console.log(Post.list);
 		if(data.length == 0){
 			Post.list[Post.params.filter].status_paging = 0;
 		}else if(data.length < 12){

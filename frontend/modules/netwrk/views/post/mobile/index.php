@@ -52,7 +52,7 @@
 </script>
 <script id="post_list" type="text/x-underscore-template" >
     <% _.each(posts,function(post){ %>
-        <div class="item_post">
+        <div class="item_post" data-item="<%= post.id %>">
             <div class="users_avatar">
                 <img src="<%= post.avatar %>">
             </div>
@@ -72,8 +72,12 @@
                     <p>Views</p>
                 </div>
                 <div class="icon_brillant">
-                  <div class="count"><%= post.num_brilliant %></div>
-                  <p>Brilliant</p>
+                    <% if (post.is_vote == 1){%>
+                        <div class="count"><%= post.num_brilliant %></div>
+                    <% }else{ %> 
+                        <div class="count disable"><%= post.num_brilliant %></div>
+                    <% } %>
+                    <p>Brilliant</p>
                 </div>
                 <div class="btn_comment">
                     <div class="num_comment"><p><%= post.num_comment %></p></div>

@@ -12,6 +12,7 @@ class m150923_030101_vote_example extends \yii\db\Migration
         }
         
         $this->createTable('{{%vote}}', [
+            'id' => Schema::TYPE_PK . '(11) NOT NULL',
             'post_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'user_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'created_at' => Schema::TYPE_DATETIME,
