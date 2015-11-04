@@ -296,6 +296,9 @@
                         font-size: 16px;
                         font-weight: bold;
                         margin: 0 0 3px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                         &::before{
                             content:"#";
                         }
@@ -317,7 +320,7 @@
                         float: left;
                         margin-top: 6px;
                         p{
-                            font-size: 9px;
+                            font-size: 8px;
                             display: block;
                             text-align: center;
                             margin: 0;
@@ -338,7 +341,7 @@
                             border-radius: 100%;
                             margin: auto;
                             p{
-                                font-size: 9px;
+                                font-size: 8px;
                                 font-weight: bold;
                                 color: #eee;
                                 padding: 3px 0;
@@ -348,7 +351,7 @@
 
                         }
                         p{
-                            font-size: 9px;
+                            font-size: 8px;
                             text-align: center;
                             margin: 0;
                         }
@@ -367,7 +370,7 @@
                             padding: 7px 0 3px;
                             p{
                                 text-align: center;
-                                font-size: 9px;
+                                font-size: 8px;
                                 padding: 5px 0 5px 0;
                             }
                             &.disable{
