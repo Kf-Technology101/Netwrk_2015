@@ -54,7 +54,7 @@
     <% _.each(posts,function(post){ %>
         <div class="item_post" data-item="<%= post.id %>">
             <div class="users_avatar">
-                <img src="<%= post.avatar %>">
+                <div class="image"><img src="<%= post.avatar %>"></div>
             </div>
             <div class="information">
                 <p class="post_name"><%= post.title %></p>
