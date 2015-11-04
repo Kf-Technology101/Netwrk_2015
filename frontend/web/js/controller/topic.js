@@ -46,7 +46,7 @@ var Topic = {
             Topic.OnShowModalPost();
             Topic.show_modal_topic(city,params);
             Topic.close_modal();
-            Topic.OnClickBackdrop();  
+             
         }
     },
 
@@ -72,7 +72,7 @@ var Topic = {
     },
 
     OnClickBackdrop: function(){
-        $('.modal-backdrop.in').unbind();
+        // $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').click(function(e) {
             $('#modal_topic').modal('hide');
         });
@@ -188,6 +188,7 @@ var Topic = {
     OnShowModalPost: function(){
         $('#modal_topic').unbind();
         $('#modal_topic').on('shown.bs.modal',function(e) {
+            console.log('show modal topic');
             Topic.load_topic_modal();
         });
     },
@@ -209,11 +210,12 @@ var Topic = {
             }
             self.scroll_bot();
             self.filter_topic(parent);
+            Topic.OnClickBackdrop(); 
         });
     },
 
     close_modal: function(){
-        $('#modal_topic').unbind();
+        // $('#modal_topic').unbind();
         $('#modal_topic').on('hidden.bs.modal',function(e) {
             $(e.currentTarget).unbind(); // or $(this)        
             Topic.reset_modal();
