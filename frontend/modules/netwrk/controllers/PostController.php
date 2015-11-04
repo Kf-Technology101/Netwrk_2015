@@ -86,9 +86,9 @@ class PostController extends BaseController
 
             $content = $value->content;
 
-            if(strlen($content > 80)){
+            if(strlen($content) > 80){
                 $content = substr($content,0,80) ;
-                $content = $content."...<a class='show_more' href='javascript:void(0)'>show more</a>";
+                $content = $content." ...<a class='show_more' href='javascript:void(0)'>show more</a>";
             }
 
             $user_photo = User::findOne($value->user_id)->profile->photo;

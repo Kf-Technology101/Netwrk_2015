@@ -58,7 +58,7 @@
             </div>
             <div class="information">
                 <p class="post_name"><%= post.title %></p>
-                <p class="post_massage"><%= post.title %></p>
+                <p class="post_massage"><%= post.content %></p>
             </div>
             <div class="icon_information">
                 <div class="icon_duration">
