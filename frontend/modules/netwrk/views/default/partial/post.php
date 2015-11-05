@@ -84,7 +84,7 @@
                 </div>
                 <div class="btn_comment">
                     <div class="num_comment"><p><%= post.num_comment %></p></div>
-                    <p> Comments</p>
+                    <p> Comment</p>
                 </div>
             </div>
         </div>
