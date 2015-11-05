@@ -62,7 +62,7 @@ class PostController extends BaseController
 
         switch ($filter) {
             case 'post':
-                $posts = Post::find()->where('topic_id ='.$topic_id)->orderBy(['comment_count'=> SORT_DESC]);
+                $posts = Post::find()->where('topic_id ='.$topic_id)->orderBy(['created_at'=> SORT_DESC]);
                 break;
             case 'brilliant':
                 $posts = Post::find()->where('topic_id ='.$topic_id)->orderBy(['brilliant_count'=> SORT_DESC]);
@@ -82,7 +82,7 @@ class PostController extends BaseController
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count ? $value->view_count : 0);
             $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
             $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value->brilliant_count ? $value->brilliant_count : 0);
-            $num_date = UtilitiesFunc::FormatDateTime($value->updated_at);
+            $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
 
             $content = $value->content;
 
