@@ -15,6 +15,7 @@
                     </div>
                 </div>
                 <div class="sidebar">
+                    <div class="title"></div>
                     <div class="dropdown">
                         <select class="form-control">
                             <option value="post">Most recent</option>
