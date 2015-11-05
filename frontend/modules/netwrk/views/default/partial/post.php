@@ -65,24 +65,33 @@
                 <p class="post_massage"><%= post.content %></p>
             </div>
             <div class="icon_information">
-                <div class="icon_duration">
-                    <img src="<?= Url::to('@web/img/icon/timehdpi.png') ?>">
-                    <p><%= post.update_at %></p>
-                </div>
-                <div class="icon_view">
-                    <div class="num_view">
-                        <p><%= post.num_view %></p>
-                    </div>
-                    <p>Views</p>
-                </div>
-                <div class="icon_brillant">
-                    <% if (post.is_vote == 1){%>
-                        <div class="count"><%= post.num_brilliant %></div>
-                    <% }else{ %> 
-                        <div class="count disable"><%= post.num_brilliant %></div>
-                    <% } %>
-                    <p>Brilliant</p>
-                </div>
+                <table>
+                    <tr class="icon">
+                        <td><div class="icon_duration"><img src="<?= Url::to('@web/img/icon/timehdpi.png') ?>"></div></td>            
+                        <td>
+                            <div class="icon_view">
+                                <div class="num_view">
+                                    <p><%= post.num_view %></p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-item="<%= post.id %>">
+                            <div class="icon_brillant">
+                                <% if (post.is_vote == 1){%>
+                                    <div class="count"><%= post.num_brilliant %></div>
+                                <% }else{ %> 
+                                    <div class="count disable"><%= post.num_brilliant %></div>
+                                <% } %>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><p><%= post.update_at %></p></td>
+                        <td><p>Views</p></td>
+                        <td><p>Brilliant</p></td>
+                    </tr>
+                </table>
                 <div class="btn_comment">
                     <div class="num_comment"><p><%= post.num_comment %></p></div>
                     <p> Comment</p>

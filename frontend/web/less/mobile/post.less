@@ -334,79 +334,93 @@
                 .icon_information{
                     width: 30%;
                     float: left;
-                    // padding: 0 5px;
-                    .icon_duration{
-                        width: 30%;
-                        float: left;
-                        margin-top: 6px;
+                    padding: 5px 0 0;
+                    table{
                         p{
-                            font-size: 8px;
-                            display: block;
-                            text-align: center;
-                            margin: 0;
-                        }
-                        img{
-                            width: 20px;
-                            height: 20px;
-                            display: block;
-                            margin: 0px auto 1px;
-                        }
-                    }
-                    .icon_view{
-                        width: 30%;
-                        float: left;
-                        margin-top: 5px;
-                        .num_view{
-                            width: 20px;
-                            background: #b2da83;
-                            border-radius: 100%;
-                            margin: 0 auto 1px;
-                            p{
-                                font-size: 8px;
-                                font-weight: bold;
-                                color: #eee;
-                                padding: 5px 0;
-                                margin: 0;
-                                text-align: center;
-                            }
-
-                        }
-                        p{
-                            font-size: 8px;
-                            text-align: center;
-                            margin: 0;
-                        }
-                    }
-                    .icon_brillant{
-                        width: 40%;
-                        float: left;
-                        margin-top: 1px;
-                        .count{
-                            width: 100%;
-                            background: url('../../img/icon/brilliant_on.png') no-repeat center;
-                            background-size: 30px 25px;
-                            display: block;
-                            text-align: center;
                             font-size: 9px;
-                            padding: 8px 0 3px;
-                            p{
-                                text-align: center;
-                                font-size: 8px;
-                                padding: 5px 0 5px 0;
-                            }
-                            &.disable{
-                                background: url('../../img/icon/brilliant_off.png') no-repeat center;
-                                background-size: 30px 30px;
-                            }
-                        }
-                        p{
-                            font-size: 8px;
-                            text-align: center;
-                            width: 100%;
                             margin: 0;
-                            padding: 3px 0;
+                            text-align: center;
+                        }
+                        .icon{
+                            padding: 5px;
+                            td{
+                                width: 30%;
+                            }
+                            .icon_duration{
+                                width: 100%;
+                                p{
+                                    font-size: 8px;
+                                    display: block;
+                                    text-align: center;
+                                    margin: 0;
+                                }
+                                img{
+                                    width: 20px;
+                                    height: 20px;
+                                    display: block;
+                                    margin: 0px auto 1px;
+                                }
+                            }
+                            .icon_view{
+                                width: 100%;
+                                .num_view{
+                                    width: 25px;
+                                    height: 25px;
+                                    background: #b2da83;
+                                    border-radius: 100%;
+                                    margin: 0 auto 1px;
+                                    display: table;
+                                    p{
+                                        font-size: 8px;
+                                        font-weight: bold;
+                                        color: #eee;
+                                        padding: 5px 0;
+                                        margin: 0;
+                                        text-align: center;
+                                        vertical-align: middle;
+                                        display: table-cell;
+                                    }
+
+                                }
+                                p{
+                                    font-size: 8px;
+                                    text-align: center;
+                                    margin: 0;
+                                }
+                            }
+                            .icon_brillant{
+                                width: 100%;
+                                .count{
+                                    width: 100%;
+                                    background: url('../../img/icon/brilliant_on.png') no-repeat center;
+                                    background-size: 30px 25px;
+                                    display: block;
+                                    text-align: center;
+                                    font-size: 9px;
+                                    padding: 8px 0 3px;
+                                    p{
+                                        text-align: center;
+                                        font-size: 8px;
+                                        padding: 5px 0 5px 0;
+                                    }
+                                    &.disable{
+                                        background: url('../../img/icon/brilliant_off.png') no-repeat center;
+                                        background-size: 30px 30px;
+                                    }
+                                }
+                                p{
+                                    font-size: 8px;
+                                    text-align: center;
+                                    width: 100%;
+                                    margin: 0;
+                                    padding: 3px 0;
+                                }
+                            }
                         }
                     }
+
+
+
                     .btn_comment{
                         width: 95%;
                         float: left;

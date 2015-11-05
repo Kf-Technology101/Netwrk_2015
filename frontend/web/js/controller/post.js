@@ -97,7 +97,7 @@ var Post ={
 
 		btn.unbind();
 		btn.on('click',function(e){
-			var post_id = $(e.currentTarget).parent().parent().attr('data-item');
+			var post_id = $(e.currentTarget).parent().attr('data-item');
 			var target = $(e.currentTarget);
 			Vote.SetVote(target,post_id);
 		});
