@@ -22,11 +22,6 @@ class PostController extends BaseController
             $value->brilliant_count = null;
             $value->save();
         }
-        $vote = Vote::find()->all();
-        foreach ($vote as $k => $v) {
-            $v->status = null;
-            $v->save();
-        }
     }
 
     public function actionIndex($city,$topic)
@@ -162,6 +157,7 @@ class PostController extends BaseController
             $vote = new Vote;
             $vote->post_id = $post_id;
             $vote->user_id = $this->currentUser;
+            $vote->status = 1;
             $vote->created_at = $current_date;
             $vote->save();
         }
