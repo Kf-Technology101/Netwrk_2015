@@ -37,7 +37,7 @@ var Map ={
 		
 		Map.eventZoom(map);
 		Map.eventClickMyLocation(map);
-		// Map.show_marker(map);
+		Map.show_marker(map);
 	},
 
 	main: function(){
