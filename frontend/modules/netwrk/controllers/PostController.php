@@ -16,13 +16,13 @@ class PostController extends BaseController
 {   
     private $currentUser = 1;
 
-    public function actionResetPostCount(){
-        $posts = Post::find()->all();
-        foreach ($posts as $key => $value) {
-            $value->brilliant_count = null;
-            $value->save();
-        }
-    }
+    // public function actionResetPostCount(){
+    //     $posts = Post::find()->all();
+    //     foreach ($posts as $key => $value) {
+    //         $value->brilliant_count = null;
+    //         $value->save();
+    //     }
+    // }
 
     public function actionIndex($city,$topic)
     {
