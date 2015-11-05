@@ -32,13 +32,13 @@ var Map ={
 		map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		
 		Map.data_map = map;
-		// Default.getMarkerDefault();
-		// Map.show_marker(map);
+		Default.getMarkerDefault();
+		Map.show_marker(map);
 		Map.min_max_zoom(map);
-		// Map.eventOnclick(map);
+		Map.eventOnclick(map);
 		
 		Map.eventZoom(map);
-		// Map.eventClickMyLocation(map);
+		Map.eventClickMyLocation(map);
 	},
 
 	main: function(){
@@ -229,13 +229,13 @@ var Map ={
 			if(zoom_current == 7){
 				map.zoom = 12;
 				zoom_current = 12;
-				// Default.getMarkerZoom();
-				// Map.show_marker(map);
+				Default.getMarkerZoom();
+				Map.show_marker(map);
 			}else if (zoom_current == 12){
 				map.zoom = 7;
 				zoom_current = 7;
-				// Default.getMarkerDefault();
-				// Map.show_marker(map);
+				Default.getMarkerDefault();
+				Map.show_marker(map);
 			}
 		});
 	},
