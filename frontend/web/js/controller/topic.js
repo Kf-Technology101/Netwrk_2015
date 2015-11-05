@@ -60,12 +60,12 @@ var Topic = {
                 if(isMobile){
                     Post.RedirectPostPage(Topic.data.city,topic);
                 }else{
+                    $('#modal_topic').modal('hide');
                     Post.params.topic = topic;
                     Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();;
                     Post.params.city = Topic.data.city;
                     Post.params.city_name = Topic.data.city_name;
                     Post.initialize();
-                    $('#modal_topic').modal('hide');
                 }
                 
             });
@@ -194,7 +194,6 @@ var Topic = {
     OnShowModalPost: function(){
         $('#modal_topic').unbind();
         $('#modal_topic').on('shown.bs.modal',function(e) {
-            console.log('show modal topic');
             Topic.load_topic_modal();
         });
     },

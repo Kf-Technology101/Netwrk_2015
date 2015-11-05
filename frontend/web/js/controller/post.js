@@ -33,13 +33,13 @@ var Post ={
 			Post.FilterTabPost($('body'));
 			Create_Post.initialize();
 		}else{
+			Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
 			Post.OnShowModalPost();
 			Post.GetDataOnTab();
 			Post.OnHideModal();
 			Post.FilterTabPost($('.container_post'));
 			Post.getNameTopic();
-			Post.ShowSideBar();
 		}	
 		
 		Post.OnclickBack();
@@ -48,8 +48,20 @@ var Post ={
 		Post.OnChangeTab();
 	},
 
-	ShowSideBar: function(){
+	ShowSideBar: function(city,topic){
+		console.log(city);
+		console.log(topic);
+    	var sidebar = $('.map_content .sidebar');
+        var city_name = "<span>"+ city +"</span> <i class='fa fa-angle-right'></i><span>"+ topic +"</span>";
 
+        sidebar.find('.container').append(city_name);
+        sidebar.show();
+	},
+
+	HideSideBar: function(){
+		var sidebar = $('.map_content .sidebar');
+		sidebar.hide();
+		sidebar.find('.container').find('span,.fa').remove();
 	},
 
 	OnclickVote: function(){
@@ -76,6 +88,7 @@ var Post ={
 	OnShowModalPost: function(){
         $('#list_post').on('shown.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
+
             Post.GetDataOnTab();
         });
 	},
@@ -83,6 +96,7 @@ var Post ={
 	OnHideModal: function(){
         $('#list_post').on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
+        	Post.HideSideBar()
             Post.ResetModal();
         });
 	},
@@ -212,6 +226,7 @@ var Post ={
 				parent.find('.no-data').hide();
 				Post.getTemplate(parent,json.data);
 				Post.OnclickVote();
+
 			}
 		});
 	},
