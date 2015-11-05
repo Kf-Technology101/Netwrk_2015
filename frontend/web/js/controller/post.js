@@ -31,6 +31,7 @@ var Post ={
 			Post.GetDefaultValue();
 			Post.GetDataOnTab();
 			Post.FilterTabPost($('body'));
+			Post.OnClickMeetIconMobile();
 			Create_Post.initialize();
 		}else{
 			Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
@@ -40,12 +41,40 @@ var Post ={
 			Post.OnHideModal();
 			Post.FilterTabPost($('.container_post'));
 			Post.getNameTopic();
+			Post.ShowMeetIcon();
 		}	
 		
 		Post.OnclickBack();
 		Post.OnclickCreate();
 		Post.LazyLoading();
 		Post.OnChangeTab();
+		
+	},
+
+	ShowMeetIcon: function(){
+		var btn_parent = $('#list_post').find('#btn_meet');
+		var btn_map = $('.map_content').find('#btn_meet');
+
+		btn_map.hide();
+		set_position_btn(btn_parent);
+		set_position_btn_resize(btn_parent);
+		btn_parent.show();
+		btn_parent.unbind();
+
+		btn_parent.on('click',function(){
+			$('#list_post').modal('hide');
+			Meet.initialize();
+		});
+
+	},
+
+	OnClickMeetIconMobile: function(){
+		var btn = $('#btn_meet_mobile');
+
+		btn.unbind();
+		btn.on('click',function(){
+			window.location.href = baseUrl + "/netwrk/meet";
+		});
 	},
 
 	ShowSideBar: function(city,topic){
