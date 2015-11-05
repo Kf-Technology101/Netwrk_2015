@@ -78,8 +78,6 @@ var Post ={
 	},
 
 	ShowSideBar: function(city,topic){
-		console.log(city);
-		console.log(topic);
     	var sidebar = $('.map_content .sidebar');
         var city_name = "<span>"+ city +"</span> <i class='fa fa-angle-right'></i><span>"+ topic +"</span>";
 
@@ -228,6 +226,7 @@ var Post ={
 	FilterTabPost: function(body){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
 		parent.show();
+		$('#list_post').find('.dropdown select').unbind('change');
 		$('#list_post').find('.dropdown select').change(function(e){
 			body.scrollTop(0);
 			Post.params.filter = $(e.currentTarget).val();
