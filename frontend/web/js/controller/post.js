@@ -90,6 +90,10 @@ var Post ={
 	ResetModal: function(){
 		var name = $('#list_post').find('.header .title_page');
 		name.find('span.title').remove();
+		Post.tab_current = "post";
+		$('#list_post').find('.tab').hide();
+		$('#list_post').find('.filter_sidebar td').removeClass('active');
+		$('#list_post').find('.filter_sidebar .post').addClass('active');
 	},
 
 	getNameTopic: function(){

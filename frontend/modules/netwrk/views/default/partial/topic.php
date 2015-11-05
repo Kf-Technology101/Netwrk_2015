@@ -43,7 +43,7 @@
                 </div>
                 <div class="name_post">
                   <% _.each(topic.post.data_post,function(post){ %>
-                    <span><%= post %></span>
+                    <a href="javascript:void(0)"><span><%= post %></span></a>
                   <% }); %>
 
                   <% 
