@@ -16,6 +16,14 @@ class PostController extends BaseController
 {   
     private $currentUser = 1;
 
+    public function actionResetPostCount(){
+        $posts = Post::find()->all();
+        foreach ($posts as $key => $value) {
+            $value->brilliant_count = null;
+            $value->save();
+        }
+    }
+
     public function actionIndex($city,$topic)
     {
         $top = Topic::findOne($topic);
@@ -101,9 +109,9 @@ class PostController extends BaseController
             }else{
                 $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
             }
-            $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$value->id)->all();
+            $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$value->id)->one();
             
-            if($currentVote){
+            if($currentVote && $currentVote->status == 1){
                 $isVote = 1;
             }else{
                 $isVote = 0;
@@ -135,12 +143,23 @@ class PostController extends BaseController
         $post_id = $_POST['post_id'];
         
         $current_date = date('Y-m-d H:i:s');
+        $curVote = Vote::find()->where('user_id = '.$this->currentUser.' AND post_id = '.$post_id)->one();
 
-        $vote = new Vote;
-        $vote->post_id = $post_id;
-        $vote->user_id = $this->currentUser;
-        $vote->created_at = $current_date;
-        $vote->save();
+        if($curVote){
+            if($curVote->status == 1){
+                $curVote->status = 0;
+                $curVote->save(); 
+            }else{
+                $curVote->status = 1;
+                $curVote->save(); 
+            }
+        }else{
+            $vote = new Vote;
+            $vote->post_id = $post_id;
+            $vote->user_id = $this->currentUser;
+            $vote->created_at = $current_date;
+            $vote->save();
+        }
 
         $post = Post::findOne($post_id);
         $temp = array ('status'=> 1 ,'data'=> $post->brilliant_count);

@@ -8,7 +8,7 @@ var Ajax ={
         $.ajax({
             url: url,
             data: params,
-            async: false,
+            async: true,
             cache: false,
             type: 'POST',
             success: defer.resolve,

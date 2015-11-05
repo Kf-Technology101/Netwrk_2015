@@ -57,6 +57,16 @@ class Vote extends \yii\db\ActiveRecord
             $this->post->updateAttributes([
                 'brilliant_count' =>  $this->post->brilliant_count + 1
             ]);
+        }else{
+            if($this->status == 1){
+                $this->post->updateAttributes([
+                    'brilliant_count' =>  $this->post->brilliant_count + 1
+                ]);
+            }else{
+                $this->post->updateAttributes([
+                    'brilliant_count' =>  $this->post->brilliant_count - 1
+                ]);
+            }
         }
         return parent::afterSave($insert, $changedAttributes);
     }
