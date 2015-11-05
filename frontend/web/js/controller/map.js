@@ -32,7 +32,6 @@ var Map ={
 		map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		
 		Map.data_map = map;
-		Default.getMarkerDefault();
 		Map.show_marker(map);
 		Map.min_max_zoom(map);
 		Map.eventOnclick(map);
@@ -52,11 +51,6 @@ var Map ={
 		var current = map.getZoom();
 		$('.indiana_marker').find("li[num-city]").remove();
 		Map.deleteNetwrk(map);
-		if(current == 7){
-			Default.getMarkerDefault();
-		}else if(current == 12){
-			Default.getMarkerZoom();
-		}
 		Map.show_marker(map);
 	},
 
@@ -93,23 +87,26 @@ var Map ={
 	},
 
 	show_marker: function(map){
-	  	var marker,json;
+		console.log('show marker');
+	  	var marker,json,data_marker;
 
 	 	var current_zoom = map.getZoom();
 
 
 	 	if(current_zoom == 7){
 	 		Ajax.get_marker_default().then(function(data){
+	 			console.log('get marker default');
 	 			data_marker = $.parseJSON(data);
 	 		});
 	 	}else if(current_zoom == 12){
 	 		Ajax.get_marker_zoom().then(function(data){
+	 			console.log('get marker zoom');
 	 			data_marker = $.parseJSON(data);
 	 		});
 	 	}
 
 		$.each(data_marker,function(i,e){
-
+			console.log('fetch elements in array marker');
 			marker = new google.maps.Marker({
 				position: new google.maps.LatLng(e.lat, e.lng),
 				map: map,
@@ -122,12 +119,12 @@ var Map ={
             });
 	            
 			google.maps.event.addListener(marker, 'click', (function(marker, i) {
-					return function(){
-						if(!isMobile){
-							infowindow.close();
-						}
-						Topic.init(marker.city_id);
-					};
+				return function(){
+					if(!isMobile){
+						infowindow.close();
+					}
+					Topic.init(marker.city_id);
+				};
 			})(marker, i));
 
 			if(!isMobile){
@@ -225,16 +222,17 @@ var Map ={
 	eventZoom: function(map){
 		var zoom_current = 7;
 	  	map.addListener('zoom_changed', function() {
+	  		console.log('map zoom');
 	  		Map.deleteNetwrk(map);
 			if(zoom_current == 7){
+				console.log('map zoom 7');
 				map.zoom = 12;
 				zoom_current = 12;
-				Default.getMarkerZoom();
 				Map.show_marker(map);
 			}else if (zoom_current == 12){
+				console.log('map zoom 12');
 				map.zoom = 7;
 				zoom_current = 7;
-				Default.getMarkerDefault();
 				Map.show_marker(map);
 			}
 		});
