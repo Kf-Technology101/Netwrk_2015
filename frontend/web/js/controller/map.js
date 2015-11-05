@@ -32,12 +32,12 @@ var Map ={
 		map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		
 		Map.data_map = map;
-		Map.show_marker(map);
 		Map.min_max_zoom(map);
 		Map.eventOnclick(map);
 		
 		Map.eventZoom(map);
 		Map.eventClickMyLocation(map);
+		// Map.show_marker(map);
 	},
 
 	main: function(){
