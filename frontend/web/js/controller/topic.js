@@ -54,6 +54,7 @@ var Topic = {
         var parent = $('#item_list_'+Topic.data.filter);
         parent.find('.item').unbind();
         parent.find('.item').on('click',function(e){
+            if($(e.currentTarget).hasClass());
             var topic = $(e.currentTarget).attr('data-item');
             Ajax.update_view_topic({topic: topic}).then(function(){
                 if(isMobile){
@@ -68,6 +69,11 @@ var Topic = {
                 }
                 
             });
+        });
+
+        parent.find('.item .name_post a').unbind();
+        parent.find('.item .name_post a').on('click',function(e){
+            e.stopPropagation();
         })
     },
 
