@@ -98,8 +98,6 @@ class TopicController extends BaseController
     $Topic->user_id = $this->currentUser;
     $Topic->city_id = $city_id;
     $Topic->title = $topic;
-    $Topic->created_at = $current_date;
-    $Topic->updated_at = $current_date;
     $Topic->save();
 
     $Post = new Post;
@@ -107,8 +105,6 @@ class TopicController extends BaseController
     $Post->content = $message;
     $Post->topic_id = $Topic->id;
     $Post->user_id = $this->currentUser;
-    $Post->created_at = $current_date;
-    $Post->updated_at = $current_date;
     $Post->save();
 
     $Topic->post_count = 1;

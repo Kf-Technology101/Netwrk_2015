@@ -18,7 +18,8 @@ class DefaultController extends BaseController
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 
-    public function actionGetUserPosition(){
+    public function actionGetUserPosition()
+    {
     	$user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
 		$data =[
     		'lat'=> $user->profile->lat,

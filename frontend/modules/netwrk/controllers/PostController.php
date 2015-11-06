@@ -51,15 +51,8 @@ class PostController extends BaseController
         $Post->content = $message;
         $Post->topic_id = $topic;
         $Post->user_id = $this->currentUser;
-        $Post->created_at = $current_date;
-        $Post->updated_at = $current_date;
         $Post->save();
 
-        $num_top = Post::find()->where('topic_id ='.$topic)->all();
-        $top = Topic::findOne($topic);
-        // $top->post_count = count($num_top);
-        $top->updated_at = $current_date;
-        $top->update();
     }
 
     public function actionGetAllPost(){
