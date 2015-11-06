@@ -19,8 +19,8 @@ class UtilitiesFunc
 		return $fnum;
 	}
 
-  public static function getDateTime($date)
-  {
+	public static function getDateTime($date)
+	{
 		$current_date = date('Y-m-d H:i:s');
 
 		// for test

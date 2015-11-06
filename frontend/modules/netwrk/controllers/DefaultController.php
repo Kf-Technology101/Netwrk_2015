@@ -2,6 +2,7 @@
 
 namespace frontend\modules\netwrk\controllers;
 
+use Yii;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
@@ -28,28 +29,6 @@ class DefaultController extends BaseController
     	return $hash;
     }
 
-    public function actionGetTopPost()
-    {	
-    	$city_id = $_POST['city_id'];
-    	$city = City::findOne($city_id);
-    	$post = $city->topics[0]->posts[0];
-
-    	$content = $post->content;
-    	if(strlen($content) > 140){
-    		$content = substr($post->content,0,140) ;
-    		$content = $content."...";
-    	}
-
-    	$data =[
-    		'city_id'=> $city->id,
-    		'zipcode'=> $city->zip_code,
-    		'name_post'=> $post->title,
-    		'content' => $content,
-    	];
-    	$hash = json_encode($data);
-    	return $hash;
-    }
-
     public function actionCheckExistZipcode()
     {
     	$zipcode = $_POST['zipcode'];
@@ -66,16 +45,18 @@ class DefaultController extends BaseController
 
     public function actionGetMakerDefaultZoom()
     {
+        $maxlength = Yii::$app->params['MaxlengthContent'];
     	$cities = City::find()->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
     	
     	$data = [];
+
 
     	foreach ($cities as $key => $value) {
     		$post = $value->topics[0]->posts[0];
 	    	$content = $post->content;
 
-	    	if(strlen($content) > 140){
-	    		$content = substr($post->content,0,140) ;
+	    	if(strlen($content) > $maxlength ){
+	    		$content = substr($post->content,0,$maxlength) ;
 	    		$content = $content."...";
 	    	}
 
@@ -100,6 +81,7 @@ class DefaultController extends BaseController
 
     public function actionGetMakerMaxZoom()
     {
+        $maxlength = Yii::$app->params['MaxlengthContent'];
     	$cities = City::find()->orderBy(['user_count'=> SORT_DESC])->all();
     	
     	$data = [];
@@ -108,8 +90,8 @@ class DefaultController extends BaseController
     		$post = $value->topics[0]->posts[0];
 	    	$content = $post->content;
 
-	    	if(strlen($content) > 140){
-	    		$content = substr($post->content,0,140) ;
+	    	if(strlen($content) > $maxlength ){
+	    		$content = substr($post->content,0,$maxlength ) ;
 	    		$content = $content."...";
 	    	}
 

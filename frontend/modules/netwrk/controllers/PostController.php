@@ -11,6 +11,7 @@ use frontend\modules\netwrk\models\Vote;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
+use Yii;
 
 class PostController extends BaseController
 {   
@@ -62,6 +63,10 @@ class PostController extends BaseController
     }
 
     public function actionGetAllPost(){
+
+        $maxlength = Yii::$app->params['MaxlengthContent'];
+        $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
+
         $filter = $_POST['filter'];
         $topic_id = $_POST['topic'];
 
@@ -94,11 +99,11 @@ class PostController extends BaseController
 
             $content = $value->content;
 
-            if($this->getIsMobile() && strlen($content) > 80){
-                $content = substr($content,0,80) ;
+            if($this->getIsMobile() && strlen($content) > $maxlengthMobile){
+                $content = substr($content,0,$maxlengthMobile) ;
                 $content = $content." ...<a class='show_more' href='javascript:void(0)'>show more</a>";
-            }elseif(!$this->getIsMobile() && strlen($content) > 140){
-                $content = substr($content,0,140) ;
+            }elseif(!$this->getIsMobile() && strlen($content) > $maxlength){
+                $content = substr($content,0,$maxlength) ;
                 $content = $content." ...<a class='show_more' href='javascript:void(0)'>show more</a>";
             }
             
