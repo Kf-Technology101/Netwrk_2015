@@ -19,7 +19,7 @@ class DefaultController extends BaseController
     }
 
     public function actionGetUserPosition(){
-    	$user = User::find()->where('id ='.$this->currentUser)->one();
+    	$user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
 		$data =[
     		'lat'=> $user->profile->lat,
     		'lng'=> $user->profile->lng,
@@ -46,7 +46,7 @@ class DefaultController extends BaseController
     public function actionGetMakerDefaultZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
-    	$cities = City::find()->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
+    	$cities = City::find()->with('topics.posts')->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
     	
     	$data = [];
 
@@ -82,7 +82,7 @@ class DefaultController extends BaseController
     public function actionGetMakerMaxZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
-    	$cities = City::find()->orderBy(['user_count'=> SORT_DESC])->all();
+    	$cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
     	
     	$data = [];
 

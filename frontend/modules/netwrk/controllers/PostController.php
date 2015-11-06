@@ -75,13 +75,13 @@ class PostController extends BaseController
 
         switch ($filter) {
             case 'post':
-                $posts = Post::find()->where('topic_id ='.$topic_id)->orderBy(['created_at'=> SORT_DESC]);
+                $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy(['created_at'=> SORT_DESC]);
                 break;
             case 'brilliant':
-                $posts = Post::find()->where('topic_id ='.$topic_id)->orderBy(['brilliant_count'=> SORT_DESC]);
+                $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy(['brilliant_count'=> SORT_DESC]);
                 break;  
             case 'view':
-                $posts = Post::find()->where('topic_id ='.$topic_id)->orderBy(['view_count'=> SORT_DESC]);
+                $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy(['view_count'=> SORT_DESC]);
                 break; 
         }
 

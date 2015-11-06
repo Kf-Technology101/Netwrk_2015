@@ -21,7 +21,7 @@ class SettingController extends BaseController
     {
         // $currentUser = 4;
         $current_date = date('Y-m-d H:i:s');
-        $user = User::find()->where('id ='.$this->currentUser)->one();
+        $user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
 
         if($user && $user->profile){
 
@@ -70,7 +70,7 @@ class SettingController extends BaseController
         $zipcode = $_POST['zipcode'];
         $lat = $_POST['lat'];
         $lng = $_POST['lng'];
-        $user = User::find()->where('id ='.$this->currentUser)->one();
+        $user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
         $profile = $user->profile;
 
         $user->profile->dob = $age;

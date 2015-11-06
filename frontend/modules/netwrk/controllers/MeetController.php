@@ -20,10 +20,11 @@ class MeetController extends BaseController
         $userCurrent = 1;
 
         $current_date = date('Y-m-d H:i:s');
-        $userLogin = User::findOne($userCurrent);
+        $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
         $users = User::find()
                         ->addSelect(["*", "RAND() order_num"])
                         ->where('id !='.$userCurrent)
+                        ->with('profile')
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
 
