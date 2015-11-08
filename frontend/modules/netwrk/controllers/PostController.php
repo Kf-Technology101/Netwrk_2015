@@ -68,18 +68,18 @@ class PostController extends BaseController
 
         switch ($filter) {
             case 'post':
-                $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy(['created_at'=> SORT_DESC]);
+                $condition = 'created_at';
                 break;
             case 'brilliant':
-                $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy(['brilliant_count'=> SORT_DESC]);
+                $condition = 'brilliant_count';
                 break;  
             case 'view':
-                $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy(['view_count'=> SORT_DESC]);
+                $condition = 'view_count';
                 break; 
         }
-
-        $countQuery = clone $posts;
-        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+        
+        $post = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy([$condition=> SORT_DESC]);
+        $pages = new Pagination(['totalCount' => $post->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
         $data = [];
@@ -107,6 +107,7 @@ class PostController extends BaseController
             }else{
                 $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
             }
+            
             $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$value->id)->one();
             
             if($currentVote && $currentVote->status == 1){
