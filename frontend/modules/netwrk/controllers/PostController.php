@@ -78,7 +78,7 @@ class PostController extends BaseController
                 break; 
         }
         
-        $post = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy([$condition=> SORT_DESC]);
+        $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $post->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
