@@ -226,10 +226,12 @@ var Post ={
 	FilterTabPost: function(body){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
 		parent.show();
-		$('#list_post').find('.dropdown select').unbind('change');
-		$('#list_post').find('.dropdown select').change(function(e){
+		var selecFilter = $('#list_post').find('.dropdown-menu li');
+		selecFilter.unbind('click');
+		selecFilter.on('click',function(e){
+			// console.log($(e.currentTarget).attr('data-value'));
 			body.scrollTop(0);
-			Post.params.filter = $(e.currentTarget).val();
+			Post.params.filter = $(e.currentTarget).attr('data-value');
 			Post.ShowPostPage();
 		});
 	},

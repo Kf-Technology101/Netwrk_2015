@@ -6,23 +6,24 @@
             <div class="modal-header">
                 <div class="header">
                     <div class="back_page">
-                        <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
+                        <span><i class="fa fa-arrow-circle-left"></i> Back </span>
                     </div>
+                    <div class="title_page"></div>
                     <div class="create_post">
-                        <span><i class="fa fa-plus"></i> Create Post</span>
+                        <span><i class="fa fa-plus-circle"></i> Create Post</span>
                     </div>
-                    <div class="title_page">
-                        
-                    </div>
+
                 </div>
                 <div class="sidebar">
                     <div class="title"></div>
-                    <div class="dropdown">
-                        <select class="form-control">
-                            <option value="post">Most recent</option>
-                            <option value="brilliant">Most brilliant</option>
-                            <option value="view">Most viewed</option>
-                        </select>    
+                    <div class="dropdown input-group">
+                        <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                        <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <li data-value="post">Most recent</li>
+                            <li data-value="brilliant">Most brilliant</li>
+                            <li data-value="view">Most viewed</li>
+                        </ul>
                     </div>
                     <table class="filter_sidebar">
                         <tr>
@@ -59,43 +60,19 @@
         <div class="item_post" data-item="<%= post.id %>">
             <div class="users_avatar">
                 <div class="image"><img src="<%= post.avatar %>"></div>
+                <div class="icon_brillant" data-item="<%= post.id %>">
+                    <% if (post.is_vote == 1){%>
+                        <div class="count"><%= post.num_brilliant %></div>
+                    <% }else{ %> 
+                        <div class="count disable"><%= post.num_brilliant %></div>
+                    <% } %>
+                    
+                </div>
             </div>
             <div class="information">
                 <p class="post_name"><%= post.title %></p>
                 <p class="post_massage"><%= post.content %></p>
-            </div>
-            <div class="icon_information">
-                <table>
-                    <tr class="icon">
-                        <td><div class="icon_duration"><img src="<?= Url::to('@web/img/icon/timehdpi.png') ?>"></div></td>            
-                        <td>
-                            <div class="icon_view">
-                                <div class="num_view">
-                                    <p><%= post.num_view %></p>
-                                </div>
-                            </div>
-                        </td>
-                        <td data-item="<%= post.id %>">
-                            <div class="icon_brillant">
-                                <% if (post.is_vote == 1){%>
-                                    <div class="count"><%= post.num_brilliant %></div>
-                                <% }else{ %> 
-                                    <div class="count disable"><%= post.num_brilliant %></div>
-                                <% } %>
-                                
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p><%= post.update_at %></p></td>
-                        <td><p>Views</p></td>
-                        <td><p>Brilliant</p></td>
-                    </tr>
-                </table>
-                <div class="btn_comment">
-                    <div class="num_comment"><p><%= post.num_comment %></p></div>
-                    <p> Comment</p>
-                </div>
+                <span class="post_chat"><i class="fa fa-comments"></i>Chat</span>
             </div>
         </div>
     <% }); %>            

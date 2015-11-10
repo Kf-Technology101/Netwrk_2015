@@ -1,4 +1,58 @@
 .wrap{
+  .navbar-inverse{
+    background: #5888ac;
+  }
+
+  .collapse{
+    .search{
+      width: 340px;
+      height: 34px;
+      float: left;
+      margin: 13px 0 ;
+      span.input-group-addon{
+        background: #fff;
+        border: none;
+        i{
+          font-size: 20px;
+          color: #8f8f8f;
+        }
+      }
+      input{
+        border: none;
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        &:focus{
+          outline: none;
+        }
+      }
+    }
+    .logo_netwrk{
+      width: 60px;
+      height: 60px;
+      float: left;
+      img{
+        width: 44px;
+        height: 44px;
+        margin: 8px;
+      }
+    }
+    .chatting{
+      float: right;
+      padding: 0 10px;
+      span{
+        color: #fff;
+        font-size: 20px;
+        line-height: 60px;
+        i{
+          margin-right: 5px;
+        }
+      }
+    }
+    .navbar-nav>li>a {
+      line-height: 30px
+    }
+  }
 
   #googleMap{
     z-index: 5;
@@ -9,7 +63,7 @@
     display: block;
   }
   .map-padding{
-    padding: 50px 0px 0px;
+    padding: 60px 0px 0px;
   }
   .map_content{
     display: block;

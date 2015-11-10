@@ -57,7 +57,7 @@ class PostController extends BaseController
 
     public function actionGetAllPost(){
 
-        $maxlength = Yii::$app->params['MaxlengthContent'];
+        $maxlength = Yii::$app->params['MaxlenghtMessageDesktop'];
         $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
 
         $filter = $_POST['filter'];

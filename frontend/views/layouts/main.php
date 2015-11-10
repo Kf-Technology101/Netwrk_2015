@@ -28,20 +28,27 @@ AppAsset::register($this);
     <div class="wrap" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
         <?php
             NavBar::begin([
-                'brandLabel' => 'Netwrk',
-                'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top menu_top',
                 ],
             ]);
-            $menuItems = [
-                // ['label' => 'Home', 'url' => ['/site/index']],
-                // ['label' => 'Menu', 'href' => ['/site/menu']],
-                ['label' => 'Menu'],
-                // ['label' => 'Talking', 'url' => ['/site/talking']],
-                ['label' => 'Talking'],
+        ?>
+        <div class="logo_netwrk">
+            <img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>">
+        </div>
+        <div class="search input-group">
+            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="What are you interests?">
+        </div>
+        <div class="chatting">
+            <span><i class="fa fa-comment"></i>Chat</span>
+        </div>
+        <?php
+            // $menuItems = [
+            //     ['label' => 'Menu'],
+            //     ['label' => 'Talking'],
                 
-            ];
+            // ];
             // if (Yii::$app->user->isGuest) {
             //     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
             // } else {
@@ -51,10 +58,10 @@ AppAsset::register($this);
             //         'linkOptions' => ['data-method' => 'post']
             //     ];
             // }
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => $menuItems,
-            ]);
+            // echo Nav::widget([
+            //     'options' => ['class' => 'navbar-nav navbar-right'],
+            //     'items' => $menuItems,
+            // ]);
             NavBar::end();
         ?>
 
@@ -65,13 +72,6 @@ AppAsset::register($this);
         <?= $content ?>
         </div>
     </div>
-
-    <!-- <footer class="footer">
-        <div class="container">
-        <p class="pull-left">&copy; Netwrk <?= date('Y') ?></p>
-        <p class="pull-right"><?php //Yii::powered() ?></p>
-        </div>
-    </footer> -->
 
     <?php $this->endBody() ?>
 </body>
