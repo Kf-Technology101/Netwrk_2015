@@ -97,7 +97,7 @@ var Post ={
 
 		btn.unbind();
 		btn.on('click',function(e){
-			var post_id = $(e.currentTarget).parent().attr('data-item');
+			var post_id = $(e.currentTarget).attr('data-item');
 			var target = $(e.currentTarget);
 			Vote.SetVote(target,post_id);
 		});
@@ -132,7 +132,10 @@ var Post ={
 		var name = $('#list_post').find('.header .title_page');
 		name.find('span.title').remove();
 		Post.tab_current = "post";
+		Post.params.filter = "post";
+		var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
 		$('#list_post').find('.tab').hide();
+		$('#list_post').find('.dropdown-toggle').text(selecFilter);
 		$('#list_post').find('.filter_sidebar td').removeClass('active');
 		$('#list_post').find('.filter_sidebar .post').addClass('active');
 	},
@@ -231,6 +234,8 @@ var Post ={
 		selecFilter.on('click',function(e){
 			// console.log($(e.currentTarget).attr('data-value'));
 			body.scrollTop(0);
+			var name = $(e.currentTarget).text();
+			$('#list_post').find('.dropdown-toggle').text(name);
 			Post.params.filter = $(e.currentTarget).attr('data-value');
 			Post.ShowPostPage();
 		});
