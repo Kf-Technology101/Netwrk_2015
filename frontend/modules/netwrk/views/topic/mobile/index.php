@@ -4,25 +4,35 @@
 <div id="show-topic" data-city="<?= $city_id ?>" <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'" data-name="'.$data->city_name.'"'; } ?>>
     <div class="header">
         <div class="back_page">
-            <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
+            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
 
         <div class="title_page">
-            <span class="title"><a href="<?php echo Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>"></a><?php print $data->zipcode?></span>
+            <span class="title"><a href="<?php echo Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><?php print $data->zipcode?></span>
         </div>
         <div class="create_topic">
-            <span>Create a topic +</span>
+            <span><i class="fa fa-plus-circle"></i> Create Topic</span>
         </div>
     </div>
     <div class="sidebar">
-       <span class="title">Topics</span>
-       <table class="filter_sidebar">
+        <span class="filter"><i class="fa fa-filter"></i></span>
+        <table class="filter_sidebar">
             <tr>
-                <td class="active post">Most posts</td>
-                <td class="view">Most viewed</td>
-                <td class="topic">My Topics</td>
+                <td class="feed">Feed</td>
+                <td class="post active">Topics</td>
             </tr>
-       </table> 
+        </table>
+    </div>
+    <div class="filter_sort">
+        <div class="dropdown input-group">
+            <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+            <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li data-value="post">Most recent</li>
+                <li data-value="brilliant">Most brilliant</li>
+                <li data-value="view">Most viewed</li>
+            </ul>
+        </div>
     </div>
     <div class="container">
         <div id="item_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
@@ -40,24 +50,24 @@
                     <div class="name_topic">
                         <p><%= topic.title %></p>
                     </div>
-                    <div class="time_ago">
-                    <% if (topic.created_at == 'Just now') {%>
-                        <span><%= topic.created_at%></span>
-                    <%}else{ %> 
-                        <img src="<%= topic.img%>"/>
-                        <span><%= topic.created_at%></span>
-                    <% } %>    
-                    </div>
+                    <div class="arrow">
+                        <p><i class="fa fa-angle-right"></i></p>
+                    </div> 
+                    <div class="num_count_duration">
+                        <div class="most_post">
+                            <p><i class="fa fa-clock-o"></i><%= topic.created_at%></p>
+                        </div>   
+                    </div> 
                     <div class="num_count">
                         <div class="most_post">
-                            <p><%= topic.view_count%></p>
-                        </div>
-                        <% if (topic.view_count == 1) {%>
-                            <p>View</p>
-                        <%}else{ %> 
-                            <p>Views</p>
-                        <% } %>    
-                    </div>     
+                            <p><i class="fa fa-file-text"></i><%= topic.post_count%></p>
+                        </div>   
+                    </div> 
+                    <div class="num_count">
+                        <div class="most_post">
+                            <p><i class="fa fa-eye"></i><%= topic.view_count%></p>
+                        </div>   
+                    </div> 
                 </div>
             <% }); %>            
         </script>

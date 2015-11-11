@@ -37,6 +37,7 @@ var Topic = {
         Topic.RedirectPostList();
         this.filter_topic($(window));
         this.scroll_bot();
+        Topic.OnClickSortBtn();
     },
 
     init: function(city,params){
@@ -49,7 +50,16 @@ var Topic = {
              
         }
     },
+    OnClickSortBtn: function(){
+        var btn_parent = $('#show-topic').find('.sidebar .filter');
 
+        btn_parent.unbind();
+        btn_parent.on('click',function(){
+            btn_parent.toggleClass('active');
+            $('#show-topic').find('.filter_sort').toggleClass('active');
+            $('#show-topic').find('.container').toggleClass('open');
+        });
+    },
     RedirectPostList: function(){
         var parent = $('#item_list_'+Topic.data.filter);
         parent.find('.item').unbind();

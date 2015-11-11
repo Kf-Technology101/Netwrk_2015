@@ -38,7 +38,7 @@ AppAsset::register($this);
         </div>
         <div class="search input-group">
             <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
-            <input type="text" class="form-control" placeholder="What are you interests?">
+            <input type="text" class="form-control" placeholder="What are your interests?">
         </div>
         <div class="chatting">
             <span><i class="fa fa-comment"></i>Chat</span>
