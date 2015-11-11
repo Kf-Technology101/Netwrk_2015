@@ -34,7 +34,7 @@ AppAsset::register($this);
             ]);
         ?>
         <div class="logo_netwrk">
-            <img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>">
+            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
         </div>
         <div class="search input-group">
             <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>

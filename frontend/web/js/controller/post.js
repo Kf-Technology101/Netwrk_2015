@@ -30,11 +30,12 @@ var Post ={
 		if(isMobile){
 			Post.GetDefaultValue();
 			Post.GetDataOnTab();
+			Post.OnClickSortBtn();
 			Post.FilterTabPost($('body'));
 			Post.OnClickMeetIconMobile();
 			Create_Post.initialize();
 		}else{
-			Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
+			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
 			Post.OnShowModalPost();
 			Post.GetDataOnTab();
@@ -49,6 +50,17 @@ var Post ={
 		Post.LazyLoading();
 		Post.OnChangeTab();
 		
+	},
+
+	OnClickSortBtn: function(){
+		var btn_parent = $('#list_post').find('.sidebar .filter');
+
+		btn_parent.unbind();
+		btn_parent.on('click',function(){
+			btn_parent.toggleClass('active');
+			$('#list_post').find('.filter_sort').toggleClass('active');
+			$('#list_post').find('.container_post').toggleClass('open');
+		});
 	},
 
 	ShowMeetIcon: function(){
@@ -123,7 +135,7 @@ var Post ={
 	OnHideModal: function(){
         $('#list_post').on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
-        	Post.HideSideBar()
+        	// Post.HideSideBar()
             Post.ResetModal();
         });
 	},
@@ -202,7 +214,7 @@ var Post ={
 	},
 
 	OnclickBack: function(){
-        $('#list_post').find('.back_page img').click(function(){
+        $('#list_post').find('.back_page span').click(function(){
         	if(isMobile){
         		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city; 
         	}else{

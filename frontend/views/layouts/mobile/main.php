@@ -27,55 +27,41 @@ MobileAsset::register($this);
   </script>
 </head>
 <body>
-  <?php $this->beginBody() ?>
+
+
+
   <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
-    <nav class="navbar-mobile navbar-fixed-bottom">
+    <div class="navbar-mobile navbar-fixed-top">
+    	<div class="menu_top">
+			<div class="logo_netwrk">
+				<a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+			</div>
+			<div class="search input-group">
+				<span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
+				<input type="text" class="form-control" placeholder="What are you interests?">
+			</div>
+    	</div>
+	</div>
+    <div class="container-fuild">
+	    <?= Breadcrumbs::widget([
+	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	    ]) ?>
+	    <?= $content ?>
+    </div>
+    <div class="navbar-mobile navbar-fixed-bottom">
       <div class="menu_bottom">
         <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div>
         <div id="btn_discover_mobile"><img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>"></div>
-        <a href="javascript:void(0)" class='left'>Menu</a>
-        <a href="javascript:void(0)" class="right">Talking</a>
-<!--         <ul class="list-menu-mobile">
-          <li class="left">Menu</li>
-          <li class="right">Talking</li>
-        </ul> -->
+        <!-- <a href="javascript:void(0)" class='left'>Menu</a> -->
+        <a href="javascript:void(0)" class="right"><i class="fa fa-comment"></i></a>
+<!--         <div class="chatting">
+            <span><i class="fa fa-comment"></i>Chat</span>
+        </div> -->
       </div>
     </div>
-    <?php
-      // NavBar::begin([
-      //   // 'brandLabel' => 'Netwrk',
-      //   // 'brandUrl' => Yii::$app->homeUrl,
-      //   'options' => [
-      //     'class' => 'navbar-inverse navbar-fixed-bottom',
-      //   ],
-      // ]);
-      // $menuItems = [
-      //     // ['label' => 'Home', 'url' => ['/site/index']],
-      //     ['label' => 'Menu', 'url' => ['/site/menu'],'class'=>"menu"],
-      //     ['label' => 'Talking', 'url' => ['/site/talking'],'class'=> "talking"],
-      // ];
-      // // if (Yii::$app->user->isGuest) {
-      // //     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-      // // } else {
-      // //     $menuItems[] = [
-      // //         'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-      // //         'url' => ['/site/logout'],
-      // //         'linkOptions' => ['data-method' => 'post']
-      // //     ];
-      // // }
-      // echo Nav::widget([
-      //     'options' => ['class' => 'navbar-nav navbar-right'],
-      //     'items' => $menuItems,
-      // ]);
-      // NavBar::end();
-    ?>
+    
 
-    <div class="container-fuild">
-    <?= Breadcrumbs::widget([
-      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-    ]) ?>
-    <?= $content ?>
-    </div>
+
   </div>
 
   <!-- <footer class="footer">
