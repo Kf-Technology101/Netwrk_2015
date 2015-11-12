@@ -51,9 +51,8 @@ function set_heigth_modal(target){
   console.log(target);
   var size = get_size_window();
   var wh = size[1] - 100;
-  target.find('.modal-dialog').css('height',wh);
-  target.find('.modal-content').css('height',wh);
-  target.find('.modal-body').css('height',wh - 90);
+  console.log(size);
+  target.find('.modal-body').css('max-height',wh - 120);
  
   
   $(window).resize(function(){
