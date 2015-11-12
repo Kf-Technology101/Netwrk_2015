@@ -239,7 +239,7 @@ var Post ={
 	},
 
 	FilterTabPost: function(body){
-		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
+		var parent = $('#list_post #tab_post').find('#filter_'+Post.params.filter);
 		parent.show();
 		var selecFilter = $('#list_post').find('.dropdown-menu li');
 		selecFilter.unbind('click');

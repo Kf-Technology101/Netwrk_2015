@@ -8,16 +8,15 @@
               <span><i class="fa fa-arrow-circle-left"></i> Back </span>
             </div>
             <div class="title_page">
-              <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>12345</span>
             </div>
-            <div class="create_post">
-              <span><i class="fa fa-plus-circle"></i> Create Post</span>
+            <div class="create_topic">
+              <span><i class="fa fa-plus-circle"></i> Create Topic</span>
             </div>
           </div>
           <div class="sidebar">
             <div class="title"></div>
             <div class="dropdown input-group">
-                <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most posts</div>
                 <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                   <li data-value="post">Most posts</li>
@@ -28,29 +27,34 @@
             <table class="filter_sidebar">
                 <tr>
                     <td class="feed">Feed</td>
-                    <td class="post active">Posts</td>
+                    <td class="topic active">Topics</td>
                 </tr>
             </table> 
           </div>
 
       </div>
       <div class="modal-body containt">
-           <div id="item_list_post">
-             <p class="no-data">There is no data available yet</p>
-           </div>
-           <div id="item_list_view">
-             <p class="no-data">There is no data available yet</p>
-           </div>
-           <div id="item_list_topic">
-             <p class="no-data">There is no data available yet</p>
-           </div>
+          <div id="tab_feed" class="tab">
+              <p class="no-data">There is no data available yet</p>
+          </div>
+          <div id="tab_topic" class="tab">
+              <div id="item_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_list_topic" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+          </div>
       </div>
     </div>
   </div>
    
    
   <script id="city_name" type="text/x-underscore-template">
-    <span><%= city %></span>
+    <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= city %></span>
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
       <% _.each(topices,function(topic){ %>

@@ -133,6 +133,9 @@
             &.active{
                 background: #5da5d8;
             }
+            &.visible{
+                visibility: hidden;
+            }
         }
     }
     .filter_sort{
@@ -178,76 +181,88 @@
         &.open{
             margin: 115px 0 65px;
         }
-        #item_list_post,#item_list_view,#item_list_topic{
-            width: 100%;
-            margin: 80px auto;
-            // display: none;
+        .tab{
+            display: none; 
             .no-data{
                 text-align: center;
-                font-size: 14px;
-                padding-top: 10px;
-                display: none;
+                font-size: 16px;
+                padding-top: 20px;  
             }
-            .item{
-                &:nth-of-type(odd) {
-                    background: #ffffff;
-                }
-                &:nth-of-type(even) {
-                    background: #fcfcfc;
-                }
+        }
+        #tab_feed{
+            width: 100%;
+            display: none;
+            margin: 80px auto;
+        }
+        #tab_topic{
+            width: 100%;
+            display: none;
+            margin: 80px auto;
+            #item_list_post,#item_list_view,#item_list_topic{
                 width: 100%;
-                height: 50px;
-                padding: 15px;
-                border-bottom: 1px solid #eee;
-                p{
-                    color: #1d1b1b;
-                    margin: 0;
-                    font-size: 12px;
-                    text-align: left;
-                }
-                .name_topic{
-                    font-size: 18px;
-                    width: 45%;
-                    height: 50px;
-                    float: left;
-                    overflow: hidden;
-                    p,span{
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        font-size: 14px;
+                display: none;
+                .item{
+                    &:nth-of-type(odd) {
+                        background: #ffffff;
                     }
-                }
-                .num_count{
-                    width: 12%;
-                    height: 50px;
-                    float: right;
-                    margin-right: 2%;
-                    i{
-                        margin-right: 3px;
+                    &:nth-of-type(even) {
+                        background: #fcfcfc;
                     }
-                }
-                .num_count_duration{
-                    width: 18%;
+                    width: 100%;
                     height: 50px;
-                    float: right;
-                    i{
-                        margin-right: 3px;
-                    }
-                }
-                .arrow{
-                    width: 8%;
-                    height: 50px;
-                    float: right;
+                    padding: 15px;
+                    border-bottom: 1px solid #eee;
                     p{
-                        text-align: center;
+                        color: #1d1b1b;
+                        margin: 0;
+                        font-size: 12px;
+                        text-align: left;
                     }
-                    i{
-                        font-size: 16px;
+                    .name_topic{
+                        font-size: 18px;
+                        width: 45%;
+                        height: 50px;
+                        float: left;
+                        overflow: hidden;
+                        p,span{
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            font-size: 14px;
+                        }
+                    }
+                    .num_count{
+                        width: 12%;
+                        height: 50px;
+                        float: right;
+                        margin-right: 2%;
+                        i{
+                            margin-right: 3px;
+                        }
+                    }
+                    .num_count_duration{
+                        width: 18%;
+                        height: 50px;
+                        float: right;
+                        i{
+                            margin-right: 3px;
+                        }
+                    }
+                    .arrow{
+                        width: 8%;
+                        height: 50px;
+                        float: right;
+                        p{
+                            text-align: center;
+                        }
+                        i{
+                            font-size: 16px;
+                        }
                     }
                 }
             }
         }
+
     }
 }
 #create_topic{

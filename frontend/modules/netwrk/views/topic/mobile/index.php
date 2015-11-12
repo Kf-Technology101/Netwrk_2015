@@ -19,13 +19,13 @@
         <table class="filter_sidebar">
             <tr>
                 <td class="feed">Feed</td>
-                <td class="post active">Topics</td>
+                <td class="topic active">Topics</td>
             </tr>
         </table>
     </div>
     <div class="filter_sort">
         <div class="dropdown input-group">
-            <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+            <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most posts</div>
             <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                 <li data-value="post">Most posts</li>
@@ -35,14 +35,19 @@
         </div>
     </div>
     <div class="container">
-        <div id="item_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+        <div id="tab_feed" class="tab">
             <p class="no-data">There is no data available yet</p>
         </div>
-        <div id="item_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-            <p class="no-data">There is no data available yet</p>
-        </div>
-        <div id="item_list_topic" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-            <p class="no-data">There is no data available yet</p>
+        <div id="tab_topic" class="tab">
+            <div id="item_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div id="item_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div id="item_list_topic" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
         </div>
         <script id="topic_list" type="text/x-underscore-template" >
             <% _.each(topices,function(topic){ %>
