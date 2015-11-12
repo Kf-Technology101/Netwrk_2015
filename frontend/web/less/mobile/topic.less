@@ -189,20 +189,24 @@
                 display: none;
             }
             .item{
-                background: #fff;
+                &:nth-of-type(odd) {
+                    background: #ffffff;
+                }
+                &:nth-of-type(even) {
+                    background: #fcfcfc;
+                }
                 width: 100%;
                 height: 50px;
-                padding: 0 0 0 15px;
+                padding: 15px;
                 border-bottom: 1px solid #eee;
                 p{
                     color: #1d1b1b;
-                    line-height: 50px;
                     margin: 0;
                     font-size: 12px;
                     text-align: left;
                 }
                 .name_topic{
-                    font-size: 15px;
+                    font-size: 18px;
                     width: 45%;
                     height: 50px;
                     float: left;
