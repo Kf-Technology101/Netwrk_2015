@@ -89,7 +89,7 @@ var Topic = {
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
         parent.find('.filter_sort').removeClass('active');
-        parent.find('.container').removeClass('.open');
+        parent.find('.container').removeClass('open');
     },
 
     OnClickSortBtn: function(){
