@@ -27,6 +27,7 @@ class MobileAsset extends AssetBundle
       'css/bootstrap-datepicker.min.css',
       'css/jquery.ui.css',
       'css/jquery.ui.pips.css',
+      'css/jquery.mCustomScrollbar.css'
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -47,6 +48,7 @@ class MobileAsset extends AssetBundle
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',
+      'js/lib/jquery.mCustomScrollbar.concat.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

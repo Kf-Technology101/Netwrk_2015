@@ -58,8 +58,8 @@ function set_heigth_modal(target){
   $(window).resize(function(){
     size = get_size_window();
     wh = size[1] - 100;
-    target.find('.modal-dialog').css('height',wh);
-    target.find('.modal-content').css('height',wh);
+    // target.find('.modal-dialog').css('height',wh);
+    // target.find('.modal-content').css('height',wh);
     target.find('.modal-body').css('height',wh -90);
   });
 }

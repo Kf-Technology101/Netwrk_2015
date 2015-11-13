@@ -117,7 +117,8 @@ var Post ={
 
 	ShowModalPost: function(){
 		var parent = $('#list_post');
-
+        
+		set_heigth_modal($('#list_post'));
 		parent.modal({
             backdrop: true,
             keyboard: false
