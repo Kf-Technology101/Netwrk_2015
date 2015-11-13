@@ -5,7 +5,7 @@ var Post ={
 		city_name:'',
 		topic:'',
 		topic_name:'',
-		size: 12,
+		size: 30,
 		page: 1
 	},
     list:{
