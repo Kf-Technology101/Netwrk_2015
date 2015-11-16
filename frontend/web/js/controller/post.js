@@ -35,6 +35,7 @@ var Post ={
 			Post.OnClickMeetIconMobile();
 			Post.OnClickSelectFilter();
 			Create_Post.initialize();
+			fix_width_post($('.container_post').find('.item_post .information'));
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();

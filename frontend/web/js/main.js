@@ -27,6 +27,15 @@ function set_position_btn(target){
   target.show();
 }
 
+function fix_width_post(target){
+  var size = get_size_window();
+  var wp = size[0] - 130;
+
+  target.css({'width': wp});
+  target.find('p').css({'max-width': wp});
+
+}
+
 function set_position_btn_resize(target){
   $(window).resize(function(){
     set_position_btn(target)
