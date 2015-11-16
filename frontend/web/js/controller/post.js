@@ -33,6 +33,7 @@ var Post ={
 			Post.OnClickSortBtn();
 			Post.FilterTabPost($('body'));
 			Post.OnClickMeetIconMobile();
+			Post.OnClickSelectFilter();
 			Create_Post.initialize();
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
@@ -50,6 +51,16 @@ var Post ={
 		Post.LazyLoading();
 		Post.OnChangeTab();
 		
+	},
+
+	OnClickSelectFilter: function(){
+		var btn = $('#list_post').find('.filter_sort .dropdown-toggle');
+
+		btn.unbind();
+		btn.on('click',function(){
+			$('#list_post .dropdown.open .dropdown-toggle').dropdown('toggle');
+			$('#list_post').find('[data-toggle="dropdown"]').parent().removeClass('open');
+		});
 	},
 
 	OnClickSortBtn: function(){
@@ -274,7 +285,6 @@ var Post ={
 				parent.find('.no-data').hide();
 				Post.getTemplate(parent,json.data);
 				Post.OnclickVote();
-
 			}
 		});
 	},

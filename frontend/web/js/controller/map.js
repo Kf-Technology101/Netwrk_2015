@@ -87,7 +87,7 @@ var Map ={
 	},
 
 	show_marker: function(map){
-		console.log('show marker');
+		// console.log('show marker');
 	  	var marker,json,data_marker;
 
 	 	var current_zoom = map.getZoom();
@@ -106,7 +106,7 @@ var Map ={
 	 	}
 
 		$.each(data_marker,function(i,e){
-			console.log('fetch elements in array marker');
+			// console.log('fetch elements in array marker');
 			marker = new google.maps.Marker({
 				position: new google.maps.LatLng(e.lat, e.lng),
 				map: map,
