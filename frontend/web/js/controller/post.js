@@ -54,7 +54,7 @@ var Post ={
 	},
 
 	OnClickSelectFilter: function(){
-		var btn = $('#list_post').find('.filter_sort .dropdown-toggle');
+		var btn = $('#list_post .filter_sort .dropdown-toggle,.input-group-addon');
 
 		btn.unbind();
 		btn.on('click',function(){
