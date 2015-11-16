@@ -309,6 +309,7 @@ var Post ={
             if(!$(e.currentTarget).hasClass('active')){
             	$('.tab').hide();
                 $('#list_post').scrollTop(0);
+                $('#list_post').find('#tab_'+filter).show();
                 self.tab_current = filter;
                 self.ChangeTabActive(target,$(e.currentTarget));
                 self.GetDataOnTab();
