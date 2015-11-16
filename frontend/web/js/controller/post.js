@@ -210,7 +210,12 @@ var Post ={
 
 	ShowFeedPage: function(){
 		$('#tab_feed').show();
-		$('#list_post').find('.dropdown').addClass('visible');
+		if(isMobile){
+			$('#list_post').find('span.filter').addClass('visible');
+		}else{
+			$('#list_post').find('.dropdown').addClass('visible');
+		}
+		
 	},
 
 	ShowPostPage: function(){
