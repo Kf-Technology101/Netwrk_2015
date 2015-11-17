@@ -22,8 +22,7 @@ function set_position_btn(target){
   var size = get_size_window();
   var hp = size[1] - 100 - menu_h;
   var wp = size[0] - 100;
-
-  target.css({'top': hp - 70 ,'left': wp});
+  target.css({'top': hp - 30 ,'left': wp});
   target.show();
 }
 
@@ -50,6 +49,7 @@ function _event_window_resize(){
 
 function window_resize(){
   var size = get_size_window();
+  console.log(size);
   set_size_map(size[0],size[1]);
   set_position_btn_meet(size[0],size[1]);
 }

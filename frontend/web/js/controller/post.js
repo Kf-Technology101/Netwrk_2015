@@ -169,7 +169,10 @@ var Post ={
 
 	ResetModal: function(){
 		var name = $('#list_post').find('.header .title_page');
+		var btn_map = $('.map_content').find('#btn_meet');
+
 		name.find('span.title').remove();
+		btn_map.show();
 		Post.tab_current = "post";
 		Post.params.filter = "post";
 		var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
