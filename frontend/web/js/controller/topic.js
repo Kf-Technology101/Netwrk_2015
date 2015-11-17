@@ -89,8 +89,12 @@ var Topic = {
     ShowTopicPage: function(){
         var parent = $('#modal_topic,#show-topic');
         parent.find('#tab_topic').show();
-        parent.find('.filter').removeClass('visible');
         
+        if(isMobile){
+            parent.find('span.filter').removeClass('visible');
+        }else{
+            parent.find('.dropdown').removeClass('visible');
+        }
     },
 
     ShowFeedPage: function(){
