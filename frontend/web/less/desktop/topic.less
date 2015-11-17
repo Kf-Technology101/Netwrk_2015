@@ -20,6 +20,7 @@
     }
     .modal-content{
         background: #e2e3e4;
+        border: none;
     }
     .modal-header{
         padding: 0;
@@ -32,14 +33,14 @@
         border-top-right-radius: 4px;
         .header{
             background: #5888ac;
-            padding: 0 5px 3px;
+            padding: 0 15px;
             width: 100%;
             height: 40px;
             border-bottom: 1px solid #fff;
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
             .back_page{
-                width: 95px;
+                width: 75px;
                 height: 40px;
                 float: left;
                 border-right: 1px solid #fff;
@@ -50,7 +51,7 @@
                 span{
                     font-size: 18px;
                     color: #fff;
-                    text-align: center;
+                    text-align: left;
                     display: block;
                     line-height: 40px;
                 }
@@ -90,27 +91,25 @@
                     color: #fff;
                     font-size: 18px;
                     display: block;
-                    text-align: center;
+                    text-align: right;
                     line-height: 40px;
                     i{
                         color: #fff;
                     }
-                }
-                &:hover{
-                    opacity: 0.7;
                 }
             }
         }
         
         .sidebar{
             width: 100%;
-            background: #5486b0;
+            background: #5888ac;
             display: table;
             z-index: 20;
             .dropdown{
                 float: right;
                 width: 20%;
-                padding: 10px 5px;
+                padding: 10px 15px 10px 0px;
+                cursor: pointer;
                 .dropdown-toggle{
                     width: 160px;
                     height: 34px;
@@ -123,12 +122,16 @@
                     border: none;
                     border-top-right-radius:  4px;
                     border-bottom-right-radius: 4px;
+                    cursor: pointer;
                 }
                 .dropdown-menu{
                     padding: 5px;
                     top: 40px;
                     left: 5px;
-                    min-width: 150px;
+                    width: 20%;
+                    li{
+                        cursor: pointer;
+                    }
                 }
                 select{
                     -webkit-appearance: none;
@@ -164,13 +167,13 @@
                 width: 200px;
                 td{ 
                     width: 50px;
-                    font-size: 14px;
+                    font-size: 18px;
                     border: 1px solid #eee;
-                    padding: 6px;
+                    padding: 5px;
                     cursor: pointer;
                     text-align: center;
                     &.active{
-                       background: #5da4d8; 
+                       background: #5da5d8; 
                     }
                 }
                 td:first-child{
@@ -231,7 +234,7 @@
 
                         margin: 0;
                         font-size: 15px;
-                        text-align: left;
+                        text-align: right;
                     }
                     .name_topic{
                         font-size: 15px;
@@ -243,11 +246,12 @@
                             text-overflow: ellipsis;
                             white-space: nowrap;
                             font-size: 18px;
+                            text-align: left;
                         }
                     }
                     .num_count{
                         width: 12%;
-                        height: 50px;
+                        // height: 50px;
                         float: right;
                         margin-right: 2%;
                         i{

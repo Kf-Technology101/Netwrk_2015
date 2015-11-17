@@ -349,7 +349,7 @@ var Topic = {
         }else{
             self.data.zipcode = '';
         }
-        var params = {'city': city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': 12,'page':self.list[self.data.filter].paging};
+        var params = {'city': city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':self.list[self.data.filter].paging};
         self.data.city = city;
         
         $(window).scrollTop(0);
@@ -405,7 +405,7 @@ var Topic = {
     load_topic_filter: function(){
         var self = this;
         var parent = $('#modal_topic,#show-topic').find('#item_list_'+self.data.filter);
-        var params = {'city': self.data.city, 'filter': self.data.filter,'size': 12,'page':self.list[self.data.filter].paging};
+        var params = {'city': self.data.city, 'filter': self.data.filter,'size': self.data.size,'page':self.list[self.data.filter].paging};
 
         parent.show();
 
@@ -434,7 +434,7 @@ var Topic = {
         if(json.data.length == 0){ 
             $('#item_list_'+self.data.filter).find('.no-data').show();
             self.list[self.data.filter].status_paging = 0;
-        }else if(json.data.length < 12 && json.data.length > 0){
+        }else if(json.data.length < self.data.size && json.data.length > 0){
             $('#item_list_'+self.data.filter).find('.no-data').hide();
             self.list[self.data.filter].status_paging = 0;
         }else{
