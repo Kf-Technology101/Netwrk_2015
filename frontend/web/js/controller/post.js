@@ -219,8 +219,13 @@ var Post ={
 	},
 
 	ShowPostPage: function(){
+		
+		if(isMobile){
+			$('#list_post').find('span.filter').removeClass('visible');
+		}else{
+			$('#list_post').find('.dropdown').removeClass('visible');
+		}
 		$('#tab_post').show();
-		$('#list_post').find('.dropdown').removeClass('visible');
 		Post.ResetTabPost();
 		Post.GetTabPost();
 	},

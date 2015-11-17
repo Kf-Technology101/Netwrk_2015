@@ -39,6 +39,7 @@ var Topic = {
         Topic.RedirectPostList();
         Topic.scroll_bot();
         Topic.OnClickSortBtn();
+        Topic.OnClickSelectFilter();
         Topic.OnClickChangeTab();
     },
 
@@ -52,7 +53,15 @@ var Topic = {
             Topic._onclickBack();
         }
     },
+    OnClickSelectFilter: function(){
+        var btn = $('#show-topic .filter_sort .dropdown-toggle,.input-group-addon');
 
+        btn.unbind();
+        btn.on('click',function(){
+            $('#show-topic .dropdown.open .dropdown-toggle').dropdown('toggle');
+            $('#show-topic').find('[data-toggle="dropdown"]').parent().removeClass('open');
+        });
+    },
     OnClickChangeTab: function(){
         var parent = $('#modal_topic,#show-topic');
         var btn = parent.find('.filter_sidebar td');
