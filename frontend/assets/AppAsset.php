@@ -20,6 +20,7 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/desktop/landing.css',
+        'css/font/font.css',
         'css/desktop/topic.css',
         'css/desktop/meet.css',
         'css/desktop/post.css',

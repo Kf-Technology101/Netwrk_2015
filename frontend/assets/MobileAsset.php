@@ -19,6 +19,7 @@ class MobileAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
       'css/site.css',
+      'css/font/font.css',
       'css/mobile/landing.css',
       'css/mobile/topic.css',
       'css/mobile/meet.css',
