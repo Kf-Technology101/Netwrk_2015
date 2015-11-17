@@ -226,7 +226,7 @@ var Post ={
 	},
 
 	ShowFeedPage: function(){
-		$('#tab_feed').show();
+		$('#list_post').find('#tab_feed').show();
 		if(isMobile){
 			$('#list_post').find('span.filter').addClass('visible');
 			$('#list_post').find('span.filter').removeClass('active');
