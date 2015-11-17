@@ -172,7 +172,7 @@ var Topic = {
     },
 
     OnClickBackdrop: function(){
-        // $('.modal-backdrop.in').unbind();
+        $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').click(function(e) {
             $('#modal_topic').modal('hide');
         });

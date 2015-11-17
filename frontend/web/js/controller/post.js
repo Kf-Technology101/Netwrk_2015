@@ -47,6 +47,7 @@ var Post ={
 			Post.getNameTopic();
 			Post.ShowMeetIcon();
 			Post.CustomScrollBar();
+			Post.OnClickBackdrop();
 		}	
 		
 		Post.OnclickBack();
@@ -54,6 +55,13 @@ var Post ={
 		Post.OnChangeTab();
 		
 	},
+
+    OnClickBackdrop: function(){
+        $('.modal-backdrop.in').unbind();
+        $('.modal-backdrop.in').on('click',function(e) {
+            $('#list_post').modal('hide');
+        });
+    },
 
     CustomScrollBar: function(){
         $("#list_post").find('.modal-body').mCustomScrollbar({
