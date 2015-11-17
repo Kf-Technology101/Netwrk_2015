@@ -97,6 +97,7 @@ var Topic = {
         var parent = $('#modal_topic,#show-topic');
         if(isMobile){
             parent.find('span.filter').addClass('visible');
+            parent.find('span.filter').removeClass('active');
             parent.find('.filter_sort').removeClass('active');
         }else{
             parent.find('.dropdown').addClass('visible');

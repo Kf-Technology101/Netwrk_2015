@@ -212,11 +212,12 @@ var Post ={
 		$('#tab_feed').show();
 		if(isMobile){
 			$('#list_post').find('span.filter').addClass('visible');
+			$('#list_post').find('span.filter').removeClass('active');
 			$('#list_post').find('.filter_sort').removeClass('active');
+			$('#list_post').find('.container_post').removeClass('open');
 		}else{
 			$('#list_post').find('.dropdown').addClass('visible');
 		}
-		
 	},
 
 	ShowPostPage: function(){
