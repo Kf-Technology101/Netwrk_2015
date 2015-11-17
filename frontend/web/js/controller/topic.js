@@ -2,7 +2,7 @@ var Topic = {
     data:{ 
         filter: 'post',
         city: '',
-        size: 12,
+        size: 30,
         city_name:'',
         zipcode:''
 
