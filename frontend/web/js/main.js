@@ -196,6 +196,18 @@ function shuffle_array(array) {
   return array;
 }
 
+function CustomScrollBar(){
+
+  if(isMobile){
+
+  }else{
+    $(".modal").find('.modal-body').mCustomScrollbar({
+        theme:"dark"
+    });
+  }
+
+}
+
 $(document).ready(function(){
   _main();
   _addListenEventPage();

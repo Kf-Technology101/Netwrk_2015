@@ -2,7 +2,7 @@ var Topic = {
     data:{ 
         filter: 'post',
         city: '',
-        size: 30,
+        size: 12,
         city_name:'',
         zipcode:''
 
@@ -53,6 +53,24 @@ var Topic = {
             Topic._onclickBack();
         }
     },
+
+    CustomScrollBar: function(){
+        var parent;
+ 
+        parent = $("#modal_topic").find('.modal-body');
+
+        parent.mCustomScrollbar({
+            theme:"dark",
+            callbacks:{
+                onTotalScroll: function(){
+                    if (Topic.list[Topic.data.filter].status_paging == 1){
+                        Topic.load_topic_more();
+                    }
+                }
+            }
+        });
+    },
+
     OnClickSelectFilter: function(){
         var btn = $('#show-topic .filter_sort .dropdown-toggle,.input-group-addon');
 
@@ -89,7 +107,7 @@ var Topic = {
     ShowTopicPage: function(){
         var parent = $('#modal_topic,#show-topic');
         parent.find('#tab_topic').show();
-        
+
         if(isMobile){
             parent.find('span.filter').removeClass('visible');
         }else{
@@ -288,8 +306,7 @@ var Topic = {
             self.getTemplate(parent,data);
             
             self.getTemplateModal(cityname,data);
-            
-            self.scroll_bot();
+            Topic.CustomScrollBar();
             Topic.filter_topic(parent);
             Topic.GetDataOnTab();
             Topic.OnClickBackdrop(); 

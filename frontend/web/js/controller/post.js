@@ -5,7 +5,7 @@ var Post ={
 		city_name:'',
 		topic:'',
 		topic_name:'',
-		size: 30,
+		size: 12,
 		page: 1
 	},
     list:{
@@ -34,6 +34,7 @@ var Post ={
 			Post.FilterTabPost($('body'));
 			Post.OnClickMeetIconMobile();
 			Post.OnClickSelectFilter();
+			Post.LazyLoading();
 			Create_Post.initialize();
 			fix_width_post($('.container_post').find('.item_post .information'));
 		}else{
@@ -45,14 +46,27 @@ var Post ={
 			Post.FilterTabPost($('.container_post'));
 			Post.getNameTopic();
 			Post.ShowMeetIcon();
+			Post.CustomScrollBar();
 		}	
 		
 		Post.OnclickBack();
 		Post.OnclickCreate();
-		Post.LazyLoading();
 		Post.OnChangeTab();
 		
 	},
+
+    CustomScrollBar: function(){
+        $("#list_post").find('.modal-body').mCustomScrollbar({
+            theme:"dark",
+            callbacks:{
+                onTotalScroll: function(){
+                    if (Post.list[Post.params.filter].status_paging == 1){
+                        Post.GetTabPost();
+                    }
+                }
+            }
+        });
+    },
 
 	OnClickSelectFilter: function(){
 		var btn = $('#list_post .filter_sort .dropdown-toggle,.input-group-addon');
@@ -305,9 +319,9 @@ var Post ={
 	checkStatus: function(data){
 		if(data.length == 0){
 			Post.list[Post.params.filter].status_paging = 0;
-		}else if(data.length < 12){
+		}else if(data.length < Post.params.size){
 			Post.list[Post.params.filter].status_paging = 0;
-		}else if(data.length == 12){
+		}else if(data.length == Post.params.size){
 			Post.list[Post.params.filter].status_paging = 1;
 			Post.params.page ++ ;
 		}
