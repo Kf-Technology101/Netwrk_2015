@@ -95,9 +95,15 @@ var Topic = {
 
     ShowFeedPage: function(){
         var parent = $('#modal_topic,#show-topic');
+        if(isMobile){
+            parent.find('span.filter').addClass('visible');
+            parent.find('.filter_sort').removeClass('active');
+        }else{
+            parent.find('.dropdown').addClass('visible');
+        }
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
-        parent.find('.filter_sort').removeClass('active');
+        
         parent.find('.container').removeClass('open');
     },
 
