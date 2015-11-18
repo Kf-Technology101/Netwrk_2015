@@ -53,7 +53,22 @@ var Post ={
 		Post.OnclickBack();
 		Post.OnclickCreate();
 		Post.OnChangeTab();
-		
+		Post.OnClickChat();
+	},
+
+	OnClickChat: function(){
+		var btn = $("#list_post").find('.post_chat');
+
+		btn.unbind();
+		btn.on('click',function(e){
+			var item_post = $(e.currentTarget).parent().parent();
+			if(isMobile){
+
+			}else{
+				$("#list_post").modal('hide');
+				ChatPost.initialize();
+			}
+		});
 	},
 
     OnClickBackdrop: function(){
@@ -152,7 +167,7 @@ var Post ={
 	ShowModalPost: function(){
 		var parent = $('#list_post');
         
-		set_heigth_modal($('#list_post'));
+		set_heigth_modal($('#list_post'),0);
 		parent.modal({
             backdrop: true,
             keyboard: false

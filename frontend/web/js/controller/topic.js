@@ -286,7 +286,7 @@ var Topic = {
     OnShowModalPost: function(){
         $('#modal_topic').unbind();
         $('#modal_topic').on('shown.bs.modal',function(e) {
-            set_heigth_modal($('#modal_topic'));
+            set_heigth_modal($('#modal_topic'),0);
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
         });
