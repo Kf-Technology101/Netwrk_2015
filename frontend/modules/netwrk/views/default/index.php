@@ -30,6 +30,7 @@
 <?= $this->render('partial/create_topic');?>    
 <?= $this->render('partial/meet');?>
 <?= $this->render('partial/create_post');?> 
-<?= $this->render('partial/post');?> 
+<?= $this->render('partial/post');?>
+<?= $this->render('partial/chat_post');?> 
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>

@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'css/desktop/topic.css',
         'css/desktop/meet.css',
         'css/desktop/post.css',
+        'css/desktop/chat_post.css',
         'css/jquery.ui.css',
         'css/jquery.ui.pips.css',
         'css/jquery.mCustomScrollbar.css'
