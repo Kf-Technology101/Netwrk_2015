@@ -22,15 +22,15 @@
   %>
         <li num-city="<%= city.id %>" lat="<%= city.lat %>" lng="<%= city.lng %>"> <%= city.name %> </li>
   <%
-      }); 
+      });
     }
   %>
 </script>
 <?= $this->render('partial/topic');?>
-<?= $this->render('partial/create_topic');?>    
+<?= $this->render('partial/create_topic');?>
 <?= $this->render('partial/meet');?>
-<?= $this->render('partial/create_post');?> 
+<?= $this->render('partial/create_post');?>
 <?= $this->render('partial/post');?>
-<?= $this->render('partial/chat_post');?> 
+<?= $this->render('partial/chat_post');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
