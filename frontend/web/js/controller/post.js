@@ -36,7 +36,7 @@ var Post ={
 			Post.OnClickSelectFilter();
 			Post.LazyLoading();
 			Create_Post.initialize();
-			fix_width_post($('.container_post').find('.item_post .information'));
+			fix_width_post($('.container_post').find('.item_post .information'),$($('.container_post').find('.item_post')[0]).find('.users_avatar').width());
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
@@ -61,9 +61,9 @@ var Post ={
 
 		btn.unbind();
 		btn.on('click',function(e){
-			var item_post = $(e.currentTarget).parent().parent();
+			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
 			if(isMobile){
-
+				ChatPost.RedirectChatPostPage(item_post);
 			}else{
 				$("#list_post").modal('hide');
 				ChatPost.initialize();
@@ -392,7 +392,7 @@ var Post ={
         parent.append(append_html);
     },
 
-	RedirectPostPage: function(city,topic){
-		window.location.href = baseUrl + "/netwrk/post?city="+ city +"&topic="+topic;
+	RedirectPostPage: function(topic){
+		window.location.href = baseUrl + "/netwrk/post?topic="+topic;
 	},	
 };

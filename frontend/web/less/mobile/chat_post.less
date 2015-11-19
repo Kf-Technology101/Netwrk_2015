@@ -1,115 +1,75 @@
-#modal_chat_post{
-    height: auto;
-    top: 90px;
-    overflow-y: hidden;
-    width: 735px;
-    margin: auto;
-    .modal-dialog{
-        width: 725px;
-        height: auto;
-        max-height: 600px;
-        min-height: 250px;
-        margin: auto;
-        border-radius: 5px;
-        box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
-    }
-    .modal-content{
-        background: #f4f4f4;
-        border: none;
-    }
-    .modal-header{
-        padding: 0;
-        width: 100%;
+#post_chat{
+    overflow-y: auto;
+    background: #f4f4f4;
+    .header{
         background: #5888ac;
-        border: none;
-        display: block;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-        .header{
-            background: #5888ac;
-            padding: 0 5px 3px;
-            width: 100%;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        border-top: 1px solid #fff;
+        position: fixed;
+        top:60px;
+        z-index: 20;
+        .back_page{
+            width: 20%;
             height: 40px;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-            .back_page{
-                width: 95px;
-                height: 40px;
-                float: left;
-                border-right: 1px solid #fff;
-                cursor: pointer;
-                img{
-                    width: 25px;
-                }
-                span{
-                    font-size: 18px;
-                    color: #fff;
-                    text-align: center;
-                    display: block;
-                    line-height: 40px;
-                }
-                i{
-                    font-size: 18px;
-                    color: #fff;
-                }
+            float: left;
+            cursor: pointer;
+            border-right: 1px solid #fff;
+            img{
+                width: 25px;
             }
-            .title_page{
-                width: 620px;
+            i{
+                font-size: 12px;
+            }
+            span{
+                font-size: 12px;
+                color: #fff;
+                display: block;
+                text-align: center;
+            }
+        }
+        .title_page{
+            width: 80%;
+            height: 40px;
+            margin: auto;
+            float: left;
+            z-index: 20;
+            img{
+                width: 20px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+            }
+            .title{
+                color: #fff;
+                display: inherit;
+                text-align: center;
+                font-size: 18px;
+                line-height: 40px;
                 height: 40px;
-                float: left;
-                img{
-                    width: 25px;
-                    margin-bottom: 2px;
-                }
-                .title{
-                    color: #fff;
-                    display: inherit;
-                    text-align: center;
-                    font-size: 22px;
-                    line-height: 40px;
-                    height: 40px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                span{
+                    min-width: 25px;
+                    max-width: 100px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    span{
-                        min-width: 25px;
-                        max-width: 200px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        display: inline-block;
-                    }
-                    i{
-                        margin-right: 5px;
-                    }
+                    display: inline-block;
                 }
-            }
-            .create_topic{
-                float: left;
-                width: 140px;
-                height: 40px;
-                cursor: pointer;
-                font-size: 18px;
-                span{
-                    color: #fff;
-                    font-size: 18px;
-                    display: block;
-                    text-align: center;
-                    line-height: 40px;
-                    i{
-                        color: #fff;
-                    }
+                i{
+                    margin-right: 5px;
                 }
             }
         }
     }
-    .modal-body{
-        overflow-y: auto;
+    .container_post_chat{
         height: auto;
-        min-height: 250px;
         width: 100%;
-        padding: 0;
-        border-radius: 4px;
+        margin: 100px auto 0px;
+        float: left;
+        z-index: 5;
         .message{
             padding: 15px;
         }
@@ -118,29 +78,29 @@
             height: auto;
             float: left;
             .user_thumbnail{
-                width: 70px;
-                height: 70px;
+                width: 50px;
+                height: 50px;
                 float: left;
                 display: table;
                 .avatar{
                     background: #5888ac;
                     border-radius: 50%;
-                    width: 60px;
-                    height: 60px;
+                    width: 40px;
+                    height: 40px;
                     display: table-cell;
                     vertical-align: middle;
                     text-align: center;
                     img{
                         width: auto;
                         height: auto;
-                        max-width: 60px;
-                        max-height: 60px;
+                        max-width: 40px;
+                        max-height: 40px;
                         margin: auto;
                     }
                 }
             }
             .content_message{
-                width: 610px;
+                width: 310px;
                 min-height: 60px;
                 border-radius: 5px;
                 position: relative;
@@ -186,29 +146,29 @@
             height: auto;
             float: left;
             .user_thumbnail{
-                width: 70px;
-                height: 70px;
+                width: 50px;
+                height: 50px;
                 float: right;
                 display: table;
                 .avatar{
                     background: #5888ac;
                     border-radius: 50%;
-                    width: 60px;
-                    height: 60px;
+                    width: 40px;
+                    height: 40px;
                     display: table-cell;
                     vertical-align: middle;
                     text-align: center;
                     img{
                         width: auto;
                         height: auto;
-                        max-width: 60px;
-                        max-height: 60px;
+                        max-width: 40px;
+                        max-height: 40px;
                         margin: auto;
                     }
                 }
             }
             .content_message{
-                width: 610px;
+                width: 315px;
                 min-height: 60px;
                 border-radius: 5px;
                 position: relative;
@@ -230,13 +190,13 @@
                     border-color: rgba(136, 183, 213, 0);
                     border-left-color: #fcfcfc;
                     border-width: 10px;
-                    margin-top: -100px;
+                    margin-top: -175px;
                 }
                 &:before{
                     border-color: rgba(194, 225, 245, 0);
                     border-left-color: #e5e5e5;
                     border-width: 11px;
-                    margin-top: -101px;
+                    margin-top: -176px;
                 }
                 p{
                     color: #1d1b1b;
@@ -250,8 +210,12 @@
             }
         }
     }
-    .modal-footer{
-        padding: 0;
+    .nav_input_message{
+        width: 100%;
+        display: block;
+        position: fixed;
+        bottom: 80px;
+        background: blue;
         .send_message{
             width: 100%;
             textarea{
