@@ -327,7 +327,7 @@ var Topic = {
         var parent = $("div[id^='item_list']");
         var target = $('#modal_topic .filter_sidebar').find('td');
         var filter = ['post','view','topic'];
-        var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
+        var selecFilter = $('#modal_topic').find('.dropdown-menu li').first().text();
 
         self.data.filter = 'post';
         parent.hide();
