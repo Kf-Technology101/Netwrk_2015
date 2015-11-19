@@ -25,10 +25,11 @@ class PostController extends BaseController
         }
     }
 
-    public function actionIndex($city,$topic)
+    public function actionIndex()
     {
-        $top = Topic::findOne($topic);
-        return $this->render($this->getIsMobile() ? 'mobile/index':'',['topic' =>$top,'city' =>$city]);
+        $topic_id = $_GET['topic'];
+        $topic= Topic::find()->where('id ='.$topic_id)->one();
+        return $this->render($this->getIsMobile() ? 'mobile/index':'',['topic' =>$topic,'city' =>$topic->city->id]);
     } 
 
     public function actionCreatePost($city,$topic)

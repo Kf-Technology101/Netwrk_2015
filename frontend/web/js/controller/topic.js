@@ -152,7 +152,7 @@ var Topic = {
             var topic = $(e.currentTarget).attr('data-item');
             Ajax.update_view_topic({topic: topic}).then(function(){
                 if(isMobile){
-                    Post.RedirectPostPage(Topic.data.city,topic);
+                    Post.RedirectPostPage(topic);
                 }else{
                     $('#modal_topic').modal('hide');
                     Post.params.topic = topic;

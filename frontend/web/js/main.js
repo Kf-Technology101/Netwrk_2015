@@ -26,9 +26,9 @@ function set_position_btn(target){
   target.show();
 }
 
-function fix_width_post(target){
+function fix_width_post(target,width){
   var size = get_size_window();
-  var wp = size[0] - 130;
+  var wp = size[0] - width;
 
   target.css({'width': wp});
   target.find('p').css({'max-width': wp});
@@ -61,6 +61,8 @@ function set_heigth_modal(target,height_footer){
   var wh = size[1] - height_footer - 100;
   target.find('.modal-body').css('max-height',wh - 120);
 }
+
+
 
 function ieVersion() {
     var ua = window.navigator.userAgent;
@@ -158,8 +160,10 @@ function _addListenEventPage(){
 		break;
 	case 'Post':
     Post.initialize();
-		
 		break;
+  case 'Chat':
+    ChatPost.initialize();
+    break;
 	default:
 		Default.initialize();
 		break;
