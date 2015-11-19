@@ -186,11 +186,26 @@
             height: auto;
             float: left;
             .user_thumbnail{
-                width: 60px;
-                height: 60px;
-                background: #5888ac;
-                border-radius: 50%;
+                width: 70px;
+                height: 70px;
                 float: right;
+                display: table;
+                .avatar{
+                    background: #5888ac;
+                    border-radius: 50%;
+                    width: 60px;
+                    height: 60px;
+                    display: table-cell;
+                    vertical-align: middle;
+                    text-align: center;
+                    img{
+                        width: auto;
+                        height: auto;
+                        max-width: 60px;
+                        max-height: 60px;
+                        margin: auto;
+                    }
+                }
             }
             .content_message{
                 width: 610px;
