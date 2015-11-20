@@ -66,6 +66,7 @@ var Post ={
 				ChatPost.RedirectChatPostPage(item_post);
 			}else{
 				$("#list_post").modal('hide');
+				ChatPost.params.post = item_post;
 				ChatPost.initialize();
 			}
 		});

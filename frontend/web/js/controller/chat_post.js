@@ -1,18 +1,19 @@
 var ChatPost = {
-
+	params:{
+		post:''
+	},
 	page:'#post_chat',
 	modal:'#modal_chat_post',
 
 	initialize: function(){
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
-			// ChatPost.CustomScrollBar($(ChatPost.page).find('.container_post_chat'));
 			ChatPost.OnClickBackBtn($(ChatPost.page));
 			fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
 		}else{
 			ChatPost.OnShowModalChatPost();
-			ChatPost.OnHideModalChatPost();
 			ChatPost.ShowModalChatPost();
+			ChatPost.OnHideModalChatPost();
 			ChatPost.CustomScrollBar($(ChatPost.modal).find('.modal-body'));
 			ChatPost.OnClickBackBtn($(ChatPost.modal));
 			ChatPost.OnClickBackdrop();
@@ -43,8 +44,8 @@ var ChatPost = {
 			if(isMobile){
 				Post.RedirectPostPage(parent.attr('data-topic'));
 			}else{
-				parent.modal('hide');
 				Post.initialize();
+				parent.modal('hide');
 			}
 		});
 	},
@@ -75,13 +76,36 @@ var ChatPost = {
 	OnShowModalChatPost: function(){
         $(ChatPost.modal).on('shown.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
-        	console.log('Show Chat Post');
+        	ChatPost.GetNameChatPost();
         });
 	},
 	OnHideModalChatPost: function(){
-        $('#list_post').on('hidden.bs.modal',function(e) {
+        $(ChatPost.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
-        	console.log('Hide Chat Post');
+        	console.log('aaaaaa');
+        	ChatPost.ResetModalChatPost();
         });
 	},
+
+	ResetModalChatPost: function(){
+		console.log('bbbbb');
+		$(ChatPost.modal).find('.title_page .title').empty();
+	},
+
+	GetNameChatPost: function(){
+		var parent = $('#modal_chat_post').find('.title_page .title');
+		Ajax.chat_post_name(ChatPost.params).then(function(data){
+			var json = $.parseJSON(data);
+			ChatPost.getNameTemplate(parent,json)
+		})
+	},
+
+    getNameTemplate: function(parent,data){
+        var self = this;
+        var list_template = _.template($("#chatpost_name" ).html());
+        var append_html = list_template({name: data});
+
+        parent.append(append_html);
+    },
+
 }

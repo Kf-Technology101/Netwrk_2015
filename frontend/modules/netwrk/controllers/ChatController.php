@@ -23,4 +23,18 @@ class ChatController extends BaseController
 
     	return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post] );
     }
+
+    public function actionChatName(){
+    	$postId = $_POST['post'];
+
+    	$post = POST::find()->where('id ='.$postId)->with('topic')->one();
+
+        $info = array(
+        	'post_name'=> $post->title,
+        	'topic_name'=> $post->topic->title,
+        );
+        
+        $hash = json_encode($info);
+        return $hash;
+    }
 }

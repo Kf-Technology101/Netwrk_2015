@@ -1,5 +1,21 @@
 var Ajax ={
+    chat_post_name: function(params){
+        var url,defer = $.Deferred();
 
+            url = baseUrl + "/netwrk/chat/chat-name";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     vote_post: function(params){
         var url,defer = $.Deferred();
 

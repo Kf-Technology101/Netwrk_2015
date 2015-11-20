@@ -7,8 +7,8 @@
         <div class="title_page">
             <span class="title">
                 <span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
-                <span><i class="fa fa-angle-right"></i>DogsDogsDogsDog</span>
-                <span><i class="fa fa-angle-right"></i> General DogsDogsDogsDogsDogs</span>
+                <span><i class="fa fa-angle-right"></i><?= $post->topic->title ?></span>
+                <span><i class="fa fa-angle-right"></i><?= $post->title ?></span>
             </span>
         </div>
     </div>

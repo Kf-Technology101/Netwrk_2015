@@ -9,9 +9,7 @@
 					</div>
 					<div class="title_page">
 						<span class="title">
-							<span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
-							<span><i class="fa fa-angle-right"></i>Dog</span>
-							<span><i class="fa fa-angle-right"></i> General Dogs</span>
+							
 						</span>
 					</div>
 				</div>
@@ -50,33 +48,9 @@
 			</div>
 		</div>
 	</div>
-	<script id="city_name" type="text/x-underscore-template">
-		<span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= city %></span>
-	</script>
-	<script id="topic_list" type="text/x-underscore-template" >
-		  <% _.each(topices,function(topic){ %>
-		      <div class="item" data-item="<%= topic.id %>">
-		        <div class="topic_post">
-		            <div class="name_topic">
-		                <p><%= topic.title %></p>
-		            </div>
-		        </div> 
-		        <div class="num_count_duration">
-		            <div class="most_post">
-		                <p><i class="fa fa-clock-o"></i><%= topic.created_at%></p>
-		            </div>   
-		        </div> 
-		        <div class="num_count">
-		            <div class="most_post">
-		                <p><i class="fa fa-file-text"></i><%= topic.post_count%></p>
-		            </div>   
-		        </div> 
-		        <div class="num_count">
-		            <div class="most_post">
-		                <p><i class="fa fa-eye"></i><%= topic.view_count%></p>
-		            </div>   
-		        </div>
-		    </div>
-		<% }); %>  
+	<script id="chatpost_name" type="text/x-underscore-template">
+		<span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
+		<span><i class="fa fa-angle-right"></i><%= name.topic_name%></span>
+		<span><i class="fa fa-angle-right"></i><%= name.post_name %></span>
 	</script>
 </div>
