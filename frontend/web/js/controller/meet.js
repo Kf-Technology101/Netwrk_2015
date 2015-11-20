@@ -37,7 +37,9 @@ var Meet ={
             container.find('.page').hide(); 
             $('.name_user').find('img').show();   
             $('#btn_meet_mobile').hide();
-            $('#btn_discover_mobile').show();
+            $('#btn_discover_mobile').hide();
+            $('.menu_bottom').hide();
+            // $('#btn_discover_mobile').show();
             $('.log_out').hide();
 
             currentTarget.show();
@@ -60,9 +62,24 @@ var Meet ={
             Meet.changefilter(currentTarget);
             Meet.ShowModalMeet();
             Meet.eventClickdiscover();
+            Meet.CustomScrollBar();
+            Meet._onClickMeetBack();
             $('#btn_meet').hide();
+            $('.modal-footer').show();
             parent.find('#btn_discover').show();
+            set_position_btn(parent,parent.find('#btn_discover'),120,100);
+            set_position_btn_resize(parent,parent.find('#btn_discover'),120,100);
         }
+    },
+
+    CustomScrollBar: function(){
+        var parent;
+ 
+        parent = $("#modal_meet").find('.modal-body');
+
+        parent.mCustomScrollbar({
+            theme:"dark"
+        });
     },
 
     changefilter: function(containt){
@@ -102,6 +119,12 @@ var Meet ={
     _onclickBack: function(){
         $('.back_page img').click(function(){
             window.location.href = baseUrl; 
+        })
+    },
+
+    _onClickMeetBack: function(){
+        $('#modal_meet .back_page span').click(function(){
+            $('#modal_meet').modal('hide');
         })
     },
 
@@ -180,11 +203,9 @@ var Meet ={
                 modal.modal({
                     backdrop: true,
                     keyboard: false
-                });   
+                });
+                // set_heigth_modal($('#modal_meet'));
             }
-
-            // set_heigth_modal($('#modal_meet'));
-
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
                 $('#modal_meet').modal('hide');

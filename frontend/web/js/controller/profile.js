@@ -29,6 +29,7 @@ var Profile = {
         Profile.onChangeWork();
         Profile.onChangeAbout();
         Profile.eventClickSave();
+        $('.modal-footer').hide();
     },
 
     eventClickSave: function(){
