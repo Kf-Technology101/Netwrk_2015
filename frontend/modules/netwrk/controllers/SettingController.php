@@ -39,6 +39,11 @@ class SettingController extends BaseController
 
             $birthday = new \DateTime($user->profile->dob);
             $birthday = $birthday->format('Y-m-d');
+            
+            $current_date = date('Y-m-d H:i:s');
+            $time1 = date_create($user->profile->dob);
+            $time2 = date_create($current_date);
+            $year_old = $time1->diff($time2)->y;
 
             $info = array(
                 'status' => 1,
@@ -48,6 +53,7 @@ class SettingController extends BaseController
                 'image' => $image,
                 'zip'=> $user->profile->zip_code,
                 'about'=> $user->profile->about,
+                'year_old' => $year_old
             );
             
         }else{

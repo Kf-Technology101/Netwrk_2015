@@ -37,6 +37,7 @@ var Meet_setting={
     _init: function(){
         var span,text ;
         $('.name_user').find('p.default').hide();
+        $('.modal-footer').hide();
 
         if(isMobile){
             $('#show_meet .page').hide();
@@ -48,8 +49,8 @@ var Meet_setting={
         }else{
             $('#modal_meet .page').hide();
              var title = $('.name_user').find('p.name');
-             span = '<p class="name">Settings</p>';
-             text = 'Settings';
+             span = '<p class="name">Meet me</p>';
+             text = 'Meet me';
         }
 
         if(title.size() > 0){

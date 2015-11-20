@@ -69,6 +69,7 @@ class MeetController extends BaseController
                 'met' => $meet,
                 'distance'=> $distance,
                 'information'=> array(
+                    'username'=> $value->profile->first_name ." ". $value->profile->last_name,
                     'image'=> $image,
                     'year_old'=> $year_old,
                     'work'=> $value->profile->work,

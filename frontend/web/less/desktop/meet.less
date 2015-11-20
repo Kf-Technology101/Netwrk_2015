@@ -1,8 +1,10 @@
 #modal_meet{
     height: auto;
     top: 80px;
-    overflow-y: hidden;
+    overflow: visible;
     display: none;
+    width: 450px;
+    margin: auto;
     .modal-dialog{
         width: 450px;
         max-height: 580px;
@@ -26,10 +28,12 @@
         display: block;
         .head{
             height: 46px;
+            border-bottom: 1px solid #fff;
             .name_modal{
                 width: 20%;
-                padding: 5px;
+                // padding: 5px;
                 float: left;
+                // border-right: 1px solid #fff;
                 p{
                     color: #eee;
                     font-size: 18px;
@@ -38,12 +42,34 @@
                     padding: 5px;
                     text-align: center;
                 }
+                .back_page{
+                    width: 95px;
+                    height: 46px;
+                    float: left;
+                    border-right: 1px solid #fff;
+                    cursor: pointer;
+                    padding-top: 3px;
+                    img{
+                        width: 25px;
+                    }
+                    span{
+                        font-size: 18px;
+                        color: #fff;
+                        text-align: center;
+                        display: block;
+                        line-height: 40px;
+                    }
+                    i{
+                        font-size: 18px;
+                        color: #fff;
+                    }
+                }
             }
             .name_user{
                 width: 60%;
                 color:#fff;
                 font-size: 25px;
-                margin: auto;
+                margin: auto 0;
                 p{
                     text-align: center;
                     padding: 5px;
@@ -58,11 +84,13 @@
         
         .sidebar{
             width: 100%;
-            background: #5486b0;
+            background: #5888ac;// #5486b0;
             display: block;
             // position: fixed;
             top: 40px;
             z-index: 20;
+            height: 46px;
+            padding-top: 2px;
             .title{
                 color: #eee;
                 font-size: 14px;
@@ -80,35 +108,38 @@
                 width: 70%;
                 td{ 
                     width: 60px;
-                    font-size: 10px;
+                    font-size: 16px;
                     border: 1px solid #eee;
-                    padding: 5px;
+                    padding: 2px;
                     cursor: pointer;
                     text-align: center;
                     &.active{
-                       background: #8FB2D0; 
+                       background: #5da5d8; // #8FB2D0; 
                     }
                 }
                 td:first-child{
                     border-right: none;
-                    border-top-left-radius: 15px;
-                    border-bottom-left-radius: 15px;
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
                 }
                 td:last-child{
                     border-left: none;
-                    border-top-right-radius: 15px;
-                    border-bottom-right-radius: 15px;
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
                 }
             }
         }
     }
     .modal-body{
         overflow-y: auto;
-        max-height: 530px;
+        max-height: 480px;
         min-height: 170px;
         width: 100%;
         padding: 0;
         #meeting{
+            .user_list{
+                max-height: 505px;
+            }
             p.no_data{
                 margin: 10px;
                 display: none;
@@ -120,31 +151,59 @@
                     width: 100%;
                     height: auto;
                     img{
-                        width: 275px;
-                        height: 275px;
+                        width: auto;
+                        height: 270px;
                         display: block;
                         margin: auto;
                     }
                 }
                 .box-infomation{
                     width: 90%;
-                    height: 150px;
+                    height: auto;
                     padding: 10px 10px 0px 10px;
                     margin: 25px auto 10px;
                     overflow-y: auto;
-                    background: #fff;
+                    // background: #fff;
                     position: relative;
-                    table{
+                    .table{
                         margin: 0;
                         td{
                             border: none;
                             padding: 0 5px;
                         }
+                        .user{
+                            font-family: "Proxima Nova Semibold";
+                            font-size: 18px;
+                            font-weight: bold;
+                            color: #1d1b1b;
+                            margin-bottom: 5px;
+                        }
+                        .user-infor{
+                            padding-left: 9px;
+                        }
+                        .work{
+                            border-left: 1px solid #1d1b1b;
+                            padding-left: 29px;
+                        }
+                        .about{
+                            border-left: 1px solid #1d1b1b;
+                            padding-left: 29px;
+                        }
+                        .post {
+                            border-left: 1px solid #000;
+                            padding-left: 29px;
+                        }
                         .title{
                             font-weight: bold;
+                            font-family: "Proxima Nova Bold";
+                            font-size: 14px;
+                            color: #1d1b1b;
                         }
                         .text{
-                            padding: 0 5px 0 40px;
+                            padding: 0 5px 0 0;
+                            font-family: "Proxima Nova Bold";
+                            font-size: 14px;
+                            color: #1d1b1b;
                             span{
                                 cursor: pointer;
                                 margin-right: 5px;
@@ -154,115 +213,108 @@
                                 float: left;
                             }
                         }
+                        span{
+                            margin-left: -36px;
+                            font-size: 14px;
+                            display: block;
+                            background-color: #e2e3e4;
+                            position: absolute;
+                        }
                     }
                     .brillant{
                         width: 40px;
                         position: absolute;
-                        top: 5px;
-                        right: 0;
+                        top: 15px;
+                        right: 10px;
                         .count{
-                            width: 40px;
+                            width: 32px;
                             background: url('../../img/icon/brilliant_on.png') no-repeat;
-                            background-size: 40px 35px;
+                            background-size: 32px 28px;
                             display: block;
                             span{
                                 display: block;
                                 text-align: center;
+                                font-family: "Verdana";
                                 font-size: 10px;
-                                padding: 14px 0 5px 0;
+                                padding: 10px 0 5px 0;
+                                color: #fff;
                             }
                         }
                         p{
-                            font-size: 10px;
+                            font-size: 12px;
                             text-align: center;
+                            font-family: "Proxima Nova Regular";
+                            color: #1d1b1b;
+                            margin-left: -5px;
                         }
                     }
                 }
             }
-            .control-btn{
-                width: 90%;
-                margin: 15px auto;
-                color: #fff;
-                display: none;
-                .met{
-                    display: none;
-                }
-                .back,.next,.meet,.met{
-                    cursor: pointer;
-                    box-shadow: 4px 4px 5px #888;
-                    &.disable{
-                        opacity: 0.8;
-                        cursor: default;
-                    }
-                }
-                .back{
-                    float: left;
-                }
-                .next{
-                    float: right;
-                }
-                .back,.next{
-                    width: 30%;
-                    border: 1px solid #D07B41;
-                    background: #f1904d;
-                    padding: 5px;
-                    border-radius: 10px;
-                    .fa{
-                        font-size: 18px;
-                    }
-                    
-                    
-                }
-                .meet,.met{
-                    width: 35%;
-                    margin: auto;
-                    border: 1px solid #48A24A;
-                    background: #49b14c;
-                    padding: 5px 14px;
-                    border-radius: 10px;
-                    .fa{
-                        font-size: 25px;
-                    }
-                    img{
-                        width: 25px;
-                        height: 25px;
-                        margin-right: 10px;
-                    }
-                    span{
-                        font-size: 25px;
-                        padding: 0;
-                        font-weight: bold;  
-                        display: block;
-                        text-align: center;    
-                    }
-                }
-                span{
-                    font-size: 25px;
-                    padding: 0 10px;
-                    font-weight: bold;      
-                }
-            }
+            // .footer-btn{
+            //     width: 100%;
+            //     display: block;
+            //     top: 40px;
+            //     z-index: 20;
+            //     height: 46px;
+            //     padding-top: 2px;
+            //     .control-btn{
+            //         font-family: "Proxima Nova Regular";
+            //         color: #eee;
+            //         border-radius: 15px;
+            //         padding: 7px;
+            //         border-collapse: separate;
+            //         margin: auto;
+            //         width: 70%;
+            //         td{ 
+            //             width: 60px;
+            //             font-size: 16px;
+            //             border: 1px solid #eee;
+            //             padding: 2px;
+            //             cursor: pointer;
+            //             text-align: center;
+            //             background-color: #5888ac;
+            //             &.active{
+            //                background: #5da5d8; // #8FB2D0; 
+            //             }
+            //         }
+            //         td:first-child{
+            //             border-right: none;
+            //             border-top-left-radius: 4px;
+            //             border-bottom-left-radius: 4px;
+            //         }
+            //         td:last-child{
+            //             border-left: none;
+            //             border-top-right-radius: 4px;
+            //             border-bottom-right-radius: 4px;
+            //         }
+            //     }
+            // }
         }
 
         #meet_setting{
-            width: 90%;
+            width: 100%;
             margin: 0 auto 30px;
             display: none;
             overflow-y: auto;
             .show_me{
-                width: 90%;
+                width: 100%;
                 background: #fff;
                 margin: auto;
+                padding: 15px;
                 p{
                     margin: 0;
-                    padding: 20px 10px;
+                    // padding: 20px 10px;
+                    padding-bottom: 15px;
                     font-weight: 500;
+                    font-family: "Proxima Nova Semibold";
+                    font-size: 16px;
+                    color: #1d1b1b;
                 }
                 .radio_gender{
                     width: 90%;
                     margin: auto;
-                    padding-bottom: 15px;
-                    text-align: center;
+                    //padding-bottom: 15px;
+                    // text-align: center;
                     label{
                         font-weight: 500;
                         cursor: pointer;
@@ -283,40 +335,48 @@
                         // width: 50px;
                         height: 20px;
                         display: inline-block;
-                        background: url('../../img/btn/dark_checkbox.png') no-repeat;
-                        background-size: 20px;
+                        background: url('../../img/btn/check-mark-lg-blue.png') no-repeat;
+                        // background-size: 13px 14px;
                         // background-attachment: absolute;
-                        background-position: 0px 0px; 
+                        // background-position: 1px 2px; 
                         text-align: center;
                     }
                     input[type=radio]:checked + label{
                         height: 20px;
                         display: inline-block;
-                        background: url('../../img/btn/dark_checked.png') no-repeat;
+                        background: url('../../img/btn/checked-mark-lg-blue.png') no-repeat;
                         // background-attachment: absolute;
-                        background-position: 0px 0px; 
-                        background-size: 20px;
+                        // background-position: 1px 2px; 
+                        // background-size: 13px 14px;
                         text-align: center;
+                        font-size: 14px;
+                        color:  #1d1b1b;
                     }
                 }
             }
             .search_area{
-                width: 90%;
+                width: 100%;
                 background: #fff;
-                margin: 10px auto;
-                padding-bottom: 20px;
+                margin: 0 auto;
+                // padding-bottom: 20px;
+                border-bottom: 1px solid #f3f3f3;
+                border-top: 1px solid #f3f3f3;
+                padding: 15px;
                 p{
                     margin: 0;
-                    padding: 10px;
+                    // padding: 10px;
                     font-weight: 500;
                 }
                 .head{
                     width: 100%;
                     height: 40px;
                     display: block;
-                    margin: 10px auto  ;  
+                    margin: 0 auto  ;
                     .title{
-                    float: left;
+                        float: left;
+                        font-family: "Proxima Nova Semibold";
+                        font-size: 16px;
+                        color: #1d1b1b;
                     }
                     .value{
                         float: right;
@@ -383,22 +443,26 @@
                 }
             }
             .search_age{
-                width: 90%;
+                width: 100%;
                 background: #fff;
-                margin: 10px auto;
-                padding-bottom: 20px;
+                margin: 0 auto;
+                // padding-bottom: 20px;
+                padding: 15px;
                 p{
                     margin: 0;
-                    padding: 10px;
+                    // padding: 10px;
                     font-weight: 500;
                 }
                 .head{
                     width: 100%;
                     height: 40px;
                     display: block;
-                    margin: 10px auto  ;  
+                    margin: 0 auto  ;  
                     .title{
-                    float: left;
+                        float: left;
+                        font-family: "Proxima Nova Semibold";
+                        font-size: 16px;
+                        color: #1d1b1b;
                     }
                     .value{
                         float: right;
@@ -466,19 +530,22 @@
             }
             .btn-control{
                 width: 90%;
-                margin: auto;
+                margin: 15px auto;
+                font-family: "Proxima Nova Regular";
+                font-size: 16px;
                 .cancel{
-                    width: 45%;
+                    width: 25%;
                     float: left;
-                    background: #f1904d;
-                    border-radius: 20px;
-                    border: 1px solid #d07b41;
+                    background: #5888ac;
+                    border-radius: 4px;
+                    border: 1px solid #fff;
                     color: #fff;
                     cursor: pointer;
+                    height: 34px;
                     p{
                         margin: 0;
                         text-align: center;
-                        padding: 10px 5px;
+                        padding: 5px 5px;
                     }
                     &.disable{
                         opacity: 0.6;
@@ -486,15 +553,16 @@
                     }
                 }
                 .save{
-                    width: 45%;
+                    width: 25%;
                     float: right;
-                    border: 1px solid #48a24a;
-                    background: #49b14c;
+                    border: 1px solid #fff;
+                    background: #5888ac;
                     color: #fff;
                     text-align: center;
-                    border-radius: 20px;
-                    padding: 10px 5px;
+                    border-radius: 4px;
+                    padding: 5px 5px;
                     cursor: pointer;
+                    height: 34px;
                     .fa{
                         font-size: 18px;
                     }
@@ -507,75 +575,126 @@
         }
 
         #user_setting{
-            width: 90%;
+            width: 100%;
             height: auto;
-            background:#fff;
+            // background:#fff;
             margin: auto;
             margin-bottom: 80px;
             // padding-bottom: 20px;
             display: none;
             .user_avatar{
-                width: 200px;
-                height: 200px;
+                width: 100%;
+                height: auto;
                 margin: auto;
                 position: relative;
-                background: #e6e6e6;
+                background: #fff;// #e6e6e6;
                 display: table;
                 .img_user{
                     height: auto;
-                    max-width: 200px;
-                    max-height: 200px;
+                    max-width: 270px;
+                    max-height: 270px;
                     width: auto;
                     text-align: center;
                     vertical-align: middle;
                     display: table-cell;
                     img{
                         margin: auto;
-                        max-width: 200px;
+                        max-width: 270px;
                         width: auto;
                         height: auto;
-                        max-height: 200px;
+                        max-height: 270px;
                     }
                 }
                 .change_avatar{
                     width: 30px;
                     height: 30px;
-                    top: 170px;
-                    left: 170px;
+                    top: 30px;
+                    right: 30px;
                     position: absolute;
-                    background: rgba(255, 255, 255, 0.3);
+                    background: rgba(0, 0, 0, 0.8);
                     cursor: pointer;
+                    border-radius: 4px;
                     .fa{
-                        font-size: 30px;
+                        font-size: 20px;
                         color: #fff;
                         text-align: center;
                         display: block;
                         cursor: pointer;
+                        margin-top: 5px;
                     }
                 }
             }
             .user_information{
                 // margin: 20px;
-                padding: 20px;
+                padding: 10px 20px 0 20px;
+                .user{
+                    font-family: "Proxima Nova Semibold";
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #1d1b1b;
+                    margin-bottom: 5px;
+                }
+                .field{
+                    width: 47%;
+                    display: inline-block;
+                    p{
+                        font-family: "Proxima Nova Bold";
+                        font-size: 14px;
+                        color: #1d1b1b;
+                        font-weight: bold;
+                        // border-bottom: 1px solid;
+                        .fa{
+                            font-size: 14px;
+                            color: #1d1b1b;
+                            margin-right: 5px;
+                        }
+                    }                  
+                    input{
+                        width: 100%;
+                        border: 1px solid #bcbcbc;
+                        border-radius: 4px;
+                        padding: 0 10px;
+                        font-family: "Proxima Nova Regular";
+                        font-size: 14px;
+                        color: #1d1b1b;
+                        height: 30px;
+                    }
+                }
+                .field-margin {
+                    margin-left: 20px;
+                }
                 .field_info{
                     margin: 10px 0;
+                    
                     p{
+                        font-family: "Proxima Nova Bold";
+                        font-size: 14px;
+                        color: #1d1b1b;
                         font-weight: bold;
-                        border-bottom: 1px solid;
+                        // border-bottom: 1px solid;
+                        .fa{
+                            font-size: 14px;
+                            color: #1d1b1b;
+                            margin-right: 5px;
+                        }
                     }
 
                     input{
                         border-radius: 7px;
-                        border: 1px solid #eee;
+                        border: 1px solid #bcbcbc;
                         outline: none;
                         text-align: left;
                         padding: 0 10px;
+                        font-family: "Proxima Nova Regular";
+                        font-size: 14px;
+                        color: #1d1b1b;
+                        height: 30px;
                     }
                     textarea{
                         width: 100%;
                         height: 100px;
-                        border-radius: 7px;
-                        border: 1px solid #eee;
+                        border-radius: 4px;
+                        border: 1px solid #bcbcbc;
                         outline: none;
                         resize: none;
                     }
@@ -605,14 +724,16 @@
                 }
             }
             .btn-control{
-                padding: 0 10px;
-                margin: 10px 0;
+                padding: 0 20px;
+                // margin: 10px 0;
+                font-family: "Proxima Nova Regular";
+                font-size: 16px;
                 .cancel{
-                    width: 45%;
+                    width: 30%;
                     float: left;
-                    background: #f1904d;
-                    border-radius: 20px;
-                    border: 1px solid #d07b41;
+                    background: #5888ac;
+                    border-radius: 4px;
+                    border: 1px solid #fff;
                     color: #fff;
                     cursor: pointer;
                     p{
@@ -626,13 +747,13 @@
                     }
                 }
                 .save{
-                    width: 45%;
+                    width: 30%;
                     float: right;
-                    border: 1px solid #48a24a;
-                    background: #49b14c;
+                    border: 1px solid #fff;
+                    background: #5888ac;
                     color: #fff;
                     text-align: center;
-                    border-radius: 20px;
+                    border-radius: 4px;
                     padding: 10px 5px;
                     cursor: pointer;
                     .fa{
@@ -642,6 +763,50 @@
                         cursor: default;
                         opacity: 0.6;
                     }
+                }
+            }
+        }
+    }
+    .modal-footer{
+        padding: 0;
+        background-color: #e2e3e4;
+        border-radius: 0 0 4px 4px;
+        .footer-btn{
+            width: 100%;
+            display: block;
+            top: 40px;
+            z-index: 20;
+            height: 46px;
+            padding-top: 2px;
+            .control-btn{
+                font-family: "Proxima Nova Regular";
+                color: #eee;
+                border-radius: 15px;
+                padding: 7px;
+                border-collapse: separate;
+                margin: auto;
+                width: 70%;
+                td{ 
+                    width: 60px;
+                    font-size: 16px;
+                    border: 1px solid #eee;
+                    padding: 2px;
+                    cursor: pointer;
+                    text-align: center;
+                    background-color: #5888ac;
+                    &.active{
+                       background: #5da5d8; // #8FB2D0; 
+                    }
+                }
+                td:first-child{
+                    border-right: none;
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                }
+                td:last-child{
+                    border-left: none;
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
                 }
             }
         }

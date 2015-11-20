@@ -1,19 +1,7 @@
 <?php use yii\helpers\Url; ?>
 
 <div id="show_meet">
-  <div class="header">
-      <div class="back_page">
-        <!-- <i class="fa fa-arrow-left"></i> -->
-        <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>">
-      </div>
-      <div class="log_out">
-        <i class="fa fa-sign-out"></i>
-        <p> Log out</p>
-      </div>
-      <div class="name_user">
-          <img src="<?= Url::to('@web/img/icon/netwrk_icon_small_hdpi.png'); ?>">
-      </div>
-  </div>
+  
   <div class="sidebar">
      <table class="filter_sidebar">
           <tr>
@@ -27,7 +15,48 @@
     <div class='page' id="meeting_page">
       <div class="user_list"></div>
       <p class="no_data">There is no relevant user. Try broadening your Meet Settings.</p>
-      <div class="control-btn">
+      <div class="footer-btn">
+            <table class="control-btn">
+              <tr>
+                <td class="back disable">
+                  <i class="fa fa-chevron-left"></i>
+                  <span>Back</span>
+                </td>
+                <td class="meet">
+                  <!-- <i class="fa fa-user"></i> -->
+                  <span>Meet</span>
+                </td>
+                <td class="met">
+                  <!-- <i class="fa fa-user"></i> -->
+                  <span>Met</span>
+                </div>
+                <td class="next">
+                  <span>Next</span>
+                  <i class="fa fa-chevron-right"></i>
+                </td>
+              </tr>
+            </table>
+          </div>
+      <!-- <div class="control-btn">
+        <table class="filter_sidebar">
+          <tr>
+              <td class="back disable">
+                <i class="fa fa-chevron-left"></i>
+                <span>Back</span>
+              </td>
+              <td class="meet">
+                <span>Meet</span>
+              </td>
+              <td class="met">
+                <span>Met</span>
+              </td>
+              <td class="next ">
+                <span>Next</span>
+                <i class="fa fa-chevron-right"></i>
+              </td>
+          </tr>
+        </table>
+
         <div class="back disable">
           <i class="fa fa-chevron-left"></i>
           <span>back</span>
@@ -37,14 +66,11 @@
           <i class="fa fa-chevron-right"></i>
         </div>
         <div class="meet">
-          <!-- <i class="fa fa-user"></i> -->
           <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>meet</span>
         </div>
-        <div class="met">
-          <!-- <i class="fa fa-user"></i> -->
           <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>met</span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class='page' id="meet_setting">
         <div class="show_me">
@@ -76,8 +102,8 @@
                     <p>Reset</p>
                 </div>
                 <div class="save disable">
-                    <i class="fa fa-check"></i>
                     <span>Save</span>
+                    <i class="fa fa-check"></i>
                 </div>
             </div>
     </div>
@@ -133,30 +159,35 @@
   <div class="user_item user_meet_<%= vt %>">
       <div class="avatar-image"><img src="<%= user.image %>"/></div>
       <div class="box-infomation">
-        <table class="table">
-          <tbody>
-            <tr>
-              <td class="title">Age:</td>
-              <td class="text"><%= user.year_old %></td>
-            </tr>
-            <tr>
-              <td class="title">Work:</td>
-              <td class="text"><%= user.work %></td>
-            </tr>
-            <tr class="about">
-              <td class="title">About:</td>
-              <td class="text"><%= user.about %></td>
-            </tr>
-            <tr class="post">
-              <td class="title">Posts:</td>
-              <td class="text">
+        <div class="table">
+          <div class="user">
+            <%= user.username %>, <%= user.year_old %>
+          </div>
+          <div class="info-detail">
+            <div class="work">
+              <span><i class="fa fa-briefcase"></i></span>
+              <p class="title">Work</p>
+              <p class="text"><%= user.work %></p>
+            </div>
+            <div class="about">
+              <span><i class="fa fa-info-circle"></i></span>
+              <p class="title">About</p>
+              <p class="text"><%= user.about %></p>
+            </div>
+            <div class="post">
+              <span>
+                <i><img src="/img/icon/post-icon-desktop.png"></img></i>
+              </span>
+              <p class="title">Posts</p>
+              <p class="text">
                 <% _.each(user.post,function(p){ %>
                   <span><%= p %></span>
                 <% }); %>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- table -->
         <div class="brillant">
           <div class="count"><span>1</span></div>
           <p>Brilliant</p>
@@ -169,24 +200,25 @@
     <div class="user_avatar">
         <div class="img_user"><img src="<%= data.image %>"></div>
         <div class="change_avatar">
-            <i class="fa fa-cog"></i>
+            <i class="fa fa-camera"></i>
         </div>
     </div>
     <div class="user_information">
-        <div class="field_info">
-            <p> Birthday: </p>
+        <div class="user"><%= data.username %>, <%= data.year_old %></div>
+        <div class="field">
+            <p><i class="fa fa-birthday-cake"></i> Birthday </p>
             <input type="text" class="birthday" maxlength="10" value="<%= data.age %>" />
         </div>
-        <div class="field_info">
-            <p> Home Zip: </p>
+        <div class="field field-margin">
+            <p><i class="fa fa-map-marker"></i> Home Zip </p>
             <input type="text" class="zip_code" maxlength="5" value="<%= data.zip %>" />
         </div>
         <div class="field_info">
-            <p> Work: </p>
+            <p><i class="fa fa-briefcase"></i> Work </p>
             <input type="text" class="work" maxlength="128" value="<%= data.work %>"/>
         </div>
         <div class="field_info">
-            <p> About: </p>
+            <p><i class="fa fa-info-circle"></i> About </p>
             <textarea class="about" maxlength="2000"><%= data.about %></textarea>
         </div>
     </div>
@@ -195,8 +227,8 @@
             <p>Reset</p>
         </div>
         <div class="save disable">
-            <i class="fa fa-check"></i>
             <span>Save</span>
+            <i class="fa fa-check"></i>
         </div>
     </div>
 </script>
