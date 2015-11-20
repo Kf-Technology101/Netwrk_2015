@@ -6,6 +6,7 @@ use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\UserMeet;
+use frontend\modules\netwrk\models\Vote;
 use yii\helpers\Url;
 
 class MeetController extends BaseController
@@ -63,6 +64,8 @@ class MeetController extends BaseController
 
             $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
             
+            $brilliant = Vote::find()->where('user_id = ' . $value->id . ' AND status = 1')->count();
+
             $user = array(
                 'user_id' => $value->id,
                 'username'=> $value->profile->first_name ." ". $value->profile->last_name,
@@ -75,6 +78,7 @@ class MeetController extends BaseController
                     'work'=> $value->profile->work,
                     'about'=> $value->profile->about,
                     'post'=> $post_data,
+                    'brilliant'=>$brilliant,
                 ),
             );
 

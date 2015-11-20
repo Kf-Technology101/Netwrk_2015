@@ -58,7 +58,7 @@
         </div>
         <div class="page" id="meet_setting">
             <div class="show_me">
-              <p>Show me:</p>
+              <p>Show me</p>
               <div class="radio_gender">
                   <input type="radio" class="input_radio fa fa-check-square-o" name='sex' id="all" value='All'><label for='all'> All</label>
                   <input type="radio" class="input_radio" name='sex'id="female" value='Female'><label for="female"> Female</label>
@@ -67,7 +67,7 @@
             </div>
             <div class="search_area">
                 <div class="head">
-                    <p class="title">Limit Search Area To:</p>
+                    <p class="title">Limit Search Area To</p>
                     <p class="value"></p>
                 </div>
                 
@@ -75,7 +75,7 @@
             </div>
             <div class="search_age">
               <div class="head">
-                  <p class="title">Limit Search Age:</p>
+                  <p class="title">Limit Search Age</p>
                   <p class="value"></p>
               </div>
             
@@ -101,7 +101,7 @@
             <table class="control-btn">
               <tr>
                 <td class="back disable">
-                  <i class="fa fa-chevron-left"></i>
+                  <i class="fa fa-angle-left"></i>
                   <span>Back</span>
                 </td>
                 <td class="meet">
@@ -114,7 +114,7 @@
                 </div>
                 <td class="next">
                   <span>Next</span>
-                  <i class="fa fa-chevron-right"></i>
+                  <i class="fa fa-angle-right"></i>
                 </td>
               </tr>
             </table>
@@ -203,7 +203,7 @@
         </div>
         
         <div class="brillant">
-          <div class="count"><span>1</span></div>
+          <div class="count"><span><%= user.brilliant %></span></div>
           <p>Brilliant</p>
         </div>
       </div>
@@ -220,19 +220,19 @@
     <div class="user_information">
         <div class="user"><%= data.username %>, <%= data.year_old %></div>
         <div class="field">
-            <p><i class="fa fa-birthday-cake"></i> Birthday: </p>
+            <p><i class="fa fa-birthday-cake"></i> Birthday </p>
             <input type="text" name='birthday' class="birthday" maxlength="10" value="<%= data.age %>" />
         </div>
         <div class="field  field-margin">
-            <p><i class="fa fa-map-marker"></i>Home Zip: </p>
+            <p><i class="fa fa-map-marker"></i>Home Zip </p>
             <input type="text" class="zip_code" maxlength="5" value="<%= data.zip %>" />
         </div>
         <div class="field_info">
-            <p><i class="fa fa-briefcase"></i> Work: </p>
+            <p><i class="fa fa-briefcase"></i> Work </p>
             <input type="text" class="work" maxlength="128" value="<%= data.work %>"/>
         </div>
         <div class="field_info">
-            <p><i class="fa fa-info-circle"></i> About: </p>
+            <p><i class="fa fa-info-circle"></i> About </p>
             <textarea class="about" maxlength="2000"><%= data.about %></textarea>
         </div>
     </div>

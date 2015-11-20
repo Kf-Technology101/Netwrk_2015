@@ -1,12 +1,12 @@
 #modal_meet{
     height: auto;
-    top: 80px;
+    top: 90px;
     overflow: visible;
     display: none;
-    width: 450px;
+    width: 400px;
     margin: auto;
     .modal-dialog{
-        width: 450px;
+        width: 400px;
         max-height: 580px;
         min-height: 230px;
         margin: auto;
@@ -17,17 +17,19 @@
         max-height: 620px;
         min-height: 230px;
         background: #e2e3e4;
+        border: none;
     }
     .modal-header{
         padding: 0;
         // height: 40px;
         width: 100%;
-        background: #265c7f;
+        background: #5888ac;
         box-shadow: 0px 3px 5px #888;
         border: none;
         display: block;
+        border-radius: 4px 4px 0 0;
         .head{
-            height: 46px;
+            height: 40px;
             border-bottom: 1px solid #fff;
             .name_modal{
                 width: 20%;
@@ -44,7 +46,7 @@
                 }
                 .back_page{
                     width: 95px;
-                    height: 46px;
+                    height: 40px;
                     float: left;
                     border-right: 1px solid #fff;
                     cursor: pointer;
@@ -58,6 +60,7 @@
                         text-align: center;
                         display: block;
                         line-height: 40px;
+                        margin-top: -3px;
                     }
                     i{
                         font-size: 18px;
@@ -66,13 +69,13 @@
                 }
             }
             .name_user{
-                width: 60%;
+                width: 54%;
                 color:#fff;
-                font-size: 25px;
+                font-size: 22px;
                 margin: auto 0;
                 p{
                     text-align: center;
-                    padding: 5px;
+                    padding-top: 5px;
                     margin: 0;
                     font-weight: bold;
                 }
@@ -84,7 +87,7 @@
         
         .sidebar{
             width: 100%;
-            background: #5888ac;// #5486b0;
+            // background: #5888ac;// #5486b0;
             display: block;
             // position: fixed;
             top: 40px;
@@ -136,6 +139,7 @@
         min-height: 170px;
         width: 100%;
         padding: 0;
+        background-color: #f3f3f3;
         #meeting{
             .user_list{
                 max-height: 505px;
@@ -150,6 +154,7 @@
                 .avatar-image{
                     width: 100%;
                     height: auto;
+                    background: #fff;
                     img{
                         width: auto;
                         height: 270px;
@@ -158,10 +163,10 @@
                     }
                 }
                 .box-infomation{
-                    width: 90%;
+                    width: 100%;
                     height: auto;
-                    padding: 10px 10px 0px 10px;
-                    margin: 25px auto 10px;
+                    padding: 15px 15px 15px 15px;
+                    // margin: 25px auto 10px;
                     overflow-y: auto;
                     // background: #fff;
                     position: relative;
@@ -172,9 +177,8 @@
                             padding: 0 5px;
                         }
                         .user{
-                            font-family: "Proxima Nova Semibold";
+                            font-family: "ProximaNovaSemibold";
                             font-size: 18px;
-                            font-weight: bold;
                             color: #1d1b1b;
                             margin-bottom: 5px;
                         }
@@ -194,14 +198,13 @@
                             padding-left: 29px;
                         }
                         .title{
-                            font-weight: bold;
-                            font-family: "Proxima Nova Bold";
+                            font-family: "ProximaNovaBold";
                             font-size: 14px;
                             color: #1d1b1b;
                         }
                         .text{
                             padding: 0 5px 0 0;
-                            font-family: "Proxima Nova Bold";
+                            font-family: "ProximaNovaRegular";
                             font-size: 14px;
                             color: #1d1b1b;
                             span{
@@ -217,8 +220,11 @@
                             margin-left: -36px;
                             font-size: 14px;
                             display: block;
-                            background-color: #e2e3e4;
+                            background-color: #f3f3f3;
                             position: absolute;
+                            .fa{
+                                color: #1d1b1b;
+                            }
                         }
                     }
                     .brillant{
@@ -228,7 +234,7 @@
                         right: 10px;
                         .count{
                             width: 32px;
-                            background: url('../../img/icon/brilliant_on.png') no-repeat;
+                            background: url('../../img/icon/brilliant-icon-large.png') no-repeat;
                             background-size: 32px 28px;
                             display: block;
                             span{
@@ -236,59 +242,21 @@
                                 text-align: center;
                                 font-family: "Verdana";
                                 font-size: 10px;
-                                padding: 10px 0 5px 0;
+                                padding: 10px 0 5px 2px;
                                 color: #fff;
+                                font-weight: bold;
                             }
                         }
                         p{
                             font-size: 12px;
                             text-align: center;
-                            font-family: "Proxima Nova Regular";
+                            font-family: "ProximaNovaRegular";
                             color: #1d1b1b;
                             margin-left: -5px;
                         }
                     }
                 }
             }
-            // .footer-btn{
-            //     width: 100%;
-            //     display: block;
-            //     top: 40px;
-            //     z-index: 20;
-            //     height: 46px;
-            //     padding-top: 2px;
-            //     .control-btn{
-            //         font-family: "Proxima Nova Regular";
-            //         color: #eee;
-            //         border-radius: 15px;
-            //         padding: 7px;
-            //         border-collapse: separate;
-            //         margin: auto;
-            //         width: 70%;
-            //         td{ 
-            //             width: 60px;
-            //             font-size: 16px;
-            //             border: 1px solid #eee;
-            //             padding: 2px;
-            //             cursor: pointer;
-            //             text-align: center;
-            //             background-color: #5888ac;
-            //             &.active{
-            //                background: #5da5d8; // #8FB2D0; 
-            //             }
-            //         }
-            //         td:first-child{
-            //             border-right: none;
-            //             border-top-left-radius: 4px;
-            //             border-bottom-left-radius: 4px;
-            //         }
-            //         td:last-child{
-            //             border-left: none;
-            //             border-top-right-radius: 4px;
-            //             border-bottom-right-radius: 4px;
-            //         }
-            //     }
-            // }
         }
 
         #meet_setting{
@@ -306,7 +274,7 @@
                     // padding: 20px 10px;
                     padding-bottom: 15px;
                     font-weight: 500;
-                    font-family: "Proxima Nova Semibold";
+                    font-family: "ProximaNovaSemibold";
                     font-size: 16px;
                     color: #1d1b1b;
                 }
@@ -335,18 +303,18 @@
                         // width: 50px;
                         height: 20px;
                         display: inline-block;
-                        background: url('../../img/btn/check-mark-lg-blue.png') no-repeat;
+                        background: url('../../img/btn/check-mark-sm-blue.png') no-repeat;
                         // background-size: 13px 14px;
                         // background-attachment: absolute;
-                        // background-position: 1px 2px; 
+                        background-position: 1px; 
                         text-align: center;
                     }
                     input[type=radio]:checked + label{
                         height: 20px;
                         display: inline-block;
-                        background: url('../../img/btn/checked-mark-lg-blue.png') no-repeat;
+                        background: url('../../img/btn/checked-mark-sm-blue.png') no-repeat;
                         // background-attachment: absolute;
-                        // background-position: 1px 2px; 
+                        background-position: 1px; 
                         // background-size: 13px 14px;
                         text-align: center;
                         font-size: 14px;
@@ -374,7 +342,7 @@
                     margin: 0 auto  ;
                     .title{
                         float: left;
-                        font-family: "Proxima Nova Semibold";
+                        font-family: "ProximaNovaSemibold";
                         font-size: 16px;
                         color: #1d1b1b;
                     }
@@ -384,7 +352,7 @@
                 }
                 #circles-slider-area.ui-slider {
                     border-radius: 20px;
-                    background: #265c7f;
+                    background: #5888ac;
                     border: none;
                     height: 10px;
                     margin: 5px 25px;
@@ -399,7 +367,7 @@
                         width: 23px;
                         top: -7px;
                         margin-left: -11px;
-                        border: 2px solid #265c7f;
+                        border: 2px solid #5da5d8;
                         outline: none;
                         // background: #265c7f;
                     }
@@ -460,7 +428,7 @@
                     margin: 0 auto  ;  
                     .title{
                         float: left;
-                        font-family: "Proxima Nova Semibold";
+                        font-family: "ProximaNovaSemibold";
                         font-size: 16px;
                         color: #1d1b1b;
                     }
@@ -470,7 +438,7 @@
                 }
                 #circles-slider-age.ui-slider {
                     border-radius: 20px;
-                    background: #265c7f;
+                    background: #5888ac;
                     border: none;
                     height: 10px;
                     margin: 5px 25px 25px;
@@ -485,7 +453,7 @@
                         width: 23px;
                         top: -7px;
                         margin-left: -11px;
-                        border: 2px solid #265c7f;
+                        border: 2px solid #5da5d8;
                         outline: none;
                         // background: #265c7f;
                     }
@@ -529,9 +497,9 @@
                 }
             }
             .btn-control{
-                width: 90%;
-                margin: 15px auto;
-                font-family: "Proxima Nova Regular";
+                // width: 100%;
+                margin: 15px;
+                font-family: "ProximaNovaRegular";
                 font-size: 16px;
                 .cancel{
                     width: 25%;
@@ -590,26 +558,26 @@
                 background: #fff;// #e6e6e6;
                 display: table;
                 .img_user{
-                    height: auto;
-                    max-width: 270px;
-                    max-height: 270px;
+                    height: 270px;
+                    // max-width: 270px;
+                    // max-height: 270px;
                     width: auto;
                     text-align: center;
                     vertical-align: middle;
                     display: table-cell;
                     img{
                         margin: auto;
-                        max-width: 270px;
+                        max-width: 400px;
                         width: auto;
-                        height: auto;
-                        max-height: 270px;
+                        height: 270px;
+                        // max-height: 270px;
                     }
                 }
                 .change_avatar{
                     width: 30px;
                     height: 30px;
-                    top: 30px;
-                    right: 30px;
+                    top: 15px;
+                    right: 15px;
                     position: absolute;
                     background: rgba(0, 0, 0, 0.8);
                     cursor: pointer;
@@ -626,22 +594,20 @@
             }
             .user_information{
                 // margin: 20px;
-                padding: 10px 20px 0 20px;
+                padding: 15px 15px 0 15px;
                 .user{
-                    font-family: "Proxima Nova Semibold";
+                    font-family: "ProximaNovaSemibold";
                     font-size: 18px;
-                    font-weight: bold;
                     color: #1d1b1b;
                     margin-bottom: 5px;
                 }
                 .field{
-                    width: 47%;
+                    width: 46%;
                     display: inline-block;
                     p{
-                        font-family: "Proxima Nova Bold";
+                        font-family: "ProximaNovaBold";
                         font-size: 14px;
                         color: #1d1b1b;
-                        font-weight: bold;
                         // border-bottom: 1px solid;
                         .fa{
                             font-size: 14px;
@@ -654,7 +620,7 @@
                         border: 1px solid #bcbcbc;
                         border-radius: 4px;
                         padding: 0 10px;
-                        font-family: "Proxima Nova Regular";
+                        font-family: "ProximaNovaRegular";
                         font-size: 14px;
                         color: #1d1b1b;
                         height: 30px;
@@ -667,10 +633,9 @@
                     margin: 10px 0;
                     
                     p{
-                        font-family: "Proxima Nova Bold";
+                        font-family: "ProximaNovaBold";
                         font-size: 14px;
                         color: #1d1b1b;
-                        font-weight: bold;
                         // border-bottom: 1px solid;
                         .fa{
                             font-size: 14px;
@@ -680,23 +645,25 @@
                     }
 
                     input{
-                        border-radius: 7px;
+                        border-radius: 4px;
                         border: 1px solid #bcbcbc;
                         outline: none;
                         text-align: left;
                         padding: 0 10px;
-                        font-family: "Proxima Nova Regular";
+                        font-family: "ProximaNovaRegular";
                         font-size: 14px;
                         color: #1d1b1b;
                         height: 30px;
                     }
                     textarea{
+                        font-family: "ProximaNovaRegular";
                         width: 100%;
                         height: 100px;
                         border-radius: 4px;
                         border: 1px solid #bcbcbc;
                         outline: none;
                         resize: none;
+                        padding: 0 10px;
                     }
                     .birthday{
                         width: 110px;
@@ -726,7 +693,7 @@
             .btn-control{
                 padding: 0 20px;
                 // margin: 10px 0;
-                font-family: "Proxima Nova Regular";
+                font-family: "ProximaNovaRegular";
                 font-size: 16px;
                 .cancel{
                     width: 30%;
@@ -736,10 +703,11 @@
                     border: 1px solid #fff;
                     color: #fff;
                     cursor: pointer;
+                    height: 34px;
                     p{
                         margin: 0;
                         text-align: center;
-                        padding: 10px 5px;
+                        padding: 5px 5px;
                     }
                     &.disable{
                         opacity: 0.6;
@@ -754,8 +722,9 @@
                     color: #fff;
                     text-align: center;
                     border-radius: 4px;
-                    padding: 10px 5px;
+                    padding: 5px 5px;
                     cursor: pointer;
+                    height: 34px;
                     .fa{
                         font-size: 18px;
                     }
@@ -771,6 +740,8 @@
         padding: 0;
         background-color: #e2e3e4;
         border-radius: 0 0 4px 4px;
+        background-color: #f3f3f3;
+        border: none;
         .footer-btn{
             width: 100%;
             display: block;
@@ -779,8 +750,8 @@
             height: 46px;
             padding-top: 2px;
             .control-btn{
-                font-family: "Proxima Nova Regular";
-                color: #eee;
+                font-family: "ProximaNovaRegular";
+                color: #fff;
                 border-radius: 15px;
                 padding: 7px;
                 border-collapse: separate;
@@ -789,13 +760,16 @@
                 td{ 
                     width: 60px;
                     font-size: 16px;
-                    border: 1px solid #eee;
+                    border: 1px solid #fff;
                     padding: 2px;
                     cursor: pointer;
                     text-align: center;
                     background-color: #5888ac;
                     &.active{
                        background: #5da5d8; // #8FB2D0; 
+                    }
+                    .fa{
+                        font-size: 16px;
                     }
                 }
                 td:first-child{
