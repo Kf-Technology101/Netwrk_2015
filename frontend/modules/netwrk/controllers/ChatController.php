@@ -11,18 +11,27 @@ use frontend\modules\netwrk\models\Post;
 
 class ChatController extends BaseController
 {
-    public function actionIndex()
-    {
-    	return $this->render('chat');
-    }
+	public function actionExecInbg($cmd)
+	{
+		if (substr(php_uname(), 0, 7) == "Windows"){
+			pclose(popen("start /B ". $cmd, "r"));
+		} else {
+			exec($cmd . " > /dev/null &");
+		}
+	}
 
-    public function actionChatPost(){
-    	$postId = $_GET['post'];
+	public function actionIndex()
+	{
+		$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
+		$status = file_get_contents($statusFile);
+		if($status == 0){
+			/* This means, the WebSocket server is not started. So we, start it */
 
-    	$post = POST::find()->where('id ='.$postId)->with('topic')->one();
-
-    	return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post] );
-    }
+			$this->actionExecInbg("php ".Yii::getAlias('@console/controllers')."/ServerWSController.php");
+			file_put_contents($statusFile, 1);
+		}
+		return $this->render('index');
+	}
 
     public function actionChatName(){
     	$postId = $_POST['post'];
@@ -33,8 +42,16 @@ class ChatController extends BaseController
         	'post_name'=> $post->title,
         	'topic_name'=> $post->topic->title,
         );
-        
+
         $hash = json_encode($info);
         return $hash;
     }
+
+	public function actionChatPost(){
+		$postId = $_GET['post'];
+
+		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
+
+		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post] );
+	}
 }
