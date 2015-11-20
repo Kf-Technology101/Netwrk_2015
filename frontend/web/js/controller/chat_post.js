@@ -6,7 +6,7 @@ var ChatPost = {
 	initialize: function(){
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
-			ChatPost.CustomScrollBar($(ChatPost.page).find('.container_post_chat'));
+			// ChatPost.CustomScrollBar($(ChatPost.page).find('.container_post_chat'));
 			ChatPost.OnClickBackBtn($(ChatPost.page));
 			fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
 		}else{
