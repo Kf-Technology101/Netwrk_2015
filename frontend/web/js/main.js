@@ -49,7 +49,6 @@ function _event_window_resize(){
 
 function window_resize(){
   var size = get_size_window();
-  console.log(size);
   set_size_map(size[0],size[1]);
   set_position_btn_meet(size[0],size[1]);
 }
