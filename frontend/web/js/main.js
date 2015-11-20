@@ -17,12 +17,15 @@ function set_position_btn_meet(w,h){
   $('#modal_meet #btn_discover').css({'top': hp - 30 ,'left': wp});
 }
 
-function set_position_btn(target){
+function set_position_btn(parent,target,paddingTop,paddingRight){
   var menu_h = $('.menu_top').height();
   var size = get_size_window();
-  var hp = size[1] - 100 - menu_h;
-  var wp = size[0] - 100;
-  target.css({'top': hp - 30 ,'left': wp});
+  var hp = size[1] - paddingTop - menu_h;
+
+  var width_p = parent.width();
+  var width_w = (size[0] - width_p)/2 + width_p - paddingRight;
+
+  target.css({'top': hp ,'left': width_w});
   target.show();
 }
 
@@ -35,9 +38,9 @@ function fix_width_post(target,width){
 
 }
 
-function set_position_btn_resize(target){
+function set_position_btn_resize(parent,target,paddingTop,paddingRight){
   $(window).resize(function(){
-    set_position_btn(target)
+    set_position_btn(parent,target,paddingTop,paddingRight)
   });
 }
 
