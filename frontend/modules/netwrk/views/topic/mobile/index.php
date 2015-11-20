@@ -25,12 +25,12 @@
     </div>
     <div class="filter_sort">
         <div class="dropdown input-group">
-            <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most posts</div>
+            <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
             <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li data-value="recent">Most recent</li>
                 <li data-value="post">Most posts</li>
                 <li data-value="view">Most viewed</li>
-                <li data-value="topic">My Topics</li>
             </ul>
         </div>
     </div>
@@ -45,7 +45,7 @@
             <div id="item_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                 <p class="no-data">There is no data available yet</p>
             </div>
-            <div id="item_list_topic" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+            <div id="item_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                 <p class="no-data">There is no data available yet</p>
             </div>
         </div>

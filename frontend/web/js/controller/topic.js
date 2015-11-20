@@ -1,6 +1,6 @@
 var Topic = {
     data:{ 
-        filter: 'post',
+        filter: 'recent',
         city: '',
         size: 30,
         city_name:'',
@@ -18,7 +18,7 @@ var Topic = {
             status_paging: 1,
             loaded: 0
         },
-        topic:{
+        recent:{
             paging:1,
             status_paging: 1,
             loaded: 0
@@ -148,7 +148,6 @@ var Topic = {
         var parent = $('#item_list_'+Topic.data.filter);
         parent.find('.item').unbind();
         parent.find('.item').on('click',function(e){
-            if($(e.currentTarget).hasClass());
             var topic = $(e.currentTarget).attr('data-item');
             Ajax.update_view_topic({topic: topic}).then(function(){
                 if(isMobile){
@@ -326,10 +325,10 @@ var Topic = {
         var self = this;
         var parent = $("div[id^='item_list']");
         var target = $('#modal_topic .filter_sidebar').find('td');
-        var filter = ['post','view','topic'];
+        var filter = ['post','view','recent'];
         var selecFilter = $('#modal_topic').find('.dropdown-menu li').first().text();
 
-        self.data.filter = 'post';
+        self.data.filter = 'recent';
         parent.hide();
         $('#modal_topic').find('.dropdown-toggle').text(selecFilter);
         $('#modal_topic').find('.title_page').empty();

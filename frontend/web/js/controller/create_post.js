@@ -25,7 +25,7 @@ var Create_Post={
             Create_Post.showModalCreatePost();
             Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
-            Create_Post.showSideBar(name_city,name_topic)
+            // Create_Post.showSideBar(name_city,name_topic)
             Create_Post.changeData();
             Create_Post.onclickBack();
             Create_Post.eventClickdiscover();
@@ -66,8 +66,8 @@ var Create_Post={
             
         }else{
             $('#btn_meet').hide();
-            set_position_btn(parent.find('#btn_discover'));
-            set_position_btn_resize(parent.find('#btn_discover'));
+            set_position_btn(parent,parent.find('#btn_discover'),160,100);
+            set_position_btn_resize(parent,parent.find('#btn_discover'),160,100);
         }
     },
 
@@ -118,7 +118,7 @@ var Create_Post={
     hideModalCreatePost:function(){
         var parent = $('#create_post');
         parent.modal('hide');
-        Create_Post.hideSideBar();
+        // Create_Post.hideSideBar();
         Create_Post.hideNetWrkBtn();
         Create_Post.reset_data();
         Create_Post.setDefaultBtn();

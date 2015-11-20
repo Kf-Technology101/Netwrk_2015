@@ -126,14 +126,14 @@ class TopicController extends BaseController
       $zipcode = $_GET['zipcode'];
     }
     switch ($filter) {
+      case 'recent':
+        $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['created_at'=> SORT_DESC]);
+        break;
       case 'post':
         $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['post_count'=> SORT_DESC]);
         break;
       case 'view':
         $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['view_count'=> SORT_DESC]);
-        break;
-      case 'topic':
-        $topices = Topic::find()->where(['city_id'=>$city,'user_id'=>$userId])->orderBy(['created_at'=> SORT_DESC]);
         break;
     }
 

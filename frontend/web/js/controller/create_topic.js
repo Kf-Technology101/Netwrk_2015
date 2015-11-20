@@ -32,7 +32,7 @@ var Create_Topic={
             Create_Topic.params.city = city;
             Create_Topic.params.city_name = name;
             Create_Topic.showModalCreateTopic();
-            Create_Topic.showSideBar();
+            // Create_Topic.showSideBar();
             Create_Topic.onCloseModalCreateTopic();
             Create_Topic.changeData();
             Create_Topic.onclickBack();
@@ -69,8 +69,8 @@ var Create_Topic={
             }
         }else{
             $('#btn_meet').hide();
-            set_position_btn(parent.find('#btn_discover'));
-            set_position_btn_resize(parent.find('#btn_discover'));
+            set_position_btn(parent,parent.find('#btn_discover'),160,100);
+            set_position_btn_resize(parent,parent.find('#btn_discover'),160,100);
         } 
     },
 
@@ -122,7 +122,7 @@ var Create_Topic={
         var parent = $('#create_topic');
         Create_Topic.reset_data();
         Create_Topic.setDefaultBtn();
-        Create_Topic.hideSideBar();
+        // Create_Topic.hideSideBar();
         Create_Topic.hideNetWrkBtn();
         parent.modal('hide');
     },
