@@ -19,7 +19,6 @@ class ServerController extends \yii\console\Controller
 	{
 		$startNow = 1;
 		// register_shutdown_function('actionShutdown');
-
 		if( isset($startNow) ){
 			$server = IoServer::factory(
 				new HttpServer(
@@ -27,7 +26,7 @@ class ServerController extends \yii\console\Controller
 						new ChatServer()
 						)
 					),
-				8080,
+				8888,
 				"127.0.0.1"
 				);
 			$server->run();

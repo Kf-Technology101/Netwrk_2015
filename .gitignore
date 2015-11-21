@@ -35,3 +35,9 @@ composer.lock
 phpunit.phar
 # local phpunit config
 /phpunit.xml
+
+# composer css frontend dir
+/frontend/web/css/desktop
+
+# composer css frontend dir
+/frontend/web/css/mobile

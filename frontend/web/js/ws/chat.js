@@ -4,7 +4,7 @@ window.scTop = function(){
 	});
 };
 window.connect = function(){
-	window.ws = $.websocket("ws://127.0.0.1:8080/", {
+	window.ws = $.websocket("ws://127.0.0.1:8888/", {
 		open: function() {
 			$(".chatWindow .chatbox .status").text("Online");
 			ws.send("fetch");
