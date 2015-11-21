@@ -204,7 +204,7 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal($('#modal_meet'), 0);
+                set_heigth_modal($('#modal_meet'), -15);
             }
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();

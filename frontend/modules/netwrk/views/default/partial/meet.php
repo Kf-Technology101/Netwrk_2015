@@ -36,24 +36,26 @@
           </div>
           
           <div class="footer-btn">
-            <table class="control-btn">
-              <tr>
-                <td class="back disable">
-                  <i class="fa fa-chevron-left"></i>
-                  <span>Back</span>
-                </td>
-                <td class="meet">
-                  <span>Meet</span>
-                </td>
-                <td class="met">
-                  <span>Met</span>
-                </div>
-                <td class="next">
-                  <span>Next</span>
-                  <i class="fa fa-chevron-right"></i>
-                </td>
-              </tr>
-            </table>
+            <div class="btn-shadow">
+              <table class="control-btn">
+                <tr>
+                  <td class="back disable">
+                    <i class="fa fa-angle-left"></i>
+                    <span>Back</span>
+                  </td>
+                  <td class="meet">
+                    <span>Meet</span>
+                  </td>
+                  <td class="met">
+                    <span>Met</span>
+                  </div>
+                  <td class="next">
+                    <span>Next</span>
+                    <i class="fa fa-angle-right"></i>
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
         <div class="page" id="meet_setting">
@@ -243,7 +245,6 @@
             <span>Save</span>
             <i class="fa fa-check"></i>
         </div>
-        <div class="clearfix"></div>
     </div>
 </script>
 <script id="user_name_current" type="text/x-underscore-template">

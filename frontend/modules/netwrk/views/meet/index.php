@@ -40,12 +40,12 @@
 
           <div class="control-btn">
             <div class="back">
-              <i class="fa fa-chevron-left"></i>
+              <i class="fa fa-angle-left"></i>
               <span>back</span>
             </div>
             <div class="next">
               <span>next</span>
-              <i class="fa fa-chevron-right"></i>
+              <i class="fa fa-angle-right"></i>
             </div>
             <div class="meet">
               <i class="fa fa-user"></i>
