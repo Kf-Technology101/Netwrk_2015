@@ -35,7 +35,7 @@
             <p class="no_data">There is no relevant user. Try broadening your Meet Settings.</p>
           </div>
           
-          <!-- <div class="footer-btn">
+          <div class="footer-btn">
             <table class="control-btn">
               <tr>
                 <td class="back disable">
@@ -54,7 +54,7 @@
                 </td>
               </tr>
             </table>
-          </div> -->
+          </div>
         </div>
         <div class="page" id="meet_setting">
             <div class="show_me">
@@ -90,13 +90,14 @@
                       <span>Save</span>
                       <i class="fa fa-check"></i>
                   </div>
+                  <div class="clearfix"></div>
               </div>
         </div>
         <div class="page" id="user_setting">
 
         </div>
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <div class="footer-btn">
             <table class="control-btn">
               <tr>
@@ -105,11 +106,9 @@
                   <span>Back</span>
                 </td>
                 <td class="meet">
-                  <!-- <i class="fa fa-user"></i> -->
                   <span>Meet</span>
                 </td>
                 <td class="met">
-                  <!-- <i class="fa fa-user"></i> -->
                   <span>Met</span>
                 </div>
                 <td class="next">
@@ -119,7 +118,7 @@
               </tr>
             </table>
           </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -244,6 +243,7 @@
             <span>Save</span>
             <i class="fa fa-check"></i>
         </div>
+        <div class="clearfix"></div>
     </div>
 </script>
 <script id="user_name_current" type="text/x-underscore-template">

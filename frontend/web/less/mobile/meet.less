@@ -64,14 +64,11 @@
         background: #5888ac;
         display: table;
         position: fixed;
-        // top: 100px;
         z-index: 20;
         .title{
             color: #eee;
             font-size: 14px;
             padding: 10px;
-            // display: table-cell;
-            // vertical-align: middle;
             float: left; 
         }
         .filter_sidebar{
@@ -123,14 +120,15 @@
             .user_item{
                 position: relative;
                 .avatar-image{
-                    width: auto; // 275px
-                    height: 270px; // 275px
+                    width: auto;
+                    height: 270px;
                     max-width: 100%;
                     margin: auto;
                     background-color: #fff;
                     img{
-                        width: auto; // 100%
-                        height: 270px; // 275px
+                        width: auto;
+                        max-height: 270px;
+                        height: auto;
                         max-width: 100%;
                         display: block;
                         margin: auto;
@@ -141,7 +139,6 @@
                     height: auto;
                     min-height: 150px;
                     padding: 15px;
-                    // margin: 5px auto 10px;
                     overflow-y: auto;
                     position: relative;
                     .table{
@@ -157,7 +154,6 @@
                         .user{
                             font-family: "ProximaNovaSemibold";
                             font-size: 18px;
-                            // font-weight: bold;
                             color: #1d1b1b;
                             margin-bottom: 10px;
                         }
@@ -176,7 +172,6 @@
                         
                         .title{
                             font-family: "ProximaNovaBold";
-                            // font-weight: bold;
                             font-size: 14px;
                             color: #1d1b1b;
                         }
@@ -204,7 +199,6 @@
                             width: 40px;
                             background: url('../../img/icon/brilliant-icon-large.png') no-repeat;
                             background-size: 40px 36px;
-                            // background-position: 5px 2px;
                             display: block;
                             span{
                                 display: block;
@@ -285,7 +279,6 @@
                 .img_user{
                     height: 270px;
                     max-width: 100%; // 200
-                    // max-height: 270px; // 200
                     width: auto;
                     text-align: center;
                     vertical-align: middle;
@@ -294,8 +287,8 @@
                         margin: auto;
                         max-width: 100%;
                         width: auto;
-                        height: 270px;
-                        // max-height: 270px;
+                        height: auto;
+                        max-height: 270px;
                     }
                 }
                 .change_avatar{
@@ -337,7 +330,6 @@
                         font-family: "ProximaNovaBold";
                         font-size: 14px;
                         color: #1d1b1b;
-                        // font-weight: bold;
                     }
                     input{
                         width: 100%;
@@ -362,11 +354,9 @@
                         position: absolute;
                     }
                     p{
-                        // font-weight: bold;
                         font-family: "ProximaNovaBold";
                         font-size: 14px;
                         color: #1d1b1b;
-                        // border-bottom: 1px solid;
                     }
 
                     input{
@@ -433,7 +423,6 @@
                     border: 1px solid #fff;
                     color: #fff;
                     height: 34px;
-                    // margin-left: 10px;
                     p{
                         margin: 0;
                         text-align: center;
@@ -453,7 +442,6 @@
                     border-radius: 4px;
                     padding: 5px 5px;
                     height: 34px;
-                    // margin-right: 10px;
                     .fa{
                         font-size: 18px;
                     }
@@ -484,7 +472,6 @@
                     width: 90%;
                     margin: auto;
                     padding-bottom: 15px;
-                    // text-align: center;
                     label{
                         font-weight: 500;
                     }
@@ -506,7 +493,6 @@
                         display: inline-block;
                         background: url('../../img/btn/check-mark-sm-blue.png') no-repeat;
                         background-size: 12px;
-                        // background-attachment: absolute;
                         background-position: 0; 
                         text-align: center;
                     }
@@ -514,7 +500,6 @@
                         height: 20px;
                         display: inline-block;
                         background: url('../../img/btn/checked-mark-sm-blue.png') no-repeat;
-                        // background-attachment: absolute;
                         background-position: 0; 
                         background-size: 12px;
                         text-align: center;
@@ -667,7 +652,6 @@
                         margin-left: -11px;
                         border: 2px solid #5da5d8;
                         outline: none;
-                        // background: #265c7f;
                     }
                     .ui-slider-pip {
                         top: 3px;

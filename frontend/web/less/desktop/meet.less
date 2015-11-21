@@ -7,21 +7,18 @@
     margin: auto;
     .modal-dialog{
         width: 400px;
-        max-height: 580px;
         min-height: 230px;
         margin: auto;
         border-radius: 5px;
         box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
     }
     .modal-content{
-        max-height: 620px;
         min-height: 230px;
         background: #e2e3e4;
         border: none;
     }
     .modal-header{
         padding: 0;
-        // height: 40px;
         width: 100%;
         background: #5888ac;
         box-shadow: 0px 3px 5px #888;
@@ -33,9 +30,7 @@
             border-bottom: 1px solid #fff;
             .name_modal{
                 width: 20%;
-                // padding: 5px;
                 float: left;
-                // border-right: 1px solid #fff;
                 p{
                     color: #eee;
                     font-size: 18px;
@@ -69,7 +64,7 @@
                 }
             }
             .name_user{
-                width: 54%;
+                width: 55%;
                 color:#fff;
                 font-size: 22px;
                 margin: auto 0;
@@ -77,7 +72,6 @@
                     text-align: center;
                     padding-top: 5px;
                     margin: 0;
-                    // font-weight: bold;
                 }
                 .default{
                     display: none;
@@ -87,9 +81,7 @@
         
         .sidebar{
             width: 100%;
-            // background: #5888ac;// #5486b0;
             display: block;
-            // position: fixed;
             top: 40px;
             z-index: 20;
             height: 46px;
@@ -98,8 +90,6 @@
                 color: #eee;
                 font-size: 14px;
                 padding: 10px;
-                // display: table-cell;
-                // vertical-align: middle;
                 float: left; 
             }
             .filter_sidebar{
@@ -135,7 +125,7 @@
     }
     .modal-body{
         overflow-y: auto;
-        max-height: 480px;
+        max-height: 100%;
         min-height: 170px;
         width: 100%;
         padding: 0;
@@ -154,12 +144,14 @@
             .user_item{
                 .avatar-image{
                     width: auto;
-                    height: 270px;
+                    height: auto;
+                    max-height: 270px;
                     max-width: 100%;
                     background: #fff;
                     img{
                         width: auto;
-                        height: 270px;
+                        height: auto;
+                        max-height: 270px;
                         max-width: 100%;
                         display: block;
                         margin: auto;
@@ -169,9 +161,8 @@
                     width: 100%;
                     height: auto;
                     padding: 15px 15px 15px 15px;
-                    // margin: 25px auto 10px;
+                    margin-bottom: 46px;
                     overflow-y: auto;
-                    // background: #fff;
                     position: relative;
                     .table{
                         margin: 0;
@@ -247,7 +238,7 @@
                                 font-size: 10px;
                                 padding: 13px 0 5px 2px;
                                 color: #fff;
-                                font-weight: bold;
+                                // font-weight: bold;
                             }
                         }
                         p{
@@ -260,8 +251,53 @@
                     }
                 }
             }
+            .footer-btn{
+                width: 100%;
+                display: block;
+                bottom: 0;
+                z-index: 20;
+                height: 46px;
+                padding-top: 2px;
+                background-color: #f3f3f3;
+                position: fixed;
+                border-radius: 0 0 4px 4px;
+                .control-btn{
+                    font-family: "ProximaNovaRegular";
+                    color: #fff;
+                    border-radius: 15px;
+                    padding: 7px;
+                    border-collapse: separate;
+                    margin: auto;
+                    width: 70%;
+                    td{ 
+                        width: 60px;
+                        font-size: 16px;
+                        border: 1px solid #fff;
+                        padding: 2px;
+                        cursor: pointer;
+                        text-align: center;
+                        background-color: #5888ac;
+                        &.active{
+                           background: #5da5d8; // #8FB2D0; 
+                        }
+                        .fa{
+                            font-size: 16px;
+                        }
+                    }
+                    td:first-child{
+                        border-right: none;
+                        border-top-left-radius: 4px;
+                        border-bottom-left-radius: 4px;
+                    }
+                    td:last-child{
+                        border-left: none;
+                        border-top-right-radius: 4px;
+                        border-bottom-right-radius: 4px;
+                    }
+                }
+            }
         }
-
+        
         #meet_setting{
             width: 100%;
             margin: 0 auto 30px;
@@ -550,30 +586,30 @@
             height: auto;
             // background:#fff;
             margin: auto;
-            margin-bottom: 80px;
-            // padding-bottom: 20px;
+            // margin-bottom: 80px;
+            padding-bottom: 20px;
             display: none;
             .user_avatar{
                 width: 100%;
-                height: auto;
+                height: 270px;
                 margin: auto;
                 position: relative;
                 background: #fff;// #e6e6e6;
                 display: table;
                 .img_user{
-                    height: 270px;
-                    // max-width: 270px;
-                    // max-height: 270px;
+                    height: auto;
+                    max-width: 100%;
+                    max-height: 270px;
                     width: auto;
                     text-align: center;
                     vertical-align: middle;
                     display: table-cell;
                     img{
                         margin: auto;
-                        max-width: 400px;
+                        max-width: 100%;
                         width: auto;
-                        height: 270px;
-                        // max-height: 270px;
+                        max-height: 270px;
+                        height: auto;
                     }
                 }
                 .change_avatar{
@@ -596,7 +632,6 @@
                 }
             }
             .user_information{
-                // margin: 20px;
                 padding: 15px 15px 0 15px;
                 .user{
                     font-family: "ProximaNovaSemibold";
@@ -611,7 +646,6 @@
                         font-family: "ProximaNovaBold";
                         font-size: 14px;
                         color: #1d1b1b;
-                        // border-bottom: 1px solid;
                         .fa{
                             font-size: 14px;
                             color: #1d1b1b;
@@ -639,7 +673,6 @@
                         font-family: "ProximaNovaBold";
                         font-size: 14px;
                         color: #1d1b1b;
-                        // border-bottom: 1px solid;
                         .fa{
                             font-size: 14px;
                             color: #1d1b1b;
@@ -742,56 +775,6 @@
     .table-responsive {
         border: none;
     }
-    .modal-footer{
-        padding: 0;
-        background-color: #e2e3e4;
-        border-radius: 0 0 4px 4px;
-        background-color: #f3f3f3;
-        border: none;
-        .footer-btn{
-            width: 100%;
-            display: block;
-            top: 40px;
-            z-index: 20;
-            height: 46px;
-            padding-top: 2px;
-            box-shadow: 1px 3px 5px 2px #888;
-            .control-btn{
-                font-family: "ProximaNovaRegular";
-                color: #fff;
-                border-radius: 15px;
-                padding: 7px;
-                border-collapse: separate;
-                margin: auto;
-                width: 70%;
-                td{ 
-                    width: 60px;
-                    font-size: 16px;
-                    border: 1px solid #fff;
-                    padding: 2px;
-                    cursor: pointer;
-                    text-align: center;
-                    background-color: #5888ac;
-                    &.active{
-                       background: #5da5d8; // #8FB2D0; 
-                    }
-                    .fa{
-                        font-size: 16px;
-                    }
-                }
-                td:first-child{
-                    border-right: none;
-                    border-top-left-radius: 4px;
-                    border-bottom-left-radius: 4px;
-                }
-                td:last-child{
-                    border-left: none;
-                    border-top-right-radius: 4px;
-                    border-bottom-right-radius: 4px;
-                }
-            }
-        }
-    }
 }
 #modal_change_avatar{
     width: 600px;
@@ -823,7 +806,6 @@
             display: table-cell;
             text-align: center;
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);
-            // vertical-align: middle;
             img{
                 width: auto;
                 height: auto;
@@ -901,7 +883,6 @@
             }
             input{
                 display: none;
-                // visibility: hidden;
             }
         }
     }
