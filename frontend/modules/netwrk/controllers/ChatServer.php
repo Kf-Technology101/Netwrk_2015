@@ -113,13 +113,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function send($client, $type, $data)
 	{
-		$result = "{
-			'msg': 'asdfsd', 'posted' : '00-00-123-12', 'user_id' : 0
-		}";
+		$arrayName = [array('msg' => 'test', 'created_at' => '12', 'name' => 'Nghia'), array('msg' => 'test', 'created_at' => '12', 'name' => 'Tai')];
 		$send = array(
 			"type" => $type,
-			"data" =>  $result
-
+			"data" => $arrayName
 		);
 		$send = json_encode($send, true);
 		$client->send($send);
