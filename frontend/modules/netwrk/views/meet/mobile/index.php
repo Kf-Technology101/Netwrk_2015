@@ -19,7 +19,7 @@
             <table class="control-btn">
               <tr>
                 <td class="back disable">
-                  <i class="fa fa-chevron-left"></i>
+                  <i class="fa fa-angle-left"></i>
                   <span>Back</span>
                 </td>
                 <td class="meet">
@@ -32,7 +32,7 @@
                 </div>
                 <td class="next">
                   <span>Next</span>
-                  <i class="fa fa-chevron-right"></i>
+                  <i class="fa fa-angle-right"></i>
                 </td>
               </tr>
             </table>
@@ -74,7 +74,7 @@
     </div>
     <div class='page' id="meet_setting">
         <div class="show_me">
-            <p>Show me:</p>
+            <p>Show me</p>
             <div class="radio_gender">
                 <input type="radio" class="input_radio" name='sex' id="all" value='All'><label for='all'> All</label>
                 <input type="radio" class="input_radio" name='sex'id="female" value='Female'><label for="female"> Female</label>
@@ -83,7 +83,7 @@
         </div>
         <div class="search_area">
             <div class="head">
-                <p class="title">Limit Search Area To:</p>
+                <p class="title">Limit Search Area To</p>
                 <p class="value"></p>
             </div>
             
@@ -91,7 +91,7 @@
         </div>
         <div class="search_age">
             <div class="head">
-                <p class="title">Limit Search Age:</p>
+                <p class="title">Limit Search Age</p>
                 <p class="value"></p>
             </div>
             
@@ -189,7 +189,7 @@
         </div>
         <!-- table -->
         <div class="brillant">
-          <div class="count"><span>1</span></div>
+          <div class="count"><span><%= user.brilliant %></span></div>
           <p>Brilliant</p>
         </div>
       </div>

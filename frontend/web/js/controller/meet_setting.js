@@ -49,8 +49,8 @@ var Meet_setting={
         }else{
             $('#modal_meet .page').hide();
              var title = $('.name_user').find('p.name');
-             span = '<p class="name">Meet me</p>';
-             text = 'Meet me';
+             span = '<p class="name">Meet Me</p>';
+             text = 'Meet Me';
         }
 
         if(title.size() > 0){

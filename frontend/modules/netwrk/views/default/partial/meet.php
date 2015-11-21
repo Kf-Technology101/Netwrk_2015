@@ -163,7 +163,7 @@
    </div> 
 </div>
 <script id="name_user" type="text/x-underscore-template">
-    <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>">Meet me</p>
+    <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>">Meet Me</p>
 </script>
 <script id="list_user" type="text/x-underscore-template">
   <div class="user_item user_meet_<%= vt %> active">
@@ -247,5 +247,5 @@
     </div>
 </script>
 <script id="user_name_current" type="text/x-underscore-template">
-    <p class="name">Meet me</p>
+    <p class="name">Meet Me</p>
 </script>

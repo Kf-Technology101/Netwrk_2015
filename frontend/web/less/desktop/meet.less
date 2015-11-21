@@ -77,7 +77,7 @@
                     text-align: center;
                     padding-top: 5px;
                     margin: 0;
-                    font-weight: bold;
+                    // font-weight: bold;
                 }
                 .default{
                     display: none;
@@ -140,6 +140,7 @@
         width: 100%;
         padding: 0;
         background-color: #f3f3f3;
+        border-radius: 0 0 4px 4px;
         #meeting{
             .user_list{
                 max-height: 505px;
@@ -152,12 +153,14 @@
             }
             .user_item{
                 .avatar-image{
-                    width: 100%;
-                    height: auto;
+                    width: auto;
+                    height: 270px;
+                    max-width: 100%;
                     background: #fff;
                     img{
                         width: auto;
                         height: 270px;
+                        max-width: 100%;
                         display: block;
                         margin: auto;
                     }
@@ -186,15 +189,15 @@
                             padding-left: 9px;
                         }
                         .work{
-                            border-left: 1px solid #1d1b1b;
+                            border-left: 1px solid #c1c1c1;
                             padding-left: 29px;
                         }
                         .about{
-                            border-left: 1px solid #1d1b1b;
+                            border-left: 1px solid #c1c1c1;
                             padding-left: 29px;
                         }
                         .post {
-                            border-left: 1px solid #000;
+                            border-left: 1px solid #c1c1c1;
                             padding-left: 29px;
                         }
                         .title{
@@ -233,16 +236,16 @@
                         top: 15px;
                         right: 10px;
                         .count{
-                            width: 32px;
+                            width: 40px;
                             background: url('../../img/icon/brilliant-icon-large.png') no-repeat;
-                            background-size: 32px 28px;
+                            background-size: 40px 36px;
                             display: block;
                             span{
                                 display: block;
                                 text-align: center;
                                 font-family: "Verdana";
                                 font-size: 10px;
-                                padding: 10px 0 5px 2px;
+                                padding: 13px 0 5px 2px;
                                 color: #fff;
                                 font-weight: bold;
                             }
@@ -252,7 +255,7 @@
                             text-align: center;
                             font-family: "ProximaNovaRegular";
                             color: #1d1b1b;
-                            margin-left: -5px;
+                            // margin-left: -5px;
                         }
                     }
                 }
@@ -736,6 +739,9 @@
             }
         }
     }
+    .table-responsive {
+        border: none;
+    }
     .modal-footer{
         padding: 0;
         background-color: #e2e3e4;
@@ -749,6 +755,7 @@
             z-index: 20;
             height: 46px;
             padding-top: 2px;
+            box-shadow: 1px 3px 5px 2px #888;
             .control-btn{
                 font-family: "ProximaNovaRegular";
                 color: #fff;
