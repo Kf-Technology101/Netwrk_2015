@@ -6,7 +6,7 @@ use frontend\components\BaseController;
 use Ratchet\ConnectionInterface;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\WsMessages;
-
+use yii\data\ActiveDataProvider;
 
 class ChatServer extends BaseController implements MessageComponentInterface {
 	protected $clients;
@@ -48,10 +48,11 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'post_type' => 0,
 					'msg_type' => 0
 				];
-				if($ws_messages->load())
+				if($this->ws_messages->load($data))
+				{
+					$this->ws_messages->save();
+				}
 
-				$sql = $ws_messages->insert("INSERT INTO `ws_messages` (`user_id`, `msg`, `created_at`) VALUES(?, ?, NOW())");
-				$sql->execute(array($user, $msg));
 				foreach ($this->clients as $client) {
 					$this->send($client, "single", array("user_id" => $user, "msg" => $msg, "created_at" => date("Y-m-d H:i:s")));
 				}
@@ -78,8 +79,14 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	/* My custom functions */
 	public function fetchMessages()
 	{
-		$msgs = $this->ws_messages->find()->all();
-		return $msgs;
+		// $msgs = $this->ws_messages->find()->all();
+		// create data provider
+        $dataProvider = new ActiveDataProvider([
+            'query' => $this->ws_messages->find(),
+            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]]
+        ]);
+       $data_result = $dataProvider->getModels();
+		return $data_result;
 	}
 
 	public function checkOnliners($curUser = "")
@@ -106,9 +113,13 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function send($client, $type, $data)
 	{
+		$result = "{
+			'msg': 'asdfsd', 'posted' : '00-00-123-12', 'user_id' : 0
+		}";
 		$send = array(
 			"type" => $type,
-			"data" => $data
+			"data" =>  $result
+
 		);
 		$send = json_encode($send, true);
 		$client->send($send);

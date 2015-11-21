@@ -14,8 +14,11 @@ window.connect = function(){
 		},
 		events: {
 			fetch: function(e) {
+				console.table(e);
 				$(".chatWindow .chat .msgs").html('');
 				$.each(e.data, function(i, elem){
+					console.log(elem);
+					console.log(i);
 					$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.posted +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
 				});
 				scTop();
@@ -28,7 +31,7 @@ window.connect = function(){
 			},
 			single: function(e){
 				var elem = e.data;
-				$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.posted +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
+				$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.created_time +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
 				scTop();
 			}
 		}

@@ -27,7 +27,7 @@ class ChatController extends BaseController
 		if($status == 0){
 			/* This means, the WebSocket server is not started. So we, start it */
 
-			$this->actionExecInbg("php ".Yii::getAlias('@console/controllers')."/ServerWSController.php");
+			$this->actionExecInbg("php ".Yii::getAlias('@console/controllers')."/server/run");
 			file_put_contents($statusFile, 1);
 		}
 		return $this->render('index');
