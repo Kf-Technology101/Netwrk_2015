@@ -29,7 +29,10 @@ var Profile = {
         Profile.onChangeWork();
         Profile.onChangeAbout();
         Profile.eventClickSave();
-        // $('.modal-footer').hide();
+        // $('.footer-btn').hide();
+        $('.modal-footer').hide();
+        var abc = $('#modal_meet .modal-body').height();
+        $('#modal_meet .modal-body').css('max-height', abc+47);
     },
 
     eventClickSave: function(){

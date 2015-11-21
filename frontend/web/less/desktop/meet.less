@@ -124,6 +124,8 @@
         }
     }
     .modal-body{
+        -webkit-transition: width 0.4s; /* Safari */
+                transition: width 0.4s;
         overflow-y: auto;
         max-height: 100%;
         min-height: 170px;
@@ -161,7 +163,7 @@
                     width: 100%;
                     height: auto;
                     padding: 15px 15px 15px 15px;
-                    margin-bottom: 46px;
+                    // margin-bottom: 46px;
                     overflow-y: auto;
                     position: relative;
                     .table{
@@ -251,58 +253,7 @@
                     }
                 }
             }
-            .footer-btn{
-                width: 100%;
-                display: block;
-                bottom: 0;
-                z-index: 20;
-                height: 46px;
-                padding-top: 2px;
-                background-color: #f3f3f3;
-                position: fixed;
-                border-radius: 0 0 4px 4px;
-                .btn-shadow {
-                    box-shadow: 0 0 1px 1px #e0e0e0;
-                    width: 70%;
-                    margin: auto;
-                    padding: 0;
-                    .control-btn{
-                        font-family: "ProximaNovaRegular";
-                        color: #fff;
-                        border-radius: 15px;
-                        // padding: 7px;
-                        border-collapse: separate;
-                        margin: auto;
-                        width: 100%;
-                        td{ 
-                            width: 60px;
-                            font-size: 16px;
-                            border: 1px solid #fff;
-                            padding: 2px;
-                            cursor: pointer;
-                            text-align: center;
-                            background-color: #5888ac;
-                            height: 30px;
-                            &.active{
-                               background: #5da5d8; // #8FB2D0; 
-                            }
-                            .fa{
-                                font-size: 16px;
-                            }
-                        }
-                        td:first-child{
-                            border-right: none;
-                            border-top-left-radius: 4px;
-                            border-bottom-left-radius: 4px;
-                        }
-                        td:last-child{
-                            border-left: none;
-                            border-top-right-radius: 4px;
-                            border-bottom-right-radius: 4px;
-                        }
-                    }
-                }
-            }
+            
         }
         
         #meet_setting{
@@ -671,7 +622,7 @@
                     }
                 }
                 .field-margin {
-                    margin-left: 26px;
+                    float: right;
                 }
                 .field_info{
                     margin: 10px 0;
@@ -781,6 +732,66 @@
             }
         }
     }
+    .modal-footer {
+        padding: 0;
+        margin: 0;
+    }
+    .modal-footer {
+        border: none;
+        .footer-btn{
+                width: 100%;
+                display: block;
+                bottom: 0;
+                z-index: 20;
+                height: 46px;
+                padding-top: 8px;
+                background-color: #f3f3f3;
+                // position: fixed;
+                border-radius: 0 0 4px 4px;
+                .btn-shadow {
+                    box-shadow: 0 0 1px 1px #e0e0e0;
+                    width: 70%;
+                    margin: auto;
+                    padding: 0;
+                    .control-btn{
+                        font-family: "ProximaNovaRegular";
+                        color: #fff;
+                        border-radius: 15px;
+                        // padding: 7px;
+                        border-collapse: separate;
+                        margin: auto;
+                        width: 100%;
+                        td{ 
+                            width: 60px;
+                            font-size: 16px;
+                            border: 1px solid #fff;
+                            padding: 2px;
+                            cursor: pointer;
+                            text-align: center;
+                            background-color: #5888ac;
+                            height: 30px;
+                            &.active{
+                               background: #5da5d8; // #8FB2D0; 
+                            }
+                            .fa{
+                                font-size: 16px;
+                            }
+                        }
+                        td:first-child{
+                            border-right: none;
+                            border-top-left-radius: 4px;
+                            border-bottom-left-radius: 4px;
+                        }
+                        td:last-child{
+                            border-left: none;
+                            border-top-right-radius: 4px;
+                            border-bottom-right-radius: 4px;
+                        }
+                    }
+                }
+            }
+    }
+    
     .table-responsive {
         border: none;
     }

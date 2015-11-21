@@ -25,7 +25,7 @@ var Meet ={
             Profile.initialize();
         }else if(Meet.filter.active === 'meeting'){
             Meet._init();
-        }    
+        }
     },
 
     _init: function(){
@@ -65,7 +65,7 @@ var Meet ={
             Meet.CustomScrollBar();
             Meet._onClickMeetBack();
             // $('#btn_meet').hide();
-            // $('.modal-footer').show();
+            $('.modal-footer').show();
             // parent.find('#btn_discover').show();
             // set_position_btn(parent,parent.find('#btn_discover'),120,100);
             // set_position_btn_resize(parent,parent.find('#btn_discover'),120,100);
@@ -204,7 +204,7 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal($('#modal_meet'), -15);
+                set_heigth_modal($('#modal_meet'), 30);
             }
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
