@@ -4,7 +4,7 @@
  *
  * This document is licensed as free software under the terms of the
  * MIT License: http://www.opensource.org/licenses/mit-license.php
- * 
+ *
  * Copyright (c) 2010 by shootaroo (Shotaro Tsubouchi).
  */
 (function($){
