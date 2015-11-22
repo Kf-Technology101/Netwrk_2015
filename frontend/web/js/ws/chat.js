@@ -4,7 +4,7 @@ window.scTop = function(){
 	});
 };
 window.connect = function(){
-	window.ws = $.websocket("ws://127.0.0.1:8888/", {
+	window.ws = $.websocket("ws://127.0.0.1:8888/?post=1", {
 		open: function() {
 			$(".chatWindow .chatbox .status").text("Online");
 			ws.send("fetch");
@@ -14,11 +14,9 @@ window.connect = function(){
 		},
 		events: {
 			fetch: function(e) {
-				console.log(e);
 				$(".chatWindow .chat .msgs").html('');
 				$.each(e.data, function(i, elem){
-					console.log(elem);
-					$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.created_at +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
+					$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.posted +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
 				});
 				scTop();
 			},
@@ -29,9 +27,8 @@ window.connect = function(){
 				});
 			},
 			single: function(e){
-				console.log('single');
 				var elem = e.data;
-				$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.created_at +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
+				$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.posted +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
 				scTop();
 			}
 		}
