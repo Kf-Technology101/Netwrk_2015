@@ -12,7 +12,6 @@ var ChatPost = {
 			ChatPost.OnClickBackBtn($(ChatPost.page));
 			ChatPost.WsConnect($(ChatPost.page).find('.container_post_chat'));
 			ChatPost.OnWsChatPost();
-			fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
 		}else{
 			ChatPost.OnShowModalChatPost();
 			ChatPost.ShowModalChatPost();
@@ -45,7 +44,7 @@ var ChatPost = {
 			var parent = $(ChatPost.modal);
 		}
 		parent.find('.container_post_chat').animate({
-			scrollTop : parent.find('.container_post_chat').scrollHeight
+			scrollTop : parent.find('.container_post_chat')[0].scrollHeight
 		});
 	},
 
@@ -65,6 +64,10 @@ var ChatPost = {
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(parent,elem);
 					});
+
+					if(isMobile){
+						fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
+					}
 					ChatPost.ScrollTopChat();
 				},
 				onliners: function(e){
@@ -79,7 +82,9 @@ var ChatPost = {
 						ChatPost.getMessageTemplate(parent,elem);
 						ChatPost.ScrollTopChat();
 					});
-
+					if(isMobile){
+						fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
+					}
 				}
 			}
 		});
