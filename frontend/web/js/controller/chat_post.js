@@ -7,8 +7,11 @@ var ChatPost = {
 
 	initialize: function(){
 		if(isMobile){
+			ChatPost.SetDataPostChat();
 			ChatPost.SetHeightContainerChat();
 			ChatPost.OnClickBackBtn($(ChatPost.page));
+			ChatPost.WsConnect($(ChatPost.page).find('.container_post_chat'));
+			ChatPost.OnWsChatPost();
 			fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
 		}else{
 			ChatPost.OnShowModalChatPost();
@@ -18,6 +21,76 @@ var ChatPost = {
 			ChatPost.OnClickBackBtn($(ChatPost.modal));
 			ChatPost.OnClickBackdrop();
 		}
+	},
+
+	SetDataPostChat: function(){
+		ChatPost.params.post = $(ChatPost.page).attr('data-post');
+	},
+
+	OnWsChatPost: function(){
+		$(ChatPost.page).find('.nav_input_message .send').on("click", function(e){
+			var parent = $(e.currentTarget).parent();
+			var val	 = parent.find("textarea").val();
+			if(val != ""){
+				ChatPost.ws.send("send", {"msg": val},ChatPost.params.post);
+				parent.find("textarea").val('');
+			}
+		});
+	},
+
+	ScrollTopChat: function(){
+		if(isMobile){
+			var parent = $(ChatPost.page);
+		}else{
+			var parent = $(ChatPost.modal);
+		}
+		parent.find('.container_post_chat').animate({
+			scrollTop : parent.find('.container_post_chat')[0].scrollHeight
+		});
+	},
+
+	WsConnect: function(parent){
+		ChatPost.ws = $.websocket("ws://127.0.0.1:8888/", {
+			open: function() {
+				console.log('open');
+				// $(".chatWindow .chatbox .status").text("Online");
+				ChatPost.ws.send("fetch");
+			},
+			close: function() {
+				console.log('close');
+				// $(".chatWindow .chatbox .status").text("Offline");
+			},
+			events: {
+				fetch: function(e) {
+					console.log('fetch');
+
+					$.each(e.data, function(i, elem){
+						ChatPost.getMessageTemplate(parent);
+					});
+					ChatPost.ScrollTopChat();
+				},
+				onliners: function(e){
+					ChatPost.getMessageTemplate(parent);
+					$.each(e.data, function(i, elem){
+						ChatPost.getMessageTemplate(parent);
+					});
+					ChatPost.ScrollTopChat();
+				},
+				single: function(e){
+					console.log('single');
+					var elem = e.data;
+					$(".container_post_chat").append("<p>hahaha</p>");
+					ChatPost.ScrollTopChat();
+				}
+			}
+		});
+	},
+
+	getMessageTemplate:function(parent){
+        var template = _.template($( "#message_chat" ).html());
+        var append_html = template();
+
+        parent.append(append_html); 
 	},
 
 	RedirectChatPostPage: function(postId){

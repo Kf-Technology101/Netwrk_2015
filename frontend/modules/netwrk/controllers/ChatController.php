@@ -26,8 +26,7 @@ class ChatController extends BaseController
 		$status = file_get_contents($statusFile);
 		if($status == 0){
 			/* This means, the WebSocket server is not started. So we, start it */
-
-			$this->actionExecInbg("php ".Yii::getAlias('@console/controllers')."/server/run");
+			$this->actionExecInbg("php yii server/run");
 			file_put_contents($statusFile, 1);
 		}
 		return $this->render('index');
@@ -51,7 +50,13 @@ class ChatController extends BaseController
 		$postId = $_GET['post'];
 
 		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
-
+		$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
+		$status = file_get_contents($statusFile);
+		if($status == 0){
+			/* This means, the WebSocket server is not started. So we, start it */
+			$this->actionExecInbg("php yii server/run");
+			file_put_contents($statusFile, 1);
+		}
 		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post] );
 	}
 }

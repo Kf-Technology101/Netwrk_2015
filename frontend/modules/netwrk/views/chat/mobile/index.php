@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="post_chat" data-topic="<?= $post->topic->id ?>">
+<div id="post_chat" data-topic="<?= $post->topic->id ?>" data-post="<?= $post->topic->id?>">
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="container_post_chat">
-        <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+<!--         <div class="message_send message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
             <div class="user_thumbnail">
                 <div class="avatar">
                     <img src="">
@@ -25,7 +25,7 @@
                 <p class="time">20:30</p>
             </div>      
         </div>
-        <div class="message_receiver message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+        <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
             <div class="user_thumbnail">
                 <div class="avatar">
                     <img src="">
@@ -35,7 +35,7 @@
                 <p>Description of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word Help</p>
                 <p class="time">20:30</p>
             </div>  
-        </div>
+        </div> -->
     </div>
     <div class="nav_input_message">
         <div class="send_message input-group">
@@ -46,3 +46,16 @@
         </div>
     </div>
 </div>
+<script id="message_chat" type="text/x-underscore-template">
+    <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+        <div class="user_thumbnail">
+            <div class="avatar">
+                <img src="">
+            </div>
+        </div>
+        <div class="content_message">
+            <p>Description of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word Help</p>
+            <p class="time">20:30</p>
+        </div>      
+    </div>
+</script>

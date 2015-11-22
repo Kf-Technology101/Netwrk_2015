@@ -29,6 +29,7 @@ window.connect = function(){
 				});
 			},
 			single: function(e){
+				console.log('single');
 				var elem = e.data;
 				$(".chatWindow .chat .msgs").append("<div class='msg' title='"+ elem.created_at +"'><span class='name'>"+ elem.name +"</span> : <span class='msgc'>"+ elem.msg +"</span></div>");
 				scTop();

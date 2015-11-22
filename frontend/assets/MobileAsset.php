@@ -34,6 +34,8 @@ class MobileAsset extends AssetBundle
     public $js = [
       'js/lib/underscore.js',
       'js/main.js',
+      'js/ws/ws.js',
+      // 'js/ws/chat.js',
       'js/bootstrap-datepicker.min.js',
       'js/controller/ajax.js',
       'js/controller/map.js',
