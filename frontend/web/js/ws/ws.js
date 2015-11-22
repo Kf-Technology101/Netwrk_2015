@@ -31,8 +31,7 @@ $.extend({
 				if (h) h.call(this, m);
 			});
 		ws._send = ws.send;
-		ws.send = function(type, data, post) {
-			console.log(post);
+		ws.send = function(type, data) {
 			var m = {type: type};
 			m = $.extend(true, m, $.extend(true, {}, $.websocketSettings.options, m));
 			if (data) m['data'] = data;
