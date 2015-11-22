@@ -4,53 +4,58 @@ var ChatPost = {
 	},
 	page:'#post_chat',
 	modal:'#modal_chat_post',
-
+	parent: '',
+	container: '',
 	initialize: function(){
-		console.log(baseUrl);
+
+		ChatPost.SetDataPostChat();
+		ChatPost.OnClickBackBtn(ChatPost.parent);
+		ChatPost.WsConnect(ChatPost.container);
+		ChatPost.OnWsChatPost();
+
 		if(isMobile){
-			ChatPost.SetDataPostChat();
 			ChatPost.SetHeightContainerChat();
-			ChatPost.OnClickBackBtn($(ChatPost.page));
-			ChatPost.WsConnect($(ChatPost.page).find('.container_post_chat'));
-			ChatPost.OnWsChatPost();
 		}else{
 			ChatPost.OnShowModalChatPost();
 			ChatPost.ShowModalChatPost();
 			ChatPost.OnHideModalChatPost();
-			ChatPost.CustomScrollBar($(ChatPost.modal).find('.modal-body'));
-			ChatPost.OnClickBackBtn($(ChatPost.modal));
+			ChatPost.CustomScrollBar();
 			ChatPost.OnClickBackdrop();
 		}
 	},
 
 	SetDataPostChat: function(){
-		ChatPost.params.post = $(ChatPost.page).attr('data-post');
+		if(isMobile){
+			ChatPost.params.post = $(ChatPost.page).attr('data-post');
+			ChatPost.parent = ChatPost.page;
+			ChatPost.container = '.container_post_chat';
+		}else{
+			ChatPost.parent = ChatPost.modal;
+			ChatPost.container = '.container_post_chat';
+		}
 	},
 
 	OnWsChatPost: function(){
-		$(ChatPost.page).find('.nav_input_message .send').on("click", function(e){
+		var btn = $(ChatPost.parent).find('.send');
+
+		btn.unbind();
+		btn.on("click", function(e){
 			var parent = $(e.currentTarget).parent();
 			var val	 = parent.find("textarea").val();
 			if(val != ""){
-				ChatPost.ws.send("send", {"msg": val},ChatPost.params.post);
+				ChatPost.ws.send("send", {"msg": val});
 				parent.find("textarea").val('');
 			}
 		});
 	},
 
 	ScrollTopChat: function(){
-		if(isMobile){
-			var parent = $(ChatPost.page);
-		}else{
-			var parent = $(ChatPost.modal);
-		}
-		parent.find('.container_post_chat').animate({
-			scrollTop : parent.find('.container_post_chat')[0].scrollHeight
+		$(ChatPost.parent).find(ChatPost.container).animate({
+			scrollTop : $(ChatPost.parent).find(ChatPost.container)[0].scrollHeight
 		});
 	},
 
 	WsConnect: function(parent){
-		console.log(ChatPost.params.post);
 		ChatPost.ws = $.websocket("ws://127.0.0.1:8888/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
@@ -63,43 +68,41 @@ var ChatPost = {
 				fetch: function(e) {
 					console.log(e.data);
 					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(parent,elem);
+						ChatPost.getMessageTemplate(elem);
 					});
 
 					if(isMobile){
-						fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 					ChatPost.ScrollTopChat();
 				},
 				onliners: function(e){
 					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(parent,elem);
+						ChatPost.getMessageTemplate(elem);
 					});
 					ChatPost.ScrollTopChat();
 				},
 				single: function(e){
 					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(parent,elem);
+						ChatPost.getMessageTemplate(elem);
 						ChatPost.ScrollTopChat();
 					});
 					if(isMobile){
-						fix_width_post($(ChatPost.page).find('.content_message'),$($(ChatPost.page).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 				}
 			}
 		});
 	},
 
-	getMessageTemplate:function(parent,data){
-		console.log(baseUrl);
+	getMessageTemplate:function(data){
         var template = _.template($( "#message_chat" ).html());
         var append_html = template({msg: data,baseurl: baseUrl});
 
-        parent.append(append_html); 
+        $(ChatPost.parent).find(ChatPost.container).append(append_html); 
 	},
 
 	RedirectChatPostPage: function(postId){
-		console.log(postId);
 		window.location.href = baseUrl + "/netwrk/chat/chat-post?post="+ postId ;
 	},
 
@@ -115,15 +118,16 @@ var ChatPost = {
 		$(ChatPost.page).find('.container_post_chat').css('height',wh);
 	},
 
-	OnClickBackBtn: function(parent){
-		var BackBtn = parent.find('.back_page');
+	OnClickBackBtn: function(){
+
+		var BackBtn = $(ChatPost.parent).find('.back_page');
 		BackBtn.unbind();
 		BackBtn.on('click',function(){
 			if(isMobile){
-				Post.RedirectPostPage(parent.attr('data-topic'));
+				Post.RedirectPostPage($(ChatPost.parent).attr('data-topic'));
 			}else{
 				Post.initialize();
-				parent.modal('hide');
+				$(ChatPost.parent).modal('hide');
 			}
 		});
 	},
@@ -135,7 +139,8 @@ var ChatPost = {
         });
     },
 
-    CustomScrollBar: function(parent){
+    CustomScrollBar: function(){
+    	var parent = $(ChatPost.modal).find('.modal-body');
         parent.mCustomScrollbar({
             theme:"dark"
         });
@@ -166,12 +171,11 @@ var ChatPost = {
 	},
 
 	ResetModalChatPost: function(){
-		console.log('bbbbb');
 		$(ChatPost.modal).find('.title_page .title').empty();
 	},
 
 	GetNameChatPost: function(){
-		var parent = $('#modal_chat_post').find('.title_page .title');
+		var parent = $(ChatPost.parent).find('.title_page .title');
 		Ajax.chat_post_name(ChatPost.params).then(function(data){
 			var json = $.parseJSON(data);
 			ChatPost.getNameTemplate(parent,json)
