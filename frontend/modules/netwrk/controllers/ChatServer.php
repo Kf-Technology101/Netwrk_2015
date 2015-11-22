@@ -5,13 +5,16 @@ use Ratchet\MessageComponentInterface;
 use frontend\components\BaseController;
 use Ratchet\ConnectionInterface;
 use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 
 class ChatServer extends BaseController implements MessageComponentInterface {
 	protected $clients;
 	protected $ws_messages;
 	protected $current_user = 1;
+	protected $post_id = 0;
 	private $users = array();
 	public function __construct()
 	{
@@ -20,7 +23,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
     }
 
 	public function onOpen(ConnectionInterface $conn)
-	{
+	{	
+		$this->post_id = $conn->WebSocket->request->getQuery()->get('post');
 		$this->clients->attach($conn);
 		$this->send($conn, "fetch", $this->fetchMessages());
 		// $this->checkOnliners();
@@ -77,11 +81,35 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	{
 		// $msgs = $this->ws_messages->find()->all();
 		// create data provider
-        $dataProvider = new ActiveDataProvider([
-            'query' => $this->ws_messages->find(),
-            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]]
-        ]);
-       $data_result = $dataProvider->getModels();
+       //  $dataProvider = new ActiveDataProvider([
+       //      'query' => $this->ws_messages->find(),
+       //      'sort'=> ['defaultOrder' => ['id' => SORT_DESC]]
+       //  ]);
+       // $data_result = $dataProvider->getModels();
+       $data_result=[];
+       $message = $this->ws_messages->find()->where('post_id ='.$this->post_id)->with('user','user.profile')->all();
+       foreach ($message as $key => $value) {
+       	# code...
+            if ($value->user->profile->photo == null){
+                $image = Url::to('@web/img/icon/no_avatar.jpg', true);
+            }else{
+                $image = Url::to('@web/uploads/'.$value->user->id.'/'.$value->user->profile->photo, true);
+            }
+            $current = 0;
+            if($value->user->id == $this->current_user){
+            	$current = 1;
+            }
+
+       		$item = array(
+       			'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
+       			'avatar'=> $image,
+       			'msg'=>$value->msg,
+       			'created_at'=>$value->created_at,
+       			'user_current'=> $current
+       		);
+
+       		array_push($data_result,$item);
+       	}
 		return $data_result;
 	}
 
@@ -109,7 +137,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function send($client, $type, $data)
 	{
-		$arrayName = [array('msg' => 'test', 'created_at' => '12', 'name' => 'Nghia'), array('msg' => 'test', 'created_at' => '12', 'name' => 'Tai')];
 		$send = array(
 			"type" => $type,
 			"data" => $data

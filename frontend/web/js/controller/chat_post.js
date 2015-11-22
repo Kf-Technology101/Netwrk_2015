@@ -50,27 +50,26 @@ var ChatPost = {
 	},
 
 	WsConnect: function(parent){
-		ChatPost.ws = $.websocket("ws://127.0.0.1:8888/", {
+		console.log(ChatPost.params.post);
+		ChatPost.ws = $.websocket("ws://127.0.0.1:8888/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
-				// $(".chatWindow .chatbox .status").text("Online");
 				ChatPost.ws.send("fetch");
 			},
 			close: function() {
 				console.log('close');
-				// $(".chatWindow .chatbox .status").text("Offline");
 			},
 			events: {
 				fetch: function(e) {
-					console.log('fetch');
-
+					console.log(e.data);
 					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(parent);
+						console.log(elem);
+						// var json = $.parseJSON(e.data);
+						ChatPost.getMessageTemplate(parent,elem);
 					});
 					ChatPost.ScrollTopChat();
 				},
 				onliners: function(e){
-					ChatPost.getMessageTemplate(parent);
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(parent);
 					});
@@ -86,9 +85,9 @@ var ChatPost = {
 		});
 	},
 
-	getMessageTemplate:function(parent){
+	getMessageTemplate:function(parent,data){
         var template = _.template($( "#message_chat" ).html());
-        var append_html = template();
+        var append_html = template({msg: data});
 
         parent.append(append_html); 
 	},
