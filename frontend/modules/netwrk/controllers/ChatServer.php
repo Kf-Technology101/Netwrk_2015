@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 class ChatServer extends BaseController implements MessageComponentInterface {
 	protected $clients;
 	protected $ws_messages;
+	protected $current_user = 1;
 	private $users = array();
 	public function __construct()
 	{
@@ -33,28 +34,23 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		if(isset($data['data']) && count($data['data']) != 0){
 			$type = $data['type'];
 			$user = isset($this->users[$id]) ? $this->users[$id]['name'] : false;
+			// $user = $current_user;
 			if($type == "register"){
 				$name = htmlspecialchars($data['data']['name']);
 				$this->users[$id] = array(
 					"name" 	=> $name,
 					"seen"	=> time()
 				);
-			}elseif($type == "send" && $user !== false){
+			}elseif($type == "send" && $this->current_user){
 				$msg = htmlspecialchars($data['data']['msg']);
-				$data = [
-					'user_id' => $user,
-					'msg' => $msg,
-					'post_id' => 1,
-					'post_type' => 0,
-					'msg_type' => 0
-				];
-				if($this->ws_messages->load($data))
-				{
-					$this->ws_messages->save();
-				}
-
+				$this->ws_messages->user_id = $this->current_user;
+				$this->ws_messages->msg = $msg;
+				$this->ws_messages->post_id = 1;
+				$this->ws_messages->msg_type = 1;
+				$this->ws_messages->post_type = 1;
+				$this->ws_messages->save(false);
 				foreach ($this->clients as $client) {
-					$this->send($client, "single", array("user_id" => $user, "msg" => $msg, "created_at" => date("Y-m-d H:i:s")));
+					$this->send($client, "single", array("name" => $user, "msg" => $msg, "created_at" => date("Y-m-d H:i:s")));
 				}
 			}elseif($type == "fetch"){
 				$this->send($from, "fetch", $this->fetchMessages());
@@ -116,7 +112,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		$arrayName = [array('msg' => 'test', 'created_at' => '12', 'name' => 'Nghia'), array('msg' => 'test', 'created_at' => '12', 'name' => 'Tai')];
 		$send = array(
 			"type" => $type,
-			"data" => $arrayName
+			"data" => $data
 		);
 		$send = json_encode($send, true);
 		$client->send($send);
