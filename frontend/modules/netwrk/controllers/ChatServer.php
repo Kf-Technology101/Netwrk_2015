@@ -65,7 +65,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					$current = 1;
 				}
 				foreach ($this->clients as $client) {
-					$this->send($client, "single", array('name'=>$user->profile->first_name ." ".$user->profile->last_name,'avatar'=> $image,'msg'=>$msg,"created_at" => date("Y-m-d H:i:s"),"user_current"=> $current));
+					$this->send($client, "single", [array(
+														'name'=>$user->profile->first_name ." ".$user->profile->last_name,
+														'avatar'=> $image,'msg'=>$msg,
+														"created_at" => date("Y-m-d H:i:s"),
+														"user_current"=> $current)
+													]);
 				}
 			}elseif($type == "fetch"){
 				$this->send($from, "fetch", $this->fetchMessages());

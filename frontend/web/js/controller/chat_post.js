@@ -45,7 +45,7 @@ var ChatPost = {
 			var parent = $(ChatPost.modal);
 		}
 		parent.find('.container_post_chat').animate({
-			scrollTop : parent.find('.container_post_chat')[0].scrollHeight
+			scrollTop : parent.find('.container_post_chat').scrollHeight
 		});
 	},
 
@@ -63,23 +63,23 @@ var ChatPost = {
 				fetch: function(e) {
 					console.log(e.data);
 					$.each(e.data, function(i, elem){
-						console.log(elem);
-						// var json = $.parseJSON(e.data);
 						ChatPost.getMessageTemplate(parent,elem);
 					});
 					ChatPost.ScrollTopChat();
 				},
 				onliners: function(e){
 					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(parent);
+						ChatPost.getMessageTemplate(parent,elem);
 					});
 					ChatPost.ScrollTopChat();
 				},
 				single: function(e){
-					console.log('single');
 					var elem = e.data;
-					$(".container_post_chat").append("<p>hahaha</p>");
-					ChatPost.ScrollTopChat();
+					$.each(e.data, function(i, elem){
+						ChatPost.getMessageTemplate(parent,elem);
+						ChatPost.ScrollTopChat();
+					});
+
 				}
 			}
 		});

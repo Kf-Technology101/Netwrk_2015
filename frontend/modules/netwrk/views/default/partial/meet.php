@@ -192,7 +192,7 @@
             </div>
             <div class="post">
               <span>
-                <i><img src="/img/icon/post-icon-desktop.png"></img></i>
+                <i><img src="<?= Url::to('@web/img/icon/post-icon-desktop.png') ?>"></img></i>
               </span>
               <p class="title">Posts</p>
               <p class="text">
