@@ -56,9 +56,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->save(false);
 				$user = User::find()->where('id = '.$this->current_user)->with('profile')->one();
 				if ($user->profile->photo == null){
-					// $image = Url::to('@frontend/web/img/icon/no_avatar.jpg');
+					$image = '/img/icon/no_avatar.jpg';
 				}else{
-					// $image = Url::to('@frontend/web/uploads/'.$user->id.'/'.$user->profile->photo);
+					$image = '/uploads/'.$user->id.'/'.$user->profile->photo;
 				}
 				$current = 0;
 				if($user->id == $this->current_user){
@@ -67,7 +67,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				foreach ($this->clients as $client) {
 					$this->send($client, "single", [array(
 														'name'=>$user->profile->first_name ." ".$user->profile->last_name,
-														// 'avatar'=> $image,'msg'=>$msg,
+														'avatar'=> $image,
+														'msg'=>$msg,
 														"created_at" => date("Y-m-d H:i:s"),
 														"user_current"=> $current)
 													]);
@@ -101,9 +102,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			foreach ($message as $key => $value) {
        			# code...
 				if ($value->user->profile->photo == null){
-					// $image = Url::to('@frontend/web/img/icon/no_avatar.jpg');
+					$image = '/img/icon/no_avatar.jpg';
 				}else{
-					// $image = Url::to('@frontend/web/uploads/'.$value->user->id.'/'.$value->user->profile->photo);
+					$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
 				}
 				$current = 0;
 				if($value->user->id == $this->current_user){
@@ -112,7 +113,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 				$item = array(
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
-					// 'avatar'=> $image,
+					'avatar'=> $image,
 					'msg'=>$value->msg,
 					'created_at'=>$value->created_at,
 					'user_current'=> $current

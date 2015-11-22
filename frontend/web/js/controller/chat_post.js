@@ -6,6 +6,7 @@ var ChatPost = {
 	modal:'#modal_chat_post',
 
 	initialize: function(){
+		console.log(baseUrl);
 		if(isMobile){
 			ChatPost.SetDataPostChat();
 			ChatPost.SetHeightContainerChat();
@@ -77,7 +78,6 @@ var ChatPost = {
 					ChatPost.ScrollTopChat();
 				},
 				single: function(e){
-					var elem = e.data;
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(parent,elem);
 						ChatPost.ScrollTopChat();
@@ -91,8 +91,9 @@ var ChatPost = {
 	},
 
 	getMessageTemplate:function(parent,data){
+		console.log(baseUrl);
         var template = _.template($( "#message_chat" ).html());
-        var append_html = template({msg: data});
+        var append_html = template({msg: data,baseurl: baseUrl});
 
         parent.append(append_html); 
 	},

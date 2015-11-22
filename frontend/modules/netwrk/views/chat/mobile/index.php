@@ -13,30 +13,7 @@
         </div>
     </div>
 
-    <div class="container_post_chat">
-<!--         <div class="message_send message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
-            <div class="user_thumbnail">
-                <div class="avatar">
-                    <img src="">
-                </div>
-            </div>
-            <div class="content_message">
-                <p>Description of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word Help</p>
-                <p class="time">20:30</p>
-            </div>      
-        </div>
-        <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
-            <div class="user_thumbnail">
-                <div class="avatar">
-                    <img src="">
-                </div>
-            </div>
-            <div class="content_message">
-                <p>Description of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word HelpDescription of the "Lorem ipsum dolor sit amet" text that appears in Word Help</p>
-                <p class="time">20:30</p>
-            </div>  
-        </div> -->
-    </div>
+    <div class="container_post_chat"></div>
     <div class="nav_input_message">
         <div class="send_message input-group">
             <textarea type="text" class="form-control" placeholder="Type message here..."></textarea>
@@ -54,7 +31,7 @@
     <% } %>
         <div class="user_thumbnail">
             <div class="avatar">
-                <img src="<%= msg.avatar %>">
+                <img src="<%= baseurl %><%=  msg.avatar %>">
             </div>
         </div>
         <div class="content_message">
