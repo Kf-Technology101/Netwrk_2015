@@ -26,7 +26,7 @@ class ServerController extends \yii\console\Controller
 						new ChatServer()
 						)
 					),
-				8888,
+				2311,
 				"127.0.0.1"
 				);
 			$server->run();

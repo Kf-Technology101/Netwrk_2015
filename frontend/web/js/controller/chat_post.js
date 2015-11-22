@@ -56,7 +56,7 @@ var ChatPost = {
 	},
 
 	WsConnect: function(parent){
-		ChatPost.ws = $.websocket("ws://127.0.0.1:8888/?post="+ChatPost.params.post, {
+		ChatPost.ws = $.websocket("ws://127.0.0.1:2311/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
 				ChatPost.ws.send("fetch");
