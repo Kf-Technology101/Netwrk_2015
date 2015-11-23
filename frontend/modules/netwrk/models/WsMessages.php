@@ -6,16 +6,16 @@ use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 /**
- * This is the model class for table "{{%city}}".
+ * This is the model class for table "ws_messages".
  *
  * @property integer $id
- * @property string $name
- * @property double $lat
- * @property double $lng
- * @property integer $post_count
- * @property integer $user_count
- *
- * @property Topic[] $topics
+ * @property integer $user_id
+ * @property string $msg
+ * @property integer $post_id
+ * @property string $msg_type
+ * @property integer $post_type
+ * @property string $created_at
+ * @property string $updated_at
  */
 class WsMessages extends \yii\db\ActiveRecord
 {
@@ -24,7 +24,7 @@ class WsMessages extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%ws_messages}}';
+        return 'ws_messages';
     }
 
     /**
@@ -33,14 +33,31 @@ class WsMessages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
-            [['user_id', 'post_id', 'post_type', 'msg_type'], 'number'],
-            [['created_time', 'updated_time'], 'safe'],
-            [['msg'], 'string', 'max' => 45],
+            [['user_id', 'post_id', 'msg_type', 'post_type', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'post_id', 'post_type'], 'integer'],
+            [['msg_type'], 'string'],
+            [['msg'], 'string', 'max' => 255],
+            [['created_at', 'updated_at'], 'string', 'max' => 20]
         ];
     }
 
-   /**
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'user_id' => 'User ID',
+            'msg' => 'Msg',
+            'post_id' => 'Post ID',
+            'msg_type' => 'Msg Type',
+            'post_type' => 'Post Type',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
+       /**
      * @inheritdoc
      */
     public function behaviors()
@@ -56,6 +73,7 @@ class WsMessages extends \yii\db\ActiveRecord
             ],
         ];
     }
+    
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);

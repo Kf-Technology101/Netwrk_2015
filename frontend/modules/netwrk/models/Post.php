@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\models;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use frontend\modules\netwrk\models\WsMessages;
 /**
  * This is the model class for table "post".
  *
@@ -81,6 +82,14 @@ class Post extends \yii\db\ActiveRecord
             $this->topic->city->updateAttributes([
                 'post_count' =>  $this->topic->city->post_count + 1
             ]);
+
+            $msg = new WsMessages();
+            $msg->user_id = $this->user_id;
+            $msg->post_id = $this->id;
+            $msg->post_type = 1;
+            $msg->msg_type = 1;
+            $msg->msg = $this->content;
+            $msg->save(false);
         }
         return parent::afterSave($insert, $changedAttributes);
     }
