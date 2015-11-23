@@ -2,12 +2,13 @@ var ChatPost = {
 	params:{
 		post:''
 	},
+	url:'12',
 	page:'#post_chat',
 	modal:'#modal_chat_post',
 	parent: '',
 	container: '',
 	initialize: function(){
-
+		ChatPost.SetUrl();
 		ChatPost.SetDataPostChat();
 		ChatPost.OnClickBackBtn(ChatPost.parent);
 		ChatPost.WsConnect(ChatPost.container);
@@ -21,7 +22,17 @@ var ChatPost = {
 			ChatPost.OnHideModalChatPost();
 			ChatPost.CustomScrollBar();
 			ChatPost.OnClickBackdrop();
+			ChatPost.ScrollTopChat();
 		}
+	},
+
+	SetUrl: function(){
+		if(baseUrl === 'http://netwrk.rubyspace.net'){
+			ChatPost.url = 'box.rubyspace.net';
+		}else{
+			ChatPost.url = "127.0.0.1";
+		};
+
 	},
 
 	SetDataPostChat: function(){
@@ -50,23 +61,25 @@ var ChatPost = {
 	},
 
 	ScrollTopChat: function(){
-		$(ChatPost.parent).find(ChatPost.container).animate({
-			scrollTop : $(ChatPost.parent).find(ChatPost.container)[0].scrollHeight
-		});
+		console.log('scroll');
+		if(isMobile){
+			$(ChatPost.parent).find(ChatPost.container).scrollTop($(ChatPost.parent).find(ChatPost.container)[0].scrollHeight);
+		}else{
+			$(ChatPost.parent).find('.modal-body').mCustomScrollbar("scrollTo","bottom");
+		}
+
 	},
 
 	WsConnect: function(parent){
-		ChatPost.ws = $.websocket("ws://127.0.0.1:2311/?post="+ChatPost.params.post, {
+		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
-				ChatPost.ws.send("fetch");
 			},
 			close: function() {
 				console.log('close');
 			},
 			events: {
 				fetch: function(e) {
-					console.log(e.data);
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(elem);
 					});
@@ -80,12 +93,10 @@ var ChatPost = {
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(elem);
 					});
-					ChatPost.ScrollTopChat();
 				},
 				single: function(e){
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(elem);
-						ChatPost.ScrollTopChat();
 					});
 					if(isMobile){
 						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
@@ -100,6 +111,7 @@ var ChatPost = {
         var append_html = template({msg: data,baseurl: baseUrl});
 
         $(ChatPost.parent).find(ChatPost.container).append(append_html); 
+        ChatPost.ScrollTopChat();
 	},
 
 	RedirectChatPostPage: function(postId){
@@ -160,8 +172,10 @@ var ChatPost = {
         $(ChatPost.modal).on('shown.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
         	ChatPost.GetNameChatPost();
+        	ChatPost.ScrollTopChat();
         });
 	},
+
 	OnHideModalChatPost: function(){
         $(ChatPost.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
@@ -172,6 +186,7 @@ var ChatPost = {
 
 	ResetModalChatPost: function(){
 		$(ChatPost.modal).find('.title_page .title').empty();
+		$(ChatPost.modal).find(ChatPost.container).empty();
 	},
 
 	GetNameChatPost: function(){

@@ -61,8 +61,7 @@ function window_resize(){
 function set_heigth_modal(target,height_footer){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
-  target.find('.modal-body').css('max-height',wh - 120);
-
+  target.find('.modal-body').css({'max-height':wh - 120,'height': wh-120});
 }
 
 
