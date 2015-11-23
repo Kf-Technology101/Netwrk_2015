@@ -20,18 +20,6 @@ class ChatController extends BaseController
 		}
 	}
 
-	public function actionIndex()
-	{
-		$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
-		$status = file_get_contents($statusFile);
-		if($status == 0){
-			/* This means, the WebSocket server is not started. So we, start it */
-			$this->actionExecInbg("php yii server/run");
-			file_put_contents($statusFile, 1);
-		}
-		return $this->render('index');
-	}
-
     public function actionChatName(){
     	$postId = $_POST['post'];
 
