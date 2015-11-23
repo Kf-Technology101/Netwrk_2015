@@ -49,15 +49,13 @@ var Post ={
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
 		}	
-		
 		Post.OnclickBack();
 		Post.OnclickCreate();
-		Post.OnChangeTab();
-		Post.OnClickChat();
+		Post.OnChangeTab();	
 	},
 
 	OnClickChat: function(){
-		var btn = $("#list_post").find('.post_chat');
+		var btn = $("#list_post .post_chat,.post_name");
 
 		btn.unbind();
 		btn.on('click',function(e){
@@ -339,6 +337,7 @@ var Post ={
 				parent.find('.no-data').hide();
 				Post.getTemplate(parent,json.data);
 				Post.OnclickVote();
+				Post.OnClickChat();
 			}
 		});
 	},

@@ -2,7 +2,7 @@ var ChatPost = {
 	params:{
 		post:''
 	},
-	url:'12',
+	url:'',
 	page:'#post_chat',
 	modal:'#modal_chat_post',
 	parent: '',
