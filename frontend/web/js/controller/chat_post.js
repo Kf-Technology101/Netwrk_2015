@@ -74,6 +74,7 @@ var ChatPost = {
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
+				ChatPost.ws.send("fetch");
 			},
 			close: function() {
 				console.log('close');
