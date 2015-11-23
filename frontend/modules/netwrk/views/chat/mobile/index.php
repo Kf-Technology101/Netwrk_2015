@@ -16,7 +16,7 @@
     <div class="container_post_chat"></div>
     <div class="nav_input_message">
         <div class="send_message input-group">
-            <textarea type="text" class="form-control" placeholder="Type message here..."></textarea>
+            <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
             <div class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
             <div class="input-group-addon emoji"><i class="fa fa-smile-o"></i></div>
             <div class="input-group-addon send" id="sizing-addon2">Send</div>
