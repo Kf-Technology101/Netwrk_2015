@@ -22,7 +22,6 @@ var ChatPost = {
 			ChatPost.OnHideModalChatPost();
 			ChatPost.CustomScrollBar();
 			ChatPost.OnClickBackdrop();
-			ChatPost.ScrollTopChat();
 		}
 	},
 
@@ -61,7 +60,6 @@ var ChatPost = {
 	},
 
 	ScrollTopChat: function(){
-		console.log('scroll');
 		if(isMobile){
 			$(ChatPost.parent).find(ChatPost.container).scrollTop($(ChatPost.parent).find(ChatPost.container)[0].scrollHeight);
 		}else{
@@ -161,7 +159,7 @@ var ChatPost = {
 
 	ShowModalChatPost: function(){
 		var height_footer = $(ChatPost.modal).find('.modal-footer').height();
-		set_heigth_modal($(ChatPost.modal),height_footer);
+		set_container_chat_modal($(ChatPost.modal),height_footer);
 
 		$(ChatPost.modal).modal({
             backdrop: true,
@@ -173,7 +171,6 @@ var ChatPost = {
         $(ChatPost.modal).on('shown.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
         	ChatPost.GetNameChatPost();
-        	ChatPost.ScrollTopChat();
         });
 	},
 
