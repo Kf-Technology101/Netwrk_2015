@@ -72,7 +72,7 @@ var ChatPost = {
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
-				ChatPost.ws.send("fetch");
+				// ChatPost.ws.send("fetch");
 			},
 			close: function() {
 				console.log('close');
@@ -177,7 +177,6 @@ var ChatPost = {
 	OnHideModalChatPost: function(){
         $(ChatPost.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
-        	console.log('aaaaaa');
         	ChatPost.ResetModalChatPost();
         });
 	},
@@ -185,6 +184,8 @@ var ChatPost = {
 	ResetModalChatPost: function(){
 		$(ChatPost.modal).find('.title_page .title').empty();
 		$(ChatPost.modal).find(ChatPost.container).empty();
+		ChatPost.ws.close();
+		ChatPost.ws = null;
 	},
 
 	GetNameChatPost: function(){
