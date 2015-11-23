@@ -19,6 +19,7 @@ class ServerController extends \yii\console\Controller
 	{
 		$startNow = 1;
 		// register_shutdown_function('actionShutdown');
+		file_put_contents(Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt", "0");
 		if( isset($startNow) ){
 			$server = IoServer::factory(
 				new HttpServer(
@@ -27,7 +28,7 @@ class ServerController extends \yii\console\Controller
 						)
 					),
 				2311,
-				"127.0.0.1"
+				"0.0.0.0"
 				);
 			$server->run();
 		}
