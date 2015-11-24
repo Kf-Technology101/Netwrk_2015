@@ -50,13 +50,18 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					);
 			}elseif($type == "send" && $this->current_user){
 				$msg = htmlspecialchars($data['data']['msg']);
+
 				$this->ws_messages = new WsMessages();
 				$this->ws_messages->user_id = $this->current_user;
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $this->post_id;
 				$this->ws_messages->msg_type = 1;
 				$this->ws_messages->post_type = 1;
-				$this->ws_messages->save(false);
+				$this->ws_messages->save();
+
+				$this->ws_messages->post->comment_count ++;
+				$this->ws_messages->post->update();
+				
 				$user = User::find()->where('id = '.$this->current_user)->with('profile')->one();
 				if ($user->profile->photo == null){
 					$image = '/img/icon/no_avatar.jpg';

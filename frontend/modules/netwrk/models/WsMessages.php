@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\models;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use frontend\modules\netwrk\models\Post;
 /**
  * This is the model class for table "ws_messages".
  *
@@ -73,9 +74,25 @@ class WsMessages extends \yii\db\ActiveRecord
             ],
         ];
     }
-    
+
+    // public function afterSave($insert, $changedAttributes){
+    //     if ($insert) {
+    //         $this->post->updateAttributes([
+    //             'comment_count' =>  $this->post->comment_count + 1
+    //         ]);
+    //     }
+
+    //     return parent::afterSave($insert, $changedAttributes);
+    // }
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function getPost()
+    {
+        return $this->hasOne(Post::className(), ['id' => 'post_id']);
+    }
+
 }

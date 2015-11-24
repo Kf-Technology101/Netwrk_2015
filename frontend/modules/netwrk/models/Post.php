@@ -79,6 +79,7 @@ class Post extends \yii\db\ActiveRecord
         if ($insert) {
             // var_dump($this);
             $this->topic->updateCounters(['post_count' => 1]);
+            $this->updateCounters(['comment_count' => 1]);
             $this->topic->city->updateAttributes([
                 'post_count' =>  $this->topic->city->post_count + 1
             ]);
@@ -90,7 +91,10 @@ class Post extends \yii\db\ActiveRecord
             $msg->msg_type = 1;
             $msg->msg = $this->content;
             $msg->save(false);
+        }else{
+            $this->updateAttributes(['view_count' => $this->view_count + 1]);
         }
+
         return parent::afterSave($insert, $changedAttributes);
     }
 
