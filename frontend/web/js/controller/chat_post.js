@@ -51,7 +51,7 @@ var ChatPost = {
 		btn.unbind();
 		btn.on("click", function(e){
 			var parent = $(e.currentTarget).parent();
-			var val	 = parent.find("textarea").val();
+			var val	 = parent.find("textarea").val().replace(/\n\r?/g, '<br />');
 			if(val != ""){
 				ChatPost.ws.send("send", {"msg": val});
 				parent.find("textarea").val('');

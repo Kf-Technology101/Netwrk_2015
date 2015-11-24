@@ -119,7 +119,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$item = array(
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 					'avatar'=> $image,
-					'msg'=>$value->msg,
+					'msg'=> nl2br($value->msg),
 					'created_at'=> $time,
 					'user_current'=> $current
 					);
