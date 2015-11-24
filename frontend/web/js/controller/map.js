@@ -13,7 +13,7 @@ var Map ={
 		var map_andiana = {
 			center:new google.maps.LatLng(39.7662195,-86.441277),
 			zoom: 7,
-			disableDoubleClickZoom: true,
+			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,
 			streetViewControl: false,
 			mapTypeId:google.maps.MapTypeId.ROADMAP,
@@ -29,7 +29,8 @@ var Map ={
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
+		map.setOptions({zoomControl: false,styles: remove_poi});
+		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		
 		Map.data_map = map;
 		Map.min_max_zoom(map);
@@ -270,7 +271,9 @@ var Map ={
 	  	google.maps.event.addListener(map, 'click', function(e) {
 	  		Map.closeInfoWindow();
 	  		Map.reset_data();
-			Map.geocoder(e.latLng);
+	  		if (map.getZoom() !=7 ){
+				Map.geocoder(e.latLng);
+			}
 			Map.latLng = e.latLng;
 		});
 	},
