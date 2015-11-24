@@ -1,0 +1,161 @@
+body{
+  background: #e6e6e6;
+}
+.wrap-mobile{
+  width: 100%;
+  /*max-width: 786px;*/
+  margin: auto;
+  .container{
+    width: 100%;
+    padding: 0;
+  }
+}
+
+.navbar-mobile{
+  /*height: 40px;*/
+  background-color: #5888ac;
+  // border-color: #426c8f;
+  border-radius: 0;
+
+  a{
+    color:#eee;
+  }
+  .menu_top{
+  	width: 100%;
+  	height: 60px;
+    padding: 0 15px;
+    .search{
+      width: 80%;
+      height: 34px;
+      float: left;
+      margin: 13px 0 ;
+      span.input-group-addon{
+        background: #fff;
+        border: none;
+        i{
+          font-size: 14px;
+          color: #8f8f8f;
+        }
+      }
+      input{
+        border: none;
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        &:focus{
+          outline: none;
+        }
+      }
+    }
+    .logo_netwrk{
+      width: 20%;
+      height: auto;
+      float: left;
+      img{
+        width: 44px;
+        height: 44px;
+        margin: 8px 0;
+      }
+    }
+    .chatting{
+      float: right;
+      padding: 0 10px;
+      span{
+        color: #fff;
+        font-size: 20px;
+        line-height: 60px;
+        i{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  .menu_bottom{
+    width: 100%;
+    height: 40px;
+    position: relative;
+    .left{
+      position: absolute;
+      top: 20%;
+      left: 5%;
+    }
+    .right{
+      /*float: right;*/
+      position: absolute;
+      top: 15%;
+      right: 5%;
+      color: #fff;
+      font-size: 20px;
+    }
+	.chatting{
+      float: right;
+      padding: 0 10px;
+      span{
+        color: #fff;
+        font-size: 20px;
+        line-height: 60px;
+        i{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+} 
+.map_content_mobile{
+  /*max-width: 786px;*/
+  width: 100%;
+  margin: 60px auto 0;
+  position: relative;
+  #btn_my_location{
+    width: 30px;
+    position: absolute;
+    top:5px;
+    right: 5px;
+    background: #5888ac;
+    border-radius: 15px;
+    display: block;
+    z-index: 6;
+    i{
+      color: #fff;
+      font-size: 25px;
+      text-align: center;
+      margin: auto;
+      width: 100%;
+      padding: 3px;
+    }
+  }
+}
+#btn_meet_mobile,#btn_discover_mobile{
+  width: 80px;
+  height: 80px;
+  position: relative;
+  z-index: 10;
+  background-color: #365167;
+  border-color: #426c8f;
+  border-radius: 100%;
+  display: table;
+  cursor: pointer;
+  bottom: 100%;
+  margin: 0 auto;
+  span{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  img{
+    width: 80px;
+    height: 80px;
+  }
+}
+
+#btn_discover_mobile{
+  display: none;
+}
+
+.list-menu-mobile{
+  list-style: none;
+  padding: 10px 15px 5px 15px;
+  color: #eee;
+}

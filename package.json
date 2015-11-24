@@ -1,0 +1,24 @@
+{
+  "name": "yii2-advanced-app",
+  "version": "0.0.0",
+  "description": "Yii2 Advanced Application",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/netwrk_larion/netwrk"
+  },
+  "author": "Ngoc Luong-Bao <baongock32@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "jit-grunt": "^0.9.1"
+  }
+}
