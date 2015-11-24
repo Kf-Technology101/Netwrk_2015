@@ -1,6 +1,7 @@
 <?php
 namespace frontend\modules\netwrk\controllers;
 
+use frontend\components\UtilitiesFunc;
 use Ratchet\MessageComponentInterface;
 use frontend\components\BaseController;
 use Ratchet\ConnectionInterface;
@@ -11,11 +12,13 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 
 class ChatServer extends BaseController implements MessageComponentInterface {
+
 	protected $clients;
 	protected $ws_messages;
 	protected $current_user = 1;
 	protected $post_id = 0;
 	private $users = array();
+
 	public function __construct()
 	{
 		$this->ws_messages = new WsMessages();
@@ -69,7 +72,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'name'=>$user->profile->first_name ." ".$user->profile->last_name,
 														'avatar'=> $image,
 														'msg'=>$msg,
-														"created_at" => date("Y-m-d H:i:s"),
+														"created_at" => date("H:i"),
 														"user_current"=> $current)
 													]);
 				}
@@ -101,6 +104,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		if($message) {
 			foreach ($message as $key => $value) {
        			# code...
+				$time = UtilitiesFunc::FormatTimeChat($value->created_at);
+
 				if ($value->user->profile->photo == null){
 					$image = '/img/icon/no_avatar.jpg';
 				}else{
@@ -115,7 +120,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 					'avatar'=> $image,
 					'msg'=>$value->msg,
-					'created_at'=>$value->created_at,
+					'created_at'=> $time,
 					'user_current'=> $current
 					);
 

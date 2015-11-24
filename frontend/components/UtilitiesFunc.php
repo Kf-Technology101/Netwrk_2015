@@ -53,6 +53,25 @@ class UtilitiesFunc
 		return $time;
 	}
 
+	public static function FormatTimeChat($date){
+		$current_date = date('Y-m-d H:i:s');
+
+		$date1 = date_create($date);
+		$date2 = date_create($current_date);
+		// $diff = $date2 - $date1;
+		// $diff_days = floor($diff/(60*60*24));
+		$diff=date_diff($date1,$date2);
+		$diff_days = $diff->format("%a");
+
+		if(intval($diff_days) >= 1){
+			$time = date_format($date1,'m/d/Y');
+		}else{
+			$time = date_format($date1,'H:i');
+		}
+
+		return $time;
+	}
+
 	public static function FormatDateTime($date){
 		$diff = self::GetDateTime($date);
 
