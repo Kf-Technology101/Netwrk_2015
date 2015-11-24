@@ -14,12 +14,12 @@ class m151120_040101_create_ws_messages extends \yii\db\Migration
         $this->createTable('ws_messages', [
             'id' => Schema::TYPE_PK,
             'user_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
-            'msg' => Schema::TYPE_STRING,
+            'msg' => Schema::TYPE_TEXT,
             'post_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
-            'msg_type' => Schema::TYPE_TEXT . ' NOT NULL',
-            'post_type'  => Schema::TYPE_INTEGER . '(11) NOT NULL',
-            'created_at' => Schema::TYPE_STRING . '(20) NOT NULL',
-            'updated_at' => Schema::TYPE_STRING . '(20) NOT NULL',
+            'msg_type' => Schema::TYPE_TEXT,
+            'post_type'  => Schema::TYPE_INTEGER ,
+            'created_at' => Schema::TYPE_STRING ,
+            'updated_at' => Schema::TYPE_STRING ,
         ], $tableOptions);
     }
 
