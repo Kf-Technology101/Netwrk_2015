@@ -66,7 +66,7 @@ class UtilitiesFunc
 		if(intval($diff_days) >= 1){
 			$time = date_format($date1,'m/d/Y');
 		}else{
-			$time = date_format($date1,'H:i');
+			$time = date_format($date1,'g:i a');
 		}
 
 		return $time;
