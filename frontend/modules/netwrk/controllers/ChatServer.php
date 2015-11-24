@@ -105,7 +105,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	public function fetchMessages()
 	{
 		$data_result=[];
-		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id)->with('user','user.profile')->all();
+		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
 		if($message) {
 			foreach ($message as $key => $value) {
        			# code...
