@@ -5,7 +5,6 @@ namespace frontend\modules\netwrk\models;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
-use frontend\modules\netwrk\models\Post;
 /**
  * This is the model class for table "ws_messages".
  *
