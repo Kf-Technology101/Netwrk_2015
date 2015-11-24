@@ -65,7 +65,6 @@ var ChatPost = {
 		}else{
 			$(ChatPost.parent).find('.modal-body').mCustomScrollbar("scrollTo","bottom");
 		}
-
 	},
 
 	WsConnect: function(parent){

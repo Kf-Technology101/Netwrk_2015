@@ -95,10 +95,10 @@ class PostController extends BaseController
 
             if($this->getIsMobile() && strlen($content) > $maxlengthMobile){
                 $content = substr($content,0,$maxlengthMobile) ;
-                $content = $content." ...<a class='show_more' href='javascript:void(0)'>show more</a>";
+                $content = $content." ...<span class='show_more>show more</span>";
             }elseif(!$this->getIsMobile() && strlen($content) > $maxlength){
                 $content = substr($content,0,$maxlength) ;
-                $content = $content." ...<a class='show_more' href='javascript:void(0)'>show more</a>";
+                $content = $content." ...<span class='show_more'>show more</span>";
             }
             
             $user_photo = User::findOne($value->user_id)->profile->photo;

@@ -68,6 +68,20 @@ var Post ={
 				ChatPost.initialize();
 			}
 		});
+
+		var btn_show_more = $("#list_post .show_more");
+		btn_show_more.unbind();
+
+		btn_show_more.on('click',function(e){
+			var item_post = $(e.currentTarget).parent().parent().parent().attr('data-item');
+			if(isMobile){
+				ChatPost.RedirectChatPostPage(item_post);
+			}else{
+				$("#list_post").modal('hide');
+				ChatPost.params.post = item_post;
+				ChatPost.initialize();
+			}
+		});
 	},
 
     OnClickBackdrop: function(){

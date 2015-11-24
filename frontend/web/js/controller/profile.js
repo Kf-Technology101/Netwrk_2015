@@ -399,7 +399,7 @@ var Profile = {
                 $('.preview_img').addClass('active');
                 $('.preview_img').append(img);
             }
-             Profile.showImageOnIE();
+            Profile.showImageOnIE();
         }
     },
 
