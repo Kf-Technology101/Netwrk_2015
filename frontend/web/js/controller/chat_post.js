@@ -13,6 +13,8 @@ var ChatPost = {
 		ChatPost.OnClickBackBtn(ChatPost.parent);
 		ChatPost.WsConnect(ChatPost.container);
 		ChatPost.OnWsChatPost();
+		ChatPost.OnWsFilePost();
+		ChatPost.HandleWsFilePost();
 
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
@@ -53,7 +55,7 @@ var ChatPost = {
 			var parent = $(e.currentTarget).parent();
 			var val	 = parent.find("textarea").val();
 			if(val != ""){
-				ChatPost.ws.send("send", {"msg": val});
+				ChatPost.ws.send("send", {"type": 0, "msg": val});
 				parent.find("textarea").val('');
 			}
 		});
@@ -67,49 +69,109 @@ var ChatPost = {
 		}
 	},
 
-	WsConnect: function(parent){
-		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
-			open: function() {
-				console.log('open');
-				// ChatPost.ws.send("fetch");
-			},
-			close: function() {
-				console.log('close');
-			},
-			events: {
-				fetch: function(e) {
-					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(elem);
-					});
+	OnWsFilePost: function(){
+		var btn = $(ChatPost.parent).find('#file_btn');
+		btn.unbind();
+		btn.on("click", function(){
+			var btn_input = $(ChatPost.parent).find('#file_upload');
+			btn_input.click();
+		});
+	},
 
-					if(isMobile){
-						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+	HandleWsFilePost: function(){
+		var input_change = $(ChatPost.parent).find('#file_upload');
+		input_change.unbind('change');
+		input_change.change(function(){
+			if(typeof input_change[0].files[0] != "undefined"){
+				file = input_change[0].files[0];
+
+				fd = new FormData();
+				fd.append('file', file);
+
+				$.ajax({
+					xhr: function() {
+						var xhr = new window.XMLHttpRequest();
+						// xhr.upload.addEventListener("progress", function(evt) {
+						// 	if(evt.lengthComputable) {
+						// 		var percentComplete = evt.loaded / evt.total;
+						// 		percentComplete = parseInt(percentComplete * 100);
+						// 		console.log(percentComplete);
+						// 		$("#msgForm").css({background : "linear-gradient(90deg, #009bcd "+ percentComplete +"%, white 0%)"});
+						// 	}
+						// }, false);
+						return xhr;
+					},
+					url:  baseUrl + "/netwrk/chat/upload",
+					type: "POST",
+					data: fd,
+					processData: false,
+					contentType: false,
+					success: function(result) {
+						var fileForm = $(ChatPost.parent).find('#msgForm');
+						val  = fileForm.find("textarea").val();
+						if(result != ""){
+							var result = $.parseJSON(result);
+							ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
+							fileForm.find("textarea").val('');
+						}
 					}
-					ChatPost.ScrollTopChat();
-				},
-				onliners: function(e){
-					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(elem);
-					});
-				},
-				single: function(e){
-					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(elem);
-					});
-					if(isMobile){
-						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-					}
-				}
+				});
 			}
 		});
 	},
 
-	getMessageTemplate:function(data){
-        var template = _.template($( "#message_chat" ).html());
-        var append_html = template({msg: data,baseurl: baseUrl});
+	ScrollTopChat: function(){
+		if(isMobile){
+			$(ChatPost.parent).find(ChatPost.container).scrollTop($(ChatPost.parent).find(ChatPost.container)[0].scrollHeight);
+		}else{
+			$(ChatPost.parent).find('.modal-body').mCustomScrollbar("scrollTo","bottom");
+		}
 
-        $(ChatPost.parent).find(ChatPost.container).append(append_html); 
-        ChatPost.ScrollTopChat();
+	},
+
+	WsConnect: function(parent){
+		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
+			open: function() {
+				console.log('open');
+					// ChatPost.ws.send("fetch");
+				},
+				close: function() {
+					console.log('close');
+				},
+				events: {
+					fetch: function(e) {
+						$.each(e.data, function(i, elem){
+							ChatPost.getMessageTemplate(elem);
+						});
+
+						if(isMobile){
+							fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						}
+						ChatPost.ScrollTopChat();
+					},
+					onliners: function(e){
+						$.each(e.data, function(i, elem){
+							ChatPost.getMessageTemplate(elem);
+						});
+					},
+					single: function(e){
+						$.each(e.data, function(i, elem){
+							ChatPost.getMessageTemplate(elem);
+						});
+						if(isMobile){
+							fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						}
+					}
+				}
+			});
+	},
+
+	getMessageTemplate:function(data){
+		var template = _.template($( "#message_chat" ).html());
+		var append_html = template({msg: data,baseurl: baseUrl});
+
+		$(ChatPost.parent).find(ChatPost.container).append(append_html);
+		ChatPost.ScrollTopChat();
 	},
 
 	RedirectChatPostPage: function(postId){
@@ -142,42 +204,42 @@ var ChatPost = {
 		});
 	},
 
-    OnClickBackdrop: function(){
-        $('.modal-backdrop.in').unbind();
-        $('.modal-backdrop.in').on('click',function(e) {
-            $(ChatPost.modal).modal('hide');
-        });
-    },
+	OnClickBackdrop: function(){
+		$('.modal-backdrop.in').unbind();
+		$('.modal-backdrop.in').on('click',function(e) {
+			$(ChatPost.modal).modal('hide');
+		});
+	},
 
-    CustomScrollBar: function(){
-    	var parent = $(ChatPost.modal).find('.modal-body');
-        parent.mCustomScrollbar({
-            theme:"dark"
-        });
-    },
+	CustomScrollBar: function(){
+		var parent = $(ChatPost.modal).find('.modal-body');
+		parent.mCustomScrollbar({
+			theme:"dark"
+		});
+	},
 
 	ShowModalChatPost: function(){
 		var height_footer = $(ChatPost.modal).find('.modal-footer').height();
 		set_container_chat_modal($(ChatPost.modal),height_footer);
 
 		$(ChatPost.modal).modal({
-            backdrop: true,
-            keyboard: false
-        });
+			backdrop: true,
+			keyboard: false
+		});
 	},
 
 	OnShowModalChatPost: function(){
-        $(ChatPost.modal).on('shown.bs.modal',function(e) {
-        	$(e.currentTarget).unbind();
-        	ChatPost.GetNameChatPost();
-        });
+		$(ChatPost.modal).on('shown.bs.modal',function(e) {
+			$(e.currentTarget).unbind();
+			ChatPost.GetNameChatPost();
+		});
 	},
 
 	OnHideModalChatPost: function(){
-        $(ChatPost.modal).on('hidden.bs.modal',function(e) {
-        	$(e.currentTarget).unbind();
-        	ChatPost.ResetModalChatPost();
-        });
+		$(ChatPost.modal).on('hidden.bs.modal',function(e) {
+			$(e.currentTarget).unbind();
+			ChatPost.ResetModalChatPost();
+		});
 	},
 
 	ResetModalChatPost: function(){
@@ -195,12 +257,12 @@ var ChatPost = {
 		})
 	},
 
-    getNameTemplate: function(parent,data){
-        var self = this;
-        var list_template = _.template($("#chatpost_name" ).html());
-        var append_html = list_template({name: data});
+	getNameTemplate: function(parent,data){
+		var self = this;
+		var list_template = _.template($("#chatpost_name" ).html());
+		var append_html = list_template({name: data});
 
-        parent.append(append_html);
-    },
+		parent.append(append_html);
+	},
 
 }

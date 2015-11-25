@@ -9,7 +9,7 @@
 					</div>
 					<div class="title_page">
 						<span class="title">
-							
+
 						</span>
 					</div>
 				</div>
@@ -18,12 +18,13 @@
 				<div class="container_post_chat"></div>
 			</div>
 			<div class="modal-footer">
-				<div class="send_message input-group">
-					<textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
-					<div class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
-					<div class="input-group-addon emoji"><i class="fa fa-smile-o"></i></div>
-					<div class="input-group-addon send" id="sizing-addon2">Send</div>
-				</div>
+				<form id='msgForm' class="send_message input-group">
+						<textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
+						<div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
+						<input type='file' id='file_upload' name='file_upload' style="display:none" />
+						<div class="input-group-addon emoji"><i class="fa fa-smile-o"></i></div>
+						<div class="input-group-addon send" id="sizing-addon2">Send</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -34,19 +35,19 @@
 	</script>
 	<script id="message_chat" type="text/x-underscore-template">
 		<% if (msg.user_current){ %>
-		    <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-		<% }else{ %>
-		    <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
-		<% } %>
-	        <div class="user_thumbnail">
-	            <div class="avatar">
-	                <img src="<%= baseurl %><%=  msg.avatar %>">
-	            </div>
-	        </div>
-	        <div class="content_message">
-	            <p><%= msg.msg %></p>
-	            <p class="time"><%= msg.created_at %></p>
-	        </div>      
-	    </div>
-	</script>
-</div>
+			<div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+				<% }else{ %>
+					<div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
+						<% } %>
+						<div class="user_thumbnail">
+							<div class="avatar">
+								<img src="<%= baseurl %><%=  msg.avatar %>">
+							</div>
+						</div>
+						<div class="content_message">
+							<p><%= msg.msg %></p>
+							<p class="time"><%= msg.created_at %></p>
+						</div>
+					</div>
+				</script>
+			</div>
