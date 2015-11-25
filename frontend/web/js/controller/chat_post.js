@@ -35,7 +35,7 @@ var ChatPost = {
 				$(e).html(emoji);
 			})
 		}else{
-			var emoji = emojione.shortnameToImage(messages.last().text()); 
+			var emoji = emojione.shortnameToImage(messages.last().text());
 			messages.last().html(emoji);
 		}
 	},
@@ -169,6 +169,7 @@ var ChatPost = {
 				},
 				single: function(e){
 					$.each(e.data, function(i, elem){
+						console.table(elem);
 						ChatPost.getMessageTemplate(elem);
 					});
 					if(isMobile){

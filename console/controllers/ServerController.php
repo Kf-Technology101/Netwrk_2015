@@ -20,7 +20,7 @@ class ServerController extends \yii\console\Controller
 	public function actionRun()
 	{
 		$startNow = 1;
-		register_shutdown_function(array($this, 'actionShutdown'));
+		// register_shutdown_function(array($this, 'actionShutdown'));
 		if( isset($startNow) ){
 			$server = IoServer::factory(
 				new HttpServer(
