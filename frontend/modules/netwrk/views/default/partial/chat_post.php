@@ -24,34 +24,7 @@
 						<input type='file' id='file_upload' name='file_upload' style="display:none" />
 						<div class="input-group-addon emoji dropup">
 							<i class="fa fa-smile-o dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" ></i>
-							<ul class="dropdown-menu">
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-								<li>:)</li>
-							</ul>
+							<ul class="dropdown-menu"></ul>
 						</div>
 
 						<div class="input-group-addon send" id="sizing-addon2">Send</div>
@@ -59,6 +32,11 @@
 			</div>
 		</div>
 	</div>
+	<script id="list_emoji" type="text/x-underscore-template">
+		<% _.each(emoji,function(i,e){ %>
+			<li data-value="<%= e %>"><a href="#"><%= e %></a></li>
+		<% })%>
+	</script>
 	<script id="chatpost_name" type="text/x-underscore-template">
 		<span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
 		<span><i class="fa fa-angle-right"></i><%= name.topic_name%></span>

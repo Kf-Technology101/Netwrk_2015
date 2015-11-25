@@ -15,7 +15,7 @@ var ChatPost = {
 		ChatPost.OnWsChatPost();
 		ChatPost.OnWsFilePost();
 		ChatPost.HandleWsFilePost();
-		ChatPost.HandleEmoji();
+		ChatPost.GetEmoji();
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
 		}else{
@@ -27,16 +27,35 @@ var ChatPost = {
 		}
 	},
 
-	HandleEmoji: function(){
-		var btn = $(ChatPost.parent).find('.emoji');
+	GetEmoji: function(){
+		var data = Emoji.GetEmoji();
+		var parent = $(ChatPost.parent).find('.emoji .dropdown-menu');
+		var template = _.template($( "#list_emoji" ).html());
+		var append_html = template({emoji: data});
+		parent.append(append_html);
 
+		parent.mCustomScrollbar({
+			theme:"dark"
+		});
+		ChatPost.ConvertEmoji();
+	},
+
+	ConvertEmoji: function(){
+		var strs  = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
+		$.each(strs,function(i,e){
+			Emoji.Convert($(e));
+		});
+	},
+
+	HandleEmoji: function(){
+		var btn = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li object');
 		btn.unbind();
-		btn.one('click',function(){
-			var strs  = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
-			$.each(strs,function(i,e){
-				Emoji.Convert($(e));
-			});
-		})
+		btn.on('click',function(e){
+			console.log('text');
+			var text = $(e.currentTarget).attr('data-value');
+			console.log(text);
+			$(ChatPost.parent).find('textarea').append(text);
+		});
 	},
 
 	FetchEmojiOne: function(data){

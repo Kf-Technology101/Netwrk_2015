@@ -29,7 +29,8 @@ class MobileAsset extends AssetBundle
       'css/bootstrap-datepicker.min.css',
       'css/jquery.ui.css',
       'css/jquery.ui.pips.css',
-      'css/jquery.mCustomScrollbar.css'
+      'css/jquery.mCustomScrollbar.css',
+      'css/emojione/css/emojione.min.css'
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -50,10 +51,12 @@ class MobileAsset extends AssetBundle
       'js/controller/chat_post.js',
       'js/controller/post.js',
       'js/controller/vote.js',
+      'js/controller/emoji.js',
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',
       'js/lib/jquery.mCustomScrollbar.concat.min.js',
+      'js/lib/emojione.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

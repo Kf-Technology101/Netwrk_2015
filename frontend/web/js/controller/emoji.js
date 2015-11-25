@@ -8,11 +8,12 @@ var Emoji ={
 	},
 
 	Convert: function(target){
+		console.log(target.text());
 		var emoji = emojione.shortnameToImage(target.text());
 		target.html(emoji);
 	},
 
 	GetEmoji: function(){
-
+		return emojione.asciiList;
 	}
 }
