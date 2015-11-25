@@ -354,7 +354,7 @@ var Post ={
 				if(isMobile){
 					var infomation = $('.container_post').find('.item_post .information');
 					var wi_avatar = $($('.container_post').find('.item_post')[0]).find('.users_avatar').width();
-					fix_width_post(infomation,wi_avatar);
+					fix_width_post(infomation,145);
 				}
 			}
 		});
