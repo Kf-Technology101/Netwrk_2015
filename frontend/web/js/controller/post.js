@@ -47,10 +47,10 @@ var Post ={
 			Post.ShowMeetIcon();
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
-		}	
+		}
 		Post.OnclickBack();
 		Post.OnclickCreate();
-		Post.OnChangeTab();	
+		Post.OnChangeTab();
 	},
 
 	OnClickChat: function(){

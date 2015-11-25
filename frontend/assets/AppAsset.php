@@ -46,6 +46,7 @@ class AppAsset extends AssetBundle
         'js/controller/chat_post.js',
         'js/controller/post.js',
         'js/controller/vote.js',
+        'js/controller/emoji.js',
         'js/ws/ws.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',

@@ -15,7 +15,7 @@ var ChatPost = {
 		ChatPost.OnWsChatPost();
 		ChatPost.OnWsFilePost();
 		ChatPost.HandleWsFilePost();
-
+		ChatPost.HandleEmoji();
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
 		}else{
@@ -27,16 +27,26 @@ var ChatPost = {
 		}
 	},
 
+	HandleEmoji: function(){
+		var btn = $(ChatPost.parent).find('.emoji');
+
+		btn.unbind();
+		btn.one('click',function(){
+			var strs  = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
+			$.each(strs,function(i,e){
+				Emoji.Convert($(e));
+			});
+		})
+	},
+
 	FetchEmojiOne: function(data){
 		var messages = $(ChatPost.parent).find(ChatPost.container).find('.message .content_message .content');
 		if(data.type === "fetch"){
 			$.each(messages,function(i,e){
-				var emoji = emojione.shortnameToImage($(e).text());
-				$(e).html(emoji);
-			})
+				Emoji.Convert($(e));
+			});
 		}else{
-			var emoji = emojione.shortnameToImage(messages.last().text()); 
-			messages.last().html(emoji);
+			Emoji.Convert(messages.last());
 		}
 	},
 

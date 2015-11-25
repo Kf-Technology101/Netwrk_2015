@@ -212,15 +212,8 @@ function CustomScrollBar(){
 
 }
 
-function _configEmojiOne(){
-  emojione.imageType = 'svg';
-  emojione.ascii = true;
-  emojione.imagePathPNG = baseUrl + '/css/emojione/png/';
-  emojione.imagePathSVG = baseUrl + '/css/emojione/svg/';
-}
-
 $(document).ready(function(){
   _main();
   _addListenEventPage();
-  _configEmojiOne();
+  Emoji.initialize();
 });
