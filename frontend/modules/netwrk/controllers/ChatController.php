@@ -83,9 +83,11 @@ class ChatController extends BaseController
 			if (isset($supported_img_types[$mime_type])) {
 				$extension = $supported_img_types[$mime_type];
 				$type = 1;
+				$location = Yii::getAlias('@frontend/web/img/uploads/');
 			} else if(isset($supported_file_types[$mime_type])) {
 				$extension = $supported_file_types[$mime_type];
-				$type = 0;
+				$type = 2;
+				$location = Yii::getAlias('@frontend/web/files/uploads/');
 			} else {
 				$extension = false;
 			}
@@ -93,7 +95,8 @@ class ChatController extends BaseController
 			if($extension !== false && $_FILES['file']['size'] <= 2097152) {
 				$info = pathinfo($_FILES['file']['name']);
 				$fileName = uniqid(basename($_FILES['file']['name'],'.'.$info['extension']).date("ymd").'_') . "." . $extension;
-				$location = Yii::getAlias('@frontend/web/img/uploads/') . $fileName;
+
+				$location = $location. $fileName;
 				move_uploaded_file($_FILES['file']['tmp_name'], $location);
 				 $data = [
 					'file_name' => $fileName,
