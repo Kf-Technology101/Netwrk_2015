@@ -132,10 +132,12 @@ var ChatPost = {
 					success: function(result) {
 						var fileForm = $(ChatPost.parent).find('#msgForm');
 						val  = fileForm.find("textarea").val();
-						if(result != ""){
+						if(result != "" && result !== false){
 							var result = $.parseJSON(result);
 							ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
 							fileForm.find("textarea").val('');
+						} else {
+							alert("The file you upload is not supported or size of file is larger than 2Mb!");
 						}
 					}
 				});
