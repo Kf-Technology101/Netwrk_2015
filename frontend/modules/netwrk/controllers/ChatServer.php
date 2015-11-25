@@ -77,7 +77,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'name'=>$user->profile->first_name ." ".$user->profile->last_name,
 														'avatar'=> $image,
 														'msg'=> nl2br($msg),
-														"created_at" => date("H:i"),
+														"created_at" => date("h:i A"),
 														"user_current"=> $current)
 													]);
 				}
