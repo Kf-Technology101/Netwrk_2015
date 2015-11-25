@@ -133,37 +133,37 @@ var ChatPost = {
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
-					// ChatPost.ws.send("fetch");
-				},
-				close: function() {
-					console.log('close');
-				},
-				events: {
-					fetch: function(e) {
-						$.each(e.data, function(i, elem){
-							ChatPost.getMessageTemplate(elem);
-						});
+				// ChatPost.ws.send("fetch");
+			},
+			close: function() {
+				console.log('close');
+			},
+			events: {
+				fetch: function(e) {
+					$.each(e.data, function(i, elem){
+						ChatPost.getMessageTemplate(elem);
+					});
 
-						if(isMobile){
-							fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-						}
-						ChatPost.ScrollTopChat();
-					},
-					onliners: function(e){
-						$.each(e.data, function(i, elem){
-							ChatPost.getMessageTemplate(elem);
-						});
-					},
-					single: function(e){
-						$.each(e.data, function(i, elem){
-							ChatPost.getMessageTemplate(elem);
-						});
-						if(isMobile){
-							fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-						}
+					if(isMobile){
+						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+					}
+					ChatPost.ScrollTopChat();
+				},
+				onliners: function(e){
+					$.each(e.data, function(i, elem){
+						ChatPost.getMessageTemplate(elem);
+					});
+				},
+				single: function(e){
+					$.each(e.data, function(i, elem){
+						ChatPost.getMessageTemplate(elem);
+					});
+					if(isMobile){
+						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 				}
-			});
+			}
+		});
 	},
 
 	getMessageTemplate:function(data){
