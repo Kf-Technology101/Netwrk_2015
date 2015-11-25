@@ -25,6 +25,19 @@ var ChatPost = {
 		}
 	},
 
+	FetchEmojiOne: function(data){
+		var messages = $(ChatPost.parent).find(ChatPost.container).find('.message .content_message .content');
+		if(data.type === "fetch"){
+			$.each(messages,function(i,e){
+				var emoji = emojione.shortnameToImage($(e).text());
+				$(e).html(emoji);
+			})
+		}else{
+			var emoji = emojione.shortnameToImage(messages.last().text()); 
+			messages.last().html(emoji);
+		}
+	},
+
 	SetUrl: function(){
 		if(baseUrl === 'http://netwrk.rubyspace.net'){
 			ChatPost.url = 'box.rubyspace.net';
@@ -81,11 +94,11 @@ var ChatPost = {
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(elem);
 					});
-
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 					ChatPost.ScrollTopChat();
+					ChatPost.FetchEmojiOne({type: 'fetch'});
 				},
 				onliners: function(e){
 					$.each(e.data, function(i, elem){
@@ -99,6 +112,7 @@ var ChatPost = {
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
+					ChatPost.FetchEmojiOne({type: 'single'});
 				}
 			}
 		});

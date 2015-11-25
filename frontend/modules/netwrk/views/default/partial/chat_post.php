@@ -44,7 +44,7 @@
 	            </div>
 	        </div>
 	        <div class="content_message">
-	            <p><%= msg.msg %></p>
+	            <p class="content"><%= msg.msg %></p>
 	            <p class="time"><%= msg.created_at %></p>
 	        </div>      
 	    </div>

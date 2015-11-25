@@ -28,6 +28,7 @@ class AppAsset extends AssetBundle
         'css/jquery.ui.css',
         'css/jquery.ui.pips.css',
         'css/jquery.mCustomScrollbar.css',
+        'css/emojione/css/emojione.min.css'
     ];
     public $js = [
         'js/lib/underscore.js',
@@ -45,11 +46,12 @@ class AppAsset extends AssetBundle
         'js/controller/chat_post.js',
         'js/controller/post.js',
         'js/controller/vote.js',
+        'js/ws/ws.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',
         'js/lib/jquery.ui.touch_punch.js',
         'js/lib/jquery.mCustomScrollbar.concat.min.js',
-        'js/ws/ws.js',
+        'js/lib/emojione.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
