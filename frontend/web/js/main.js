@@ -34,7 +34,7 @@ function fix_width_post(target,width){
   var wp = size[0] - width;
 
   target.css({'width': wp});
-  target.find('p').css({'max-width': wp});
+  target.find('p').css({'width': wp});
 
 }
 
