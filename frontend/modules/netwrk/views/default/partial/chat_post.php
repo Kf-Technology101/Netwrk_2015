@@ -9,7 +9,7 @@
 					</div>
 					<div class="title_page">
 						<span class="title">
-							
+
 						</span>
 					</div>
 				</div>
@@ -18,12 +18,13 @@
 				<div class="container_post_chat"></div>
 			</div>
 			<div class="modal-footer">
-				<div class="send_message input-group">
-					<textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
-					<div class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
-					<div class="input-group-addon emoji"><i class="fa fa-smile-o"></i></div>
-					<div class="input-group-addon send" id="sizing-addon2">Send</div>
-				</div>
+				<form id='msgForm' class="send_message input-group">
+						<textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
+						<div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
+						<input type='file' id='file_upload' name='file_upload' style="display:none" />
+						<div class="input-group-addon emoji"><i class="fa fa-smile-o"></i></div>
+						<div class="input-group-addon send" id="sizing-addon2">Send</div>
+				</form>
 			</div>
 		</div>
 	</div>

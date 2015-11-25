@@ -20,19 +20,19 @@ class ChatController extends BaseController
 		}
 	}
 
-    public function actionChatName(){
-    	$postId = $_POST['post'];
+	public function actionChatName(){
+		$postId = $_POST['post'];
 
-    	$post = POST::find()->where('id ='.$postId)->with('topic')->one();
-    	$post->update();
-        $info = array(
-        	'post_name'=> $post->title,
-        	'topic_name'=> $post->topic->title,
-        );
+		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
+		$post->update();
+		$info = array(
+			'post_name'=> $post->title,
+			'topic_name'=> $post->topic->title,
+			);
 
-        $hash = json_encode($info);
-        return $hash;
-    }
+		$hash = json_encode($info);
+		return $hash;
+	}
 
 	public function actionChatPost(){
 		$postId = $_GET['post'];
@@ -47,5 +47,63 @@ class ChatController extends BaseController
 			file_put_contents($statusFile, 1);
 		}
 		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post] );
+	}
+
+	public function actionUpload()
+	{
+		if(isset($_FILES['file'])){
+			$file = file_get_contents($_FILES['file']['tmp_name']);
+			$f = finfo_open();
+			$mime_type = finfo_buffer($f, $file, FILEINFO_MIME_TYPE);
+
+			$supported_img_types = array(
+				"image/png" => "png",
+				"image/jpeg" => "jpg",
+				"image/pjpeg" => "jpg",
+				"image/gif" => "gif"
+				);
+
+			$supported_file_types = array(
+				"text/plain" => "txt",
+				"application/msword" => 'doc',
+				"application/excel" => 'xls',
+				"application/vnd.ms-excel" => 'xls',
+				"application/x-excel" => 'xls',
+				"application/x-msexcel" => 'xls',
+				"application/mspowerpoint" => 'ppt',
+				"application/powerpoint" => 'ppt',
+				"application/vnd.ms-powerpoint" => 'ppt',
+				"application/x-mspowerpoint" => 'ppt',
+				"application/pdf" => 'pdf',
+				"audio/mpeg3" => 'mp3',
+				"video/mpeg" => "mp3",
+				"video/avi" => "avi"
+				);
+
+			if (isset($supported_img_types[$mime_type])) {
+				$extension = $supported_img_types[$mime_type];
+				$type = 1;
+			} else if(isset($supported_file_types[$mime_type])) {
+				$extension = $supported_file_types[$mime_type];
+				$type = 0;
+			} else {
+				$extension = false;
+			}
+
+			if($extension !== false && $_FILES['file']['size'] <= 2097152) {
+				$info = pathinfo($_FILES['file']['name']);
+				$fileName = uniqid(basename($_FILES['file']['name'],'.'.$info['extension']).date("ymd").'_') . "." . $extension;
+				$location = Yii::getAlias('@frontend/web/img/uploads/') . $fileName;
+				move_uploaded_file($_FILES['file']['tmp_name'], $location);
+				 $data = [
+					'file_name' => $fileName,
+					'type' => $type
+				];
+				$data = json_encode($data);
+				return $data;
+			} else {
+				return false;
+			}
+		}
 	}
 }

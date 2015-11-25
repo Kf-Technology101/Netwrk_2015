@@ -12,8 +12,8 @@ use yii\db\ActiveRecord;
  * @property integer $user_id
  * @property string $msg
  * @property integer $post_id
- * @property string $msg_type
- * @property integer $post_type
+ * @property string $msg_type   0: text, 1: image, 2: file
+ * @property integer $post_type 0: public, 1:private
  * @property string $created_at
  * @property string $updated_at
  */
