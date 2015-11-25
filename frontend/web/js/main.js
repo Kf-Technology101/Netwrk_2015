@@ -38,6 +38,13 @@ function fix_width_post(target,width){
 
 }
 
+function fix_width_chat_post(target,width){
+  var size = get_size_window();
+  var wp = size[0] - width;
+
+  target.css({'width': wp});
+
+}
 function set_position_btn_resize(parent,target,paddingTop,paddingRight){
   $(window).resize(function(){
     set_position_btn(parent,target,paddingTop,paddingRight)

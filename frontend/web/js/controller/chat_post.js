@@ -83,7 +83,7 @@ var ChatPost = {
 					});
 
 					if(isMobile){
-						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 					ChatPost.ScrollTopChat();
 				},
@@ -97,7 +97,7 @@ var ChatPost = {
 						ChatPost.getMessageTemplate(elem);
 					});
 					if(isMobile){
-						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 				}
 			}
