@@ -53,7 +53,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				// make new models to stored data
 				$this->ws_messages = new WsMessages();
 
-				$msg = $data['data']['type'] == 0 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
+				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
 				$this->ws_messages->user_id = $this->current_user;
 				$this->ws_messages->msg = $msg;

@@ -82,11 +82,11 @@ class ChatController extends BaseController
 
 			if (isset($supported_img_types[$mime_type])) {
 				$extension = $supported_img_types[$mime_type];
-				$type = 1;
+				$type = 2;
 				$location = Yii::getAlias('@frontend/web/img/uploads/');
 			} else if(isset($supported_file_types[$mime_type])) {
 				$extension = $supported_file_types[$mime_type];
-				$type = 2;
+				$type = 3;
 				$location = Yii::getAlias('@frontend/web/files/uploads/');
 			} else {
 				$extension = false;

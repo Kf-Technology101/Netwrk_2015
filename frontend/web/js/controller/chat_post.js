@@ -78,7 +78,7 @@ var ChatPost = {
 			var parent = $(e.currentTarget).parent();
 			var val	 = parent.find("textarea").val();
 			if(val != ""){
-				ChatPost.ws.send("send", {"type": 0, "msg": val});
+				ChatPost.ws.send("send", {"type": 1, "msg": val});
 				parent.find("textarea").val('');
 			}
 		});

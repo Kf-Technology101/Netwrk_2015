@@ -76,9 +76,9 @@
 	            </div>
 	        </div>
 	        <div class="content_message">
-	        <% if(msg.msg_type == 0) { %>
+	        <% if(msg.msg_type == 1) { %>
 	            <p class="content"><%= msg.msg %></p>
-            <% }else if(msg.msg_type == 1) { %>
+            <% }else if(msg.msg_type == 2) { %>
             	<img src='<?= Url::to("@web/img/uploads/") ?><%= msg.msg %>' class='img_chat_style'/>
         	<% } else { %>
         		<a href='<?= Url::to("@web/files/uploads/") ?><%= msg.msg %>' target='_blank'><%= msg.msg %></a>
