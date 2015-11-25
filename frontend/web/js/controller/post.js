@@ -36,7 +36,6 @@ var Post ={
 			Post.OnClickSelectFilter();
 			Post.LazyLoading();
 			Create_Post.initialize();
-			fix_width_post($('.container_post').find('.item_post .information'),$($('.container_post').find('.item_post')[0]).find('.users_avatar').width());
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
@@ -342,7 +341,7 @@ var Post ={
 
 	GetTabPost: function(){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
-		
+
 		Ajax.get_post_by_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
@@ -350,6 +349,9 @@ var Post ={
 				parent.show();
 				parent.find('.no-data').hide();
 				Post.getTemplate(parent,json.data);
+				var infomation = $('.container_post').find('.item_post .information');
+				var wi_avatar = $($('.container_post').find('.item_post')[0]).find('.users_avatar').width();
+				fix_width_post(infomation,wi_avatar);
 				Post.OnclickVote();
 				Post.OnClickChat();
 			}
