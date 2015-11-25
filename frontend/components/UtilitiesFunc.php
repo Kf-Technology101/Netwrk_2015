@@ -54,17 +54,15 @@ class UtilitiesFunc
 	}
 
 	public static function FormatTimeChat($date){
-		$current_date = date('Y-m-d H:i:s');
-
-		$date1 = date_create($date);
+		$current_date = date('Y-m-d');
+		$timestampformat = date_format(date_create($date),'Y-m-d');
+		$date1 = date_create($timestampformat);
 		$date2 = date_create($current_date);
-		// $diff = $date2 - $date1;
-		// $diff_days = floor($diff/(60*60*24));
-		$diff=date_diff($date1,$date2);
-		$diff_days = $diff->format("%a");
+		
+		$diff=$date2->diff($date1)->d;
 
-		if(intval($diff_days) >= 1){
-			$time = date_format($date1,'m/d/Y');
+		if(intval($diff) >= 1){
+			$time = date_format(date_create($date),'m/d/Y');
 		}else{
 			$time = date('h:i A',strtotime($date));
 		}
