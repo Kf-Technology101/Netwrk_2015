@@ -9,6 +9,7 @@ var Map ={
 	markers:[],
 	data_map:'',
 	infowindow:[],
+	zoomIn: false,
 	initialize: function() {
 		var map_andiana = {
 			center:new google.maps.LatLng(39.7662195,-86.441277),
@@ -16,6 +17,7 @@ var Map ={
 			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,
 			streetViewControl: false,
+			scrollwheel: false,
 			mapTypeId:google.maps.MapTypeId.ROADMAP,
 		};
 		var remove_poi = [
@@ -34,7 +36,7 @@ var Map ={
 		
 		Map.data_map = map;
 		Map.min_max_zoom(map);
-		Map.eventOnclick(map);
+		// Map.eventOnclick(map);
 		
 		Map.eventZoom(map);
 		Map.eventClickMyLocation(map);
@@ -92,7 +94,6 @@ var Map ={
 	  	var marker,json,data_marker;
 
 	 	var current_zoom = map.getZoom();
-
 
 	 	if(current_zoom == 7){
 	 		Ajax.get_marker_default().then(function(data){
@@ -208,9 +209,9 @@ var Map ={
 
 		btn.on('click',function(){
 			var zoom_current = map.getZoom();
-
 			if (zoom_current == 7) {
-				map.setZoom(12);
+				Map.smoothZoom(map, 13, zoom_current, true);
+				Map.zoomIn = true;
 			}
 
 			Ajax.get_position_user().then(function(data){
@@ -221,23 +222,51 @@ var Map ={
 	},
 
 	eventZoom: function(map){
-		var zoom_current = 7;
-	  	map.addListener('zoom_changed', function() {
-	  		console.log('map zoom');
-	  		Map.deleteNetwrk(map);
-			if(zoom_current == 7){
-				console.log('map zoom 7');
+		var mode = true;
+		map.addListener('dblclick', function(event){
+		    if(!Map.zoomIn){
+			    Map.smoothZoom(map, 13, map.getZoom(), true);
+		    	Map.zoomIn = true;
+			    Map.deleteNetwrk(map);
 				map.zoom = 12;
-				zoom_current = 12;
 				Map.show_marker(map);
-			}else if (zoom_current == 12){
-				console.log('map zoom 12');
+			} else {
+				Map.smoothZoom(map, 6, map.getZoom(), false);
+				Map.zoomIn = false;
+				Map.deleteNetwrk(map);
 				map.zoom = 7;
-				zoom_current = 7;
 				Map.show_marker(map);
 			}
 		});
 	},
+
+	smoothZoom: function(map, level, cnt, mode) {
+		// If mode is zoom in
+		if(mode == true) {
+			if (cnt >= level) {
+				return;
+			}
+			else {
+				var z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+					google.maps.event.removeListener(z);
+					Map.smoothZoom(map, level, cnt + 1, true);
+				});
+				setTimeout(function(){map.setZoom(cnt)}, 80);
+			}
+		} else {
+			if (cnt <= level) {
+				return;
+			}
+			else {
+				var z = google.maps.event.addListener(map, 'zoom_changed', function(event) {
+					google.maps.event.removeListener(z);
+					Map.smoothZoom(map, level, cnt - 1, false);
+				});
+				setTimeout(function(){map.setZoom(cnt)}, 80);
+			}
+		}
+	},
+
 	min_max_zoom: function(map){
 	  	google.maps.event.addListenerOnce(map, "projection_changed", function(){
 		    map.setMapTypeId(google.maps.MapTypeId.HYBRID);  //Changes the MapTypeId in short time.
@@ -271,7 +300,7 @@ var Map ={
 	  	google.maps.event.addListener(map, 'click', function(e) {
 	  		Map.closeInfoWindow();
 	  		Map.reset_data();
-	  		if (map.getZoom() !=7 ){
+	  		if (map.getZoom() == 12 ){
 				Map.geocoder(e.latLng);
 			}
 			Map.latLng = e.latLng;
