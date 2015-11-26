@@ -32,7 +32,7 @@ var Map ={
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false,styles: remove_poi});
+		map.setOptions({zoomControl: false, scrollwheel: false,styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		
 		Map.data_map = map;
@@ -254,6 +254,7 @@ var Map ={
 		if(mode == true) {
 			if (cnt > level) {
 				Map.incre = 1;
+				console.log(cnt);
 				return;
 			}
 			else {
@@ -278,7 +279,7 @@ var Map ={
 				
 				var z = google.maps.event.addListener(map, 'zoom_changed', function(event) {
 					google.maps.event.removeListener(z);
-					Map.smoothZoom(map, level, cnt - Map.incre, false);
+					Map.smoothZoom(map, level, cnt - 1, false);
 				});
 				setTimeout(function(){map.setZoom(cnt)}, 110);
 				if (Map.incre < 2)
