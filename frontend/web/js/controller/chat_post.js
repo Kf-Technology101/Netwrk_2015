@@ -10,6 +10,7 @@ var ChatPost = {
 	status_emoji: 1,
 	text_message:'',
 	message_type:1,
+	msg_lenght: 0,
 	initialize: function(){
 		ChatPost.SetUrl();
 		ChatPost.SetDataPostChat();
@@ -191,15 +192,15 @@ var ChatPost = {
 			},
 			events: {
 				fetch: function(e) {
-					console.log('fetch');
+					ChatPost.msg_lenght = e.data.length;
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(elem);
+						ChatPost.ScrollTopChat();
 					});
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 					ChatPost.FetchEmojiOne({type: 'fetch'});
-					ChatPost.ScrollTopChat();
 				},
 				onliners: function(e){
 					$.each(e.data, function(i, elem){
