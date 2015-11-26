@@ -99,7 +99,7 @@ class ChatController extends BaseController
 				$extension = false;
 			}
 
-			if($extension !== false && $_FILES['file']['size'] <= 2097152) {
+			if($extension !== false && $_FILES['file']['size'] <= 50331648) {
 				$info = pathinfo($_FILES['file']['name']);
 				$fileName = uniqid(basename($_FILES['file']['name'],'.'.$info['extension']).date("ymd").'_') . "." . $extension;
 

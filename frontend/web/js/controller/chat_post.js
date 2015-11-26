@@ -160,7 +160,7 @@ var ChatPost = {
 							ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
 							fileForm.find("textarea").val('');
 						} else {
-							alert("The file you upload is not supported or size of file is larger than 2Mb!");
+							alert("The file you upload is not supported or size of file is larger than 12Mb!");
 						}
 					}
 				});
