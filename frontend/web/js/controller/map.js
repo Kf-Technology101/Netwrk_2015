@@ -15,8 +15,6 @@ var Map ={
 		var map_andiana = {
 			center:new google.maps.LatLng(39.7662195,-86.441277),
 			zoom: 7,
-			map.minZoom = 7;
-			map.maxZoom = 7;
 			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,
 			streetViewControl: false,
