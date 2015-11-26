@@ -50,7 +50,7 @@
             <% }else if(msg.msg_type == 2) { %>
                 <a href='<?= Url::to("@web/img/uploads/") ?><%= msg.msg %>' target='_blank'><img src='<?= Url::to("@web/img/uploads/") ?><%= msg.msg %>' class='img_chat_style'/></a>
             <% } else { %>
-                <a href='<?= Url::to("@web/files/uploads/") ?><%= msg.msg %>' target='_blank'><%= msg.msg %></a>
+                <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.msg %>' target='_blank'><%= msg.msg %></a>
             <% } %>
                 <p class="time"><%= msg.created_at %></p>
             </div>
