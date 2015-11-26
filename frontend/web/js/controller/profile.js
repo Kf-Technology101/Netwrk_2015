@@ -30,9 +30,9 @@ var Profile = {
         Profile.onChangeAbout();
         Profile.eventClickSave();
         // $('.footer-btn').hide();
-        $('.modal-footer').hide();
-        var abc = $('#modal_meet .modal-body').height();
-        $('#modal_meet .modal-body').css('max-height', abc+47);
+        $('#modal_meet .modal-footer').hide();
+        var footer_height = $('#modal_meet .modal-body').height();
+        $('#modal_meet .modal-body').css('max-height', footer_height+47);
     },
 
     eventClickSave: function(){
