@@ -241,6 +241,7 @@ var Map ={
 	},
 
 	smoothZoom: function(map, level, cnt, mode) {
+		// console.log("level: " + level + " === cnt: " + cnt + " === mode: " + mode);
 		// If mode is zoom in
 		if(mode == true) {
 			if (cnt >= level) {
@@ -251,7 +252,7 @@ var Map ={
 					google.maps.event.removeListener(z);
 					Map.smoothZoom(map, level, cnt + 1, true);
 				});
-				setTimeout(function(){map.setZoom(cnt)}, 80);
+				setTimeout(function(){map.setZoom(cnt)}, 250);
 			}
 		} else {
 			if (cnt <= level) {
@@ -262,7 +263,7 @@ var Map ={
 					google.maps.event.removeListener(z);
 					Map.smoothZoom(map, level, cnt - 1, false);
 				});
-				setTimeout(function(){map.setZoom(cnt)}, 80);
+				setTimeout(function(){map.setZoom(cnt)}, 250);
 			}
 		}
 	},
