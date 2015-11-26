@@ -107,6 +107,7 @@ var ChatPost = {
 			if(val != ""){
 				ChatPost.ws.send("send", {"type": 1, "msg": val});
 				parent.find("textarea").val('');
+				parent.find("textarea").focus();
 			}
 		});
 	},
