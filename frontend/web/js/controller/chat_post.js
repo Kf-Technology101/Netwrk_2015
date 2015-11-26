@@ -37,19 +37,21 @@ var ChatPost = {
 		var template = _.template($( "#list_emoji" ).html());
 		var append_html = template({emoji: data});
 
-		parent.append(append_html);
-		if(!isMobile){
+		if(ChatPost.status_emoji == 1){
+			parent.append(append_html);
 			parent.mCustomScrollbar({
 				theme:"dark"
 			});
+			ChatPost.ConvertEmoji();
 		}
-		ChatPost.ConvertEmoji();
+
 	},
 
 	ConvertEmoji: function(){
 		var strs  = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
 		$.each(strs,function(i,e){
 			Emoji.Convert($(e));
+			ChatPost.status_emoji = 0;
 		});
 	},
 
@@ -60,6 +62,7 @@ var ChatPost = {
 			ChatPost.text_message = $(ChatPost.parent).find('.send_message textarea').val();
 			ChatPost.text_message += $(e.currentTarget).attr('data-value') + ' ';
 			$(ChatPost.parent).find('textarea').val(ChatPost.text_message);
+			$(ChatPost.parent).find('textarea').focus();
 		});
 	},
 
@@ -196,6 +199,7 @@ var ChatPost = {
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
+				$(ChatPost.parent).find('textarea').focus();
 			},
 			close: function() {
 				console.log('close');
@@ -206,7 +210,7 @@ var ChatPost = {
 						ChatPost.getMessageTemplate(elem);
 					});
 					if(isMobile){
-						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 					ChatPost.ScrollTopChat();
 					ChatPost.FetchEmojiOne({type: 'fetch'});
@@ -222,7 +226,7 @@ var ChatPost = {
 						ChatPost.getMessageTemplate(elem);
 					});
 					if(isMobile){
-						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
 					if(ChatPost.message_type == 1){
 						ChatPost.FetchEmojiOne({type: 'single'});
