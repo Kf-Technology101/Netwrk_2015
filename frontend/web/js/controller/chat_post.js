@@ -130,41 +130,45 @@ var ChatPost = {
 		input_change.unbind('change');
 		input_change.change(function(){
 			if(typeof input_change[0].files[0] != "undefined"){
+				var size_file = input_change[0].files[0].size;
 				file = input_change[0].files[0];
 
 				fd = new FormData();
 				fd.append('file', file);
-
-				$.ajax({
-					xhr: function() {
-						var xhr = new window.XMLHttpRequest();
-						// xhr.upload.addEventListener("progress", function(evt) {
-						// 	if(evt.lengthComputable) {
-						// 		var percentComplete = evt.loaded / evt.total;
-						// 		percentComplete = parseInt(percentComplete * 100);
-						// 		console.log(percentComplete);
-						// 		$("#msgForm").css({background : "linear-gradient(90deg, #009bcd "+ percentComplete +"%, white 0%)"});
-						// 	}
-						// }, false);
-						return xhr;
-					},
-					url:  baseUrl + "/netwrk/chat/upload",
-					type: "POST",
-					data: fd,
-					processData: false,
-					contentType: false,
-					success: function(result) {
-						var fileForm = $(ChatPost.parent).find('#msgForm');
-						val  = fileForm.find("textarea").val();
-						if(result != "" && result !== false){
-							var result = $.parseJSON(result);
-							ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
-							fileForm.find("textarea").val('');
-						} else {
-							alert("The file you upload is not supported or size of file is larger than 12Mb!");
+				if (size_file > 12582912) {
+					alert("The file you upload is not supported or size of file is larger than 12Mb!");
+					return false;
+				} else {
+					$.ajax({
+						xhr: function() {
+							var xhr = new window.XMLHttpRequest();
+							xhr.upload.addEventListener("progress", function(evt) {
+								if(evt.lengthComputable) {
+									var percentComplete = evt.loaded / evt.total;
+									percentComplete = parseInt(percentComplete * 100);
+									console.log(percentComplete);
+									$("#msgForm").css({background : "linear-gradient(90deg, #009bcd "+ percentComplete +"%, white 0%)"});
+								}
+							}, false);
+							return xhr;
+						},
+						url:  baseUrl + "/netwrk/chat/upload",
+						type: "POST",
+						data: fd,
+						processData: false,
+						contentType: false,
+						success: function(result) {
+							var fileForm = $(ChatPost.parent).find('#msgForm');
+							val  = fileForm.find("textarea").val();
+							if(result != "" && result !== false){
+								var result = $.parseJSON(result);
+								ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
+								fileForm.find("textarea").val('');
+							}
 						}
-					}
-				});
+					});
+				}
+
 			}
 		});
 	},
