@@ -35,29 +35,28 @@ var ChatPost = {
 		var template = _.template($( "#list_emoji" ).html());
 		var append_html = template({emoji: data});
 
-		if(ChatPost.status_emoji == 1){
-			parent.append(append_html);
+		parent.append(append_html);
+		if(!isMobile){
 			parent.mCustomScrollbar({
 				theme:"dark"
 			});
-
-			ChatPost.ConvertEmoji();
 		}
+		ChatPost.ConvertEmoji();
 	},
 
 	ConvertEmoji: function(){
 		var strs  = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
 		$.each(strs,function(i,e){
 			Emoji.Convert($(e));
-			ChatPost.status_emoji = 0;
 		});
 	},
 
 	HandleEmoji: function(){
 		var btn = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
+		btn.unbind();
 		btn.on('click',function(e){
 			var text = $(e.currentTarget).attr('data-value');
-			$(ChatPost.parent).find('textarea').append(text + ' ');
+			$(ChatPost.parent).find('textarea').val(text + ' ');
 		});
 	},
 

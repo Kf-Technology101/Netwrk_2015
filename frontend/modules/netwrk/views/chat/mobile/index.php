@@ -19,11 +19,19 @@
             <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
             <div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
             <input type='file' id='file_upload' name='file_upload' style="display:none" />
-            <div class="input-group-addon emoji"><i class="fa fa-smile-o"></i></div>
+            <div class="input-group-addon emoji dropup">
+                <i class="fa fa-smile-o dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" ></i>
+                <ul class="dropdown-menu"></ul>
+            </div>
             <div class="input-group-addon send" id="sizing-addon2">Send</div>
         </form>
     </div>
 </div>
+<script id="list_emoji" type="text/x-underscore-template">
+    <% _.each(emoji,function(i,e){ %>
+        <li data-value="<%= i %>"><%= i %></li>
+    <% })%>
+</script>
 <script id="message_chat" type="text/x-underscore-template">
     <% if (msg.user_current){ %>
         <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">

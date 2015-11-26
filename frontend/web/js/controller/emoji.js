@@ -13,6 +13,7 @@ var Emoji ={
 	},
 
 	GetEmoji: function(){
-		return emojione.asciiList;
+		var emoji =[":heart:", ":broken_heart:", ":joy:", ":smiley:", ":smile:", ":sweat_smile:", ":laughing:", ":wink:" , ":sweat:", ":kissing_heart:", ":stuck_out_tongue_winking_eye:", ":disappointed:", ":angry:", ":cry:", ":persevere:", ":fearful:", ":flushed:", ":dizzy_face:", ":ok_woman:", ":innocent:", ":sunglasses:", ":expressionless:", ":confused:", ":stuck_out_tongue:", ":open_mouth:", ":no_mouth:"]
+		return emoji;
 	}
 }
