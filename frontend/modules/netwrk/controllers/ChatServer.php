@@ -55,6 +55,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
+				$room = $data['data']['room'];
 				$this->ws_messages->user_id = $this->current_user;
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $this->post_id;
@@ -73,7 +74,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'msg'=> nl2br($msg),
 														'msg_type' => $type,
 														"created_at" => date("h:i A"),
-														'post_id'=> $this->post_id,
+														'post_id'=> $room,
 														"user_current"=> $userProfile->current)
 													]);
 				}
@@ -124,7 +125,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'msg'=> nl2br($value->msg),
 					'msg_type' => $value->msg_type,
 					'created_at'=> $time,
-					'post_id'=> $this->post_id,
+					'post_id'=> $value->post_id,
 					'user_current'=> $current
 					);
 
