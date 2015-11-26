@@ -66,7 +66,9 @@ class ChatController extends BaseController
 			$supported_file_types = array(
 				"text/plain" => "txt",
 				"application/msword" => 'doc',
+				"application/vnd.openxmlformats-officedocument.wordprocessingml.document" => 'docx',
 				"application/excel" => 'xls',
+				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => 'xlsx',
 				"application/vnd.ms-excel" => 'xls',
 				"application/x-excel" => 'xls',
 				"application/x-msexcel" => 'xls',
@@ -74,10 +76,15 @@ class ChatController extends BaseController
 				"application/powerpoint" => 'ppt',
 				"application/vnd.ms-powerpoint" => 'ppt',
 				"application/x-mspowerpoint" => 'ppt',
+				"application/vnd.openxmlformats-officedocument.presentationml.presentation" => 'pptx',
 				"application/pdf" => 'pdf',
 				"audio/mpeg3" => 'mp3',
 				"video/mpeg" => "mp3",
-				"video/avi" => "avi"
+				"video/avi" => "avi",
+				"application/x-shockwave-flash" => 'swf',
+				"audio/wav, audio/x-wav" => 'wav',
+				"application/xml" => 'xml',
+				"image/x-icon" => 'ico'
 				);
 
 			if (isset($supported_img_types[$mime_type])) {
