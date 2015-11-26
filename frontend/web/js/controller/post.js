@@ -86,6 +86,7 @@ var Post ={
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
+        	console.log('click backdrop post');
             $('#list_post').modal('hide');
         });
     },
@@ -178,7 +179,6 @@ var Post ={
 
 	ShowModalPost: function(){
 		var parent = $('#list_post');
-        
 		set_heigth_modal($('#list_post'),0);
 		parent.modal({
             backdrop: true,

@@ -51,12 +51,13 @@ var Topic = {
             Topic.show_modal_topic(city,params);
             Topic.close_modal();
             Topic._onclickBack();
+            Topic.OnClickBackdrop();
         }
     },
 
     CustomScrollBar: function(){
         var parent;
- 
+
         parent = $("#modal_topic").find('.modal-body');
 
         parent.mCustomScrollbar({
@@ -126,7 +127,6 @@ var Topic = {
         }
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
-        
         parent.find('.container').removeClass('open');
     },
 
@@ -160,7 +160,6 @@ var Topic = {
                     Post.params.city_name = Topic.data.city_name;
                     Post.initialize();
                 }
-                
             });
         });
 
@@ -173,6 +172,7 @@ var Topic = {
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').click(function(e) {
+            console.log('click backdrop');
             $('#modal_topic').modal('hide');
         });
     },
@@ -274,7 +274,7 @@ var Topic = {
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
         parent.show();
-
+        set_heigth_modal($('#modal_topic'),0);
         $('#modal_topic').modal({
             backdrop: true,
             keyboard: false
@@ -285,7 +285,6 @@ var Topic = {
     OnShowModalPost: function(){
         $('#modal_topic').unbind();
         $('#modal_topic').on('shown.bs.modal',function(e) {
-            set_heigth_modal($('#modal_topic'),0);
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
         });
@@ -303,19 +302,17 @@ var Topic = {
             parent.scrollTop(0);
             self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
             self.getTemplate(parent,data);
-            
             self.getTemplateModal(cityname,data);
             Topic.CustomScrollBar();
             Topic.filter_topic(parent);
             Topic.GetDataOnTab();
-            Topic.OnClickBackdrop(); 
+            
         });
     },
 
     close_modal: function(){
-        // $('#modal_topic').unbind();
         $('#modal_topic').on('hidden.bs.modal',function(e) {
-            $(e.currentTarget).unbind(); // or $(this)        
+            $(e.currentTarget).unbind();
             Topic.reset_modal();
             Map.get_data_marker();
         });

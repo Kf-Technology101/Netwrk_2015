@@ -51,8 +51,7 @@
       </div>
     </div>
   </div>
-   
-   
+</div>
   <script id="city_name" type="text/x-underscore-template">
     <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= city %></span>
   </script>
@@ -82,4 +81,4 @@
         </div>
     <% }); %>  
     </script>
-</div>
+

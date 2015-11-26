@@ -18,7 +18,7 @@
                     <div class="title"></div>
                     <div class="dropdown input-group">
                         <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
-                        <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
+                        <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                             <li data-value="post">Most recent</li>
                             <li data-value="brilliant">Most brilliant</li>
@@ -30,7 +30,7 @@
                             <td class="feed">Feed</td>
                             <td class="post active">Posts</td>
                         </tr>
-                    </table> 
+                    </table>
                 </div>
             </div>
            <div class="modal-body container_post">
