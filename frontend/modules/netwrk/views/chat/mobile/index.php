@@ -14,7 +14,7 @@
     </div>
 
     <div class="container_post_chat"></div>
-    <img src='img/icon/ajax-loader.gif' class='loading_imge' />
+    <img src='<?= Url::to("@web/img/icon/ajax-loader.gif")?>' class='loading_imge' />
     <div class="nav_input_message">
         <form id='msgForm' class="send_message input-group">
             <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
