@@ -35,6 +35,9 @@ var Map ={
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
 		map.setOptions({zoomControl: false, scrollwheel: false, scaleControl: false, styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
+		if (isMobile){
+			map.setOptions({zoomControl: false, scrollwheel: false, panControl:false, styles: remove_poi});
+		}
 		
 		Map.data_map = map;
 		Map.min_max_zoom(map);

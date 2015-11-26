@@ -171,10 +171,9 @@ var ChatPost = {
 
 				fd = new FormData();
 				fd.append('file', file);
-				console.log($.inArray(type_file, array_type_support));
 				if ((size_file > 12582912) || ($.inArray(type_file, array_type_support) === -1)) {
 					alert("Uploaded file is not supported or it exceeds the allowable limit of 12MB.");
-					return false;
+					input_change.val('');
 				} else {
 					$.ajax({
 						xhr: function() {
