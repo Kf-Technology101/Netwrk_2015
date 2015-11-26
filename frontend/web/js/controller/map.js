@@ -18,7 +18,7 @@ var Map ={
 			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,
 			streetViewControl: false,
-			// scrollwheel: false,
+			scrollwheel: false,
 			mapTypeId:google.maps.MapTypeId.ROADMAP,
 		};
 		var remove_poi = [
