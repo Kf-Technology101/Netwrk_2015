@@ -8,7 +8,7 @@ var Emoji ={
 	},
 
 	Convert: function(target){
-		var emoji = emojione.shortnameToImage(target.text());
+		var emoji = emojione.shortnameToImage(target.text().replace(/(?:\r\n|\r|\n)/g, '<br />'));
 		target.html(emoji);
 	},
 

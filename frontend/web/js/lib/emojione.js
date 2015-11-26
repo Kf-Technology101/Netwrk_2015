@@ -235,7 +235,7 @@
 
                 // depending on the settings, we'll either add the native unicode as the alt tag, otherwise the shortname
                 alt = (ns.unicodeAlt) ? ns.convert(unicode) : shortname;
-                console.log(ns);
+
                 if(ns.imageType === 'png') {
                     if(ns.sprites) {
                         replaceWith = '<span class="emojione-'+unicode+'" title="'+shortname+'">'+alt+'</span>';
