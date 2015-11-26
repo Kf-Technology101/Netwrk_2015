@@ -51,7 +51,7 @@ class ChatController extends BaseController
 
 	public function actionUpload()
 	{
-		if(isset($_FILES['file'])){
+		if(isset($_FILES['file']) && $_FILES['file']['error'] == 0 ){
 			$file = file_get_contents($_FILES['file']['tmp_name']);
 			$f = finfo_open();
 			$mime_type = finfo_buffer($f, $file, FILEINFO_MIME_TYPE);
