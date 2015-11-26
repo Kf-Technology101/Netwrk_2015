@@ -150,7 +150,8 @@ var ChatPost = {
 									var percentComplete = evt.loaded / evt.total;
 									percentComplete = parseInt(percentComplete * 100);
 									console.log(percentComplete);
-									$("#msgForm").css({background : "linear-gradient(90deg, #009bcd "+ percentComplete +"%, white 0%)"});
+									$(ChatPost.parent).find('#file_upload').attr('disabled', 'disabled');
+									$(ChatPost.parent).find(".loading_imge").css('display', 'block');
 								}
 							}, false);
 							return xhr;
@@ -166,6 +167,8 @@ var ChatPost = {
 							if(result != "" && result !== false){
 								var result = $.parseJSON(result);
 								ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
+								$(ChatPost.parent).find('#file_upload').removeAttr('disabled');
+								$(ChatPost.parent).find(".loading_imge").css('display', 'none');
 								fileForm.find("textarea").val('');
 							}
 						}
