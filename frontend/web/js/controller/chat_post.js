@@ -126,6 +126,7 @@ var ChatPost = {
 	},
 
 	HandleWsFilePost: function(){
+		var parentChat = $(ChatPost.parent);
 		var input_change = $(ChatPost.parent).find('#file_upload');
 		input_change.unbind('change');
 		input_change.change(function(){
@@ -147,8 +148,11 @@ var ChatPost = {
 									var percentComplete = evt.loaded / evt.total;
 									percentComplete = parseInt(percentComplete * 100);
 									console.log(percentComplete);
-									$(ChatPost.parent).find('#file_upload').attr('disabled', 'disabled');
-									$(ChatPost.parent).find(".loading_imge").css('display', 'block');
+									parentChat.find('#file_upload').attr('disabled', 'disabled');
+									parentChat.find(".loading_imge").css('display', 'block');
+									parentChat.find("#sizing-addon2").attr('disabled', 'disabled');
+									parentChat.find(".emoji i").attr('disabled', 'disabled');
+									parentChat.find("#msgForm textarea").attr('disabled', 'disabled');
 								}
 							}, false);
 							return xhr;
@@ -164,8 +168,11 @@ var ChatPost = {
 							if(result != "" && result !== false){
 								var result = $.parseJSON(result);
 								ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
-								$(ChatPost.parent).find('#file_upload').removeAttr('disabled');
-								$(ChatPost.parent).find(".loading_imge").css('display', 'none');
+								parentChat.find('#file_upload').removeAttr('disabled');
+								parentChat.find(".loading_imge").css('display', 'none');
+								parentChat.find("#sizing-addon2").removeAttr('disabled');
+								parentChat.find(".emoji i").removeAttr('disabled');
+								parentChat.find("#msgForm textarea").removeAttr('disabled');
 								fileForm.find("textarea").val('');
 							}
 						}
