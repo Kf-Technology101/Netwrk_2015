@@ -52,7 +52,7 @@ class AppAsset extends AssetBundle
         'js/lib/jquery.ui.pips.js',
         'js/lib/jquery.ui.touch_punch.js',
         'js/lib/jquery.mCustomScrollbar.concat.min.js',
-        'js/lib/emojione.min.js',
+        'js/lib/emojione.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
