@@ -10,6 +10,7 @@ var Map ={
 	data_map:'',
 	infowindow:[],
 	zoomIn: false,
+	incre: 1,
 	initialize: function() {
 		var map_andiana = {
 			center:new google.maps.LatLng(39.7662195,-86.441277),
@@ -225,45 +226,66 @@ var Map ={
 		var mode = true;
 		map.addListener('dblclick', function(event){
 		    if(!Map.zoomIn){
-			    Map.smoothZoom(map, 13, map.getZoom(), true);
-		    	Map.zoomIn = true;
-			    Map.deleteNetwrk(map);
-				map.zoom = 12;
-				Map.show_marker(map);
+			    Map.smoothZoom(map, 12, map.getZoom() + 1, true);
+			    Map.zoomIn = true;
+			    // Map.incre = 1;
+			    if(map.getZoom() == 12) {
+				    Map.deleteNetwrk(map);
+					map.zoom = 12;
+					Map.show_marker(map);
+				}
+				
 			} else {
-				Map.smoothZoom(map, 6, map.getZoom(), false);
+				Map.smoothZoom(map, 7, map.getZoom(), false);
 				Map.zoomIn = false;
-				Map.deleteNetwrk(map);
-				map.zoom = 7;
-				Map.show_marker(map);
+				// Map.incre = 1;
+				if(map.getZoom() == 7) {
+					Map.deleteNetwrk(map);
+					map.zoom = 7;
+					Map.show_marker(map);
+				}
 			}
 		});
 	},
 
 	smoothZoom: function(map, level, cnt, mode) {
-		// console.log("level: " + level + " === cnt: " + cnt + " === mode: " + mode);
+		console.log("level: " + level + " === cnt: " + cnt + " === mode: " + mode + " === incre: " + Map.incre);
 		// If mode is zoom in
 		if(mode == true) {
-			if (cnt >= level) {
+			if (cnt > level) {
+				Map.incre = 1;
 				return;
 			}
 			else {
+				
 				var z = google.maps.event.addListener(map, 'zoom_changed', function(event){
 					google.maps.event.removeListener(z);
-					Map.smoothZoom(map, level, cnt + 1, true);
+					Map.smoothZoom(map, level, cnt + Map.incre, true);
 				});
-				setTimeout(function(){map.setZoom(cnt)}, 250);
+				setTimeout(function(){map.setZoom(cnt)}, 150);
+				if (Map.incre < 2) {
+					Map.incre++;
+				} else {
+					Map.incre = 2;
+				}
 			}
 		} else {
-			if (cnt <= level) {
+			if (cnt < level) {
+				Map.incre = 1;
 				return;
 			}
 			else {
+				
 				var z = google.maps.event.addListener(map, 'zoom_changed', function(event) {
 					google.maps.event.removeListener(z);
-					Map.smoothZoom(map, level, cnt - 1, false);
+					Map.smoothZoom(map, level, cnt - Map.incre, false);
 				});
-				setTimeout(function(){map.setZoom(cnt)}, 250);
+				setTimeout(function(){map.setZoom(cnt)}, 110);
+				if (Map.incre < 2)
+					Map.incre++;
+				else {
+					Map.incre = 1;
+				}
 			}
 		}
 	},
