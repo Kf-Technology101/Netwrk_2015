@@ -136,11 +136,40 @@ var ChatPost = {
 		input_change.change(function(){
 			if(typeof input_change[0].files[0] != "undefined"){
 				var size_file = input_change[0].files[0].size;
+				var type_file = input_change[0].files[0].type;
+				var array_type_support = [
+						"image/png",
+						"image/jpeg",
+						"image/pjpeg",
+						"image/gif",
+						"text/plain",
+						"application/msword",
+						"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+						"application/excel",
+						"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+						"application/vnd.ms-excel" ,
+						"application/x-excel" ,
+						"application/x-msexcel",
+						"application/mspowerpoint",
+						"application/powerpoint",
+						"application/vnd.ms-powerpoint",
+						"application/x-mspowerpoint",
+						"application/vnd.openxmlformats-officedocument.presentationml.presentation",
+						"application/pdf",
+						"audio/mpeg3",
+						"video/mpeg",
+						"video/avi",
+						"application/x-shockwave-flash",
+						"audio/wav, audio/x-wav",
+						"application/xml",
+						"image/x-icon"
+					]
 				file = input_change[0].files[0];
 
 				fd = new FormData();
 				fd.append('file', file);
-				if (size_file > 12582912) {
+				console.log($.inArray(type_file, array_type_support));
+				if ((size_file > 12582912) || ($.inArray(type_file, array_type_support) === -1)) {
 					alert("Uploaded file is not supported or it exceeds the allowable limit of 12MB.");
 					return false;
 				} else {

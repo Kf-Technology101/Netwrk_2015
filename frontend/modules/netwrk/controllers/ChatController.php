@@ -86,7 +86,6 @@ class ChatController extends BaseController
 				"application/xml" => 'xml',
 				"image/x-icon" => 'ico'
 				);
-
 			if (isset($supported_img_types[$mime_type])) {
 				$extension = $supported_img_types[$mime_type];
 				$type = 2;
