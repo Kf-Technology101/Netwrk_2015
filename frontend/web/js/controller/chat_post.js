@@ -10,6 +10,7 @@ var ChatPost = {
 	status_emoji: 1,
 	text_message:'',
 	message_type:1,
+	msg_lenght: 0,
 	initialize: function(){
 		ChatPost.SetUrl();
 		ChatPost.SetDataPostChat();
@@ -113,10 +114,11 @@ var ChatPost = {
 	},
 
 	ScrollTopChat: function(){
+		console.log('scroll');
 		if(isMobile){
 			$(ChatPost.parent).find(ChatPost.container).scrollTop($(ChatPost.parent).find(ChatPost.container)[0].scrollHeight);
 		}else{
-			$(ChatPost.parent).find('.modal-body').mCustomScrollbar("scrollTo","bottom");
+			$(ChatPost.parent).find('.modal-body').mCustomScrollbar("scrollTo",$(ChatPost.parent).find(ChatPost.container)[0].scrollHeight);
 		}
 	},
 
@@ -208,15 +210,6 @@ var ChatPost = {
 		});
 	},
 
-	ScrollTopChat: function(){
-		if(isMobile){
-			$(ChatPost.parent).find(ChatPost.container).scrollTop($(ChatPost.parent).find(ChatPost.container)[0].scrollHeight);
-		}else{
-			$(ChatPost.parent).find('.modal-body').mCustomScrollbar("scrollTo","bottom");
-		}
-
-	},
-
 	WsConnect: function(parent){
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
 			open: function() {
@@ -228,13 +221,14 @@ var ChatPost = {
 			},
 			events: {
 				fetch: function(e) {
+					ChatPost.msg_lenght = e.data.length;
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(elem);
+						ChatPost.ScrollTopChat();
 					});
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
-					ChatPost.ScrollTopChat();
 					ChatPost.FetchEmojiOne({type: 'fetch'});
 				},
 				onliners: function(e){
@@ -253,6 +247,7 @@ var ChatPost = {
 					if(ChatPost.message_type == 1){
 						ChatPost.FetchEmojiOne({type: 'single'});
 					}
+					ChatPost.ScrollTopChat();
 				}
 			}
 		});
@@ -263,7 +258,6 @@ var ChatPost = {
 		var append_html = template({msg: data,baseurl: baseUrl});
 
 		$(ChatPost.parent).find(ChatPost.container).append(append_html);
-		ChatPost.ScrollTopChat();
 	},
 
 	RedirectChatPostPage: function(postId){
