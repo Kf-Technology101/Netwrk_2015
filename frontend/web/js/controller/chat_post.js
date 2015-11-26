@@ -54,9 +54,10 @@ var ChatPost = {
 	HandleEmoji: function(){
 		var btn = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
 		btn.unbind();
+		var text = '';
 		btn.on('click',function(e){
-			var text = $(e.currentTarget).attr('data-value');
-			$(ChatPost.parent).find('textarea').val(text + ' ');
+			text += $(e.currentTarget).attr('data-value') +' ';
+			$(ChatPost.parent).find('textarea').val(text);
 		});
 	},
 
@@ -179,7 +180,6 @@ var ChatPost = {
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
 			open: function() {
 				console.log('open');
-				// ChatPost.ws.send("fetch");
 			},
 			close: function() {
 				console.log('close');
