@@ -34,7 +34,7 @@
 	</div>
 	<script id="list_emoji" type="text/x-underscore-template">
 		<% _.each(emoji,function(i,e){ %>
-			<li data-value="<%= e %>"><a href="#"><%= e %></a></li>
+			<li data-value="<%= e %>"><%= e %></li>
 		<% })%>
 	</script>
 	<script id="chatpost_name" type="text/x-underscore-template">

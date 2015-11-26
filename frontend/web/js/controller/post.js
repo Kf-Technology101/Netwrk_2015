@@ -273,7 +273,6 @@ var Post ={
 	},
 
 	ShowPostPage: function(){
-		
 		if(isMobile){
 			$('#list_post').find('span.filter').removeClass('visible');
 		}else{

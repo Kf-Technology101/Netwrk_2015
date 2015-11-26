@@ -1,14 +1,13 @@
 var Emoji ={
 
 	initialize: function(){
-	  emojione.imageType = 'svg';
+	  emojione.imageType = 'png';
 	  emojione.ascii = true;
 	  emojione.imagePathPNG = baseUrl + '/css/emojione/png/';
 	  emojione.imagePathSVG = baseUrl + '/css/emojione/svg/';
 	},
 
 	Convert: function(target){
-		console.log(target.text());
 		var emoji = emojione.shortnameToImage(target.text());
 		target.html(emoji);
 	},
