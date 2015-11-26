@@ -9,6 +9,7 @@ var ChatPost = {
 	container: '',
 	status_emoji: 1,
 	text_message:'',
+	message_type:1,
 	initialize: function(){
 		ChatPost.SetUrl();
 		ChatPost.SetDataPostChat();
@@ -203,12 +204,15 @@ var ChatPost = {
 				},
 				single: function(e){
 					$.each(e.data, function(i, elem){
+						ChatPost.message_type = elem.msg_type;
 						ChatPost.getMessageTemplate(elem);
 					});
 					if(isMobile){
 						fix_width_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}
-					ChatPost.FetchEmojiOne({type: 'single'});
+					if(ChatPost.message_type == 1){
+						ChatPost.FetchEmojiOne({type: 'single'});
+					}
 				}
 			}
 		});
