@@ -35,6 +35,9 @@ var Map ={
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
 		map.setOptions({zoomControl: false, scrollwheel: false, scaleControl: false, styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
+		if (isMobile){
+			map.setOptions({zoomControl: false, scrollwheel: false, panControl:false, styles: remove_poi});
+		}
 		
 		Map.data_map = map;
 		Map.min_max_zoom(map);
@@ -233,8 +236,8 @@ var Map ={
 			    if(map.getZoom() == 12) {
 				    Map.deleteNetwrk(map);
 					map.zoom = 12;
-					map.minzoom = 12;
-					map.maxzoom = 12;
+					map.minZoom = 12;
+					map.maxZoom = 12;
 					Map.show_marker(map);
 				}
 				
@@ -245,8 +248,8 @@ var Map ={
 				if(map.getZoom() == 7) {
 					Map.deleteNetwrk(map);
 					map.zoom = 7;
-					map.minzoom = 7;
-					map.maxzoom = 7;
+					map.minZoom = 7;
+					map.maxZoom = 7;
 					Map.show_marker(map);
 				}
 			}
