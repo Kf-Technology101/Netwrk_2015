@@ -15,12 +15,13 @@
 
     <div class="container_post_chat"></div>
     <div class="nav_input_message">
-        <div class="send_message input-group">
+        <form id='msgForm' class="send_message input-group">
             <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
-            <div class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
+            <div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
+            <input type='file' id='file_upload' name='file_upload' style="display:none" />
             <div class="input-group-addon emoji"><i class="fa fa-smile-o"></i></div>
             <div class="input-group-addon send" id="sizing-addon2">Send</div>
-        </div>
+        </form>
     </div>
 </div>
 <script id="message_chat" type="text/x-underscore-template">
@@ -35,8 +36,15 @@
             </div>
         </div>
         <div class="content_message">
-            <p class="content"><%= msg.msg %></p>
-            <p class="time"><%= msg.created_at %></p>
-        </div>      
+            <% if(msg.msg_type == 1) { %>
+                <p class="content"><%= msg.msg %></p>
+            <% }else if(msg.msg_type == 2) { %>
+                <img src='<?= Url::to("@web/img/uploads/") ?><%= msg.msg %>' class='img_chat_style'/>
+            <% } else { %>
+                <a href='<?= Url::to("@web/files/uploads/") ?><%= msg.msg %>' target='_blank'><%= msg.msg %></a>
+            <% } %>
+                <p class="time"><%= msg.created_at %></p>
+            </div>
+        </div>
     </div>
 </script>
