@@ -152,11 +152,7 @@ var ChatPost = {
 									var percentComplete = evt.loaded / evt.total;
 									percentComplete = parseInt(percentComplete * 100);
 									console.log(percentComplete);
-									parentChat.find('#file_upload').attr('disabled', 'disabled');
-									parentChat.find(".loading_imge").css('display', 'block');
-									parentChat.find("#sizing-addon2").attr('disabled', 'disabled');
-									parentChat.find(".emoji i").attr('disabled', 'disabled');
-									parentChat.find("#msgForm textarea").attr('disabled', 'disabled');
+									parentChat.find(".loading_image").css('display', 'block');
 								}
 							}, false);
 							return xhr;
@@ -172,11 +168,7 @@ var ChatPost = {
 							if(result != "" && result !== false){
 								var result = $.parseJSON(result);
 								ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name});
-								parentChat.find('#file_upload').removeAttr('disabled');
-								parentChat.find(".loading_imge").css('display', 'none');
-								parentChat.find("#sizing-addon2").removeAttr('disabled');
-								parentChat.find(".emoji i").removeAttr('disabled');
-								parentChat.find("#msgForm textarea").removeAttr('disabled');
+								parentChat.find(".loading_image").css('display', 'none');
 								fileForm.find("textarea").val('');
 							}
 						}
