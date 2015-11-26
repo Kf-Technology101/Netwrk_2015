@@ -73,6 +73,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'msg'=> nl2br($msg),
 														'msg_type' => $type,
 														"created_at" => date("h:i A"),
+														'post_id'=> $this->post_id,
 														"user_current"=> $userProfile->current)
 													]);
 				}
@@ -123,6 +124,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'msg'=> nl2br($value->msg),
 					'msg_type' => $value->msg_type,
 					'created_at'=> $time,
+					'post_id'=> $this->post_id,
 					'user_current'=> $current
 					);
 

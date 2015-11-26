@@ -238,8 +238,10 @@ var ChatPost = {
 				},
 				single: function(e){
 					$.each(e.data, function(i, elem){
-						ChatPost.message_type = elem.msg_type;
-						ChatPost.getMessageTemplate(elem);
+						if(ChatPost.params.post == elem.post_id){
+							ChatPost.message_type = elem.msg_type;
+							ChatPost.getMessageTemplate(elem);
+						}
 					});
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
