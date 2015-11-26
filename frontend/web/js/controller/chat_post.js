@@ -8,6 +8,7 @@ var ChatPost = {
 	parent: '',
 	container: '',
 	status_emoji: 1,
+	text_message:'',
 	initialize: function(){
 		ChatPost.SetUrl();
 		ChatPost.SetDataPostChat();
@@ -54,10 +55,10 @@ var ChatPost = {
 	HandleEmoji: function(){
 		var btn = $(ChatPost.parent).find('.emoji').find('.dropdown-menu li');
 		btn.unbind();
-		var text = '';
 		btn.on('click',function(e){
-			text += $(e.currentTarget).attr('data-value') +' ';
-			$(ChatPost.parent).find('textarea').val(text);
+			ChatPost.text_message = $(ChatPost.parent).find('.send_message textarea').val();
+			ChatPost.text_message += $(e.currentTarget).attr('data-value') + ' ';
+			$(ChatPost.parent).find('textarea').val(ChatPost.text_message);
 		});
 	},
 
