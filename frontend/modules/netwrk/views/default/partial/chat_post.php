@@ -16,7 +16,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="container_post_chat"></div>
-				<img src='img/icon/ajax-loader.gif' class='loading_imge' />
+				<img src='img/icon/ajax-loader.gif' class='loading_image' />
 			</div>
 			<div class="modal-footer">
 				<form id='msgForm' class="send_message input-group">
