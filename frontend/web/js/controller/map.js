@@ -19,7 +19,6 @@ var Map ={
 			disableDefaultUI: true,
 			streetViewControl: false,
 			scrollwheel: false,
-			scaleControl: false,
 			mapTypeId:google.maps.MapTypeId.ROADMAP,
 		};
 		var remove_poi = [
@@ -33,11 +32,8 @@ var Map ={
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false, scrollwheel: false, scaleControl: false, styles: remove_poi});
+		map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
-		if (isMobile){
-			map.setOptions({zoomControl: false, scrollwheel: false, panControl:false, scaleControl: false, styles: remove_poi});
-		}
 		
 		Map.data_map = map;
 		Map.min_max_zoom(map);
@@ -236,8 +232,6 @@ var Map ={
 			    if(map.getZoom() == 12) {
 				    Map.deleteNetwrk(map);
 					map.zoom = 12;
-					map.minZoom = 12;
-					map.maxZoom = 12;
 					Map.show_marker(map);
 				}
 				
@@ -248,8 +242,6 @@ var Map ={
 				if(map.getZoom() == 7) {
 					Map.deleteNetwrk(map);
 					map.zoom = 7;
-					map.minZoom = 7;
-					map.maxZoom = 7;
 					Map.show_marker(map);
 				}
 			}
@@ -317,7 +309,7 @@ var Map ={
 		//Gets the specified MapType
 		var mapType = mapTypeRegistry.get(mapTypeId);
 		//Sets limits to MapType
-		mapType.maxZoom = 7;  //It doesn't work with SATELLITE and HYBRID maptypes.
+		mapType.maxZoom = 12;  //It doesn't work with SATELLITE and HYBRID maptypes.
 		mapType.minZoom = 7;
 	},
 
