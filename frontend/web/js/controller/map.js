@@ -36,7 +36,7 @@ var Map ={
 		map.setOptions({zoomControl: false, scrollwheel: false, scaleControl: false, styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		if (isMobile){
-			map.setOptions({zoomControl: false, scrollwheel: false, draggable: false, panControl:false, scaleControl: false, styles: remove_poi});
+			map.setOptions({zoomControl: false, scrollwheel: false, panControl:false, scaleControl: false, styles: remove_poi});
 		}
 		
 		Map.data_map = map;
@@ -257,7 +257,7 @@ var Map ={
 	},
 
 	smoothZoom: function(map, level, cnt, mode) {
-		console.log("level: " + level + " === cnt: " + cnt + " === mode: " + mode + " === incre: " + Map.incre);
+		// console.log("level: " + level + " === cnt: " + cnt + " === mode: " + mode + " === incre: " + Map.incre);
 		// If mode is zoom in
 		if(mode == true) {
 			if (cnt > level) {
@@ -317,8 +317,8 @@ var Map ={
 		//Gets the specified MapType
 		var mapType = mapTypeRegistry.get(mapTypeId);
 		//Sets limits to MapType
-		// mapType.maxZoom = 12;  //It doesn't work with SATELLITE and HYBRID maptypes.
-		// mapType.minZoom = 7;
+		mapType.maxZoom = 7;  //It doesn't work with SATELLITE and HYBRID maptypes.
+		mapType.minZoom = 7;
 	},
 
 	reset_data: function(){
