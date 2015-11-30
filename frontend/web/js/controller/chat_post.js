@@ -106,7 +106,6 @@ var ChatPost = {
 			var parent = $(e.currentTarget).parent();
 			var val	 = parent.find("textarea").val();
 			if(val != ""){
-				console.log(ChatPost.params.post);
 				ChatPost.ws.send("send", {"type": 1, "msg": val,"room": ChatPost.params.post});
 				parent.find("textarea").val('');
 				parent.find("textarea").focus();
@@ -238,8 +237,6 @@ var ChatPost = {
 				},
 				single: function(e){
 					$.each(e.data, function(i, elem){
-						console.log(ChatPost.params.post);
-						console.log(elem.post_id);
 						if(ChatPost.params.post == elem.post_id){
 							ChatPost.message_type = elem.msg_type;
 							ChatPost.getMessageTemplate(elem);

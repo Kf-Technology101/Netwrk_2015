@@ -283,8 +283,9 @@ var Topic = {
 
 
     OnShowModalPost: function(){
-        $('#modal_topic').unbind();
+        // $('#modal_topic').unbind('click');
         $('#modal_topic').on('shown.bs.modal',function(e) {
+            // $('#modal_topic').bind('click');
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
         });
@@ -306,7 +307,6 @@ var Topic = {
             Topic.CustomScrollBar();
             Topic.filter_topic(parent);
             Topic.GetDataOnTab();
-            
         });
     },
 
@@ -334,8 +334,8 @@ var Topic = {
         // $('.map_content .sidebar .container').find('span').remove();
         $.each(filter,function(i,e){
             self.list[e].paging = 1;
-            self.list[e].status_paging = 1; 
-            self.list[e].loaded = 0; 
+            self.list[e].status_paging = 1;
+            self.list[e].loaded = 0;
         });
 
         $.each(parent,function(i,e){
