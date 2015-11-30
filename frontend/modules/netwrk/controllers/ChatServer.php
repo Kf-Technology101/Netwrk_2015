@@ -58,7 +58,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$room = $data['data']['room'];
 				$this->ws_messages->user_id = $this->current_user;
 				$this->ws_messages->msg = $msg;
-				$this->ws_messages->post_id = $this->post_id;
+				$this->ws_messages->post_id = $room;
 				$this->ws_messages->msg_type = $type;
 				$this->ws_messages->post_type = 1;
 				$this->ws_messages->save(false);
