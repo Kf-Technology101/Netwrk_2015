@@ -36,7 +36,7 @@ var Map ={
 		map.setOptions({zoomControl: false, scrollwheel: false, scaleControl: false, styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		if (isMobile){
-			map.setOptions({zoomControl: false, scrollwheel: false, panControl:false, scaleControl: false, styles: remove_poi});
+			map.setOptions({zoomControl: false, scrollwheel: false, draggable: false, panControl:false, scaleControl: false, styles: remove_poi});
 		}
 		
 		Map.data_map = map;
