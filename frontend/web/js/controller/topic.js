@@ -48,8 +48,8 @@ var Topic = {
             Topic.show_page_topic(city,params);
         }else {
             Topic.OnShowModalPost();
-            Topic.show_modal_topic(city,params);
             Topic.close_modal();
+            Topic.show_modal_topic(city,params);
             Topic._onclickBack();
             Topic.OnClickBackdrop();
         }
@@ -283,9 +283,8 @@ var Topic = {
 
 
     OnShowModalPost: function(){
-        // $('#modal_topic').unbind('click');
+        $('#modal_topic').unbind('shown.bs.modal');
         $('#modal_topic').on('shown.bs.modal',function(e) {
-            // $('#modal_topic').bind('click');
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
         });
@@ -311,6 +310,7 @@ var Topic = {
     },
 
     close_modal: function(){
+        $('#modal_topic').unbind('hidden.bs.modal');
         $('#modal_topic').on('hidden.bs.modal',function(e) {
             $(e.currentTarget).unbind();
             Topic.reset_modal();
