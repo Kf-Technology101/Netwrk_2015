@@ -33,8 +33,8 @@
                 <p>Reset</p>
             </div>
             <div class="save disable">
-                <i class="fa fa-check"></i>
                 <span>Save</span>
+                <i class="fa fa-check"></i>
             </div>
         </div>
 
