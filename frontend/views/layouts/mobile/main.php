@@ -1,4 +1,4 @@
-<?php
+  <?php
 use frontend\assets\MobileAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -51,7 +51,7 @@ MobileAsset::register($this);
     <div class="navbar-mobile navbar-fixed-bottom">
       <div class="menu_bottom">
         <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div>
-        <div id="btn_discover_mobile"><img src="<?= Url::to('@web/img/icon/netwrk_btn.png'); ?>"></div>
+        <div id="btn_discover_mobile"><img src="<?= Url::to('@web/img/icon/Icons2-01.png'); ?>"></div>
         <!-- <a href="javascript:void(0)" class='left'>Menu</a> -->
         <a href="javascript:void(0)" class="right"><i class="fa fa-comment"></i></a>
 <!--         <div class="chatting">
