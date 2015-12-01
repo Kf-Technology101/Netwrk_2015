@@ -32,5 +32,6 @@
 <?= $this->render('partial/create_post');?>
 <?= $this->render('partial/post');?>
 <?= $this->render('partial/chat_post');?>
+<?= $this->render('partial/login');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>

@@ -78,6 +78,7 @@ AppAsset::register($this);
 <script type="text/javascript">
     var baseUrl = '<?php echo Url::base(true); ?>';
     var isMobile = false;
+    var isLogin = true;
 </script>
 </html>
 <?php $this->endPage() ?>

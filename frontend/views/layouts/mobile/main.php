@@ -59,9 +59,6 @@ MobileAsset::register($this);
         </div> -->
       </div>
     </div>
-    
-
-
   </div>
 
   <!-- <footer class="footer">
@@ -73,6 +70,9 @@ MobileAsset::register($this);
 
   <?php $this->endBody() ?>
 </body>
-<script type="text/javascript">var isMobile = true;</script>
+<script type="text/javascript">
+  var isMobile = true;
+  var isLogin = true;
+</script>
 </html>
 <?php $this->endPage() ?>
