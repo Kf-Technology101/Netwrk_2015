@@ -28,6 +28,7 @@ var Create_Topic={
             Create_Topic.onclickBack();
             Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickdiscoverMobile();
+            Create_Topic.postTitleFocus();
         }else{
             Create_Topic.params.city = city;
             Create_Topic.params.city_name = name;
@@ -39,6 +40,14 @@ var Create_Topic={
             Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickdiscover();
         }
+    },
+    postTitleFocus: function(){
+        $('.name_post').focus(function(){
+            $('.input-group').addClass('clsFocus');
+        });
+        $('.name_post').focusout(function(){
+            $('.input-group').removeClass('clsFocus');
+        });
     },
     eventClickdiscover: function(){
         var parent = $('#create_topic'),
