@@ -1,5 +1,13 @@
-var login={
+var Login={
 	initialize:function(){
-		console.log('login');
+		if(isMobile){
+			
+		}else{
+			Login.OnShowModalLogin();
+		}
+	},
+
+	OnShowModalLogin: function(){
+		
 	}
 };
