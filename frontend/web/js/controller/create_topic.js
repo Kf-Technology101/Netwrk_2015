@@ -57,7 +57,6 @@ var Create_Topic={
                 parent.modal('hide');
             });
     },
-
     eventClickdiscoverMobile: function(){
         var target = $('#btn_discover_mobile');
         target.unbind();
@@ -137,7 +136,7 @@ var Create_Topic={
     },
 
     onclickBack: function(){
-        var parent = $('#create_topic').find('.back_page img');
+        var parent = $('#create_topic').find('.back_page a');
         var city = Create_Topic.params.city;
         var params = {zipcode: Create_Topic.params.city_name};
         parent.unbind();
