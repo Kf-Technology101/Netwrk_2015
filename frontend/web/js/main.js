@@ -75,6 +75,12 @@ function set_heigth_modal(target,height_footer){
   target.find('.modal-body').css({'max-height':wh - 120});
 }
 
+function set_heigth_page_mobile(target){
+  var menutop = $('.menu_top').height();
+  var menubot = $('.menu_bottom').height();
+  target.css({'height': $(window).height() - menutop - menubot});
+}
+
 function ieVersion() {
     var ua = window.navigator.userAgent;
     if (ua.indexOf("Trident/7.0") > 0)
@@ -174,6 +180,9 @@ function _addListenEventPage(){
 		break;
   case 'Chat':
     ChatPost.initialize();
+    break;
+  case 'User':
+    User.initialize();
     break;
 	default:
 		Default.initialize();

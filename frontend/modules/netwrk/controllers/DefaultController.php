@@ -10,8 +10,8 @@ use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
 
 class DefaultController extends BaseController
-{	
-	private $currentUser = 1; 
+{
+	private $currentUser = 1;
 
     public function actionIndex()
     {
@@ -48,7 +48,7 @@ class DefaultController extends BaseController
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
     	$cities = City::find()->with('topics.posts')->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
-    	
+
     	$data = [];
 
 
@@ -84,7 +84,7 @@ class DefaultController extends BaseController
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
     	$cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
-    	
+
     	$data = [];
 
     	foreach ($cities as $key => $value) {

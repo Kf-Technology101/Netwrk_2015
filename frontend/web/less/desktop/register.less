@@ -1,8 +1,8 @@
-#login{
+#register{
     height: auto;
     top: 90px;
     overflow: visible;
-    display: none;
+    display: block;
     width: 500px;
     margin: auto;
     .modal-dialog{
@@ -50,7 +50,7 @@
         padding: 15px 0 0 0;
         height: auto;
         border-radius: 4px;
-        .form-login{
+        .form-register{
             p{
                 margin: 0 0 5px;
                 font-size: 16px;
@@ -64,6 +64,23 @@
                 .forgot-password{
                     text-align: right;
                     display: block;
+                }
+            }
+            .col-field-name{
+                margin: 0 0 15px;
+                width: 214px;
+                float: left;
+                input{
+                    width: 100%;
+                }
+                &:nth-of-type(odd) {
+                    margin-right: 42px;
+                }
+                &:nth-of-type(even) {
+                }
+                .dropdown-menu{
+                    width: 185px;
+                    padding: 10px;
                 }
             }
             ::-webkit-input-placeholder {
@@ -85,18 +102,23 @@
         .btn-control{
             background: #5888ac;
             border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            float: left;
             p{
                 color: #fff;
                 font-size: 20px;
                 font-weight: bold;
                 text-align: center;
-                padding: 10px 0;
+                line-height: 40px;
             }
             &.disable{
                 opacity: 0.6;
             }
         }
-        .sign-up{
+        .sign-in{
+            width: 100%;
+            float: left;
             margin-top: 20px;
             p{
                 font-size: 20px;

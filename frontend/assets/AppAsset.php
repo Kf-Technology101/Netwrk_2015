@@ -26,8 +26,10 @@ class AppAsset extends AssetBundle
         'css/desktop/post.css',
         'css/desktop/chat_post.css',
         'css/desktop/login.css',
+        'css/desktop/register.css',
         'css/jquery.ui.css',
         'css/jquery.ui.pips.css',
+        'css/bootstrap-datepicker.min.css',
         'css/jquery.mCustomScrollbar.css',
         'css/emojione/css/emojione.min.css'
     ];
@@ -48,11 +50,13 @@ class AppAsset extends AssetBundle
         'js/controller/post.js',
         'js/controller/vote.js',
         'js/controller/emoji.js',
+        'js/controller/user.js',
         'js/controller/login.js',
         'js/ws/ws.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',
         'js/lib/jquery.ui.touch_punch.js',
+        'js/bootstrap-datepicker.min.js',
         'js/lib/jquery.mCustomScrollbar.concat.min.js',
         'js/lib/emojione.js',
     ];

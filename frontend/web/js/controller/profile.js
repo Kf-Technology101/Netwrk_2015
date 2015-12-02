@@ -93,8 +93,8 @@ var Profile = {
 
                 Profile.status_change.zipcode = false;
                 Profile.OnTemplate();
-                Profile.invalidZip();                
-            }            
+                Profile.invalidZip();
+            }
         });
     },
 

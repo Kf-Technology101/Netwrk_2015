@@ -1,7 +1,6 @@
 <?php use yii\helpers\Url; ?>
 
 <div id="show_meet">
-  
   <div class="sidebar">
      <table class="filter_sidebar">
           <tr>
@@ -37,40 +36,6 @@
               </tr>
             </table>
           </div>
-      <!-- <div class="control-btn">
-        <table class="filter_sidebar">
-          <tr>
-              <td class="back disable">
-                <i class="fa fa-chevron-left"></i>
-                <span>Back</span>
-              </td>
-              <td class="meet">
-                <span>Meet</span>
-              </td>
-              <td class="met">
-                <span>Met</span>
-              </td>
-              <td class="next ">
-                <span>Next</span>
-                <i class="fa fa-chevron-right"></i>
-              </td>
-          </tr>
-        </table>
-
-        <div class="back disable">
-          <i class="fa fa-chevron-left"></i>
-          <span>back</span>
-        </div>
-        <div class="next">
-          <span>next</span>
-          <i class="fa fa-chevron-right"></i>
-        </div>
-        <div class="meet">
-          <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>meet</span>
-        </div>
-          <span><img src="<?= Url::to('@web/img/icon/human.png'); ?>"/>met</span>
-        </div>
-      </div> -->
     </div>
     <div class='page' id="meet_setting">
         <div class="show_me">
@@ -140,14 +105,12 @@
                                 <?php \yii\widgets\ActiveForm::end(); ?>
                                 <p>Browse</p>
                             </div>
-                            
                        </div>
                    </div>
                </div>
-           </div> 
+           </div>
         </div>
     </div>
-    
   </div>
 </div>
 
