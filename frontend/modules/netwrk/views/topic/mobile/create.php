@@ -3,7 +3,7 @@
     <div class="header">
         <div class="back_page">
             <!-- <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>"> -->
-            <p><a href="<?php echo Url::base(true); ?>"><i class="fa fa-arrow-circle-left"></i> Back </a></p>
+            <p><a href="#"><i class="fa fa-arrow-circle-left"></i> Back </a></p>
         </div>
         <div class="title_page">
             <span class="title">Create a Topic</span>
