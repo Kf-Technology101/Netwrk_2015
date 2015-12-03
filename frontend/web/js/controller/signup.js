@@ -8,11 +8,20 @@ var Signup={
 			Signup.parent = Signup.page;
 		}else{
 			Signup.parent = Signup.modal;
-			Signup.OnShowModalLogin();
-			Signup.OnHideModalLogin();
+			Signup.OnShowModalSignUp();
+			Signup.OnHideModalSignUp();
+			Signup.ShowModal();
+			Signup.OnClickBackdrop();
 		}
 		Signup.OnShowDatePicker();
 		Signup.OnChangeGender();
+	},
+
+	ShowModal: function(){
+		$(Signup.parent).modal({
+			backdrop: true,
+			keyboard: false
+		})
 	},
 
 	OnChangeGender: function(){
@@ -36,15 +45,31 @@ var Signup={
         });
 	},
 
-	OnShowModalLogin: function(){
+	OnShowModalSignUp: function(){
         $(Signup.parent).on('shown.bs.modal',function(e) {
+        	$(e.currentTarget).unbind();
+        	$('.modal-backdrop.in').addClass('active');
+        });
+	},
+
+	OnHideModalSignUp: function(){
+        $(Signup.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
         });
 	},
 
-	OnHideModalLogin: function(){
-        $(Signup.parent).on('hidden.bs.modal',function(e) {
-        	$(e.currentTarget).unbind();
-        });
+	OnClickSignUp: function(){
+		var btn = $(Login.parent).find('.sign-up b');
+		btn.unbind();
+		btn.on('click',function(){
+			Signup.initialize();
+			$(Login.parent).modal('hide');
+		});
 	},
+    OnClickBackdrop: function(){
+        $('.modal-backdrop.in').unbind();
+        $('.modal-backdrop.in').on('click',function(e) {
+            $(Signup.parent).modal('hide');
+        });
+    },
 };

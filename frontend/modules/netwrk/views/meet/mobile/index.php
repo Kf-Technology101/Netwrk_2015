@@ -51,7 +51,6 @@
                 <p class="title">Limit Search Area To</p>
                 <p class="value"></p>
             </div>
-            
             <div id="circles-slider-area"></div>
         </div>
         <div class="search_age">

@@ -37,7 +37,7 @@
                     <p>Sign Up</p>
                 </div>
                 <div class="sign-in">
-                    <p>Already have an account! <a href="javascript:void(0)">Login</a> now</p>
+                    <p>Already have an account! <b>Login</b> now</p>
                 </div>
             </div>
         </div>

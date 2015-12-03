@@ -15,22 +15,30 @@ var Login={
 		}
 	},
 
+	OnClickSignUp: function(){
+		var btn = $(Login.parent).find('.sign-up b');
+		btn.unbind();
+		btn.on('click',function(){
+			$(Login.parent).modal('hide');
+			Signup.initialize();
+		});
+	},
+
 	ShowModalLogin: function(){
-		$(Login.parent).modal({
+		$(Login.modal).modal({
 			backdrop: true,
 			keyboard: false
 		})
 	},
 
 	OnShowModalLogin: function(){
-        $('#login').on('shown.bs.modal',function(e) {
-        	$(e.currentTarget).unbind();
+        $(Login.modal).on('shown.bs.modal',function(e) {
         	$('.modal-backdrop.in').addClass('active');
         });
 	},
 
 	OnHideModalLogin: function(){
-        $('#list_post').on('hidden.bs.modal',function(e) {
+        $(Login.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
         	// $('.modal-backdrop.in').removeClass('active');
         });
@@ -39,7 +47,6 @@ var Login={
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
-        	console.log('aaaa');
             $(Login.parent).modal('hide');
         });
     },
