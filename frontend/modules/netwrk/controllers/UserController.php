@@ -16,7 +16,7 @@ class UserController extends BaseController
         return $this->render($this->getIsMobile() ? 'mobile/login' : '');
     }
 
-    public function actionRegister(){
-        return $this->render($this->getIsMobile() ? 'mobile/register' : '');
+    public function actionSignup(){
+        return $this->render($this->getIsMobile() ? 'mobile/signup' : '');
     }
 }

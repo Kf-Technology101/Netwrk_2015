@@ -22,6 +22,6 @@
         <p>Login</p>
     </div>
     <div class="sign-up">
-        <p>Don't have an account! <a href="javascript:void(0)">Sign Up</a> now</p>
+        <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup">Sign Up</a> now</p>
     </div>
 </div>

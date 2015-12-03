@@ -47,7 +47,6 @@ AppAsset::register($this);
             // $menuItems = [
             //     ['label' => 'Menu'],
             //     ['label' => 'Talking'],
-                
             // ];
             // if (Yii::$app->user->isGuest) {
             //     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

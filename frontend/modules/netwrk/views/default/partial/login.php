@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal" id='login'>
+<div class="modal" id='login' role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

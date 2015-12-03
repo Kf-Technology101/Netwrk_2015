@@ -15,7 +15,7 @@ MobileAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-  <meta charset="<?= Yii::$app->charset ?>"/>  
+  <meta charset="<?= Yii::$app->charset ?>"/>
   <meta http-equiv="Cache-control" content="public">
   <meta name="viewport" id="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
   <?= Html::csrfMetaTags() ?>

@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal" id='register'>
+<div class="modal" id='signup'>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,12 +18,12 @@
                     <div class="col-field-name">
                         <input type="password" class="password form-control" maxlength="128" placeholder="Password">
                     </div>
-                    <div class="col-field-name dropdown input-group">
+                    <div class="col-field-name sex dropdown input-group">
                         <input type="text" class="gender form-control" maxlength="128" placeholder="Gender" data-toggle="dropdown">
                         <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <li data-value="post">Male</li>
-                            <li data-value="brilliant">Female</li>
+                            <li>Male</li>
+                            <li>Female</li>
                         </ul>
                     </div>
                     <div class="col-field-name">

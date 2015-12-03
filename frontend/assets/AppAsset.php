@@ -26,7 +26,7 @@ class AppAsset extends AssetBundle
         'css/desktop/post.css',
         'css/desktop/chat_post.css',
         'css/desktop/login.css',
-        'css/desktop/register.css',
+        'css/desktop/signup.css',
         'css/jquery.ui.css',
         'css/jquery.ui.pips.css',
         'css/bootstrap-datepicker.min.css',
@@ -52,6 +52,7 @@ class AppAsset extends AssetBundle
         'js/controller/emoji.js',
         'js/controller/user.js',
         'js/controller/login.js',
+        'js/controller/signup.js',
         'js/ws/ws.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',
@@ -62,7 +63,7 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        // 'yii\bootstrap\BootstrapAsset',
         'rmrevin\yii\fontawesome\AssetBundle',
     ];
 }
