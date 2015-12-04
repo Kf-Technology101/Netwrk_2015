@@ -49,11 +49,11 @@ class PostController extends BaseController
         $current_date = date('Y-m-d H:i:s');
 
         $Post = new Post;
-        $message->post->title = $post;
-        $message->post->content = $message;
-        $message->post->topic_id = $topic;
-        $message->post->user_id = $this->currentUser;
-        $message->post->save();
+        $Post->title = $post;
+        $Post->content = $message;
+        $Post->topic_id = $topic;
+        $Post->user_id = $this->currentUser;
+        $Post->save();
 
     }
 
@@ -164,7 +164,7 @@ class PostController extends BaseController
         }
 
         $post = Post::findOne($post_id);
-        $temp = array ('status'=> 1 ,'data'=> $message->post->brilliant_count);
+        $temp = array ('status'=> 1 ,'data'=> $post->brilliant_count);
         $hash = json_encode($temp);
 
         return $hash;
