@@ -51,7 +51,7 @@
 		<li>
 			<div class='chat-post-id' data-post='<%= chat_inbox.id %>'>
 				<span class='avatar-user'>
-					<img class='img_avatar' src='<?= Url::to("@web/img/") ?><%= chat_inbox.avatar %>' />
+					<img class='img_avatar' src='<?= Url::to("@web/") ?><%= chat_inbox.avatar %>' />
 				</span>
 				<div class='title-description-user'>
 					<div class='title-chat-inbox'><%= chat_inbox.title %></div>

@@ -184,9 +184,9 @@ class PostController extends BaseController
             foreach ($messages as $key => $message) {
                 $user_photo = User::findOne($message->post->user_id)->profile->photo;
                 if ($user_photo == null){
-                    $image = '/icon/no_avatar.jpg';
+                    $image = 'img/icon/no_avatar.jpg';
                 }else{
-                    $image = '/uploads/'.$message->post->user_id.'/'.$user_photo;
+                    $image = 'uploads/'.$message->post->user_id.'/'.$user_photo;
                 }
 
                 $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$message->post->id)->one();
