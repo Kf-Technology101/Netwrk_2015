@@ -30,12 +30,15 @@ return [
             ],
         ],
     ],
-    'modules' => [
-        'user' => [
-            'class' => 'amnah\yii2\user\Module',
-            // set custom module properties here ...
-        ],
-    ],
+    // 'modules' => [
+    //     'user' => [
+    //         'class' => 'amnah\yii2\user\Module',
+    //         'controllerMap' => [
+    //             'default' => 'frontend\modules\netwrk\controllers\UserController',
+    //         ],
+    //         // set custom module properties here ...
+    //     ],
+    // ],
     // 'as access' => [
     //     'class' => 'mdm\admin\components\AccessControl',
     //     'allowActions' => [

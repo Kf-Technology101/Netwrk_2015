@@ -3,6 +3,7 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
+use amnah\yii2\user\models\Profile as BaseProfile;
 
 /**
  * This is the model class for table "profile".
@@ -20,7 +21,7 @@ use Yii;
  * @property double $lat
  * @property double $lng
  */
-class Profile extends \yii\db\ActiveRecord
+class Profile extends BaseProfile
 {
     /**
      * @inheritdoc

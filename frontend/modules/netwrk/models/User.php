@@ -3,6 +3,7 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
+use amnah\yii2\user\models\User as BaseUser;
 
 /**
  * This is the model class for table "user".
@@ -24,7 +25,7 @@ use Yii;
  * @property string $ban_time
  * @property string $ban_reason
  */
-class User extends \yii\db\ActiveRecord
+class User extends BaseUser
 {
     /**
      * @inheritdoc
