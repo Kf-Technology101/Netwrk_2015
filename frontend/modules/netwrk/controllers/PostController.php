@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace frontend\modules\netwrk\controllers;
 
 use frontend\components\BaseController;
@@ -8,13 +8,14 @@ use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Vote;
+use frontend\modules\netwrk\models\WsMessages;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
 use Yii;
 
 class PostController extends BaseController
-{   
+{
     private $currentUser = 1;
 
     public function actionResetPostCount(){
@@ -30,10 +31,10 @@ class PostController extends BaseController
         $topic_id = $_GET['topic'];
         $topic= Topic::find()->where('id ='.$topic_id)->one();
         return $this->render($this->getIsMobile() ? 'mobile/index':'',['topic' =>$topic,'city' =>$topic->city->id]);
-    } 
+    }
 
     public function actionCreatePost($city,$topic)
-    {   
+    {
         $top = Topic::findOne($topic);
         $cty = City::findOne($city);
         return $this->render('mobile/create',['topic' =>$top,'city' =>$cty]);
@@ -48,11 +49,11 @@ class PostController extends BaseController
         $current_date = date('Y-m-d H:i:s');
 
         $Post = new Post;
-        $Post->title = $post;
-        $Post->content = $message;
-        $Post->topic_id = $topic;
-        $Post->user_id = $this->currentUser;
-        $Post->save();
+        $message->post->title = $post;
+        $message->post->content = $message;
+        $message->post->topic_id = $topic;
+        $message->post->user_id = $this->currentUser;
+        $message->post->save();
 
     }
 
@@ -69,16 +70,16 @@ class PostController extends BaseController
 
         switch ($filter) {
             case 'post':
-                $condition = 'created_at';
-                break;
+            $condition = 'created_at';
+            break;
             case 'brilliant':
-                $condition = 'brilliant_count';
-                break;  
+            $condition = 'brilliant_count';
+            break;
             case 'view':
-                $condition = 'view_count';
-                break; 
+            $condition = 'view_count';
+            break;
         }
-        
+
         $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $posts->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
@@ -100,7 +101,7 @@ class PostController extends BaseController
                 $content = substr($content,0,$maxlength) ;
                 $content = $content." ...<span class='show_more'>show more</span>";
             }
-            
+
             $user_photo = User::findOne($value->user_id)->profile->photo;
 
             if ($user_photo == null){
@@ -108,9 +109,9 @@ class PostController extends BaseController
             }else{
                 $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
             }
-            
+
             $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$value->id)->one();
-            
+
             if($currentVote && $currentVote->status == 1){
                 $isVote = 1;
             }else{
@@ -129,7 +130,7 @@ class PostController extends BaseController
                 'avatar'=> $image,
                 'update_at'=>$num_date,
                 'is_vote'=> $isVote
-            );
+                );
 
             array_push($data,$post);
         }
@@ -141,17 +142,17 @@ class PostController extends BaseController
 
     public function actionVotePost(){
         $post_id = $_POST['post_id'];
-        
+
         $current_date = date('Y-m-d H:i:s');
         $curVote = Vote::find()->where('user_id = '.$this->currentUser.' AND post_id = '.$post_id)->one();
 
         if($curVote){
             if($curVote->status == 1){
                 $curVote->status = 0;
-                $curVote->save(); 
+                $curVote->save();
             }else{
                 $curVote->status = 1;
-                $curVote->save(); 
+                $curVote->save();
             }
         }else{
             $vote = new Vote;
@@ -163,9 +164,60 @@ class PostController extends BaseController
         }
 
         $post = Post::findOne($post_id);
-        $temp = array ('status'=> 1 ,'data'=> $post->brilliant_count);
+        $temp = array ('status'=> 1 ,'data'=> $message->post->brilliant_count);
         $hash = json_encode($temp);
 
         return $hash;
+    }
+
+    public function actionGetChatInbox()
+    {
+        $messages = new WsMessages();
+        $messages = $messages->find()->select('post_id')->where('user_id = '.$this->currentUser)
+        ->distinct()
+        ->with('post')
+        ->all();
+
+        if($messages) {
+            $data = [];
+
+            foreach ($messages as $key => $message) {
+                $user_photo = User::findOne($message->post->user_id)->profile->photo;
+                if ($user_photo == null){
+                    $image = '/icon/no_avatar.jpg';
+                }else{
+                    $image = '/uploads/'.$message->post->user_id.'/'.$user_photo;
+                }
+
+                $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$message->post->id)->one();
+
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
+                $num_date = UtilitiesFunc::FormatDateTime($message->post->updated_at);
+
+                $item = [
+                    'id'=> $message->post->id,
+                    'post_title'=> $message->post->title,
+                    'post_content'=> $message->post->content,
+                    'topic_id'=> $message->post->topic_id,
+                    'title'=> $message->post->title,
+                    'content'=> $message->post->content,
+                    'num_comment' => $num_comment ? $num_comment: 0,
+                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+                    'avatar'=> $image,
+                    'update_at'=> $num_date,
+                    'real_update_at' => $message->post->updated_at
+                    ];
+                array_push($data, $item);
+            }
+            // return strtotime($data[0]['real_update_at']) - strtotime($data[1]['real_update_at']);die;
+            usort($data, function($a, $b) {
+                return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
+            });
+            $data = json_encode($data);
+            return $data;
+        } else {
+            return false;
+        }
     }
 }

@@ -99,12 +99,12 @@ class Post extends \yii\db\ActiveRecord
     }
 
     public function afterDelete(){
-        
+
         $this->topic->updateAttributes(['post_count' => $this->topic->post_count > 0 ? $this->topic->post_count - 1 : 0]);
         $this->topic->city->updateAttributes([
             'post_count' =>  $this->topic->city->post_count > 0 ? $this->topic->city->post_count - 1 : 0
         ]);
-       
+
         return parent::afterDelete();
     }
 

@@ -228,7 +228,7 @@ var Post ={
         var self = this;
         var containt = $('.container_post');
         if (isMobile) {
-            $(window).scroll(function() {   
+            $(window).scroll(function() {
                 if( $(window).scrollTop() + $(window).height() == $(document).height() && Post.list[Post.params.filter].status_paging == 1) {
                     setTimeout(function(){
                     	self.GetTabPost();
@@ -292,7 +292,7 @@ var Post ={
 	OnclickBack: function(){
         $('#list_post').find('.back_page span').click(function(){
         	if(isMobile){
-        		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city; 
+        		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city;
         	}else{
         		$('#list_post').modal('hide');
         		Topic.init(Post.params.city);
@@ -411,5 +411,5 @@ var Post ={
 
 	RedirectPostPage: function(topic){
 		window.location.href = baseUrl + "/netwrk/post?topic="+topic;
-	},	
+	}
 };

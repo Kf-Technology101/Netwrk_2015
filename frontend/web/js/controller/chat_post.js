@@ -11,6 +11,7 @@ var ChatPost = {
 	text_message:'',
 	message_type:1,
 	msg_lenght: 0,
+	temp_post: 0,
 	initialize: function(){
 		ChatPost.SetUrl();
 		ChatPost.SetDataPostChat();
@@ -181,7 +182,6 @@ var ChatPost = {
 								if(evt.lengthComputable) {
 									var percentComplete = evt.loaded / evt.total;
 									percentComplete = parseInt(percentComplete * 100);
-									console.log(percentComplete);
 									parentChat.find(".loading_image").css('display', 'block');
 								}
 							}, false);
@@ -236,12 +236,15 @@ var ChatPost = {
 					});
 				},
 				single: function(e){
+					var update_list_chat;
 					$.each(e.data, function(i, elem){
 						if(ChatPost.params.post == elem.post_id){
 							ChatPost.message_type = elem.msg_type;
 							ChatPost.getMessageTemplate(elem);
+							update_list_chat = $.parseJSON(elem.update_list_chat);
 						}
 					});
+					ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}

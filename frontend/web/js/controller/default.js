@@ -6,6 +6,7 @@ var Default ={
         }else{
             $('#btn_meet').show();
             self._eventClickMeetBtn();
+            ChatInbox.initialize();
         }
     },
 
@@ -43,7 +44,7 @@ var Default ={
 
     getTemplate: function(parent,data){
         var self = this;
-        var json = $.parseJSON(data); 
+        var json = $.parseJSON(data);
         var list_template = _.template($("#netwrk_place").html());
         var append_html = list_template({cities: json});
 

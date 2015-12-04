@@ -40,7 +40,7 @@ AppAsset::register($this);
             <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
             <input type="text" class="form-control" placeholder="What are your interests?">
         </div>
-        <div class="chatting">
+        <div class="chatting" id='chat_inbox_btn'>
             <span><i class="fa fa-comment"></i>Chat</span>
         </div>
         <?php

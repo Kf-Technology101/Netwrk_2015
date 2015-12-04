@@ -34,5 +34,6 @@
 <?= $this->render('partial/chat_post');?>
 <?= $this->render('partial/login');?>
 <?= $this->render('partial/signup');?>
+<?= $this->render('partial/chat_inbox');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>

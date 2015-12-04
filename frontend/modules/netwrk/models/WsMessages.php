@@ -93,5 +93,4 @@ class WsMessages extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Post::className(), ['id' => 'post_id']);
     }
-
 }

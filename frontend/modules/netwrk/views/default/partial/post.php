@@ -63,10 +63,10 @@
                 <div class="icon_brillant" data-item="<%= post.id %>">
                     <% if (post.is_vote == 1){%>
                         <div class="count"><%= post.num_brilliant %></div>
-                    <% }else{ %> 
+                    <% }else{ %>
                         <div class="count disable"><%= post.num_brilliant %></div>
                     <% } %>
-                    
+
                 </div>
             </div>
             <div class="information">
@@ -75,5 +75,5 @@
                 <span class="post_chat"><i class="fa fa-comments"></i>Chat</span>
             </div>
         </div>
-    <% }); %>            
+    <% }); %>
 </script>

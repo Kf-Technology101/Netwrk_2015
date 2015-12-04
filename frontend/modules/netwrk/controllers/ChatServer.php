@@ -67,6 +67,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 				$userProfile = json_decode($this->userProfile());
 
+				// for list chat box
+				$list_chat_inbox = $this->updateListChatBox();
+
 				foreach ($this->clients as $client) {
 					$this->send($client, "single", [array(
 														'name'=>$userProfile->name,
@@ -75,7 +78,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'msg_type' => $type,
 														"created_at" => date("h:i A"),
 														'post_id'=> $room,
-														"user_current"=> $userProfile->current)
+														"user_current" => $userProfile->current,
+														"update_list_chat" => $list_chat_inbox
+														)
 													]);
 				}
 
@@ -185,6 +190,57 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			'image' => $image,
 			'current' => $current
 		]);
+	}
+
+	public function updateListChatBox()
+	{
+
+
+        $messages = new WsMessages();
+		$messages = $messages->find()->select('post_id')->where('user_id = '.$this->current_user)
+		        ->distinct()
+		        ->with('post')
+		        ->all();
+        if($messages) {
+            $data = [];
+        	$user = new User();
+            foreach ($messages as $key => $message) {
+
+                $user_photo = $user->findOne($message->post->user_id)->profile->photo;
+                if ($user_photo == null){
+                    $image = '/icon/no_avatar.jpg';
+                }else{
+                    $image = '/uploads/'.$message->post->user_id.'/'.$user_photo;
+                }
+
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
+                $num_date = UtilitiesFunc::FormatDateTime($message->post->updated_at);
+
+                $item = [
+                    'id'=> $message->post->id,
+                    'post_title'=> $message->post->title,
+                    'post_content'=> $message->post->content,
+                    'topic_id'=> $message->post->topic_id,
+                    'title'=> $message->post->title,
+                    'content'=> $message->post->content,
+                    'num_comment' => $num_comment ? $num_comment: 0,
+                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+                    'avatar'=> $image,
+                    'update_at'=> $num_date,
+                    'real_update_at' => $message->post->updated_at
+                    ];
+                array_push($data, $item);
+            }
+            // return strtotime($data[0]['real_update_at']) - strtotime($data[1]['real_update_at']);die;
+            usort($data, function($a, $b) {
+                return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
+            });
+            $data = json_encode($data);
+            return $data;
+        } else {
+            return false;
+        }
 	}
 }
 ?>
