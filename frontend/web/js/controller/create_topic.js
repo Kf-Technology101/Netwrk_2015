@@ -86,16 +86,16 @@ var Create_Topic={
             // }
         }else{
             $('#btn_meet').hide();
-            set_position_btn(parent,parent.find('#btn_discover'),160,100);
-            set_position_btn_resize(parent,parent.find('#btn_discover'),160,100);
+            set_position_btn(parent,parent.find('#btn_discover'),130,100);
+            set_position_btn_resize(parent,parent.find('#btn_discover'),130,100);
         } 
     },
 
     hideNetWrkBtn: function(){
         var parent = $('#create_topic');
         if(isMobile){
-            $('#btn_meet_mobile').show();
-            $('#btn_discover_mobile').hide();
+            // $('#btn_meet_mobile').show();
+            // $('#btn_discover_mobile').hide();
         }else{
             $('#btn_meet').show();
             parent.find('#btn_discover').hide();
@@ -140,7 +140,7 @@ var Create_Topic={
         Create_Topic.reset_data();
         Create_Topic.setDefaultBtn();
         // Create_Topic.hideSideBar();
-        // Create_Topic.hideNetWrkBtn();
+        Create_Topic.hideNetWrkBtn();
         parent.modal('hide');
     },
 
