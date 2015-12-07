@@ -39,7 +39,15 @@ var Create_Topic={
             Create_Topic.onclickBack();
             Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickdiscover();
+            Create_Topic.postTitleFocus();
+            Create_Topic.showZipcodeBreadcrumb(name);
+            Create_Topic.onClickBackZipcodeBreadcrumb();
+            Create_Topic.onClickBackNetwrkLogo();
         }
+    },
+    showZipcodeBreadcrumb: function(zipcode){
+        var target = $('#create_topic').find('.scrumb .zipcode');
+        target.html(zipcode);
     },
     postTitleFocus: function(){
         $('.name_post').focus(function(){
@@ -136,7 +144,7 @@ var Create_Topic={
     },
 
     onclickBack: function(){
-        var parent = $('#create_topic').find('.back_page a');
+        var parent = $('#create_topic').find('.back_page span');
         var city = Create_Topic.params.city;
         var params = {zipcode: Create_Topic.params.city_name};
         parent.unbind();
@@ -147,6 +155,25 @@ var Create_Topic={
                 Create_Topic.hideModalCreateTopic();
                 Topic.init(city,params);
             }
+        });
+    },
+    onClickBackZipcodeBreadcrumb: function(){
+        var parent = $('#create_topic').find('.scrumb .zipcode');
+        var city = Create_Topic.params.city;
+        var params = {zipcode: Create_Topic.params.city_name};
+        parent.unbind();
+        parent.click(function(){
+            if(isMobile){
+                Create_Topic.redirect();
+            }else{
+                Create_Topic.hideModalCreateTopic();
+                Topic.init(city,params);
+            }
+        });
+    },
+    onClickBackNetwrkLogo: function(){
+        $('#create_topic .scrumb .logo').click(function(){
+            $('#create_topic').modal('hide');
         });
     },
     changeData: function(){
