@@ -1,6 +1,6 @@
 <?php
 use frontend\assets\AppAsset;
-use Yii;
+
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
