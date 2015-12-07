@@ -41,6 +41,7 @@ var Topic = {
         Topic.OnClickSortBtn();
         Topic.OnClickSelectFilter();
         Topic.OnClickChangeTab();
+        Topic.eventClickMeetMobile();
     },
 
     init: function(city,params){
@@ -486,5 +487,16 @@ var Topic = {
         var append_html = list_template({city: json.city});
         Topic.data.city_name = json.city;
         parent.append(append_html); 
+    },
+
+    eventClickMeetMobile: function(){
+        var target = $('#btn_meet_mobile');
+        target.unbind();
+        target.on('click',function(){
+            target.bind();
+            window.location.href = baseUrl + "/netwrk/meet"; 
+            // Meet.reset_page();
+            // Meet._init();
+        });
     },
 };

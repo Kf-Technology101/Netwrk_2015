@@ -27,7 +27,7 @@ var Create_Topic={
             this.changeData();
             Create_Topic.onclickBack();
             Create_Topic.showNetWrkBtn();
-            Create_Topic.eventClickdiscoverMobile();
+            Create_Topic.eventClickMeetMobile();
             Create_Topic.postTitleFocus();
         }else{
             Create_Topic.params.city = city;
@@ -65,12 +65,13 @@ var Create_Topic={
                 parent.modal('hide');
             });
     },
-    eventClickdiscoverMobile: function(){
-        var target = $('#btn_discover_mobile');
+    eventClickMeetMobile: function(){
+        // var target = $('#btn_discover_mobile');
+        var target = $('#btn_meet_mobile');
         target.unbind();
         target.on('click',function(){
             target.bind();
-            window.location.href = baseUrl; 
+            window.location.href = baseUrl + "/netwrk/meet"; 
             // Meet.reset_page();
             // Meet._init();
         });
@@ -79,10 +80,10 @@ var Create_Topic={
     showNetWrkBtn: function(){
         var parent = $('#create_topic');
         if(isMobile){
-            if($('#create_topic').size()>0){
-                $('#btn_meet_mobile').hide();
-                $('#btn_discover_mobile').show();
-            }
+            // if($('#create_topic').size()>0){
+            //     $('#btn_meet_mobile').hide();
+            //     $('#btn_discover_mobile').show();
+            // }
         }else{
             $('#btn_meet').hide();
             set_position_btn(parent,parent.find('#btn_discover'),160,100);
@@ -139,7 +140,7 @@ var Create_Topic={
         Create_Topic.reset_data();
         Create_Topic.setDefaultBtn();
         // Create_Topic.hideSideBar();
-        Create_Topic.hideNetWrkBtn();
+        // Create_Topic.hideNetWrkBtn();
         parent.modal('hide');
     },
 

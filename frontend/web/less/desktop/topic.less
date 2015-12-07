@@ -282,7 +282,7 @@
 
 #create_topic{
     height: auto;
-    top: 120px;
+    top: 90px;
     overflow-y: hidden;
     .modal-dialog{
         width: 725px;
@@ -296,6 +296,7 @@
         max-height: 620px;
         min-height: 300px;
         background: #e2e3e4;
+        border: none;
     }
     .modal-header{
         padding: 0;
@@ -325,27 +326,6 @@
                 }
             }
             .back_page{
-                // padding: 10px 15px;
-                // width: 90px; // 15%
-                // float: left;
-                // cursor: pointer;
-                // height: 40px;
-                // color: #fff;
-                // border-right: 1px solid #fff;
-                // .back{
-                //     height: 100%;
-                //     p{
-                //         float: left;
-                //         line-height: 21px;
-                //         padding-left: 5px;
-                //         font-size: 17px;
-                //     }
-                //     i{
-                //         font-size: 20px;
-                //         color: #fff;
-                //         float: left;
-                //     }
-                // }
                 width: 95px;
                 height: 40px;
                 float: left;
@@ -418,6 +398,9 @@
                 box-shadow: 0px 3px 5px #888;
                 border: none;
                 border-bottom: 1px solid #f3f3f3;
+                input:-ms-input-placeholder{
+                    color: #beb8b8;
+                }
                 .name_topic{
                     width: 100%;
                     font-family: "ProximaNovaRegular";
@@ -449,6 +432,9 @@
                             padding: 5px 5px 5px 10px;
                             color: #1d1b1b;
                         }
+                        input:-ms-input-placeholder{
+                            color: #beb8b8;
+                        }
                         input{
                             border: none;
                             padding: 0;
@@ -467,7 +453,10 @@
                 }
                 .post-message{
                     padding: 15px;
-                    textarea.message{
+                    textarea:-ms-input-placeholder{
+                        color: #beb8b8;
+                    }
+                    .message{
                         width: 100%;
                         border: 1px solid #bcbcbc;
                         height: 110px;
