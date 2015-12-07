@@ -2,6 +2,7 @@ var Login={
 	modal: '#login',
 	page:'#page-login',
 	parent: '',
+	form_id:'#login-form',
 	initialize:function(){
 		if(isMobile){
 			$('body').css('background','#fff');
@@ -13,6 +14,45 @@ var Login={
 			Login.OnClickBackdrop();
 			Login.OnClickSignUp();
 		}
+		Login.OnChangeBtnLogin();
+		Login.OnClickBtnLogin();
+	},
+
+	OnClickBtnLogin: function(){
+		var btn = $(Login.parent).find('.btn-control');
+		btn.unbind('click');
+
+		btn.on('click',function(e){
+			if(!btn.hasClass('disable')){
+				if(isMobile){
+					$(Login.parent).find(Login.form_id).submit();
+				}else{
+					// e.preventDefault();
+					// Login.OnGetDataLogin();
+					// $(Login.parent).find(Login.form_id).submit();
+				}
+			}
+		});
+	},
+
+	OnGetDataLogin: function(){
+		// console.log('get data');
+	},
+
+	OnChangeBtnLogin: function(){
+		var input = $(Login.parent).find('#loginform-username,#loginform-password'),
+			username = $(Login.parent).find('#loginform-username'),
+			password = $(Login.parent).find('#loginform-password'),
+			btn = $(Login.parent).find('.btn-control');
+
+		input.unbind('keyup');
+		input.on('keyup',function(){
+			if(username.val() === "" || password.val() === ""){
+				btn.addClass('disable');
+			}else{
+				btn.removeClass('disable');
+			}
+		});
 	},
 
 	OnClickSignUp: function(){

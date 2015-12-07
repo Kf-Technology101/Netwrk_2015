@@ -34,7 +34,7 @@ class UserController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("netwrk")->loginDuration)) {
             return $this->goBack(Yii::$app->getModule("netwrk")->loginRedirect);
         }
-
+        // echo "<pre>";print_r($model['_errors']);die;
         // render
         return $this->render($this->getIsMobile() ? 'mobile/login' : 'login',[
         	'model' => $model
