@@ -11,8 +11,8 @@ use yii\helpers\Url;
 class SettingController extends BaseController
 {
     private $currentUser = 1;
-    public function actionIndex()   
-    {   
+    public function actionIndex()
+    {
 
         return $this->render('mobile/index');
     }
@@ -39,7 +39,7 @@ class SettingController extends BaseController
 
             $birthday = new \DateTime($user->profile->dob);
             $birthday = $birthday->format('Y-m-d');
-            
+
             $current_date = date('Y-m-d H:i:s');
             $time1 = date_create($user->profile->dob);
             $time2 = date_create($current_date);
@@ -55,14 +55,14 @@ class SettingController extends BaseController
                 'about'=> $user->profile->about,
                 'year_old' => $year_old
             );
-            
+
         }else{
             $info = array(
                 'status' => 0
             );
-        }    
+        }
         $hash = json_encode($info);
-        return $hash;          
+        return $hash;
     }
 
     public function actionUpdateProfile()

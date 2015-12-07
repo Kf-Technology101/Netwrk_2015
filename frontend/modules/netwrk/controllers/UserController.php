@@ -32,7 +32,7 @@ class UserController extends BaseController
         // load post data and login
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("netwrk")->loginDuration)) {
-            return $this->goBack(Yii::$app->getModule("user")->loginRedirect);
+            return $this->goBack(Yii::$app->getModule("netwrk")->loginRedirect);
         }
 
         // render
@@ -43,6 +43,7 @@ class UserController extends BaseController
 
     public function actionIndex(){
         //return $this->render($this->getIsMobile() ? 'mobile/login' : '');
+        // echo "<pre>";print_r(Yii::$app->user);die;
     }
 
     public function actionSignup(){

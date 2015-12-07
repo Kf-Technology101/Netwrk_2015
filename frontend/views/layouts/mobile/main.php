@@ -72,7 +72,7 @@ MobileAsset::register($this);
 </body>
 <script type="text/javascript">
   var isMobile = true;
-  var isLogin = true;
+  var isLogin = '<?php echo Yii::$app->user->id; ?>';
 </script>
 </html>
 <?php $this->endPage() ?>

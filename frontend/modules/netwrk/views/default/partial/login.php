@@ -1,4 +1,8 @@
-<?php use yii\helpers\Url; ?>
+<?php
+    use yii\helpers\Url;
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+?>
 <div class="modal" id='login' role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

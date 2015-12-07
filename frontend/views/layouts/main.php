@@ -1,5 +1,6 @@
 <?php
 use frontend\assets\AppAsset;
+use Yii;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -77,7 +78,7 @@ AppAsset::register($this);
 <script type="text/javascript">
     var baseUrl = '<?php echo Url::base(true); ?>';
     var isMobile = false;
-    var isLogin = true;
+    var isLogin = '<?php echo Yii::$app->user->id; ?>';
 </script>
 </html>
 <?php $this->endPage() ?>

@@ -1,26 +1,41 @@
-<?php use yii\helpers\Url; ?>
+<?php
+    use yii\helpers\Url;
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+?>
 <div id='page-login'>
 
     <div class="header">
-        <p> Log in OVERWRITE</p>
+        <p> Log in</p>
     </div>
 
-    <div class="form-login">
-        <div class="field-name">
-            <p class="title"> Username </p>
-            <input type="text" class="username form-control" maxlength="128" placeholder="Username">
-        </div>
-        <div class="field-name">
-            <p class="title"> Password </p>
-            <input type="password" class="password form-control" maxlength="128" placeholder="Password">
-        </div>
-        <div class="field-name">
-            <a href="javascript:void(0)" class="forgot-password">Forgot password</a>
-        </div>
+    <?php $form = ActiveForm::begin([
+        'id' => 'login-form',
+        'options' => ['class' => 'form-login form-horizontal'],
+        'fieldConfig' => [
+            'template' => "<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-7\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-2 control-label'],
+        ],
+
+    ]); ?>
+    <div class="field-name">
+        <p class="title"> Username </p>
+        <!-- <input type="text" class="username form-control" maxlength="128" placeholder="Username"> -->
+        <?= $form->field($model, 'username') ?>
     </div>
+    <div class="field-name">
+        <p class="title"> Password </p>
+        <!-- <input type="password" class="password form-control" maxlength="128" placeholder="Password"> -->
+        <?= $form->field($model, 'password')->passwordInput() ?>
+    </div>
+    <div class="field-name">
+        <a href="javascript:void(0)" class="forgot-password">Forgot password</a>
+    </div>
+
     <div class="btn-control disable">
         <p>Login</p>
     </div>
+    <?php ActiveForm::end(); ?>
     <div class="sign-up">
         <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup">Sign Up</a> now</p>
     </div>

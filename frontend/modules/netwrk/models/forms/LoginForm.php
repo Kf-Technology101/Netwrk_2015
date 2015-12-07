@@ -71,15 +71,15 @@ class LoginForm extends Model
     {
         // check for ban status
         $user = $this->getUser();
-        if ($user->ban_time) {
-            $this->addError("username", "User is banned". $user->ban_reason );
-        }
+        // if ($user->ban_time) {
+        //     $this->addError("username", "User is banned". $user->ban_reason );
+        // }
 
         // check status and resend email if inactive
         if ($user->status == $user::STATUS_INACTIVE) {
 
             /** @var \amnah\yii2\user\models\UserKey $userKey */
-            $userKey = Yii::$app->getModule("user")->model("UserKey");
+            $userKey = Yii::$app->getModule("netwrk")->model("UserKey");
             $userKey = $userKey::generate($user->id, $userKey::TYPE_EMAIL_ACTIVATE);
             $user->sendEmailConfirmation($userKey);
             $this->addError("username", "Confirmation email resent");
