@@ -18,7 +18,7 @@ var Create_Post={
             Create_Post.params.city = $('#create_post').attr('data-city');
             Create_Post.changeData();
             Create_Post.onclickBack();
-            Create_Post.showNetWrkBtn();
+            // Create_Post.showNetWrkBtn();
             Create_Post.eventClickdiscoverMobile();
             Create_Post.postTitleFocus();
         }else{
@@ -26,7 +26,7 @@ var Create_Post={
             Create_Post.params.topic = topic;
             Create_Post.params.city_name = name_city;
             Create_Post.showModalCreatePost();
-            Create_Post.showNetWrkBtn();
+            // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
             // Create_Post.showSideBar(name_city,name_topic)
             Create_Post.changeData();

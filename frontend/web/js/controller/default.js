@@ -30,6 +30,7 @@ var Default ={
             self = this;
 
         target.on('click',function(){
+            $('.modal').modal('hide');
             Meet.initialize();
         });
     },
@@ -39,6 +40,7 @@ var Default ={
 
         target.on('click',function(){
             Meet.showUserMeetMobile();
+            console.log('sgshgdhsgdsd');
         });
     },
 
