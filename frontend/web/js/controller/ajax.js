@@ -1,4 +1,20 @@
 var Ajax ={
+    user_login: function(form){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/login-user";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     chat_post_name: function(params){
         var url,defer = $.Deferred();
 

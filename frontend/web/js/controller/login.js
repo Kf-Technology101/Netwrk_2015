@@ -1,8 +1,13 @@
 var Login={
+	params:{
+		username:'',
+		password:''
+	},
 	modal: '#login',
 	page:'#page-login',
 	parent: '',
 	form_id:'#login-form',
+	data_login:'',
 	initialize:function(){
 		if(isMobile){
 			$('body').css('background','#fff');
@@ -27,16 +32,26 @@ var Login={
 				if(isMobile){
 					$(Login.parent).find(Login.form_id).submit();
 				}else{
-					// e.preventDefault();
-					// Login.OnGetDataLogin();
-					// $(Login.parent).find(Login.form_id).submit();
+					Login.OnUserLogin();
 				}
 			}
 		});
 	},
 
-	OnGetDataLogin: function(){
-		// console.log('get data');
+	OnUserLogin: function(){
+		Ajax.user_login(Login.form_id).then(function(data){
+			var json = $.parseJSON(data);
+			Login.data_login = json;
+			if(json.status == 1){
+				$(Login.parent).modal('hide');
+			}else{
+				Login.OnShowLoginErrors();
+			}
+		});
+	},
+
+	OnShowLoginErrors: function(){
+		console.log()
 	},
 
 	OnChangeBtnLogin: function(){

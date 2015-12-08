@@ -3,7 +3,7 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
-use amnah\yii2\user\models\Profile as BaseProfile;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "profile".
@@ -21,7 +21,7 @@ use amnah\yii2\user\models\Profile as BaseProfile;
  * @property double $lat
  * @property double $lng
  */
-class Profile extends BaseProfile
+class Profile extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -66,5 +66,40 @@ class Profile extends BaseProfile
             'lat' => 'Lat',
             'lng' => 'Lng',
         ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class'      => 'yii\behaviors\TimestampBehavior',
+                'value'      => function () { return date("Y-m-d H:i:s"); },
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'create_time',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        $user = Yii::$app->getModule("netwrk")->model("User");
+        return $this->hasOne($user::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * Set user id
+     *
+     * @param int $userId
+     * @return static
+     */
+    public function setUser($userId)
+    {
+        $this->user_id = $userId;
+        return $this;
     }
 }

@@ -78,7 +78,7 @@ AppAsset::register($this);
 <script type="text/javascript">
     var baseUrl = '<?php echo Url::base(true); ?>';
     var isMobile = false;
-    var isLogin = '<?php echo Yii::$app->user->id; ?>';
+    var isLogin = '<?php echo Yii::$app->user->id ?>';
 </script>
 </html>
 <?php $this->endPage() ?>

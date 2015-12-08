@@ -12,7 +12,7 @@ function set_position_btn_meet(w,h){
   var menu_h = $('.menu_top').height();
   var hp = h - 100 - menu_h;
   var wp = w - 100;
-  
+
   $('#btn_meet').css({'top': hp,'left': wp});
   $('#modal_meet #btn_discover').css({'top': hp - 30 ,'left': wp});
 }

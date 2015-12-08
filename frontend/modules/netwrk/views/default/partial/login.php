@@ -24,13 +24,13 @@
                     ],
 
                 ]); ?>
-                    <div class="field-name">
+                    <div class="field-name username">
                         <p class="title"> Username </p>
-                        <?= $form->field($model, 'username') ?>
+                        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username')); ?>
                     </div>
-                    <div class="field-name">
+                    <div class="field-name password">
                         <p class="title"> Password </p>
-                        <?= $form->field($model, 'password')->passwordInput() ?>
+                        <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password')); ?>
                     </div>
                     <div class="field-name">
                         <a href="javascript:void(0)" class="forgot-password">Forgot password</a>

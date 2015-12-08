@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\netwrk\models;
+namespace frontend\modules\netwrk\models;
 
 use Yii;
 
@@ -17,6 +17,20 @@ use Yii;
  */
 class UserKey extends \yii\db\ActiveRecord
 {
+    /**
+     * @var int Key for email activations (for registrations)
+     */
+    const TYPE_EMAIL_ACTIVATE = 1;
+
+    /**
+     * @var int Key for email changes (=updating account page)
+     */
+    const TYPE_EMAIL_CHANGE = 2;
+
+    /**
+     * @var int Key for password resets
+     */
+    const TYPE_PASSWORD_RESET = 3;
     /**
      * @inheritdoc
      */

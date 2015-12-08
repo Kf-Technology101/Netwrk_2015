@@ -21,12 +21,12 @@
     <div class="field-name">
         <p class="title"> Username </p>
         <!-- <input type="text" class="username form-control" maxlength="128" placeholder="Username"> -->
-        <?= $form->field($model, 'username') ?>
+        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username')); ?>
     </div>
     <div class="field-name">
         <p class="title"> Password </p>
         <!-- <input type="password" class="password form-control" maxlength="128" placeholder="Password"> -->
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password')); ?>
     </div>
     <div class="field-name">
         <a href="javascript:void(0)" class="forgot-password">Forgot password</a>

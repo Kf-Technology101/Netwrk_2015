@@ -3,6 +3,7 @@
 namespace frontend\modules\netwrk\controllers;
 
 use Yii;
+use yii\web\Session;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
@@ -15,6 +16,7 @@ class DefaultController extends BaseController
 
     public function actionIndex()
     {
+        echo "<pre>";print_r(new session());die;
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 

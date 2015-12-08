@@ -3,6 +3,7 @@ var Signup={
 	page:'#page-signup',
 	parent: '',
 	initialize:function(){
+		console.log('signup');
 		if(isMobile){
 			$('body').css('background','#fff');
 			Signup.parent = Signup.page;

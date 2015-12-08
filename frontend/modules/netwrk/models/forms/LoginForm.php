@@ -39,7 +39,7 @@ class LoginForm extends Model
         return [
             [["username", "password"], "required"],
             ["username", "validateUser"],
-            ["username", "validateUserStatus"],
+            // ["username", "validateUserStatus"],
             ["password", "validatePassword"],
             ["rememberMe", "boolean"],
         ];
@@ -161,6 +161,7 @@ class LoginForm extends Model
     public function login($loginDuration)
     {
         if ($this->validate()) {
+            // echo "<pre>";print_r(Yii::$app->user->login($this->getUser(), $this->rememberMe ? $loginDuration : 0));die;
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? $loginDuration : 0);
         }
 

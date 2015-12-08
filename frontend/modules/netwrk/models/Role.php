@@ -65,11 +65,11 @@ class Role extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'          => Yii::t('user', 'ID'),
-            'name'        => Yii::t('user', 'Name'),
-            'create_time' => Yii::t('user', 'Create Time'),
-            'update_time' => Yii::t('user', 'Update Time'),
-            'can_admin'   => Yii::t('user', 'Can Admin'),
+            'id'          => 'ID',
+            'name'        => 'Name',
+            'create_time' => 'Create Time',
+            'update_time' => 'Update Time',
+            'can_admin'   => 'Can Admin',
         ];
     }
 
@@ -95,7 +95,7 @@ class Role extends ActiveRecord
      */
     public function getUsers()
     {
-        $user = Yii::$app->getModule("user")->model("User");
+        $user = Yii::$app->getModule("netwrk")->model("User");
         return $this->hasMany($user::className(), ['role_id' => 'id']);
     }
 

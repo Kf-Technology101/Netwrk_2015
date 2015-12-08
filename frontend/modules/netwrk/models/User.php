@@ -3,6 +3,7 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
+use yii\base\Behavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\swiftmailer\Mailer;
@@ -86,14 +87,14 @@ class User extends ActiveRecord implements IdentityInterface
             [['email', 'username'], 'unique'],
             [['email', 'username'], 'filter', 'filter' => 'trim'],
             [['email'], 'email'],
-            [['username'], 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u', 'message' => Yii::t('user', '{attribute} can contain only letters, numbers, and "_"')],
+            [['username'], 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u', 'message' => '{attribute} can contain only letters, numbers, and "_"'],
 
             // password rules
             [['newPassword'], 'string', 'min' => 3],
             [['newPassword'], 'filter', 'filter' => 'trim'],
             [['newPassword'], 'required', 'on' => ['register', 'reset']],
             [['newPasswordConfirm'], 'required', 'on' => ['reset']],
-            [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'message' => Yii::t('user','Passwords do not match')],
+            [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'message' => 'Passwords do not match'],
 
             // account page
             [['currentPassword'], 'required', 'on' => ['account']],
@@ -141,12 +142,24 @@ class User extends ActiveRecord implements IdentityInterface
             'ban_reason' => 'Ban Reason',
 
             // virtual attributes set above
-            'currentPassword' => Yii::t('user', 'Current Password'),
-            'newPassword'     => Yii::t('user', 'New Password'),
-            'newPasswordConfirm' => Yii::t('user', 'New Password Confirm'),
+            'currentPassword' => 'Current Password',
+            'newPassword'     => 'New Password',
+            'newPasswordConfirm' => 'New Password Confirm',
         ];
     }
-
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class'      => 'yii\behaviors\TimestampBehavior',
+                'value'      => function () { return date("Y-m-d H:i:s"); },
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'create_time',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+                ],
+            ],
+        ];
+    }
     /**
      * Validate current password (account page)
      */
@@ -176,7 +189,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function getRole()
     {
         $role = Yii::$app->getModule("netwrk")->model("Role");
-        return $this->hasOne($role::className(), ['id' => 'role_id']);
+        return $this->hasOne(Role::className(), ['id' => 'role_id']);
     }
 
     /**
@@ -185,7 +198,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserKeys()
     {
         $userKey = Yii::$app->getModule("netwrk")->model("UserKey");
-        return $this->hasMany($userKey::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserKey::className(), ['user_id' => 'id']);
     }
 
     public function getUserAuths()
@@ -195,7 +208,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne($id);
+        return self::findOne($id);
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
@@ -440,7 +453,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user    = $this;
         $profile = $user->profile;
         $email   = $user->new_email !== null ? $user->new_email : $user->email;
-        $subject = Yii::$app->id . " - " . Yii::t("user", "Email Confirmation");
+        $subject = Yii::$app->id . " - Email Confirmation";
         $message  = $mailer->compose('confirmEmail', compact("subject", "user", "profile", "userKey"))
             ->setTo($email)
             ->setSubject($subject);

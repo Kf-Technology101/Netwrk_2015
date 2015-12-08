@@ -6,7 +6,8 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'class' => 'amnah\yii2\user\components\User',
+            'class' => 'frontend\components\UserComponent',
+            'identityClass' => 'frontend\modules\netwrk\models\User',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
