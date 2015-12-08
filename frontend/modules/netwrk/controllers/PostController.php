@@ -193,7 +193,7 @@ class PostController extends BaseController
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatDateTime($message->post->updated_at);
+                $num_date = UtilitiesFunc::FormatDateTime($message->post->updated_at ? $message->post->updated_at : $message->post->created_at);
 
                 $item = [
                     'id'=> $message->post->id,
@@ -201,12 +201,12 @@ class PostController extends BaseController
                     'post_content'=> $message->post->content,
                     'topic_id'=> $message->post->topic_id,
                     'title'=> $message->post->title,
-                    'content'=> $message->post->content,
+                    // 'content'=> $message->post->content,
                     'num_comment' => $num_comment ? $num_comment: 0,
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $message->post->updated_at
+                    'real_update_at' => $message->post->updated_at ? $message->post->updated_at : $message->post->created_at
                     ];
                 array_push($data, $item);
             }

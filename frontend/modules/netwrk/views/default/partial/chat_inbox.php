@@ -27,19 +27,6 @@
 		</div>
 		<div role="tabpanel" class="tab-pane active" id="chat_dicussion">
 			<ul>
-				<!-- <li>
-					<div class='chat-post-id'>
-						<span class='avatar-user'>
-							<img class='img_avatar' src='<?= Url::to('@web/img/icon/no_avatar.jpg'); ?>' />
-						</span>
-						<div class='title-description-user'>
-							<div class='title-chat-inbox'>#General Dogs</div>
-							<div class='description-chat-inbox'>Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet</div>
-						</div>
-						<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> Oct 5hrs</span>
-						<i class='fa fa fa-chevron-right'></i>
-					</div>
-				</li> -->
 			</ul>
 		</div>
 	</div>

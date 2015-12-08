@@ -24,6 +24,7 @@ var ChatPost = {
 		ChatPost.HandleEmoji();
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
+			ChatPost.OnClickMeetMobile();
 		}else{
 			ChatPost.OnShowModalChatPost();
 			ChatPost.ShowModalChatPost();
@@ -353,6 +354,13 @@ var ChatPost = {
 		var append_html = list_template({name: data});
 
 		parent.append(append_html);
+	},
+
+	OnClickMeetMobile: function(){
+		var target = $('.navbar-mobile').find('.menu_bottom #btn_meet_mobile');
+		target.on('click', function(){
+			window.location.href = baseUrl + '/netwrk/meet';
+		});
 	},
 
 }

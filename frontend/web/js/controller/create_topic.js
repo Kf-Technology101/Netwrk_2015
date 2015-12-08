@@ -26,7 +26,7 @@ var Create_Topic={
             Create_Topic.params.lng = $('#create_topic').attr('data-lng');
             this.changeData();
             Create_Topic.onclickBack();
-            Create_Topic.showNetWrkBtn();
+            // Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickMeetMobile();
             Create_Topic.postTitleFocus();
         }else{
@@ -37,7 +37,7 @@ var Create_Topic={
             Create_Topic.onCloseModalCreateTopic();
             Create_Topic.changeData();
             Create_Topic.onclickBack();
-            Create_Topic.showNetWrkBtn();
+            // Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickdiscover();
             Create_Topic.postTitleFocus();
             Create_Topic.showZipcodeBreadcrumb(name);

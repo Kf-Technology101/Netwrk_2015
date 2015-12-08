@@ -10,52 +10,57 @@ var ChatInbox = {
 
 	CustomScrollBar: function(){
 		var parent = $(ChatInbox.modal).find('#chat_dicussion ul');
-		parent.mCustomScrollbar({
-			theme:"dark"
-		});
+		if ($(parent).find("#mCSB_1_container").length == 0) {
+			$(parent).mCustomScrollbar({
+				theme:"dark",
+			});
+		};
 	},
 
 	getTemplateChatInbox: function(parent,data){
-        var self = this;
-        var list_template = _.template($("#chat_inbox_list" ).html());
-        var append_html = list_template({chat_inbox_list: data});
-        parent.html("");
-        parent.append(append_html);
-        ChatInbox.OnClickChatPostDetail();
-    },
+		var list_template = _.template($("#chat_inbox_list" ).html());
+		var append_html = list_template({chat_inbox_list: data});
+		if ($(parent).find("#mCSB_1_container").length == 1) {
+			parent.find("#mCSB_1_container").html("");
+			parent.find("#mCSB_1_container").append(append_html);
+		} else {
+			parent.append(append_html);
+		}
+		ChatInbox.CustomScrollBar();
+		ChatInbox.OnClickChatPostDetail();
+	},
 
-    OnClickChatInbox: function() {
-        var chat_inbox = $("#chat_inbox");
-        var parent = $(chat_inbox).find('#chat_dicussion ul');
-        $("#chat_inbox_btn").on("click", function() {
-            if (chat_inbox.css('right') == '-400px') {
-                $.ajax({
-                    url: baseUrl + "/netwrk/post/get-chat-inbox",
-                    type: 'POST',
-                    data: null,
-                    processData: false,
-                    contentType: false,
-                    success: function(result) {
-                        result = $.parseJSON(result);
-                        ChatInbox.getTemplateChatInbox(parent,result);
-                    }
+	OnClickChatInbox: function() {
+		var chat_inbox = $("#chat_inbox");
+		var parent = $(chat_inbox).find('#chat_dicussion ul');
+		$("#chat_inbox_btn").on("click", function() {
+			if (chat_inbox.css('right') == '-400px') {
+				$.ajax({
+					url: baseUrl + "/netwrk/post/get-chat-inbox",
+					type: 'POST',
+					data: null,
+					processData: false,
+					contentType: false,
+					success: function(result) {
+						result = $.parseJSON(result);
+						ChatInbox.getTemplateChatInbox(parent,result);
+					}
+				});
+				chat_inbox.animate({
+					"right": "0"
+				}, 500);
+			} else {
+				chat_inbox.animate({
+					"right": "-400px"
+				}, 500);
+			}
 
-                });
-                chat_inbox.animate({
-                    "right": "0"
-                }, 1000);
-            } else {
-                chat_inbox.animate({
-                    "right": "-400px"
-                }, 1000);
-            }
+		});
 
-        });
+	},
 
-    },
-
-    OnClickChatPostDetail: function() {
-    	var btn = $(ChatInbox.modal).find('#chat_dicussion li');
+	OnClickChatPostDetail: function() {
+		var btn = $(ChatInbox.modal).find('#chat_dicussion li');
 		btn.unbind();
 		btn.on('click',function(e){
 
@@ -72,5 +77,5 @@ var ChatInbox = {
 
 			}
 		});
-    }
+	}
 }

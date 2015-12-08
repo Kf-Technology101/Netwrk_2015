@@ -3,7 +3,8 @@ var Create_Post={
         topic: null,
         post:'',
         message: '',
-        city:''
+        city:'',
+        city_name: ''
     },
     status_change:{
         post: false,
@@ -17,19 +18,40 @@ var Create_Post={
             Create_Post.params.city = $('#create_post').attr('data-city');
             Create_Post.changeData();
             Create_Post.onclickBack();
-            Create_Post.showNetWrkBtn();
+            // Create_Post.showNetWrkBtn();
             Create_Post.eventClickdiscoverMobile();
+            Create_Post.postTitleFocus();
         }else{
             Create_Post.params.city = city;
             Create_Post.params.topic = topic;
+            Create_Post.params.city_name = name_city;
             Create_Post.showModalCreatePost();
-            Create_Post.showNetWrkBtn();
+            // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
             // Create_Post.showSideBar(name_city,name_topic)
             Create_Post.changeData();
             Create_Post.onclickBack();
             Create_Post.eventClickdiscover();
+            Create_Post.postTitleFocus();
+            Create_Post.showDataBreadcrumb(name_city, name_topic);
+            Create_Post.onClickBackTopicBreakcrumb();
+            Create_Post.onClickBackNetwrkLogo();
+            Create_Post.onClickBackZipcodeBreadcrumb();
         }
+    },
+    showDataBreadcrumb: function(zipcode, topic){
+        var target = $('#create_post').find('.scrumb .zipcode');
+        var target_topic = $('#create_post').find('.scrumb .topic');
+        target.html(zipcode);
+        target_topic.html(topic);
+    },
+    postTitleFocus: function(){
+        $('.name_post').focus(function(){
+            $('.input-group').addClass('clsFocus');
+        });
+        $('.name_post').focusout(function(){
+            $('.input-group').removeClass('clsFocus');
+        });
     },
     eventClickdiscover: function(){
         var parent = $('#create_post'),
@@ -60,14 +82,14 @@ var Create_Post={
 
         if(isMobile){
             if($('#create_post').size()>0){
-                $('#btn_meet_mobile').hide();
-                $('#btn_discover_mobile').show();
+                // $('#btn_meet_mobile').hide();
+                // $('#btn_discover_mobile').show();
             }
             
         }else{
             $('#btn_meet').hide();
-            set_position_btn(parent,parent.find('#btn_discover'),160,100);
-            set_position_btn_resize(parent,parent.find('#btn_discover'),160,100);
+            set_position_btn(parent,parent.find('#btn_discover'),130,100);
+            set_position_btn_resize(parent,parent.find('#btn_discover'),130,100);
         }
     },
 
@@ -75,8 +97,8 @@ var Create_Post={
         var parent = $('#create_post');
 
         if(isMobile){
-            $('#btn_meet_mobile').show();
-            $('#btn_discover_mobile').hide();
+            // $('#btn_meet_mobile').show();
+            // $('#btn_discover_mobile').hide();
         }else{
             $('#btn_meet').show();
             parent.find('#btn_discover').hide();
@@ -207,7 +229,7 @@ var Create_Post={
     },
 
     onclickBack: function(){
-        var parent = $('#create_post').find('.back_page img');
+        var parent = $('#create_post').find('.back_page span');
         var city = Create_Post.params.city;
 
         parent.unbind();
@@ -218,6 +240,42 @@ var Create_Post={
                 Create_Post.hideModalCreatePost();
                 Post.initialize();
             }
+        });
+    },
+
+    onClickBackZipcodeBreadcrumb: function(){
+        var parent = $('#create_post').find('.scrumb .zipcode');
+        var city = Create_Post.params.city;
+        var params = {zipcode: Create_Post.params.city_name};
+        parent.unbind();
+        parent.click(function(){
+            if(isMobile){
+                Create_Post.redirect();
+            }else{
+                Create_Post.hideModalCreatePost();
+                Topic.init(city,params);
+            }
+        });
+    },
+
+    onClickBackTopicBreakcrumb: function(){
+        var parent = $('#create_post').find('.scrumb .topic');
+        var city = Create_Post.params.city;
+
+        parent.unbind();
+        parent.click(function(){
+            if(isMobile){
+                Create_Post.redirect();
+            }else{
+                Create_Post.hideModalCreatePost();
+                Post.initialize();
+            }
+        });
+    },
+
+    onClickBackNetwrkLogo: function(){
+        $('#create_post .scrumb .logo').click(function(){
+            $('#create_post').modal('hide');
         });
     },
 
