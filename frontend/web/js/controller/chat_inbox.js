@@ -21,6 +21,7 @@ var ChatInbox = {
         var append_html = list_template({chat_inbox_list: data});
         parent.html("");
         parent.append(append_html);
+        ChatInbox.CustomScrollBar();
         ChatInbox.OnClickChatPostDetail();
     },
 
