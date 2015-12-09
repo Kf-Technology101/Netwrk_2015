@@ -92,6 +92,10 @@
 				.title-chat-inbox {
 					font-size: 16px;
 					font-weight: bold;
+					max-width: 230px;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					overflow: hidden;
 				}
 
 				.title-chat-inbox::before {
@@ -117,9 +121,10 @@
 				border: 1px solid #cccccc;
 				display: inline-block;
 				vertical-align: top;
+				line-height: 50px;
 				.img_avatar {
-					width: 100%;
-					height: 100%;
+					max-width: 100%;
+					height: auto;
 				}
 			}
 
