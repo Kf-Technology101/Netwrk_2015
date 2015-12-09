@@ -16,7 +16,6 @@ class DefaultController extends BaseController
 
     public function actionIndex()
     {
-        echo "<pre>";print_r(new session());die;
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 
