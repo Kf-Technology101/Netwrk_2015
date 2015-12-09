@@ -59,9 +59,8 @@ var Login={
 			username = $(Login.parent).find('#loginform-username'),
 			password = $(Login.parent).find('#loginform-password'),
 			btn = $(Login.parent).find('.btn-control');
-
 		input.unbind('keyup');
-		input.on('keyup',function(){
+		input.on('change keyup',function(){
 			if(username.val() === "" || password.val() === ""){
 				btn.addClass('disable');
 			}else{

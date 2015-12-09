@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\models\forms;
 use Yii;
 use yii\base\Model;
 use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\UserKey;
 
 /**
  * LoginForm is the model behind the login form.
@@ -39,7 +40,7 @@ class LoginForm extends Model
         return [
             [["username", "password"], "required"],
             ["username", "validateUser"],
-            // ["username", "validateUserStatus"],
+            ["username", "validateUserStatus"],
             ["password", "validatePassword"],
             ["rememberMe", "boolean"],
         ];
@@ -79,10 +80,10 @@ class LoginForm extends Model
         if ($user->status == $user::STATUS_INACTIVE) {
 
             /** @var \amnah\yii2\user\models\UserKey $userKey */
-            $userKey = Yii::$app->getModule("netwrk")->model("UserKey");
-            $userKey = $userKey::generate($user->id, $userKey::TYPE_EMAIL_ACTIVATE);
-            $user->sendEmailConfirmation($userKey);
-            $this->addError("username", "Confirmation email resent");
+            // $userKey = Yii::$app->getModule("netwrk")->model("UserKey");
+            // $userKey = UserKey::generate($user->id, UserKey::TYPE_EMAIL_ACTIVATE);
+            // $user->sendEmailConfirmation($userKey);
+            // $this->addError("username", "Confirmation email resent");
         }
     }
 

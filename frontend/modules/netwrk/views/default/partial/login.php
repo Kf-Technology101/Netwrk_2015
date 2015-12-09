@@ -35,7 +35,7 @@
                     <div class="field-name">
                         <a href="javascript:void(0)" class="forgot-password">Forgot password</a>
                     </div>
-                <div class="btn-control disable">
+                <div class="btn-control">
                     <p>Login</p>
                 </div>
                 <?php ActiveForm::end(); ?>

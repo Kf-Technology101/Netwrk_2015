@@ -38,11 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'enableAjaxValidation' => true,
         ]); ?>
 
-        <?php if (Yii::$app->getModule("user")->requireEmail): ?>
+        <?php if (Yii::$app->getModule("netwrk")->requireEmail): ?>
             <?= $form->field($user, 'email') ?>
         <?php endif; ?>
 
-        <?php if (Yii::$app->getModule("user")->requireUsername): ?>
+        <?php if (Yii::$app->getModule("netwrk")->requireUsername): ?>
             <?= $form->field($user, 'username') ?>
         <?php endif; ?>
 

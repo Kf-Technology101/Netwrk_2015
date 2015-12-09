@@ -35,27 +35,35 @@
             <!-- <input type="password" class="password form-control" maxlength="128" placeholder="Password"> -->
             <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'Password')); ?>
         </div>
-        <div class="col-field-name sex dropdown input-group">
-            <input type="text" class="gender form-control" maxlength="128" placeholder="Gender" data-toggle="dropdown">
-            <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li>Male</li>
-                <li>Female</li>
-            </ul>
+        <div class="col-field-name">
+            <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First name')); ?>
         </div>
         <div class="col-field-name">
-            <input type="text" class="zipcode form-control" maxlength="128" placeholder="Zipcode">
+            <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last name')); ?>
         </div>
         <div class="col-field-name">
-            <input type="text" class="age form-control" maxlength="128" placeholder="Age must be at least 18">
+            <?= $form->field(
+                    $profile,
+                    'gender',
+                    [
+                       'template'=>"<div class=\"col-lg-3 input-group sex\">{input}\n
+                       <span class='input-group-addon' data-toggle='dropdown'><i class='fa fa-sort'></i></span>\n
+            <ul class='dropdown-menu' aria-labelledby='dropdownMenu2'><li>Male</li><li>Female</li></ul></div>\n<div class=\"col-lg-7\">{error}</div>"
+                    ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown')); ?>
         </div>
-        <?= Html::submitButton('Register', ['class' => 'btn btn-primary']) ?>
+        <div class="col-field-name zipcode">
+            <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode')); ?>
+        </div>
+        <div class="col-field-name age">
+            <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
+        </div>
+        <?= Html::submitButton('Sign Up', ['class' => 'btn btn-primary btn-control']) ?>
     <?php ActiveForm::end(); ?>
      <?php endif; ?>
-    <div class="btn-control disable">
+<!--     <div class="btn-control disable">
         <p>Sign Up</p>
-    </div>
+    </div> -->
     <div class="sign-in">
-        <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/">Login</a> now</p>
+        <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/login">Login</a> now</p>
     </div>
 </div>

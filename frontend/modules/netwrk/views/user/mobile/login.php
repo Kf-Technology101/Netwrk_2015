@@ -11,7 +11,9 @@
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
-        'options' => ['class' => 'form-login form-horizontal'],
+        'options' => ['class' => 'form-login form-horizontal',
+                        'autocomplete'=> 'on'
+                     ],
         'fieldConfig' => [
             'template' => "<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-7\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-2 control-label'],
@@ -32,7 +34,7 @@
         <a href="javascript:void(0)" class="forgot-password">Forgot password</a>
     </div>
 
-    <div class="btn-control disable">
+    <div class="btn-control">
         <p>Login</p>
     </div>
     <?php ActiveForm::end(); ?>

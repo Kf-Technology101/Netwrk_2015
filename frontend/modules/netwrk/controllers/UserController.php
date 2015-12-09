@@ -37,8 +37,9 @@ class UserController extends BaseController
         // load post data and login
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("netwrk")->loginDuration)) {
-            // echo "<pre>";print_r(Yii::$app->user->id);die;
-            return $this->goBack(Yii::$app->getModule("netwrk")->loginRedirect);
+            // echo "<pre>";print_r(Yii::$app->user);die;
+            // return $this->goBack(Yii::$app->getModule("netwrk")->loginRedirect);
+            return $this->goHome();
         }
 
         return $this->render($this->getIsMobile() ? 'mobile/login' : 'login',[
@@ -65,7 +66,7 @@ class UserController extends BaseController
     public function actionSignup()
     {
 
-        $user = new User();
+        $user = new User(["scenario" => "register"]);
         $profile = new Profile();
 
         // load post data
@@ -74,7 +75,7 @@ class UserController extends BaseController
         if ($user->load($post)) {
 
             // ensure profile data gets loaded
-            // $profile->load($post);
+            $profile->load($post);
 
             // validate for ajax request
             if (Yii::$app->request->isAjax) {
@@ -87,7 +88,7 @@ class UserController extends BaseController
 
                 // perform registration
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
-                // $profile->setUser($user->id)->save(false);
+                $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
 
                 // set flash
@@ -102,7 +103,7 @@ class UserController extends BaseController
         }
 
         // render
-        return $this->render("mobile/signup", [
+        return $this->render($this->getIsMobile() ? 'mobile/signup' : $this->goHome(), [
             'user'    => $user,
             'profile' => $profile,
         ]);
@@ -126,11 +127,11 @@ class UserController extends BaseController
 
             // generate userKey and send email
             $userKey = UserKey::generate($user->id, $userKeyType);
-            // if (!$numSent = $user->sendEmailConfirmation($userKey)) {
+            if (!$numSent = $user->sendEmailConfirmation($userKey)) {
 
                 // handle email error
-                //Yii::$app->session->setFlash("Email-error", "Failed to send email");
-            // }
+                Yii::$app->session->setFlash("Email-error", "Failed to send email");
+            }
         } else {
             Yii::$app->user->login($user, Yii::$app->getModule("netwrk")->loginDuration);
         }

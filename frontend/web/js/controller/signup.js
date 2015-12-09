@@ -2,6 +2,7 @@ var Signup={
 	modal: '#signup',
 	page:'#page-signup',
 	parent: '',
+	validate:true,
 	initialize:function(){
 		console.log('signup');
 		if(isMobile){
@@ -15,7 +16,12 @@ var Signup={
 			Signup.OnClickBackdrop();
 		}
 		Signup.OnShowDatePicker();
+		Signup.OnValidate();
 		Signup.OnChangeGender();
+	},
+
+	OnValidate: function(){
+		$(Signup.parent).find('.firstname');
 	},
 
 	ShowModal: function(){
@@ -39,7 +45,7 @@ var Signup={
 		var dt = new Date();
 		dt.setFullYear(new Date().getFullYear()-18);
 
-		$(Signup.parent).find('.age').datepicker({
+		$(Signup.parent).find('.age input').datepicker({
             dateFormat: 'yy-mm-dd',
             viewMode: "years",
             endDate : dt

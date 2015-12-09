@@ -56,11 +56,11 @@ class MobileAsset extends AssetBundle
       'js/controller/user.js',
       'js/controller/login.js',
       'js/controller/signup.js',
-      'js/bootstrap-datepicker.min.js',
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',
       'js/lib/jquery.mCustomScrollbar.concat.min.js',
+      'js/bootstrap-datepicker.min.js',
       'js/lib/emojione.js',
     ];
     public $depends = [
