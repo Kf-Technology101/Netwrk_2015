@@ -76,7 +76,7 @@ class Module extends \yii\base\Module
     /**
      * @var string Email view path
      */
-    public $emailViewPath = "@app/frontend/modules/netwrk/mail";
+    public $emailViewPath = '@frontend/mail';
 
 
     public function init()
