@@ -215,7 +215,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatDateTime($message->post->updated_at);
+                $num_date = UtilitiesFunc::FormatDateTime($message->post->created_at);
 
                 $item = [
                     'id'=> $message->post->id,
