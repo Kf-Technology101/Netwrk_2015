@@ -201,7 +201,7 @@ class PostController extends BaseController
                     'post_content'=> $message->post->content,
                     'topic_id'=> $message->post->topic_id,
                     'title'=> $message->post->title,
-                    // 'content'=> $message->post->content,
+                    'content'=> $message->post->content,
                     'num_comment' => $num_comment ? $num_comment: 0,
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,

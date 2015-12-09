@@ -3,7 +3,7 @@
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
 		<li role="presentation" class=" col-xs-6"><a href="#chat_private" aria-controls="chat_private" role="tab" data-toggle="tab">Chats</a></li>
-		<li role="presentation" class="active col-xs-6"><a href="#chat_dicussion" aria-controls="chat_dicussion" role="tab" data-toggle="tab">Dicussions</a></li>
+		<li role="presentation" class="active col-xs-6"><a href="#chat_dicussion" aria-controls="chat_dicussion" role="tab" data-toggle="tab">Discussions</a></li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -45,7 +45,7 @@
 					<div class='description-chat-inbox'><%= chat_inbox.content %></div>
 				</div>
 				<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> <%= chat_inbox.update_at %></span>
-				<i class='fa fa fa-chevron-right'></i>
+				<i class='fa fa-2x fa-angle-right'></i>
 			</div>
 		</li>
 	<% }); %>
