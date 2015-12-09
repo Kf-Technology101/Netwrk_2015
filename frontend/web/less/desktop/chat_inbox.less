@@ -33,8 +33,12 @@
 				border: 0;
 				border-radius: 0;
 				font-size: 16px;
-				padding: 5px 0px;
+				padding: 5px 0px 0px;
 				color: #1d1b1b;
+				span {
+					height: 29px;
+					display: inline-block;
+				}
 			}
 
 			a:hover {
@@ -44,12 +48,23 @@
 				color: #5da5d8;
 			}
 
-			a[aria-controls='chat_dicussion'] {
+			&.chat-dicussions-btn {
 				text-align: left;
+				a {
+					span {
+						width: 90px;
+					}
+				}
+
 			}
 
-			a[aria-controls='chat_private'] {
+			&.chat-private-btn {
 				text-align: right;
+				a {
+					span {
+						width: 50px;
+					}
+				}
 			}
 		}
 
@@ -68,7 +83,6 @@
 				span {
 					color: #5da5d8;
 					border-bottom: solid 2px #5da5d8;
-					padding: 7px 8px;
 				}
 			}
 		}
