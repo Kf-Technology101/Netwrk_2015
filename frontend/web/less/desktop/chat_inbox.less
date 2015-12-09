@@ -7,7 +7,7 @@
 }
 #chat_inbox_btn:hover {
 	cursor: pointer;
-	background-color: #5DA4D8;
+	background-color: #5da5d8;
 }
 
 
@@ -24,19 +24,17 @@
 	.chat-inbox-tab {
 		background: #ffffff;
 		height: 35px;
+
 		li {
 			margin: 0;
-			padding: 0 40px;
 			border: 0;
 
 			a {
 				border: 0;
 				border-radius: 0;
-				text-align: center;
 				font-size: 16px;
-				padding: 8px 20px 2px;
+				padding: 5px 0px;
 				color: #1d1b1b;
-
 			}
 
 			a:hover {
@@ -44,6 +42,14 @@
 				cursor: pointer;
 				background: #ffffff;
 				color: #5da5d8;
+			}
+
+			a[aria-controls='chat_dicussion'] {
+				text-align: left;
+			}
+
+			a[aria-controls='chat_private'] {
+				text-align: right;
 			}
 		}
 
@@ -59,8 +65,11 @@
 			color: #5da5d8;
 
 			a {
-				color: #5da5d8;
-				border-bottom: solid 2px #5da5d8;
+				span {
+					color: #5da5d8;
+					border-bottom: solid 2px #5da5d8;
+					padding-bottom: 7px;
+				}
 			}
 		}
 	}
@@ -122,10 +131,12 @@
 				border-radius: 2px;
 				display: inline-block;
 				vertical-align: top;
-				line-height: 40px;
+				line-height: 36px;
+				text-align: center;
 				.img_avatar {
 					max-width: 100%;
 					height: auto;
+					max-height: 100%;
 				}
 			}
 
