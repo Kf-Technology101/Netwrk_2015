@@ -60,7 +60,16 @@ class UserController extends BaseController
         //return $this->render($this->getIsMobile() ? 'mobile/login' : '');
         // echo "<pre>";print_r(Yii::$app->user);die;
     }
+    public function actionRegister(){
 
+        $user = new User(["scenario" => "register"]);
+        $profile = new Profile();
+
+        return $this->render($this->getIsMobile() ? 'mobile/signup' : $this->goHome(), [
+            'user'    => $user,
+            'profile' => $profile,
+        ]);
+    }
     public function actionSignup()
     {
 
