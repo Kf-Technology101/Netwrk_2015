@@ -19,8 +19,6 @@
         ],
         'enableAjaxValidation' => true,
     ]);
-        $user = new User(["scenario" => "register"]);
-        $profile = new Profile();
     ?>
         <div class="col-field-name">
             <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First name')); ?>
