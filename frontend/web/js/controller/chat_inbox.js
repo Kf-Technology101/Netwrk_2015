@@ -49,10 +49,13 @@ var ChatInbox = {
 				chat_inbox.animate({
 					"right": "0"
 				}, 500);
+
+				ChatInbox.ActiveReponsiveChatInbox();
 			} else {
 				chat_inbox.animate({
 					"right": "-400px"
 				}, 500);
+				ChatInbox.DeactiveReponsiveChatInbox();
 			}
 
 		});
@@ -63,6 +66,10 @@ var ChatInbox = {
 		var btn = $(ChatInbox.modal).find('#chat_dicussion li');
 		btn.unbind();
 		btn.on('click',function(e){
+			Post.params.topic = btn.find("input[name='topic_id']").val();
+			Post.params.topic_name = btn.find("input[name='topic_name']").val();
+			Post.params.city = btn.find("input[name='city_id']").val();
+			Post.params.city_name = btn.find("input[name='city_name']").val();
 
 			var item_post = $(e.currentTarget).find('.chat-post-id').attr('data-post');
 			if(isMobile){
@@ -77,5 +84,21 @@ var ChatInbox = {
 
 			}
 		});
+	},
+
+	ActiveReponsiveChatInbox: function() {
+		var width = $( window ).width();
+		console.log(width);
+		if (width <= 1366) {
+			console.log($("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post"));
+			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
+		}
+	},
+
+	DeactiveReponsiveChatInbox: function() {
+		var width = $( window ).width();
+		if (width <= 1366) {
+			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
+		}
 	}
 }
