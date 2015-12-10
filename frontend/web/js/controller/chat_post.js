@@ -338,6 +338,7 @@ var ChatPost = {
 		$(ChatPost.modal).find(ChatPost.container).empty();
 		ChatPost.ws.close();
 		ChatPost.ws = null;
+		ChatPost.temp_post = 0;
 	},
 
 	GetNameChatPost: function(){

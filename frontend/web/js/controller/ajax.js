@@ -238,7 +238,7 @@ var Ajax ={
 
         return defer.promise();
     },
-    
+
     usermeet: function(params){
         var url,defer = $.Deferred();
 
@@ -327,7 +327,7 @@ var Ajax ={
 
     upload_image:function(params){
         var url,defer = $.Deferred();
-// 
+//
         // if (isMobile) {
             url = baseUrl +"/netwrk/setting/upload-image";
         // }else{
@@ -399,7 +399,7 @@ var Ajax ={
 
     new_topic: function(params){
         var url,defer = $.Deferred();
-     
+
         url = baseUrl +"/netwrk/topic/new-topic";
 
         $.ajax({
@@ -419,7 +419,7 @@ var Ajax ={
 
     new_post: function(params){
         var url,defer = $.Deferred();
-     
+
         url = baseUrl +"/netwrk/post/new-post";
 
         $.ajax({
