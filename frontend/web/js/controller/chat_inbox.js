@@ -9,8 +9,8 @@ var ChatInbox = {
 	},
 
 	CustomScrollBar: function(){
-		var parent = $(ChatInbox.modal).find('#chat_dicussion ul');
-		if ($(parent).find("#mCSB_1_container").length == 0) {
+		var parent = $(ChatInbox.modal).find('#chat_dicussion #container_ul_chat_list');
+		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
 			});
@@ -20,12 +20,13 @@ var ChatInbox = {
 	getTemplateChatInbox: function(parent,data){
 		var list_template = _.template($("#chat_inbox_list" ).html());
 		var append_html = list_template({chat_inbox_list: data});
-		if ($(parent).find("#mCSB_1_container").length == 1) {
-			parent.find("#mCSB_1_container").html("");
-			parent.find("#mCSB_1_container").append(append_html);
-		} else {
+		// if ($(parent).find("div[id^='mSCB']").length == 1) {
+		// 	parent.find("div[id^='mSCB']").html("");
+		// 	parent.find("div[id^='mSCB']").append(append_html);
+		// } else {
+			parent.find('li').remove();
 			parent.append(append_html);
-		}
+		// }
 		ChatInbox.CustomScrollBar();
 		ChatInbox.OnClickChatPostDetail();
 	},

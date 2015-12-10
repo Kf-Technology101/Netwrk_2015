@@ -26,8 +26,10 @@
 			</ul>
 		</div>
 		<div role="tabpanel" class="tab-pane active" id="chat_dicussion">
-			<ul>
-			</ul>
+			<div id="container_ul_chat_list">
+				<ul>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>
