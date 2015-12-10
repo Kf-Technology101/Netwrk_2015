@@ -11,11 +11,19 @@ return [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => true,
+            // 'useFileTransport' => true,
             'messageConfig' => [
-                'from' => ['admin@website.com' => 'Admin'], // this is needed for sending emails
+                'from' => ['admin@rubyspace.net' => 'Admin'], // this is needed for sending emails
                 'charset' => 'UTF-8',
-            ]
+            ],
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'hungnhottest@gmail.com',
+                'password' => 'Admintrum',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
         'authManager'  => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
