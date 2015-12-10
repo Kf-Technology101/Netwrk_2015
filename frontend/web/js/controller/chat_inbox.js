@@ -73,6 +73,7 @@ var ChatInbox = {
 			Post.params.city_name = btn.find("input[name='city_name']").val();
 			Topic.data.city = btn.find("input[name='city_id']").val();
 			Topic.data.city_name = btn.find("input[name='city_name']").val();
+			Topic.params.city = btn.find("input[name='city_id']").val();
 			var item_post = $(e.currentTarget).find('.chat-post-id').attr('data-post');
 			if(isMobile){
 				ChatPost.RedirectChatPostPage(item_post);
