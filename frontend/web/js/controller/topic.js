@@ -1,5 +1,5 @@
 var Topic = {
-    data:{ 
+    data:{
         filter: 'recent',
         city: '',
         size: 30,
@@ -156,7 +156,7 @@ var Topic = {
                 }else{
                     $('#modal_topic').modal('hide');
                     Post.params.topic = topic;
-                    Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();;
+                    Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();
                     Post.params.city = Topic.data.city;
                     Post.params.city_name = Topic.data.city_name;
                     Post.initialize();
@@ -238,7 +238,7 @@ var Topic = {
         var self = this;
         var containt = $('.containt');
         if (isMobile) {
-            $(window).scroll(function() {   
+            $(window).scroll(function() {
                 if( $(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 ) {
                     setTimeout(function(){
                         self.load_topic_more();
@@ -355,7 +355,7 @@ var Topic = {
 
     show_page_topic: function(city,params){
         if (params){
-            window.location.href = "netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng; 
+            window.location.href = "netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
         }else{
             window.location.href = "netwrk/topic/topic-page?city="+city;
         }
@@ -385,7 +385,7 @@ var Topic = {
         }
         var params = {'city': city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':self.list[self.data.filter].paging};
         self.data.city = city;
-        
+
         $(window).scrollTop(0);
         if($('#Topic').attr('data-action') == 'topic-page'){
             if(self.list[self.data.filter].status_paging == 1){
@@ -423,7 +423,7 @@ var Topic = {
             contain.scrollTop(0);
             self.data.filter = filter;
             self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
-            
+
         });
     },
 
@@ -454,18 +454,18 @@ var Topic = {
 
     getTemplate: function(parent,data){
         var self = this;
-        var json = $.parseJSON(data); 
+        var json = $.parseJSON(data);
         var list_template = _.template($( "#topic_list" ).html());
         var append_html = list_template({topices: json.data});
 
         parent.append(append_html);
-        self.onTemplate(json); 
+        self.onTemplate(json);
     },
 
     onTemplate: function(json){
         var self = this;
 
-        if(json.data.length == 0){ 
+        if(json.data.length == 0){
             $('#item_list_'+self.data.filter).find('.no-data').show();
             self.list[self.data.filter].status_paging = 0;
         }else if(json.data.length < self.data.size && json.data.length > 0){
@@ -482,11 +482,11 @@ var Topic = {
 
     getTemplateModal: function(parent,data){
         var self = this;
-        var json = $.parseJSON(data); 
+        var json = $.parseJSON(data);
         var list_template = _.template($( "#city_name" ).html());
         var append_html = list_template({city: json.city});
         Topic.data.city_name = json.city;
-        parent.append(append_html); 
+        parent.append(append_html);
     },
 
     eventClickMeetMobile: function(){
@@ -494,7 +494,7 @@ var Topic = {
         target.unbind();
         target.on('click',function(){
             target.bind();
-            window.location.href = baseUrl + "/netwrk/meet"; 
+            window.location.href = baseUrl + "/netwrk/meet";
             // Meet.reset_page();
             // Meet._init();
         });

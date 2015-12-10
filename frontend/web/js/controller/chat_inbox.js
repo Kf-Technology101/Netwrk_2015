@@ -63,6 +63,10 @@ var ChatInbox = {
 		var btn = $(ChatInbox.modal).find('#chat_dicussion li');
 		btn.unbind();
 		btn.on('click',function(e){
+			Post.params.topic = btn.find("input[name='topic_id']").val();
+			Post.params.topic_name = btn.find("input[name='topic_name']").val();
+			Post.params.city = btn.find("input[name='city_id']").val();
+			Post.params.city_name = btn.find("input[name='city_name']").val();
 
 			var item_post = $(e.currentTarget).find('.chat-post-id').attr('data-post');
 			if(isMobile){

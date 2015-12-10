@@ -34,7 +34,7 @@
 
 
 <script id="chat_inbox_list" type="text/x-underscore-template" >
-<% _.each(chat_inbox_list,function(chat_inbox){ %>
+	<% _.each(chat_inbox_list,function(chat_inbox){ %>
 		<li>
 			<div class='chat-post-id' data-post='<%= chat_inbox.id %>'>
 				<span class='avatar-user'>
@@ -47,6 +47,11 @@
 				<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> <%= chat_inbox.update_at %></span>
 				<i class='fa fa-2x fa-angle-right'></i>
 			</div>
+			<input type='hidden' value='<%= chat_inbox.topic_id %>' name='topic_id' />
+			<input type='hidden' value='<%= chat_inbox.topic_name %>' name='topic_name'/>
+			<input type='hidden' value='<%= chat_inbox.city_id %>' name='city_id' />
+			<input type='hidden' value='<%= chat_inbox.city_name %>' name='city_name'/>
 		</li>
-	<% }); %>
-</script>
+
+		<% }); %>
+	</script>
