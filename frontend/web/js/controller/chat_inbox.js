@@ -81,6 +81,7 @@ var ChatInbox = {
 				ChatPost.params.post = item_post;
 				if(ChatPost.temp_post != ChatPost.params.post){
 					$(ChatPost.modal).modal('hide');
+					$("#modal_topic").modal('hide');
 					ChatPost.initialize();
 					ChatPost.temp_post = ChatPost.params.post;
 				}
