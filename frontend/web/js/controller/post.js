@@ -404,6 +404,7 @@ var Post ={
     getNameTemplate: function(parent,data){
         var self = this;
         var list_template = _.template($("#name_post_list" ).html());
+        $('#list_post').find('.header .title_page').html("");
         var append_html = list_template({name: data});
 
         parent.append(append_html);

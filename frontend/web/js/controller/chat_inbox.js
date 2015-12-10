@@ -66,11 +66,11 @@ var ChatInbox = {
 		var btn = $(ChatInbox.modal).find('#chat_dicussion li');
 		btn.unbind();
 		btn.on('click',function(e){
+			var btn = $(this);
 			Post.params.topic = btn.find("input[name='topic_id']").val();
 			Post.params.topic_name = btn.find("input[name='topic_name']").val();
 			Post.params.city = btn.find("input[name='city_id']").val();
 			Post.params.city_name = btn.find("input[name='city_name']").val();
-
 			var item_post = $(e.currentTarget).find('.chat-post-id').attr('data-post');
 			if(isMobile){
 				ChatPost.RedirectChatPostPage(item_post);
@@ -88,9 +88,7 @@ var ChatInbox = {
 
 	ActiveReponsiveChatInbox: function() {
 		var width = $( window ).width();
-		console.log(width);
 		if (width <= 1366) {
-			console.log($("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post"));
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
 		}
 	},
