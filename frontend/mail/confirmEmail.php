@@ -14,4 +14,4 @@ use yii\helpers\Url;
 
 <p><?= "Please confirm your email address by clicking the link below:" ?></p>
 
-<p><?= Url::toRoute(["/user/confirm", "key" => $userKey->key_value], true); ?></p>
+<p><?= Url::toRoute(["/netwrk/user/confirm", "key" => $userKey->key_value], true); ?></p>

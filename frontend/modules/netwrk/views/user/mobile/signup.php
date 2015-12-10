@@ -59,7 +59,7 @@
         </div>
         <?= Html::submitButton('Sign Up', ['class' => 'btn btn-primary btn-control']) ?>
     <?php ActiveForm::end(); ?>
-     <?php endif; ?>
+    <?php endif; ?>
 <!--     <div class="btn-control disable">
         <p>Sign Up</p>
     </div> -->

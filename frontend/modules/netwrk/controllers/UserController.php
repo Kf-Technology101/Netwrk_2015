@@ -33,12 +33,10 @@ class UserController extends BaseController
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        // echo "<pre>";print_r(Yii::$app->user); die;
+
         // load post data and login
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("netwrk")->loginDuration)) {
-            // echo "<pre>";print_r(Yii::$app->user);die;
-            // return $this->goBack(Yii::$app->getModule("netwrk")->loginRedirect);
             return $this->goHome();
         }
 
@@ -66,6 +64,7 @@ class UserController extends BaseController
     public function actionSignup()
     {
 
+
         $user = new User(["scenario" => "register"]);
         $profile = new Profile();
 
@@ -90,15 +89,15 @@ class UserController extends BaseController
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
-
+                return $this->goHome();
                 // set flash
                 // don't use $this->refresh() because user may automatically be logged in and get 403 forbidden
-                $successText = "Successfully registered [{$user->getDisplayName()}]";
-                $guestText = "";
-                if (Yii::$app->user->isGuest) {
-                    $guestText =  " - Please check your email to confirm your account";
-                }
-                Yii::$app->session->setFlash("Register-success", $successText . $guestText);
+                // $successText = "Successfully registered [{$user->getDisplayName()}]";
+                // $guestText = "";
+                // if (Yii::$app->user->isGuest) {
+                //     $guestText =  " - Please check your email to confirm your account";
+                // }
+                // Yii::$app->session->setFlash("Register-success", $successText . $guestText);
             }
         }
 
@@ -135,5 +134,33 @@ class UserController extends BaseController
         } else {
             Yii::$app->user->login($user, Yii::$app->getModule("netwrk")->loginDuration);
         }
+    }
+
+    public function actionConfirm($key)
+    {
+        /** @var \amnah\yii2\user\models\UserKey $userKey */
+        /** @var \amnah\yii2\user\models\User $user */
+
+        // search for userKey
+        $success = false;
+        $userKey = new UserKey();
+        $userKey = $userKey::findActiveByKey($key, [$userKey::TYPE_EMAIL_ACTIVATE, $userKey::TYPE_EMAIL_CHANGE]);
+        if ($userKey) {
+
+            // confirm user
+            $user = new User();
+            $user = $user::findOne($userKey->user_id);
+            $user->confirm();
+
+            // consume userKey and set success
+            $userKey->consume();
+            $success = $user->email;
+        }
+
+        // render
+        return $this->render("confirm", [
+            "userKey" => $userKey,
+            "success" => $success
+        ]);
     }
 }

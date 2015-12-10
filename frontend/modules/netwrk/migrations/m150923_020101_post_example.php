@@ -18,7 +18,7 @@ class m150923_020101_post_example extends \yii\db\Migration
             'topic_id' => Schema::TYPE_INTEGER . '(11)',
             'user_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'created_at' => Schema::TYPE_DATETIME ,
-            'updated_at' => Schema::TYPE_DATETIME ,
+            'updated_at' => Schema::TYPE_DATETIME .'null default null',
         ], $tableOptions);
 
         $current_date = date('Y-m-d H:i:s');

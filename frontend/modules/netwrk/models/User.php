@@ -306,7 +306,7 @@ class User extends ActiveRecord implements IdentityInterface
             $attributes["status"] = $status;
         }
         elseif ($emailConfirmation && $requireEmail) {
-            $attributes["status"] = static::STATUS_INACTIVE;
+            $attributes["status"] = static::STATUS_ACTIVE;
         }
         elseif ($emailConfirmation && $useEmail && $this->email) {
             $attributes["status"] = static::STATUS_UNCONFIRMED_EMAIL;
@@ -448,12 +448,11 @@ class User extends ActiveRecord implements IdentityInterface
         $mailer           = Yii::$app->mailer;
         $oldViewPath      = $mailer->viewPath;
         $mailer->viewPath = Yii::$app->getModule("netwrk")->emailViewPath;
-
         // send email
         $user    = $this;
         $profile = $user->profile;
         $email   = $user->new_email !== null ? $user->new_email : $user->email;
-        $subject = Yii::$app->id . " - Email Confirmation";
+        $subject = " - Email Confirmation";
         $message  = $mailer->compose('confirmEmail', compact("subject", "user", "profile", "userKey"))
             ->setTo($email)
             ->setSubject($subject);

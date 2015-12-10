@@ -26,9 +26,9 @@ class m151207_040101_table_user_key_auth extends \yii\db\Migration
             'user_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'type' => Schema::TYPE_SMALLINT . '(6) NOT NULL',
             'key_value' => Schema::TYPE_STRING . '(255) NOT NULL',
-            'create_time' => Schema::TYPE_TIMESTAMP,
-            'consume_time' => Schema::TYPE_TIMESTAMP,
-            'expire_time' => Schema::TYPE_TIMESTAMP,
+            'create_time' => Schema::TYPE_TIMESTAMP. ' null default null',
+            'consume_time' => Schema::TYPE_TIMESTAMP. ' null default null',
+            'expire_time' => Schema::TYPE_TIMESTAMP. ' null default null',
         ], $tableOptions);
 
         $this->createIndex('{{%user_email}}', '{{%user}}', 'email', true);
