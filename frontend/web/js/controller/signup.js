@@ -47,6 +47,7 @@ var Signup={
 	OnChangeGender: function(){
 		var gender = $(Signup.parent).find('.sex .dropdown-menu li');
 		var input_gender = $(Signup.parent).find('#profile-gender');
+
 		gender.unbind();
 		gender.on('click',function(e){
 			var text = $(e.currentTarget).text();
