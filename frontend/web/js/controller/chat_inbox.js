@@ -49,10 +49,13 @@ var ChatInbox = {
 				chat_inbox.animate({
 					"right": "0"
 				}, 500);
+
+				ChatInbox.ActiveReponsiveChatInbox();
 			} else {
 				chat_inbox.animate({
 					"right": "-400px"
 				}, 500);
+				ChatInbox.DeactiveReponsiveChatInbox();
 			}
 
 		});
@@ -81,5 +84,21 @@ var ChatInbox = {
 
 			}
 		});
+	},
+
+	ActiveReponsiveChatInbox: function() {
+		var width = $( window ).width();
+		console.log(width);
+		if (width <= 1366) {
+			console.log($("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post"));
+			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
+		}
+	},
+
+	DeactiveReponsiveChatInbox: function() {
+		var width = $( window ).width();
+		if (width <= 1366) {
+			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
+		}
 	}
 }
