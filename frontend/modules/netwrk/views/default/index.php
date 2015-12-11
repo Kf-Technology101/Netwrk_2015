@@ -35,5 +35,7 @@
 <?= $this->render('partial/login');?>
 <?= $this->render('partial/signup');?>
 <?= $this->render('partial/chat_inbox');?>
+<?= $this->render('partial/forgot_password');?>
+<?= $this->render('partial/reset_password');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>

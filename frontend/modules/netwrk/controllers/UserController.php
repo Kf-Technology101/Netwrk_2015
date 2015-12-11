@@ -23,6 +23,19 @@ use yii\helpers\Url;
 
 class UserController extends BaseController
 {
+    /**
+     * Forgot password
+     */
+    public function actionForgotPassword(){
+        return $this->render($this->getIsMobile() ? 'mobile/forgot_password' : $this->goHome());
+    }
+
+    /**
+     * Forgot password
+     */
+    public function actionResetPassword(){
+        return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome());
+    }
 
     /**
      * Display login page

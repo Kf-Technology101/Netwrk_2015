@@ -32,7 +32,8 @@ class MobileAsset extends AssetBundle
       'css/jquery.ui.css',
       'css/jquery.ui.pips.css',
       'css/jquery.mCustomScrollbar.css',
-      'css/emojione/css/emojione.min.css'
+      'css/emojione/css/emojione.min.css',
+      'css/mobile/forgot_pass.css',
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -62,6 +63,8 @@ class MobileAsset extends AssetBundle
       'js/lib/jquery.mCustomScrollbar.concat.min.js',
       'js/bootstrap-datepicker.min.js',
       'js/lib/emojione.js',
+      'js/controller/forgot_password.js',
+      'js/controller/reset_password.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
