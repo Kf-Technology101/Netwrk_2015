@@ -44,12 +44,6 @@ AppAsset::register($this);
         <div class="chatting" id='chat_inbox_btn'>
             <span><i class="fa fa-comment"></i>Chat</span>
         </div>
-        <div class="forgot_pass" id='forgot_pass'>
-            <span>Forgot password?</span>
-        </div>
-        <div class="reset_pass" id='reset_pass'>
-            <span>Reset password</span>
-        </div>
         <?php
             // $menuItems = [
             //     ['label' => 'Menu'],

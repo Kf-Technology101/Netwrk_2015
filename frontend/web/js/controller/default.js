@@ -7,24 +7,7 @@ var Default ={
             $('#btn_meet').show();
             self._eventClickMeetBtn();
             ChatInbox.initialize();
-            Default.forgotPass(); // test function
-            Default.resetPass(); // test function
-            // ForgotPass.initialize();
         }
-    },
-
-    forgotPass: function(){
-        var target = $('.navbar-collapse').find('.forgot_pass');
-        target.on('click', function(){
-            ForgotPass.initialize();
-        });
-    },
-
-    resetPass: function(){
-        var target = $('.navbar-collapse').find('.reset_pass');
-        target.on('click', function(){
-            ResetPass.initialize();
-        });
     },
 
     getMarkerDefault: function(){
