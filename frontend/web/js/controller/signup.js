@@ -6,6 +6,7 @@ var Signup={
 	validate:true,
 	state: 'Indiana',
 	zipcode: false,
+	data_validate:'',
 	initialize:function(){
 		console.log('signup');
 		if(isMobile){
@@ -16,25 +17,70 @@ var Signup={
 			Signup.OnShowModalSignUp();
 			Signup.OnHideModalSignUp();
 			Signup.ShowModal();
+			Signup.Customscrollbar();
 			Signup.OnClickBackdrop();
+			Signup.OnClickSubmitForm();
+			Signup.AutoValidateEmail();
+
 		}
 		Signup.OnShowDatePicker();
 		Signup.OnChangeGender();
 		Signup.validateZipcode();
-		Signup.OnClickSubmitSignUp();
+		Signup.OnBeforeSubmitForm();
 	},
 
-	OnClickSubmitSignUp: function(){
-		var btn = $(Signup.parent).find('.btn-control.sign-up');
+	ShowErrorValidate: function(validate){
+		$.each(Signup.data_validate,function(i,e){
+			if(validate){
+				var target = $('.field-'+ i);
+				target.removeClass('has-success').addClass('has-error');
+				target.find('.help-block').text(e);
+				return false;
+			}else{
+				var target = $('.field-'+ i);
+				target.removeClass('has-success').addClass('has-error');
+				target.find('.help-block').text(e);
+			}
+		})
+	},
+
+	AutoValidateEmail: function(){
+		if($(Signup.parent).find('#user-email').val() != ""){
+			Ajax.user_signup($(Signup.form_id)).then(function(data){
+				Signup.data_validate = data;
+				setTimeout(function(){
+					Signup.ShowErrorValidate('user-email');
+				}, 500);
+			});
+		}
+	},
+
+	OnClickSubmitForm: function(){
+		var btn = $(Signup.parent).find('.btn-control');
+
 		btn.unbind();
-		$(Signup.parent).on('afterValidate',Signup.form_id,function(e,data,error){
-			console.log(data);
+		btn.on('click',function(){
+			Ajax.user_signup($(Signup.form_id)).then(function(data){
+				Signup.data_validate = data;
+				Signup.ShowErrorValidate();
+			});
+		});
+	},
+
+	Customscrollbar: function(){
+		$(Signup.parent).find('.modal-body').mCustomScrollbar({
+			theme:"dark"
+		});
+	},
+
+	OnBeforeSubmitForm: function(){
+		$(Signup.parent).on('beforeSubmit',Signup.form_id,function(e,data,error){
 			if(!Signup.zipcode){
 				var zip = $(Signup.parent).find('#profile-zip_code').val();
 				Signup.CheckZipcode(zip);
+				return false
 			}
 		});
-
 	},
 
 	ShowModal: function(){

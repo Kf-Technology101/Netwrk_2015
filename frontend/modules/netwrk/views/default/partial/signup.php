@@ -1,4 +1,11 @@
-<?php use yii\helpers\Url; ?>
+<?php
+    use yii\helpers\Url;
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+    use frontend\modules\netwrk\controllers\UserController;
+    use frontend\modules\netwrk\models\User;
+    use frontend\modules\netwrk\models\Profile;
+?>
 <div class="modal" id='signup' role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -8,34 +15,60 @@
                 </div>
             </div>
             <div class="modal-body">
-                <div class="form-register">
-                    <div class="field-name">
-                        <input type="text" class="username form-control" maxlength="128" placeholder="Username">
+                <?php
+                    $form = ActiveForm::begin([
+                        'id' => 'register-form',
+                        'options' => ['class' => 'form-register form-horizontal'],
+                        'fieldConfig' => [
+                            'template' => "<div class=\"col-md-12\">{input}</div>\n<div class=\"col-md-12\">{error}</div>",
+                            'labelOptions' => ['class' => 'col-lg-2 control-label'],
+                        ],
+                    ]);
+                    $user = new User(["scenario" => "register"]);
+                    $profile = new Profile();
+
+                    // $post = Yii::$app->request->post();
+
+                    // if ($user->load($post)) {
+                        // $user->validate();
+                        // $profile->validate();
+                    // }
+                ?>
+                    <div class="col-field-name field">
+                        <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First name')); ?>
                     </div>
-                    <div class="field-name">
-                        <input type="text" class="email form-control" maxlength="128" placeholder="Email">
+                    <div class="col-field-name field">
+                        <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last name')); ?>
                     </div>
-                    <div class="col-field-name">
-                        <input type="password" class="password form-control" maxlength="128" placeholder="Password">
+                    <div class="field-name field">
+                        <?= $form->field($user, 'username')->textInput(array('placeholder' => 'Username')) ?>
                     </div>
-                    <div class="col-field-name sex dropdown input-group">
-                        <input type="text" class="gender form-control" maxlength="128" placeholder="Gender" data-toggle="dropdown">
-                        <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <li>Male</li>
-                            <li>Female</li>
-                        </ul>
+                    <div class="field-name field">
+                        <?= $form->field($user,'email')->textInput(array('placeholder' => 'Email','autocomplete'=> 'off')); ?>
                     </div>
-                    <div class="col-field-name">
-                        <input type="text" class="zipcode form-control" maxlength="128" placeholder="Zipcode">
+                    <div class="col-field-name field">
+                        <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'Password')); ?>
                     </div>
-                    <div class="col-field-name">
-                        <input type="text" class="age form-control" maxlength="128" placeholder="Age must be at least 18">
+                    <div class="col-field-name sex field">
+                        <?= $form->field(
+                                $profile,
+                                'gender',
+                                [
+                                   'template'=>"<div class=\"col-md-12 input-group sex\">{input}\n
+                                   <span class='input-group-addon' data-toggle='dropdown'><i class='fa fa-sort'></i></span>\n
+                        <ul class='dropdown-menu' aria-labelledby='dropdownMenu2'><li>Male</li><li>Female</li></ul></div>\n<div class=\"col-lg-7\">{error}</div>"
+                                ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); ?>
                     </div>
-                </div>
-                <div class="btn-control disable">
+                    <div class="col-field-name zipcode field">
+                        <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode')); ?>
+                    </div>
+                    <div class="col-field-name age field">
+                        <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
+                    </div>
+                <div class="btn-control">
                     <p>Sign Up</p>
                 </div>
+            <?php ActiveForm::end(); ?>
                 <div class="sign-in">
                     <p>Already have an account! <b>Login</b> now</p>
                 </div>

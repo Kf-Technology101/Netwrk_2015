@@ -15,7 +15,6 @@
     .modal-content{
         background: #fff;
         border:none;
-        padding: 30px 15px;
     }
     .modal-header{
         padding: 0;
@@ -28,15 +27,15 @@
         border-top-right-radius: 4px;
         .header{
             background: #fff;
-            padding: 0;
+            padding: 10px;
             width: 100%;
-            height: 40px;
+            height: 45px;
             border-bottom: 1px solid #fff;
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
             p{
-                margin: 0;
-                line-height: 40px;
+                margin: 0 15px;
+                line-height: 45px;
                 font-size: 24px;
                 font-weight: bold;
             }
@@ -44,13 +43,15 @@
     }
     .modal-body{
         overflow-y: auto;
-        max-height: 410px;
+        max-height: 550px;
         min-height: 300px;
         width: 100%;
-        padding: 15px 0 0 0;
+        padding:0;
         height: auto;
         border-radius: 4px;
+        overflow-x: hidden;
         .form-register{
+            padding:15px;
             p{
                 margin: 0 0 5px;
                 font-size: 16px;
@@ -68,19 +69,23 @@
             }
             .col-field-name{
                 margin: 0 0 15px;
-                width: 214px;
+                width: 225px;
                 float: left;
                 input{
                     width: 100%;
                 }
                 &:nth-of-type(odd) {
-                    margin-right: 42px;
+                    margin-right: 20px;
                 }
                 &:nth-of-type(even) {
                 }
                 .dropdown-menu{
                     width: 185px;
                     padding: 10px;
+                }
+                &.sex{
+                    width: 195px;
+                    margin-left: 15px;
                 }
             }
             ::-webkit-input-placeholder {
@@ -105,6 +110,10 @@
             height: 40px;
             width: 100%;
             float: left;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
             p{
                 color: #fff;
                 font-size: 20px;

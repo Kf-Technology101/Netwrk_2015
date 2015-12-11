@@ -56,23 +56,48 @@ class UserController extends BaseController
         return $hash;
     }
 
-    public function actionIndex(){
-        //return $this->render($this->getIsMobile() ? 'mobile/login' : '');
-        // echo "<pre>";print_r(Yii::$app->user);die;
-    }
-    public function actionRegister(){
+    public function actionSignupUser(){
 
         $user = new User(["scenario" => "register"]);
         $profile = new Profile();
 
-        return $this->render($this->getIsMobile() ? 'mobile/signup' : $this->goHome(), [
-            'user'    => $user,
-            'profile' => $profile,
-        ]);
+        // load post data
+        $post = Yii::$app->request->post();
+
+        if ($user->load($post)) {
+
+            // ensure profile data gets loaded
+            $profile->load($post);
+
+            // validate for ajax request
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($user, $profile);
+            }
+
+            // validate for normal request
+            if ($user->validate()) {
+
+                // perform registration
+                $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
+                $profile->setUser($user->id)->save(false);
+                $this->afterSignUp($user);
+                $data = array('status' => 1,'data'=>[]);
+            }else{
+                $data = array('status' => 0,'data'=>$user);
+            }
+        }
+
+        $hash = json_encode($data);
+        return $hash;
     }
+
+    public function actionIndex(){
+
+    }
+
     public function actionSignup()
     {
-
 
         $user = new User(["scenario" => "register"]);
         $profile = new Profile();
@@ -99,14 +124,6 @@ class UserController extends BaseController
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
                 return $this->goHome();
-                // set flash
-                // don't use $this->refresh() because user may automatically be logged in and get 403 forbidden
-                // $successText = "Successfully registered [{$user->getDisplayName()}]";
-                // $guestText = "";
-                // if (Yii::$app->user->isGuest) {
-                //     $guestText =  " - Please check your email to confirm your account";
-                // }
-                // Yii::$app->session->setFlash("Register-success", $successText . $guestText);
             }
         }
 
@@ -117,7 +134,7 @@ class UserController extends BaseController
         ]);
     }
 
-    protected function afterSignUp($user)
+    public function afterSignUp($user)
     {
         /** @var \amnah\yii2\user\models\UserKey $userKey */
 
