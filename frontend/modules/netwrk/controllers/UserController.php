@@ -76,28 +76,26 @@ class UserController extends BaseController
 
         // load post data
         $post = Yii::$app->request->post();
-
-        if ($user->load($post)) {
-
+        if ($user->load($post) && $profile->load($post)) {
             // ensure profile data gets loaded
-            $profile->load($post);
-
             // validate for ajax request
-            if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($user, $profile);
-            }
+            $zipcode = $post['Profile']['zip_code'];
+            $lat = $post['Profile']['lat'];
+            $lng = $post['Profile']['lng'];
 
+            $form = ActiveForm::validate($user, $profile);
             // validate for normal request
-            if ($user->validate()) {
-
+            if ($user->validate() && $profile->validate() && $zipcode) {
                 // perform registration
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
+                $profile->zip_code = $zipcode;
+                $profile->lat = $lat;
+                $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
                 $data = array('status' => 1,'data'=>[]);
             }else{
-                $data = array('status' => 0,'data'=>$user);
+                $data = array('status' => 0,'data'=>$form);
             }
         }
 
@@ -114,13 +112,17 @@ class UserController extends BaseController
 
         $user = new User(["scenario" => "register"]);
         $profile = new Profile();
-
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         // load post data
         $post = Yii::$app->request->post();
-
+        
         if ($user->load($post)) {
-
             // ensure profile data gets loaded
+            $zipcode = $post['Profile']['zip_code'];
+            $lat = $post['Profile']['lat'];
+            $lng = $post['Profile']['lng'];
             $profile->load($post);
 
             // validate for ajax request
@@ -130,10 +132,13 @@ class UserController extends BaseController
             }
 
             // validate for normal request
-            if ($user->validate()) {
+            if ($user->validate() && $profile->validate() && $zipcode) {
 
                 // perform registration
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
+                $profile->zip_code = $zipcode;
+                $profile->lat = $lat;
+                $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
                 return $this->goHome();

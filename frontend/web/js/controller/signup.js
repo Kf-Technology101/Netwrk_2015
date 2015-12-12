@@ -6,6 +6,8 @@ var Signup={
 	validate:true,
 	state: 'Indiana',
 	zipcode: false,
+	lat: 0,
+	lng: 0,
 	data_validate:'',
 	initialize:function(){
 		console.log('signup');
@@ -21,21 +23,25 @@ var Signup={
 			Signup.OnClickBackdrop();
 			Signup.OnClickSubmitForm();
 			Signup.AutoValidateEmail();
+			Signup.AutoValidateUsername();
 
 		}
 		Signup.OnShowDatePicker();
 		Signup.OnChangeGender();
 		Signup.validateZipcode();
+		Signup.OnAfterValidateForm();
 		Signup.OnBeforeSubmitForm();
 	},
 
 	ShowErrorValidate: function(validate){
-		$.each(Signup.data_validate,function(i,e){
+		$.each(Signup.data_validate.data,function(i,e){
 			if(validate){
-				var target = $('.field-'+ i);
-				target.removeClass('has-success').addClass('has-error');
-				target.find('.help-block').text(e);
-				return false;
+				var target = $('.field-'+ validate);
+				if(validate == i){
+					target.removeClass('has-success').addClass('has-error');
+					target.find('.help-block').text(e);
+					return false;
+				}
 			}else{
 				var target = $('.field-'+ i);
 				target.removeClass('has-success').addClass('has-error');
@@ -47,12 +53,54 @@ var Signup={
 	AutoValidateEmail: function(){
 		if($(Signup.parent).find('#user-email').val() != ""){
 			Ajax.user_signup($(Signup.form_id)).then(function(data){
-				Signup.data_validate = data;
-				setTimeout(function(){
-					Signup.ShowErrorValidate('user-email');
-				}, 500);
+				Signup.data_validate = $.parseJSON(data);
+				if(Signup.data_validate.status == 0){
+					setTimeout(function(){
+						Signup.ShowErrorValidate('user-email');
+					}, 500);	
+				}
 			});
 		}
+
+		$(Signup.parent).find('#user-email').on('blur',function(){
+			Ajax.user_signup($(Signup.form_id)).then(function(data){
+				Signup.data_validate = $.parseJSON(data);
+				if(Signup.data_validate.status == 0){
+					setTimeout(function(){
+						Signup.ShowErrorValidate('user-email');
+					}, 500);
+				}
+			});
+		});
+	},
+
+	AutoValidateUsername: function(){
+		if($(Signup.parent).find('#user-username').val() != ""){
+			Ajax.user_signup($(Signup.form_id)).then(function(data){
+				Signup.data_validate = $.parseJSON(data);
+				if(Signup.data_validate.status == 0){
+					setTimeout(function(){
+						Signup.ShowErrorValidate('user-username');
+					}, 500);
+				}else{
+					console.log('signup')
+				}
+			});
+		}
+
+		$(Signup.parent).find('#user-username').on('blur',function(){
+			Ajax.user_signup($(Signup.form_id)).then(function(data){
+				Signup.data_validate = $.parseJSON(data);
+				console.log(Signup.data_validate);
+				if(Signup.data_validate.status == 0){
+					setTimeout(function(){
+						Signup.ShowErrorValidate('user-username');
+					}, 500);
+				}else{
+					console.log('signup')
+				}
+			});
+		});
 	},
 
 	OnClickSubmitForm: function(){
@@ -60,10 +108,22 @@ var Signup={
 
 		btn.unbind();
 		btn.on('click',function(){
-			Ajax.user_signup($(Signup.form_id)).then(function(data){
-				Signup.data_validate = data;
-				Signup.ShowErrorValidate();
-			});
+			if(!Signup.zipcode){
+				var zip = $(Signup.parent).find('#profile-zip_code').val();
+				Signup.CheckZipcode(zip);
+				return false
+			}else{
+				Ajax.user_signup($(Signup.form_id)).then(function(data){
+					Signup.data_validate = $.parseJSON(data);
+					if(Signup.data_validate.status == 0){
+						Signup.data_validate = data;
+						Signup.ShowErrorValidate();	
+					}else{
+						$(Signup.modal).modal('hide');
+					}			
+				});
+			}
+
 		});
 	},
 
@@ -75,6 +135,16 @@ var Signup={
 
 	OnBeforeSubmitForm: function(){
 		$(Signup.parent).on('beforeSubmit',Signup.form_id,function(e,data,error){
+			if(!Signup.zipcode){
+				var zip = $(Signup.parent).find('#profile-zip_code').val();
+				Signup.CheckZipcode(zip);
+				return false
+			}
+		});
+	},
+
+	OnAfterValidateForm: function(){
+		$(Signup.parent).on('afterValidate',Signup.form_id,function(e,data,error){
 			if(!Signup.zipcode){
 				var zip = $(Signup.parent).find('#profile-zip_code').val();
 				Signup.CheckZipcode(zip);
@@ -117,6 +187,9 @@ var Signup={
 		var target = $(Signup.parent).find('#profile-zip_code');
 
 		target.unbind('keyup');
+		target.unbind('change');
+		target.unbind('blur');
+
 		target.on('blur change keyup',function(e){
 			Signup.CheckZipcode($(e.currentTarget).val()) ;
 		})
@@ -143,8 +216,11 @@ var Signup={
     apiZipcode: function(zipcode){
     	var message;
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+        	console.log(data);
             if (data.places[0].state == Signup.state){
             	Signup.zipcode = 1;
+            	Signup.lat = data.places[0].latitude;
+            	Signup.lng = data.places[0].longitude;
             	Signup.OnShowZipcodeValid();
             }else{
             	message = " Zipcode not in state Indiana";
@@ -162,6 +238,15 @@ var Signup={
     	var target = $(Signup.parent).find('.zipcode .form-group');
     	target.removeClass('has-error').addClass('has-success');
     	target.find('.help-block').text('');
+    	Signup.AddLatLngUser();
+    },
+
+    AddLatLngUser: function(){
+    	var latIn = $(Signup.parent).find('#profile-lat'),
+    		lngIn = $(Signup.parent).find('#profile-lng');
+
+    	latIn.val(Signup.lat);
+    	lngIn.val(Signup.lng);
     },
 
 	OnShowZipcodeErrors: function(message){
@@ -180,6 +265,7 @@ var Signup={
 	OnHideModalSignUp: function(){
         $(Signup.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
+        	$(Signup.modal).find(Signup,form_id)[0].reset();
         });
 	},
 

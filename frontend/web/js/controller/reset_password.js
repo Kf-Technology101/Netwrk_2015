@@ -12,7 +12,7 @@ var ResetPass = {
         ResetPass.onChangeConfirmPass();
         ResetPass.onClickResetNetwrkLogo();
         if(isMobile){
-            ResetPass.hideHeaderFooter();
+            // ResetPass.hideHeaderFooter();
         }
     },
 

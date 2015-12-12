@@ -65,6 +65,8 @@
                     <div class="col-field-name age field">
                         <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
                     </div>
+                    <?=  $form->field($profile, 'lat')->hiddenInput()->label(false); ?>
+                    <?=  $form->field($profile, 'lng')->hiddenInput()->label(false); ?>
                 <div class="btn-control">
                     <p>Sign Up</p>
                 </div>

@@ -10,7 +10,7 @@ var ForgotPass = {
         ForgotPass.onChangeEmail();
         ForgotPass.onClickForgotNetwrkLogo();
         if(isMobile){
-            ForgotPass.hideHeaderFooter();
+            // ForgotPass.hideHeaderFooter();
         }
     },
 
