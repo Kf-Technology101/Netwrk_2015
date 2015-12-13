@@ -78,7 +78,7 @@ AppAsset::register($this);
 <script type="text/javascript">
     var baseUrl = '<?php echo Url::base(true); ?>',
     isMobile = false,
-    isLogin = '<?php echo Yii::$app->user->isGuest ?>',
+    isGuest = '<?php echo Yii::$app->user->isGuest ?>',
     isResetPassword ="<?= Yii::$app->session['key_reset_password'] ?>",
     isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>"; 
 </script>

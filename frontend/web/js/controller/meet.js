@@ -58,14 +58,18 @@ var Meet ={
             Meet.reset_modal();
             currentTarget.show();
 
-            
-            Meet.changefilter(currentTarget);
-            Meet.ShowModalMeet();
-            Meet.eventClickdiscover();
-            Meet.CustomScrollBar();
-            Meet._onClickMeetBack();
-            // $('#btn_meet').hide();
-            $('.modal-footer').show();
+            if(isGuest){
+                Login.initialize();
+            }else{
+                Meet.changefilter(currentTarget);
+                Meet.ShowModalMeet();
+                Meet.eventClickdiscover();
+                Meet.CustomScrollBar();
+                Meet._onClickMeetBack();
+                // $('#btn_meet').hide();
+                $('.modal-footer').show();
+            }
+
             // parent.find('#btn_discover').show();
             // set_position_btn(parent,parent.find('#btn_discover'),120,100);
             // set_position_btn_resize(parent,parent.find('#btn_discover'),120,100);

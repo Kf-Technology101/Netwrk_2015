@@ -10,10 +10,10 @@ use frontend\modules\netwrk\models\Post;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
+use Yii;
 
 class TopicController extends BaseController
 {
-    private $currentUser = 1;
     public function actionIndex()
     {
 // $query = Topic::find()->where(['city_id'=>1])->orderBy(['post_count'=> SORT_DESC]);
@@ -39,6 +39,9 @@ class TopicController extends BaseController
     }
 
     public function actionCreateTopic() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(array('/netwrk/user/login'));
+        }
         $city = $_GET['city'];
         $cty = City::findOne($city);
         if ($cty){
@@ -67,6 +70,7 @@ class TopicController extends BaseController
     }
 
     public function actionNewTopic() {
+        $currentUser = Yii::$app->user->id;
         $city = $_POST['city'];
         $topic = $_POST['topic'];
         $post = $_POST['post'];
@@ -95,7 +99,7 @@ class TopicController extends BaseController
         }
 
         $Topic = new Topic;
-        $Topic->user_id = $this->currentUser;
+        $Topic->user_id = $currentUser;
         $Topic->city_id = $city_id;
         $Topic->title = $topic;
         $Topic->save();
@@ -104,7 +108,7 @@ class TopicController extends BaseController
         $Post->title = $post;
         $Post->content = $message;
         $Post->topic_id = $Topic->id;
-        $Post->user_id = $this->currentUser;
+        $Post->user_id = $currentUser;
         $Post->save();
 
         $Topic->post_count = 1;
@@ -115,7 +119,6 @@ class TopicController extends BaseController
 
     public function actionGetTopicMobile()
     {
-        $userId = 1;
         $city = $_GET['city'];
         $filter = $_GET['filter'];
         $pageSize = $_GET['size'];

@@ -7,21 +7,24 @@ use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\UserSettings;
 use yii\helpers\Url;
+use Yii;
 
 class SettingController extends BaseController
 {
     private $currentUser = 1;
     public function actionIndex()
     {
-
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(array('/netwrk/user/login'));
+        }
         return $this->render('mobile/index');
     }
 
     public function actionLoadProfile()
     {
-        // $currentUser = 4;
+        $currentUser = Yii::$app->user->id;
         $current_date = date('Y-m-d H:i:s');
-        $user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
+        $user = User::find()->where('id ='.$currentUser)->with('profile')->one();
 
         if($user && $user->profile){
 
@@ -34,7 +37,7 @@ class SettingController extends BaseController
                 $image = Url::to('@web/img/icon/no_avatar.jpg');
             }else{
                 //get avatar
-                $image = Url::to('@web/uploads/'.$this->currentUser.'/'.$user->profile->photo);
+                $image = Url::to('@web/uploads/'.$currentUser.'/'.$user->profile->photo);
             }
 
             $birthday = new \DateTime($user->profile->dob);
@@ -67,7 +70,7 @@ class SettingController extends BaseController
 
     public function actionUpdateProfile()
     {
-        // $currentUser = 4;
+        $currentUser = Yii::$app->user->id;
         $status = 0;
 
         $age = $_POST['age'];
@@ -76,7 +79,7 @@ class SettingController extends BaseController
         $zipcode = $_POST['zipcode'];
         $lat = $_POST['lat'];
         $lng = $_POST['lng'];
-        $user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
+        $user = User::find()->where('id ='.$currentUser)->with('profile')->one();
         $profile = $user->profile;
 
         $user->profile->dob = $age;
@@ -94,7 +97,7 @@ class SettingController extends BaseController
             $image = Url::to('@web/img/icon/no_avatar.jpg');
         }else{
             //get avatar
-            $image = Url::to('@web/uploads/'.$this->currentUser.'/'.$user->profile->photo);
+            $image = Url::to('@web/uploads/'.$currentUser.'/'.$user->profile->photo);
         }
 
         $data = array(
@@ -112,7 +115,7 @@ class SettingController extends BaseController
 
     public function actionUploadImage()
     {
-        // $currentUser = 4;
+        $currentUser = Yii::$app->user->id;
 
         $image = $_FILES[ 'image' ];
 
@@ -126,9 +129,9 @@ class SettingController extends BaseController
         $extension = substr( $_FILES[ 'image' ][ 'name' ], strrpos( $_FILES[ 'image' ][ 'name' ], '.' ) );
 
         // Generate unique name /
-        $filename = $this->currentUser . '-' . time() . $extension;
+        $filename = $currentUser . '-' . time() . $extension;
         
-        $upload_path = \Yii::getAlias('@frontend') . "/web/uploads/".$this->currentUser."/";
+        $upload_path = \Yii::getAlias('@frontend') . "/web/uploads/".$currentUser."/";
         if (!is_dir($upload_path)) {
             mkdir( $upload_path, 0777, true);
         }
@@ -144,20 +147,20 @@ class SettingController extends BaseController
         fclose( $fp );
         fclose( $postdata );   
 
-        $user = User::find()->where('id ='.$this->currentUser)->one();
+        $user = User::find()->where('id ='.$currentUser)->one();
         $user->profile->photo = $filename;
         $user->profile->update();
 
-        $image = Url::to('@web/uploads/'.$this->currentUser.'/'.$user->profile->photo);
+        $image = Url::to('@web/uploads/'.$currentUser.'/'.$user->profile->photo);
         $hash = json_encode(array('data_image'=>$image));
         return $hash;
     }
 
     public function actionGetUserSetting()
     {
-        // $currentUser = 4;
+        $currentUser = Yii::$app->user->id;
 
-        $setting = UserSettings::find()->where('user_id ='.$this->currentUser)->one();
+        $setting = UserSettings::find()->where('user_id ='.$currentUser)->one();
 
         if($setting){
             $array= array(
@@ -180,7 +183,7 @@ class SettingController extends BaseController
 
     public function actionUpdateUserSetting()
     {
-        // $currentUser = 4;
+        $currentUser = Yii::$app->user->id;
 
         $age = $_POST['age'];
         $distance = $_POST['distance'];
@@ -194,7 +197,7 @@ class SettingController extends BaseController
         }
 
 
-        $setting = UserSettings::find()->where('user_id ='.$this->currentUser)->one();
+        $setting = UserSettings::find()->where('user_id ='.$currentUser)->one();
         $array = array('status'=> 0);  
         if($setting){
             $setting->distance = $distance;
@@ -209,7 +212,7 @@ class SettingController extends BaseController
             );  
         }else{
             $us = new UserSettings;
-            $us->user_id = $this->currentUser;
+            $us->user_id = $currentUser;
             $us->distance = $distance;
             $us->age = $age;
             $us->gender = $gender;

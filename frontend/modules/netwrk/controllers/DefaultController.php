@@ -12,7 +12,6 @@ use frontend\modules\netwrk\models\User;
 
 class DefaultController extends BaseController
 {
-	private $currentUser = 1;
 
     public function actionIndex()
     {   
@@ -20,8 +19,9 @@ class DefaultController extends BaseController
     }
 
     public function actionGetUserPosition()
-    {
-    	$user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
+    {   
+
+    	$user = User::find()->where('id ='.Yii::$app->user->id)->with('profile')->one();
 		$data =[
     		'lat'=> $user->profile->lat,
     		'lng'=> $user->profile->lng,

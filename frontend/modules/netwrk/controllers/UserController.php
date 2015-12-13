@@ -131,9 +131,9 @@ class UserController extends BaseController
     public function actionLogin()
     {
         /** @var \amnah\yii2\user\models\forms\LoginForm $model */
-        // if (!Yii::$app->user->isGuest) {
-        //     return $this->goHome();
-        // }
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
         // load post data and login
         $model = new LoginForm();
@@ -141,7 +141,7 @@ class UserController extends BaseController
             return $this->goHome();
         }
 
-        return $this->render($this->getIsMobile() ? 'mobile/login' : 'login',[
+        return $this->render($this->getIsMobile() ? 'mobile/login' : $this->goHome(),[
         	'model' => $model
         ]);
     }

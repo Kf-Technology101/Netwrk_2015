@@ -30,6 +30,10 @@ var Create_Topic={
             Create_Topic.eventClickMeetMobile();
             Create_Topic.postTitleFocus();
         }else{
+            if(isGuest){
+                Login.initialize();
+                return false;
+            }
             Create_Topic.params.city = city;
             Create_Topic.params.city_name = name;
             Create_Topic.showModalCreateTopic();

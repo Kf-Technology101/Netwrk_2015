@@ -43,7 +43,7 @@ var Login={
 			var json = $.parseJSON(data);
 			Login.data_login = json;
 			if(json.status == 1){
-				isLogin = '';
+				isGuest = '';
 				$(Login.parent).modal('hide');
 			}else{
 				Login.OnShowLoginErrors();
