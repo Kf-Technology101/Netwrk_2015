@@ -1,18 +1,58 @@
 var ResetPass = {
     data:{},
+    params:{
+        key:'',
+        newPassword:'',
+        newPasswordConfirm:''
+    },
+    modal:'#reset-password',
+    form_id:'#reset-form',
     status_change:{
         new_pass:false,
         confirm_pass:false
     },
     initialize: function(){
-        if(!isMobile){
-            ResetPass.showModalResetPass();
-        }
-        ResetPass.onChangeNewPass();
-        ResetPass.onChangeConfirmPass();
-        ResetPass.onClickResetNetwrkLogo();
         if(isMobile){
-            // ResetPass.hideHeaderFooter();
+            ResetPass.onClickResetNetwrkLogo();
+        }else{
+            ResetPass.showModalResetPass();
+            ResetPass.OnHideModalReset();
+            ResetPass.CheckKeyValidate();
+            ResetPass.OnSubmitReset();
+        }
+    },
+
+    OnHideModalReset: function(){
+
+    },
+
+    OnSubmitReset: function(){
+        var btn = $(ResetPass.modal).find('.reset');
+        btn.unbind();
+
+        btn.on('click',function(){
+            ResetPass.params.key = isResetPassword;
+            ResetPass.params.newPassword = $(ResetPass.modal).find('input#user-newpassword').val();
+            ResetPass.params.newPasswordConfirm = $(ResetPass.modal).find('input#user-newpasswordconfirm').val();
+            Ajax.reset_password(ResetPass.params).then(function(data){
+                console.log(data);
+                var json = $.parseJSON(data);
+                if(data.status == 1){
+                    $(ResetPass.modal).modal('hide');
+                }
+            });
+        });
+    },
+
+    CheckKeyValidate: function(){
+        if(isInvalidKey){
+            $(ResetPass.modal).find('form').hide();
+            $(ResetPass.modal).find('.alert-danger').show();
+        }
+    },
+    CheckSessionResetPassword: function(){
+        if(isResetPassword){
+            ResetPass.initialize();
         }
     },
 

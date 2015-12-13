@@ -1,4 +1,8 @@
-<?php use yii\helpers\Url; ?>
+<?php 
+    use yii\helpers\Url; 
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+?>
 <div id='reset-password'>
     <div class="header">
         <div class="title">
@@ -7,14 +11,24 @@
         </div>
     </div>
     <div class="container">
-        <div class="form-group">
-            <label class="title-field">New Password</label>
-            <input type="password" class="form-control new-pass" id="new-pass" placeholder="New Password">
-        </div>
-        <div class="form-group">
-            <label class="title-field">Confirm Password</label>
-            <input type="password" class="form-control confirm-pass" id="confirm-pass" placeholder="Confirm Password">
-        </div>
-        <div class="reset disable">Reset</div>
+        <?php if (!empty($success)): ?>
+
+            <div class="alert alert-success">
+                <p><?= "Password has been reset" ?></p>
+            </div>
+
+        <?php elseif (!empty($invalidKey)): ?>
+            <div class="alert alert-danger">
+                <p><?= "Invalid key" ?></p>
+            </div>
+        <?php else: ?>
+            <?php $form = ActiveForm::begin(['id' => 'reset-form']); ?>
+                <?= $form->field($user, 'newPassword')->passwordInput() ?>
+                <?= $form->field($user, 'newPasswordConfirm')->passwordInput() ?>
+                <div class="form-group">
+                    <?= Html::submitButton("Reset", ['class' => 'btn btn-primary reset']) ?>
+                </div>
+            <?php ActiveForm::end(); ?>
+        <?php endif; ?>
     </div>
 </div>

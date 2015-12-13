@@ -15,7 +15,7 @@ class DefaultController extends BaseController
 	private $currentUser = 1;
 
     public function actionIndex()
-    {
+    {   
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 

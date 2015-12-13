@@ -12,6 +12,7 @@ use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\UserSettings;
 
 use frontend\modules\netwrk\models\forms\LoginForm;
+use frontend\modules\netwrk\models\forms\ForgotForm;
 
 use yii\web\Response;
 use yii\filters\AccessControl;
@@ -27,25 +28,112 @@ class UserController extends BaseController
      * Forgot password
      */
     public function actionForgotPassword(){
-        return $this->render($this->getIsMobile() ? 'mobile/forgot_password' : $this->goHome());
+        $model = new ForgotForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->sendForgotEmail()) {
+            // set flash (which will show on the current page)
+            Yii::$app->session->setFlash("Forgot-success", "Instructions to reset your password have been sent");
+            $data = array('status' => 1,'data'=>$model);
+        }else{
+            $data = array('status' => 0,'data'=>$model['_errors']);
+        }
+        // render
+        if($this->getIsMobile()){
+            return $this->render($this->getIsMobile() ? 'mobile/forgot_password' : $this->goHome(),[
+                "model" => $model,
+            ]);
+        }else{
+            $hash = json_encode($data);
+            return $hash;
+        }
     }
 
     /**
      * Forgot password
      */
-    public function actionResetPassword(){
-        return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome());
+    public function actionResetPassword($key){
+        $session = Yii::$app->session;
+        $userKey = new UserKey();
+        $userKey = UserKey::findActiveByKey($key, $userKey::TYPE_PASSWORD_RESET);
+        if (!$userKey) {
+            if($this->getIsMobile()){
+                return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(), ["invalidKey" => true]);
+            }else{
+                $session['key_reset_password']= $key;
+                $session['invalidKey'] = true;
+                return $this->goHome();
+            }
+        }
+
+        // get user and set "reset" scenario
+        $success = false;
+        $user = new User();
+        $user = $user::findOne($userKey->user_id);
+        $user->setScenario("reset");
+
+        // load post data and reset user password
+        if ($user->load(Yii::$app->request->post()) && $user->save()) {
+
+            // consume userKey and set success = true
+            $userKey->consume();
+            $success = true;
+        }
+
+        // render
+        if($this->getIsMobile()){
+            return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(),compact("user", "success"));
+        }else{
+            $session['key_reset_password']= $key;
+            return $this->goHome();
+        }
     }
 
+    public function actionUserResetPassword(){
+        $data = [];
+        $key = $_POST['key'];
+        $newPassword = $_POST['newPassword'];
+        $newPasswordConfirm = $_POST['newPasswordConfirm'];
+
+        $userKey = new UserKey();
+        $userKey = UserKey::findActiveByKey($key, $userKey::TYPE_PASSWORD_RESET);
+        // get user and set "reset" scenario
+        $success = false;
+        $user = new User();
+        $user = $user::findOne($userKey->user_id);
+        $user->setScenario("reset");
+
+        $user->newPassword = $newPassword;
+        $user->newPasswordConfirm = $newPasswordConfirm;
+        // load post data and reset user password
+        if ($user->save()) {
+
+            // consume userKey and set success = true
+            $userKey->consume();
+            $success = true;
+            $data = ['status'=> 1];
+        }else{
+            $data = ['status'=> 0,'data'=> $user];
+        }
+
+        // render
+        $hash = json_encode($data);
+        return $hash;
+    }
+
+    public function actionResetSession(){
+        unset(Yii::$app->session['key_reset_password']);
+        unset(Yii::$app->session['invalidKey']);
+        Yii::$app->session->destroy();
+    }
     /**
      * Display login page
      */
     public function actionLogin()
     {
         /** @var \amnah\yii2\user\models\forms\LoginForm $model */
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        // if (!Yii::$app->user->isGuest) {
+        //     return $this->goHome();
+        // }
 
         // load post data and login
         $model = new LoginForm();

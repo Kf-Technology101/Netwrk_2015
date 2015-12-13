@@ -1,29 +1,57 @@
 var ForgotPass = {
-    data:{},
+    data:'',
+    modal:'#forgot-password',
+    form_id:'#forgot-form',
     status_change:{
         email: false
     },
+    email_valid: false,
     initialize: function(){
-        if(!isMobile){
-            ForgotPass.showModalForgotPass();
-        }
-        ForgotPass.onChangeEmail();
-        ForgotPass.onClickForgotNetwrkLogo();
         if(isMobile){
             // ForgotPass.hideHeaderFooter();
+            ForgotPass.onClickForgotNetwrkLogo();
+        }else{
+            ForgotPass.showModalForgotPass();
+            // ForgotPass.OnAfterValidateForm();
+            // ForgotPass.OnBeforeSubmitForm();
+            ForgotPass.onClickSubmit();
         }
+        // ForgotPass.onChangeEmail();
+    },
+
+    onClickSubmit: function(){
+        var btn = $(ForgotPass.modal).find('.send-email');
+
+        btn.unbind();
+        btn.on('click',function(){
+            Ajax.forgot_password(ForgotPass.form_id).then(function(res){
+                ForgotPass.data = $.parseJSON(res);
+                console.log(ForgotPass.data);
+                if(ForgotPass.data.status == 1){
+                    $(ForgotPass.modal).modal('hide');
+                }else{
+                    ForgotPass.OnShowError();
+                }
+            });
+        });
+    },
+
+    OnShowError: function(){
+        var target = $(ForgotPass.modal).find('.form-group');
+            target.removeClass('has-success').addClass('has-error');
+            target.find('.help-block').text(ForgotPass.data.data.email);
     },
 
     showModalForgotPass: function(){
-        var parent = $('#forgot-password');
+        var parent = $(ForgotPass.modal);
         parent.modal({show: true});
     },
 
     onChangeEmail: function(){
-        if(!isMobile){
-            var target = $('#forgot-password').find('.modal-body input.email');
+        if(isMobile){
+            var target = $(ForgotPass.modal).find('.container input.email');
         } else {
-            var target = $('#forgot-password').find('.container input.email');
+            var target = $(ForgotPass.modal).find('.modal-body input.email');
         }
         target.on('keyup',function(){
             if(target.val() != ''){
@@ -39,9 +67,9 @@ var ForgotPass = {
 
     setDefaultBtnSendEmail: function(){
         if(isMobile){
-            $('#forgot-password').find('.container .send-email').addClass('disable');
+            $(ForgotPass.modal).find('.container .send-email').addClass('disable');
         } else {
-            $('#forgot-password').find('.modal-body .send-email').addClass('disable');
+            $(ForgotPass.modal).find('.modal-body .send-email').addClass('disable');
         }
     },
 
@@ -53,9 +81,9 @@ var ForgotPass = {
 
     onClickSendEmail: function(){
         if(isMobile){
-            var btn_send_email = $('#forgot-password').find('.container .send-email');
+            var btn_send_email = $(ForgotPass.modal).find('.container .send-email');
         } else {
-            var btn_send_email = $('#forgot-password').find('.modal-body .send-email');
+            var btn_send_email = $(ForgotPass.modal).find('.modal-body .send-email');
         }
         if(ForgotPass.status_change.email){
             btn_send_email.removeClass('disable');
@@ -74,7 +102,7 @@ var ForgotPass = {
     },
 
     onClickForgotNetwrkLogo: function(){
-        var target = $('#forgot-password').find('.title img');
+        var target = $(ForgotPass.modal).find('.title img');
         target.unbind();
         target.on('click', function(){
             target.bind();            

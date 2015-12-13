@@ -12,7 +12,8 @@
 
     <?php $form = ActiveForm::begin([
         'id' => 'register-form',
-        'options' => ['class' => 'form-register form-horizontal'],
+        'options' => ['class' => 'form-register form-horizontal',
+        'autocomplete'=> 'off'],
         'fieldConfig' => [
             'template' => "<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-7\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-2 control-label'],
