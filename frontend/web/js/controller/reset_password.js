@@ -15,6 +15,7 @@ var ResetPass = {
         if(isMobile){
             ResetPass.onClickResetNetwrkLogo();
         }else{
+            ResetPass.OnShowModalResetPass();
             ResetPass.showModalResetPass();
             ResetPass.OnHideModalReset();
             ResetPass.CheckKeyValidate();
@@ -147,5 +148,12 @@ var ResetPass = {
     hideHeaderFooter: function(){
         $('.navbar-fixed-top').hide();
         $('.navbar-fixed-bottom').hide();
-    }
+    },
+
+    OnShowModalResetPass: function(){
+        $(ResetPass.modal).on('shown.bs.modal',function(e) {
+            var target = $('.modal-backdrop.in');
+            target.addClass('active');
+        });
+    },
 };
