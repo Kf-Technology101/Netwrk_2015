@@ -250,6 +250,7 @@ var ChatPost = {
 			},
 			events: {
 				fetch: function(e) {
+					console.log('fetch');
 					ChatPost.msg_lenght = e.data.length;
 					$.each(e.data, function(i, elem){
 						console.log(elem);

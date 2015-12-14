@@ -58,13 +58,14 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					"seen"	=> time()
 					);
 			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['user_id'])){
-
+				echo "send message here ! \n";
 				// make new models to stored data
 				$this->ws_messages = new WsMessages();
 
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
 				$room = $data['data']['room'];
+				// $this->post_id = $data['data']['room'];
 				$user = $data ['data']['user_id'];
 				// $this->current_user = $user;
 				$this->ws_messages->user_id = $user;
@@ -77,10 +78,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->post->update();
 
 				$userProfile = json_decode($this->userProfile($user));
-
 				// for list chat box
-				$list_chat_inbox = $this->updateListChatBox();
-
+				$list_chat_inbox = $this->updateListChatBox($user);
+				
 				foreach ($this->clients as $client) {
 					$this->send($client, "single", [array(
 														'id'=> $user,
@@ -90,10 +90,11 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'msg_type' => $type,
 														"created_at" => date("h:i A"),
 														'post_id'=> $room,
-														"user_current" => $userProfile->current,
+														// "user_current" => $userProfile->current,
 														"update_list_chat" => $list_chat_inbox
 														)
 													]);
+					echo "send message heh !";
 				}
 
 			}elseif($type == "fetch"){
@@ -119,7 +120,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	/* My custom functions */
 	public function fetchMessages()
 	{
-
+		echo "Fetch Message";
 		$data_result=[];
 		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
 
@@ -147,7 +148,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				array_push($data_result,$item);
 
 			}
-			print_r($data_result);
 		}
 		return $data_result;
 	}
@@ -176,6 +176,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function send($client, $type, $data)
 	{
+		echo "Send Message";
 		$send = array(
 			"type" => $type,
 			"data" => $data
@@ -184,9 +185,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		$client->send($send);
 	}
 
-	public function userProfile($user)
+	public function userProfile($user_id)
 	{
-		$user = User::find()->where('id = '.$user)->with('profile')->one();
+		$user = User::find()->where('id = '.$user_id)->with('profile')->one();
 
 		if ($user->profile->photo == null){
 			$image = '/img/icon/no_avatar.jpg';
@@ -197,7 +198,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		// if($user->id == $this->current_user){
 		// 	$current = 1;
 		// }
-
 		return $data = json_encode([
 			'name' => $user->profile->first_name ." ".$user->profile->last_name,
 			'image' => $image,
@@ -205,12 +205,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		]);
 	}
 
-	public function updateListChatBox()
+	public function updateListChatBox($user_id)
 	{
 
 
         $messages = new WsMessages();
-		$messages = $messages->find()->select('post_id')->where('user_id = '.$this->current_user)
+		$messages = $messages->find()->select('post_id')->where('user_id = '.$user_id)
 		        ->distinct()
 		        ->with('post')
 		        ->all();
@@ -219,11 +219,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
         	$user = new User();
             foreach ($messages as $key => $message) {
 
-                $user_photo = $user->findOne($message->post->user_id)->profile->photo;
+                $user_photo = $user->findOne($user_id)->profile->photo;
+                
                 if ($user_photo == null){
                     $image = 'img/icon/no_avatar.jpg';
                 }else{
-                    $image = 'uploads/'.$message->post->user_id.'/'.$user_photo;
+                    $image = 'uploads/'.$user_id.'/'.$user_photo;
                 }
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
