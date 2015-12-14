@@ -15,12 +15,12 @@ class DefaultController extends BaseController
 {
 
     public function actionIndex()
-    {   
+    {
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 
     public function actionGetUserPosition()
-    {   
+    {
 
     	$user = User::find()->where('id ='.Yii::$app->user->id)->with('profile')->one();
 		$data =[

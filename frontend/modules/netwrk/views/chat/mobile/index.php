@@ -42,7 +42,7 @@
     <% })%>
 </script>
 <script id="message_chat" type="text/x-underscore-template">
-    <% if (msg.user_current){ %>
+    <% if (msg.id == UserLogin){ %>
         <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
    <% }else{ %>
         <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">

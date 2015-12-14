@@ -10,14 +10,15 @@ use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
-use Yii;
+
 
 class ChatServer extends BaseController implements MessageComponentInterface {
 
 	protected $clients;
 	protected $ws_messages;
+	protected $current_user;
 	protected $post_id = 0;
-	protected $id_ws = 0;
+
 	private $users = array();
 
 	public function __construct()
@@ -28,16 +29,11 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function onOpen(ConnectionInterface $conn)
 	{
-		$this->id_ws = $conn->resourceId;
-
 		$this->post_id = $conn->WebSocket->request->getQuery()->get('post');
-		$this->users[$this->id_ws] = array(
-			"id" 	=> $conn->WebSocket->request->getQuery()->get('user_id'),
-			"seen"	=> time()
-		);
+		$this->current_user = $conn->WebSocket->request->getQuery()->get('user_id');
+
 
 		$this->clients->attach($conn);
-
 		$this->send($conn, "fetch", $this->fetchMessages());
 		// $this->checkOnliners();
 		echo "New connection! ({$conn->resourceId})\n";
@@ -46,21 +42,22 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	public function onMessage(ConnectionInterface $from, $data)
 	{
 		$id	  = $from->resourceId;
-		$this->id_ws = $id;
+
 		$data = json_decode($data, true);
 
 		if(isset($data['data']) && count($data['data']) != 0){
 
 			$type = $data['type'];
-			$user = isset($this->users[$id]) ? $this->users[$id]['id'] : false;
+			$user = isset($this->users[$id]) ? $this->users[$id]['name'] : false;
 			// $user = $current_user;
 			if($type == "register"){
-				$user_id = htmlspecialchars($data['data']['user_id']);
+				$name = htmlspecialchars($data['data']['name']);
+
 				$this->users[$id] = array(
-					"id" 	=> $user_id,
+					"name" 	=> $name,
 					"seen"	=> time()
 					);
-			}elseif($type == "send" &&  isset($data['data']['type'])){
+			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['user_id'])){
 
 				// make new models to stored data
 				$this->ws_messages = new WsMessages();
@@ -68,9 +65,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
 				$room = $data['data']['room'];
-				$user =  $data['data']['user_id'];
-				$this->users[$this->id_ws]['id'] = $user;
-				$this->ws_messages->user_id = $this->users[$this->id_ws]['id'];
+				$user = $data ['data']['user_id'];
+				// $this->current_user = $user;
+				$this->ws_messages->user_id = $user;
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $room;
 				$this->ws_messages->msg_type = $type;
@@ -79,13 +76,14 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->post->comment_count ++;
 				$this->ws_messages->post->update();
 
-				$userProfile = json_decode($this->userProfile());
+				$userProfile = json_decode($this->userProfile($user));
 
 				// for list chat box
 				$list_chat_inbox = $this->updateListChatBox();
 
 				foreach ($this->clients as $client) {
 					$this->send($client, "single", [array(
+														'id'=> $user,
 														'name'=>$userProfile->name,
 														'avatar'=> $userProfile->image,
 														'msg'=> nl2br($msg),
@@ -121,9 +119,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	/* My custom functions */
 	public function fetchMessages()
 	{
-		$currentUser = $this->users[$this->id_ws]['id'];
+
 		$data_result=[];
 		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
+
 		if($message) {
 			foreach ($message as $key => $value) {
        			# code...
@@ -134,23 +133,21 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				}else{
 					$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
 				}
-				$current = 0;
-				if($value->user->id == $currentUser){
-					$current = 1;
-				}
 
 				$item = array(
+					'id'=>$value->user->id,
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 					'avatar'=> $image,
 					'msg'=> nl2br($value->msg),
 					'msg_type' => $value->msg_type,
 					'created_at'=> $time,
 					'post_id'=> $value->post_id,
-					'user_current'=> $current
-					);
+				);
 
 				array_push($data_result,$item);
+
 			}
+			print_r($data_result);
 		}
 		return $data_result;
 	}
@@ -187,33 +184,33 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		$client->send($send);
 	}
 
-	public function userProfile()
+	public function userProfile($user)
 	{
-		$currentUser = $this->users[$this->id_ws]['id'];
-		$user = User::find()->where('id = '.$currentUser)->with('profile')->one();
+		$user = User::find()->where('id = '.$user)->with('profile')->one();
+
 		if ($user->profile->photo == null){
 			$image = '/img/icon/no_avatar.jpg';
 		}else{
 			$image = '/uploads/'.$user->id.'/'.$user->profile->photo;
 		}
-		$current = 0;
-		if($user->id == $currentUser){
-			$current = 1;
-		}
+		// $current = 0;
+		// if($user->id == $this->current_user){
+		// 	$current = 1;
+		// }
 
 		return $data = json_encode([
 			'name' => $user->profile->first_name ." ".$user->profile->last_name,
 			'image' => $image,
-			'current' => $current
+			// 'current' => $current
 		]);
 	}
 
 	public function updateListChatBox()
 	{
-		$currentUser = $this->users[$this->id_ws]['id'];
+
 
         $messages = new WsMessages();
-		$messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser)
+		$messages = $messages->find()->select('post_id')->where('user_id = '.$this->current_user)
 		        ->distinct()
 		        ->with('post')
 		        ->all();

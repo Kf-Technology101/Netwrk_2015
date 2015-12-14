@@ -238,9 +238,10 @@ var ChatPost = {
 	},
 
 	WsConnect: function(parent){
-		var data = 10;
+
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post+"&user_id="+UserLogin, {
 			open: function(data) {
+				// ChatPost.ws.send("regeister", {"room": ChatPost.params.post,"user_id": UserLogin});
 				$(ChatPost.parent).find('textarea').focus();
 				console.log('Open');
 			},
@@ -251,6 +252,7 @@ var ChatPost = {
 				fetch: function(e) {
 					ChatPost.msg_lenght = e.data.length;
 					$.each(e.data, function(i, elem){
+						console.log(elem);
 						ChatPost.getMessageTemplate(elem);
 						ChatPost.ScrollTopChat();
 					});
@@ -266,6 +268,7 @@ var ChatPost = {
 					console.log('single');
 					var update_list_chat;
 					$.each(e.data, function(i, elem){
+						console.log(elem);
 						if(ChatPost.params.post == elem.post_id){
 							ChatPost.message_type = elem.msg_type;
 							ChatPost.getMessageTemplate(elem);
