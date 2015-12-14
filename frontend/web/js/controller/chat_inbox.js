@@ -4,7 +4,6 @@ var ChatInbox = {
 	initialize: function(){
 		if(isMobile){
 		} else {
-
 			ChatInbox.OnClickChatInbox();
 		}
 	},

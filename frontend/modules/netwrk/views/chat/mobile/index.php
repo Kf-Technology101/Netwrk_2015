@@ -16,16 +16,24 @@
     <div class="container_post_chat"></div>
     <img src='<?= Url::to("@web/img/icon/ajax-loader.gif")?>' class='loading_image' />
     <div class="nav_input_message">
-        <form id='msgForm' class="send_message input-group">
-            <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
-            <div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
-            <input type='file' id='file_upload' name='file_upload' style="display:none" />
-            <div class="input-group-addon emoji dropup">
-                <i class="fa fa-smile-o dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" ></i>
-                <ul class="dropdown-menu"></ul>
+        <?php if(Yii::$app->user->isGuest){?>
+            <div class="send_message input-group" data-url="<?= $url ?>">
+                <input type="text" class="form-control" placeholder="You have to log in to chat" disabled="true">
+                <div class="input-group-addon login" id="sizing-addon2">Login</div>
             </div>
-            <div class="input-group-addon send" id="sizing-addon2">Send</div>
-        </form>
+        <?php }else{ ?>
+            <form id='msgForm' class="send_message input-group">
+                <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
+                <div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
+                <input type='file' id='file_upload' name='file_upload' style="display:none" />
+                <div class="input-group-addon emoji dropup">
+                    <i class="fa fa-smile-o dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" ></i>
+                    <ul class="dropdown-menu"></ul>
+                </div>
+                <div class="input-group-addon send" id="sizing-addon2">Send</div>
+            </form>
+        <?php } ?>
+
     </div>
 </div>
 <script id="list_emoji" type="text/x-underscore-template">

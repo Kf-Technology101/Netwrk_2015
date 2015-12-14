@@ -22,6 +22,7 @@ var ChatPost = {
 		ChatPost.HandleWsFilePost();
 		ChatPost.GetListEmoji();
 		ChatPost.HandleEmoji();
+		ChatPost.OnclickLogin();
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
 			ChatPost.OnClickMeetMobile();
@@ -33,7 +34,21 @@ var ChatPost = {
 			ChatPost.OnClickBackdrop();
 		}
 	},
+	OnclickLogin: function(){
+		var btn = $(ChatPost.parent).find('.login');
 
+		btn.unbind();
+		btn.on('click',function(){
+			if(isMobile){
+				window.location.href = baseUrl + "/netwrk/user/login?url_callback="+ $(ChatPost.parent).find('.send_message').attr('data-url');
+			}else{
+				$(ChatPost.parent).modal('hide');
+                Login.modal_callback = ChatPost;
+                Login.initialize();
+                return false;
+			}
+		});
+	},
 	GetListEmoji: function(){
 		var data = Emoji.GetEmoji();
 		var parent = $(ChatPost.parent).find('.emoji .dropdown-menu');
@@ -211,10 +226,11 @@ var ChatPost = {
 	},
 
 	WsConnect: function(parent){
-		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post, {
-			open: function() {
-				console.log('open');
+		var data = 10;
+		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post+"&user_id="+UserLogin, {
+			open: function(data) {
 				$(ChatPost.parent).find('textarea').focus();
+				console.log('Open');
 			},
 			close: function() {
 				console.log('close');
@@ -232,11 +248,10 @@ var ChatPost = {
 					ChatPost.FetchEmojiOne({type: 'fetch'});
 				},
 				onliners: function(e){
-					$.each(e.data, function(i, elem){
-						ChatPost.getMessageTemplate(elem);
-					});
+					console.log('onliners');
 				},
 				single: function(e){
+					console.log('single');
 					var update_list_chat;
 					$.each(e.data, function(i, elem){
 						if(ChatPost.params.post == elem.post_id){
@@ -245,7 +260,7 @@ var ChatPost = {
 							update_list_chat = $.parseJSON(elem.update_list_chat);
 						}
 					});
-					ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
+					// ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					}

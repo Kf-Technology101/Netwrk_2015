@@ -59,6 +59,7 @@ var Meet ={
             currentTarget.show();
 
             if(isGuest){
+                Login.modal_callback = Meet;
                 Login.initialize();
             }else{
                 Meet.changefilter(currentTarget);
@@ -69,10 +70,6 @@ var Meet ={
                 // $('#btn_meet').hide();
                 $('.modal-footer').show();
             }
-
-            // parent.find('#btn_discover').show();
-            // set_position_btn(parent,parent.find('#btn_discover'),120,100);
-            // set_position_btn_resize(parent,parent.find('#btn_discover'),120,100);
         }
     },
 
@@ -148,8 +145,8 @@ var Meet ={
             }else{
                 $('p.no_data').show();
             }
-            
-            
+
+
             // $('#modal_meet').on('hidden.bs.modal',function() {
             //     self.reset_modal();
             // });
@@ -186,7 +183,7 @@ var Meet ={
     ShowModalMeet: function(){
         var modal = $('#modal_meet'),
             self = this;
-        
+
         Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;

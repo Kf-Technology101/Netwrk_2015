@@ -24,6 +24,7 @@ var Signup={
 			Signup.OnClickSubmitForm();
 			Signup.AutoValidateEmail();
 			Signup.AutoValidateUsername();
+			Sigup.onClickLogin();
 
 		}
 		Signup.OnShowDatePicker();
@@ -57,7 +58,7 @@ var Signup={
 				if(Signup.data_validate.status == 0){
 					setTimeout(function(){
 						Signup.ShowErrorValidate('user-email');
-					}, 500);	
+					}, 500);
 				}
 			});
 		}
@@ -273,8 +274,8 @@ var Signup={
 		var btn = $(Login.parent).find('.sign-in b');
 		btn.unbind();
 		btn.on('click',function(){
-			// Signup.initialize();
-			// $(Login.parent).modal('hide');
+			Login.initialize();
+			$(Signup.parent).modal('hide');
 		});
 	},
     OnClickBackdrop: function(){

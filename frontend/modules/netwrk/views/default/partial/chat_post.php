@@ -19,6 +19,12 @@
 				<img src='img/icon/ajax-loader.gif' class='loading_image' />
 			</div>
 			<div class="modal-footer">
+				<?php if(Yii::$app->user->isGuest){?>
+		            <div class="send_message input-group">
+		                <input type="text" class="form-control" placeholder="You have to log in to chat" disabled="true">
+		                <div class="input-group-addon login" id="sizing-addon2">Login</div>
+		            </div>
+				<?php }else{ ?>
 				<form id='msgForm' class="send_message input-group">
 						<textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
 						<div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
@@ -30,6 +36,7 @@
 
 						<div class="input-group-addon send" id="sizing-addon2">Send</div>
 				</form>
+				<?php } ?>
 			</div>
 		</div>
 	</div>

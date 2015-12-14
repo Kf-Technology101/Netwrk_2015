@@ -9,6 +9,7 @@ use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
+use frontend\components\UtilitiesFunc;
 
 class DefaultController extends BaseController
 {

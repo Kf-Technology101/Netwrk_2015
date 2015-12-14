@@ -23,6 +23,7 @@ var Create_Post={
             Create_Post.postTitleFocus();
         }else{
             if(isGuest){
+                Login.modal_callback = Post;
                 Login.initialize();
                 return false;
             }

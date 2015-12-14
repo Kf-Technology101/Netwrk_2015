@@ -131,6 +131,9 @@ class UserController extends BaseController
     public function actionLogin()
     {
         /** @var \amnah\yii2\user\models\forms\LoginForm $model */
+        if(isset($_GET['url_callback'])){
+           $url_callback =  $_GET['url_callback'];
+        }
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -138,7 +141,11 @@ class UserController extends BaseController
         // load post data and login
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("netwrk")->loginDuration)) {
-            return $this->goHome();
+            if($url_callback){
+                Yii::$app->getResponse()->redirect($url_callback)->send();
+            }else{
+                return $this->goHome();
+            }
         }
 
         return $this->render($this->getIsMobile() ? 'mobile/login' : $this->goHome(),[

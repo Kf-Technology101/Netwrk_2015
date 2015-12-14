@@ -216,11 +216,15 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne(["api_key" => $token]);
     }
 
-        public function getId()
+    public function getId()
     {
         return $this->id;
     }
-
+    public function getCurrent()
+    {
+        $current = $this->id;
+        return $current;
+    }
     /**
      * @inheritdoc
      */
