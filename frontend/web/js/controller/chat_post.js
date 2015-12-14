@@ -27,6 +27,7 @@ var ChatPost = {
 			ChatPost.SetHeightContainerChat();
 			ChatPost.OnClickMeetMobile();
 		}else{
+			ChatPost.ShowChatBox();
 			ChatPost.OnShowModalChatPost();
 			ChatPost.ShowModalChatPost();
 			ChatPost.OnHideModalChatPost();
@@ -34,8 +35,19 @@ var ChatPost = {
 			ChatPost.OnClickBackdrop();
 		}
 	},
+
+	ShowChatBox: function(){
+		if(isGuest){
+			$(ChatPost.parent).find('.send_message.login').removeClass('active');
+			$(ChatPost.parent).find('.send_message.no-login').addClass('active');
+		}else{
+			$(ChatPost.parent).find('.send_message.no-login').removeClass('active');
+			$(ChatPost.parent).find('.send_message.login').addClass('active');
+		}
+	},
+
 	OnclickLogin: function(){
-		var btn = $(ChatPost.parent).find('.login');
+		var btn = $(ChatPost.parent).find('.send_message.no-login .input-group-addon');
 
 		btn.unbind();
 		btn.on('click',function(){
@@ -123,7 +135,7 @@ var ChatPost = {
 			var parent = $(e.currentTarget).parent();
 			var val	 = parent.find("textarea").val();
 			if(val != ""){
-				ChatPost.ws.send("send", {"type": 1, "msg": val,"room": ChatPost.params.post});
+				ChatPost.ws.send("send", {"type": 1, "msg": val,"room": ChatPost.params.post,"user_id": UserLogin});
 				parent.find("textarea").val('');
 				parent.find("textarea").focus();
 			}
@@ -213,7 +225,7 @@ var ChatPost = {
 							val  = fileForm.find("textarea").val();
 							if(result != "" && result !== false){
 								var result = $.parseJSON(result);
-								ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": ChatPost.params.post});
+								ChatPost.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": ChatPost.params.post,"user_id": UserLogin});
 								parentChat.find(".loading_image").css('display', 'none');
 								fileForm.find("textarea").val('');
 							}

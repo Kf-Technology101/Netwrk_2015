@@ -68,6 +68,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
 				$room = $data['data']['room'];
+				$user =  $data['data']['user_id'];
+				$this->users[$this->id_ws]['id'] = $user;
 				$this->ws_messages->user_id = $this->users[$this->id_ws]['id'];
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $room;
