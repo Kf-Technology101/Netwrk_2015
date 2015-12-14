@@ -12,16 +12,16 @@ use frontend\modules\netwrk\models\User;
 
 class DefaultController extends BaseController
 {
-	private $currentUser = 1;
 
     public function actionIndex()
-    {
+    {   
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 
     public function actionGetUserPosition()
-    {
-    	$user = User::find()->where('id ='.$this->currentUser)->with('profile')->one();
+    {   
+
+    	$user = User::find()->where('id ='.Yii::$app->user->id)->with('profile')->one();
 		$data =[
     		'lat'=> $user->profile->lat,
     		'lng'=> $user->profile->lng,

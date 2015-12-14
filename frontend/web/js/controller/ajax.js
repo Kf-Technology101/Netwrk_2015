@@ -1,4 +1,53 @@
 var Ajax ={
+    reset_password: function(params){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/user-reset-password";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    forgot_password: function(form){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/forgot-password";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    user_signup: function(form){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/signup-user";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     user_login: function(form){
         var url,defer = $.Deferred();
             url = baseUrl + "/netwrk/user/login-user";
@@ -15,6 +64,7 @@ var Ajax ={
 
         return defer.promise();
     },
+
     chat_post_name: function(params){
         var url,defer = $.Deferred();
 

@@ -7,6 +7,7 @@ var Default ={
             $('#btn_meet').show();
             self._eventClickMeetBtn();
             ChatInbox.initialize();
+            ResetPass.CheckSessionResetPassword();
         }
     },
 

@@ -8,17 +8,21 @@ use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\Vote;
 use yii\helpers\Url;
+use Yii;
 
 class MeetController extends BaseController
 {
     public function actionIndex() 
-    {   
+    {                           
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(array('/netwrk/user/login'));
+        }
         return $this->render('mobile/index');
     }
 
     public function actionGetUserMeet()
     {
-        $userCurrent = 1;
+        $userCurrent = Yii::$app->user->id;
 
         $current_date = date('Y-m-d H:i:s');
         $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
@@ -133,7 +137,7 @@ class MeetController extends BaseController
 
     public function actionUserMeet()
     {   
-        $userCurrent = 1;
+        $userCurrent = Yii::$app->user->id;
         $Auth = $_GET['user_id'];
 
         $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
@@ -153,7 +157,7 @@ class MeetController extends BaseController
 
     public function actionUserMet()
     {
-        $userCurrent = 1;
+        $userCurrent = Yii::$app->user->id;
         $Auth = $_GET['user_id'];
         $meet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
         $meet->status = 0;

@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\swiftmailer\Mailer;
 use yii\swiftmailer\Message;
+use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\UserKey;
 
 /**
  * Forgot password form
@@ -43,7 +45,7 @@ class ForgotForm extends Model
         // check for valid user
         $this->_user = $this->getUser();
         if (!$this->_user) {
-            $this->addError("email", Yii::t("user", "Email not found"));
+            $this->addError("email", "Email not found");
         }
     }
 
@@ -68,7 +70,7 @@ class ForgotForm extends Model
     public function attributeLabels()
     {
         return [
-            "email" => Yii::t("user", "Email"),
+            "email" => "Email",
         ];
     }
 
@@ -94,7 +96,7 @@ class ForgotForm extends Model
             $expireTime = $expireTime !== null ? date("Y-m-d H:i:s", strtotime("+" . $expireTime)) : null;
 
             // create userKey
-            $userKey    = Yii::$app->getModule("netwrk")->model("UserKey");
+            $userKey    = new UserKey();
             $userKey    = $userKey::generate($user->id, $userKey::TYPE_PASSWORD_RESET, $expireTime);
 
             // modify view path to module views
@@ -103,7 +105,7 @@ class ForgotForm extends Model
             $mailer->viewPath = Yii::$app->getModule("netwrk")->emailViewPath;
 
             // send email
-            $subject = Yii::$app->id . " - " . Yii::t("user", "Forgot password");
+            $subject = "Forgot password";
             $message  = $mailer->compose('forgotPassword', compact("subject", "user", "userKey"))
                 ->setTo($user->email)
                 ->setSubject($subject);

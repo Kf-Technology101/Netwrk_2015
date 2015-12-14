@@ -17,21 +17,31 @@ body{
 			border-color: #ccc ;
 			box-shadow: none;
 			outline: none;
+			background: #fff;
 			&:focus{
 				border-color: #ccc ;
 				box-shadow: none;
 				outline: none;
 			}
 		}
+		.input-group-addon{
+			border-color: #ccc ;
+			color: #555;
+			background: #eee;
+		}
 	}
 	.form-control{
 		border-color: #ccc ;
 		box-shadow: none;
 		outline: none;
+		background-color: #fff;
 		&:focus{
 			border-color: #ccc ;
 			box-shadow: none;
 			outline: none;
+		}
+		&[readonly]{
+			background-color: #fff;
 		}
 	}
 }

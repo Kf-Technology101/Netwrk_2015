@@ -4,9 +4,11 @@
 </ul>
 
 <div class="map_content">
+  <?php if(!Yii::$app->user->isGuest){?>
   <div id="btn_my_location" data-toggle="tooltip" title="Show My Local Netwrk">
     <i class="fa fa-crosshairs"></i>
   </div>
+  <?php } ?>
   <div class="sidebar">
     <div class="container">
       <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
@@ -35,5 +37,7 @@
 <?= $this->render('partial/login');?>
 <?= $this->render('partial/signup');?>
 <?= $this->render('partial/chat_inbox');?>
+<?= $this->render('partial/forgot_password');?>
+<?= $this->render('partial/reset_password');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>

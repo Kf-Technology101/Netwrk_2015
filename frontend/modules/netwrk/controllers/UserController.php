@@ -12,6 +12,7 @@ use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\UserSettings;
 
 use frontend\modules\netwrk\models\forms\LoginForm;
+use frontend\modules\netwrk\models\forms\ForgotForm;
 
 use yii\web\Response;
 use yii\filters\AccessControl;
@@ -23,7 +24,107 @@ use yii\helpers\Url;
 
 class UserController extends BaseController
 {
+    /**
+     * Forgot password
+     */
+    public function actionForgotPassword(){
+        $model = new ForgotForm();
 
+        if ($model->load(Yii::$app->request->post()) && $model->sendForgotEmail()) {
+            // set flash (which will show on the current page)
+            Yii::$app->session->setFlash("Forgot-success", "Instructions to reset your password have been sent");
+            $data = array('status' => 1,'data'=>$model);
+        }else{
+            $data = array('status' => 0,'data'=>$model['_errors']);
+        }
+        // render
+        if($this->getIsMobile()){
+            return $this->render($this->getIsMobile() ? 'mobile/forgot_password' : $this->goHome(),[
+                "model" => $model,
+            ]);
+        }else{
+            $hash = json_encode($data);
+            return $hash;
+        }
+    }
+
+    /**
+     * Forgot password
+     */
+    public function actionResetPassword($key){
+        $session = Yii::$app->session;
+        $userKey = new UserKey();
+        $userKey = UserKey::findActiveByKey($key, $userKey::TYPE_PASSWORD_RESET);
+        if (!$userKey) {
+            if($this->getIsMobile()){
+                return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(), ["invalidKey" => true]);
+            }else{
+                $session['key_reset_password']= $key;
+                $session['invalidKey'] = true;
+                return $this->goHome();
+            }
+        }
+
+        // get user and set "reset" scenario
+        $success = false;
+        $user = new User();
+        $user = $user::findOne($userKey->user_id);
+        $user->setScenario("reset");
+
+        // load post data and reset user password
+        if ($user->load(Yii::$app->request->post()) && $user->save()) {
+
+            // consume userKey and set success = true
+            $userKey->consume();
+            $success = true;
+        }
+
+        // render
+        if($this->getIsMobile()){
+            return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(),compact("user", "success"));
+        }else{
+            $session['key_reset_password']= $key;
+            return $this->goHome();
+        }
+    }
+
+    public function actionUserResetPassword(){
+        $data = [];
+        $key = $_POST['key'];
+        $newPassword = $_POST['newPassword'];
+        $newPasswordConfirm = $_POST['newPasswordConfirm'];
+
+        $userKey = new UserKey();
+        $userKey = UserKey::findActiveByKey($key, $userKey::TYPE_PASSWORD_RESET);
+        // get user and set "reset" scenario
+        $success = false;
+        $user = new User();
+        $user = $user::findOne($userKey->user_id);
+        $user->setScenario("reset");
+
+        $user->newPassword = $newPassword;
+        $user->newPasswordConfirm = $newPasswordConfirm;
+        // load post data and reset user password
+        if ($user->save()) {
+
+            // consume userKey and set success = true
+            $userKey->consume();
+            $success = true;
+            $data = ['status'=> 1];
+        }else{
+            $data = ['status'=> 0,'data'=> $user];
+        }
+
+        // render
+        $hash = json_encode($data);
+        return $hash;
+    }
+
+    public function actionResetSession(){
+        unset(Yii::$app->session['key_reset_password']);
+        unset(Yii::$app->session['invalidKey']);
+        Yii::$app->session->destroy();
+    }
     /**
      * Display login page
      */
@@ -40,7 +141,7 @@ class UserController extends BaseController
             return $this->goHome();
         }
 
-        return $this->render($this->getIsMobile() ? 'mobile/login' : 'login',[
+        return $this->render($this->getIsMobile() ? 'mobile/login' : $this->goHome(),[
         	'model' => $model
         ]);
     }
@@ -56,24 +157,60 @@ class UserController extends BaseController
         return $hash;
     }
 
-    public function actionIndex(){
-        //return $this->render($this->getIsMobile() ? 'mobile/login' : '');
-        // echo "<pre>";print_r(Yii::$app->user);die;
-    }
-
-    public function actionSignup()
-    {
-
+    public function actionSignupUser(){
 
         $user = new User(["scenario" => "register"]);
         $profile = new Profile();
 
         // load post data
         $post = Yii::$app->request->post();
-
-        if ($user->load($post)) {
-
+        if ($user->load($post) && $profile->load($post)) {
             // ensure profile data gets loaded
+            // validate for ajax request
+            $zipcode = $post['Profile']['zip_code'];
+            $lat = $post['Profile']['lat'];
+            $lng = $post['Profile']['lng'];
+
+            $form = ActiveForm::validate($user, $profile);
+            // validate for normal request
+            if ($user->validate() && $profile->validate() && $zipcode) {
+                // perform registration
+                $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
+                $profile->zip_code = $zipcode;
+                $profile->lat = $lat;
+                $profile->lng = $lng;
+                $profile->setUser($user->id)->save(false);
+                $this->afterSignUp($user);
+                $data = array('status' => 1,'data'=>[]);
+            }else{
+                $data = array('status' => 0,'data'=>$form);
+            }
+        }
+
+        $hash = json_encode($data);
+        return $hash;
+    }
+
+    public function actionIndex(){
+
+    }
+
+    public function actionSignup()
+    {
+
+        $user = new User(["scenario" => "register"]);
+        $profile = new Profile();
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        // load post data
+        $post = Yii::$app->request->post();
+        
+        if ($user->load($post)) {
+            // ensure profile data gets loaded
+            $zipcode = $post['Profile']['zip_code'];
+            $lat = $post['Profile']['lat'];
+            $lng = $post['Profile']['lng'];
             $profile->load($post);
 
             // validate for ajax request
@@ -83,21 +220,16 @@ class UserController extends BaseController
             }
 
             // validate for normal request
-            if ($user->validate()) {
+            if ($user->validate() && $profile->validate() && $zipcode) {
 
                 // perform registration
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
+                $profile->zip_code = $zipcode;
+                $profile->lat = $lat;
+                $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
                 return $this->goHome();
-                // set flash
-                // don't use $this->refresh() because user may automatically be logged in and get 403 forbidden
-                // $successText = "Successfully registered [{$user->getDisplayName()}]";
-                // $guestText = "";
-                // if (Yii::$app->user->isGuest) {
-                //     $guestText =  " - Please check your email to confirm your account";
-                // }
-                // Yii::$app->session->setFlash("Register-success", $successText . $guestText);
             }
         }
 
@@ -108,7 +240,7 @@ class UserController extends BaseController
         ]);
     }
 
-    protected function afterSignUp($user)
+    public function afterSignUp($user)
     {
         /** @var \amnah\yii2\user\models\UserKey $userKey */
 

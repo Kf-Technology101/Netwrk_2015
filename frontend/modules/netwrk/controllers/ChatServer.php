@@ -10,12 +10,12 @@ use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
+use Yii;
 
 class ChatServer extends BaseController implements MessageComponentInterface {
 
 	protected $clients;
 	protected $ws_messages;
-	protected $current_user = 1;
 	protected $post_id = 0;
 	private $users = array();
 
@@ -35,7 +35,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	}
 
 	public function onMessage(ConnectionInterface $from, $data)
-	{
+	{	
+		$currentUser = Yii::$app->user->id;
 		$id	  = $from->resourceId;
 		$data = json_decode($data, true);
 		if(isset($data['data']) && count($data['data']) != 0){
@@ -48,7 +49,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					"name" 	=> $name,
 					"seen"	=> time()
 					);
-			}elseif($type == "send" && $this->current_user && isset($data['data']['type'])){
+			}elseif($type == "send" && $currentUser && isset($data['data']['type'])){
 
 				// make new models to stored data
 				$this->ws_messages = new WsMessages();
@@ -56,7 +57,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
 				$room = $data['data']['room'];
-				$this->ws_messages->user_id = $this->current_user;
+				$this->ws_messages->user_id = $currentUser;
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $room;
 				$this->ws_messages->msg_type = $type;
@@ -107,6 +108,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	/* My custom functions */
 	public function fetchMessages()
 	{
+		$currentUser = Yii::$app->user->id;
 		$data_result=[];
 		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
 		if($message) {
@@ -120,7 +122,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
 				}
 				$current = 0;
-				if($value->user->id == $this->current_user){
+				if($value->user->id == $currentUser){
 					$current = 1;
 				}
 
@@ -174,14 +176,15 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function userProfile()
 	{
-		$user = User::find()->where('id = '.$this->current_user)->with('profile')->one();
+		$currentUser = Yii::$app->user->id;
+		$user = User::find()->where('id = '.$currentUser)->with('profile')->one();
 		if ($user->profile->photo == null){
 			$image = '/img/icon/no_avatar.jpg';
 		}else{
 			$image = '/uploads/'.$user->id.'/'.$user->profile->photo;
 		}
 		$current = 0;
-		if($user->id == $this->current_user){
+		if($user->id == $currentUser){
 			$current = 1;
 		}
 
@@ -194,10 +197,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function updateListChatBox()
 	{
-
+		$currentUser = Yii::$app->user->id;
 
         $messages = new WsMessages();
-		$messages = $messages->find()->select('post_id')->where('user_id = '.$this->current_user)
+		$messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser)
 		        ->distinct()
 		        ->with('post')
 		        ->all();

@@ -22,9 +22,14 @@ var Create_Post={
             Create_Post.eventClickdiscoverMobile();
             Create_Post.postTitleFocus();
         }else{
+            if(isGuest){
+                Login.initialize();
+                return false;
+            }
             Create_Post.params.city = city;
             Create_Post.params.topic = topic;
             Create_Post.params.city_name = name_city;
+
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();

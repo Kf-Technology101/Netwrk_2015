@@ -4,6 +4,7 @@ var ChatInbox = {
 	initialize: function(){
 		if(isMobile){
 		} else {
+
 			ChatInbox.OnClickChatInbox();
 		}
 	},
@@ -35,6 +36,10 @@ var ChatInbox = {
 		var chat_inbox = $("#chat_inbox");
 		var parent = $(chat_inbox).find('#chat_dicussion ul');
 		$("#chat_inbox_btn").on("click", function() {
+            if(isGuest){
+                Login.initialize();
+                return false;
+            }
 			if (chat_inbox.css('right') == '-400px') {
 				$.ajax({
 					url: baseUrl + "/netwrk/post/get-chat-inbox",

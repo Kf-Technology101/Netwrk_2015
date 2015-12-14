@@ -9,7 +9,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="header">
-                    <p> Log in</p>
+                    <p>Log in</p>
                 </div>
             </div>
             <div class="modal-body">

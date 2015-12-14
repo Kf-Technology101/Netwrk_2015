@@ -19,7 +19,7 @@ var Login={
 			Login.OnClickBackdrop();
 			Login.OnClickSignUp();
 		}
-		Login.OnChangeBtnLogin();
+		// Login.OnChangeBtnLogin();
 		Login.OnClickBtnLogin();
 	},
 
@@ -43,6 +43,7 @@ var Login={
 			var json = $.parseJSON(data);
 			Login.data_login = json;
 			if(json.status == 1){
+				isGuest = '';
 				$(Login.parent).modal('hide');
 			}else{
 				Login.OnShowLoginErrors();
@@ -51,7 +52,11 @@ var Login={
 	},
 
 	OnShowLoginErrors: function(){
-		console.log()
+		$.each(Login.data_login.data,function(i,e){
+			var target = $(Login.parent).find('.' + i + ' .form-group');
+			target.removeClass('has-success').addClass('has-error');
+			target.find('.help-block').text(e[0]);
+		});
 	},
 
 	OnChangeBtnLogin: function(){
@@ -94,7 +99,6 @@ var Login={
 	OnHideModalLogin: function(){
         $(Login.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
-        	// $('.modal-backdrop.in').removeClass('active');
         });
 	},
 

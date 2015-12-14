@@ -32,7 +32,8 @@ class AppAsset extends AssetBundle
         'css/bootstrap-datepicker.min.css',
         'css/jquery.mCustomScrollbar.css',
         'css/emojione/css/emojione.min.css',
-        'css/desktop/chat_inbox.css'
+        'css/desktop/chat_inbox.css',
+        'css/desktop/forgot_pass.css'
     ];
     public $js = [
         'js/lib/underscore.js',
@@ -62,6 +63,8 @@ class AppAsset extends AssetBundle
         'js/lib/jquery.mCustomScrollbar.concat.min.js',
         'js/lib/emojione.js',
         'js/controller/chat_inbox.js',
+        'js/controller/forgot_password.js',
+        'js/controller/reset_password.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -35,6 +35,9 @@ class PostController extends BaseController
 
     public function actionCreatePost($city,$topic)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(array('/netwrk/user/login'));
+        }
         $top = Topic::findOne($topic);
         $cty = City::findOne($city);
         return $this->render('mobile/create',['topic' =>$top,'city' =>$cty]);
@@ -43,6 +46,7 @@ class PostController extends BaseController
     public function actionNewPost()
     {
         // $city = $_POST['city'];
+        $currentUser = Yii::$app->user->id;
         $topic = $_POST['topic'];
         $post = $_POST['post'];
         $message = $_POST['message'];
@@ -52,13 +56,13 @@ class PostController extends BaseController
         $Post->title = $post;
         $Post->content = $message;
         $Post->topic_id = $topic;
-        $Post->user_id = $this->currentUser;
+        $Post->user_id = $currentUser;
         $Post->save();
 
     }
 
     public function actionGetAllPost(){
-
+        $currentUser = Yii::$app->user->id;
         $maxlength = Yii::$app->params['MaxlenghtMessageDesktop'];
         $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
 
@@ -109,8 +113,10 @@ class PostController extends BaseController
             }else{
                 $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
             }
-
-            $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$value->id)->one();
+            $currentVote = null;
+            if($currentUser){
+                $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$value->id)->one();
+            }
 
             if($currentVote && $currentVote->status == 1){
                 $isVote = 1;
@@ -141,10 +147,11 @@ class PostController extends BaseController
     }
 
     public function actionVotePost(){
+        $currentUser = Yii::$app->user->id;
         $post_id = $_POST['post_id'];
 
         $current_date = date('Y-m-d H:i:s');
-        $curVote = Vote::find()->where('user_id = '.$this->currentUser.' AND post_id = '.$post_id)->one();
+        $curVote = Vote::find()->where('user_id = '.$currentUser.' AND post_id = '.$post_id)->one();
 
         if($curVote){
             if($curVote->status == 1){
@@ -157,7 +164,7 @@ class PostController extends BaseController
         }else{
             $vote = new Vote;
             $vote->post_id = $post_id;
-            $vote->user_id = $this->currentUser;
+            $vote->user_id = $currentUser;
             $vote->status = 1;
             $vote->created_at = $current_date;
             $vote->save();
@@ -172,8 +179,9 @@ class PostController extends BaseController
 
     public function actionGetChatInbox()
     {
+        $currentUser = Yii::$app->user->id;
         $messages = new WsMessages();
-        $messages = $messages->find()->select('post_id')->where('user_id = '.$this->currentUser)
+        $messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser)
         ->distinct()
         ->with('post')
         ->all();
@@ -189,7 +197,7 @@ class PostController extends BaseController
                     $image = 'uploads/'.$message->post->user_id.'/'.$user_photo;
                 }
 
-                $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$message->post->id)->one();
+                $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$message->post->id)->one();
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
