@@ -18,13 +18,13 @@ var Signup={
 			Signup.parent = Signup.modal;
 			Signup.OnShowModalSignUp();
 			Signup.OnHideModalSignUp();
+			Signup.OnClickLogin();
 			Signup.ShowModal();
 			Signup.Customscrollbar();
 			Signup.OnClickBackdrop();
 			Signup.OnClickSubmitForm();
 			Signup.AutoValidateEmail();
 			Signup.AutoValidateUsername();
-			Sigup.onClickLogin();
 
 		}
 		Signup.OnShowDatePicker();
@@ -118,10 +118,13 @@ var Signup={
 					Signup.data_validate = $.parseJSON(data);
 					if(Signup.data_validate.status == 0){
 						Signup.data_validate = data;
-						Signup.ShowErrorValidate();	
+						Signup.ShowErrorValidate();
 					}else{
+						console.log(Signup.data_validate);
+						isGuest = '';
+						UserLogin = Signup.data_validate.data;
 						$(Signup.modal).modal('hide');
-					}			
+					}
 				});
 			}
 
@@ -271,7 +274,7 @@ var Signup={
 	},
 
 	OnClickLogin: function(){
-		var btn = $(Login.parent).find('.sign-in b');
+		var btn = $(Signup.parent).find('.sign-in b');
 		btn.unbind();
 		btn.on('click',function(){
 			Login.initialize();

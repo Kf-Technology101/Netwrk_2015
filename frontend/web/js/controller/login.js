@@ -56,6 +56,7 @@ var Login={
 			Login.data_login = json;
 			if(json.status == 1){
 				isGuest = '';
+				UserLogin = json.data;
 				$(Login.parent).modal('hide');
 				setTimeout(function(){
 					Login.modal_callback.initialize();

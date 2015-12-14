@@ -156,7 +156,7 @@ class UserController extends BaseController
     public function actionLoginUser(){
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("netwrk")->loginDuration)) {
-            $data = array('status' => 1,'data'=>Yii::$app->user->isGuest);
+            $data = array('status' => 1,'data'=>Yii::$app->user->id);
         }else{
             $data = array('status' => 0,'data'=>$model['_errors']);
         }
@@ -188,7 +188,7 @@ class UserController extends BaseController
                 $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
-                $data = array('status' => 1,'data'=>[]);
+                $data = array('status' => 1,'data'=>Yii::$app->user->id);
             }else{
                 $data = array('status' => 0,'data'=>$form);
             }

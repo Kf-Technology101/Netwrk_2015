@@ -17,7 +17,7 @@ var Create_Topic={
         total: false
     },
 
-    initialize: function(city,name){       
+    initialize: function(city,name){
         if(isMobile){
             Create_Topic.params.city = $('#create_topic').attr('data-city');
             Create_Topic.params.netwrk_name = $('#create_topic').attr('data-name-city');
