@@ -5,6 +5,7 @@
 		<li role="presentation" class=" col-xs-6 chat-private-btn"><a href="#chat_private" aria-controls="chat_private" role="tab" data-toggle="tab"><span>Chats</span></a></li>
 		<li role="presentation" class="active col-xs-6 chat-dicussions-btn"><a href="#chat_dicussion" aria-controls="chat_dicussion" role="tab" data-toggle="tab"><span>Discussions</span></a></li>
 	</ul>
+	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 
 	<!-- Tab panes -->
 	<div class="tab-content chat-inbox-content">
