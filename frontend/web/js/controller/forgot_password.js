@@ -11,7 +11,9 @@ var ForgotPass = {
             // ForgotPass.hideHeaderFooter();
             ForgotPass.onClickForgotNetwrkLogo();
         }else{
+            ForgotPass.OnShowModalForgotPass();
             ForgotPass.showModalForgotPass();
+            
             // ForgotPass.OnAfterValidateForm();
             // ForgotPass.OnBeforeSubmitForm();
             ForgotPass.onClickSubmit();
@@ -113,5 +115,12 @@ var ForgotPass = {
     hideHeaderFooter: function(){
         $('.navbar-fixed-top').hide();
         $('.navbar-fixed-bottom').hide();
-    }
+    },
+
+    OnShowModalForgotPass: function(){
+        $(ForgotPass.modal).on('shown.bs.modal',function(e) {
+            var target = $('.modal-backdrop.in');
+            target.addClass('active');
+        });
+    },
 };
