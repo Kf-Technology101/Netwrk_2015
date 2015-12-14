@@ -12,10 +12,10 @@ use Yii;
 
 class MeetController extends BaseController
 {
-    public function actionIndex() 
-    {                           
+    public function actionIndex()
+    {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(array('/netwrk/user/login'));
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/meet']);
         }
         return $this->render('mobile/index');
     }

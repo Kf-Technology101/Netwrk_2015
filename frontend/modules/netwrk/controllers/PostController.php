@@ -36,7 +36,7 @@ class PostController extends BaseController
     public function actionCreatePost($city,$topic)
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(array('/netwrk/user/login'));
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post?topic='.$topic]);
         }
         $top = Topic::findOne($topic);
         $cty = City::findOne($city);

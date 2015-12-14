@@ -8,6 +8,7 @@ use frontend\components\UtilitiesFunc;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
+use yii\helpers\Url;
 
 class ChatController extends BaseController
 {
@@ -46,7 +47,8 @@ class ChatController extends BaseController
 			$this->actionExecInbg("php yii server/run");
 			file_put_contents($statusFile, 1);
 		}
-		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post] );
+		$url = Url::base(true).'/netwrk/chat/chat-post?post='.$postId;
+		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post,'url'=> $url] );
 	}
 
 	public function actionUpload()

@@ -80,7 +80,8 @@ AppAsset::register($this);
     isMobile = false,
     isGuest = '<?php echo Yii::$app->user->isGuest ?>',
     isResetPassword ="<?= Yii::$app->session['key_reset_password'] ?>",
-    isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>"; 
+    isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>";
+    var UserLogin = '<?php echo Yii::$app->user->id; ?>';
 </script>
 <?php 
     unset(Yii::$app->session['key_reset_password']);

@@ -17,7 +17,6 @@
               <p class="default"> NO DATA</p>
             </div>
           </div>
-          
           <div class="sidebar">
             <table class="filter_sidebar">
                 <tr>

@@ -31,6 +31,7 @@ var Create_Topic={
             Create_Topic.postTitleFocus();
         }else{
             if(isGuest){
+                Login.modal_callback = Topic;
                 Login.initialize();
                 return false;
             }

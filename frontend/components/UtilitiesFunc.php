@@ -1,8 +1,16 @@
 <?php
 namespace frontend\components;
-
+use Yii;
 class UtilitiesFunc
 {
+	public static function GetUserCurrent(){
+		$currentUser = 0;
+		if(!Yii::$app->user->isGuest){
+			$currentUser = Yii::$app->user->id;
+		}
+		return $currentUser;
+	}
+
 	public static function changeFormatNumber($num)
 	{
 		$fnum = $num;

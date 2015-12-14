@@ -7,6 +7,7 @@ var Login={
 	page:'#page-login',
 	parent: '',
 	form_id:'#login-form',
+	modal_callback:'',
 	data_login:'',
 	initialize:function(){
 		if(isMobile){
@@ -18,11 +19,22 @@ var Login={
 			Login.ShowModalLogin();
 			Login.OnClickBackdrop();
 			Login.OnClickSignUp();
+			Login.OnForgotPassword();
 		}
 		// Login.OnChangeBtnLogin();
 		Login.OnClickBtnLogin();
 	},
+	OnForgotPassword: function(){
+		var btn = $(Login.parent).find('.forgot-password');
+		btn.unbind();
 
+		btn.on('click',function(){
+			$(Login.parent).modal('hide');
+			ForgotPass.initialize();
+
+		})
+		// $(Login.parent).modal('hide');
+	},
 	OnClickBtnLogin: function(){
 		var btn = $(Login.parent).find('.btn-control');
 		btn.unbind('click');
@@ -45,6 +57,9 @@ var Login={
 			if(json.status == 1){
 				isGuest = '';
 				$(Login.parent).modal('hide');
+				setTimeout(function(){
+					Login.modal_callback.initialize();
+				}, 500)
 			}else{
 				Login.OnShowLoginErrors();
 			}
