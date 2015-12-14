@@ -260,9 +260,10 @@ var ChatPost = {
 							update_list_chat = $.parseJSON(elem.update_list_chat);
 						}
 					});
-					// ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
 					if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+					} else {
+						ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
 					}
 					if(ChatPost.message_type == 1){
 						ChatPost.FetchEmojiOne({type: 'single'});
