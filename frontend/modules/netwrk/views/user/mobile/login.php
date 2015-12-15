@@ -31,7 +31,7 @@
         <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password')); ?>
     </div>
     <div class="field-name">
-        <a href="<?= Url::base(true); ?>/netwrk/user/forgot-password ?>" class="forgot-password">Forgot password</a>
+        <a href="<?= Url::base(true); ?>/netwrk/user/forgot-password" class="forgot-password">Forgot password</a>
     </div>
 
     <div class="btn-control">
@@ -39,6 +39,6 @@
     </div>
     <?php ActiveForm::end(); ?>
     <div class="sign-up">
-        <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup ?>">Sign Up</a> now</p>
+        <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup">Sign Up</a> now</p>
     </div>
 </div>
