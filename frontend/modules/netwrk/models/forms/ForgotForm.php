@@ -105,7 +105,7 @@ class ForgotForm extends Model
             $mailer->viewPath = Yii::$app->getModule("netwrk")->emailViewPath;
 
             // send email
-            $subject = "Forgot password";
+            $subject = "Password reset confirmation from Netwrk";
             $message  = $mailer->compose('forgotPassword', compact("subject", "user", "userKey"))
                 ->setTo($user->email)
                 ->setSubject($subject);

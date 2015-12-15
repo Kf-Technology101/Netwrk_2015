@@ -32,8 +32,8 @@ class UserController extends BaseController
 
         if ($model->load(Yii::$app->request->post()) && $model->sendForgotEmail()) {
             // set flash (which will show on the current page)
-            Yii::$app->session->setFlash("Forgot-success", "Instructions to reset your password have been sent");
-            $data = array('status' => 1,'data'=>$model);
+            Yii::$app->session->setFlash("Forgot-success", "A password reset email has been sent. Please check your inbox");
+            $data = array('status' => 1,'data'=>$model,'message'=> "A password reset email has been sent. Please check your inbox");
         }else{
             $data = array('status' => 0,'data'=>$model['_errors']);
         }

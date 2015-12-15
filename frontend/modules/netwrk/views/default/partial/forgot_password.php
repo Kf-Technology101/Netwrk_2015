@@ -15,6 +15,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-success">
+                <p></p>
+            </div>
             <div class="modal-body">
                 <p class="description">Please enter the email address associated and we will send you an email with a link to reset your password</p>
                 <?php $form = ActiveForm::begin([
@@ -23,7 +26,7 @@
                         'template' => "{input}\n{error}",
                         'labelOptions' => ['class' => 'col-lg-2 control-label'],
                     ],
-                ]); 
+                ]);
                 $model = new ForgotForm();
                 ?>
                     <?= $form->field($model, 'email')->textInput(array('placeholder' => 'Email address','class'=>'form-control email')) ?>

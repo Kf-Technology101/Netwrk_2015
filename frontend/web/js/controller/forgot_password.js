@@ -30,7 +30,9 @@ var ForgotPass = {
                 ForgotPass.data = $.parseJSON(res);
                 console.log(ForgotPass.data);
                 if(ForgotPass.data.status == 1){
-                    $(ForgotPass.modal).modal('hide');
+                    $(ForgotPass.modal).find('.modal-body').hide();
+                    $(ForgotPass.modal).find('.alert.alert-success').show();
+                    $(ForgotPass.modal).find('.alert.alert-success p').text(ForgotPass.data.message);
                 }else{
                     ForgotPass.OnShowError();
                 }
