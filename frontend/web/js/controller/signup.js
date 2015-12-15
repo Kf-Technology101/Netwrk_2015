@@ -109,11 +109,7 @@ var Signup={
 
 		btn.unbind();
 		btn.on('click',function(){
-			if(!Signup.zipcode){
-				var zip = $(Signup.parent).find('#profile-zip_code').val();
-				Signup.CheckZipcode(zip);
-				return false
-			}else{
+			if(Signup.zipcode){
 				Ajax.user_signup($(Signup.form_id)).then(function(data){
 					Signup.data_validate = $.parseJSON(data);
 					if(Signup.data_validate.status == 0){
@@ -126,6 +122,8 @@ var Signup={
 						$(Signup.modal).modal('hide');
 					}
 				});
+			}else{
+				$(Signup.form_id).submit();
 			}
 
 		});
@@ -149,6 +147,7 @@ var Signup={
 
 	OnAfterValidateForm: function(){
 		$(Signup.parent).on('afterValidate',Signup.form_id,function(e,data,error){
+			console.log(data);
 			if(!Signup.zipcode){
 				var zip = $(Signup.parent).find('#profile-zip_code').val();
 				Signup.CheckZipcode(zip);
