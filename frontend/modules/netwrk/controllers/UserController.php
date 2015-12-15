@@ -81,7 +81,11 @@ class UserController extends BaseController
 
         // render
         if($this->getIsMobile()){
-            return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(),compact("user", "success"));
+            if($success){
+                return $this->render($this->getIsMobile() ? 'mobile/login' : $this->goHome());
+            }else{
+                return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(),compact("user", "success"));
+            }
         }else{
             $session['key_reset_password']= $key;
             return $this->goHome();

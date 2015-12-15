@@ -54,7 +54,7 @@
                                 [
                                    'template'=>"<div class=\"col-md-12 input-group sex\">{input}\n
                                    <span class='input-group-addon' data-toggle='dropdown'><i class='fa fa-sort'></i></span>\n
-                        <ul class='dropdown-menu' aria-labelledby='dropdownMenu2'><li>Male</li><li>Female</li></ul></div>\n<div class=\"col-lg-7\">{error}</div>"
+                        <ul class='dropdown-menu' aria-labelledby='dropdownMenu2'><li>Male</li><li>Female</li></ul></div>\n<div class=\"col-md-12\">{error}</div>"
                                 ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); ?>
                     </div>
                     <div class="col-field-name zipcode field">

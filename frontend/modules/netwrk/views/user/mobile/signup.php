@@ -7,7 +7,7 @@
 ?>
 <div id='page-signup'>
     <div class="header">
-        <img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>">
+        <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
         <p>Sign up</p>
     </div>
 
@@ -63,9 +63,10 @@
         <!-- <div class="btn-control sign-up">
             <p>Sign Up</p>
         </div> -->
+        <div class="sign-in">
+            <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/login">Log in</a> Now</p>
+        </div>
     <?php ActiveForm::end(); ?>
 
-    <div class="sign-in">
-        <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/login">Log in</a> Now</p>
-    </div>
+
 </div>

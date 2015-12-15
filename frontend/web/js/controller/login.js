@@ -11,7 +11,7 @@ var Login={
 	data_login:'',
 	initialize:function(){
 		if(isMobile){
-			// $('body').css('background','#fff');
+			$('body').addClass('no-login');
 			Login.parent = Login.page;
 		}else{
 			Login.parent = Login.modal;
@@ -59,9 +59,11 @@ var Login={
 				isGuest = '';
 				UserLogin = json.data;
 				$(Login.parent).modal('hide');
-				setTimeout(function(){
-					Login.modal_callback.initialize();
-				}, 500)
+				if(Login.modal_callback){
+					setTimeout(function(){
+						Login.modal_callback.initialize();
+					}, 500)
+				}
 			}else{
 				Login.OnShowLoginErrors();
 			}

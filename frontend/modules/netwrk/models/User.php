@@ -84,15 +84,16 @@ class User extends ActiveRecord implements IdentityInterface
         $rules = [
             // general email and username rules
             [['email', 'username'], 'required', 'message'=> 'This is required field.'],
-            [['email', 'username'], 'string', 'max' => 255,'min'=> 4,'message'=> '{attribute} must be at least 4 characters long'],
+            [['username'], 'string', 'max' => 255,'min'=> 4,'message'=> '{attribute} must be at least 4 characters long'],
+            [['email'], 'string', 'max' => 255,'message'=> '{attribute} is invalid'],
             [['email', 'username'], 'unique'],
             [['email', 'username'], 'filter', 'filter' => 'trim'],
             [['email'], 'email'],
             [['username'], 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u', 'message' => '{attribute} can contain only letters, numbers, and "_"'],
             // password rules
-            [['newPassword'], 'string', 'min' => 8 , 'message'=>'Password must be at least 8 characters long'],
+            [['newPassword'], 'string', 'min'=> 8, 'max'=> 255,'message'=> 'Password should contain at least 8 characters.'],
             [['newPassword'], 'filter', 'filter' => 'trim'],
-            [['newPassword'], 'required', 'on' => ['register', 'reset'],'message'=>'Password must be at least 8 characters long'],
+            [['newPassword'], 'required', 'on' => ['register', 'reset'],'message'=>'Password should contain at least 8 characters.'],
             [['newPasswordConfirm'], 'required', 'on' => ['reset']],
             [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'message' => 'Passwords do not match'],
 
@@ -143,8 +144,8 @@ class User extends ActiveRecord implements IdentityInterface
 
             // virtual attributes set above
             'currentPassword' => 'Current Password',
-            'newPassword'     => 'New Password',
-            'newPasswordConfirm' => 'New Password Confirm',
+            'newPassword'     => 'Password',
+            'newPasswordConfirm' => 'Password Confirm',
         ];
     }
     public function behaviors()

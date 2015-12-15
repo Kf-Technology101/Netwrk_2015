@@ -6,6 +6,7 @@
 <div id='page-login'>
 
     <div class="header">
+        <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
         <p> Log in</p>
     </div>
 
@@ -25,20 +26,17 @@
         <!-- <input type="text" class="username form-control" maxlength="128" placeholder="Username"> -->
         <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username')); ?>
     </div>
-    <div class="field-name">
+    <div class="field-name password">
         <p class="title"> Password </p>
+        <a href="<?= Url::base(true); ?>/netwrk/user/forgot-password" class="forgot-password">Forgot password</a>
         <!-- <input type="password" class="password form-control" maxlength="128" placeholder="Password"> -->
         <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password')); ?>
     </div>
-    <div class="field-name">
-        <a href="<?= Url::base(true); ?>/netwrk/user/forgot-password" class="forgot-password">Forgot password</a>
-    </div>
-
     <div class="btn-control">
         <p>Login</p>
     </div>
     <?php ActiveForm::end(); ?>
     <div class="sign-up">
-        <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup">Sign Up</a> now</p>
+        <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup">Sign up</a> Now</p>
     </div>
 </div>
