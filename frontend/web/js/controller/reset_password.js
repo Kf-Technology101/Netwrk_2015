@@ -16,6 +16,7 @@ var ResetPass = {
             ResetPass.onClickResetNetwrkLogo();
         }else{
             ResetPass.OnShowModalResetPass();
+            ResetPass.OnHideModalResetPass();
             ResetPass.showModalResetPass();
             ResetPass.OnHideModalReset();
             ResetPass.CheckKeyValidate();
@@ -154,6 +155,16 @@ var ResetPass = {
         $(ResetPass.modal).on('shown.bs.modal',function(e) {
             var target = $('.modal-backdrop.in');
             target.addClass('active');
+            $('.menu_top').addClass('deactive');
+            $('#btn_meet').addClass('deactive');
+        });
+    },
+    OnHideModalResetPass: function(){
+        $(ResetPass.modal).on('hidden.bs.modal',function(e) {
+            var target = $('.modal-backdrop.in');
+            target.addClass('active');
+            $('.menu_top').removeClass('deactive');
+            $('#btn_meet').removeClass('deactive');
         });
     },
 };

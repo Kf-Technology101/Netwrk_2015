@@ -262,12 +262,16 @@ var Signup={
         $(Signup.parent).on('shown.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
         	$('.modal-backdrop.in').addClass('active');
+        	$('.menu_top').addClass('deactive');
+        	$('#btn_meet').addClass('deactive');
         });
 	},
 
 	OnHideModalSignUp: function(){
         $(Signup.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
+        	$('.menu_top').removeClass('deactive');
+        	$('#btn_meet').removeClass('deactive');
         	$(Signup.modal).find(Signup,form_id)[0].reset();
         });
 	},

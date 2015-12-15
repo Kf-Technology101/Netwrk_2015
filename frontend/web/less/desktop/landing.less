@@ -13,6 +13,9 @@
   .menu_top {
     border:none;
     z-index: 9999;
+    &.deactive{
+      z-index: 0;
+    }
   }
   .collapse{
     .search{
@@ -150,6 +153,9 @@
     // top: 80%;
     // left: 90%;
     cursor: pointer;
+    &.deactive{
+      z-index: 100;
+    }
     span{
       text-align: center;
       color: white;

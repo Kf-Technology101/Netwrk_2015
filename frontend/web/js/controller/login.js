@@ -16,6 +16,7 @@ var Login={
 		}else{
 			Login.parent = Login.modal;
 			Login.OnShowModalLogin();
+			Login.OnHideModalLogin();
 			Login.ShowModalLogin();
 			Login.OnClickBackdrop();
 			Login.OnClickSignUp();
@@ -109,12 +110,16 @@ var Login={
 	OnShowModalLogin: function(){
         $(Login.modal).on('shown.bs.modal',function(e) {
         	$('.modal-backdrop.in').addClass('active');
+        	$('.menu_top').addClass('deactive');
+        	$('#btn_meet').addClass('deactive');
         });
 	},
 
 	OnHideModalLogin: function(){
         $(Login.modal).on('hidden.bs.modal',function(e) {
         	$(e.currentTarget).unbind();
+        	$('.menu_top').removeClass('deactive');
+        	$('#btn_meet').removeClass('deactive');
         });
 	},
 

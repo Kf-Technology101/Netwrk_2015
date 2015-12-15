@@ -12,6 +12,7 @@ var ForgotPass = {
             ForgotPass.onClickForgotNetwrkLogo();
         }else{
             ForgotPass.OnShowModalForgotPass();
+            ForgotPass.OnHideModalForgotPass();
             ForgotPass.showModalForgotPass();
             
             // ForgotPass.OnAfterValidateForm();
@@ -121,6 +122,17 @@ var ForgotPass = {
         $(ForgotPass.modal).on('shown.bs.modal',function(e) {
             var target = $('.modal-backdrop.in');
             target.addClass('active');
+            $('.menu_top').addClass('deactive');
+            $('#btn_meet').addClass('deactive');
+        });
+    },
+
+    OnHideModalForgotPass: function(){
+        $(ForgotPass.modal).on('hidden.bs.modal',function(e) {
+            var target = $('.modal-backdrop.in');
+            target.addClass('active');
+            $('.menu_top').removeClass('deactive');
+            $('#btn_meet').removeClass('deactive');
         });
     },
 };
