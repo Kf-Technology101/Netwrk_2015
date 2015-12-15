@@ -36,10 +36,10 @@ var ChatInbox = {
 		var chat_inbox = $("#chat_inbox");
 		var parent = $(chat_inbox).find('#chat_dicussion ul');
 		$("#chat_inbox_btn").on("click", function() {
-            // if(isGuest){
-            //     Login.initialize();
-            //     return false;
-            // }
+            if(isGuest){
+                Login.initialize();
+                return false;
+            }
 			if (chat_inbox.css('right') == '-400px') {
 				$.ajax({
 					url: baseUrl + "/netwrk/post/get-chat-inbox",
@@ -106,7 +106,7 @@ var ChatInbox = {
 					'width':width_map+'px',
 					'left': 0, 'margin': 0
 				}, 500);
-		$('#btn_meet').css({'left': '', 'right' : '10px'});
+		$('#btn_meet').css({'left': '', 'right' : '15px'});
 	},
 
 	DeactiveReponsiveChatInbox: function() {
@@ -115,7 +115,7 @@ var ChatInbox = {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
 		}
 		$('.map_content').css({'width': '100%', 'left': '', 'margin': 'auto'});
-		$('#btn_meet').css({'left': '', 'right' : '10px'});
+		$('#btn_meet').css({'left': '', 'right' : '15px'});
 	},
 
 	OnClickHideCloseChatInboxBtn: function() {
