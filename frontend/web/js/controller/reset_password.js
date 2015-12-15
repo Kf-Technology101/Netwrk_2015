@@ -24,10 +24,6 @@ var ResetPass = {
         }
     },
 
-    OnHideModalReset: function(){
-
-    },
-
     OnSubmitReset: function(){
         var btn = $(ResetPass.modal).find('.reset');
         btn.unbind();
@@ -66,7 +62,6 @@ var ResetPass = {
     onTemplate: function(){
         var self = this;
         self.onClickReset();
-        
     },
 
     onChangeNewPass: function(){

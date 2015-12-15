@@ -12,7 +12,8 @@ var Signup={
 	initialize:function(){
 		console.log('signup');
 		if(isMobile){
-			$('body').css('background','#fff');
+			Default.hideHeaderFooter();
+			$('body').addClass('no-login');
 			Signup.parent = Signup.page;
 		}else{
 			Signup.parent = Signup.modal;
@@ -20,7 +21,7 @@ var Signup={
 			Signup.OnHideModalSignUp();
 			Signup.OnClickLogin();
 			Signup.ShowModal();
-			Signup.Customscrollbar();
+			// Signup.Customscrollbar();
 			Signup.OnClickBackdrop();
 			Signup.OnClickSubmitForm();
 			Signup.AutoValidateEmail();

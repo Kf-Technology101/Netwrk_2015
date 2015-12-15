@@ -8,13 +8,12 @@ var ForgotPass = {
     email_valid: false,
     initialize: function(){
         if(isMobile){
-            // ForgotPass.hideHeaderFooter();
+            Default.hideHeaderFooter();
             ForgotPass.onClickForgotNetwrkLogo();
         }else{
             ForgotPass.OnShowModalForgotPass();
             ForgotPass.OnHideModalForgotPass();
             ForgotPass.showModalForgotPass();
-            
             // ForgotPass.OnAfterValidateForm();
             // ForgotPass.OnBeforeSubmitForm();
             ForgotPass.onClickSubmit();
@@ -79,7 +78,6 @@ var ForgotPass = {
     onTemplate: function(){
         var self = this;
         self.onClickSendEmail();
-        
     },
 
     onClickSendEmail: function(){
@@ -101,22 +99,19 @@ var ForgotPass = {
         }else{
             btn_send_email.addClass('disable');
         }
-        
+
     },
 
     onClickForgotNetwrkLogo: function(){
         var target = $(ForgotPass.modal).find('.title img');
         target.unbind();
         target.on('click', function(){
-            target.bind();            
-            window.location.href = baseUrl; 
+            target.bind();
+            window.location.href = baseUrl;
         });
     },
 
-    hideHeaderFooter: function(){
-        $('.navbar-fixed-top').hide();
-        $('.navbar-fixed-bottom').hide();
-    },
+
 
     OnShowModalForgotPass: function(){
         $(ForgotPass.modal).on('shown.bs.modal',function(e) {

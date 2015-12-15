@@ -11,7 +11,7 @@ var Login={
 	data_login:'',
 	initialize:function(){
 		if(isMobile){
-			$('body').css('background','#fff');
+			// $('body').css('background','#fff');
 			Login.parent = Login.page;
 		}else{
 			Login.parent = Login.modal;

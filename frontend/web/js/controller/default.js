@@ -53,4 +53,8 @@ var Default ={
 
         parent.append(append_html);
     },
+    hideHeaderFooter: function(){
+        $('.navbar-fixed-top').hide();
+        $('.navbar-fixed-bottom').hide();
+    },
 };

@@ -10,9 +10,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="header">
-                    <p> Sign up </p>
-                </div>
+                <p> Sign up </p>
             </div>
             <div class="modal-body">
                 <?php
