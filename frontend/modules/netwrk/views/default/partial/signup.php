@@ -11,7 +11,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="header">
-                    <p> Sign Up </p>
+                    <p> Sign up </p>
                 </div>
             </div>
             <div class="modal-body">
@@ -35,10 +35,10 @@
                     // }
                 ?>
                     <div class="col-field-name field">
-                        <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First name')); ?>
+                        <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First Name')); ?>
                     </div>
                     <div class="col-field-name field">
-                        <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last name')); ?>
+                        <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last Name')); ?>
                     </div>
                     <div class="field-name field">
                         <?= $form->field($user, 'username')->textInput(array('placeholder' => 'Username')) ?>
@@ -60,7 +60,7 @@
                                 ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); ?>
                     </div>
                     <div class="col-field-name zipcode field">
-                        <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode','maxlength'=>5)); ?>
+                        <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zip Code','maxlength'=>5)); ?>
                     </div>
                     <div class="col-field-name age field">
                         <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
@@ -72,7 +72,7 @@
                 </div>
             <?php ActiveForm::end(); ?>
                 <div class="sign-in">
-                    <p>Already have an account! <b>Login</b> now</p>
+                    <p>Already have an account! <b>Log in</b> Now</p>
                 </div>
             </div>
         </div>

@@ -65,6 +65,6 @@
     <?php ActiveForm::end(); ?>
 
     <div class="sign-in">
-        <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/login">Login</a> now</p>
+        <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/login">Log in</a> now</p>
     </div>
 </div>
