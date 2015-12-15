@@ -49,7 +49,7 @@
                     ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); ?>
         </div>
         <div class="col-field-name zipcode">
-            <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode')); ?>
+            <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode','maxlength'=>5)); ?>
         </div>
         <div class="col-field-name age">
             <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
