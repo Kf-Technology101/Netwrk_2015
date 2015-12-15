@@ -13,7 +13,7 @@ return [
             'class' => 'yii\swiftmailer\Mailer',
             // 'useFileTransport' => true,
             'messageConfig' => [
-                'from' => ['admin@rubyspace.net' => 'Admin'], // this is needed for sending emails
+                'from' => ['admin@rubyspace.net' => 'support@netwrk.com'], // this is needed for sending emails
                 'charset' => 'UTF-8',
             ],
             'transport' => [
