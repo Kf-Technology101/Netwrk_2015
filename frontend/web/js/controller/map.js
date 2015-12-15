@@ -18,7 +18,7 @@ var Map ={
 			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,
 			streetViewControl: false,
-			scrollwheel: false,
+			// scrollwheel: false,
 			mapTypeId:google.maps.MapTypeId.ROADMAP,
 		};
 		var remove_poi = [
@@ -32,9 +32,28 @@ var Map ={
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
+		map.setOptions({zoomControl: false,  styles: remove_poi}); // scrollwheel: false,
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
-		
+		var tskey = "b26fdd409c" ;
+		var imgMapType = new google.maps.ImageMapType({
+				getTileUrl: function(coord, zoom){
+					if(zoom!=12){
+						return null;
+					}
+					if(zoom==12){
+						var url = "http://storage.googleapis.com/zipmap/tiles/" + zoom + "/" + coord.x + "/" + coord.y + ".png" ;
+						return url;
+					}
+					var server = coord.x % 6;
+					var url = "http://ts" + server + ".usnaviguide.com/tileserver.pl?X=" + coord.x + "&Y=" + coord.y + "&Z=" + zoom + "&T=" + tskey + "&S=Z1001";
+					return url;
+				},
+				tileSize: new google.maps.Size(256,256),
+				opacity: .3,
+				name: 'ziphybrid'
+			});
+		map.overlayMapTypes.push(imgMapType);
+
 		Map.data_map = map;
 		Map.min_max_zoom(map);
 		// Map.eventOnclick(map);
@@ -42,6 +61,7 @@ var Map ={
 		Map.eventZoom(map);
 		Map.eventClickMyLocation(map);
 		Map.show_marker(map);
+		Map.showHeaderFooter();
 	},
 
 	main: function(){
@@ -55,7 +75,7 @@ var Map ={
 		var current = map.getZoom();
 		$('.indiana_marker').find("li[num-city]").remove();
 		Map.deleteNetwrk(map);
-		Map.show_marker(map);
+		Map.show_marker(map).trigger('idle');
 	},
 
 	get_netwrk: function(){
@@ -110,11 +130,14 @@ var Map ={
 
 		$.each(data_marker,function(i,e){
 			// console.log('fetch elements in array marker');
+			var img = './img/icon/map_icon_community_v_2.png';
 			marker = new google.maps.Marker({
 				position: new google.maps.LatLng(e.lat, e.lng),
 				map: map,
+				icon: img,
 				city_id: parseInt(e.id)
 			});
+
             var infowindow = new google.maps.InfoWindow({
             	content: '',
             	city_id: e.id,
@@ -202,8 +225,179 @@ var Map ={
 
 			Map.markers.push(marker);
 		});
-		
+
+		if(map.getZoom() == 12) {
+			map.addListener('idle', function(){
+				// radarSearch --------------------------------------------
+				var service = new google.maps.places.PlacesService(map);
+				  service.radarSearch({
+				  	bounds: map.getBounds(),
+	    			keyword: 'university in indiana state',
+	    			types: ['university']
+				}, function(results, status){
+					if (status === google.maps.places.PlacesServiceStatus.OK) {
+						console.log('university');
+						infowindow = new google.maps.InfoWindow();
+					    for (var i = 0; i < results.length; i++) {
+					      Map.createMarkerGov(service, results[i], map);
+					     //  Map.getZipcodeAddress(results[i].vicinity);
+					    	// console.log(results[i].vicinity);
+					    }
+					}
+				});
+
+				  var service2 = new google.maps.places.PlacesService(map);
+				  service2.radarSearch({
+				  	bounds: map.getBounds(),
+	    			keyword: 'government in indiana state',
+	    			types: ['local_government_office']
+				}, function(results, status){
+					if (status === google.maps.places.PlacesServiceStatus.OK) {
+						console.log('government');
+						infowindow = new google.maps.InfoWindow();
+					    for (var i = 0; i < results.length; i++) {
+					      Map.createMarker(service2, results[i], map);
+					     //  Map.getZipcodeAddress(results[i].vicinity);
+					     // console.log(results[i].vicinity);
+					    }
+					    console.log(results[0]);
+					}
+				});
+
+				// nearbySearch ------------------------------------------------
+				// var service = new google.maps.places.PlacesService(map);
+				//   service.nearbySearch({
+				//     location: {lat: 39.7662195, lng: -86.441277},
+				//     radius: 1000,
+				//     types: ['local_government_office']
+				// }, function(results, status){
+				// 	if (status === google.maps.places.PlacesServiceStatus.OK) {
+				// 		infowindow = new google.maps.InfoWindow();
+				// 	    for (var i = 0; i < results.length; i++) {
+				// 	      Map.createMarkerGov(results[i], map);
+				// 	      Map.getZipcodeAddress(results[i].vicinity);
+				// 	    	console.log(results[i].vicinity);
+				// 	    }
+				// 	}
+				// });
+
+				// var service2 = new google.maps.places.PlacesService(map);
+				// service2.nearbySearch({
+				//     location: {lat: 39.7662195, lng: -86.441277},
+				//     radius: 1000,
+				//     types: ['university']
+				// }, function(results, status){
+				// 	if (status === google.maps.places.PlacesServiceStatus.OK) {
+				// 		infowindow = new google.maps.InfoWindow();
+				// 	    for (var i = 0; i < results.length; i++) {
+				// 	    	Map.createMarker(results[i], map);
+				// 	    	Map.getZipcodeAddress(results[i].vicinity);
+				// 	    	console.log(results[i].vicinity);
+				// 	    }
+				// 	}
+				// });
+			});
+	 	} else {
+	 		google.maps.event.clearListeners(map, 'idle');
+	 	}
 	},
+
+	callback: function(results, status, map) {
+	  if (status === google.maps.places.PlacesServiceStatus.OK) {
+	    for (var i = 0; i < results.length; i++) {
+	      Map.createMarker(results[i], map);
+	    }
+	  }
+	},
+
+	createMarker: function(service, place, map) {
+	  var placeLoc = place.geometry.location;
+	  
+	  var img = './img/icon/map_icon_university_v_2.png';
+	  
+	  var marker = new google.maps.Marker({
+	    map: map,
+	    position: place.geometry.location,
+	    icon: img,
+	    city_id: 1,
+	  });
+
+	  google.maps.event.addListener(marker, 'click', function() {
+	    service.getDetails(place, function(result, status){
+	  		infowindow.setContent(result.name);
+	    	infowindow.open(map, marker);
+	  	});
+	  });
+	  Map.markers.push(marker);
+	},
+
+	createMarkerGov: function(service, place, map) {
+	  var placeLoc = place.geometry.location;
+	  
+	  var img = './img/icon/map_icon_government_v_2.png';
+	  
+	  var marker = new google.maps.Marker({
+	    map: map,
+	    position: place.geometry.location,
+	    icon: img,
+	    city_id: 1,
+	    // icon: {
+	    //   url: img,
+	    //   // anchor: new google.maps.Point(10, 10),
+	    //   // scaledSize: new google.maps.Size(27, 45)
+	    // }
+	  });
+
+	  // google.maps.event.addListener(marker, 'click', function() {
+	  // 	service.getDetails(place, function(result, status){
+	  // 		infowindow.setContent(result.name);
+	  //   	infowindow.open(map, marker);
+	  // 	});
+	  // });
+	  google.maps.event.addListener(marker, 'click', (function(marker) {
+				return function(){
+					if(!isMobile){
+						infowindow.close();
+					}
+					Topic.init(marker.city_id);
+				};
+			})(marker));
+	  Map.markers.push(marker);
+	},
+
+	getZipcodeAddress: function(address){
+        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+address+" IN" ,function(data){
+        	var len = data.results[0].address_components.length;
+        	for(var i=0; i<len; i++) {
+        		if(data.results[0].address_components[i].types[0] == 'postal_code') {
+        			console.log(data.results[0].address_components[i].long_name);
+        		}
+        	}
+            // if (data.places[0].state == "Indiana"){
+            // 	Map.params.name = data.places[0]['place name'],
+            // 	Map.params.zipcode = zipcode;
+            // 	Map.params.lat = data.places[0].latitude;
+            // 	Map.params.lng = data.places[0].longitude;
+            // 	Create_Topic.params.zip_code = zipcode;
+            // 	Create_Topic.params.lat = Map.latLng.lat();
+            // 	Create_Topic.params.lng = Map.latLng.lng();
+            // 	Create_Topic.params.netwrk_name = data.places[0]['place name'];
+
+            // 	Ajax.check_zipcode_exist(Map.params).then(function(data){
+            // 		var json = $.parseJSON(data);
+            // 		if (json.status == 0){
+            // 			Topic.init($.now(),Map.params);
+            // 		}else{
+            // 			Topic.init(json.city);
+            // 		}
+            // 	});
+            // }
+            // console.log(data.results[0].address_components.length);
+        });
+	},
+
+
+
 
 	eventClickMyLocation: function(map){
 		var btn = $('#btn_my_location');
@@ -228,22 +422,23 @@ var Map ={
 		    if(!Map.zoomIn){
 			    Map.smoothZoom(map, 12, map.getZoom() + 1, true);
 			    Map.zoomIn = true;
+
 			    // Map.incre = 1;
-			    if(map.getZoom() == 12) {
+			    // if(map.getZoom() == 12) {
 				    Map.deleteNetwrk(map);
 					map.zoom = 12;
 					Map.show_marker(map);
-				}
+				// }
 				
 			} else {
 				Map.smoothZoom(map, 7, map.getZoom(), false);
 				Map.zoomIn = false;
 				// Map.incre = 1;
-				if(map.getZoom() == 7) {
+				// if(map.getZoom() == 7) {
 					Map.deleteNetwrk(map);
 					map.zoom = 7;
 					Map.show_marker(map);
-				}
+				// }
 			}
 		});
 	},
@@ -399,4 +594,9 @@ var Map ={
             }
         });
 	},
+
+	showHeaderFooter: function(){
+        $('.navbar-fixed-top').show();
+        $('.navbar-fixed-bottom').show();
+    }
 }
