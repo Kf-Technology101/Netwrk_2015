@@ -83,16 +83,16 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $rules = [
             // general email and username rules
-            [['email', 'username'], 'string', 'max' => 255],
+            [['email', 'username'], 'required', 'message'=> 'This is required field.'],
+            [['email', 'username'], 'string', 'max' => 255,'min'=> 4,'message'=> '{attribute} must be at least 4 characters long'],
             [['email', 'username'], 'unique'],
             [['email', 'username'], 'filter', 'filter' => 'trim'],
             [['email'], 'email'],
             [['username'], 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u', 'message' => '{attribute} can contain only letters, numbers, and "_"'],
-
             // password rules
-            [['newPassword'], 'string', 'min' => 3],
+            [['newPassword'], 'string', 'min' => 8 , 'message'=>'Password must be at least 8 characters long'],
             [['newPassword'], 'filter', 'filter' => 'trim'],
-            [['newPassword'], 'required', 'on' => ['register', 'reset']],
+            [['newPassword'], 'required', 'on' => ['register', 'reset'],'message'=>'Password must be at least 8 characters long'],
             [['newPasswordConfirm'], 'required', 'on' => ['reset']],
             [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'message' => 'Passwords do not match'],
 

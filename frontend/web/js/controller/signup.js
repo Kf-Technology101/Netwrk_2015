@@ -205,12 +205,12 @@ var Signup={
 		if(val > 9999 && val < 99999){
 			Signup.apiZipcode(val);
 		}else if(val ==""){
-			message = "Zipcode cannot be blank";
+			message = "Zip Code is invalid";
 			Signup.OnShowZipcodeErrors(message);
 			Signup.zipcode = 0;
 		}
 		else{
-			message = "Zipcode can not more than 5 characte or less ";
+			message = "Zip Code is invalid";
 			Signup.OnShowZipcodeErrors(message);
 			Signup.zipcode = 0;
 		}
@@ -226,12 +226,12 @@ var Signup={
             	Signup.lng = data.places[0].longitude;
             	Signup.OnShowZipcodeValid();
             }else{
-            	message = " Zipcode not in state Indiana";
+            	message = "Zip Code is invalid";
             	Signup.zipcode = 0;
             	Signup.OnShowZipcodeErrors(message);
             }
         }).fail(function(jqXHR) {
-        	message = " Zipcode invalid";
+        	message = "Zip Code is invalid";
         	Signup.zipcode = 0;
         	Signup.OnShowZipcodeErrors(message);
         });
