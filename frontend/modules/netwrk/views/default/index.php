@@ -38,4 +38,4 @@
 <?= $this->render('partial/forgot_password');?>
 <?= $this->render('partial/reset_password');?>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
