@@ -18,21 +18,23 @@ var ResetPass = {
             ResetPass.OnShowModalResetPass();
             ResetPass.OnHideModalResetPass();
             ResetPass.showModalResetPass();
-            // ResetPass.OnValidateNewPasswordConfirm();
+            ResetPass.OnValidateNewPasswordConfirm();
             ResetPass.CheckKeyValidate();
             ResetPass.OnSubmitReset();
         }
     },
     OnValidateNewPasswordConfirm: function(){
-        var target = $(ResetPass.modal).find('.field-user-newpasswordconfirm'),
+        var target = $(ResetPass.modal).find('.field-user-newpasswordconfirm');
             newpass = $(ResetPass.modal).find('input#user-newpassword').val();
 
         target.find('input').unbind();
 
         target.find('input').on('change',function(){
-            if(target.val() == newpass){
-                target.removeClass('has-error');
-                target.addClass('has-success');
+            var newpass = $(ResetPass.modal).find('input#user-newpassword').val();
+            if(target.find('input').val() === newpass){
+                target.addClass('has-success-disable');
+            }else{
+                target.removeClass('has-success-disable');
             }
         });
 
