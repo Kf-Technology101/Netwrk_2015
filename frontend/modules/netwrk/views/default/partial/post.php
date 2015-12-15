@@ -1,6 +1,6 @@
 <?php use yii\helpers\Url; ?>
 <div class="modal" id="list_post">
-    <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div>
+    <!-- <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div> -->
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

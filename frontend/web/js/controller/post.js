@@ -129,7 +129,7 @@ var Post ={
 		var btn_parent = $('#list_post').find('#btn_meet');
 		var btn_map = $('.map_content').find('#btn_meet');
 
-		btn_map.hide();
+		// btn_map.hide();
 		set_position_btn($('#list_post'),btn_parent,130,100);
 		set_position_btn_resize($('#list_post'),btn_parent,130,100);
 		btn_parent.show();
