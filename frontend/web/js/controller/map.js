@@ -12,33 +12,33 @@ var Map ={
 	zoomIn: false,
 	incre: 1,
 	initialize: function() {
-		var map_andiana = {
-			center:new google.maps.LatLng(39.7662195,-86.441277),
+		console.log('loaded');
+		var map_andiana	 = {
+			center: new google.maps.LatLng(39.7662195,-86.441277),
 			zoom: 7,
 			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,
 			streetViewControl: false,
 			scrollwheel: false,
-			mapTypeId:google.maps.MapTypeId.ROADMAP,
+			mapTypeId:google.maps.MapTypeId.ROADMAP
 		};
 		var remove_poi = [
    			{
      			featureType: "poi",
  				stylers: [
       				{ visibility: "off" }
- 				]   
+ 				]
     		}
 		];
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
 		map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
-		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
-		
+
 		Map.data_map = map;
 		Map.min_max_zoom(map);
 		// Map.eventOnclick(map);
-		
+
 		Map.eventZoom(map);
 		Map.eventClickMyLocation(map);
 		Map.show_marker(map);
@@ -120,7 +120,7 @@ var Map ={
             	city_id: e.id,
             	maxWidth: 350
             });
-	            
+
 			google.maps.event.addListener(marker, 'click', (function(marker, i) {
 				return function(){
 					if(!isMobile){
@@ -139,8 +139,8 @@ var Map ={
 			                '</div>' +
 			                '<div class="iw-bottom-gradient"></div>' +
 			              '</div>';
-			    infowindow.content = content; 
-			             
+			    infowindow.content = content;
+
 	            Map.infowindow.push(infowindow);
 
 				google.maps.event.addListener(marker, 'mouseover', function() {
@@ -152,7 +152,7 @@ var Map ={
 				google.maps.event.addListener(marker, 'mouseout', function() {
 					// infowindow.close();
 				});
-				
+
 			  	google.maps.event.addListener(infowindow, 'domready', function() {
 
 				  //   // Reference to the DIV that wraps the bottom of infowindow
@@ -161,7 +161,7 @@ var Map ={
 				  //    // Since this div is in a position prior to .gm-div style-iw.
 				  //    // * We use jQuery and create a iwBackground variable,
 				  //    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-				    
+
 				    var iwBackground = iwOuter.prev();
 				    iwOuter.children(':nth-child(1)').css({'max-width' : '400px'});
 				  // Removes background shadow DIV
@@ -202,7 +202,7 @@ var Map ={
 
 			Map.markers.push(marker);
 		});
-		
+
 	},
 
 	eventClickMyLocation: function(map){
@@ -234,7 +234,7 @@ var Map ={
 					map.zoom = 12;
 					Map.show_marker(map);
 				}
-				
+
 			} else {
 				Map.smoothZoom(map, 7, map.getZoom(), false);
 				Map.zoomIn = false;
@@ -258,7 +258,7 @@ var Map ={
 				return;
 			}
 			else {
-				
+
 				var z = google.maps.event.addListener(map, 'zoom_changed', function(event){
 					google.maps.event.removeListener(z);
 					Map.smoothZoom(map, level, cnt + Map.incre, true);
@@ -276,7 +276,7 @@ var Map ={
 				return;
 			}
 			else {
-				
+
 				var z = google.maps.event.addListener(map, 'zoom_changed', function(event) {
 					google.maps.event.removeListener(z);
 					Map.smoothZoom(map, level, cnt - 1, false);

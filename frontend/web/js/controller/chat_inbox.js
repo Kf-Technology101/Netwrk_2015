@@ -55,7 +55,7 @@ var ChatInbox = {
 				chat_inbox.animate({
 					"right": "0"
 				}, 500);
-				setTimeout(ChatInbox.ActiveReponsiveChatInbox(), 500);
+				ChatInbox.ActiveReponsiveChatInbox();
 			} else {
 				chat_inbox.animate({
 					"right": "-400px"
@@ -101,11 +101,10 @@ var ChatInbox = {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
 		}
 		var width_map = width -320;
-		// $('.map_content').css({'width':width_map+'px', 'left': 0, 'margin': 0});
 		$('.map_content').animate({
 					'width':width_map+'px',
 					'left': 0, 'margin': 0
-				}, 500);
+				}, 500, 'swing', function(){ Map.initialize(); });
 		$('#btn_meet').css({'left': '', 'right' : '15px'});
 	},
 
@@ -114,7 +113,12 @@ var ChatInbox = {
 		if (width <= 1366) {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
 		}
-		$('.map_content').css({'width': '100%', 'left': '', 'margin': 'auto'});
+
+		$('.map_content').animate({
+					'width':'100%',
+					'left': '', 'margin': 'auto'
+				}, 500, 'swing', function(){ Map.initialize(); });
+
 		$('#btn_meet').css({'left': '', 'right' : '15px'});
 	},
 
