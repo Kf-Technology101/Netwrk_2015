@@ -55,8 +55,7 @@ var ChatInbox = {
 				chat_inbox.animate({
 					"right": "0"
 				}, 500);
-
-				ChatInbox.ActiveReponsiveChatInbox();
+				setTimeout(ChatInbox.ActiveReponsiveChatInbox(), 500);
 			} else {
 				chat_inbox.animate({
 					"right": "-400px"
@@ -102,8 +101,12 @@ var ChatInbox = {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
 		}
 		var width_map = width -320;
-		$('.map_content').css({'width':width_map+'px', 'left': 0, 'margin': 0});
-		$('#btn_meet').css({'left': '', 'right' : '0'});
+		// $('.map_content').css({'width':width_map+'px', 'left': 0, 'margin': 0});
+		$('.map_content').animate({
+					'width':width_map+'px',
+					'left': 0, 'margin': 0
+				}, 500);
+		$('#btn_meet').css({'left': '', 'right' : '10px'});
 	},
 
 	DeactiveReponsiveChatInbox: function() {
@@ -112,7 +115,7 @@ var ChatInbox = {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
 		}
 		$('.map_content').css({'width': '100%', 'left': '', 'margin': 'auto'});
-		$('#btn_meet').css({'left': '', 'right' : '0'});
+		$('#btn_meet').css({'left': '', 'right' : '10px'});
 	},
 
 	OnClickHideCloseChatInboxBtn: function() {
