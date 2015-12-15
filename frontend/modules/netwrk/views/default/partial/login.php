@@ -8,9 +8,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="header">
-                    <p>Log in</p>
-                </div>
+                <p>Log in</p>
             </div>
             <div class="modal-body">
                 <?php
@@ -30,17 +28,15 @@
                     </div>
                     <div class="field-name password">
                         <p class="title"> Password </p>
-                        <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password')); ?>
-                    </div>
-                    <div class="field-name">
                         <a href="javascript:void(0)" class="forgot-password">Forgot password</a>
+                        <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password')); ?>
                     </div>
                 <div class="btn-control">
                     <p>Login</p>
                 </div>
                 <?php ActiveForm::end(); ?>
                 <div class="sign-up">
-                    <p>Don't have an account! <b>Sign Up</b> now</p>
+                    <p>Don't have an account! <b>Sign up</b> Now</p>
                 </div>
             </div>
         </div>

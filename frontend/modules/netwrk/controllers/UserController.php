@@ -198,10 +198,6 @@ class UserController extends BaseController
         return $hash;
     }
 
-    public function actionIndex(){
-
-    }
-
     public function actionSignup()
     {
 
@@ -212,7 +208,6 @@ class UserController extends BaseController
         }
         // load post data
         $post = Yii::$app->request->post();
-        
         if ($user->load($post)) {
             // ensure profile data gets loaded
             $zipcode = $post['Profile']['zip_code'];

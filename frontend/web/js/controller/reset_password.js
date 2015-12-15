@@ -18,12 +18,25 @@ var ResetPass = {
             ResetPass.OnShowModalResetPass();
             ResetPass.OnHideModalResetPass();
             ResetPass.showModalResetPass();
-            ResetPass.OnHideModalReset();
+            // ResetPass.OnValidateNewPasswordConfirm();
             ResetPass.CheckKeyValidate();
             ResetPass.OnSubmitReset();
         }
     },
+    OnValidateNewPasswordConfirm: function(){
+        var target = $(ResetPass.modal).find('.field-user-newpasswordconfirm'),
+            newpass = $(ResetPass.modal).find('input#user-newpassword').val();
 
+        target.find('input').unbind();
+
+        target.find('input').on('change',function(){
+            if(target.val() == newpass){
+                target.removeClass('has-error');
+                target.addClass('has-success');
+            }
+        });
+
+    },
     OnSubmitReset: function(){
         var btn = $(ResetPass.modal).find('.reset');
         btn.unbind();
@@ -35,8 +48,10 @@ var ResetPass = {
             Ajax.reset_password(ResetPass.params).then(function(data){
                 console.log(data);
                 var json = $.parseJSON(data);
-                if(data.status == 1){
+                console.log(json.status);
+                if(json.status == 1){
                     $(ResetPass.modal).modal('hide');
+                    Login.initialize();
                 }
             });
         });
@@ -135,9 +150,8 @@ var ResetPass = {
         var target = $('#reset-password').find('.title img');
         target.unbind();
         target.on('click', function(){
-            target.bind();            
+            target.bind();
             window.location.href = baseUrl;
-            
         });
     },
 
