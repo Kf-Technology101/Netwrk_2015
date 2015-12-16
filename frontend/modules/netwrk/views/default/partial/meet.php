@@ -196,13 +196,12 @@
               <p class="title">Posts</p>
               <p class="text">
                 <% _.each(user.post,function(p){ %>
-                    <span><%= p %></span>
+                    <span data-item ="<%= p.id %>"><%= p.title %></span>
                   <% }); %>
               </p>
             </div>
           </div>
         </div>
-        
         <div class="brillant">
           <div class="count"><span><%= user.brilliant %></span></div>
           <p>Brilliant</p>

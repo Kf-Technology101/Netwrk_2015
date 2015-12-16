@@ -46,7 +46,11 @@ class MeetController extends BaseController
             $post_data = [];
 
             foreach ($posts as $key => $post){
-                array_push($post_data,'#'.$post->title);
+                $item_post = array(
+                    'id'=> $post->id,
+                    'title'=> '#'.$post->title
+                );
+                array_push($post_data,$item_post);
             }
             $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$value->id)->one();
             if($usermeet && $usermeet->status == 1){
@@ -78,7 +82,6 @@ class MeetController extends BaseController
             }
             $brilliant = $count_like;
             // $brilliant = Vote::find()->where('user_id = ' . $value->id . ' AND status = 1')->count();
-            
 
             $user = array(
                 'user_id' => $value->id,
@@ -146,13 +149,12 @@ class MeetController extends BaseController
     }
 
     public function actionUserMeet()
-    {   
+    {
         $userCurrent = Yii::$app->user->id;
         $Auth = $_GET['user_id'];
 
         $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
 
-            
         if($usermeet == null){
             $meet = new UserMeet;
             $meet->user_id_1 = $userCurrent;
