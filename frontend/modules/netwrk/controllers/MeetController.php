@@ -68,7 +68,17 @@ class MeetController extends BaseController
 
             $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
             
-            $brilliant = Vote::find()->where('user_id = ' . $value->id . ' AND status = 1')->count();
+            $count_like = 0;
+            $count_posts = Post::find()->where('user_id ='.$value->id)->all();
+            foreach ($count_posts as $key => $post) {
+                $vote = Vote::find()->where('post_id = ' . $post->id . ' AND status = 1')->count();
+                if($vote>0){
+                    $count_like += $vote;
+                }
+            }
+            $brilliant = $count_like;
+            // $brilliant = Vote::find()->where('user_id = ' . $value->id . ' AND status = 1')->count();
+            
 
             $user = array(
                 'user_id' => $value->id,

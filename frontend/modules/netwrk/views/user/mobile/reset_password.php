@@ -23,8 +23,8 @@
             </div>
         <?php else: ?>
             <?php $form = ActiveForm::begin(['id' => 'reset-form']); ?>
-                <?= $form->field($user, 'newPassword')->passwordInput() ?>
-                <?= $form->field($user, 'newPasswordConfirm')->passwordInput() ?>
+                <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New password')) ?>
+                <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
                 <div class="form-group">
                     <?= Html::submitButton("Reset", ['class' => 'btn btn-primary reset']) ?>
                 </div>

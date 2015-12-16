@@ -34,7 +34,8 @@ class MobileAsset extends AssetBundle
       'css/jquery.mCustomScrollbar.css',
       'css/emojione/css/emojione.min.css',
       'css/mobile/forgot_pass.css',
-      'css/mobile/chat_inbox.css'
+      'css/mobile/chat_inbox.css',
+      'css/mobile/forgot_pass.css'
     ];
     public $js = [
       'js/lib/underscore.js',

@@ -30,8 +30,8 @@
 
                     $form = ActiveForm::begin(['id' => 'reset-form']); 
                 ?>
-                    <?= $form->field($user, 'newPassword')->passwordInput() ?>
-                    <?= $form->field($user, 'newPasswordConfirm')->passwordInput() ?>
+                    <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New Password')) ?>
+                    <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
                     <div class="reset">Reset</div>
                 <?php ActiveForm::end(); ?>
             </div>
