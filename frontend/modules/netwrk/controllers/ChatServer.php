@@ -219,12 +219,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
         	$user = new User();
             foreach ($messages as $key => $message) {
 
-                $user_photo = $user->findOne($user_id)->profile->photo;
-                
+                $user_photo = $user->findOne($message->post->user_id)->profile->photo;
+
                 if ($user_photo == null){
                     $image = 'img/icon/no_avatar.jpg';
                 }else{
-                    $image = 'uploads/'.$user_id.'/'.$user_photo;
+                    $image = 'uploads/'.$message->post->user_id.'/'.$user_photo;
                 }
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
