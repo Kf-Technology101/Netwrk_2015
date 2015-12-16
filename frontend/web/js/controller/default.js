@@ -6,7 +6,7 @@ var Default ={
         }else{
             $('#btn_meet').show();
             self._eventClickMeetBtn();
-            ChatInbox.initialize();
+            ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
         }
     },
