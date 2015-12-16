@@ -85,14 +85,19 @@ var ChatInbox = {
 			}else{
 				ChatPost.params.post = item_post;
 				if(ChatPost.temp_post != ChatPost.params.post){
-					$(ChatPost.modal).modal('hide');
-					$("#modal_topic").modal('hide');
+					// $(Topic.modal).modal('hide');
+					// $(ChatPost.modal).modal('hide');
+					// $(Post.modal).modal('hide');
+					// $(Topic.modal_create).modal('hide');
+					// $(Post.modal_create).modal('hide');
+					// $(Meet.modal).modal('hide');
+					$('.modal').modal('hide');
+
 					ChatPost.initialize();
+
 					ChatPost.temp_post = ChatPost.params.post;
 				}
-				if($('#modal_meet').hasClass('in')) {
-					$('#modal_meet').modal('hide');
-				}
+
 			}
 		});
 	},
@@ -100,12 +105,12 @@ var ChatInbox = {
 	ActiveReponsiveChatInbox: function() {
 		var width = $( window ).width();
 		if (width <= 1366) {
-			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
+			$(".modal").addClass("responsive-chat-inbox");
 		}
 
 		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
-
+		Map.center = Map.map.getCenter();
 		var width_map = width -320;
 		$('.map_content').animate({
 					'width':width_map+'px',
@@ -117,11 +122,12 @@ var ChatInbox = {
 	DeactiveReponsiveChatInbox: function() {
 		var width = $( window ).width();
 		if (width <= 1366) {
-			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
+			$(".modal").removeClass("responsive-chat-inbox");
 		}
 
 		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
+		Map.center = Map.map.getCenter();
 
 		$('.map_content').animate({
 					'width':'100%',

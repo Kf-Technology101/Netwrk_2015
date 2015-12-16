@@ -25,6 +25,8 @@ var Post ={
             loaded: 0
         }
     },
+    modal: '#list_post',
+    modal_create: '#create_post',
 	tab_current:'post',
 	initialize: function(){
 		if(isMobile){

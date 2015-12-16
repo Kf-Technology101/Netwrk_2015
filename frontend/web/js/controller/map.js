@@ -13,10 +13,10 @@ var Map ={
 	incre: 1,
 	map:'',
 	zoom: 7,
+	center: new google.maps.LatLng(39.7662195,-86.441277),
 	initialize: function() {
-		console.log('loaded');
 		var map_andiana	 = {
-			center: new google.maps.LatLng(39.7662195,-86.441277),
+			center: Map.center,
 			zoom: Map.zoom,
 			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,

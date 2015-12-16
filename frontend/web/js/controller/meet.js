@@ -16,8 +16,8 @@ var Meet ={
     json:{
 
     },
-    
-    initialize: function() {  
+    modal: '#modal_meet',
+    initialize: function() {
         console.log(Meet.filter.active);
         if(Meet.filter.active === 'setting'){
             Meet_setting.initialize();
@@ -34,8 +34,8 @@ var Meet ={
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
 
-            container.find('.page').hide(); 
-            $('.name_user').find('img').show();   
+            container.find('.page').hide();
+            $('.name_user').find('img').show();
             $('#btn_meet_mobile').hide();
             $('#btn_discover_mobile').hide();
             $('.menu_bottom').hide();
@@ -119,7 +119,7 @@ var Meet ={
 
     _onclickBack: function(){
         $('.back_page img').click(function(){
-            window.location.href = baseUrl; 
+            window.location.href = baseUrl;
         })
     },
 
@@ -130,7 +130,7 @@ var Meet ={
     },
 
     showUserMeetMobile: function(){
-        window.location.href = "netwrk/meet"; 
+        window.location.href = "netwrk/meet";
     },
 
     GetUserMeet: function(){
@@ -161,7 +161,7 @@ var Meet ={
         target.unbind();
         target.on('click',function(){
             target.bind();
-            window.location.href = baseUrl; 
+            window.location.href = baseUrl;
             // Meet.reset_page();
             // Meet._init();
         });
@@ -234,7 +234,7 @@ var Meet ={
         btn_back.addClass('disable');
         self.user_list.vt = 0;
         self.user_list.num = 1;
-        self.user_list.len = 0;  
+        self.user_list.len = 0;
         self.json = {};
         Meet.filter.active = 'meeting';
         $('.control-btn').hide();
@@ -260,7 +260,7 @@ var Meet ={
         $('.control-btn').hide();
         self.user_list.vt = 0;
         self.user_list.num = 1;
-        self.user_list.len = 0;  
+        self.user_list.len = 0;
         self.json = {};
 
     },
@@ -313,7 +313,7 @@ var Meet ={
             }
         });
 
-        
+
         self.eventMeet();
         self.eventMet();
     },
@@ -335,7 +335,7 @@ var Meet ={
             self.user_list.num ++ ;
             self.showUserMeet();
         }
-       
+
     },
     eventMeet: function(){
         var self = this,
@@ -379,7 +379,7 @@ var Meet ={
         var self = this;
         var name = $('.name_user'),
             info = $('.user_list');
-            
+
         var vt = self.user_list.vt;
         var data = self.json[vt];
         self.getTemplateUserName(name,data,vt);
@@ -392,7 +392,7 @@ var Meet ={
         var template = _.template($( "#name_user" ).html());
         var append_html = template({user: data,vt: vt});
 
-        parent.append(append_html); 
+        parent.append(append_html);
     },
 
     getTemplateInfo: function(parent,data,vt){
@@ -400,6 +400,6 @@ var Meet ={
         var template = _.template($( "#list_user" ).html());
         var append_html = template({user: data.information ,vt: vt});
 
-        parent.append(append_html); 
+        parent.append(append_html);
     }
-}; 
+};
