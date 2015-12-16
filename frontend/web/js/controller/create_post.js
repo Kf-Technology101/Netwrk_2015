@@ -77,7 +77,7 @@ var Create_Post={
         target.unbind();
         target.on('click',function(){
             target.bind();
-            window.location.href = baseUrl; 
+            window.location.href = baseUrl;
             // Meet.reset_page();
             // Meet._init();
         });
@@ -91,7 +91,7 @@ var Create_Post={
                 // $('#btn_meet_mobile').hide();
                 // $('#btn_discover_mobile').show();
             }
-            
+
         }else{
             $('#btn_meet').hide();
             set_position_btn(parent,parent.find('#btn_discover'),130,100);
@@ -154,7 +154,7 @@ var Create_Post={
 
     changeData: function(){
         var parent = $('#create_post');
-        
+
         this.onChangeData(parent.find('.name_post'),'post');
         this.onChangeData(parent.find('.message'),'message');
     },
@@ -211,7 +211,7 @@ var Create_Post={
                 Create_Post.setDefaultBtn();
             }
         });
-        
+
     },
 
     reset_data: function(){
@@ -321,6 +321,8 @@ var Create_Post={
                         }
                     },700);
                 });
+                var chat_inbox = $("#chat_inbox");
+                ChatInbox.GetDataListChatPost(chat_inbox);
             }
         });
     }
