@@ -22,9 +22,23 @@
                 <p><?= "Invalid key" ?></p>
             </div>
         <?php else: ?>
-            <?php $form = ActiveForm::begin(['id' => 'reset-form']); ?>
-                <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New password','autofocus'=>true)) ?>
-                <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
+            <?php $form = ActiveForm::begin([
+                            'id' => 'reset-form',
+                             'fieldConfig' => [
+                                'template' => "<div class=\"col-md-12 no-padding\">{input}</div>\n<div class=\"col-lg-12 no-padding\">{error}</div>",
+                            ],
+                        ]); ?>
+                <div class="form-reset">
+                    <div class="field-name username">
+                        <p class="title"> New Password </p>
+                        <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New password','autofocus'=>true)) ?>
+                    </div>
+                    <div class="field-name username">
+                        <p class="title"> Confirm Password </p>
+                        <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <?= Html::submitButton("Reset", ['class' => 'btn btn-primary reset']) ?>
                 </div>

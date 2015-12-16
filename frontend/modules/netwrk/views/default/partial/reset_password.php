@@ -28,11 +28,22 @@
                     $user = new User();
                     $user->setScenario("reset");
 
-                    $form = ActiveForm::begin(['id' => 'reset-form']); 
+                    $form = $form = ActiveForm::begin([
+                            'id' => 'reset-form',
+                             'fieldConfig' => [
+                                'template' => "<div class=\"col-md-12 no-padding\">{input}</div>\n<div class=\"col-md-12 no-padding\">{error}</div>",
+                            ],
+                        ]);
                 ?>
-                    <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New Password')) ?>
-                    <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password','autofocus'=>true)) ?>
-                    <div class="reset">Reset</div>
+                <div class="field">
+                    <p class="title"> New Password </p>
+                    <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New Password','autofocus'=>true)) ?>
+                </div>
+                <div class="field">
+                    <p class="title"> Confirm Password </p>
+                    <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
+                </div>
+                <div class=" reset field">Reset</div>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

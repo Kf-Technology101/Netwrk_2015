@@ -141,9 +141,9 @@
                 <i><img src="<?= Url::to('@web/img/icon/post-icon-desktop.png') ?>"></img></i>
               </span>
               <p class="title">Posts</p>
-              <p class="text">
+              <p class="text list-post">
                 <% _.each(user.post,function(p){ %>
-                  <span><%= p %></span>
+                  <span data-item="<%= p.id%>"><%= p.title %></span>
                 <% }); %>
               </p>
             </div>

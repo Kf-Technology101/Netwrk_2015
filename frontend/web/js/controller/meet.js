@@ -317,6 +317,23 @@ var Meet ={
 
         self.eventMeet();
         self.eventMet();
+        self.OnClickChatPost();
+    },
+
+    OnClickChatPost: function(){
+        var target = $('#meeting_page,#modal_meet').find('.box-infomation .post .list-post span');
+        target.unbind();
+            target.on('click',function(e){
+            var item_post = $(e.currentTarget).attr('data-item');
+            if(isMobile){
+                ChatPost.RedirectChatPostPage(item_post);
+            }else{
+                $('#modal_meet').modal('hide');
+                ChatPost.params.post = item_post;
+                ChatPost.initialize();
+            }
+        });
+
     },
 
     disableUser: function(num){
