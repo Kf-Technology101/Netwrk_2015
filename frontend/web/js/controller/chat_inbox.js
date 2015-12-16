@@ -91,7 +91,7 @@ var ChatInbox = {
 					ChatPost.temp_post = ChatPost.params.post;
 				}
 				if($('#modal_meet').hasClass('in')) {
-					$('#modal_meet').hide();
+					$('#modal_meet').modal('hide');
 				}
 			}
 		});
