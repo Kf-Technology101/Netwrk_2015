@@ -29,7 +29,7 @@
                 ]);
                 $model = new ForgotForm();
                 ?>
-                    <?= $form->field($model, 'email')->textInput(array('placeholder' => 'Email address','class'=>'form-control email')) ?>
+                    <?= $form->field($model, 'email')->textInput(array('placeholder' => 'Email address','class'=>'form-control email','autofocus'=>true)) ?>
                 <?php ActiveForm::end(); ?>
                 <div class="send-email">Send Email</div>
             </div>
