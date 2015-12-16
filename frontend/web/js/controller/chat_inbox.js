@@ -90,7 +90,9 @@ var ChatInbox = {
 					ChatPost.initialize();
 					ChatPost.temp_post = ChatPost.params.post;
 				}
-
+				if($('#modal_meet').hasClass('in')) {
+					$('#modal_meet').hide();
+				}
 			}
 		});
 	},
@@ -100,10 +102,10 @@ var ChatInbox = {
 		if (width <= 1366) {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
 		}
-		
+
+		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
 
-		console.log(Map.zoom);
 		var width_map = width -320;
 		$('.map_content').animate({
 					'width':width_map+'px',
@@ -118,6 +120,7 @@ var ChatInbox = {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
 		}
 
+		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
 
 		$('.map_content').animate({
