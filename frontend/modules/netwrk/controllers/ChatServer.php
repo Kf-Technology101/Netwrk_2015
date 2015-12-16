@@ -80,7 +80,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$userProfile = json_decode($this->userProfile($user));
 				// for list chat box
 				$list_chat_inbox = $this->updateListChatBox($user);
-				
+
 				foreach ($this->clients as $client) {
 					$this->send($client, "single", [array(
 														'id'=> $user,
