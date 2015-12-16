@@ -13,7 +13,8 @@ var Map ={
 	incre: 1,
 	map:'',
 	zoom: 7,
-	center: new google.maps.LatLng(39.7662195,-86.441277),
+	// center: new google.maps.LatLng(39.7662195,-86.441277),
+	center:'',
 	initialize: function() {
 		var map_andiana	 = {
 			center: Map.center,
@@ -48,6 +49,7 @@ var Map ={
 
 	main: function(){
 	  	if (typeof google !== "undefined") {
+	  		Map.center = new google.maps.LatLng(39.7662195,-86.441277);
     		google.maps.event.addDomListener(window, 'load', Map.initialize());
   		}
 	},
