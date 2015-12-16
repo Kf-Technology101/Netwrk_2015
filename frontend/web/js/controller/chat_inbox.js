@@ -85,27 +85,19 @@ var ChatInbox = {
 			}else{
 				ChatPost.params.post = item_post;
 				if(ChatPost.temp_post != ChatPost.params.post){
-					$(Topic.modal).modal('hide');
-
-					if($(Post.modal).hasClass('in')) {
-						$(Post.modal).modal('hide');
-					}
-
-					if ($(Topic.modal_create).hasClass('in')) {
-						$(Topic.modal_create).modal('hide');
-					};
-
-					if ($(Post.modal_create).hasClass('in')) {
-						$(Post.modal_create).modal('hide');
-					};
+					// $(Topic.modal).modal('hide');
+					// $(ChatPost.modal).modal('hide');
+					// $(Post.modal).modal('hide');
+					// $(Topic.modal_create).modal('hide');
+					// $(Post.modal_create).modal('hide');
+					// $(Meet.modal).modal('hide');
+					$('.modal').modal('hide');
 
 					ChatPost.initialize();
 
 					ChatPost.temp_post = ChatPost.params.post;
 				}
-				if($(Meet.modal).hasClass('in')) {
-					$(Meet.modal).modal('hide');
-				}
+
 			}
 		});
 	},
