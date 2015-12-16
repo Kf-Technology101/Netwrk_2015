@@ -11,11 +11,13 @@ var Map ={
 	infowindow:[],
 	zoomIn: false,
 	incre: 1,
+	map:'',
+	zoom: 7,
 	initialize: function() {
 		console.log('loaded');
 		var map_andiana	 = {
 			center: new google.maps.LatLng(39.7662195,-86.441277),
-			zoom: 7,
+			zoom: Map.zoom,
 			// disableDoubleClickZoom: true,
 			disableDefaultUI: true,
 			streetViewControl: false,
@@ -32,16 +34,16 @@ var Map ={
 		];
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
-		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
+		Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
+		Map.map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
 
-		Map.data_map = map;
-		Map.min_max_zoom(map);
+		Map.data_map = Map.map;
+		Map.min_max_zoom(Map.map);
 		// Map.eventOnclick(map);
 
-		Map.eventZoom(map);
-		Map.eventClickMyLocation(map);
-		Map.show_marker(map);
+		Map.eventZoom(Map.map);
+		Map.eventClickMyLocation(Map.map);
+		Map.show_marker(Map.map);
 	},
 
 	main: function(){
@@ -229,21 +231,21 @@ var Map ={
 			    Map.smoothZoom(map, 12, map.getZoom() + 1, true);
 			    Map.zoomIn = true;
 			    // Map.incre = 1;
-			    if(map.getZoom() == 12) {
+			    // if(map.getZoom() == 12) {
 				    Map.deleteNetwrk(map);
 					map.zoom = 12;
 					Map.show_marker(map);
-				}
+				// }
 
 			} else {
 				Map.smoothZoom(map, 7, map.getZoom(), false);
 				Map.zoomIn = false;
 				// Map.incre = 1;
-				if(map.getZoom() == 7) {
+				// if(map.getZoom() == 7) {
 					Map.deleteNetwrk(map);
 					map.zoom = 7;
 					Map.show_marker(map);
-				}
+				// }
 			}
 		});
 	},

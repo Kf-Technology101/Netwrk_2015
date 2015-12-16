@@ -100,6 +100,10 @@ var ChatInbox = {
 		if (width <= 1366) {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").addClass("responsive-chat-inbox");
 		}
+		
+		Map.zoom = Map.map.getZoom();
+
+		console.log(Map.zoom);
 		var width_map = width -320;
 		$('.map_content').animate({
 					'width':width_map+'px',
@@ -113,6 +117,8 @@ var ChatInbox = {
 		if (width <= 1366) {
 			$("#modal_topic,  #list_post, #modal_chat_post, #create_topic, #create_post").removeClass("responsive-chat-inbox");
 		}
+
+		Map.zoom = Map.map.getZoom();
 
 		$('.map_content').animate({
 					'width':'100%',
