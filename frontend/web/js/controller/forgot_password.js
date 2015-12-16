@@ -36,6 +36,10 @@ var ForgotPass = {
 
         btn.unbind();
         btn.on('click',function(){
+            $(ForgotPass.form_id).submit(function(e){
+                e.preventDefault();
+            });
+
             Ajax.forgot_password(ForgotPass.form_id).then(function(res){
                 ForgotPass.data = $.parseJSON(res);
                 console.log(ForgotPass.data);
@@ -58,7 +62,7 @@ var ForgotPass = {
 
     showModalForgotPass: function(){
         var parent = $(ForgotPass.modal);
-        parent.modal({show: true});
+        parent.modal({show: true,keyboard:false});
     },
 
     onChangeEmail: function(){

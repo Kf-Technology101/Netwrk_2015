@@ -85,7 +85,7 @@ var ResetPass = {
 
     showModalResetPass: function(){
         var parent = $('#reset-password');
-        parent.modal({show: true});
+        parent.modal({show: true,keyboard:false});
     },
 
     onTemplate: function(){
