@@ -2,7 +2,7 @@
 // 	display: none;
 // }
 #forgot-password, #reset-password{
-	margin-top: 80px;
+	margin-top: 40px;
 	overflow-y: auto;
 	.header{
 		text-align: center;
@@ -23,7 +23,7 @@
 		padding: 0 15px 15px;
 		font-family: "ProximaNovaRegular";
 		color: #1d1b1b;
-		.description{			
+		.description{
 		    font-size: 16px;
 		    margin-top: 25px;
 		    margin-bottom: 25px;
@@ -39,7 +39,6 @@
 		}
 		.send-email, .reset{
 			width: 100%;
-			margin: 25px 0;
     		height: 46px;
     		font-size: 22px;
             border: 1px solid #fff;
@@ -67,10 +66,30 @@
 		margin-bottom: 40px;
 	}
 	.form-group{
+
 		margin-bottom: 25px;
-		input:-ms-input-placeholder{
-    		color: #beb8b8;
+		input{
+    		height: 48px;
     	}
+        ::-webkit-input-placeholder {
+        	color: #beb8b8;
+           font-size: 18px;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+        	color: #beb8b8;
+           font-size: 18px;
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+        	color: #beb8b8;
+           font-size: 18px;
+        }
+
+        :-ms-input-placeholder {
+        	color: #beb8b8;
+           font-size: 18px;
+        }
 		.title-field{
 			font-family: "ProximaNovaSemibold";
 			font-weight: normal;
