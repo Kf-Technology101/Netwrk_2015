@@ -34,24 +34,13 @@ var ChatInbox = {
 
 	OnClickChatInbox: function() {
 		var chat_inbox = $("#chat_inbox");
-		var parent = $(chat_inbox).find('#chat_dicussion ul');
 		$("#chat_inbox_btn").on("click", function() {
             if(isGuest){
                 Login.initialize();
                 return false;
             }
 			if (chat_inbox.css('right') == '-400px') {
-				$.ajax({
-					url: baseUrl + "/netwrk/post/get-chat-inbox",
-					type: 'POST',
-					data: null,
-					processData: false,
-					contentType: false,
-					success: function(result) {
-						result = $.parseJSON(result);
-						ChatInbox.getTemplateChatInbox(parent,result);
-					}
-				});
+				ChatInbox.GetDataListChatPost(chat_inbox);
 				chat_inbox.animate({
 					"right": "0"
 				}, 500);
@@ -145,6 +134,21 @@ var ChatInbox = {
 				"right": "-400px"
 			}, 500);
 			ChatInbox.DeactiveReponsiveChatInbox();
+		});
+	},
+
+	GetDataListChatPost: function(chat_inbox) {
+		var parent = $(chat_inbox).find('#chat_dicussion ul');
+		$.ajax({
+			url: baseUrl + "/netwrk/post/get-chat-inbox",
+			type: 'POST',
+			data: null,
+			processData: false,
+			contentType: false,
+			success: function(result) {
+				result = $.parseJSON(result);
+				ChatInbox.getTemplateChatInbox(parent,result);
+			}
 		});
 	}
 }
