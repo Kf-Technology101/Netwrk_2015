@@ -76,7 +76,7 @@ var Create_Topic={
         target.unbind();
         target.on('click',function(){
             target.bind();
-            window.location.href = baseUrl + "/netwrk/meet"; 
+            window.location.href = baseUrl + "/netwrk/meet";
             // Meet.reset_page();
             // Meet._init();
         });
@@ -93,7 +93,7 @@ var Create_Topic={
             $('#btn_meet').hide();
             set_position_btn(parent,parent.find('#btn_discover'),130,100);
             set_position_btn_resize(parent,parent.find('#btn_discover'),130,100);
-        } 
+        }
     },
 
     hideNetWrkBtn: function(){
@@ -184,7 +184,7 @@ var Create_Topic={
     },
     changeData: function(){
         var parent = $('#create_topic');
-        
+
         this.onChangeData(parent.find('.name_topic'),'topic');
         this.onChangeData(parent.find('.name_post'),'post');
         this.onChangeData(parent.find('.message'),'message');
@@ -210,7 +210,7 @@ var Create_Topic={
             }
             Create_Topic.onCheckStatus();
         });
-        
+
     },
 
     onCheckStatus: function(){
@@ -251,7 +251,7 @@ var Create_Topic={
                 Create_Topic.setDefaultBtn();
             }
         });
-        
+
     },
 
     reset_data: function(){
@@ -306,6 +306,7 @@ var Create_Topic={
                         }else{
                             Create_Topic.hideModalCreateTopic();
                             Topic.initialize(Create_Topic.params.city);
+                            ChatInbox.GetDataListChatPost();
                         }
                     },700);
                 });
