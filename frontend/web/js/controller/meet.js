@@ -69,6 +69,7 @@ var Meet ={
                 Meet._onClickMeetBack();
                 // $('#btn_meet').hide();
                 $('.modal-footer').show();
+                // parent.find('.modal-body').addClass('onmeeting');
             }
         }
     },
@@ -328,7 +329,7 @@ var Meet ={
         var user = $('.user_meet_'+num),
             self = this;
         if(user.length > 0){
-            user.show();
+            user.fadeIn('500');
             self.eventMeet();
             user.addClass('active');
         }else{
