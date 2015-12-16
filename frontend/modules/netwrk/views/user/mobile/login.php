@@ -37,6 +37,10 @@
     </div>
     <?php ActiveForm::end(); ?>
     <div class="sign-up">
-        <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup">Sign up</a> Now</p>
+        <?php if($url && $url != Url::base(true)){?>
+             <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup?url_callback=<?=$url?>">Sign up</a> Now</p>
+        <?php }else{ ?>
+            <p>Don't have an account! <a href="<?= Url::base(true); ?>/netwrk/user/signup">Sign up</a> Now</p>
+        <?php } ?>
     </div>
 </div>

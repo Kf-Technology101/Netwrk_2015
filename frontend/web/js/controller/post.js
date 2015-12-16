@@ -295,7 +295,7 @@ var Post ={
         		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city;
         	}else{
         		$('#list_post').modal('hide');
-        		Topic.init(Post.params.city);
+        		Topic.initialize(Post.params.city);
         	}
         })
 	},

@@ -135,6 +135,7 @@ class UserController extends BaseController
     public function actionLogin()
     {
         /** @var \amnah\yii2\user\models\forms\LoginForm $model */
+        $url_callback='';
         if(isset($_GET['url_callback'])){
            $url_callback =  $_GET['url_callback'];
         }
@@ -153,7 +154,8 @@ class UserController extends BaseController
         }
 
         return $this->render($this->getIsMobile() ? 'mobile/login' : $this->goHome(),[
-        	'model' => $model
+        	'model' => $model,
+            'url' => $url_callback
         ]);
     }
 
@@ -204,7 +206,10 @@ class UserController extends BaseController
 
     public function actionSignup()
     {
-
+        $url_callback='';
+        if(isset($_GET['url_callback'])){
+           $url_callback =  $_GET['url_callback'];
+        }
         $user = new User(["scenario" => "register"]);
         $profile = new Profile();
         if (!Yii::$app->user->isGuest) {
@@ -235,7 +240,11 @@ class UserController extends BaseController
                 $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
-                return $this->goHome();
+                if($url_callback != ''){
+                    Yii::$app->getResponse()->redirect($url_callback)->send();
+                }else{
+                    return $this->goHome();
+                }
             }
         }
 
@@ -243,6 +252,7 @@ class UserController extends BaseController
         return $this->render($this->getIsMobile() ? 'mobile/signup' : $this->goHome(), [
             'user'    => $user,
             'profile' => $profile,
+            'url'=> $url_callback
         ]);
     }
 

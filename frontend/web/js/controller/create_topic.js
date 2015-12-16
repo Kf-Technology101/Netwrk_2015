@@ -159,7 +159,7 @@ var Create_Topic={
                 Create_Topic.redirect();
             }else{
                 Create_Topic.hideModalCreateTopic();
-                Topic.init(city,params);
+                Topic.initialize(city,params);
             }
         });
     },
@@ -173,7 +173,7 @@ var Create_Topic={
                 Create_Topic.redirect();
             }else{
                 Create_Topic.hideModalCreateTopic();
-                Topic.init(city,params);
+                Topic.initialize(city,params);
             }
         });
     },
@@ -305,7 +305,7 @@ var Create_Topic={
                             Create_Topic.redirect(Create_Topic.params.city);
                         }else{
                             Create_Topic.hideModalCreateTopic();
-                            Topic.init(Create_Topic.params.city);
+                            Topic.initialize(Create_Topic.params.city);
                         }
                     },700);
                 });
