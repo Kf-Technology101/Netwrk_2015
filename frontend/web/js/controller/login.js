@@ -128,6 +128,7 @@ var Login={
 
 	OnShowModalLogin: function(){
         $(Login.modal).on('shown.bs.modal',function(e) {
+        	$(Login.modal).find('input')[1].focus();
         	$('.modal-backdrop.in').addClass('active');
         	$('.menu_top').addClass('deactive');
         	$('#btn_meet').addClass('deactive');

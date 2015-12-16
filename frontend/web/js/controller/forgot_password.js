@@ -131,6 +131,7 @@ var ForgotPass = {
 
     OnShowModalForgotPass: function(){
         $(ForgotPass.modal).on('shown.bs.modal',function(e) {
+            $(ForgotPass.modal).find('input')[1].focus();
             var target = $('.modal-backdrop.in');
             target.addClass('active');
             $('.menu_top').addClass('deactive');

@@ -176,6 +176,7 @@ var ResetPass = {
 
     OnShowModalResetPass: function(){
         $(ResetPass.modal).on('shown.bs.modal',function(e) {
+            $(ResetPass.modal).find('input')[1].focus();
             var target = $('.modal-backdrop.in');
             target.addClass('active');
             $('.menu_top').addClass('deactive');

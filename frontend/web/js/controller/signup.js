@@ -272,6 +272,7 @@ var Signup={
 
 	OnShowModalSignUp: function(){
         $(Signup.parent).on('shown.bs.modal',function(e) {
+        	$(Signup.parent).find('input')[1].focus();
         	$(e.currentTarget).unbind();
         	$('.modal-backdrop.in').addClass('active');
         	$('.menu_top').addClass('deactive');

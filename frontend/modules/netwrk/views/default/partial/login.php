@@ -24,7 +24,7 @@
                 ]); ?>
                     <div class="field-name username">
                         <p class="title"> Username </p>
-                        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username')); ?>
+                        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username','autofocus'=>true)); ?>
                     </div>
                     <div class="field-name password">
                         <p class="title"> Password </p>
