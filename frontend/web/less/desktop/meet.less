@@ -123,6 +123,9 @@
             }
         }
     }
+    // .onmeeting{
+    //     height: 524px;
+    // }
     .modal-body{
         -webkit-transition: width 0.4s; /* Safari */
                 transition: width 0.4s;
@@ -133,6 +136,7 @@
         padding: 0;
         background-color: #f3f3f3;
         border-radius: 0 0 4px 4px;
+        
         #meeting{
             // .user_list{
             //     // max-height: 505px;
@@ -147,13 +151,13 @@
                 .avatar-image{
                     width: auto;
                     height: auto;
-                    min-height: 270px;
+                    min-height: 188px;
                     max-width: 100%;
                     background: #fff;
                     img{
                         width: auto;
                         // height: auto;
-                        height: 270px;
+                        height: 188px;
                         max-width: 400px;
                         display: block;
                         margin: auto;
@@ -162,6 +166,7 @@
                 .box-infomation{
                     width: 100%;
                     height: auto;
+                    min-height: 336px;
                     padding: 15px 15px 15px 15px;
                     // margin-bottom: 46px;
                     overflow: hidden;
@@ -197,6 +202,14 @@
                                     position: relative;
                                     margin-left: 0px;
                                 }
+                            }
+                            &:after{
+                                content: " ";
+                                display: block;
+                                height: 0;
+                                clear: both;
+                                overflow: hidden;
+                                visibility: hidden;
                             }
                         }
                         .title{

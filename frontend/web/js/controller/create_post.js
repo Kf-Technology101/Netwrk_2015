@@ -321,8 +321,7 @@ var Create_Post={
                         }
                     },700);
                 });
-                var chat_inbox = $("#chat_inbox");
-                ChatInbox.GetDataListChatPost(chat_inbox);
+                ChatInbox.GetDataListChatPost();
             }
         });
     }
