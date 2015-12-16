@@ -30,6 +30,8 @@ var Topic = {
         lat: '',
         lng:'',
     },
+    modal: '#modal_topic',
+    modal_create: '#create_topic',
     tab_current: 'topic',
     init: function(){
         Topic._onclickBack();
