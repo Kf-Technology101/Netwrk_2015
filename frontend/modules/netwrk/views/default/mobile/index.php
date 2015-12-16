@@ -2,11 +2,9 @@
 </ul>
 
 <div class="map_content_mobile">
-  <?php if(!Yii::$app->user->isGuest){?>
   <div id="btn_my_location">
     <i class="fa fa-crosshairs"></i>
   </div>
-  <?php } ?>
   <div id="googleMap" style=""></div>
 </div>
 <script src="http://maps.googleapis.com/maps/api/js"></script>

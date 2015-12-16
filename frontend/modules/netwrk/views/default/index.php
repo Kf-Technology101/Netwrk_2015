@@ -4,11 +4,9 @@
 </ul>
 
 <div class="map_content">
-  <?php if(!Yii::$app->user->isGuest){?>
   <div id="btn_my_location" data-toggle="tooltip" title="Show My Local Netwrk">
     <i class="fa fa-crosshairs"></i>
   </div>
-  <?php } ?>
   <div class="sidebar">
     <div class="container">
       <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
