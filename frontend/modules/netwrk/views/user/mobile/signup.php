@@ -64,7 +64,11 @@
             <p>Sign Up</p>
         </div> -->
         <div class="sign-in">
+        <?php if($url && $url != Url::base(true)){?>
+             <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/login?url_callback=<?=$url?>">Log in</a> Now</p>
+        <?php }else{ ?>
             <p>Already have an account! <a href="<?= Url::base(true); ?>/netwrk/user/login">Log in</a> Now</p>
+        <?php } ?>
         </div>
     <?php ActiveForm::end(); ?>
 

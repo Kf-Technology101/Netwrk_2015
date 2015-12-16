@@ -126,7 +126,7 @@ var Map ={
 					if(!isMobile){
 						infowindow.close();
 					}
-					Topic.init(marker.city_id);
+					Topic.initialize(marker.city_id);
 				};
 			})(marker, i));
 
@@ -341,7 +341,7 @@ var Map ={
 			e.close();
 			Map.infowindow=[];
 		});
-		Topic.init(city);
+		Topic.initialize(city);
 	},
 
 	onhoverInfoWindow: function(city,marker){
@@ -391,9 +391,9 @@ var Map ={
             	Ajax.check_zipcode_exist(Map.params).then(function(data){
             		var json = $.parseJSON(data);
             		if (json.status == 0){
-            			Topic.init($.now(),Map.params);
+            			Topic.initialize($.now(),Map.params);
             		}else{
-            			Topic.init(json.city);
+            			Topic.initialize(json.city);
             		}
             	});
             }

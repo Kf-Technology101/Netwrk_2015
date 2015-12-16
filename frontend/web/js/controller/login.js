@@ -59,15 +59,21 @@ var Login={
 				isGuest = '';
 				UserLogin = json.data;
 				$(Login.parent).modal('hide');
-				if(Login.modal_callback){
-					setTimeout(function(){
-						Login.modal_callback.initialize();
-					}, 500)
-				}
+				Login.OnCallBackAfterLogin();
 			}else{
 				Login.OnShowLoginErrors();
 			}
 		});
+	},
+
+	OnCallBackAfterLogin: function(){
+		if(Login.modal_callback){
+			console.log('callback');
+			setTimeout(function(){
+				console.log('show modal callback');
+				Login.modal_callback.initialize();
+			}, 500)
+		}
 	},
 
 	OnShowLoginErrors: function(){

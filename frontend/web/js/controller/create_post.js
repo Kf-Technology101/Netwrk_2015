@@ -259,7 +259,7 @@ var Create_Post={
                 Create_Post.redirect();
             }else{
                 Create_Post.hideModalCreatePost();
-                Topic.init(city,params);
+                Topic.initialize(city,params);
             }
         });
     },

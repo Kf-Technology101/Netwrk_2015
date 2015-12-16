@@ -31,7 +31,7 @@ var Topic = {
         lng:'',
     },
     tab_current: 'topic',
-    initialize: function(){
+    init: function(){
         Topic._onclickBack();
         Topic.GetDataOnTab();
         Topic.load_topic();
@@ -44,7 +44,7 @@ var Topic = {
         Topic.eventClickMeetMobile();
     },
 
-    init: function(city,params){
+    initialize: function(city,params){
         if (isMobile) {
             Topic.show_page_topic(city,params);
         }else {
@@ -264,12 +264,12 @@ var Topic = {
         var self = this;
         var parent = $('#item_list_'+self.data.filter);
         var sidebar = $('.map_content .sidebar');
-        self.data.city = city;
 
         if(new_params){
             self.data.zipcode = new_params.zipcode;
-        }else{
-            self.data.zipcode = '';
+        }
+        if(city){
+            self.data.city = city;
         }
 
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};

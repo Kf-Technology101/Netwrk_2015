@@ -120,6 +120,7 @@ var Signup={
 						console.log(Signup.data_validate);
 						isGuest = '';
 						UserLogin = Signup.data_validate.data;
+						Login.OnCallBackAfterLogin();
 						$(Signup.modal).modal('hide');
 					}
 				});

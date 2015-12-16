@@ -166,7 +166,7 @@ function _addListenEventPage(){
 	var Page = eval(page);
 	switch(page){
 	case 'Topic':
-		Page.initialize();
+		Topic.init();
 		Create_Topic.initialize();
 		break;
 	case 'Meet':
