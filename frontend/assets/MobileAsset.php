@@ -34,6 +34,7 @@ class MobileAsset extends AssetBundle
       'css/jquery.mCustomScrollbar.css',
       'css/emojione/css/emojione.min.css',
       'css/mobile/forgot_pass.css',
+      'css/mobile/chat_inbox.css'
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -65,6 +66,7 @@ class MobileAsset extends AssetBundle
       'js/lib/emojione.js',
       'js/controller/forgot_password.js',
       'js/controller/reset_password.js',
+      'js/controller/chat_inbox.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
