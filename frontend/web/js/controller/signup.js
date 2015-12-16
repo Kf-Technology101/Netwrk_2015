@@ -33,6 +33,16 @@ var Signup={
 		Signup.validateZipcode();
 		Signup.OnAfterValidateForm();
 		Signup.OnBeforeSubmitForm();
+		Signup.OnEventEnterForm();
+	},
+
+	OnEventEnterForm: function(){
+		var btn = $(Signup.parent).find('.btn-control');
+		$(Signup.parent).find(Signup.form_id).keypress(function( event ) {
+			if ( event.which == 13 ) {
+				btn.trigger('click');
+			}
+		});
 	},
 
 	ShowErrorValidate: function(validate){

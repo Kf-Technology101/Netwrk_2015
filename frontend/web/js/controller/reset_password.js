@@ -22,7 +22,18 @@ var ResetPass = {
             ResetPass.CheckKeyValidate();
             ResetPass.OnSubmitReset();
         }
+        ResetPass.OnEventEnterForm();
     },
+
+    OnEventEnterForm: function(){
+        var btn = $(ResetPass.modal).find('.reset');
+        $(ResetPass.modal).find(ResetPass.form_id).keypress(function( event ) {
+            if ( event.which == 13 ) {
+                btn.trigger('click');
+            }
+        });
+    },
+
     OnValidateNewPasswordConfirm: function(){
         var target = $(ResetPass.modal).find('.field-user-newpasswordconfirm');
             newpass = $(ResetPass.modal).find('input#user-newpassword').val();
@@ -48,12 +59,13 @@ var ResetPass = {
             ResetPass.params.newPassword = $(ResetPass.modal).find('input#user-newpassword').val();
             ResetPass.params.newPasswordConfirm = $(ResetPass.modal).find('input#user-newpasswordconfirm').val();
             Ajax.reset_password(ResetPass.params).then(function(data){
-                console.log(data);
                 var json = $.parseJSON(data);
                 console.log(json.status);
                 if(json.status == 1){
                     $(ResetPass.modal).modal('hide');
                     Login.initialize();
+                }else{
+                    ResetPass.OnShowError();
                 }
             });
         });

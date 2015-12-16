@@ -19,6 +19,16 @@ var ForgotPass = {
             ForgotPass.onClickSubmit();
         }
         // ForgotPass.onChangeEmail();
+        ForgotPass.OnEventEnterForm();
+    },
+
+    OnEventEnterForm: function(){
+        var btn = $(ForgotPass.modal).find('.send-email');
+        $(ForgotPass.modal).find(ForgotPass.form_id).keypress(function( event ) {
+            if ( event.which == 13 ) {
+                btn.trigger('click');
+            }
+        });
     },
 
     onClickSubmit: function(){

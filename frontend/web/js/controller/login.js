@@ -24,7 +24,18 @@ var Login={
 		}
 		// Login.OnChangeBtnLogin();
 		Login.OnClickBtnLogin();
+		Login.OnEventEnterForm();
 	},
+
+	OnEventEnterForm: function(){
+		var btn = $(Login.parent).find('.btn-control');
+		$(Login.parent).find(Login.form_id).keypress(function( event ) {
+			if ( event.which == 13 ) {
+				btn.trigger('click');
+			}
+		});
+	},
+
 	OnForgotPassword: function(){
 		var btn = $(Login.parent).find('.forgot-password');
 		btn.unbind();

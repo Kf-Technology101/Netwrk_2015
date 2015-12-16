@@ -209,18 +209,30 @@ var Map ={
 
 	eventClickMyLocation: function(map){
 		var btn = $('#btn_my_location');
-
+		btn.unbind();
 		btn.on('click',function(){
-			var zoom_current = map.getZoom();
-			if (zoom_current == 7) {
-				Map.smoothZoom(map, 13, zoom_current, true);
-				Map.zoomIn = true;
-			}
+			if(isGuest){
+			    navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+	      			map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
+	      			map.setZoom(12);
+			    });
+			    // map.zoom = 12;
+			}else{
+				var zoom_current = map.getZoom();
+				if (zoom_current == 7) {
+					Map.smoothZoom(map, 13, zoom_current, true);
+					Map.zoomIn = true;
+				}
 
-			Ajax.get_position_user().then(function(data){
-				var json = $.parseJSON(data);
-				map.setCenter(new google.maps.LatLng(json.lat, json.lng));
-			});
+				Ajax.get_position_user().then(function(data){
+					var json = $.parseJSON(data);
+					map.setCenter(new google.maps.LatLng(json.lat, json.lng));
+				});
+			}
 		});
 	},
 
