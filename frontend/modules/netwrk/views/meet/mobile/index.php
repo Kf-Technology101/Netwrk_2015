@@ -143,7 +143,7 @@
               <p class="title">Posts</p>
               <p class="text">
                 <% _.each(user.post,function(p){ %>
-                  <span><%= p %></span>
+                  <span><%= p.title %></span>
                 <% }); %>
               </p>
             </div>
