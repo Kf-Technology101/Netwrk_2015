@@ -245,7 +245,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $message->post->updated_at
+                    'real_update_at' => $message->post->updated_at ? $message->post->updated_at : $message->post->created_at
                     ];
                 array_push($data, $item);
             }
