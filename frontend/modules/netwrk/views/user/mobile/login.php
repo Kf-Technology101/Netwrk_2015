@@ -24,7 +24,7 @@
     <div class="field-name">
         <p class="title"> Username </p>
         <!-- <input type="text" class="username form-control" maxlength="128" placeholder="Username"> -->
-        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username')); ?>
+        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username','autofocus'=>true)); ?>
     </div>
     <div class="field-name password">
         <p class="title"> Password </p>

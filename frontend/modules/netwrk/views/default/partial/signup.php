@@ -33,7 +33,7 @@
                     // }
                 ?>
                     <div class="col-field-name field">
-                        <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First Name')); ?>
+                        <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First Name','autofocus'=>true)); ?>
                     </div>
                     <div class="col-field-name field">
                         <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last Name')); ?>

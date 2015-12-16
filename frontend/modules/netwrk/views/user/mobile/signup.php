@@ -23,7 +23,7 @@
     ]);
     ?>
         <div class="col-field-name">
-            <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First name')); ?>
+            <?= $form->field($profile, 'first_name')->textInput(array('placeholder' => 'First name','autofocus'=>true)); ?>
         </div>
         <div class="col-field-name">
             <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last name')); ?>

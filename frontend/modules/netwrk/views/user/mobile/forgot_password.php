@@ -25,7 +25,7 @@
                         'labelOptions' => ['class' => 'col-lg-2 control-label'],
                     ],
                 ]); ?>
-                <?= $form->field($model, 'email')->textInput(array('placeholder' => 'Email address','class'=>'form-control email')) ?>
+                <?= $form->field($model, 'email')->textInput(array('placeholder' => 'Email address','class'=>'form-control email','autofocus'=>true)) ?>
                 <?= Html::submitButton('Send Email', ['class' => 'send-email']) ?>
             <?php ActiveForm::end(); ?>
         <?php endif; ?>

@@ -31,7 +31,7 @@
                     $form = ActiveForm::begin(['id' => 'reset-form']); 
                 ?>
                     <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New Password')) ?>
-                    <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
+                    <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password','autofocus'=>true)) ?>
                     <div class="reset">Reset</div>
                 <?php ActiveForm::end(); ?>
             </div>
