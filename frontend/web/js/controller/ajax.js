@@ -207,6 +207,24 @@ var Ajax ={
         return defer.promise();
     },
 
+    place_check_zipcode_exist: function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/default/check-exist-place-zipcode";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     get_marker_default: function(){
         var url,defer = $.Deferred();
 
@@ -485,6 +503,26 @@ var Ajax ={
         });
 
         return defer.promise();
-    }
+    },
+
+    new_place: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/place-save";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 }
 

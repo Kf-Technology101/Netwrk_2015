@@ -46,6 +46,22 @@ class DefaultController extends BaseController
     	return $hash;
     }
 
+    public function actionCheckExistPlaceZipcode()
+    {
+        $zipcode = $_POST['zipcode'];
+        $place_name = $_POST['place_name'];
+        $city = City::find()->where(['zip_code'=>$zipcode, 'office'=>$place_name])->one();
+
+        if($city){
+            $data = ['status'=> 1,'city'=>$city->id];
+        }else{
+            $cty = City::find()->where(['zip_code'=>$zipcode])->one();
+            $data = ['status'=> 0, 'city_name'=>$cty->name];
+        }
+        $hash = json_encode($data);
+        return $hash;
+    }
+
     public function actionGetMakerDefaultZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
@@ -53,29 +69,47 @@ class DefaultController extends BaseController
 
     	$data = [];
 
-
     	foreach ($cities as $key => $value) {
-    		$post = $value->topics[0]->posts[0];
-	    	$content = $post->content;
+            if(isset($value->topics[0])) {
+        		$post = $value->topics[0]->posts[0];
+    	    	$content = $post->content;
 
-	    	if(strlen($content) > $maxlength ){
-	    		$content = substr($post->content,0,$maxlength) ;
-	    		$content = $content."...";
-	    	}
+    	    	if(strlen($content) > $maxlength ){
+    	    		$content = substr($post->content,0,$maxlength) ;
+    	    		$content = $content."...";
+    	    	}
 
-    		$netwrk = array(
-    			'id'=> $value->id,
-    			'name'=> $value->name,
-    			'lat'=> $value->lat,
-    			'lng'=>$value->lng,
-    			'zip_code'=> $value->zip_code,
-    			'post'=> array(
-		    		'name_post'=> $post->title,
-    				'content' => $content,
-    			)
-    		);
+        		$netwrk = array(
+        			'id'=> $value->id,
+        			'name'=> $value->name,
+        			'lat'=> $value->lat,
+        			'lng'=>$value->lng,
+        			'zip_code'=> $value->zip_code,
+                    'office'=>$value->office,
+                    'office_type'=>$value->office_type,
+        			'post'=> array(
+    		    		'name_post'=> $post->title,
+        				'content' => $content,
+        			)
+        		);
+        		array_push($data,$netwrk);
+            } else {
+                $netwrk = array(
+                    'id'=> $value->id,
+                    'name'=> $value->name,
+                    'lat'=> $value->lat,
+                    'lng'=>$value->lng,
+                    'zip_code'=> $value->zip_code,
+                    'office'=>$value->office,
+                    'office_type'=>$value->office_type,
+                    'post'=> array(
+                        'name_post'=> '',
+                        'content' => '',
+                    )
+                );
 
-    		array_push($data,$netwrk);
+                array_push($data,$netwrk);
+            }
     	}
 
     	$hash = json_encode($data);
@@ -90,29 +124,68 @@ class DefaultController extends BaseController
     	$data = [];
 
     	foreach ($cities as $key => $value) {
-    		$post = $value->topics[0]->posts[0];
-	    	$content = $post->content;
+            if(isset($value->topics[0])) {
+        		$post = $value->topics[0]->posts[0];
+    	    	$content = $post->content;
 
-	    	if(strlen($content) > $maxlength ){
-	    		$content = substr($post->content,0,$maxlength ) ;
-	    		$content = $content."...";
-	    	}
+    	    	if(strlen($content) > $maxlength ){
+    	    		$content = substr($post->content,0,$maxlength ) ;
+    	    		$content = $content."...";
+    	    	}
 
-    		$netwrk = array(
-    			'id'=> $value->id,
-    			'name'=> $value->name,
-    			'lat'=> $value->lat,
-    			'lng'=>$value->lng,
-    			'zip_code'=> $value->zip_code,
-    			'post'=> array(
-		    		'name_post'=> $post->title,
-    				'content' => $content,
-				)
-    		);
-    		array_push($data,$netwrk);
+        		$netwrk = array(
+        			'id'=> $value->id,
+        			'name'=> $value->name,
+        			'lat'=> $value->lat,
+        			'lng'=>$value->lng,
+        			'zip_code'=> $value->zip_code,
+                    'office'=>$value->office,
+                    'office_type'=>$value->office_type,
+        			'post'=> array(
+    		    		'name_post'=> $post->title,
+        				'content' => $content,
+    				)
+        		);
+        		array_push($data,$netwrk);
+            } else {
+                $netwrk = array(
+                    'id'=> $value->id,
+                    'name'=> $value->name,
+                    'lat'=> $value->lat,
+                    'lng'=>$value->lng,
+                    'zip_code'=> $value->zip_code,
+                    'office'=>$value->office,
+                    'office_type'=>$value->office_type,
+                    'post'=> array(
+                        'name_post'=> '',
+                        'content' => '',
+                    )
+                );
+
+                array_push($data,$netwrk);
+            }
     	}
 
     	$hash = json_encode($data);
     	return $hash;
+    }
+
+    public function actionPlaceSave(){
+        $zipcode = $_POST['zip_code'];
+        $city_name = $_POST['netwrk_name'];
+        $lat = $_POST['lat'];
+        $lng = $_POST['lng'];
+        $office = $_POST['office'];
+        $office_type = $_POST['office_type'];
+
+        $netwrk = new City;
+        $netwrk->name = $city_name;
+        $netwrk->lat = $lat;
+        $netwrk->lng = $lng;
+        $netwrk->zip_code = $zipcode;
+        $netwrk->office = $office;
+        $netwrk->office_type = $office_type;
+        $netwrk->save();
+        return json_encode($netwrk->id);
     }
 }

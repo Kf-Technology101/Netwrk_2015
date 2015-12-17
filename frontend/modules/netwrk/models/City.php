@@ -35,6 +35,7 @@ class City extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['lat', 'lng', 'post_count', 'user_count'], 'number'],
             [['name'], 'string', 'max' => 45],
+            [['office', 'office_type'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,6 +49,8 @@ class City extends \yii\db\ActiveRecord
             'name' => 'Name',
             'lat' => 'Lat',
             'lng' => 'Lng',
+            'office' => 'Office',
+            'office_type' => 'Office Type',
         ];
     }
 
