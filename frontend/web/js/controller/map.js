@@ -36,7 +36,7 @@ var Map ={
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false,  styles: remove_poi}); // scrollwheel: false,
+		map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 		Map.mapBoundaries(map);
 
@@ -242,42 +242,42 @@ var Map ={
 			Map.markers.push(marker);
 		});
 
-		if(map.getZoom() == 12) {
-			map.addListener('idle', function(){
-				// radarSearch --------------------------------------------
-				var service = new google.maps.places.PlacesService(map); 
-				  service.radarSearch({
-				  	bounds: map.getBounds(),
-	    			keyword: 'university in indiana state',
-	    			types: ['university']
-				}, function(results, status){
-					if (status === google.maps.places.PlacesServiceStatus.OK) {
-						console.log('university');
-						infowindow = new google.maps.InfoWindow();
-					    for (var i = 0; i < results.length; i++) {
-					      	setTimeout(Map.getZipcodeAddress(service, results[i], map, 'uni', results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), 50);
-					    }
-					}
-				});
+		// if(map.getZoom() == 12) {
+		// 	map.addListener('idle', function(){
+		// 		// radarSearch --------------------------------------------
+		// 		var service = new google.maps.places.PlacesService(map); 
+		// 		  service.radarSearch({
+		// 		  	bounds: map.getBounds(),
+	 //    			keyword: 'university in indiana state',
+	 //    			types: ['university']
+		// 		}, function(results, status){
+		// 			if (status === google.maps.places.PlacesServiceStatus.OK) {
+		// 				console.log('university');
+		// 				infowindow = new google.maps.InfoWindow();
+		// 			    for (var i = 0; i < results.length; i++) {
+		// 			      	setTimeout(Map.getZipcodeAddress(service, results[i], map, 'uni', results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), 50);
+		// 			    }
+		// 			}
+		// 		});
 
-				  var service2 = new google.maps.places.PlacesService(map);
-				  service2.radarSearch({
-				  	bounds: map.getBounds(),
-	    			keyword: 'government in indiana state',
-	    			types: ['local_government_office']
-				}, function(results, status){
-					if (status === google.maps.places.PlacesServiceStatus.OK) {
-						console.log('government');
-						infowindow = new google.maps.InfoWindow();
-					    for (var i = 0; i < results.length; i++) {
-							setTimeout(Map.getZipcodeAddress(service2, results[i], map, 'gov', results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), 50);
-					    }
-					}
-				});
-			});
-	 	} else {
-	 		google.maps.event.clearListeners(map, 'idle');
-	 	}
+		// 		  var service2 = new google.maps.places.PlacesService(map);
+		// 		  service2.radarSearch({
+		// 		  	bounds: map.getBounds(),
+	 //    			keyword: 'government in indiana state',
+	 //    			types: ['local_government_office']
+		// 		}, function(results, status){
+		// 			if (status === google.maps.places.PlacesServiceStatus.OK) {
+		// 				console.log('government');
+		// 				infowindow = new google.maps.InfoWindow();
+		// 			    for (var i = 0; i < results.length; i++) {
+		// 					setTimeout(Map.getZipcodeAddress(service2, results[i], map, 'gov', results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), 50);
+		// 			    }
+		// 			}
+		// 		});
+		// 	});
+		// } else {
+		// 	google.maps.event.clearListeners(map, 'idle');
+		// }
 	},
 
 	callback: function(results, status, map) {
