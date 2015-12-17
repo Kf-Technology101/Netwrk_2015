@@ -35,18 +35,18 @@ var Map ={
 		];
 
 		var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
-		var map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-		map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
+		Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
+		Map.map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
 		// map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
-		Map.mapBoundaries(map);
+		Map.mapBoundaries(Map.map);
 
-		Map.data_map = map;
-		Map.min_max_zoom(map);
+		Map.data_map = Map.map;
+		Map.min_max_zoom(Map.map);
 		// Map.eventOnclick(map);
-		
-		Map.eventZoom(map);
-		Map.eventClickMyLocation(map);
-		Map.show_marker(map);
+
+		Map.eventZoom(Map.map);
+		Map.eventClickMyLocation(Map.map);
+		Map.show_marker(Map.map);
 		Map.showHeaderFooter();
 	},
 
@@ -245,7 +245,7 @@ var Map ={
 		// if(map.getZoom() == 12) {
 		// 	map.addListener('idle', function(){
 		// 		// radarSearch --------------------------------------------
-		// 		var service = new google.maps.places.PlacesService(map); 
+		// 		var service = new google.maps.places.PlacesService(map);
 		// 		  service.radarSearch({
 		// 		  	bounds: map.getBounds(),
 	 //    			keyword: 'university in indiana state',
@@ -293,7 +293,7 @@ var Map ={
 		Ajax.place_check_zipcode_exist(params).then(function(data){
     		var json = $.parseJSON(data);
     		if (json.status == 0){
-    			Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service);    			
+    			Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service);
     		}else{
     			console.log('existing......');
     		}
@@ -352,7 +352,7 @@ var Map ={
                 '</div>' +
                 '<div class="iw-bottom-gradient"></div>' +
               '</div>';
-	    infowindow.content = content; 
+	    infowindow.content = content;
         Map.infowindow.push(infowindow);
 
 		google.maps.event.addListener(marker, 'mouseover', function() {
@@ -363,7 +363,7 @@ var Map ={
 		google.maps.event.addListener(marker, 'mouseout', function() {
 			// infowindow.close();
 		});
-		
+
 	  	google.maps.event.addListener(infowindow, 'domready', function() {
 			var iwOuter = $('.gm-style-iw');
 
@@ -439,7 +439,7 @@ var Map ={
                 '</div>' +
                 '<div class="iw-bottom-gradient"></div>' +
               '</div>';
-	    infowindow.content = content; 
+	    infowindow.content = content;
         Map.infowindow.push(infowindow);
 
 		google.maps.event.addListener(marker, 'mouseover', function() {
@@ -450,7 +450,7 @@ var Map ={
 		google.maps.event.addListener(marker, 'mouseout', function() {
 			// infowindow.close();
 		});
-		
+
 	  	google.maps.event.addListener(infowindow, 'domready', function() {
 			var iwOuter = $('.gm-style-iw');
 

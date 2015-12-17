@@ -21,6 +21,7 @@ var Create_Post={
             // Create_Post.showNetWrkBtn();
             Create_Post.eventClickdiscoverMobile();
             Create_Post.postTitleFocus();
+            Create_Post.OnClickChatInboxBtnMobile();
         }else{
             if(isGuest){
                 Login.modal_callback = Post;
@@ -324,6 +325,10 @@ var Create_Post={
                 ChatInbox.GetDataListChatPost();
             }
         });
+    },
+
+    OnClickChatInboxBtnMobile: function() {
+        ChatInbox.OnClickChatInboxBtnMobile();
     }
 
 };

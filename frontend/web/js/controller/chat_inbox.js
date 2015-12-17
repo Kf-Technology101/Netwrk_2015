@@ -2,13 +2,18 @@ var ChatInbox = {
 	parent: '',
 	modal:'#chat_inbox',
 	chat_inbox: '#chat_inbox',
+	chat_inbox_mobile: '#chat_inbox_btn_mobile',
 	initialize: function(){
 		if(isMobile){
+			ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
+			ChatInbox.OnClickChatPostDetail();
+			ChatInbox.OnClickMeetIconMobile();
 		} else {
 			ChatInbox.OnShowListChatPost();
-			ChatInbox.OnClickHideCloseChatInboxBtn();
 			ChatInbox.GetDataListChatPost();
 		}
+		ChatInbox.OnClickHideCloseChatInboxBtn();
+
 	},
 	OnShowListChatPost: function(){
 
@@ -93,25 +98,25 @@ var ChatInbox = {
 				}
 
 			}
-		});
-},
-
-ActiveReponsiveChatInbox: function() {
-	var width = $( window ).width();
-	if (width <= 1366) {
-		$(".modal").addClass("responsive-chat-inbox");
-	}
-
-		//set zoom for re-init
-		Map.zoom = Map.map.getZoom();
-		Map.center = Map.map.getCenter();
-		var width_map = width -320;
-		$('.map_content').animate({
-			'width':width_map+'px',
-			'left': 0, 'margin': 0
-		}, 500, 'swing', function(){ Map.initialize(); });
-		$('#btn_meet').css({'left': '', 'right' : '15px'});
+			});
 	},
+
+	ActiveReponsiveChatInbox: function() {
+		var width = $( window ).width();
+		if (width <= 1366) {
+			$(".modal").addClass("responsive-chat-inbox");
+		}
+
+			//set zoom for re-init
+			Map.zoom = Map.map.getZoom();
+			Map.center = Map.map.getCenter();
+			var width_map = width -320;
+			$('.map_content').animate({
+				'width':width_map+'px',
+				'left': 0, 'margin': 0
+			}, 500, 'swing', function(){ Map.initialize(); });
+			$('#btn_meet').css({'left': '', 'right' : '15px'});
+		},
 
 	DeactiveReponsiveChatInbox: function() {
 		var width = $( window ).width();
@@ -132,14 +137,22 @@ ActiveReponsiveChatInbox: function() {
 	},
 
 	OnClickHideCloseChatInboxBtn: function() {
-		var chat_inbox = $("#chat_inbox");
-		var parent = $(chat_inbox).find('#chat_dicussion ul');
-		$("#hide_chat_inbox_btn").on("click", function() {
-			chat_inbox.animate({
-				"right": "-400px"
-			}, 500);
-			ChatInbox.DeactiveReponsiveChatInbox();
-		});
+		var hide_chat_inbox_btn = "#hide_chat_inbox_btn";
+		$(hide_chat_inbox_btn).unbind();
+		if (isMobile) {
+			$(hide_chat_inbox_btn).on("click", function() {
+				window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? baseUrl : document.referrer;
+			});
+		} else {
+			var chat_inbox = $("#chat_inbox");
+			var parent = $(chat_inbox).find('#chat_dicussion ul');
+			$(hide_chat_inbox_btn).on("click", function() {
+				chat_inbox.animate({
+					"right": "-400px"
+				}, 500);
+				ChatInbox.DeactiveReponsiveChatInbox();
+			});
+		}
 	},
 
 	GetDataListChatPost: function() {
@@ -155,5 +168,40 @@ ActiveReponsiveChatInbox: function() {
 				ChatInbox.getTemplateChatInbox(parent,result);
 			}
 		});
+	},
+
+	OnClickChatInboxMobile: function() {
+		window.location.href  = baseUrl+ "/netwrk/chat-inbox";
+	},
+
+	getTemplateChatInboxMobile: function(parent) {
+		if (isMobile) {
+			Ajax.list_chat_post().then(function(data){
+				data = $.parseJSON(data);
+				var list_template = _.template($("#chat_inbox_list" ).html());
+				var append_html = list_template({chat_inbox_list: data});
+				parent = $(parent).find('#chat_dicussion ul');
+				parent.find('li').remove();
+				parent.append(append_html);
+				ChatInbox.CustomScrollBar();
+			});
+		};
+	},
+
+	OnClickMeetIconMobile: function() {
+		var btn = $('#btn_meet_mobile');
+		btn.unbind();
+		btn.on('click',function(){
+			window.location.href = baseUrl + "/netwrk/meet";
+		});
+	},
+
+	OnClickChatInboxBtnMobile: function() {
+		var target = $('#chat_inbox_btn_mobile');
+        target.unbind();
+        target.on('click',function(){
+            ChatInbox.OnClickChatInboxMobile();
+        });
 	}
+
 }

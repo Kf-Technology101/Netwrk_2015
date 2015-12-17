@@ -3,6 +3,8 @@ var Default ={
         var self = this;
         if(isMobile){
             self._eventClickMeetBtnMobile();
+            self._eventClickChatInboxBtnMobile();
+
         }else{
             $('#btn_meet').show();
             self._eventClickMeetBtn();
@@ -41,8 +43,11 @@ var Default ={
 
         target.on('click',function(){
             Meet.showUserMeetMobile();
-            console.log('sgshgdhsgdsd');
         });
+    },
+
+    _eventClickChatInboxBtnMobile: function() {
+        ChatInbox.OnClickChatInboxBtnMobile();
     },
 
     getTemplate: function(parent,data){

@@ -524,5 +524,22 @@ var Ajax ={
 
         return defer.promise();
     },
+
+    list_chat_post: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/post/get-chat-inbox";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 }
 

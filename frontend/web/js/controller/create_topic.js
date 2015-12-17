@@ -29,6 +29,7 @@ var Create_Topic={
             // Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickMeetMobile();
             Create_Topic.postTitleFocus();
+            Create_Topic.OnClickChatInboxBtnMobile();
         }else{
             if(isGuest){
                 Login.modal_callback = Topic;
@@ -312,5 +313,9 @@ var Create_Topic={
                 });
             }
         });
+    },
+
+    OnClickChatInboxBtnMobile: function() {
+        ChatInbox.OnClickChatInboxBtnMobile();
     }
 };

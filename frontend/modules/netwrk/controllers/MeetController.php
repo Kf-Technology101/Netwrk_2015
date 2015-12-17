@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace frontend\modules\netwrk\controllers;
 use frontend\components\BaseController;
@@ -71,7 +71,7 @@ class MeetController extends BaseController
             $year_old = $time1->diff($time2)->y;
 
             $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
-            
+
             $count_like = 0;
             $count_posts = Post::find()->where('user_id ='.$value->id)->all();
             foreach ($count_posts as $key => $post) {
@@ -128,7 +128,7 @@ class MeetController extends BaseController
             if($filter && $gender && $age && $status_distance ){
                 array_push($data,$user);
             }elseif (!$filter){
-                array_push($data,$user); 
+                array_push($data,$user);
             }
         }
 

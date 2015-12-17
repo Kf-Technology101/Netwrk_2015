@@ -26,6 +26,7 @@ var ChatPost = {
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
 			ChatPost.OnClickMeetMobile();
+			ChatPost.OnClickChatInboxBtnMobile();
 		}else{
 			ChatPost.ShowChatBox();
 			ChatPost.OnShowModalChatPost();
@@ -395,5 +396,9 @@ var ChatPost = {
 			window.location.href = baseUrl + '/netwrk/meet';
 		});
 	},
+
+	OnClickChatInboxBtnMobile: function() {
+		ChatInbox.OnClickChatInboxBtnMobile();
+	}
 
 }

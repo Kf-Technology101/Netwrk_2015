@@ -497,8 +497,6 @@ var Topic = {
         target.on('click',function(){
             target.bind();
             window.location.href = baseUrl + "/netwrk/meet";
-            // Meet.reset_page();
-            // Meet._init();
         });
     },
 };
