@@ -13,12 +13,12 @@ class ChatInboxController extends BaseController
 
 	public function actionIndex()
 	{
-		$data = json_decode(PostController::actionGetChatInbox());
 		if($this->getIsMobile()) {
 
 			if (Yii::$app->user->isGuest) {
 				return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/chat-inbox/']);
 			}
+			$data = json_decode(PostController::actionGetChatInbox());
 			return $this->render('mobile/index', ['data' => $data]);
 		}
 	}
