@@ -338,12 +338,12 @@ var Map ={
     var placeLoc = place.geometry.location;
     var img = './img/icon/map_icon_university_v_2.png';
     var marker = new google.maps.Marker({
-      map: map,
-      position: place.geometry.location,
-      icon: img,
-      city_id: cid,
-      place_name: name_of_place,
-    });
+	      map: map,
+	      position: place.geometry.location,
+	      icon: img,
+	      city_id: cid,
+	      place_name: name_of_place,
+    	});
 
       var infowindow = new google.maps.InfoWindow({
         content: '',
@@ -537,7 +537,7 @@ var Map ={
           Map.zoomIn = true;
         }
         if(map.getZoom() < 12) {
-          map.setZoom(12);
+          map.zoom = 12;
           Map.show_marker(map);
         }
         
@@ -559,8 +559,8 @@ var Map ={
           // Map.incre = 1;
           // if(map.getZoom() == 12) {
             Map.deleteNetwrk(map);
-          map.zoom = 12;
-          Map.show_marker(map);
+	        map.zoom = 12;
+	        Map.show_marker(map);
         // }
       } else {
         Map.smoothZoom(map, 7, map.getZoom(), false);
