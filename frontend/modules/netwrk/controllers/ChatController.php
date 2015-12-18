@@ -39,7 +39,7 @@ class ChatController extends BaseController
 		$postId = $_GET['post'];
 
 		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
-		$post->update();
+		// $post->update();
 		$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
 		$status = file_get_contents($statusFile);
 		if($status == 0){

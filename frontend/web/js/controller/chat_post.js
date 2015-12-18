@@ -316,7 +316,7 @@ var ChatPost = {
 		var size = get_size_window();
 		var h_navSearch = $('.navbar-mobile').height();
 		var h_header = $(ChatPost.page).find('.header').height();
-		var btn_meet = $('#btn_meet_mobile').height();
+		var btn_meet = $('#btn_meet_mobile').height()-40;
 		var nav_message = $(ChatPost.page).find('.nav_input_message').height();
 		var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message;
 
