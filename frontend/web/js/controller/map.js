@@ -173,7 +173,7 @@ var Map ={
 				var content = '<div id="iw-container" >' +
 			                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ e.id +'" onclick="Map.eventOnClickZipcode('+e.id +')"><span class="zipcode">'+ e.zip_code + '</span></a></div>' +
 			                '<div class="iw-content">' +
-			                  '<div class="iw-subTitle">#'+e.post.name_post+'</div>' +
+			                  '<div class="iw-subTitle" data-item=' + e.post.post_id +'>#'+e.post.name_post+'</div>' +
 			                  '<p>'+e.post.content+'</p>'+
 			                '</div>' +
 			                '<div class="iw-bottom-gradient"></div>' +
@@ -236,8 +236,18 @@ var Map ={
 				    iwCloseBtn.mouseout(function(){
 				      $(this).css({opacity: '0'});
 				    });
+
+				    var post = $("#iw-container .iw-content .iw-subTitle");
+					post.click(function(e){
+						var post_id = $(e.currentTarget).attr('data-item');
+						if(post_id != -1) {
+							ChatPost.params.post = post_id;
+							ChatPost.initialize();
+						}
+					});
 		  		});
 			}
+			
 
 			Map.markers.push(marker);
 		});

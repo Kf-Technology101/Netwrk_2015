@@ -78,7 +78,6 @@ class DefaultController extends BaseController
     	    		$content = substr($post->content,0,$maxlength) ;
     	    		$content = $content."...";
     	    	}
-
         		$netwrk = array(
         			'id'=> $value->id,
         			'name'=> $value->name,
@@ -88,6 +87,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
         			'post'=> array(
+                        'post_id'=>$post->id,
     		    		'name_post'=> $post->title,
         				'content' => $content,
         			)
@@ -103,6 +103,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'post'=> array(
+                        'post_id'=>-1,
                         'name_post'=> '',
                         'content' => '',
                     )
@@ -142,6 +143,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
         			'post'=> array(
+                        'post_id'=>$post->id,
     		    		'name_post'=> $post->title,
         				'content' => $content,
     				)
@@ -157,6 +159,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'post'=> array(
+                        'post_id'=>-1,
                         'name_post'=> '',
                         'content' => '',
                     )
