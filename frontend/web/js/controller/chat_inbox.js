@@ -8,6 +8,7 @@ var ChatInbox = {
 			ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
 			ChatInbox.OnClickChatPostDetail();
 			ChatInbox.OnClickMeetIconMobile();
+			ChatInbox.HideMeetIconMobile();
 		} else {
 			ChatInbox.OnShowListChatPost();
 			ChatInbox.GetDataListChatPost();
@@ -32,6 +33,7 @@ var ChatInbox = {
 	},
 	CustomScrollBar: function(){
 		var parent = $(ChatInbox.modal).find('#chat_dicussion #container_ul_chat_list');
+		parent.css('height', $(window).height()-100);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
@@ -202,6 +204,10 @@ var ChatInbox = {
         target.on('click',function(){
             ChatInbox.OnClickChatInboxMobile();
         });
+	},
+
+	HideMeetIconMobile: function() {
+		$('#btn_meet_mobile').hide();
 	}
 
 }
