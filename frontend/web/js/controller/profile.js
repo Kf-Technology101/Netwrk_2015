@@ -31,8 +31,7 @@ var Profile = {
         Profile.eventClickSave();
         // $('.footer-btn').hide();
         $('#modal_meet .modal-footer').hide();
-        var footer_height = $('#modal_meet .modal-body').height();
-        $('#modal_meet .modal-body').css('max-height', footer_height+47);
+        $('#modal_meet .modal-body').css('height', Meet.height+47);
     },
 
     eventClickSave: function(){

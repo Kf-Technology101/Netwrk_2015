@@ -17,6 +17,7 @@ var Meet ={
 
     },
     modal: '#modal_meet',
+    height: 0,
     initialize: function() {
         console.log(Meet.filter.active);
         if(Meet.filter.active === 'setting'){
@@ -206,7 +207,9 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal($('#modal_meet'), 30);
+                set_heigth_modal_meet($('#modal_meet'), 30);
+                var meet_height = $('#modal_meet .modal-body').height();
+                Meet.height = meet_height;
             }
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();

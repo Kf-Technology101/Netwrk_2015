@@ -72,10 +72,16 @@ function set_container_chat_modal(target,height_footer){
 function set_heigth_modal(target,height_footer){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
-  if(wh - 120 > 570){
-    wh = 644;
-  }
   target.find('.modal-body').css({'max-height':wh - 120});
+}
+
+function set_heigth_modal_meet(target,height_footer){
+  var size = get_size_window();
+  var wh = size[1] - height_footer - 100;
+  // if(wh - 120 > 570){
+  //   wh = 644;
+  // }
+  target.find('.modal-body').css({'height':wh - 120});
 }
 
 function set_heigth_page_mobile(target){
