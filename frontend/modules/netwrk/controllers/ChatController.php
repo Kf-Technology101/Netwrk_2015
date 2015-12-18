@@ -25,7 +25,7 @@ class ChatController extends BaseController
 		$postId = $_POST['post'];
 
 		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
-		$post->update();
+		// $post->update();
 		$info = array(
 			'post_name'=> $post->title,
 			'topic_name'=> $post->topic->title,

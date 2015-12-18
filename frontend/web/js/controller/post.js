@@ -413,6 +413,6 @@ var Post ={
     },
 
 	RedirectPostPage: function(topic){
-		window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer :baseUrl + "/netwrk/post?topic="+topic;
+		window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
 	}
 };
