@@ -130,17 +130,28 @@ var ChatPost = {
 
 	OnWsChatPost: function(){
 		var btn = $(ChatPost.parent).find('.send');
+		var formWsChat = $(ChatPost.parent).find('#msgForm');
 
-		btn.unbind();
-		btn.on("click", function(e){
-			var parent = $(e.currentTarget).parent();
-			var val	 = parent.find("textarea").val();
-			if(val != ""){
-				ChatPost.ws.send("send", {"type": 1, "msg": val,"room": ChatPost.params.post,"user_id": UserLogin});
-				parent.find("textarea").val('');
-				parent.find("textarea").focus();
+		formWsChat.on("keydown", function(e){
+			if (event.keyCode == 13 && !event.shiftKey) {
+				e.preventDefault();
+				ChatPost.OnWsSendDataPost(e.currentTarget);
 			}
 		});
+		btn.unbind();
+		btn.on("click", function(e){
+			ChatPost.OnWsSendDataPost(e.currentTarget);
+		});
+	},
+
+	OnWsSendDataPost: function(e) {
+		var parent = $(e).parent();
+		var val	 = parent.find("textarea").val();
+		if(val != ""){
+			ChatPost.ws.send("send", {"type": 1, "msg": val,"room": ChatPost.params.post,"user_id": UserLogin});
+			parent.find("textarea").val("");
+			parent.find("textarea").focus();
+		}
 	},
 
 	ScrollTopChat: function(){
@@ -254,7 +265,6 @@ var ChatPost = {
 					console.log('fetch');
 					ChatPost.msg_lenght = e.data.length;
 					$.each(e.data, function(i, elem){
-						console.log(elem);
 						ChatPost.getMessageTemplate(elem);
 						ChatPost.ScrollTopChat();
 					});
@@ -270,7 +280,6 @@ var ChatPost = {
 					console.log('single');
 					var update_list_chat;
 					$.each(e.data, function(i, elem){
-						console.log(elem);
 						if(ChatPost.params.post == elem.post_id){
 							ChatPost.message_type = elem.msg_type;
 							ChatPost.getMessageTemplate(elem);

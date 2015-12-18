@@ -11,7 +11,6 @@ var ChatInbox = {
 			ChatInbox.HideMeetIconMobile();
 		} else {
 			ChatInbox.OnShowListChatPost();
-			ChatInbox.GetDataListChatPost();
 		}
 		ChatInbox.OnClickHideCloseChatInboxBtn();
 
