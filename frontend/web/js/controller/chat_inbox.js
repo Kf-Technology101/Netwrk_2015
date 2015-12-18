@@ -11,6 +11,7 @@ var ChatInbox = {
 			ChatInbox.HideMeetIconMobile();
 		} else {
 			ChatInbox.OnShowListChatPost();
+			ChatInbox.OnClickChatInboxBtnMobile();
 		}
 		ChatInbox.OnClickHideCloseChatInboxBtn();
 
@@ -142,7 +143,14 @@ var ChatInbox = {
 		$(hide_chat_inbox_btn).unbind();
 		if (isMobile) {
 			$(hide_chat_inbox_btn).on("click", function() {
-				window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? baseUrl : document.referrer;
+				var previous_page = document.referrer;
+				var check_regular_expression_link = new RegExp('/chat/chat-post');
+
+				if (check_regular_expression_link.test(previous_page)) {
+					window.location.href = window.history.go(-3);
+				} else {
+					window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox"  ? baseUrl : document.referrer;
+				}
 			});
 		} else {
 			var chat_inbox = $("#chat_inbox");
@@ -172,7 +180,7 @@ var ChatInbox = {
 	},
 
 	OnClickChatInboxMobile: function() {
-		window.location.href  = baseUrl+ "/netwrk/chat-inbox";
+		window.location.href  = window.location.href == baseUrl + "/netwrk/chat-inbox" ? baseUrl : baseUrl+ "/netwrk/chat-inbox";
 	},
 
 	getTemplateChatInboxMobile: function(parent) {
