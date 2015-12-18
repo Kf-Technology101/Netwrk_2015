@@ -27,6 +27,7 @@ var ChatPost = {
 			ChatPost.SetHeightContainerChat();
 			ChatPost.OnClickMeetMobile();
 			ChatPost.OnClickChatInboxBtnMobile();
+			ChatInbox.HideMeetIconMobile();
 		}else{
 			ChatPost.ShowChatBox();
 			ChatPost.OnShowModalChatPost();
