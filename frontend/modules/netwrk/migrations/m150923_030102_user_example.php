@@ -25,8 +25,8 @@ class m150923_030102_user_example extends \yii\db\Migration
             'login_time' => Schema::TYPE_TIMESTAMP,
             'create_ip' => Schema::TYPE_STRING . '(255)',
             'create_time' => Schema::TYPE_TIMESTAMP,
-            'update_time' => Schema::TYPE_TIMESTAMP .'null default null',
-            'ban_time' => Schema::TYPE_TIMESTAMP .'null default null',
+            'update_time' => Schema::TYPE_TIMESTAMP .' null default null',
+            'ban_time' => Schema::TYPE_TIMESTAMP .' null default null',
             'ban_reason' => Schema::TYPE_STRING . '(255)',
         ], $tableOptions);
 
