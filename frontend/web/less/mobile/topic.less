@@ -170,7 +170,15 @@
             }
             .dropdown-menu{
                 width: 100%;
-                padding: 5px;
+                padding: 0;
+                li{
+                    cursor: pointer;
+                    padding: 5px 10px;
+                    border-bottom: 1px solid #ddd;
+                    &:last-child{
+                        border-bottom: 0;
+                    }
+                }
             }
         }
     }
