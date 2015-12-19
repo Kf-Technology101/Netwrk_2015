@@ -162,7 +162,7 @@ var Create_Post={
 
     onChangeData: function(target,filter){
         target.unbind();
-        target.on('keyup',function(e){
+        target.on('keyup input',function(e){
             if($(e.currentTarget).val().length > 0){
                 Create_Post.params[filter] = $(e.currentTarget).val();
                 Create_Post.status_change[filter] = true;

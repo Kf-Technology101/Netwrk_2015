@@ -202,7 +202,7 @@ var Create_Topic={
 
     onChangeData: function(target,filter){
         target.unbind();
-        target.on('keyup',function(e){
+        target.on('keyup input',function(e){
             if($(e.currentTarget).val().length > 0){
                 Create_Topic.params[filter] = $(e.currentTarget).val();
                 Create_Topic.status_change[filter] = true;
@@ -211,7 +211,15 @@ var Create_Topic={
             }
             Create_Topic.onCheckStatus();
         });
-
+        // target.on('input',function(e){
+        //     if($(e.currentTarget).val().length > 0){
+        //         Create_Topic.params[filter] = $(e.currentTarget).val();
+        //         Create_Topic.status_change[filter] = true;
+        //     }else{
+        //         Create_Topic.status_change[filter] = false;
+        //     }
+        //     Create_Topic.onCheckStatus();
+        // });
     },
 
     onCheckStatus: function(){
