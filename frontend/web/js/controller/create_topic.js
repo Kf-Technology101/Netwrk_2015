@@ -316,6 +316,12 @@ var Create_Topic={
     },
 
     OnClickChatInboxBtnMobile: function() {
-        ChatInbox.OnClickChatInboxBtnMobile();
+        var target = $('#chat_inbox_btn_mobile');
+        target.unbind();
+        target.on('click',function(){
+            Ajax.set_previous_page(window.location.href).then(function(data){
+                ChatInbox.OnClickChatInboxMobile();
+            });
+        });
     }
 };

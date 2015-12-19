@@ -3,15 +3,18 @@ var ChatInbox = {
 	modal:'#chat_inbox',
 	chat_inbox: '#chat_inbox',
 	chat_inbox_mobile: '#chat_inbox_btn_mobile',
+	params: {
+		previous: ''
+	},
 	initialize: function(){
 		if(isMobile){
 			ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
 			ChatInbox.OnClickChatPostDetail();
 			ChatInbox.OnClickMeetIconMobile();
 			ChatInbox.HideMeetIconMobile();
+			ChatInbox.OnClickChatInboxBtnMobile();
 		} else {
 			ChatInbox.OnShowListChatPost();
-			ChatInbox.OnClickChatInboxBtnMobile();
 		}
 		ChatInbox.OnClickHideCloseChatInboxBtn();
 
@@ -143,14 +146,9 @@ var ChatInbox = {
 		$(hide_chat_inbox_btn).unbind();
 		if (isMobile) {
 			$(hide_chat_inbox_btn).on("click", function() {
-				var previous_page = document.referrer;
-				var check_regular_expression_link = new RegExp('/chat/chat-post');
-
-				if (check_regular_expression_link.test(previous_page)) {
-					window.location.href = window.history.go(-3);
-				} else {
-					window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox"  ? baseUrl : document.referrer;
-				}
+				Ajax.get_previous_page().then(function(data){
+					window.location.href = data;
+				});
 			});
 		} else {
 			var chat_inbox = $("#chat_inbox");
@@ -180,7 +178,13 @@ var ChatInbox = {
 	},
 
 	OnClickChatInboxMobile: function() {
-		window.location.href  = window.location.href == baseUrl + "/netwrk/chat-inbox" ? baseUrl : baseUrl+ "/netwrk/chat-inbox";
+		if ( window.location.href == baseUrl + "/netwrk/chat-inbox") {
+			Ajax.get_previous_page().then(function(data){
+				window.location.href = data;
+			});
+		} else {
+			window.location.href = baseUrl+ "/netwrk/chat-inbox";
+		}
 	},
 
 	getTemplateChatInboxMobile: function(parent) {
@@ -205,7 +209,7 @@ var ChatInbox = {
 		});
 	},
 
-	OnClickChatInboxBtnMobile: function() {
+	OnClickChatInboxBtnMobile: function(previous_link) {
 		var target = $('#chat_inbox_btn_mobile');
         target.unbind();
         target.on('click',function(){

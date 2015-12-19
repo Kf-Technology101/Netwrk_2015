@@ -541,5 +541,37 @@ var Ajax ={
 
         return defer.promise();
     },
+
+    set_previous_page: function(previous_link){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/previous-page/set-previous-page";
+
+        $.ajax({
+            url: url,
+            data: {previous: previous_link},
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    get_previous_page: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/previous-page/get-previous-page";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
 }
 
