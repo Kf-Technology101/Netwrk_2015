@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\controllers;
 
 use Yii;
 use yii\web\Session;
+use yii\db\Query;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
@@ -65,7 +66,23 @@ class DefaultController extends BaseController
     public function actionGetMakerDefaultZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
-        $cities = City::find()->with('topics.posts')->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
+
+        $query = new Query();
+        $datas = $query->select('COUNT(DISTINCT ws_messages.user_id) AS count_user_comment, city.id, COUNT(post.id) AS post_count')
+            ->from('city')
+            ->leftJoin('topic', 'city.id=topic.city_id')
+            ->leftJoin('post', 'topic.id=post.topic_id')
+            ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
+            ->groupBy('city.id')
+            ->orderBy('count_user_comment DESC, post_count DESC')
+            ->limit(10)
+            ->all();
+        $zipcodes = array();
+        for ($i=0; $i < count($datas); $i++) { 
+            array_push($zipcodes, $datas[$i]['id']);
+        }
+        // $cities = City::find()->with('topics.posts')->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
+        $cities = City::find()->with('topics.posts')->where(['id' => $zipcodes])->all();
 
         $data = [];
 
