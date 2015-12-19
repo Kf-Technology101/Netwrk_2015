@@ -85,7 +85,7 @@ var ChatInbox = {
 			Topic.params.city = btn.find("input[name='city_id']").val();
 			var item_post = $(e.currentTarget).find('.chat-post-id').attr('data-post');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post);
+				ChatPost.RedirectChatPostPage(item_post, 1);
 			}else{
 				ChatPost.params.post = item_post;
 				if(ChatPost.temp_post != ChatPost.params.post){

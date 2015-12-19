@@ -62,7 +62,7 @@ var Post ={
 		btn.on('click',function(e){
 			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post);
+				ChatPost.RedirectChatPostPage(item_post, 0);
 			}else{
 				$("#list_post").modal('hide');
 				ChatPost.params.post = item_post;
@@ -413,6 +413,14 @@ var Post ={
     },
 
 	RedirectPostPage: function(topic){
-		window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
+		if (ChatPost.GetSearchParam(window.location.href)["previous-flag"]) {
+			if (ChatPost.GetSearchParam(window.location.href)["previous-flag"] == 0) {
+				window.location.href = baseUrl + "/netwrk/post?topic="+topic;
+			} else {
+				window.location.href = baseUrl+"/netwrk/chat-inbox";
+			}
+		} else {
+			window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
+		}
 	}
 };
