@@ -17,9 +17,9 @@ var ForgotPass = {
             // ForgotPass.OnAfterValidateForm();
             // ForgotPass.OnBeforeSubmitForm();
             ForgotPass.onClickSubmit();
+            ForgotPass.OnEventEnterForm();
         }
         // ForgotPass.onChangeEmail();
-        ForgotPass.OnEventEnterForm();
     },
 
     OnEventEnterForm: function(){
