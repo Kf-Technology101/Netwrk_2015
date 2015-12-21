@@ -53,7 +53,7 @@
     </div>
 </div>
 <script id="name_post_list" type="text/x-underscore-template" >
-    <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= name %></span>
+    <span class="title"><a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= name %></span>
 </script>
 <script id="post_list" type="text/x-underscore-template" >
     <% _.each(posts,function(post){ %>

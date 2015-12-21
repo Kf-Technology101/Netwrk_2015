@@ -125,8 +125,6 @@ var Map ={
 
     var current_zoom = map.getZoom();
 
-   console.log(current_zoom + ' jhsdfgdhfgdgfhdgfhgdfgdhfgdfgdgf');
-
     if(current_zoom == 7){
       Ajax.get_marker_default().then(function(data){
         console.log('get marker default');
