@@ -502,16 +502,14 @@ var Map ={
 		        	};
 		            map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
 		            map.setZoom(12);
-		            Map.initialize();
+		            // Map.initialize();
 		        });
 	      	} else {
 		        var zoom_current = map.getZoom();
-		        // console.log(zoom_current);
 		        if (zoom_current == 7) {
 			        Map.smoothZoom(map, 13, zoom_current, true);
 			        Map.zoomIn = true;
-		        }
-		        if(map.getZoom() < 12) {
+			        Map.deleteNetwrk(map);
 			        map.zoom = 12;
 			        Map.show_marker(map);
 		        }
