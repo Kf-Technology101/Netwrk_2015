@@ -20,9 +20,9 @@ var ResetPass = {
             ResetPass.showModalResetPass();
             ResetPass.OnValidateNewPasswordConfirm();
             ResetPass.CheckKeyValidate();
+            ResetPass.OnEventEnterForm();
             ResetPass.OnSubmitReset();
         }
-        ResetPass.OnEventEnterForm();
     },
 
     OnEventEnterForm: function(){
