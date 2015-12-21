@@ -24,6 +24,7 @@ var ForgotPass = {
 
     OnEventEnterForm: function(){
         var btn = $(ForgotPass.modal).find('.send-email');
+        btn.unbind();
         $(ForgotPass.modal).find(ForgotPass.form_id).keypress(function( event ) {
             if ( event.which == 13 ) {
                 btn.trigger('click');

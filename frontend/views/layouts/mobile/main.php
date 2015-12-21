@@ -50,7 +50,7 @@ MobileAsset::register($this);
     </div>
     <div class="navbar-mobile navbar-fixed-bottom">
       <div class="menu_bottom">
-        <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div>
+        <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon.png'); ?>"></div>
         <!-- <div id="btn_discover_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div> -->
         <!-- <a href="javascript:void(0)" class='left'>Menu</a> -->
         <a class="right" id='chat_inbox_btn_mobile'><i class="fa fa-comment"></i></a>
