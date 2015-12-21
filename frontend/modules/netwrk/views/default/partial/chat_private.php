@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal" id='modal_chat_post'>
+<div class="modal" id='modal_chat_private'>
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -15,7 +15,7 @@
 				</div>
 			</div>
 			<div class="modal-body">
-				<div class="container_post_chat"></div>
+				<div class="container_private_chat"></div>
 				<img src='<?= Url::to('@web/img/icon/ajax-loader.gif'); ?>' class='loading_image' />
 			</div>
 			<div class="modal-footer">
@@ -42,7 +42,7 @@
 			<li data-value="<%= i %>" data-toggle="tooltip" title="<%= i %>"><%= i %></li>
 		<% })%>
 	</script>
-	<script id="chatpost_name" type="text/x-underscore-template">
+	<script id="chatprivate_name" type="text/x-underscore-template">
 		<span id='logo_modal_chat'><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></span>
 		<span><i class="fa fa-angle-right"></i><%= name.topic_name%></span>
 		<span><i class="fa fa-angle-right"></i><%= name.post_name %></span>

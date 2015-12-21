@@ -3,7 +3,7 @@
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
 		<li role="presentation" class=" col-xs-6 chat-private-btn"><a href="#chat_private" aria-controls="chat_private" role="tab" data-toggle="tab"><span>Chats</span></a></li>
-		<li role="presentation" class="active col-xs-6 chat-dicussions-btn"><a href="#chat_dicussion" aria-controls="chat_dicussion" role="tab" data-toggle="tab"><span>Discussions</span></a></li>
+		<li role="presentation" class="active col-xs-6 chat-dicussions-btn"><a href="#chat_discussion" aria-controls="chat_discussion" role="tab" data-toggle="tab"><span>Discussions</span></a></li>
 	</ul>
 	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 
@@ -13,7 +13,7 @@
 			<div id="container_ul_chat_list">
 				<ul>
 					<li>
-						<div class='chat-post-id'>
+						<div class='chat-post-id' data-user=''>
 							<span class='avatar-user'>
 								<img class='img_avatar' src='<?= Url::to('@web/img/icon/no_avatar.jpg'); ?>' />
 							</span>
@@ -28,7 +28,7 @@
 				</ul>
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane active" id="chat_dicussion">
+		<div role="tabpanel" class="tab-pane active" id="chat_discussion">
 			<div id="container_ul_chat_list">
 				<ul>
 				</ul>

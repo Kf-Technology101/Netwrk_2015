@@ -18,6 +18,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	protected $ws_messages;
 	protected $current_user;
 	protected $post_id = 0;
+	protected $chat_type;
 
 	private $users = array();
 
@@ -31,8 +32,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	{
 		$this->post_id = $conn->WebSocket->request->getQuery()->get('post');
 		$this->current_user = $conn->WebSocket->request->getQuery()->get('user_id');
-
-
+		$this->chat_type = $conn->WebSocket->request->getQuery()->get('chat_type');
 		$this->clients->attach($conn);
 		$this->send($conn, "fetch", $this->fetchMessages());
 		// $this->checkOnliners();
@@ -58,7 +58,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					"seen"	=> time()
 					);
 			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['user_id'])){
-				echo "send message here ! \n";
 				// make new models to stored data
 				$this->ws_messages = new WsMessages();
 
@@ -72,7 +71,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $room;
 				$this->ws_messages->msg_type = $type;
-				$this->ws_messages->post_type = 1;
+				$this->ws_messages->post_type = $this->chat_type;
 				$this->ws_messages->save(false);
 				$this->ws_messages->post->comment_count ++;
 				$this->ws_messages->post->update();
@@ -94,7 +93,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														"update_list_chat" => $list_chat_inbox
 														)
 													]);
-					echo "send message heh !";
 				}
 
 			}elseif($type == "fetch"){
@@ -120,9 +118,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	/* My custom functions */
 	public function fetchMessages()
 	{
-		echo "Fetch Message";
 		$data_result=[];
-		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
+		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
 
 		if($message) {
 			foreach ($message as $key => $value) {
@@ -176,7 +173,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function send($client, $type, $data)
 	{
-		echo "Send Message";
 		$send = array(
 			"type" => $type,
 			"data" => $data

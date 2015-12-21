@@ -172,7 +172,7 @@ function _main(){
 
 function _addListenEventPage(){
 	var page = this.show_page();
-	var Page = page !== 'Chat-inbox' ? eval(page) : page;
+	var Page = page !== 'Chat-inbox' && page !== 'Chat-private'  ? eval(page) : page;
 	switch(page){
 	case 'Topic':
 		Topic.init();
@@ -195,6 +195,9 @@ function _addListenEventPage(){
     break;
   case 'Chat-inbox':
     ChatInbox.initialize();
+    break;
+  case 'Chat-private':
+    ChatPrivate.initialize();
     break;
 	default:
 		Default.initialize();

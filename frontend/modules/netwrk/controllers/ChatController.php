@@ -8,6 +8,7 @@ use frontend\components\UtilitiesFunc;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
+use frontend\modules\netwrk\models\User;
 use yii\helpers\Url;
 
 class ChatController extends BaseController
@@ -49,6 +50,24 @@ class ChatController extends BaseController
 		}
 		$url = Url::base(true).'/netwrk/chat/chat-post?post='.$postId;
 		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post,'url'=> $url] );
+	}
+
+	public function actionChatPrivate()
+	{
+		$user_id = $_GET['privateId'];
+
+		$user = User::find()->where('id = '. $user_id)->with('profile')->one();
+
+		$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
+		$status = file_get_contents($statusFile);
+		if($status == 0){
+			/* This means, the WebSocket server is not started. So we, start it */
+			$this->actionExecInbg("php yii server/run");
+			file_put_contents($statusFile, 1);
+		}
+
+		return $this->render($this->getIsMobile() ? 'mobile/private' : '' , ['user'=> $user] );
+
 	}
 
 	public function actionUpload()

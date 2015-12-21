@@ -3,7 +3,7 @@
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
 		<li role="presentation" class=" col-xs-6 chat-private-btn"><a href="#chat_private" aria-controls="chat_private" role="tab" data-toggle="tab"><span>Chats</span></a></li>
-		<li role="presentation" class="active col-xs-6 chat-dicussions-btn"><a href="#chat_dicussion" aria-controls="chat_dicussion" role="tab" data-toggle="tab"><span>Discussions</span></a></li>
+		<li role="presentation" class="active col-xs-6 chat-dicussions-btn"><a href="#chat_discussion" aria-controls="chat_discussion" role="tab" data-toggle="tab"><span>Discussions</span></a></li>
 	</ul>
 	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 	<!-- Tab panes -->
@@ -21,13 +21,13 @@
 								<div class='description-chat-inbox'>Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet</div>
 							</div>
 							<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> 1 hr</span>
-							<i class='fa fa fa-chevron-right'></i>
+							<i class='fa fa-2x fa-angle-right'></i>
 						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane active" id="chat_dicussion">
+		<div role="tabpanel" class="tab-pane active" id="chat_discussion">
 			<div id="container_ul_chat_list">
 				<ul>
 				</ul>

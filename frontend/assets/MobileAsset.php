@@ -67,7 +67,8 @@ class MobileAsset extends AssetBundle
       'js/lib/emojione.js',
       'js/controller/forgot_password.js',
       'js/controller/reset_password.js',
-      'js/controller/chat_inbox.js'
+      'js/controller/chat_inbox.js',
+      'js/controller/chat_private.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

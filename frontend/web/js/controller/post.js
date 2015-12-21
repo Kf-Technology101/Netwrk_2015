@@ -63,7 +63,7 @@ var Post ={
 		btn.on('click',function(e){
 			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post, 0);
+				ChatPost.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				$("#list_post").modal('hide');
 				ChatPost.params.post = item_post;
@@ -77,7 +77,7 @@ var Post ={
 		btn_show_more.on('click',function(e){
 			var item_post = $(e.currentTarget).parent().parent().parent().attr('data-item');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post);
+				ChatPost.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				$("#list_post").modal('hide');
 				ChatPost.params.post = item_post;
