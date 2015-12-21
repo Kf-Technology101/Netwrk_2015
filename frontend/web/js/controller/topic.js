@@ -55,6 +55,7 @@ var Topic = {
             Topic.show_modal_topic(city,params);
             Topic._onclickBack();
             Topic.OnClickBackdrop();
+            Topic.onNetwrkLogo();
         }
     },
 
@@ -373,6 +374,12 @@ var Topic = {
                 $('#modal_topic').modal('hide');
             })
         }
+    },
+
+    onNetwrkLogo: function(){
+        $('#modal_topic .title_page .title a').click(function(){
+            $('#modal_topic').modal('hide');
+        });
     },
 
     load_topic: function(){

@@ -53,6 +53,7 @@ var Post ={
 		Post.OnclickBack();
 		Post.OnclickCreate();
 		Post.OnChangeTab();
+		Post.OnNetwrkLogo();
 	},
 
 	OnClickChat: function(){
@@ -89,6 +90,12 @@ var Post ={
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
         	console.log('click backdrop post');
+            $('#list_post').modal('hide');
+        });
+    },
+
+    OnNetwrkLogo: function(){
+        $('#list_post .title_page .title a').click(function(){
             $('#list_post').modal('hide');
         });
     },

@@ -43,7 +43,7 @@
 		<% })%>
 	</script>
 	<script id="chatpost_name" type="text/x-underscore-template">
-		<span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
+		<span id='logo_modal_chat'><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></span>
 		<span><i class="fa fa-angle-right"></i><%= name.topic_name%></span>
 		<span><i class="fa fa-angle-right"></i><%= name.post_name %></span>
 	</script>

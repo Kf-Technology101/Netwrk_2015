@@ -23,6 +23,7 @@ var ChatPost = {
 		ChatPost.GetListEmoji();
 		ChatPost.HandleEmoji();
 		ChatPost.OnclickLogin();
+		
 		if(isMobile){
 			ChatPost.SetHeightContainerChat();
 			ChatPost.OnClickMeetMobile();
@@ -366,6 +367,14 @@ var ChatPost = {
 		});
 	},
 
+	OnNetwrkLogo: function(){
+		var btn = $(ChatPost.modal).find('#logo_modal_chat img');
+		btn.unbind();
+        btn.on('click', function(){
+            $('#modal_chat_post').modal('hide');
+        });
+    },
+
 	CustomScrollBar: function(){
 		var parent = $(ChatPost.modal).find('.modal-body');
 		parent.mCustomScrollbar({
@@ -409,7 +418,8 @@ var ChatPost = {
 		var parent = $(ChatPost.parent).find('.title_page .title');
 		Ajax.chat_post_name(ChatPost.params).then(function(data){
 			var json = $.parseJSON(data);
-			ChatPost.getNameTemplate(parent,json)
+			ChatPost.getNameTemplate(parent,json);
+			ChatPost.OnNetwrkLogo();
 		})
 	},
 
