@@ -308,7 +308,7 @@ var Map ={
 	    }
     	Ajax.new_place(params).then(function(data){
 			var js = $.parseJSON(data);
-			if type == 'gov') {
+			if (type == 'gov') {
 				Map.createMarkerGov(service, place, map, zipcode, office, js);
 			} else {
 				Map.createMarker(service, place, map, zipcode, office, js);
@@ -331,7 +331,7 @@ var Map ={
 	        content: '',
 	        city_id: cid,
 	        maxWidth: 350
-      	);
+      	});
 
       	google.maps.event.addListener(marker, 'click', (function(marker) {
 			return function(){
