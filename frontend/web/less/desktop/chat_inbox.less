@@ -116,6 +116,24 @@
 				font-size: 12px;
 			}
 
+			.notify-chat-inbox{
+				position: absolute;
+				right: 110px;
+				background: #f95e65;
+				width: 18px;
+				border-radius: 20px;
+				text-align: center;
+				height: 18px;
+				font-family: "ProximaNovaSemibold";
+				color: #fff;
+				font-size: 10px;
+				padding-top: 2px;
+			}
+
+			.disable{
+				display: none;
+			}
+
 			.fa-angle-right {
 				position: absolute;
 				top: 50%;
@@ -132,16 +150,16 @@
 				.title-chat-inbox {
 					font-size: 15px;
 					font-weight: bold;
-					max-width: 145px;
+					max-width: 110px; // 145px
 					white-space: nowrap;
 					text-overflow: ellipsis;
 					overflow: hidden;
 					color: #1d1b1b;
 				}
 
-				.title-chat-inbox::before {
-					content: "#";
-				}
+				// .title-chat-inbox::before {
+				// 	content: "#";
+				// }
 
 				.description-chat-inbox {
 					min-width: 220px;
@@ -149,6 +167,18 @@
 					white-space:nowrap;
 					text-overflow: ellipsis;
 					color: #1d1b1b;
+				}
+
+				.match-description{
+				    font-size: 13px;
+					font-family: "ProximaNovaBold";
+					color: #f95e65;
+					.matched-date{
+						background: #f95e65;
+						color: #fff;
+						padding: 0 5px;
+						border-radius: 2px;
+					}
 				}
 			}
 

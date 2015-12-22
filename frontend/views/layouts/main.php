@@ -42,7 +42,7 @@ AppAsset::register($this);
             <input type="text" class="form-control" placeholder="What are your interests?">
         </div>
         <div class="chatting" id='chat_inbox_btn'>
-            <span><i class="fa fa-comment"></i>Chat</span>
+            <span><i class="fa fa-comment"></i><span class='notify disable'>15</span>Chat</span>
         </div>
         <?php
             // $menuItems = [

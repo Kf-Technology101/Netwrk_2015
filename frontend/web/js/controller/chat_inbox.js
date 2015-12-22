@@ -74,13 +74,16 @@ var ChatInbox = {
 	},
 
 	OnClickChatInbox: function() {
-		var chat_inbox = $("#chat_inbox");
+		var chat_inbox = $("#chat_inbox"),
+			notify = $("#chat_inbox_btn").find('.notify');
 		$("#chat_inbox_btn").on("click", function() {
 			if(isGuest){
 				Login.modal_callback = ChatInbox;
 				Login.initialize();
 				return false;
 			}
+			notify.html('0');
+			notify.addClass('disable');
 			ChatInbox.initialize();
 		});
 
@@ -240,7 +243,7 @@ var ChatInbox = {
 	},
 
 	OnClickChatPrivateDetail: function() {
-		var btn = $(ChatInbox.modal).find('#chat_private li');
+		var btn = $(ChatInbox.modal).find('#chat_private li'), private_notify;
 		btn.unbind();
 		// var userID = $(ChatPost.parent).attr('data-topic');
 		var userID = 12;
@@ -256,6 +259,9 @@ var ChatInbox = {
 					ChatPrivate.temp_private = ChatPrivate.params.private;
 				}
 			}
+			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
+			private_notify.html('0');
+			private_notify.addClass('disable');
 		});
 	}
 }
