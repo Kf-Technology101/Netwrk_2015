@@ -18,10 +18,39 @@
 								<img class='img_avatar' src='<?= Url::to('@web/img/icon/no_avatar.jpg'); ?>' />
 							</span>
 							<div class='title-description-user'>
-								<div class='title-chat-inbox'>General Dogs</div>
+								<div class='title-chat-inbox'>Harry</div>
+								<span class='notify-chat-inbox disable'>3</span>
 								<div class='description-chat-inbox'>Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet</div>
 							</div>
+							<!-- <span class='notify-chat-inbox'>3</span> -->
 							<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> 1 hr</span>
+							<i class='fa fa fa-chevron-right'></i>
+						</div>
+					</li>
+					<li>
+						<div class='chat-post-id' data-user=''>
+							<span class='avatar-user'>
+								<img class='img_avatar' src='<?= Url::to('@web/img/icon/no_avatar.jpg'); ?>' />
+							</span>
+							<div class='title-description-user'>
+								<div class='title-chat-inbox'>Mary</div>
+								<div class='description-chat-inbox'>Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet</div>
+							</div>
+							<span class='notify-chat-inbox disable'>3</span>
+							<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> 1 hr</span>
+							<i class='fa fa fa-chevron-right'></i>
+						</div>
+					</li>
+					<li>
+						<div class='chat-post-id' data-user=''>
+							<span class='avatar-user'>
+								<img class='img_avatar' src='<?= Url::to('@web/img/icon/no_avatar.jpg'); ?>' />
+							</span>
+							<div class='title-description-user'>
+								<div class='title-chat-inbox'>Amy</div>
+								<div class='description-chat-inbox match-description'>Matched on <span class='matched-date'>Nov 25</span></div>
+							</div>
+							<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> 1 wk</span>
 							<i class='fa fa fa-chevron-right'></i>
 						</div>
 					</li>
