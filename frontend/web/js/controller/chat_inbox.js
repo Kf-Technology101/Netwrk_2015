@@ -16,6 +16,7 @@ var ChatInbox = {
 			ChatInbox.OnClickMeetIconMobile();
 			ChatInbox.HideMeetIconMobile();
 			ChatInbox.OnClickChatInboxBtnMobile();
+			ChatInbox.CheckBackFromChat();
 		} else {
 			ChatInbox.OnShowListChatPost();
 		}
@@ -63,13 +64,9 @@ var ChatInbox = {
 	getTemplateChatInbox: function(parent,data){
 		var list_template = _.template($("#chat_inbox_list" ).html());
 		var append_html = list_template({chat_inbox_list: data});
-		// if ($(parent).find("div[id^='mSCB']").length == 1) {
-		// 	parent.find("div[id^='mSCB']").html("");
-		// 	parent.find("div[id^='mSCB']").append(append_html);
-		// } else {
-			parent.find('li').remove();
-			parent.append(append_html);
-		// }
+		console.log(data);
+		parent.find('li').remove();
+		parent.append(append_html);
 		ChatInbox.CustomScrollBar();
 		ChatInbox.OnClickChatPostDetail();
 	},
@@ -315,4 +312,37 @@ var ChatInbox = {
 		$('#btn_meet_mobile').hide();
 	},
 
+	GetSearchParam: function(url) {
+		var query_string = {};
+		var query = url.substring(1);
+		var vars = query.split("?");
+		for (var i=0;i<vars.length;i++) {
+		    var pair = vars[i].split("=");
+		        // If first entry with this name
+		    if (typeof query_string[pair[0]] === "undefined") {
+		      query_string[pair[0]] = decodeURIComponent(pair[1]);
+		        // If second entry with this name
+		    } else if (typeof query_string[pair[0]] === "string") {
+		      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+		      query_string[pair[0]] = arr;
+		        // If third or later entry with this name
+		    } else {
+		      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+		    }
+		}
+	    return query_string;
+	},
+
+	CheckBackFromChat: function() {
+		var referrer = ChatInbox.GetSearchParam(window.location.href)["chat-type"];
+			console.log(referrer);
+
+		if(referrer) {
+			$(ChatInbox.modal).find('.chat-dicussions-btn').removeClass('active');
+			$(ChatInbox.modal).find(ChatInbox.discussion_chat).removeClass('active');
+
+			$(ChatInbox.modal).find('.chat-private-btn').addClass('active');
+			$(ChatInbox.modal).find(ChatInbox.private_chat).addClass('active');
+		}
+	}
 }

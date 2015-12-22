@@ -332,14 +332,14 @@ var ChatPrivate = {
 
 		var BackBtn = $(ChatPrivate.parent).find('.back_page');
 		BackBtn.unbind();
-		// BackBtn.on('click',function(){
-		// 	if(isMobile){
-		// 		Private.RedirectPrivatePage($(ChatPrivate.parent).attr('data-topic'));
-		// 	}else{
-		// 		Private.initialize();
-		// 		$(ChatPrivate.parent).modal('hide');
-		// 	}
-		// });
+		BackBtn.on('click',function(){
+			if(isMobile){
+				window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=0';
+			}else{
+				Private.initialize();
+				$(ChatPrivate.parent).modal('hide');
+			}
+		});
 	},
 
 	GetSearchParam: function(url) {
