@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="private_chat" data-private="<?= $user->id ?>">
+<div id="private_chat" data-private="<?= $post_id; ?>">
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>

@@ -84,7 +84,7 @@ class PostController extends BaseController
             break;
         }
 
-        $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy([$condition=> SORT_DESC]);
+        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->with('topic')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $posts->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
@@ -181,7 +181,7 @@ class PostController extends BaseController
     {
         $currentUser = Yii::$app->user->id;
         $messages = new WsMessages();
-        $messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser)
+        $messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser. ' AND post_type = 1')
         ->distinct()
         ->with('post')
         ->all();
@@ -198,11 +198,9 @@ class PostController extends BaseController
                 }
 
                 $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$message->post->id)->one();
-
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
                 $num_date = UtilitiesFunc::FormatDateTime($message->post->created_at);
-
                 $item = [
                     'id'=> $message->post->id,
                     'post_title'=> $message->post->title,
@@ -221,6 +219,7 @@ class PostController extends BaseController
                     ];
                 array_push($data, $item);
             }
+
             // return strtotime($data[0]['real_update_at']) - strtotime($data[1]['real_update_at']);die;
             usort($data, function($a, $b) {
                 return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
@@ -230,5 +229,21 @@ class PostController extends BaseController
         } else {
             return false;
         }
+    }
+
+    public function actionSetPrivatePost()
+    {
+        $currentUser = Yii::$app->user->id;
+        $post_private = new POST();
+        $post_private->title = 'private'.time();
+        $post_private->content = 'content private'.time();
+        $post_private->user_id = $currentUser;
+        $post_private->post_type = 0;
+        if($post_private->save(false)) {
+            return $post_private->id;
+        } else {
+            return false;
+        }
+
     }
 }

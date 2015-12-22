@@ -8,9 +8,10 @@ use Ratchet\ConnectionInterface;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
+use frontend\modules\netwrk\models\ChatPrivate;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
-
+use Yii;
 
 class ChatServer extends BaseController implements MessageComponentInterface {
 
@@ -46,9 +47,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		$data = json_decode($data, true);
 
 		if(isset($data['data']) && count($data['data']) != 0){
-
 			$type = $data['type'];
+
 			$user = isset($this->users[$id]) ? $this->users[$id]['name'] : false;
+
 			// $user = $current_user;
 			if($type == "register"){
 				$name = htmlspecialchars($data['data']['name']);
@@ -60,7 +62,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['user_id'])){
 				// make new models to stored data
 				$this->ws_messages = new WsMessages();
-
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
 				$room = $data['data']['room'];
@@ -73,12 +74,17 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->msg_type = $type;
 				$this->ws_messages->post_type = $this->chat_type;
 				$this->ws_messages->save(false);
-				$this->ws_messages->post->comment_count ++;
-				$this->ws_messages->post->update();
-
+				if ($this->chat_type == 1) {
+					$this->ws_messages->post->comment_count ++;
+					$this->ws_messages->post->update();
+					$list_chat_inbox = $this->updateListChatBox($user);
+				} else {
+					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id)->one();
+					$chat_private->save(false);
+					$list_chat_inbox = $this->updateChatPrivateList($user);
+				}
 				$userProfile = json_decode($this->userProfile($user));
 				// for list chat box
-				$list_chat_inbox = $this->updateListChatBox($user);
 
 				foreach ($this->clients as $client) {
 					$this->send($client, "single", [array(
@@ -203,10 +209,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function updateListChatBox($user_id)
 	{
-
-
         $messages = new WsMessages();
-		$messages = $messages->find()->select('post_id')->where('user_id = '.$user_id)
+		$messages = $messages->find()->select('post_id')->where('user_id = '.$user_id. ' AND post_type = 1')
 		        ->distinct()
 		        ->with('post')
 		        ->all();
@@ -254,6 +258,44 @@ class ChatServer extends BaseController implements MessageComponentInterface {
         } else {
             return false;
         }
+	}
+
+	public function updateChatPrivateList($user_id)
+	{
+		$currentUser = $user_id;
+		$chat_list = ChatPrivate::find()->where('user_id = '.$currentUser)->all();
+		if ($chat_list) {
+			$data = [];
+			foreach ($chat_list as $key => $chat) {
+				$num_date = UtilitiesFunc::FormatDateTime($chat->updated_at ? $chat->updated_at : $chat->created_at);
+				$user_photo = User::findOne($chat->user_id_guest)->profile->photo;
+				$content = WsMessages::find()->where('post_id = '.$chat->user_id_guest)->orderBy(['id'=> SORT_DESC])->one();
+				if ($user_photo == null){
+                    $image = 'img/icon/no_avatar.jpg';
+                }else{
+                    $image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
+                }
+				$item = [
+					'user_id_guest' => $chat->user->id,
+					'user_id_guest_first_name' => $chat->user->profile->first_name,
+					'user_id_guest_last_name' => $chat->user->profile->last_name,
+					'updated_at'=> $num_date,
+					'avatar' => $image,
+					'content' => $content ? $content->msg : 'Match!',
+					'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
+				];
+
+				array_push($data, $item);
+			}
+
+			usort($data, function($a, $b) {
+                return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
+            });
+			$data = json_encode($data);
+			return $data;
+		} else {
+			return false;
+		}
 	}
 }
 ?>

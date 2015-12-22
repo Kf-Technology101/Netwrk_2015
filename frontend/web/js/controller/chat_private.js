@@ -230,7 +230,7 @@ var ChatPrivate = {
 							return xhr;
 						},
 						url:  baseUrl + "/netwrk/chat/upload",
-						type: "Private",
+						type: "POST",
 						data: fd,
 						processData: false,
 						contentType: false,
@@ -281,7 +281,7 @@ var ChatPrivate = {
 					console.log('single');
 					var update_list_chat;
 					$.each(e.data, function(i, elem){
-						if(ChatPrivate.params.private == elem.private_id){
+						if(ChatPrivate.params.private == elem.post_id){
 							ChatPrivate.message_type = elem.msg_type;
 							ChatPrivate.getMessageTemplate(elem);
 							update_list_chat = $.parseJSON(elem.update_list_chat);
@@ -290,7 +290,7 @@ var ChatPrivate = {
 					if(isMobile){
 						fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					} else {
-						ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
+						ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
 					}
 					if(ChatPrivate.message_type == 1){
 						ChatPrivate.FetchEmojiOne({type: 'single'});
@@ -308,9 +308,9 @@ var ChatPrivate = {
 		$(ChatPrivate.parent).find(ChatPrivate.container).append(append_html);
 	},
 
-	RedirectChatPrivatePage: function(PrivateId, chat_type, previous_flag){
+	RedirectChatPrivatePage: function(PrivateId, chat_type, previous_flag, post_id){
 		if (chat_type == 0) {
-			window.location.href = baseUrl + "/netwrk/chat-private/?privateId="+ PrivateId +"&chat_type="+chat_type+"&previous-flag=" + previous_flag;
+			window.location.href = baseUrl + "/netwrk/chat-private/?privateId="+ PrivateId +"&chat_type="+chat_type+"&previous-flag=" + previous_flag+'&postID='+post_id;
 		} else {
 			window.location.href = baseUrl + "/netwrk/chat/chat-private?privateId="+ PrivateId +"&chat_type="+chat_type+"&previous-flag=" + previous_flag;
 		}

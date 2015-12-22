@@ -573,5 +573,37 @@ var Ajax ={
         });
         return defer.promise();
     },
+
+    get_chat_private_list: function(user_id) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/chat-private/get-chat-private-list";
+
+        $.ajax({
+            url: url,
+            data: {'user_id': user_id},
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    // set_private_post: function(user_id) {
+    //     var url,defer = $.Deferred();
+    //     url = baseUrl +"/netwrk/post/set-private-post";
+
+    //     $.ajax({
+    //         url: url,
+    //         data: null,
+    //         async: false,
+    //         cache: false,
+    //         type: 'POST',
+    //         success: defer.resolve,
+    //         error: defer.reject
+    //     });
+    //     return defer.promise();
+    // }
 }
 

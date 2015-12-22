@@ -3,7 +3,8 @@
 use yii\db\Migration;
 use yii\db\Schema;
 
-class m151219_032839_create_previous_page_table extends Migration
+
+class m151222_111924_add_column_post_type_post_table extends Migration
 {
     public function up()
     {
@@ -11,19 +12,12 @@ class m151219_032839_create_previous_page_table extends Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-
-        $this->createTable('previous_page', [
-            'id' => Schema::TYPE_PK,
-            'url' => Schema::TYPE_TEXT,
-            'created_at' => Schema::TYPE_STRING,
-            'updated_at' => Schema::TYPE_STRING,
-        ], $tableOptions);
-
+        $this->addColumn('post', 'post_type', Schema::TYPE_INTEGER. ' default 1');
     }
 
     public function down()
     {
-        $this->dropTable('{{%previous_page}}');
+        $this->dropColumn('post', 'post_type', Schema::TYPE_INTEGER);
 
         return false;
     }

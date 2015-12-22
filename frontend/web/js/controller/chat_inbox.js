@@ -11,6 +11,7 @@ var ChatInbox = {
 	initialize: function(){
 		if(isMobile){
 			ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
+			ChatInbox.getTemplateChatPrivateMobile(ChatInbox.modal);
 			ChatInbox.OnClickChatPostDetail();
 			ChatInbox.OnClickMeetIconMobile();
 			ChatInbox.HideMeetIconMobile();
@@ -26,7 +27,7 @@ var ChatInbox = {
 
 		if ($(ChatInbox.chat_inbox).css('right') == '-400px') {
 			ChatInbox.GetDataListChatPost();
-			// ChatInbox.GetDataListChatPrivate();
+			ChatInbox.GetDataListChatPrivate();
 			$(ChatInbox.chat_inbox).animate({
 				"right": "0"
 			}, 500);
@@ -69,6 +70,15 @@ var ChatInbox = {
 			parent.find('li').remove();
 			parent.append(append_html);
 		// }
+		ChatInbox.CustomScrollBar();
+		ChatInbox.OnClickChatPostDetail();
+	},
+
+	getTemplateChatPrivate: function(parent,data){
+		var list_template = _.template($("#chat_inbox_list" ).html());
+		var append_html = list_template({chat_inbox_list: data});
+		parent.find('li').remove();
+		parent.append(append_html);
 		ChatInbox.CustomScrollBar();
 		ChatInbox.OnClickChatPostDetail();
 	},
@@ -122,6 +132,33 @@ var ChatInbox = {
 
 			}
 			});
+	},
+
+	OnClickChatPrivateDetail: function() {
+		var btn = $(ChatInbox.modal).find('#chat_private li'),private_notify;
+		btn.unbind();
+		var userID = $(btn).find('.chat-post-id').attr('data-user');
+		var postID=  $(btn).find('.chat-post-id').attr('data-post');
+		btn.on("click", function(e) {
+			var btn = $(this);
+			if(isMobile){
+				// Ajax.set_private_post(userID).then(function(data){
+					// if (data) {
+						ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
+					// };
+				// });
+			}else{
+				ChatPrivate.params.private = userID;
+				if(ChatPrivate.temp_private != ChatPrivate.params.private){
+					$('.modal').modal('hide');
+					ChatPrivate.initialize();
+					ChatPrivate.temp_private = ChatPrivate.params.private;
+				}
+			}
+			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
+			private_notify.html('0');
+			private_notify.addClass('disable');
+		});
 	},
 
 	ActiveReponsiveChatInbox: function() {
@@ -195,6 +232,26 @@ var ChatInbox = {
 		});
 	},
 
+	GetDataListChatPrivate: function() {
+		var btn = $(ChatInbox.chat_inbox).find('.chat-private-btn');
+		btn.unbind();
+		btn.on('click', function() {
+			var parent = $(ChatInbox.chat_inbox).find('#chat_private ul');
+			$.ajax({
+				url: baseUrl + "/netwrk/chat-private/get-chat-private-list",
+				type: 'GET',
+				data: {"user_id": UserLogin},
+				processData: false,
+				contentType: false,
+				success: function(result) {
+					console.log(result);
+					result = $.parseJSON(result);
+					ChatInbox.getTemplateChatPrivate(parent,result);
+				}
+			});
+		});
+	},
+
 	OnClickChatInboxMobile: function() {
 		if ( window.location.href == baseUrl + "/netwrk/chat-inbox") {
 			Ajax.get_previous_page().then(function(data){
@@ -222,6 +279,22 @@ var ChatInbox = {
 		};
 	},
 
+	getTemplateChatPrivateMobile: function(parent) {
+		if (isMobile) {
+			Ajax.get_chat_private_list().then(function(data){
+				if (data) {
+					data = $.parseJSON(data);
+				}
+				var list_template = _.template($("#chat_private_list" ).html());
+				var append_html = list_template({chat_private_list: data});
+				parent = $(parent).find('#chat_private ul');
+				parent.find('li').remove();
+				parent.append(append_html);
+				ChatInbox.CustomScrollBarPrivate();
+			});
+		};
+	},
+
 	OnClickMeetIconMobile: function() {
 		var btn = $('#btn_meet_mobile');
 		btn.unbind();
@@ -242,26 +315,4 @@ var ChatInbox = {
 		$('#btn_meet_mobile').hide();
 	},
 
-	OnClickChatPrivateDetail: function() {
-		var btn = $(ChatInbox.modal).find('#chat_private li'), private_notify;
-		btn.unbind();
-		// var userID = $(ChatPost.parent).attr('data-topic');
-		var userID = 12;
-		btn.on("click", function(e) {
-			var btn = $(this);
-			if(isMobile){
-				ChatPrivate.RedirectChatPrivatePage(userID, 0, 1);
-			}else{
-				ChatPrivate.params.private = userID;
-				if(ChatPrivate.temp_private != ChatPrivate.params.private){
-					$('.modal').modal('hide');
-					ChatPrivate.initialize();
-					ChatPrivate.temp_private = ChatPrivate.params.private;
-				}
-			}
-			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
-			private_notify.html('0');
-			private_notify.addClass('disable');
-		});
-	}
 }
