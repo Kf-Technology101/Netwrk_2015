@@ -33,13 +33,16 @@ MobileAsset::register($this);
   <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
     <div class="navbar-mobile navbar-fixed-top">
     	<div class="menu_top">
-			<div class="logo_netwrk">
-				<a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
-			</div>
-			<div class="search input-group">
-				<span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
-				<input type="text" class="form-control" placeholder="What are your interests?">
-			</div>
+  			<div class="logo_netwrk">
+  				<a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+  			</div>
+        <div class="box-search">
+          <div class="search input-group">
+            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="What are your interests?">
+          </div>
+          <!-- <?= $this->render('@frontend/modules/netwrk/views/search/result') ?> -->
+        </div>
     	</div>
 	</div>
     <div class="container-fuild">

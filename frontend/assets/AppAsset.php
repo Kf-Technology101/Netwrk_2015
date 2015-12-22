@@ -33,7 +33,8 @@ class AppAsset extends AssetBundle
         'css/jquery.mCustomScrollbar.css',
         'css/emojione/css/emojione.min.css',
         'css/desktop/chat_inbox.css',
-        'css/desktop/forgot_pass.css'
+        'css/desktop/forgot_pass.css',
+        'css/desktop/search.css'
     ];
     public $js = [
         'js/lib/underscore.js',

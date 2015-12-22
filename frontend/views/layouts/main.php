@@ -37,10 +37,14 @@ AppAsset::register($this);
         <div class="logo_netwrk">
             <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
         </div>
-        <div class="search input-group">
-            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
-            <input type="text" class="form-control" placeholder="What are your interests?">
+        <div class="box-search">
+            <div class="search input-group">
+                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="What are your interests?">
+            </div>
+            <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
+
         <div class="chatting" id='chat_inbox_btn'>
             <span><i class="fa fa-comment"></i>Chat</span>
         </div>

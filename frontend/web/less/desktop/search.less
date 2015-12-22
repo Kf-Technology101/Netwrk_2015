@@ -1,0 +1,144 @@
+.box-search{
+	width: 350px;
+	float: left;
+	position: relative;
+	.result-search{
+		display: none;
+		position: absolute;
+		top: 48px;
+		left: 0;
+		width: 350px;
+		height: 400px;
+		background: #fff;
+		.location{
+			width: 100%;
+			float: left;
+			.title{
+				width: 100%;
+				float: left;
+				border: 1px solid #1b1b1b;
+				background: #4a4c4e;
+				font-size: 16px;
+				color: #fff;
+				padding: 0 10px;
+				span{
+					font-size: 12px;
+				}
+			}
+			.content-result{
+				border: 1px solid #e3e3e3;
+				.post-result{
+					.post-item{
+						padding: 10px;
+						border-bottom: 1px solid #e3e3e3;
+						float: left;
+						width: 100%;
+						.thumb{
+							width: 50px;
+							height: 50px;
+							float: left;
+							img{
+								width: 50px;
+								height: 50px;
+							}
+						}
+						.content-post{
+							width: 200px;
+							float: left;
+							padding: 0 10px;
+							overflow: hidden;
+						    word-wrap: break-word;
+							.title{
+								font-family: 'ProximaNovaSemibold';
+								background: none;
+								border: none;
+								color: #5888ac;
+								margin: 0;
+								padding: 0;
+								&:hover{
+									color: #5da5d8;
+								}
+								&:before{
+									content: "#";
+								}
+							}
+							.container-post{
+								a{
+									color:#5888ac;
+									&:hover{
+										color: #5da5d8;
+									}
+								}
+							}
+						}
+						.info{
+							width: 75px;
+							float: left;
+							.date{
+								margin-bottom: -5px;
+								font-size: 12px;
+								color: #1d1b1b;
+								text-align: center;
+							}
+							.brillant{
+								width: 52px;
+								height: 44px;
+								margin:auto;
+								background: url('../../img/icon/brilliant-icon-large.png') no-repeat;
+								background-size: 52px 44px;
+								p{
+									line-height: 52px;
+									text-align: center;
+									font-size: 10px;
+									color: #fff;
+									font-family: vendera;
+								}
+							}
+						}
+					}
+				}
+				.topic-result{
+					width: 100%;
+					float: left;
+					.topic-item{
+						width: 100%;
+						float: left;
+						border-bottom: 1px solid #e3e3e3;
+						.topic-name{
+							width: 70%;
+							float: left;
+							margin:10px 0 10px 10px;
+							font-size: 16px;
+							color: #1d1b1b;
+							font-family: 'ProximaNovaSemibold;';
+						}
+						.count-post{
+							width: 20%;
+							margin:10px 0 ;
+							float: left;
+							font-size: 16px;
+							color: #1d1b1b;
+							p{
+								margin: 0;
+								text-align: center;
+							}
+							i{
+								font-size: 15px;
+								margin-left: 5px;
+							}
+						}
+						.topic-arrow{
+							line-height: 40px;
+							i{
+								font-size: 15px;
+							}
+						}
+					}
+				}
+			}
+		}
+		.notice{
+			padding: 10px;
+		}
+	}
+}
