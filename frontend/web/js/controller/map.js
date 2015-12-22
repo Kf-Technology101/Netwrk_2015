@@ -262,7 +262,7 @@ var Map ={
 		//         	if (status === google.maps.places.PlacesServiceStatus.OK) {
 		// 	           	infowindow = new google.maps.InfoWindow();
 		// 	            for (var i = 0; i < results.length; i++) {
-		// 	                 etTimeout(Map.getZipcodeAddress(service, results[i], map, 'uni', results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), 50);
+		// 	                 setTimeout(Map.getZipcodeAddress(service, results[i], map, 'uni', results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), 50);
 		// 	            }
 		//         	}
 		//        	});
