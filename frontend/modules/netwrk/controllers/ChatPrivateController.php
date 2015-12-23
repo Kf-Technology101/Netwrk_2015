@@ -71,7 +71,7 @@ class ChatPrivateController extends BaseController
 				'user_id_guest_last_name' => $chat->user->profile->last_name,
 				'updated_at'=> $num_date,
 				'avatar' => $image,
-				'content' => $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file!') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>',
+				'content' => $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>',
 				'post_id' => $chat->post_id,
 				'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at,
 				'class_first_met' => $content ? 1 : 0
