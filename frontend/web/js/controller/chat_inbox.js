@@ -72,10 +72,15 @@ var ChatInbox = {
 	},
 
 	getTemplateChatPrivate: function(parent,data){
-		var list_template = _.template($("#chat_inbox_list" ).html());
-		var append_html = list_template({chat_inbox_list: data});
+		var list_template = _.template($("#chat_private_list" ).html());
+		var append_html = list_template({chat_private_list: data});
 		parent.find('li').remove();
 		parent.append(append_html);
+		for (var i =0;i< data.length; i++) {
+			if(data[i].class_first_met==0) {
+				parent.find('li .chat-post-id .title-description-user .description-chat-inbox').addClass('match-description');
+			}
+		};
 		ChatInbox.CustomScrollBarPrivate();
 		ChatInbox.OnClickChatPrivateDetail();
 	},
@@ -241,7 +246,6 @@ var ChatInbox = {
 				processData: false,
 				contentType: false,
 				success: function(result) {
-					console.log(result);
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatPrivate(parent,result);
 				}
@@ -287,6 +291,11 @@ var ChatInbox = {
 				parent = $(parent).find('#chat_private ul');
 				parent.find('li').remove();
 				parent.append(append_html);
+				for(i=0; i < data.length; i++) {
+					if(data[i].class_first_met == 0) {
+						parent.find('li .chat-post-id .title-description-user .description-chat-inbox').addClass('match-description');
+					}
+				}
 				ChatInbox.CustomScrollBarPrivate();
 			});
 		};

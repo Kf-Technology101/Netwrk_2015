@@ -64,15 +64,17 @@ class ChatPrivateController extends BaseController
 				}else{
 					$image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
 				}
+				$num_date_first_met = date('M d');
 				$item = [
 				'user_id_guest' => $chat->user->id,
 				'user_id_guest_first_name' => $chat->user->profile->first_name,
 				'user_id_guest_last_name' => $chat->user->profile->last_name,
 				'updated_at'=> $num_date,
 				'avatar' => $image,
-				'content' => $content ? $content->msg : 'Matched!',
+				'content' => $content ? $content->msg : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>',
 				'post_id' => $chat->post_id,
-				'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
+				'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at,
+				'class_first_met' => $content ? 1 : 0
 				];
 
 				array_push($data, $item);
