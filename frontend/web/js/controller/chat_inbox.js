@@ -134,10 +134,10 @@ var ChatInbox = {
 	OnClickChatPrivateDetail: function() {
 		var btn = $(ChatInbox.modal).find('#chat_private li'),private_notify;
 		btn.unbind();
-		var userID = $(btn).find('.chat-post-id').attr('data-user');
-		var postID=  $(btn).find('.chat-post-id').attr('data-post');
 		btn.on("click", function(e) {
 			var btn = $(this);
+			var userID = $(btn).find('.chat-post-id').attr('data-user');
+			var postID=  $(btn).find('.chat-post-id').attr('data-post');
 			if(isMobile){
 				// Ajax.set_private_post(userID).then(function(data){
 					// if (data) {

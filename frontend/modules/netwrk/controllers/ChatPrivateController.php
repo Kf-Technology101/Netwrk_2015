@@ -26,20 +26,26 @@ class ChatPrivateController extends BaseController
 		$user_id = $_GET['privateId'];
 		$post_id = $_GET['postID'];
 		$user = User::find()->where('id = '. $user_id)->with('profile')->one();
-		$data = ChatPrivate::find()->where('user_id = '.Yii::$app->user->id. ' AND post_id = '. $post_id. ' AND user_id_guest = '.$user_id)->count();
-		if ($data > 0) {
-			$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
-			$status = file_get_contents($statusFile);
-			if($status == 0){
-				/* This means, the WebSocket server is not started. So we, start it */
-				$this->actionExecInbg("php yii server/run");
-				file_put_contents($statusFile, 1);
-			}
+		$currentUser = Yii::$app->user->id;
+		if ($currentUser) {
+			$data = ChatPrivate::find()->where('user_id = '.$currentUser. ' AND post_id = '. $post_id. ' AND user_id_guest = '.$user_id)->count();
+			if ($data > 0) {
+				$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
+				$status = file_get_contents($statusFile);
+				if($status == 0){
+					/* This means, the WebSocket server is not started. So we, start it */
+					$this->actionExecInbg("php yii server/run");
+					file_put_contents($statusFile, 1);
+				}
 
-			return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['user' => $user, 'post_id' => $post_id ] );
+				return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['user' => $user, 'post_id' => $post_id ] );
+			} else {
+				return  $this->goHome();
+			}
 		} else {
-			 return  $this->goHome();
+			return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/chat-inbox/']);
 		}
+
 
 	}
 
@@ -73,7 +79,7 @@ class ChatPrivateController extends BaseController
 			}
 
 			usort($data, function($a, $b) {
-				return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
+				return strtotime($b['real_updated_at']) - strtotime($a['real_updated_at']);
 			});
 			$data = json_encode($data);
 			return $data;

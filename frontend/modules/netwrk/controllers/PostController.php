@@ -57,6 +57,7 @@ class PostController extends BaseController
         $Post->content = $message;
         $Post->topic_id = $topic;
         $Post->user_id = $currentUser;
+        $Post->post_type = 1;
         $Post->save();
 
     }
