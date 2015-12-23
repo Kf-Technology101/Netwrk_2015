@@ -79,8 +79,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					$this->ws_messages->post->update();
 					$list_chat_inbox = $this->updateListChatBox($user);
 				} else {
-					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id)->one();
-					$chat_private->save(false);
+					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id . ' AND user_id = ' .$user)->one();
+					if ($chat_private) {
+						$chat_private->save(false);
+					}
 					$list_chat_inbox = $this->updateChatPrivateList($user);
 				}
 				$userProfile = json_decode($this->userProfile($user));
@@ -263,7 +265,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	public function updateChatPrivateList($user_id)
 	{
 		$currentUser = $user_id;
-		$chat_list = ChatPrivate::find()->where('user_id = '.$currentUser)->all();
+		$chat_list = ChatPrivate::find()->where('user_id = '.$currentUser )->all();
 		if ($chat_list) {
 			$data = [];
 			foreach ($chat_list as $key => $chat) {
@@ -289,7 +291,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			}
 
 			usort($data, function($a, $b) {
-                return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
+                return strtotime($b['real_updated_at']) - strtotime($a['real_updated_at']);
             });
 			$data = json_encode($data);
 			return $data;

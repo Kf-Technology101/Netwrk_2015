@@ -7,6 +7,7 @@ use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\Vote;
+use frontend\modules\netwrk\models\ChatPrivate;
 use yii\helpers\Url;
 use Yii;
 
@@ -153,7 +154,7 @@ class MeetController extends BaseController
         $userCurrent = Yii::$app->user->id;
         $Auth = $_GET['user_id'];
 
-        $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
+        $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth. ' AND status = 1')->one();
 
         if($usermeet == null){
             $meet = new UserMeet;
@@ -161,6 +162,29 @@ class MeetController extends BaseController
             $meet->user_id_2 = $Auth;
             $meet->status = 1;
             $meet->save();
+            $usermeet_guest = Usermeet::find()->where('user_id_1 = '. $Auth. ' AND user_id_2 = '.$userCurrent. ' AND status = 1')->one();
+            if($usermeet_guest) {
+                $post_private = new POST();
+                $post_private->title = 'private'.time();
+                $post_private->content = 'content private'.time();
+                $post_private->user_id = $userCurrent;
+                $post_private->post_type = 0;
+                if($post_private->save(false)) {
+                    $chat_private = new ChatPrivate();
+                    $chat_private->user_id = $userCurrent;
+                    $chat_private->user_id_guest = $Auth;
+                    $chat_private->post_id = $post_private->id;
+                    $chat_private->save(false);
+                    $chat_private = new ChatPrivate();
+                    $chat_private->user_id = $Auth;
+                    $chat_private->user_id_guest = $userCurrent;
+                    $chat_private->post_id = $post_private->id;
+                    $chat_private->save(false);
+                } else {
+                    return false;
+                }
+            }
+
         }else{
             $usermeet->status = 1;
             $usermeet->update();

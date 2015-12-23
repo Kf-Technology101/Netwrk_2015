@@ -51,9 +51,10 @@ var Default ={
         var target = $('#chat_inbox_btn_mobile');
         target.unbind();
         target.on('click',function(){
-            Ajax.set_previous_page(window.location.href).then(function(data){
-                ChatInbox.OnClickChatInboxMobile();
-            });
+            sessionStorage.url = window.location.href;
+            ChatInbox.OnClickChatInboxMobile();
+            // Ajax.set_previous_page(window.location.href).then(function(data){
+            // });
         });
     },
 
