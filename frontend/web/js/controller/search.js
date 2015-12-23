@@ -4,9 +4,8 @@ var Search = {
 		if(isMobile){
 
 		}else{
-
+			Search.CustomScrollBar();
 		}
-		Search.CustomScrollBar();
 	},
 
 	CustomScrollBar: function(){

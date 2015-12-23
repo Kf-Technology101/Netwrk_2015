@@ -34,7 +34,7 @@ class Topic extends \yii\db\ActiveRecord
     {
         return [
             [['city_id', 'user_id', 'title'], 'required'],
-            [['city_id', 'user_id', 'post_count', 'view_count'], 'integer'],
+            [['city_id', 'user_id', 'post_count', 'view_count','brilliant_count'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255]
         ];
@@ -54,6 +54,7 @@ class Topic extends \yii\db\ActiveRecord
             'view_count' => 'View Count',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'brilliant_count'=> 'Brilliant Count',
         ];
     }
 
