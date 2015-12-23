@@ -6,8 +6,8 @@
         </div>
         <div class="title_page">
             <span class="title">
-                <span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
-                <span><i class="fa fa-angle-right"></i><?= $user->profile->first_name.' '.$user->profile->last_name; ?></span>
+                <!-- <span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span> -->
+                <span><?= $user->profile->first_name.' '.$user->profile->last_name; ?></span>
             </span>
         </div>
     </div>

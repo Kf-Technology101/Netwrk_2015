@@ -70,7 +70,7 @@ class ChatPrivateController extends BaseController
 				'user_id_guest_last_name' => $chat->user->profile->last_name,
 				'updated_at'=> $num_date,
 				'avatar' => $image,
-				'content' => $content ? $content->msg : 'Match!',
+				'content' => $content ? $content->msg : 'Matched!',
 				'post_id' => $chat->post_id,
 				'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
 				];

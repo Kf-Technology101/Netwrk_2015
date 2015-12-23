@@ -80,7 +80,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					$list_chat_inbox = $this->updateListChatBox($user);
 				} else {
 					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id . ' AND user_id = ' .$user)->one();
-					$chat_private->save(false);
+					if ($chat_private) {
+						$chat_private->save(false);
+					}
 					$list_chat_inbox = $this->updateChatPrivateList($user);
 				}
 				$userProfile = json_decode($this->userProfile($user));
