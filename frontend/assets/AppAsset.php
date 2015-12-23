@@ -56,6 +56,7 @@ class AppAsset extends AssetBundle
         'js/controller/user.js',
         'js/controller/login.js',
         'js/controller/signup.js',
+        'js/controller/search.js',
         'js/ws/ws.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',

@@ -11,6 +11,7 @@ var Default ={
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
         }
+        Search.initialize();
     },
 
     getMarkerDefault: function(){

@@ -35,7 +35,8 @@ class MobileAsset extends AssetBundle
       'css/emojione/css/emojione.min.css',
       'css/mobile/forgot_pass.css',
       'css/mobile/chat_inbox.css',
-      'css/mobile/forgot_pass.css'
+      'css/mobile/forgot_pass.css',
+      'css/mobile/search.css'
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -59,6 +60,7 @@ class MobileAsset extends AssetBundle
       'js/controller/user.js',
       'js/controller/login.js',
       'js/controller/signup.js',
+      'js/controller/search.js',
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',

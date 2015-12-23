@@ -32,6 +32,7 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/signup.css": "frontend/web/less/mobile/signup.less",
           "frontend/web/css/mobile/chat_inbox.css": "frontend/web/less/mobile/chat_inbox.less",
           "frontend/web/css/mobile/forgot_pass.css": "frontend/web/less/mobile/forgot_pass.less",
+          "frontend/web/css/mobile/search.css": "frontend/web/less/mobile/search.less",
         }
       }
     },
