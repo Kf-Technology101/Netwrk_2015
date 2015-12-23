@@ -57,7 +57,7 @@
 				</span>
 				<div class='title-description-user'>
 					<div class='title-chat-inbox'><%= chat_inbox.user_id_guest_first_name + ' '+ chat_inbox.user_id_guest_last_name %></div>
-					<span class='notify-chat-inbox'>3</span>
+					<span class='notify-chat-inbox disable'>3</span>
 					<div class='description-chat-inbox'><%= chat_inbox.content %></div>
 				</div>
 				<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> <%= chat_inbox.updated_at %></span>
