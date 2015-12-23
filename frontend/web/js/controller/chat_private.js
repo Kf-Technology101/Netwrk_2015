@@ -290,7 +290,7 @@ var ChatPrivate = {
 					if(isMobile){
 						fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
 					} else {
-						ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
+						ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat);
 					}
 					if(ChatPrivate.message_type == 1){
 						ChatPrivate.FetchEmojiOne({type: 'single'});

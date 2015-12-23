@@ -134,36 +134,36 @@ var ChatInbox = {
 
 			}
 		});
-},
+	},
 
-OnClickChatPrivateDetail: function() {
-	var btn = $(ChatInbox.modal).find('#chat_private li'),private_notify;
-	btn.unbind();
-	btn.on("click", function(e) {
-		var btn = $(this);
-		var userID = $(btn).find('.chat-post-id').attr('data-user');
-		var postID=  $(btn).find('.chat-post-id').attr('data-post');
-		if(isMobile){
-			ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
-		}else{
-			ChatPrivate.params.private = userID;
-			if(ChatPrivate.temp_private != ChatPrivate.params.private){
-				$('.modal').modal('hide');
-				ChatPrivate.initialize();
-				ChatPrivate.temp_private = ChatPrivate.params.private;
+	OnClickChatPrivateDetail: function() {
+		var btn = $(ChatInbox.modal).find('#chat_private li'),private_notify;
+		btn.unbind();
+		btn.on("click", function(e) {
+			var btn = $(this);
+			var userID = $(btn).find('.chat-post-id').attr('data-user');
+			var postID=  $(btn).find('.chat-post-id').attr('data-post');
+			if(isMobile){
+				ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
+			}else{
+				ChatPrivate.params.private = userID;
+				if(ChatPrivate.temp_private != ChatPrivate.params.private){
+					$('.modal').modal('hide');
+					ChatPrivate.initialize();
+					ChatPrivate.temp_private = ChatPrivate.params.private;
+				}
 			}
-		}
-		private_notify = $(e.currentTarget).find('.notify-chat-inbox');
-		private_notify.html('0');
-		private_notify.addClass('disable');
-	});
-},
+			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
+			private_notify.html('0');
+			private_notify.addClass('disable');
+		});
+	},
 
-ActiveReponsiveChatInbox: function() {
-	var width = $( window ).width();
-	if (width <= 1366) {
-		$(".modal").addClass("responsive-chat-inbox");
-	}
+	ActiveReponsiveChatInbox: function() {
+		var width = $( window ).width();
+		if (width <= 1366) {
+			$(".modal").addClass("responsive-chat-inbox");
+		}
 
 			//set zoom for re-init
 			Map.zoom = Map.map.getZoom();
@@ -202,10 +202,7 @@ ActiveReponsiveChatInbox: function() {
 				var previous_link = sessionStorage.url !== undefined ? sessionStorage.url : baseUrl;
 				sessionStorage.clear();
 				window.location.href = previous_link;
-				// Ajax.get_previous_page().then(function(data){
-				// 	window.location.href = data;
-				// });
-		});
+			});
 		} else {
 			var chat_inbox = $("#chat_inbox");
 			var parent = $(chat_inbox).find('#chat_discussion ul');
@@ -234,23 +231,19 @@ ActiveReponsiveChatInbox: function() {
 	},
 
 	GetDataListChatPrivate: function() {
-		var btn = $(ChatInbox.chat_inbox).find('.chat-private-btn');
-		btn.unbind();
-		// btn.on('click', function() {
-			var parent = $(ChatInbox.chat_inbox).find('#chat_private ul');
-			$.ajax({
-				url: baseUrl + "/netwrk/chat-private/get-chat-private-list",
-				type: 'GET',
-				data: {"user_id": UserLogin},
-				processData: false,
-				contentType: false,
-				success: function(result) {
-					result = $.parseJSON(result);
-					ChatInbox.getTemplateChatPrivate(parent,result);
-				}
-			});
-		// });
-},
+		var parent = $(ChatInbox.chat_inbox).find('#chat_private ul');
+		$.ajax({
+			url: baseUrl + "/netwrk/chat-private/get-chat-private-list",
+			type: 'GET',
+			data: {"user_id": UserLogin},
+			processData: false,
+			contentType: false,
+			success: function(result) {
+				result = $.parseJSON(result);
+				ChatInbox.getTemplateChatPrivate(parent,result);
+			}
+		});
+	},
 
 	getTemplateChatInboxMobile: function(parent) {
 		if (isMobile) {
@@ -281,8 +274,9 @@ ActiveReponsiveChatInbox: function() {
 				parent.find('li').remove();
 				parent.append(append_html);
 				for(i=0; i < data.length; i++) {
+					console.log(data[i]);
 					if(data[i].class_first_met == 0) {
-						parent.find('li .chat-post-id .title-description-user .description-chat-inbox').addClass('match-description');
+						parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
 					}
 				}
 				ChatInbox.CustomScrollBarPrivate();
@@ -306,77 +300,36 @@ ActiveReponsiveChatInbox: function() {
 		}
 	},
 
-getTemplateChatInboxMobile: function(parent) {
-	if (isMobile) {
-		Ajax.list_chat_post().then(function(data){
-			if (data) {
-				data = $.parseJSON(data);
-			}
-
-			var list_template = _.template($("#chat_inbox_list" ).html());
-			var append_html = list_template({chat_inbox_list: data});
-			parent = $(parent).find('#chat_discussion ul');
-			parent.find('li').remove();
-			parent.append(append_html);
-			ChatInbox.CustomScrollBar();
+	OnClickChatInboxBtnMobile: function(previous_link) {
+		var target = $('#chat_inbox_btn_mobile');
+		target.unbind();
+		target.on('click',function(){
+			ChatInbox.OnClickChatInboxMobile();
 		});
-	};
-},
+	},
 
-getTemplateChatPrivateMobile: function(parent) {
-	if (isMobile) {
-		Ajax.get_chat_private_list().then(function(data){
-			if (data) {
-				data = $.parseJSON(data);
+	HideMeetIconMobile: function() {
+		$('#btn_meet_mobile').hide();
+	},
+
+	GetSearchParam: function(url) {
+		var query_string = {};
+		var query = url.substring(1);
+		var vars = query.split("?");
+		for (var i=0;i<vars.length;i++) {
+			var pair = vars[i].split("=");
+			        // If first entry with this name
+			        if (typeof query_string[pair[0]] === "undefined") {
+			        	query_string[pair[0]] = decodeURIComponent(pair[1]);
+			        // If second entry with this name
+			    } else if (typeof query_string[pair[0]] === "string") {
+			    	var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+			    	query_string[pair[0]] = arr;
+			        // If third or later entry with this name
+			    } else {
+			    	query_string[pair[0]].push(decodeURIComponent(pair[1]));
+			    }
 			}
-			var list_template = _.template($("#chat_private_list" ).html());
-			var append_html = list_template({chat_private_list: data});
-			parent = $(parent).find('#chat_private ul');
-			parent.find('li').remove();
-			parent.append(append_html);
-			ChatInbox.CustomScrollBarPrivate();
-		});
-	};
-},
-
-OnClickMeetIconMobile: function() {
-	var btn = $('#btn_meet_mobile');
-	btn.unbind();
-	btn.on('click',function(){
-		window.location.href = baseUrl + "/netwrk/meet";
-	});
-},
-
-OnClickChatInboxBtnMobile: function(previous_link) {
-	var target = $('#chat_inbox_btn_mobile');
-	target.unbind();
-	target.on('click',function(){
-		ChatInbox.OnClickChatInboxMobile();
-	});
-},
-
-HideMeetIconMobile: function() {
-	$('#btn_meet_mobile').hide();
-},
-
-GetSearchParam: function(url) {
-	var query_string = {};
-	var query = url.substring(1);
-	var vars = query.split("?");
-	for (var i=0;i<vars.length;i++) {
-		var pair = vars[i].split("=");
-		        // If first entry with this name
-		        if (typeof query_string[pair[0]] === "undefined") {
-		        	query_string[pair[0]] = decodeURIComponent(pair[1]);
-		        // If second entry with this name
-		    } else if (typeof query_string[pair[0]] === "string") {
-		    	var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
-		    	query_string[pair[0]] = arr;
-		        // If third or later entry with this name
-		    } else {
-		    	query_string[pair[0]].push(decodeURIComponent(pair[1]));
-		    }
-		}
 		return query_string;
 	},
 
