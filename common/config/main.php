@@ -6,15 +6,24 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'class' => 'amnah\yii2\user\components\User',
+            'class' => 'frontend\components\UserComponent',
+            'identityClass' => 'frontend\modules\netwrk\models\User',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => true,
+            // 'useFileTransport' => true,
             'messageConfig' => [
-                'from' => ['admin@website.com' => 'Admin'], // this is needed for sending emails
+                'from' => ['admin@rubyspace.net' => 'support@netwrk.com'], // this is needed for sending emails
                 'charset' => 'UTF-8',
-            ]
+            ],
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'hungnhottest@gmail.com',
+                'password' => 'Admintrum',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
         'authManager'  => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
@@ -30,12 +39,15 @@ return [
             ],
         ],
     ],
-    'modules' => [
-        'user' => [
-            'class' => 'amnah\yii2\user\Module',
-            // set custom module properties here ...
-        ],
-    ],
+    // 'modules' => [
+    //     'user' => [
+    //         'class' => 'amnah\yii2\user\Module',
+    //         'controllerMap' => [
+    //             'default' => 'frontend\modules\netwrk\controllers\UserController',
+    //         ],
+    //         // set custom module properties here ...
+    //     ],
+    // ],
     // 'as access' => [
     //     'class' => 'mdm\admin\components\AccessControl',
     //     'allowActions' => [

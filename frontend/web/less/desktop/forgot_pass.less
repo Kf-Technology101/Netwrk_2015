@@ -1,0 +1,125 @@
+#forgot-password, #reset-password{
+	top: 90px;
+	.modal-dialog{
+        width: 485px;
+        height: auto;
+        margin: auto;
+    }
+
+    .modal-content{
+    	background: #fbfbfb;
+    }
+
+    .modal-header{
+        width: 100%;
+        border: none;
+        display: block;
+		border-radius: 5px 5px 0 0;
+		min-height: auto;
+		padding: 25px 40px;
+		.head{
+			font-family: "ProximaNovaSemibold";
+			font-size: 26px;
+			color: #1d1b1b;
+			p{
+				margin: 0;
+			}
+		}
+    }
+    .alert{
+        display: none;
+        width: 90%;
+        margin: 10px auto 40px;
+        font-size: 16px;
+    }
+    .modal-body{
+    	padding: 0 40px 40px;
+    	font-family: "ProximaNovaRegular";
+
+    	.description{
+    		margin-bottom: 25px;
+    		font-size: 16px;
+    		color: #1d1b1b;
+    	}
+    	input:-ms-input-placeholder{
+    		color: #beb8b8;
+    	}
+
+    	.email{
+    		height: 46px;
+    		width: 400px;
+    		border: 1px solid #bcbcbc;
+            box-shadow: none;
+    		font-size: 18px;
+    		border-radius: 4px;
+    		color: #1d1b1b;
+    		outline: none;
+    		padding: 0 15px;
+    		&:focus{
+    			border-color: #5da5d8;
+    		}
+    	}
+    	.send-email, .reset{
+    		margin: 25px 0;
+    		height: 46px;
+    		font-size: 22px;
+            border: 1px solid #fff;
+            background: #5888ac;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px #e0e0e0;
+            &.disable{
+                opacity: 0.5;
+                cursor: default;
+            }
+    	}
+    }
+}
+
+#reset-password{
+	.modal-body{
+		font-size: 16px;
+		color: #1d1b1b;
+	}
+    .field{
+        width: 100%;
+        height: 85px;
+    }
+    .title{
+        font-family: "ProximaNovaRegular";
+        color: #1b1b1b;
+        border-color: #bcbcbc;
+        box-shadow: none;
+        outline: none;
+        font-weight: bold;
+    }
+    .no-padding{
+        padding: 0;
+    }
+	.form-group{
+		margin-bottom: 25px;
+		input:-ms-input-placeholder{
+    		color: #beb8b8;
+    	}
+		.title-field{
+			font-family: "ProximaNovaSemibold";
+			font-weight: normal;
+		}
+		.new-pass, .confirm-pass{
+    		height: 46px;
+    		width: 400px;
+    		border: 1px solid #bcbcbc;
+    		border-radius: 4px;
+    		font-size: 18px;
+    		color: #1d1b1b;
+    		outline: none;
+    		padding: 0 15px;
+    		&:focus{
+    			border-color: #5da5d8;
+    		}
+    	}
+	}
+}

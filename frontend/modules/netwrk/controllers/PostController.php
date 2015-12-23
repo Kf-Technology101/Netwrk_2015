@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace frontend\modules\netwrk\controllers;
 
 use frontend\components\BaseController;
@@ -8,13 +8,14 @@ use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Vote;
+use frontend\modules\netwrk\models\WsMessages;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
 use Yii;
 
 class PostController extends BaseController
-{   
+{
     private $currentUser = 1;
 
     public function actionResetPostCount(){
@@ -30,10 +31,13 @@ class PostController extends BaseController
         $topic_id = $_GET['topic'];
         $topic= Topic::find()->where('id ='.$topic_id)->one();
         return $this->render($this->getIsMobile() ? 'mobile/index':'',['topic' =>$topic,'city' =>$topic->city->id]);
-    } 
+    }
 
     public function actionCreatePost($city,$topic)
-    {   
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post?topic='.$topic]);
+        }
         $top = Topic::findOne($topic);
         $cty = City::findOne($city);
         return $this->render('mobile/create',['topic' =>$top,'city' =>$cty]);
@@ -42,6 +46,7 @@ class PostController extends BaseController
     public function actionNewPost()
     {
         // $city = $_POST['city'];
+        $currentUser = Yii::$app->user->id;
         $topic = $_POST['topic'];
         $post = $_POST['post'];
         $message = $_POST['message'];
@@ -51,13 +56,14 @@ class PostController extends BaseController
         $Post->title = $post;
         $Post->content = $message;
         $Post->topic_id = $topic;
-        $Post->user_id = $this->currentUser;
+        $Post->user_id = $currentUser;
+        $Post->post_type = 1;
         $Post->save();
 
     }
 
     public function actionGetAllPost(){
-
+        $currentUser = Yii::$app->user->id;
         $maxlength = Yii::$app->params['MaxlenghtMessageDesktop'];
         $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
 
@@ -69,17 +75,17 @@ class PostController extends BaseController
 
         switch ($filter) {
             case 'post':
-                $condition = 'created_at';
-                break;
+            $condition = 'created_at';
+            break;
             case 'brilliant':
-                $condition = 'brilliant_count';
-                break;  
+            $condition = 'brilliant_count';
+            break;
             case 'view':
-                $condition = 'view_count';
-                break; 
+            $condition = 'view_count';
+            break;
         }
-        
-        $posts = Post::find()->where('topic_id ='.$topic_id)->with('topic')->orderBy([$condition=> SORT_DESC]);
+
+        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->with('topic')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $posts->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
@@ -95,12 +101,12 @@ class PostController extends BaseController
 
             if($this->getIsMobile() && strlen($content) > $maxlengthMobile){
                 $content = substr($content,0,$maxlengthMobile) ;
-                $content = $content." ...<span class='show_more>show more</span>";
+                $content = $content." ...<span class='show_more'>show more</span>";
             }elseif(!$this->getIsMobile() && strlen($content) > $maxlength){
                 $content = substr($content,0,$maxlength) ;
                 $content = $content." ...<span class='show_more'>show more</span>";
             }
-            
+
             $user_photo = User::findOne($value->user_id)->profile->photo;
 
             if ($user_photo == null){
@@ -108,9 +114,11 @@ class PostController extends BaseController
             }else{
                 $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
             }
-            
-            $currentVote = Vote::find()->where('user_id= '.$this->currentUser.' AND post_id= '.$value->id)->one();
-            
+            $currentVote = null;
+            if($currentUser){
+                $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$value->id)->one();
+            }
+
             if($currentVote && $currentVote->status == 1){
                 $isVote = 1;
             }else{
@@ -129,7 +137,7 @@ class PostController extends BaseController
                 'avatar'=> $image,
                 'update_at'=>$num_date,
                 'is_vote'=> $isVote
-            );
+                );
 
             array_push($data,$post);
         }
@@ -140,23 +148,24 @@ class PostController extends BaseController
     }
 
     public function actionVotePost(){
+        $currentUser = Yii::$app->user->id;
         $post_id = $_POST['post_id'];
-        
+
         $current_date = date('Y-m-d H:i:s');
-        $curVote = Vote::find()->where('user_id = '.$this->currentUser.' AND post_id = '.$post_id)->one();
+        $curVote = Vote::find()->where('user_id = '.$currentUser.' AND post_id = '.$post_id)->one();
 
         if($curVote){
             if($curVote->status == 1){
                 $curVote->status = 0;
-                $curVote->save(); 
+                $curVote->save();
             }else{
                 $curVote->status = 1;
-                $curVote->save(); 
+                $curVote->save();
             }
         }else{
             $vote = new Vote;
             $vote->post_id = $post_id;
-            $vote->user_id = $this->currentUser;
+            $vote->user_id = $currentUser;
             $vote->status = 1;
             $vote->created_at = $current_date;
             $vote->save();
@@ -167,5 +176,75 @@ class PostController extends BaseController
         $hash = json_encode($temp);
 
         return $hash;
+    }
+
+    public function actionGetChatInbox()
+    {
+        $currentUser = Yii::$app->user->id;
+        $messages = new WsMessages();
+        $messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser. ' AND post_type = 1')
+        ->distinct()
+        ->with('post')
+        ->all();
+
+        if($messages) {
+            $data = [];
+
+            foreach ($messages as $key => $message) {
+                $user_photo = User::findOne($message->post->user_id)->profile->photo;
+                if ($user_photo == null){
+                    $image = 'img/icon/no_avatar.jpg';
+                }else{
+                    $image = 'uploads/'.$message->post->user_id.'/'.$user_photo;
+                }
+
+                $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$message->post->id)->one();
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
+                $num_date = UtilitiesFunc::FormatDateTime($message->post->created_at);
+                $item = [
+                    'id'=> $message->post->id,
+                    'post_title'=> $message->post->title,
+                    'post_content'=> $message->post->content,
+                    'topic_id'=> $message->post->topic_id,
+                    'topic_name'=> $message->post->topic->title,
+                    'city_id' => $message->post->topic->city_id,
+                    'city_name' => $message->post->topic->city->name,
+                    'title'=> $message->post->title,
+                    'content'=> $message->post->content,
+                    'num_comment' => $num_comment ? $num_comment: 0,
+                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+                    'avatar'=> $image,
+                    'update_at'=> $num_date,
+                    'real_update_at' => $message->post->updated_at ? $message->post->updated_at : $message->post->created_at
+                    ];
+                array_push($data, $item);
+            }
+
+            // return strtotime($data[0]['real_update_at']) - strtotime($data[1]['real_update_at']);die;
+            usort($data, function($a, $b) {
+                return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
+            });
+            $data = json_encode($data);
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+    public function actionSetPrivatePost()
+    {
+        $currentUser = Yii::$app->user->id;
+        $post_private = new POST();
+        $post_private->title = 'private'.time();
+        $post_private->content = 'content private'.time();
+        $post_private->user_id = $currentUser;
+        $post_private->post_type = 0;
+        if($post_private->save(false)) {
+            return $post_private->id;
+        } else {
+            return false;
+        }
+
     }
 }

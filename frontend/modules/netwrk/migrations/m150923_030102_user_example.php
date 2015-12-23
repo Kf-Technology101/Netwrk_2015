@@ -25,24 +25,24 @@ class m150923_030102_user_example extends \yii\db\Migration
             'login_time' => Schema::TYPE_TIMESTAMP,
             'create_ip' => Schema::TYPE_STRING . '(255)',
             'create_time' => Schema::TYPE_TIMESTAMP,
-            'update_time' => Schema::TYPE_TIMESTAMP,
-            'ban_time' => Schema::TYPE_TIMESTAMP,
+            'update_time' => Schema::TYPE_TIMESTAMP .' null default null',
+            'ban_time' => Schema::TYPE_TIMESTAMP .' null default null',
             'ban_reason' => Schema::TYPE_STRING . '(255)',
         ], $tableOptions);
 
         $security = Yii::$app->security;
-        $this->execute("INSERT INTO {{%user}} (role_id, status, email, username, password, auth_key,api_key,create_time,update_time) VALUES
-            ('1', '1', 'aaa@gmail.com','AAAAAAA', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'bbb@gmail.com','BBBBBBB', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'ccc@gmail.com','CCCCCCC', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'ddd@gmail.com','DasDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'asdas@gmail.com','DaasDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'ddsadd@gmail.com','DdsaDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'dasddd@gmail.com','DDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'ddasdd@gmail.com','eeeDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'dd213d@gmail.com','asdsdD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
-            ('1', '1', 'eee@gmail.com','EEEEEEE', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46');
-        ");
+        // $this->execute("INSERT INTO {{%user}} (role_id, status, email, username, password, auth_key,api_key,create_time,update_time) VALUES
+        //     ('1', '1', 'aaa@gmail.com','AAAAAAA', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'bbb@gmail.com','BBBBBBB', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'ccc@gmail.com','CCCCCCC', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}', '2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'ddd@gmail.com','DasDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'asdas@gmail.com','DaasDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'ddsadd@gmail.com','DdsaDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'dasddd@gmail.com','DDDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'ddasdd@gmail.com','eeeDD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'dd213d@gmail.com','asdsdD', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46'),
+        //     ('1', '1', 'eee@gmail.com','EEEEEEE', '{$security->generatePasswordHash('1qazxsw2')}', '{$security->generateRandomString()}', '{$security->generateRandomString()}','2015-09-23 08:33:46', '2015-09-23 08:33:46');
+        // ");
     }
 
     public function down()

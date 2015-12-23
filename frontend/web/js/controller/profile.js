@@ -30,9 +30,8 @@ var Profile = {
         Profile.onChangeAbout();
         Profile.eventClickSave();
         // $('.footer-btn').hide();
-        $('.modal-footer').hide();
-        var abc = $('#modal_meet .modal-body').height();
-        $('#modal_meet .modal-body').css('max-height', abc+47);
+        $('#modal_meet .modal-footer').hide();
+        $('#modal_meet .modal-body').css('height', Meet.height+46);
     },
 
     eventClickSave: function(){
@@ -52,7 +51,6 @@ var Profile = {
     validateZipcode: function(){
         // Profile.apiZipcode();
         $('input.zip_code').on('keyup',function(e){
-            
             var zipcode_current = parseInt($('input.zip_code').val());
             if (zipcode_current > 9999 && Profile.params.zipcode == Profile.data.zip && !Profile.zipcode){
                 Profile.params.zipcode = zipcode_current;
@@ -65,7 +63,7 @@ var Profile = {
                 Profile.invalidZip();
                 Profile.status_change.zipcode = false;
                 Profile.OnTemplate();
-            }    
+            }
         });
     },
 
@@ -75,15 +73,12 @@ var Profile = {
         Profile.zipcode = true;
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
             if (data.places[0].state == Profile.state){
-                
                 Profile.params.lat = data.places[0].latitude;
                 Profile.params.lng = data.places[0].longitude;
                 Profile.validZip();
                 Profile.status_change.zipcode = true;
-                
                 Profile.OnTemplate();
             }else{
-                
                 Profile.invalidZip();
                 Profile.status_change.zipcode = false;
                 Profile.OnTemplate();
@@ -93,8 +88,8 @@ var Profile = {
 
                 Profile.status_change.zipcode = false;
                 Profile.OnTemplate();
-                Profile.invalidZip();                
-            }            
+                Profile.invalidZip();
+            }
         });
     },
 
@@ -144,7 +139,7 @@ var Profile = {
         }else{
             Profile.status_change.age = false;
             Profile.OnTemplate();
-            $('input.birthday').parent().addClass('alert_validate');        
+            $('input.birthday').parent().addClass('alert_validate');
         }
     },
 

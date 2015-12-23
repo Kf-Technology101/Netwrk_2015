@@ -26,7 +26,8 @@
         "amnah/yii2-user": "~3.0",
         "mdmsoft/yii2-admin": "~2.0",
         "dmstr/yii2-adminlte-asset": "2.*",
-        "bower-asset/js-cookie": "1.5.*"
+        "bower-asset/js-cookie": "1.5.*",
+        "yiisoft/yii2-swiftmailer": "~2.0.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

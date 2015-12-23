@@ -1,4 +1,70 @@
 var Ajax ={
+    reset_password: function(params){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/user-reset-password";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    forgot_password: function(form){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/forgot-password";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    user_signup: function(form){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/signup-user";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    user_login: function(form){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/user/login-user";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     chat_post_name: function(params){
         var url,defer = $.Deferred();
 
@@ -141,6 +207,24 @@ var Ajax ={
         return defer.promise();
     },
 
+    place_check_zipcode_exist: function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/default/check-exist-place-zipcode";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     get_marker_default: function(){
         var url,defer = $.Deferred();
 
@@ -222,7 +306,7 @@ var Ajax ={
 
         return defer.promise();
     },
-    
+
     usermeet: function(params){
         var url,defer = $.Deferred();
 
@@ -311,7 +395,7 @@ var Ajax ={
 
     upload_image:function(params){
         var url,defer = $.Deferred();
-// 
+//
         // if (isMobile) {
             url = baseUrl +"/netwrk/setting/upload-image";
         // }else{
@@ -383,7 +467,7 @@ var Ajax ={
 
     new_topic: function(params){
         var url,defer = $.Deferred();
-     
+
         url = baseUrl +"/netwrk/topic/new-topic";
 
         $.ajax({
@@ -403,7 +487,7 @@ var Ajax ={
 
     new_post: function(params){
         var url,defer = $.Deferred();
-     
+
         url = baseUrl +"/netwrk/post/new-post";
 
         $.ajax({
@@ -419,6 +503,107 @@ var Ajax ={
         });
 
         return defer.promise();
-    }
+    },
+
+    new_place: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/place-save";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    list_chat_post: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/post/get-chat-inbox";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    set_previous_page: function(previous_link){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/previous-page/set-previous-page";
+
+        $.ajax({
+            url: url,
+            data: {previous: previous_link},
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    get_previous_page: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/previous-page/get-previous-page";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    get_chat_private_list: function(user_id) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/chat-private/get-chat-private-list";
+
+        $.ajax({
+            url: url,
+            data: {'user_id': user_id},
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    // set_private_post: function(user_id) {
+    //     var url,defer = $.Deferred();
+    //     url = baseUrl +"/netwrk/post/set-private-post";
+
+    //     $.ajax({
+    //         url: url,
+    //         data: null,
+    //         async: false,
+    //         cache: false,
+    //         type: 'POST',
+    //         success: defer.resolve,
+    //         error: defer.reject
+    //     });
+    //     return defer.promise();
+    // }
 }
 

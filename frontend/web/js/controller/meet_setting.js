@@ -37,7 +37,8 @@ var Meet_setting={
     _init: function(){
         var span,text ;
         $('.name_user').find('p.default').hide();
-        $('.modal-footer').hide();
+        $('#modal_meet .modal-footer').hide();
+        $('#modal_meet .modal-body').css('height', Meet.height+46);
 
         if(isMobile){
             $('#show_meet .page').hide();

@@ -12,13 +12,6 @@
         </div>
     </div>
     <div class="sidebar">
-<!--         <div class="dropdown">
-            <select class="form-control">
-                <option value="post">Most recent</option>
-                <option value="brilliant">Most brilliant</option>
-                <option value="view">Most view</option>
-            </select>    
-        </div> -->
         <span class="filter"><i class="fa fa-filter"></i></span>
         <table class="filter_sidebar">
             <tr>
@@ -30,7 +23,7 @@
     <div class="filter_sort">
         <div class="dropdown input-group">
             <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
-            <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
+            <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                 <li data-value="post">Most recent</li>
                 <li data-value="brilliant">Most brilliant</li>

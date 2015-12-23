@@ -6,4 +6,66 @@
 
 body{
 	font-family: 'ProximaNovaRegular';
+	.modal-backdrop.in{
+	    opacity: 0;
+	    &.active{
+	        opacity: 0.5;
+	    }
+	}
+	.has-success-disable{
+		.form-control,.control-label{
+			color: #1b1b1b !important;
+			border-color: #bcbcbc !important ;
+			box-shadow: none !important;
+			outline: none !important;
+			background: #fff !important;
+			&:focus{
+				border-color: #5da5d8 !important;
+				box-shadow: none !important;
+				outline: none !important;
+			}
+		}
+		.input-group-addon{
+			border-color: #bcbcbc ;
+			color: #555;
+			background: #eee;
+		}
+		.help-block{
+			display: none !important;
+		}
+	}
+	.has-success{
+		.form-control,.control-label{
+			color: #1b1b1b;
+			border-color: #bcbcbc ;
+			box-shadow: none;
+			outline: none;
+			background: #fff;
+			&:focus{
+				border-color: #5da5d8 ;
+				box-shadow: none;
+				outline: none;
+			}
+		}
+		.input-group-addon{
+			border-color: #bcbcbc ;
+			color: #555;
+			background: #eee;
+		}
+	}
+	.form-control,.control-label{
+		color: #1b1b1b;
+		border-color: #bcbcbc ;
+		box-shadow: none;
+		outline: none;
+		background-color: #fff;
+		&:focus{
+			border-color: #5da5d8 ;
+			box-shadow: none;
+			outline: none;
+		}
+		&[readonly]{
+			background-color: #fff;
+		}
+	}
 }

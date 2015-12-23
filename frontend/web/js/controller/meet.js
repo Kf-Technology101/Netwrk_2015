@@ -16,8 +16,9 @@ var Meet ={
     json:{
 
     },
-    
-    initialize: function() {  
+    modal: '#modal_meet',
+    height: 0,
+    initialize: function() {
         console.log(Meet.filter.active);
         if(Meet.filter.active === 'setting'){
             Meet_setting.initialize();
@@ -34,8 +35,8 @@ var Meet ={
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
 
-            container.find('.page').hide(); 
-            $('.name_user').find('img').show();   
+            container.find('.page').hide();
+            $('.name_user').find('img').show();
             $('#btn_meet_mobile').hide();
             $('#btn_discover_mobile').hide();
             $('.menu_bottom').hide();
@@ -58,23 +59,25 @@ var Meet ={
             Meet.reset_modal();
             currentTarget.show();
 
-            
-            Meet.changefilter(currentTarget);
-            Meet.ShowModalMeet();
-            Meet.eventClickdiscover();
-            Meet.CustomScrollBar();
-            Meet._onClickMeetBack();
-            // $('#btn_meet').hide();
-            $('.modal-footer').show();
-            // parent.find('#btn_discover').show();
-            // set_position_btn(parent,parent.find('#btn_discover'),120,100);
-            // set_position_btn_resize(parent,parent.find('#btn_discover'),120,100);
+            if(isGuest){
+                Login.modal_callback = Meet;
+                Login.initialize();
+            }else{
+                Meet.changefilter(currentTarget);
+                Meet.ShowModalMeet();
+                Meet.eventClickdiscover();
+                Meet.CustomScrollBar();
+                Meet._onClickMeetBack();
+                // $('#btn_meet').hide();
+                $('.modal-footer').show();
+                // parent.find('.modal-body').addClass('onmeeting');
+            }
         }
     },
 
     CustomScrollBar: function(){
         var parent;
- 
+
         parent = $("#modal_meet").find('.modal-body');
 
         parent.mCustomScrollbar({
@@ -118,7 +121,7 @@ var Meet ={
 
     _onclickBack: function(){
         $('.back_page img').click(function(){
-            window.location.href = baseUrl; 
+            window.location.href = baseUrl;
         })
     },
 
@@ -129,7 +132,7 @@ var Meet ={
     },
 
     showUserMeetMobile: function(){
-        window.location.href = "netwrk/meet"; 
+        window.location.href = "netwrk/meet";
     },
 
     GetUserMeet: function(){
@@ -144,8 +147,8 @@ var Meet ={
             }else{
                 $('p.no_data').show();
             }
-            
-            
+
+
             // $('#modal_meet').on('hidden.bs.modal',function() {
             //     self.reset_modal();
             // });
@@ -160,7 +163,7 @@ var Meet ={
         target.unbind();
         target.on('click',function(){
             target.bind();
-            window.location.href = baseUrl; 
+            window.location.href = baseUrl;
             // Meet.reset_page();
             // Meet._init();
         });
@@ -182,7 +185,7 @@ var Meet ={
     ShowModalMeet: function(){
         var modal = $('#modal_meet'),
             self = this;
-        
+
         Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
@@ -204,7 +207,9 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal($('#modal_meet'), 30);
+                set_heigth_modal_meet($('#modal_meet'), 30);
+                var meet_height = $('#modal_meet .modal-body').height();
+                Meet.height = meet_height;
             }
             $('#modal_meet').on('hidden.bs.modal',function() {
                 self.reset_modal();
@@ -233,7 +238,7 @@ var Meet ={
         btn_back.addClass('disable');
         self.user_list.vt = 0;
         self.user_list.num = 1;
-        self.user_list.len = 0;  
+        self.user_list.len = 0;
         self.json = {};
         Meet.filter.active = 'meeting';
         $('.control-btn').hide();
@@ -259,7 +264,7 @@ var Meet ={
         $('.control-btn').hide();
         self.user_list.vt = 0;
         self.user_list.num = 1;
-        self.user_list.len = 0;  
+        self.user_list.len = 0;
         self.json = {};
 
     },
@@ -312,9 +317,26 @@ var Meet ={
             }
         });
 
-        
+
         self.eventMeet();
         self.eventMet();
+        self.OnClickChatPost();
+    },
+
+    OnClickChatPost: function(){
+        var target = $('#meeting_page,#modal_meet').find('.box-infomation .post .list-post span');
+        target.unbind();
+            target.on('click',function(e){
+            var item_post = $(e.currentTarget).attr('data-item');
+            if(isMobile){
+                ChatPost.RedirectChatPostPage(item_post);
+            }else{
+                $('#modal_meet').modal('hide');
+                ChatPost.params.post = item_post;
+                ChatPost.initialize();
+            }
+        });
+
     },
 
     disableUser: function(num){
@@ -327,14 +349,14 @@ var Meet ={
         var user = $('.user_meet_'+num),
             self = this;
         if(user.length > 0){
-            user.show();
+            user.fadeIn('500');
             self.eventMeet();
             user.addClass('active');
         }else{
             self.user_list.num ++ ;
             self.showUserMeet();
         }
-       
+
     },
     eventMeet: function(){
         var self = this,
@@ -378,7 +400,7 @@ var Meet ={
         var self = this;
         var name = $('.name_user'),
             info = $('.user_list');
-            
+
         var vt = self.user_list.vt;
         var data = self.json[vt];
         self.getTemplateUserName(name,data,vt);
@@ -391,7 +413,7 @@ var Meet ={
         var template = _.template($( "#name_user" ).html());
         var append_html = template({user: data,vt: vt});
 
-        parent.append(append_html); 
+        parent.append(append_html);
     },
 
     getTemplateInfo: function(parent,data,vt){
@@ -399,6 +421,6 @@ var Meet ={
         var template = _.template($( "#list_user" ).html());
         var append_html = template({user: data.information ,vt: vt});
 
-        parent.append(append_html); 
+        parent.append(append_html);
     }
-}; 
+};

@@ -12,8 +12,8 @@ use yii\db\ActiveRecord;
  * @property integer $user_id
  * @property string $msg
  * @property integer $post_id
- * @property string $msg_type
- * @property integer $post_type
+ * @property string $msg_type   1: text, 2: image, 3: file
+ * @property integer $post_type 0: public, 1:private
  * @property string $created_at
  * @property string $updated_at
  */
@@ -93,5 +93,4 @@ class WsMessages extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Post::className(), ['id' => 'post_id']);
     }
-
 }

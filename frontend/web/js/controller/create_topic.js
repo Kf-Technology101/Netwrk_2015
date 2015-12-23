@@ -17,7 +17,7 @@ var Create_Topic={
         total: false
     },
 
-    initialize: function(city,name){       
+    initialize: function(city,name){
         if(isMobile){
             Create_Topic.params.city = $('#create_topic').attr('data-city');
             Create_Topic.params.netwrk_name = $('#create_topic').attr('data-name-city');
@@ -26,9 +26,16 @@ var Create_Topic={
             Create_Topic.params.lng = $('#create_topic').attr('data-lng');
             this.changeData();
             Create_Topic.onclickBack();
-            Create_Topic.showNetWrkBtn();
-            Create_Topic.eventClickdiscoverMobile();
+            // Create_Topic.showNetWrkBtn();
+            Create_Topic.eventClickMeetMobile();
+            Create_Topic.postTitleFocus();
+            Create_Topic.OnClickChatInboxBtnMobile();
         }else{
+            if(isGuest){
+                Login.modal_callback = Topic;
+                Login.initialize();
+                return false;
+            }
             Create_Topic.params.city = city;
             Create_Topic.params.city_name = name;
             Create_Topic.showModalCreateTopic();
@@ -36,9 +43,25 @@ var Create_Topic={
             Create_Topic.onCloseModalCreateTopic();
             Create_Topic.changeData();
             Create_Topic.onclickBack();
-            Create_Topic.showNetWrkBtn();
+            // Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickdiscover();
+            Create_Topic.postTitleFocus();
+            Create_Topic.showZipcodeBreadcrumb(name);
+            Create_Topic.onClickBackZipcodeBreadcrumb();
+            Create_Topic.onClickBackNetwrkLogo();
         }
+    },
+    showZipcodeBreadcrumb: function(zipcode){
+        var target = $('#create_topic').find('.scrumb .zipcode');
+        target.html(zipcode);
+    },
+    postTitleFocus: function(){
+        $('.name_post').focus(function(){
+            $('.input-group').addClass('clsFocus');
+        });
+        $('.name_post').focusout(function(){
+            $('.input-group').removeClass('clsFocus');
+        });
     },
     eventClickdiscover: function(){
         var parent = $('#create_topic'),
@@ -48,13 +71,13 @@ var Create_Topic={
                 parent.modal('hide');
             });
     },
-
-    eventClickdiscoverMobile: function(){
-        var target = $('#btn_discover_mobile');
+    eventClickMeetMobile: function(){
+        // var target = $('#btn_discover_mobile');
+        var target = $('#btn_meet_mobile');
         target.unbind();
         target.on('click',function(){
             target.bind();
-            window.location.href = baseUrl; 
+            window.location.href = baseUrl + "/netwrk/meet";
             // Meet.reset_page();
             // Meet._init();
         });
@@ -63,22 +86,22 @@ var Create_Topic={
     showNetWrkBtn: function(){
         var parent = $('#create_topic');
         if(isMobile){
-            if($('#create_topic').size()>0){
-                $('#btn_meet_mobile').hide();
-                $('#btn_discover_mobile').show();
-            }
+            // if($('#create_topic').size()>0){
+            //     $('#btn_meet_mobile').hide();
+            //     $('#btn_discover_mobile').show();
+            // }
         }else{
             $('#btn_meet').hide();
-            set_position_btn(parent,parent.find('#btn_discover'),160,100);
-            set_position_btn_resize(parent,parent.find('#btn_discover'),160,100);
-        } 
+            set_position_btn(parent,parent.find('#btn_discover'),130,100);
+            set_position_btn_resize(parent,parent.find('#btn_discover'),130,100);
+        }
     },
 
     hideNetWrkBtn: function(){
         var parent = $('#create_topic');
         if(isMobile){
-            $('#btn_meet_mobile').show();
-            $('#btn_discover_mobile').hide();
+            // $('#btn_meet_mobile').show();
+            // $('#btn_discover_mobile').hide();
         }else{
             $('#btn_meet').show();
             parent.find('#btn_discover').hide();
@@ -128,7 +151,7 @@ var Create_Topic={
     },
 
     onclickBack: function(){
-        var parent = $('#create_topic').find('.back_page img');
+        var parent = $('#create_topic').find('.back_page span');
         var city = Create_Topic.params.city;
         var params = {zipcode: Create_Topic.params.city_name};
         parent.unbind();
@@ -137,13 +160,32 @@ var Create_Topic={
                 Create_Topic.redirect();
             }else{
                 Create_Topic.hideModalCreateTopic();
-                Topic.init(city,params);
+                Topic.initialize(city,params);
             }
+        });
+    },
+    onClickBackZipcodeBreadcrumb: function(){
+        var parent = $('#create_topic').find('.scrumb .zipcode');
+        var city = Create_Topic.params.city;
+        var params = {zipcode: Create_Topic.params.city_name};
+        parent.unbind();
+        parent.click(function(){
+            if(isMobile){
+                Create_Topic.redirect();
+            }else{
+                Create_Topic.hideModalCreateTopic();
+                Topic.initialize(city,params);
+            }
+        });
+    },
+    onClickBackNetwrkLogo: function(){
+        $('#create_topic .scrumb .logo').click(function(){
+            $('#create_topic').modal('hide');
         });
     },
     changeData: function(){
         var parent = $('#create_topic');
-        
+
         this.onChangeData(parent.find('.name_topic'),'topic');
         this.onChangeData(parent.find('.name_post'),'post');
         this.onChangeData(parent.find('.message'),'message');
@@ -160,7 +202,7 @@ var Create_Topic={
 
     onChangeData: function(target,filter){
         target.unbind();
-        target.on('keyup',function(e){
+        target.on('keyup input',function(e){
             if($(e.currentTarget).val().length > 0){
                 Create_Topic.params[filter] = $(e.currentTarget).val();
                 Create_Topic.status_change[filter] = true;
@@ -169,7 +211,15 @@ var Create_Topic={
             }
             Create_Topic.onCheckStatus();
         });
-        
+        // target.on('input',function(e){
+        //     if($(e.currentTarget).val().length > 0){
+        //         Create_Topic.params[filter] = $(e.currentTarget).val();
+        //         Create_Topic.status_change[filter] = true;
+        //     }else{
+        //         Create_Topic.status_change[filter] = false;
+        //     }
+        //     Create_Topic.onCheckStatus();
+        // });
     },
 
     onCheckStatus: function(){
@@ -210,7 +260,7 @@ var Create_Topic={
                 Create_Topic.setDefaultBtn();
             }
         });
-        
+
     },
 
     reset_data: function(){
@@ -264,11 +314,22 @@ var Create_Topic={
                             Create_Topic.redirect(Create_Topic.params.city);
                         }else{
                             Create_Topic.hideModalCreateTopic();
-                            Topic.init(Create_Topic.params.city);
+                            Topic.initialize(Create_Topic.params.city);
+                            ChatInbox.GetDataListChatPost();
                         }
                     },700);
                 });
             }
+        });
+    },
+
+    OnClickChatInboxBtnMobile: function() {
+        var target = $('#chat_inbox_btn_mobile');
+        target.unbind();
+        target.on('click',function(){
+            Ajax.set_previous_page(window.location.href).then(function(data){
+                ChatInbox.OnClickChatInboxMobile();
+            });
         });
     }
 };

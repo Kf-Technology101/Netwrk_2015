@@ -1,5 +1,8 @@
 body{
-  background: #f3f3f3;
+  background: #f2f2f2;
+  &.no-login{
+    background: #fbfbfb !important;
+  }
 }
 .wrap-mobile{
   width: 100%;
@@ -32,29 +35,7 @@ body{
   	width: 100%;
   	height: 60px;
     padding: 0 15px;
-    .search{
-      width: 80%;
-      height: 34px;
-      float: left;
-      margin: 13px 0 ;
-      span.input-group-addon{
-        background: #fff;
-        border: none;
-        i{
-          font-size: 14px;
-          color: #8f8f8f;
-        }
-      }
-      input{
-        border: none;
-        outline: none;
-        box-shadow: none;
-        padding: 0;
-        &:focus{
-          outline: none;
-        }
-      }
-    }
+
     .logo_netwrk{
       width: 20%;
       height: auto;
@@ -134,16 +115,16 @@ body{
   }
 }
 #btn_meet_mobile,#btn_discover_mobile{
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   position: relative;
   z-index: 10;
-  background-color: #365167;
-  border-color: #426c8f;
-  border-radius: 100%;
+  // background-color: #365167;
+  // border-color: #426c8f;
+  // border-radius: 100%;
   display: table;
   cursor: pointer;
-  bottom: 100%;
+  bottom: 90%;
   margin: 0 auto;
   span{
     text-align: center;
@@ -153,12 +134,13 @@ body{
     vertical-align: middle;
   }
   img{
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
   }
 }
 
 #btn_discover_mobile{
+  box-shadow: 0 0 2px 1px #4e7b9c;
   display: none;
 }
 

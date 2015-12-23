@@ -1,5 +1,6 @@
 <?php
 use frontend\assets\AppAsset;
+
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -36,18 +37,21 @@ AppAsset::register($this);
         <div class="logo_netwrk">
             <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
         </div>
-        <div class="search input-group">
-            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
-            <input type="text" class="form-control" placeholder="What are your interests?">
+        <div class="box-search">
+            <div class="search input-group">
+                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="What are your interests?">
+            </div>
+            <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
-        <div class="chatting">
-            <span><i class="fa fa-comment"></i>Chat</span>
+
+        <div class="chatting" id='chat_inbox_btn'>
+            <span><i class="fa fa-comment"></i><span class='notify disable'>15</span>Chat</span>
         </div>
         <?php
             // $menuItems = [
             //     ['label' => 'Menu'],
             //     ['label' => 'Talking'],
-                
             // ];
             // if (Yii::$app->user->isGuest) {
             //     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -76,8 +80,17 @@ AppAsset::register($this);
     <?php $this->endBody() ?>
 </body>
 <script type="text/javascript">
-    var baseUrl = '<?php echo Url::base(true); ?>';
-    var isMobile = false;
+    var baseUrl = '<?php echo Url::base(true); ?>',
+    isMobile = false,
+    isGuest = '<?php echo Yii::$app->user->isGuest ?>',
+    isResetPassword ="<?= Yii::$app->session['key_reset_password'] ?>",
+    isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>";
+    var UserLogin = '<?php echo Yii::$app->user->id; ?>';
 </script>
+<?php 
+    unset(Yii::$app->session['key_reset_password']);
+    unset(Yii::$app->session['invalidKey']);
+    Yii::$app->session->destroy();
+?>
 </html>
 <?php $this->endPage() ?>

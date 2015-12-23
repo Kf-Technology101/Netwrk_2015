@@ -12,7 +12,7 @@ function set_position_btn_meet(w,h){
   var menu_h = $('.menu_top').height();
   var hp = h - 100 - menu_h;
   var wp = w - 100;
-  
+
   $('#btn_meet').css({'top': hp,'left': wp});
   $('#modal_meet #btn_discover').css({'top': hp - 30 ,'left': wp});
 }
@@ -34,10 +34,17 @@ function fix_width_post(target,width){
   var wp = size[0] - width;
 
   target.css({'width': wp});
-  target.find('p').css({'max-width': wp});
+  target.find('p').css({'width': wp});
 
 }
 
+function fix_width_chat_post(target,width){
+  var size = get_size_window();
+  var wp = size[0] - width;
+
+  target.css({'width': wp});
+
+}
 function set_position_btn_resize(parent,target,paddingTop,paddingRight){
   $(window).resize(function(){
     set_position_btn(parent,target,paddingTop,paddingRight)
@@ -66,6 +73,21 @@ function set_heigth_modal(target,height_footer){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
   target.find('.modal-body').css({'max-height':wh - 120});
+}
+
+function set_heigth_modal_meet(target,height_footer){
+  var size = get_size_window();
+  var wh = size[1] - height_footer - 100;
+  if(wh - 120 > 570){
+    wh = 645;
+  }
+  target.find('.modal-body').css({'height':wh - 120});
+}
+
+function set_heigth_page_mobile(target){
+  var menutop = $('.menu_top').height();
+  var menubot = $('.menu_bottom').height();
+  target.css({'height': $(window).height() - menutop - menubot});
 }
 
 function ieVersion() {
@@ -150,10 +172,10 @@ function _main(){
 
 function _addListenEventPage(){
 	var page = this.show_page();
-	var Page = eval(page);
+	var Page = page !== 'Chat-inbox' && page !== 'Chat-private'  ? eval(page) : page;
 	switch(page){
 	case 'Topic':
-		Page.initialize();
+		Topic.init();
 		Create_Topic.initialize();
 		break;
 	case 'Meet':
@@ -167,6 +189,15 @@ function _addListenEventPage(){
 		break;
   case 'Chat':
     ChatPost.initialize();
+    break;
+  case 'User':
+    User.initialize();
+    break;
+  case 'Chat-inbox':
+    ChatInbox.initialize();
+    break;
+  case 'Chat-private':
+    ChatPrivate.initialize();
     break;
 	default:
 		Default.initialize();
@@ -208,4 +239,5 @@ function CustomScrollBar(){
 $(document).ready(function(){
   _main();
   _addListenEventPage();
+  Emoji.initialize();
 });

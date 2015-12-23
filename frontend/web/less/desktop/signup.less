@@ -1,0 +1,153 @@
+#signup{
+    height: auto;
+    top: 90px;
+    overflow: visible;
+    display: none;
+    width: 480px;
+    margin: auto;
+    font-family: 'ProximaNovaSemibold';
+    .modal-dialog{
+        width: 480px;
+        min-height: 250px;
+        margin: auto;
+        border-radius: 5px;
+        box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
+    }
+    .modal-content{
+        background: #fbfbfb;
+        border:none;
+    }
+    .modal-header{
+        padding: 20px 40px;
+        width: 100%;
+        border: none;
+        display: block;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        p{
+            color: #1b1b1b;
+            font-size: 26px;
+            font-weight: bold;
+        }
+    }
+    .modal-body{
+        max-height: 550px;
+        min-height: 300px;
+        width: 100%;
+        padding: 0px 40px;
+        height: auto;
+        border-radius: 4px;
+        overflow: hidden;
+        .form-register{
+            p{
+                margin: 0 0 5px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input{
+                height: 34px;
+            }
+            .field-profile-lat,.field-profile-lng{
+                display: none;
+            }
+            .field-name{
+                width: 100%;
+                float: left;
+                .forgot-password{
+                    text-align: right;
+                    display: block;
+                }
+            }
+            .col-field-name{
+                width: 185px;
+                float: left;
+                input{
+                    width: 100%;
+                }
+                &:nth-of-type(odd) {
+                    margin-right: 30px;
+                }
+                &:nth-of-type(even) {
+                }
+                .dropdown-menu{
+                    width: 175px;
+                    padding: 10px;
+                }
+                &.sex{
+                    width: 155px;
+                    margin-left: 15px;
+                    .input-group-addon{
+                        border-top-right-radius: 4px;
+                        border-bottom-right-radius: 4px;
+                    }
+                }
+            }
+            .form-group{
+                margin-bottom: 10px;
+                .help-block{
+                    margin-bottom: 0;
+                }
+            }
+            ::-webkit-input-placeholder {
+               font-size: 14px;
+               font-family: 'ProximaNovaRegular';
+            }
+
+            :-moz-placeholder { /* Firefox 18- */
+               font-size: 14px;
+               font-family: 'ProximaNovaRegular';
+            }
+
+            ::-moz-placeholder {  /* Firefox 19+ */
+               font-size: 14px;
+               font-family: 'ProximaNovaRegular';
+            }
+
+            :-ms-input-placeholder {
+               font-size: 14px;
+               font-family: 'ProximaNovaRegular';
+            }
+        }
+        .btn-control{
+            cursor: pointer;
+            background: #5888ac;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            height: 50px;
+            width: 100%;
+            float: left;
+            color: #fff;
+            font-size: 20px;
+            font-weight: normal;
+            text-align: center;
+            box-shadow: 0 0 1px 1px #e0e0e0;
+            font-family: 'ProximaNovaRegular';
+            p{
+                color: #fff;
+                font-size: 22px;
+                font-weight: normal;
+                text-align: center;
+                line-height: 50px;
+            }
+            &.disable{
+                opacity: 0.6;
+            }
+        }
+        .sign-in{
+            width: 100%;
+            float: left;
+            margin: 20px 0;
+            font-family: 'ProximaNovaLight';
+            p{
+                font-size: 22px;
+                text-align: center;
+                color: #1d1b1b;
+            }
+            b{
+                font-family: 'ProximaNovaSemibold';
+                color: #5da5d8;
+                cursor: pointer;
+            }
+        }
+    }
+}

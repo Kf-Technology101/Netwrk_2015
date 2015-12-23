@@ -3,6 +3,7 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "profile".
@@ -20,7 +21,7 @@ use Yii;
  * @property double $lat
  * @property double $lng
  */
-class Profile extends \yii\db\ActiveRecord
+class Profile extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -36,10 +37,10 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'first_name', 'last_name'], 'required'],
-            [['user_id', 'age', 'zip_code'], 'integer'],
+            [['first_name', 'last_name','dob','gender'], 'required','message'=>'This is required field'],
+            [['user_id', 'age'], 'integer'],
             [['dob'], 'safe'],
-            [['about'], 'string'],
+            [['about','dob'], 'string'],
             [['lat', 'lng'], 'number'],
             [['first_name', 'last_name', 'work'], 'string', 'max' => 45],
             [['photo', 'gender'], 'string', 'max' => 255]
@@ -65,5 +66,40 @@ class Profile extends \yii\db\ActiveRecord
             'lat' => 'Lat',
             'lng' => 'Lng',
         ];
+    }
+
+    // public function behaviors()
+    // {
+    //     return [
+    //         'timestamp' => [
+    //             'class'      => 'yii\behaviors\TimestampBehavior',
+    //             'value'      => function () { return date("Y-m-d H:i:s"); },
+    //             'attributes' => [
+    //                 ActiveRecord::EVENT_BEFORE_INSERT => 'create_time',
+    //                 ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+    //             ],
+    //         ],
+    //     ];
+    // }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        $user = Yii::$app->getModule("netwrk")->model("User");
+        return $this->hasOne($user::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * Set user id
+     *
+     * @param int $userId
+     * @return static
+     */
+    public function setUser($userId)
+    {
+        $this->user_id = $userId;
+        return $this;
     }
 }

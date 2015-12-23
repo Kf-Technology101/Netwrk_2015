@@ -56,6 +56,12 @@
                         display: block;
                         line-height: 40px;
                         margin-top: -3px;
+                        border-radius: 4px 0 0 0;
+                        -webkit-border-radius: 4px 0 0 0;
+                        &:hover{
+                            background: #5DA5D8;
+                            height: 39px;
+                        }
                     }
                     i{
                         font-size: 18px;
@@ -123,6 +129,9 @@
             }
         }
     }
+    // .onmeeting{
+    //     height: 524px;
+    // }
     .modal-body{
         -webkit-transition: width 0.4s; /* Safari */
                 transition: width 0.4s;
@@ -133,10 +142,11 @@
         padding: 0;
         background-color: #f3f3f3;
         border-radius: 0 0 4px 4px;
+        
         #meeting{
-            .user_list{
-                max-height: 505px;
-            }
+            // .user_list{
+            //     // max-height: 505px;
+            // }
             p.no_data{
                 margin: 10px;
                 display: none;
@@ -147,13 +157,13 @@
                 .avatar-image{
                     width: auto;
                     height: auto;
-                    max-height: 188px;
+                    min-height: 188px;
                     max-width: 100%;
                     background: #fff;
                     img{
                         width: auto;
-                        height: auto;
-                        max-height: 188px;
+                        // height: auto;
+                        height: 188px;
                         max-width: 400px;
                         display: block;
                         margin: auto;
@@ -162,9 +172,9 @@
                 .box-infomation{
                     width: 100%;
                     height: auto;
+                    // min-height: 336px;
                     padding: 15px 15px 15px 15px;
-                    // margin-bottom: 46px;
-                    overflow-y: auto;
+                    overflow: hidden;
                     position: relative;
                     .table{
                         margin: 0;
@@ -192,6 +202,19 @@
                         .post {
                             border-left: 1px solid #c1c1c1;
                             padding-left: 29px;
+                            .text{
+                                span{
+                                    position: relative;
+                                    margin-left: 0px;
+                                }
+                            }
+                            &:after{
+                                content: "";
+                                display: block;
+                                height: 0;
+                                clear: both;
+                                visibility: hidden;
+                            }
                         }
                         .title{
                             font-family: "ProximaNovaBold";
@@ -207,7 +230,7 @@
                                 cursor: pointer;
                                 margin-right: 5px;
                                 text-decoration: underline;
-                                color: #4141BD;
+                                color: #5888ac;
                                 display: block;
                                 float: left;
                             }

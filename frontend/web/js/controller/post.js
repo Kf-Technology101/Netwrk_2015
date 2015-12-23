@@ -25,6 +25,8 @@ var Post ={
             loaded: 0
         }
     },
+    modal: '#list_post',
+    modal_create: '#create_post',
 	tab_current:'post',
 	initialize: function(){
 		if(isMobile){
@@ -36,7 +38,6 @@ var Post ={
 			Post.OnClickSelectFilter();
 			Post.LazyLoading();
 			Create_Post.initialize();
-			fix_width_post($('.container_post').find('.item_post .information'),$($('.container_post').find('.item_post')[0]).find('.users_avatar').width());
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
@@ -48,10 +49,11 @@ var Post ={
 			Post.ShowMeetIcon();
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
-		}	
+		}
 		Post.OnclickBack();
 		Post.OnclickCreate();
-		Post.OnChangeTab();	
+		Post.OnChangeTab();
+		Post.OnNetwrkLogo();
 	},
 
 	OnClickChat: function(){
@@ -61,7 +63,7 @@ var Post ={
 		btn.on('click',function(e){
 			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post);
+				ChatPost.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				$("#list_post").modal('hide');
 				ChatPost.params.post = item_post;
@@ -75,7 +77,7 @@ var Post ={
 		btn_show_more.on('click',function(e){
 			var item_post = $(e.currentTarget).parent().parent().parent().attr('data-item');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post);
+				ChatPost.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				$("#list_post").modal('hide');
 				ChatPost.params.post = item_post;
@@ -87,6 +89,13 @@ var Post ={
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
+        	console.log('click backdrop post');
+            $('#list_post').modal('hide');
+        });
+    },
+
+    OnNetwrkLogo: function(){
+        $('#list_post .title_page .title a').click(function(){
             $('#list_post').modal('hide');
         });
     },
@@ -129,7 +138,7 @@ var Post ={
 		var btn_parent = $('#list_post').find('#btn_meet');
 		var btn_map = $('.map_content').find('#btn_meet');
 
-		btn_map.hide();
+		// btn_map.hide();
 		set_position_btn($('#list_post'),btn_parent,130,100);
 		set_position_btn_resize($('#list_post'),btn_parent,130,100);
 		btn_parent.show();
@@ -179,7 +188,6 @@ var Post ={
 
 	ShowModalPost: function(){
 		var parent = $('#list_post');
-        
 		set_heigth_modal($('#list_post'),0);
 		parent.modal({
             backdrop: true,
@@ -229,7 +237,7 @@ var Post ={
         var self = this;
         var containt = $('.container_post');
         if (isMobile) {
-            $(window).scroll(function() {   
+            $(window).scroll(function() {
                 if( $(window).scrollTop() + $(window).height() == $(document).height() && Post.list[Post.params.filter].status_paging == 1) {
                     setTimeout(function(){
                     	self.GetTabPost();
@@ -274,7 +282,6 @@ var Post ={
 	},
 
 	ShowPostPage: function(){
-		
 		if(isMobile){
 			$('#list_post').find('span.filter').removeClass('visible');
 		}else{
@@ -294,10 +301,10 @@ var Post ={
 	OnclickBack: function(){
         $('#list_post').find('.back_page span').click(function(){
         	if(isMobile){
-        		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city; 
+        		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city;
         	}else{
         		$('#list_post').modal('hide');
-        		Topic.init(Post.params.city);
+        		Topic.initialize(Post.params.city);
         	}
         })
 	},
@@ -342,7 +349,7 @@ var Post ={
 
 	GetTabPost: function(){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
-		
+
 		Ajax.get_post_by_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
@@ -352,6 +359,11 @@ var Post ={
 				Post.getTemplate(parent,json.data);
 				Post.OnclickVote();
 				Post.OnClickChat();
+				if(isMobile){
+					var infomation = $('.container_post').find('.item_post .information');
+					var wi_avatar = $($('.container_post').find('.item_post')[0]).find('.users_avatar').width();
+					fix_width_post(infomation,145);
+				}
 			}
 		});
 	},
@@ -401,12 +413,21 @@ var Post ={
     getNameTemplate: function(parent,data){
         var self = this;
         var list_template = _.template($("#name_post_list" ).html());
+        $('#list_post').find('.header .title_page').html("");
         var append_html = list_template({name: data});
 
         parent.append(append_html);
     },
 
 	RedirectPostPage: function(topic){
-		window.location.href = baseUrl + "/netwrk/post?topic="+topic;
-	},	
+		if (ChatPost.GetSearchParam(window.location.href)["previous-flag"]) {
+			if (ChatPost.GetSearchParam(window.location.href)["previous-flag"] == 0) {
+				window.location.href = baseUrl + "/netwrk/post?topic="+topic;
+			} else {
+				window.location.href = baseUrl+"/netwrk/chat-inbox";
+			}
+		} else {
+			window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
+		}
+	}
 };

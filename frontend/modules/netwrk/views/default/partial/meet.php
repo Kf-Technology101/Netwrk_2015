@@ -17,7 +17,6 @@
               <p class="default"> NO DATA</p>
             </div>
           </div>
-          
           <div class="sidebar">
             <table class="filter_sidebar">
                 <tr>
@@ -195,15 +194,14 @@
                 <i><img src="<?= Url::to('@web/img/icon/post-icon-desktop.png') ?>"></img></i>
               </span>
               <p class="title">Posts</p>
-              <p class="text">
+              <p class="text list-post">
                 <% _.each(user.post,function(p){ %>
-                    <span><%= p %></span>
+                    <span data-item ="<%= p.id %>"><%= p.title %></span>
                   <% }); %>
               </p>
             </div>
           </div>
         </div>
-        
         <div class="brillant">
           <div class="count"><span><%= user.brilliant %></span></div>
           <p>Brilliant</p>

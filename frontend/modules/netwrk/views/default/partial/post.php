@@ -1,6 +1,6 @@
 <?php use yii\helpers\Url; ?>
 <div class="modal" id="list_post">
-    <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div>
+    <!-- <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div> -->
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,7 +18,7 @@
                     <div class="title"></div>
                     <div class="dropdown input-group">
                         <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
-                        <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
+                        <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                             <li data-value="post">Most recent</li>
                             <li data-value="brilliant">Most brilliant</li>
@@ -30,7 +30,7 @@
                             <td class="feed">Feed</td>
                             <td class="post active">Posts</td>
                         </tr>
-                    </table> 
+                    </table>
                 </div>
             </div>
            <div class="modal-body container_post">
@@ -53,7 +53,7 @@
     </div>
 </div>
 <script id="name_post_list" type="text/x-underscore-template" >
-    <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= name %></span>
+    <span class="title"><a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= name %></span>
 </script>
 <script id="post_list" type="text/x-underscore-template" >
     <% _.each(posts,function(post){ %>
@@ -63,10 +63,10 @@
                 <div class="icon_brillant" data-item="<%= post.id %>">
                     <% if (post.is_vote == 1){%>
                         <div class="count"><%= post.num_brilliant %></div>
-                    <% }else{ %> 
+                    <% }else{ %>
                         <div class="count disable"><%= post.num_brilliant %></div>
                     <% } %>
-                    
+
                 </div>
             </div>
             <div class="information">
@@ -75,5 +75,5 @@
                 <span class="post_chat"><i class="fa fa-comments"></i>Chat</span>
             </div>
         </div>
-    <% }); %>            
+    <% }); %>
 </script>

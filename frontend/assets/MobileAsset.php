@@ -26,17 +26,23 @@ class MobileAsset extends AssetBundle
       'css/mobile/setting.css',
       'css/mobile/post.css',
       'css/mobile/chat_post.css',
+      'css/mobile/login.css',
+      'css/mobile/signup.css',
       'css/bootstrap-datepicker.min.css',
       'css/jquery.ui.css',
       'css/jquery.ui.pips.css',
-      'css/jquery.mCustomScrollbar.css'
+      'css/jquery.mCustomScrollbar.css',
+      'css/emojione/css/emojione.min.css',
+      'css/mobile/forgot_pass.css',
+      'css/mobile/chat_inbox.css',
+      'css/mobile/forgot_pass.css',
+      'css/mobile/search.css'
     ];
     public $js = [
       'js/lib/underscore.js',
       'js/main.js',
       'js/ws/ws.js',
       // 'js/ws/chat.js',
-      'js/bootstrap-datepicker.min.js',
       'js/controller/ajax.js',
       'js/controller/map.js',
       'js/controller/default.js',
@@ -50,10 +56,21 @@ class MobileAsset extends AssetBundle
       'js/controller/chat_post.js',
       'js/controller/post.js',
       'js/controller/vote.js',
+      'js/controller/emoji.js',
+      'js/controller/user.js',
+      'js/controller/login.js',
+      'js/controller/signup.js',
+      'js/controller/search.js',
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',
       'js/lib/jquery.mCustomScrollbar.concat.min.js',
+      'js/bootstrap-datepicker.min.js',
+      'js/lib/emojione.js',
+      'js/controller/forgot_password.js',
+      'js/controller/reset_password.js',
+      'js/controller/chat_inbox.js',
+      'js/controller/chat_private.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

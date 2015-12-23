@@ -122,14 +122,15 @@
                 position: relative;
                 .avatar-image{
                     width: auto;
-                    height: 270px;
+                    height: auto;
+                    min-height: 270px;
                     max-width: 100%;
                     margin: auto;
                     background-color: #fff;
                     img{
                         width: auto;
-                        max-height: 270px;
-                        height: auto;
+                        // max-height: 270px;
+                        height: 270px;
                         max-width: 100%;
                         display: block;
                         margin: auto;
@@ -170,6 +171,14 @@
                                 color: #1d1b1b;
                             }
                         }
+                        .post{
+                            .text{
+                                span{
+                                    position: relative;
+                                    margin-left: 0px;
+                                }
+                            }
+                        }
                         
                         .title{
                             font-family: "ProximaNovaBold";
@@ -185,7 +194,7 @@
                                 cursor: pointer;
                                 margin-right: 5px;
                                 text-decoration: underline;
-                                color: #4141BD;
+                                color: #5888ac;
                                 display: block;
                                 float: left;
                             }

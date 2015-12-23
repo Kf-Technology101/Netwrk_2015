@@ -32,8 +32,9 @@ return [
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => false,
+            'class' => 'frontend\components\UserComponent',
+            'identityClass' => 'frontend\modules\netwrk\models\User',
+            'enableAutoLogin' => true,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

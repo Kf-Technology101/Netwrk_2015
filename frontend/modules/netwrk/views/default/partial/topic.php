@@ -17,7 +17,7 @@
             <div class="title"></div>
             <div class="dropdown input-group">
                 <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
-                <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>    
+                <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                   <li data-value="recent">Most recent</li>
                   <li data-value="post">Most posts</li>
@@ -51,10 +51,9 @@
       </div>
     </div>
   </div>
-   
-   
+</div>
   <script id="city_name" type="text/x-underscore-template">
-    <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= city %></span>
+    <span class="title"><a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= city %></span>
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
       <% _.each(topices,function(topic){ %>
@@ -82,4 +81,4 @@
         </div>
     <% }); %>  
     </script>
-</div>
+

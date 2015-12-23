@@ -4,6 +4,7 @@
     overflow-y: hidden;
     width: 735px;
     margin: auto;
+    z-index: 999999;
     .modal-dialog{
         width: 725px;
         height: auto;
@@ -27,7 +28,7 @@
         border-top-right-radius: 4px;
         .header{
             background: #5888ac;
-            padding: 0 5px 3px;
+            padding: 0;
             width: 100%;
             height: 40px;
             border-top-left-radius: 4px;
@@ -38,6 +39,11 @@
                 float: left;
                 border-right: 1px solid #fff;
                 cursor: pointer;
+                border-radius: 4px 0 0 0;
+                -webkit-border-radius: 4px 0 0 0;
+                &:hover{
+                    background: #5DA5D8;
+                }
                 img{
                     width: 25px;
                 }
@@ -78,6 +84,7 @@
                         text-overflow: ellipsis;
                         white-space: nowrap;
                         display: inline-block;
+                        cursor: pointer;
                     }
                     i{
                         margin-right: 5px;
@@ -110,10 +117,23 @@
         width: 100%;
         padding: 0;
         border-radius: 4px;
+        position: relative;
         .container_post_chat{
             width: 100%;
             height: auto;
             float: left;
+        }
+        .loading_image {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            z-index: 999;
+            display: none;
+            -webkit-transition: all 0.2s;
+            -moz-transition: all 0.2s;
+            -ms-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            transition: all 0.2s;
         }
         .message{
             padding: 15px;
@@ -123,8 +143,8 @@
             height: auto;
             float: left;
             .user_thumbnail{
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 float: left;
                 display: table;
                 .avatar{
@@ -139,8 +159,8 @@
                     img{
                         width: auto;
                         height: auto;
-                        max-width: 70px;
-                        max-height: 70px;
+                        max-width: 60px;
+                        max-height: 60px;
                         margin: auto;
                     }
                 }
@@ -179,12 +199,26 @@
                 p{
                     color: #1d1b1b;
                     font-size: 14px;
-                    word-break: break-word;
+                    word-wrap: break-word;
                 }
                 p.time{
                     font-size: 12px;
                     text-align: right;
                     margin: 0;
+                }
+                .img_chat_style {
+                    width: auto;
+                    height: auto;
+                    max-width: 100px;
+                    max-height: 100px;
+                    min-height: 100px;
+                    img {
+                        width: auto;
+                        height: 100px;
+                    }
+                }
+                .file-uploaded-link {
+                    word-wrap: break-word;
                 }
             }
         }
@@ -193,8 +227,8 @@
             height: auto;
             float: left;
             .user_thumbnail{
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 float: right;
                 display: table;
                 .avatar{
@@ -209,8 +243,8 @@
                     img{
                         width: auto;
                         height: auto;
-                        max-width: 70px;
-                        max-height: 70px;
+                        max-width: 60px;
+                        max-height: 60px;
                         margin: auto;
                     }
                 }
@@ -238,23 +272,37 @@
                     border-color: rgba(136, 183, 213, 0);
                     border-left-color: #fcfcfc;
                     border-width: 10px;
-                    margin-top: -110px;
+                    margin-top: -10px;
                 }
                 &:before{
                     border-color: rgba(194, 225, 245, 0);
                     border-left-color: #e5e5e5;
                     border-width: 11px;
-                    margin-top: -111px;
+                    margin-top: -11px;
                 }
                 p{
                     color: #1d1b1b;
                     font-size: 14px;
-                    word-break: break-word; 
+                    word-wrap: break-word;
                 }
                 p.time{
                     font-size: 12px;
                     text-align: left;
                     margin: 0;
+                }
+                .img_chat_style {
+                    width: auto;
+                    height: auto;
+                    max-width: 100px;
+                    max-height: 100px;
+                    min-height: 100px;
+                    img {
+                        width: auto;
+                        height: 100px;
+                    }
+                }
+                .file-uploaded-link {
+                    word-wrap: break-word;
                 }
             }
         }
@@ -263,6 +311,10 @@
         padding: 0;
         .send_message{
             width: 100%;
+            display: none;
+            &.active{
+                display: table;
+            }
             textarea{
                 width: 100%;
                 height: 46px;
@@ -272,7 +324,18 @@
                 resize: none;
                 padding-top: 15px;
             }
-            .send{
+            input{
+                width: 100%;
+                height: 46px;
+                line-height: 46px;
+                border: none;
+                border-radius: 0px;
+                outline: none;
+                box-shadow: none;
+                text-align: center;
+                font-size: 20px;
+            }
+            .send,.login{
                 background: #5888ac;
                 color: #fff;
                 border: none;
@@ -285,6 +348,17 @@
                 background: #fff;
                 border:none;
                 cursor: pointer;
+                .dropdown-menu{
+                    width: 250px;
+                    height: 135px;
+                    left: -155px;
+                    overflow: auto;
+                    li{
+                        float: left;
+                        margin: 5px;
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }
