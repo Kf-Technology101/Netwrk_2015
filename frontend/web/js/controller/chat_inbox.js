@@ -87,7 +87,7 @@ var ChatInbox = {
 
 	OnClickChatInbox: function() {
 		var chat_inbox = $("#chat_inbox"),
-			notify = $("#chat_inbox_btn").find('.notify');
+		notify = $("#chat_inbox_btn").find('.notify');
 		$("#chat_inbox_btn").on("click", function() {
 			if(isGuest){
 				Login.modal_callback = ChatInbox;
@@ -133,41 +133,37 @@ var ChatInbox = {
 				}
 
 			}
-			});
-	},
-
-	OnClickChatPrivateDetail: function() {
-		var btn = $(ChatInbox.modal).find('#chat_private li'),private_notify;
-		btn.unbind();
-		btn.on("click", function(e) {
-			var btn = $(this);
-			var userID = $(btn).find('.chat-post-id').attr('data-user');
-			var postID=  $(btn).find('.chat-post-id').attr('data-post');
-			if(isMobile){
-				// Ajax.set_private_post(userID).then(function(data){
-					// if (data) {
-						ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
-					// };
-				// });
-			}else{
-				ChatPrivate.params.private = userID;
-				if(ChatPrivate.temp_private != ChatPrivate.params.private){
-					$('.modal').modal('hide');
-					ChatPrivate.initialize();
-					ChatPrivate.temp_private = ChatPrivate.params.private;
-				}
-			}
-			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
-			private_notify.html('0');
-			private_notify.addClass('disable');
 		});
-	},
+},
 
-	ActiveReponsiveChatInbox: function() {
-		var width = $( window ).width();
-		if (width <= 1366) {
-			$(".modal").addClass("responsive-chat-inbox");
+OnClickChatPrivateDetail: function() {
+	var btn = $(ChatInbox.modal).find('#chat_private li'),private_notify;
+	btn.unbind();
+	btn.on("click", function(e) {
+		var btn = $(this);
+		var userID = $(btn).find('.chat-post-id').attr('data-user');
+		var postID=  $(btn).find('.chat-post-id').attr('data-post');
+		if(isMobile){
+			ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
+		}else{
+			ChatPrivate.params.private = userID;
+			if(ChatPrivate.temp_private != ChatPrivate.params.private){
+				$('.modal').modal('hide');
+				ChatPrivate.initialize();
+				ChatPrivate.temp_private = ChatPrivate.params.private;
+			}
 		}
+		private_notify = $(e.currentTarget).find('.notify-chat-inbox');
+		private_notify.html('0');
+		private_notify.addClass('disable');
+	});
+},
+
+ActiveReponsiveChatInbox: function() {
+	var width = $( window ).width();
+	if (width <= 1366) {
+		$(".modal").addClass("responsive-chat-inbox");
+	}
 
 			//set zoom for re-init
 			Map.zoom = Map.map.getZoom();
@@ -180,11 +176,11 @@ var ChatInbox = {
 			$('#btn_meet').css({'left': '', 'right' : '15px'});
 		},
 
-	DeactiveReponsiveChatInbox: function() {
-		var width = $( window ).width();
-		if (width <= 1366) {
-			$(".modal").removeClass("responsive-chat-inbox");
-		}
+		DeactiveReponsiveChatInbox: function() {
+			var width = $( window ).width();
+			if (width <= 1366) {
+				$(".modal").removeClass("responsive-chat-inbox");
+			}
 
 		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
@@ -203,10 +199,13 @@ var ChatInbox = {
 		$(hide_chat_inbox_btn).unbind();
 		if (isMobile) {
 			$(hide_chat_inbox_btn).on("click", function() {
-				Ajax.get_previous_page().then(function(data){
-					window.location.href = data;
-				});
-			});
+				var previous_link = sessionStorage.url !== undefined ? sessionStorage.url : baseUrl;
+				sessionStorage.clear();
+				window.location.href = previous_link;
+				// Ajax.get_previous_page().then(function(data){
+				// 	window.location.href = data;
+				// });
+		});
 		} else {
 			var chat_inbox = $("#chat_inbox");
 			var parent = $(chat_inbox).find('#chat_discussion ul');
@@ -251,17 +250,7 @@ var ChatInbox = {
 				}
 			});
 		// });
-	},
-
-	OnClickChatInboxMobile: function() {
-		if ( window.location.href == baseUrl + "/netwrk/chat-inbox") {
-			Ajax.get_previous_page().then(function(data){
-				window.location.href = data;
-			});
-		} else {
-			window.location.href = baseUrl+ "/netwrk/chat-inbox";
-		}
-	},
+},
 
 	getTemplateChatInboxMobile: function(parent) {
 		if (isMobile) {
@@ -306,58 +295,107 @@ var ChatInbox = {
 		btn.unbind();
 		btn.on('click',function(){
 			window.location.href = baseUrl + "/netwrk/meet";
+			});
+	},
+
+	OnClickChatInboxMobile: function() {
+		if ( window.location.href == baseUrl + "/netwrk/chat-inbox") {
+			window.location.href = sessionStorage.url;
+		} else {
+			window.location.href = baseUrl+ "/netwrk/chat-inbox";
+		}
+	},
+
+getTemplateChatInboxMobile: function(parent) {
+	if (isMobile) {
+		Ajax.list_chat_post().then(function(data){
+			if (data) {
+				data = $.parseJSON(data);
+			}
+
+			var list_template = _.template($("#chat_inbox_list" ).html());
+			var append_html = list_template({chat_inbox_list: data});
+			parent = $(parent).find('#chat_discussion ul');
+			parent.find('li').remove();
+			parent.append(append_html);
+			ChatInbox.CustomScrollBar();
 		});
-	},
+	};
+},
 
-	OnClickChatInboxBtnMobile: function(previous_link) {
-		var target = $('#chat_inbox_btn_mobile');
-        target.unbind();
-        target.on('click',function(){
-            ChatInbox.OnClickChatInboxMobile();
-        });
-	},
+getTemplateChatPrivateMobile: function(parent) {
+	if (isMobile) {
+		Ajax.get_chat_private_list().then(function(data){
+			if (data) {
+				data = $.parseJSON(data);
+			}
+			var list_template = _.template($("#chat_private_list" ).html());
+			var append_html = list_template({chat_private_list: data});
+			parent = $(parent).find('#chat_private ul');
+			parent.find('li').remove();
+			parent.append(append_html);
+			ChatInbox.CustomScrollBarPrivate();
+		});
+	};
+},
 
-	HideMeetIconMobile: function() {
-		$('#btn_meet_mobile').hide();
-	},
+OnClickMeetIconMobile: function() {
+	var btn = $('#btn_meet_mobile');
+	btn.unbind();
+	btn.on('click',function(){
+		window.location.href = baseUrl + "/netwrk/meet";
+	});
+},
 
-	GetSearchParam: function(url) {
-		var query_string = {};
-		var query = url.substring(1);
-		var vars = query.split("?");
-		for (var i=0;i<vars.length;i++) {
-		    var pair = vars[i].split("=");
+OnClickChatInboxBtnMobile: function(previous_link) {
+	var target = $('#chat_inbox_btn_mobile');
+	target.unbind();
+	target.on('click',function(){
+		ChatInbox.OnClickChatInboxMobile();
+	});
+},
+
+HideMeetIconMobile: function() {
+	$('#btn_meet_mobile').hide();
+},
+
+GetSearchParam: function(url) {
+	var query_string = {};
+	var query = url.substring(1);
+	var vars = query.split("?");
+	for (var i=0;i<vars.length;i++) {
+		var pair = vars[i].split("=");
 		        // If first entry with this name
-		    if (typeof query_string[pair[0]] === "undefined") {
-		      query_string[pair[0]] = decodeURIComponent(pair[1]);
+		        if (typeof query_string[pair[0]] === "undefined") {
+		        	query_string[pair[0]] = decodeURIComponent(pair[1]);
 		        // If second entry with this name
 		    } else if (typeof query_string[pair[0]] === "string") {
-		      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
-		      query_string[pair[0]] = arr;
+		    	var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+		    	query_string[pair[0]] = arr;
 		        // If third or later entry with this name
 		    } else {
-		      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+		    	query_string[pair[0]].push(decodeURIComponent(pair[1]));
 		    }
 		}
-	    return query_string;
+		return query_string;
 	},
 
 	CheckBackFromChat: function() {
 		var referrer = ChatInbox.GetSearchParam(window.location.href)["chat-type"];
-			console.log(referrer);
+		if(referrer) {
+			if (referrer == 0) {
+				$(ChatInbox.modal).find('.chat-dicussions-btn').removeClass('active');
+				$(ChatInbox.modal).find(ChatInbox.discussion_chat).removeClass('active');
 
-		if(referrer && referrer == 0) {
-			$(ChatInbox.modal).find('.chat-dicussions-btn').removeClass('active');
-			$(ChatInbox.modal).find(ChatInbox.discussion_chat).removeClass('active');
+				$(ChatInbox.modal).find('.chat-private-btn').addClass('active');
+				$(ChatInbox.modal).find(ChatInbox.private_chat).addClass('active');
+			} else {
+				$(ChatInbox.modal).find('.chat-dicussions-btn').addClass('active');
+				$(ChatInbox.modal).find(ChatInbox.discussion_chat).addClass('active');
 
-			$(ChatInbox.modal).find('.chat-private-btn').addClass('active');
-			$(ChatInbox.modal).find(ChatInbox.private_chat).addClass('active');
-		} else {
-			$(ChatInbox.modal).find('.chat-dicussions-btn').addClass('active');
-			$(ChatInbox.modal).find(ChatInbox.discussion_chat).addClass('active');
-
-			$(ChatInbox.modal).find('.chat-private-btn').removeClass('active');
-			$(ChatInbox.modal).find(ChatInbox.private_chat).removeClass('active');
+				$(ChatInbox.modal).find('.chat-private-btn').removeClass('active');
+				$(ChatInbox.modal).find(ChatInbox.private_chat).removeClass('active');
+			}
 		}
 	}
 }

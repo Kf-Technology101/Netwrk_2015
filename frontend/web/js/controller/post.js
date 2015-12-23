@@ -424,7 +424,7 @@ var Post ={
 			if (ChatPost.GetSearchParam(window.location.href)["previous-flag"] == 0) {
 				window.location.href = baseUrl + "/netwrk/post?topic="+topic;
 			} else {
-				window.location.href = baseUrl+"/netwrk/chat-inbox";
+				window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=1';
 			}
 		} else {
 			window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
