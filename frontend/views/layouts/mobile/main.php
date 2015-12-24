@@ -56,7 +56,7 @@ MobileAsset::register($this);
         <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
         <!-- <div id="btn_discover_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div> -->
         <!-- <a href="javascript:void(0)" class='left'>Menu</a> -->
-        <a class="right" id='chat_inbox_btn_mobile'><i class="fa fa-comment"></i></a>
+        <a class="right" id='chat_inbox_btn_mobile'><i class="fa fa-comment"></i><span class='notify'>15</span></a>
 <!--         <div class="chatting">
             <span><i class="fa fa-comment"></i>Chat</span>
         </div> -->

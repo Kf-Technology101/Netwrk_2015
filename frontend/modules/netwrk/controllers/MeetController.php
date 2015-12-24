@@ -199,6 +199,138 @@ class MeetController extends BaseController
         $meet->status = 0;
         $meet->update();
     }
+
+    public function actionGetUserMeetProfile(){
+        $userCurrent = Yii::$app->user->id;
+        $chat_post_id = $_POST['post_id'];
+
+        $user_profile = ChatPrivate::find()->where(['user_id'=>$userCurrent, 'post_id'=>$chat_post_id])->one();
+
+        $current_date = date('Y-m-d H:i:s');
+        $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
+        $users = User::find()
+                        ->addSelect(["*", "RAND() order_num"])
+                        ->where('id !='.$userCurrent)
+                        ->with('profile')
+                        ->orderBy(['order_num'=> SORT_DESC])
+                        ->all();
+
+        if($userLogin->setting){
+            $filter = true;
+        }else{
+            $filter = false;
+        }
+
+        $data = [];
+        $newdata = [];
+        foreach ($users as $key => $value) {
+
+            $posts = Post::find()->where('user_id ='.$value->id)->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
+            $post_data = [];
+
+            foreach ($posts as $key => $post){
+                $item_post = array(
+                    'id'=> $post->id,
+                    'title'=> '#'.$post->title
+                );
+                array_push($post_data,$item_post);
+            }
+            $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$value->id)->one();
+            if($usermeet && $usermeet->status == 1){
+                $meet = 1;
+            }else{
+                $meet = 0;
+            }
+            if ($value->profile->photo == null){
+                $image = Url::to('@web/img/icon/no_avatar.jpg');
+            }else{
+                $image = Url::to('@web/uploads/'.$value->id.'/'.$value->profile->photo);
+            }
+
+            $years = $value->profile->dob;
+
+            $time1 = date_create($years);
+            $time2 = date_create($current_date);
+            $year_old = $time1->diff($time2)->y;
+
+            $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
+
+            $count_like = 0;
+            $count_posts = Post::find()->where('user_id ='.$value->id)->all();
+            foreach ($count_posts as $key => $post) {
+                $vote = Vote::find()->where('post_id = ' . $post->id . ' AND status = 1')->count();
+                if($vote>0){
+                    $count_like += $vote;
+                }
+            }
+            $brilliant = $count_like;
+            // $brilliant = Vote::find()->where('user_id = ' . $value->id . ' AND status = 1')->count();
+
+            $user = array(
+                'user_id' => $value->id,
+                'username'=> $value->profile->first_name ." ". $value->profile->last_name,
+                'met' => $meet,
+                'distance'=> $distance,
+                'information'=> array(
+                    'username'=> $value->profile->first_name ." ". $value->profile->last_name,
+                    'image'=> $image,
+                    'year_old'=> $year_old,
+                    'work'=> $value->profile->work,
+                    'about'=> $value->profile->about,
+                    'post'=> $post_data,
+                    'brilliant'=>$brilliant,
+                ),
+            );
+
+            if( $filter ){
+                if($userLogin->setting->gender == 'All'){
+                    $gender = true;
+                }elseif($value->profile->gender == $userLogin->setting->gender){
+                    $gender = true;
+                }else{
+                    $gender = false;
+                }
+
+                if($userLogin->setting->age == 0){
+                    $age = true;
+                }elseif($year_old >= $userLogin->setting->age){
+                    $age = true;
+                }else{
+                    $age = false;
+                }
+
+                if($userLogin->setting->distance == 0){
+                    $status_distance = true;
+                }elseif($distance <=  $userLogin->setting->distance){
+                    $status_distance = true;
+                }else{
+                    $status_distance = false;
+                }
+            }
+
+            if($filter && $gender && $age && $status_distance ){
+                if($value->id == $user_profile->user_id_guest){
+                    array_push($newdata, $user);
+                }else{
+                    array_push($data,$user);
+                }
+            }elseif (!$filter){
+               if($value->id == $user_profile->user_id_guest){
+                    array_push($newdata, $user);
+                }else{
+                    array_push($data,$user);
+                }
+            }
+        }
+
+        for ($i=0; $i < count($data); $i++) { 
+            array_push($newdata, $data[$i]);
+        }
+
+        $temp = array ('data'=> $newdata);
+        $hash = json_encode($temp);
+        return $hash;
+    }
 }
 
 ?>

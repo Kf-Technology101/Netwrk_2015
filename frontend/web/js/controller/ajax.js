@@ -590,5 +590,24 @@ var Ajax ={
     //     });
     //     return defer.promise();
     // }
+    get_user_met_profile: function(chat_post_id){
+        var url,defer = $.Deferred();
+        if (isMobile) {
+            url = baseUrl +"/netwrk/meet/get-user-meet-profile";
+        }else{
+            url = "netwrk/meet/get-user-meet-profile";
+        }
+
+        $.ajax({
+            url: url,
+            data: {'post_id': chat_post_id},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    }
 }
 

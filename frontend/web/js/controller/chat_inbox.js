@@ -22,8 +22,8 @@ var ChatInbox = {
 		}
 		ChatInbox.OnClickHideCloseChatInboxBtn();
 		ChatInbox.OnClickChatPrivateDetail();
-
 	},
+
 	OnShowListChatPost: function(){
 		if ($(ChatInbox.chat_inbox).css('right') == '-400px') {
 			ChatInbox.GetDataListChatPost();
@@ -97,7 +97,6 @@ var ChatInbox = {
 			notify.addClass('disable');
 			ChatInbox.initialize();
 		});
-
 	},
 
 	OnClickChatPostDetail: function() {

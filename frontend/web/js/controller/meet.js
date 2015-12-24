@@ -30,7 +30,7 @@ var Meet ={
     },
 
     _init: function(){
-
+        var post_id = Meet.getParameterByName('post_id');
         if(isMobile){
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
@@ -47,9 +47,14 @@ var Meet ={
 
             Meet.reset_page();
             Meet._onclickBack();
-            Meet.GetUserMeet();
+            if(post_id != ""){
+                Meet.GetUserMeetProfile(post_id);
+            }else{
+                Meet.GetUserMeet();
+            }
             Meet.changefilter(currentTarget);
             Meet.eventClickdiscoverMobile();
+            
         }else{
             var parent = $('#modal_meet');
                 currentTarget = parent.find('#meeting'),
@@ -64,7 +69,11 @@ var Meet ={
                 Login.initialize();
             }else{
                 Meet.changefilter(currentTarget);
-                Meet.ShowModalMeet();
+                if(post_id != ""){
+                    Meet.ShowUserMeetProfile(post_id);
+                }else{
+                    Meet.ShowModalMeet();
+                }
                 Meet.eventClickdiscover();
                 Meet.CustomScrollBar();
                 Meet._onClickMeetBack();
@@ -379,6 +388,9 @@ var Meet ={
                 btn_met.show();
                 Ajax.usermeet({user_id: data[self.user_list.vt].user_id }).then(function(res){
                     self.eventMet();
+                    if(!isMobile){
+                        ChatInbox.GetDataListChatPrivate();
+                    }
                 });
             });
         }
@@ -422,5 +434,67 @@ var Meet ={
         var append_html = template({user: data.information ,vt: vt});
 
         parent.append(append_html);
-    }
+    },
+
+    getParameterByName: function(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    },
+
+    GetUserMeetProfile: function(post_id){
+         Ajax.get_user_met_profile(post_id).then(function(data){
+            var json = $.parseJSON(data);
+            if(json.data.length >0){
+                $('p.no_data').hide();
+                Meet.user_list.len = json.data.length;
+                Meet.json = json.data;
+                Meet.showUserMeet();
+                $('.control-btn').show();
+            }else{
+                $('p.no_data').show();
+            }
+        });
+    },
+
+    ShowUserMeetProfile: function(post_id){
+        var modal = $('#modal_meet'),
+            self = this;
+
+        Ajax.get_user_met_profile(post_id).then(function(data){
+            var json = $.parseJSON(data);
+            self.user_list.len = json.data.length;
+
+            if(self.user_list.len > 0){
+                $('p.no_data').hide();
+                $('.control-btn').show();
+                $('p.default').hide();
+                self.json = json.data;
+                self.showUserMeet();
+            }else{
+                $('.control-btn').hide();
+                $('p.default').show();
+                $('p.no_data').show();
+            }
+
+            if(!isMobile){
+                modal.modal({
+                    backdrop: true,
+                    keyboard: false
+                });
+                set_heigth_modal_meet($('#modal_meet'), 30);
+                var meet_height = $('#modal_meet .modal-body').height();
+                Meet.height = meet_height;
+            }
+            $('#modal_meet').on('hidden.bs.modal',function() {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+            $('.modal-backdrop.in').click(function(e) {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+        });
+    },
 };

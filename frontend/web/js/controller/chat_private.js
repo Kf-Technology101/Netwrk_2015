@@ -306,6 +306,7 @@ var ChatPrivate = {
 		var append_html = template({msg: data,baseurl: baseUrl});
 
 		$(ChatPrivate.parent).find(ChatPrivate.container).append(append_html);
+		ChatPrivate.OnClickAvatar();
 	},
 
 	RedirectChatPrivatePage: function(PrivateId, chat_type, previous_flag, post_id){
@@ -440,6 +441,15 @@ var ChatPrivate = {
             ChatInbox.OnClickChatInboxMobile();
         });
 		// ChatInbox.OnClickChatInboxBtnMobile();
-	}
+	},
 
+	OnClickAvatar: function(){
+		var avatar = $('#private_chat .container_private_chat .message_receiver .user_thumbnail'),
+			post_id = $('#private_chat').attr('data-private');
+		avatar.unbind();
+		avatar.on('click', function(){
+			console.log('clicked on avatar has post_id ' + post_id);
+			window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id;
+		});
+	}
 }
