@@ -127,10 +127,10 @@ var ChatInbox = {
 					// $(Meet.modal).modal('hide');
 					$('.modal').modal('hide');
 
-					ChatPost.initialize();
+					// ChatPost.initialize();
 
 					ChatPost.temp_post = ChatPost.params.post;
-					// PopupChat.initialize();
+					PopupChat.initialize();
 				}
 			}
 		});
