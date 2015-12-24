@@ -25,11 +25,11 @@ var PopupChat = {
       if(id == PopupChat.popups[i])
       {
         PopupChat.Remove(PopupChat.popups, i);
-        
+
         document.getElementById(id).style.display = "none";
-        
+
         PopupChat.CalculatePopups();
-        
+
         return;
       }
     }
@@ -37,7 +37,7 @@ var PopupChat = {
 
   DisplayPopups: function() {
     var right = 330;
-  
+
     var i = 0;
     for(i; i < PopupChat.total_popups; i++)
     {
@@ -45,14 +45,14 @@ var PopupChat = {
       {
         var element = document.getElementById(PopupChat.popups[i]);
         element.style.right = right + "px";
-        right = right + 320;
+        right = right + 280;
         element.style.display = "block";
       }
     }
 
     for (var j = (PopupChat.popups.length - i)-1; j >= 0; j--) {
       var element = document.getElementById(PopupChat.popups[j]);
-      element.style.display = "none"; 
+      element.style.display = "none";
       PopupChat.ClosePopup(PopupChat.popups[j]);
     }
   },
@@ -60,7 +60,7 @@ var PopupChat = {
   RegisterPopup: function(id, name) {
     console.log('RegisterPopup');
     for(var i = 0; i < PopupChat.popups.length; i++)
-    {   
+    {
       //already registered. Bring it to front.
       if(PopupChat.params.post == PopupChat.popups[i])
       {
@@ -69,8 +69,8 @@ var PopupChat = {
         PopupChat.CalculatePopups();
         return;
       }
-    }                
-    PopupChat.getTemplate();  
+    }
+    PopupChat.getTemplate();
     PopupChat.popups.push(PopupChat.params.post);
     PopupChat.CalculatePopups();
   },
@@ -81,7 +81,7 @@ var PopupChat = {
     var append_html = list_template({post_id: PopupChat.params.post});
 
     $('body').append(append_html);
-    
+
   },
   CalculatePopups: function() {
     var width = window.innerWidth;
@@ -101,7 +101,7 @@ var PopupChat = {
         PopupChat.total_popups = 4;
       }
     }
-    
+
     PopupChat.DisplayPopups();
   }
 
