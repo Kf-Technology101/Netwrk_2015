@@ -25,7 +25,6 @@ var ChatInbox = {
 
 	},
 	OnShowListChatPost: function(){
-
 		if ($(ChatInbox.chat_inbox).css('right') == '-400px') {
 			ChatInbox.GetDataListChatPost();
 			ChatInbox.GetDataListChatPrivate();
@@ -118,6 +117,7 @@ var ChatInbox = {
 				ChatPost.RedirectChatPostPage(item_post, 1, 1);
 			}else{
 				ChatPost.params.post = item_post;
+				PopupChat.params.post = item_post;
 				if(ChatPost.temp_post != ChatPost.params.post){
 					// $(Topic.modal).modal('hide');
 					// $(ChatPost.modal).modal('hide');
@@ -130,8 +130,8 @@ var ChatInbox = {
 					ChatPost.initialize();
 
 					ChatPost.temp_post = ChatPost.params.post;
+					// PopupChat.initialize();
 				}
-
 			}
 		});
 	},
