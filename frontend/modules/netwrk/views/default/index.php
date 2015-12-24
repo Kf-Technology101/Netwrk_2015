@@ -37,5 +37,6 @@
 <?= $this->render('partial/chat_inbox');?>
 <?= $this->render('partial/forgot_password');?>
 <?= $this->render('partial/reset_password');?>
+<?= $this->render('partial/popup_chat');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
