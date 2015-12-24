@@ -24,15 +24,38 @@ class MeetController extends BaseController
     public function actionGetUserMeet()
     {
         $userCurrent = Yii::$app->user->id;
-
         $current_date = date('Y-m-d H:i:s');
         $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
-        $users = User::find()
+
+        // get random user is met
+        $usermeets = UserMeet::find()
+                            ->addSelect(['user_id_2'])
+                            ->where('user_id_1 = '.$userCurrent)
+                            ->all();
+        $user_meet_ids = [];
+        for ($i=0; $i < count($usermeets); $i++) { 
+            array_push($user_meet_ids, $usermeets[$i]->user_id_2);
+        }
+        $meet_ids = implode(',', $user_meet_ids);
+        $user_meet_rand = User::find()
                         ->addSelect(["*", "RAND() order_num"])
-                        ->where('id !='.$userCurrent)
+                        ->where('id in ('.$meet_ids. ')')
                         ->with('profile')
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
+        
+        // get other users
+        $users = User::find()
+                        ->addSelect(["*", "RAND() order_num"])
+                        ->where('id not in ('.$meet_ids. ','.$userCurrent.')')
+                        ->with('profile')
+                        ->orderBy(['order_num'=> SORT_DESC])
+                        ->all();
+
+        // collect meet user
+        for ($i=0; $i < count($users); $i++) { 
+            array_push($user_meet_rand, $users[$i]);
+        }
 
         if($userLogin->setting){
             $filter = true;
@@ -41,7 +64,7 @@ class MeetController extends BaseController
         }
 
         $data = [];
-        foreach ($users as $key => $value) {
+        foreach ($user_meet_rand as $key => $value) {
 
             $posts = Post::find()->where('user_id ='.$value->id)->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
             $post_data = [];
@@ -208,12 +231,34 @@ class MeetController extends BaseController
 
         $current_date = date('Y-m-d H:i:s');
         $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
-        $users = User::find()
+        // get random user is met
+        $usermeets = UserMeet::find()
+                            ->addSelect(['user_id_2'])
+                            ->where('user_id_1 = '.$userCurrent.' AND user_id_2 != '.$user_profile->user_id_guest)
+                            ->all();
+        $user_meet_ids = [];
+        for ($i=0; $i < count($usermeets); $i++) { 
+            array_push($user_meet_ids, $usermeets[$i]->user_id_2);
+        }
+        $meet_ids = implode(',', $user_meet_ids);
+        $user_meet_rand = User::find()
                         ->addSelect(["*", "RAND() order_num"])
-                        ->where('id !='.$userCurrent)
+                        ->where('id in ('.$meet_ids. ')')
                         ->with('profile')
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
+        
+        // get other users
+        $users = User::find()
+                        ->addSelect(["*", "RAND() order_num"])
+                        ->where('id not in ('.$meet_ids. ','.$userCurrent.')')
+                        ->with('profile')
+                        ->orderBy(['order_num'=> SORT_DESC])
+                        ->all();
+        // collect meet user
+        for ($i=0; $i < count($users); $i++) { 
+            array_push($user_meet_rand, $users[$i]);
+        }
 
         if($userLogin->setting){
             $filter = true;
@@ -223,7 +268,7 @@ class MeetController extends BaseController
 
         $data = [];
         $newdata = [];
-        foreach ($users as $key => $value) {
+        foreach ($user_meet_rand as $key => $value) {
 
             $posts = Post::find()->where('user_id ='.$value->id)->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
             $post_data = [];
