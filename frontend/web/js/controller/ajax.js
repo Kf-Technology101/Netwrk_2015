@@ -1,4 +1,21 @@
 var Ajax ={
+    global_search: function(params){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/search/global-search";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     reset_password: function(params){
         var url,defer = $.Deferred();
             url = baseUrl + "/netwrk/user/user-reset-password";
