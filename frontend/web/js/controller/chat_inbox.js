@@ -117,6 +117,7 @@ var ChatInbox = {
 			}else{
 				ChatPost.params.post = item_post;
 				PopupChat.params.post = item_post;
+				PopupChat.initialize();
 				if(ChatPost.temp_post != ChatPost.params.post){
 					// $(Topic.modal).modal('hide');
 					// $(ChatPost.modal).modal('hide');
@@ -129,7 +130,6 @@ var ChatInbox = {
 					// ChatPost.initialize();
 
 					ChatPost.temp_post = ChatPost.params.post;
-					PopupChat.initialize();
 				}
 			}
 		});

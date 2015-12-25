@@ -2,9 +2,9 @@
   <script id="popup_chat" type="text/x-underscore-template">
     <div class="popup-box chat-popup" id="<%= post_id %>">
       <div class="popup-head">
-        <div class="popup-head-left">Post name</div>
+        <div class="popup-head-left"><%= post_id %></div>
         <div class="popup-head-right">
-          <a href="#">&#10005;</a>
+          <a href="javascript:PopupChat.ClosePopup(<%= post_id %>);">&#10005;</a>
         </div>
         <div style="clear: both"></div>
       </div>

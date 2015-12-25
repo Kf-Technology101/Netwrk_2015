@@ -57,8 +57,7 @@ var PopupChat = {
     }
   },
 
-  RegisterPopup: function(id, name) {
-    console.log('RegisterPopup');
+  RegisterPopup: function() {
     for(var i = 0; i < PopupChat.popups.length; i++)
     {
       //already registered. Bring it to front.
@@ -83,6 +82,7 @@ var PopupChat = {
     $('body').append(append_html);
 
   },
+
   CalculatePopups: function() {
     var width = window.innerWidth;
 
@@ -104,7 +104,4 @@ var PopupChat = {
 
     PopupChat.DisplayPopups();
   }
-
-
-
 }
