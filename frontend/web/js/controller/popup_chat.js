@@ -65,8 +65,12 @@ var PopupChat = {
                 PopupChat.Remove(PopupChat.popups, i);
                 PopupChat.popups.push(PopupChat.params.post);
                 PopupChat.CalculatePopups();
+                return;
             }
         }
+        PopupChat.getTemplate();
+        PopupChat.popups.push(PopupChat.params.post);
+        PopupChat.CalculatePopups();
     },
 
     getTemplate: function(){
