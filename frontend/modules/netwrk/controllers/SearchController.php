@@ -19,36 +19,160 @@ class SearchController extends BaseController
         $_search = $_POST['text'];
 
         if (Yii::$app->user->isGuest) {
-
+    		$cur_lat = $_POST['lat'] ? $_POST['lat'] : 0;
+    		$cur_lng = $_POST['lng'] ? $_POST['lng'] : 0;
         }else{
             $current_user = Yii::$app->user->identity;
             $cur_lat = $current_user->profile->lat;
             $cur_lng = $current_user->profile->lng;
         }
-
-        $local =[];
-        $netwrk_local = [];
+        $num_search_local = 0;
+        $num_search_global = 0;
         $radius_local = 50;
+        $id_local =[];
+        $post_local = [];
+        $topic_local = [];
+        $netwrk_local = [];
+        $id_global =[];
+        $post_global = [];
+        $topic_global = [];
         $netwrk_global = [];
+        $maxlength = Yii::$app->params['MaxlenghtMessageDesktop'];
+        $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
 
-        $city = City::find()->all();
+		// Post Local
+        $posts = Post::find()->where(['like','title',$_search])->orderBy(['brilliant_count'=> SORT_DESC])->all();
+        foreach ($posts as $key => $post) {
+        	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$post->topic->city->lat,$post->topic->city->lng);
+            if($distance <= $radius_local && count($post_local) < 2){
 
-        foreach ($city as $key => $value) {
+	            if($this->getIsMobile() && strlen($post->content) > $maxlengthMobile){
+	                $post->content = substr($post->content,0,$maxlengthMobile) ;
+	                $post->content = $content." ...<span class='show_more'>show more</span>";
+	            }elseif(!$this->getIsMobile() && strlen($post->content) > $maxlength){
+	                $post->content = substr($post->content,0,$maxlength) ;
+	                $post->content = $post->content." ...<span class='show_more'>show more</span>";
+	            }
+
+                $item_post = [
+                    'id'=>$post->id,
+                    'title'=>$post->title,
+                    'content'=> $post->content,
+                    'brilliant'=> $post->brilliant_count ? $post->brilliant_count : 0,
+                    'created_at'=> date_format(date_create($post->created_at),'Y-m-d')
+                ];
+
+                array_push($post_local, $item_post);
+                array_push($id_local,$post->topic->city->id);
+                $num_search_local += count($post_local);
+            }
+       	}
+
+       	// Topic Local
+       	$topics = Topic::find()->where(['like','title',$_search])->orderBy(['brilliant_count'=> SORT_DESC])->all();
+        foreach ($topics as $key => $topic) {
+        	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$topic->city->lat,$topic->city->lng);
+            if($distance <= $radius_local && count($post_local) < 2){
+                $item_post = [
+                    'id'=>$topic->id,
+                    'title'=>$topic->title,
+                    'post'=>$topic->post_count
+                ];
+                array_push($topic_local, $item_post);
+                array_push($id_local,$topic->city->id);
+                $num_search_local += count($topic_local);
+            }
+       	}
+
+        $city_local = City::find()->where(['id'=> $id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit(2)->all();
+    	foreach ($city_local as $key => $value) {
             $distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$value->lat,$value->lng);
             if($distance <= $radius_local){
                 $netwrk = [
                     'id'=>$value->id,
                     'name'=> $value->name,
-                    'brilliant'=> $value->brilliant_count,
+                    'zipcode'=> $value->zip_code,
                 ];
                 array_push($netwrk_local, $netwrk);
+                $num_search_local += count($netwrk_local);
             }
         }
-        $data =[
-            'data'=> $netwrk_local
+
+        $posts_go = Post::find()->joinWith('topic')
+			        ->where(['like','post.title',$_search])
+			        ->andWhere(['not in','topic.city_id',$id_local])
+			        ->orderBy(['brilliant_count'=> SORT_DESC])
+			        ->limit(2)
+			        ->all();
+
+		foreach ($posts_go as $key => $post_go) {
+
+            if($this->getIsMobile() && strlen($post_go->content) > $maxlengthMobile){
+                $post_go->content = substr($post_go->content,0,$maxlengthMobile) ;
+                $post_go->content = $post_go->content." ...<span class='show_more'>show more</span>";
+            }elseif(!$this->getIsMobile() && strlen($post_go->content) > $maxlength){
+                $post_go->content = substr($post_go->content,0,$maxlength) ;
+               	$post_go->content = $post_go->content." ...<span class='show_more'>show more</span>";
+            }
+
+			$item = [
+                'id'=>$post_go->id,
+                'title'=>$post_go->title,
+                'content'=> $post_go->content,
+                'brilliant'=> $post_go->brilliant_count ? $post_go->brilliant_count : 0,
+                'created_at'=> date_format(date_create($post_go->created_at),'Y-m-d')
+			];
+			array_push($post_global, $item);
+			array_push($id_global,$post_go->topic->city->id);
+			$num_search_global += count($post_global);
+		}
+
+		$topics_go = Topic::find()
+					->where(['like','title',$_search])
+			        ->andWhere(['not in','city_id',$id_local])
+			        ->orderBy(['brilliant_count'=> SORT_DESC])
+			        ->limit(2)
+			        ->all();
+
+		foreach ($topics_go as $key => $topic_go) {
+			$item = [
+                'id'=>$topic_go->id,
+                'title'=>$topic_go->title,
+                'post'=>$topic->post_count,
+			];
+			array_push($topic_global, $item);
+			array_push($id_global,$topic_go->city->id);
+			$num_search_global += count($topic_global);
+		}
+
+		$city_go = City::find()->where(['id'=>$id_global])->andwhere(['not in','id',$id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit(2)->all();
+
+		foreach ($city_go as $key => $value) {
+			$netwrk = [
+                'id'=>$value->id,
+                'name'=> $value->name,
+                'zipcode'=> $value->zip_code,
+            ];
+            array_push($netwrk_global, $netwrk);
+            $num_search_global += count($netwrk_global);
+		}
+
+        $temp =[
+        	'search_local'=>$num_search_local,
+        	'search_global'=> $num_search_global,
+        	'local'=>[
+        		'post'=> $post_local,
+	            'topic'=>$topic_local,
+	            'netwrk'=>$netwrk_local
+        	],
+        	'global'=>[
+        		'post'=> $post_global,
+	            'topic'=>$topic_global,
+	            'netwrk'=>$netwrk_global
+        	]
         ];
 
-        $hash = json_encode($data);
+        $hash = json_encode($temp);
         return $hash;
     }
 }
