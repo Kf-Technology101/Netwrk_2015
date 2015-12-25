@@ -37,7 +37,7 @@
 
         <div class="nav_input_message">
           <?php if(Yii::$app->user->isGuest){?>
-            <div class="send_message input-group" data-url="<?= $url ?>">
+            <div class="send_message input-group">
               <input type="text" class="form-control" placeholder="You have to log in to chat" disabled="true">
               <div class="input-group-addon login" id="sizing-addon2">Login</div>
             </div>
