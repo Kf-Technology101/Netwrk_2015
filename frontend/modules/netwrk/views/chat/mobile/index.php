@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="post_chat" data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id?>">
+<div id="post_chat" data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id?>" data-user-login="<?= $current_user ?>">
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
@@ -47,7 +47,7 @@
    <% }else{ %>
         <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
     <% } %>
-        <div class="user_thumbnail">
+        <div class="user_thumbnail" data-user-id='<%= msg.id %>'>
             <div class="avatar">
                 <img src="<%= baseurl %><%=  msg.avatar %>">
             </div>

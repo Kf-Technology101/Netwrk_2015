@@ -36,7 +36,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		$this->chat_type = $conn->WebSocket->request->getQuery()->get('chat_type');
 		$this->clients->attach($conn);
 		$this->send($conn, "fetch", $this->fetchMessages());
-		// $this->checkOnliners();
+		$this->checkOnliners();
 		echo "New connection! ({$conn->resourceId})\n";
 	}
 
@@ -173,7 +173,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		}
 
 		/* Send online users to evryone */
-		$data = $this->users;
+		$data = $this->current_user;
 		foreach ($this->clients as $client) {
 			$this->send($client, "onliners", $data);
 		}

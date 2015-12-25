@@ -408,6 +408,7 @@ var Post ={
         var append_html = list_template({posts: data});
 
         parent.append(append_html);
+        Post.OnClickAvatarPostListDesktop();
     },
 
     getNameTemplate: function(parent,data){
@@ -429,5 +430,20 @@ var Post ={
 		} else {
 			window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
 		}
+	},
+
+	OnClickAvatarPostListDesktop: function(){
+		var avatar = $(Post.modal).find('#tab_post .item_post .users_avatar');
+		avatar.unbind();
+		avatar.on('click', function(e){
+			var user_login = $(e.currentTarget).parent().attr('data-user'),
+				user_view = $(e.currentTarget).attr('data-user-post');
+			if(user_view != user_login){
+				Meet.infoOf = user_view;
+				$('.modal').modal('hide');
+				// $(Post.modal).modal('hide');
+				Meet.initialize();
+			}
+		});
 	}
 };

@@ -18,6 +18,7 @@ var Meet ={
     },
     modal: '#modal_meet',
     height: 0,
+    infoOf: 0,
     initialize: function() {
         console.log(Meet.filter.active);
         if(Meet.filter.active === 'setting'){
@@ -30,7 +31,9 @@ var Meet ={
     },
 
     _init: function(){
-        var post_id = Meet.getParameterByName('post_id');
+        var post_id = Meet.getParameterByName('post_id'),
+            user_view = Meet.getParameterByName('user_id'),
+            from = Meet.getParameterByName('from');
         if(isMobile){
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
@@ -47,8 +50,10 @@ var Meet ={
 
             Meet.reset_page();
             Meet._onclickBack();
-            if(post_id != ""){
+            if(post_id != "" && from != "" && from == "private"){
                 Meet.GetUserMeetProfile(post_id);
+            } else if (user_view != "" && from != "" && from == "discussion"){
+                Meet.GetUserMeetProfileDiscussion(user_view);
             }else{
                 Meet.GetUserMeet();
             }
@@ -71,6 +76,8 @@ var Meet ={
                 Meet.changefilter(currentTarget);
                 if(post_id != ""){
                     Meet.ShowUserMeetProfile(post_id);
+                }else if(Meet.infoOf != 0){
+                    Meet.ShowModalMeetProfile(Meet.infoOf);
                 }else{
                     Meet.ShowModalMeet();
                 }
@@ -444,7 +451,7 @@ var Meet ={
     },
 
     GetUserMeetProfile: function(post_id){
-         Ajax.get_user_met_profile(post_id).then(function(data){
+        Ajax.get_user_met_profile(post_id).then(function(data){
             var json = $.parseJSON(data);
             if(json.data.length >0){
                 $('p.no_data').hide();
@@ -463,6 +470,101 @@ var Meet ={
             self = this;
 
         Ajax.get_user_met_profile(post_id).then(function(data){
+            var json = $.parseJSON(data);
+            self.user_list.len = json.data.length;
+
+            if(self.user_list.len > 0){
+                $('p.no_data').hide();
+                $('.control-btn').show();
+                $('p.default').hide();
+                self.json = json.data;
+                self.showUserMeet();
+            }else{
+                $('.control-btn').hide();
+                $('p.default').show();
+                $('p.no_data').show();
+            }
+
+            if(!isMobile){
+                modal.modal({
+                    backdrop: true,
+                    keyboard: false
+                });
+                set_heigth_modal_meet($('#modal_meet'), 30);
+                var meet_height = $('#modal_meet .modal-body').height();
+                Meet.height = meet_height;
+            }
+            $('#modal_meet').on('hidden.bs.modal',function() {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+            $('.modal-backdrop.in').click(function(e) {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+        });
+    },
+
+    GetUserMeetProfileDiscussion: function(user_view){
+        Ajax.get_user_met_profile_discussion(user_view).then(function(data){
+            var json = $.parseJSON(data);
+            if(json.data.length >0){
+                $('p.no_data').hide();
+                Meet.user_list.len = json.data.length;
+                Meet.json = json.data;
+                Meet.showUserMeet();
+                $('.control-btn').show();
+            }else{
+                $('p.no_data').show();
+            }
+        });
+    },
+
+    ShowModalMeetProfile: function(user_view){
+        var modal = $('#modal_meet'),
+            self = this;
+
+        Ajax.get_user_met_profile_discussion(user_view).then(function(data){
+            var json = $.parseJSON(data);
+            self.user_list.len = json.data.length;
+
+            if(self.user_list.len > 0){
+                $('p.no_data').hide();
+                $('.control-btn').show();
+                $('p.default').hide();
+                self.json = json.data;
+                self.showUserMeet();
+            }else{
+                $('.control-btn').hide();
+                $('p.default').show();
+                $('p.no_data').show();
+            }
+
+            if(!isMobile){
+                modal.modal({
+                    backdrop: true,
+                    keyboard: false
+                });
+                set_heigth_modal_meet($('#modal_meet'), 30);
+                var meet_height = $('#modal_meet .modal-body').height();
+                Meet.height = meet_height;
+            }
+            $('#modal_meet').on('hidden.bs.modal',function() {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+            $('.modal-backdrop.in').click(function(e) {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+        });
+    },
+
+    ShowModalMeetProfile: function(user_view){
+        var modal = $('#modal_meet'),
+            self = this;
+
+        Ajax.get_user_met_profile_discussion(user_view).then(function(data){
             var json = $.parseJSON(data);
             self.user_list.len = json.data.length;
 

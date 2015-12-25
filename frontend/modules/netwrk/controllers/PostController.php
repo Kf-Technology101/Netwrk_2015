@@ -136,7 +136,9 @@ class PostController extends BaseController
                 'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                 'avatar'=> $image,
                 'update_at'=>$num_date,
-                'is_vote'=> $isVote
+                'is_vote'=> $isVote,
+                'post_user_id' => $value->user_id,
+                'user' => $currentUser,
                 );
 
             array_push($data,$post);

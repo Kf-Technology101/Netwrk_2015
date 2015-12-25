@@ -307,6 +307,7 @@ var ChatPost = {
 		var append_html = template({msg: data,baseurl: baseUrl});
 
 		$(ChatPost.parent).find(ChatPost.container).append(append_html);
+		ChatPost.OnClickParticipantAvatarMobile();
 	},
 
 	RedirectChatPostPage: function(postId, chat_type, previous_flag){
@@ -444,6 +445,18 @@ var ChatPost = {
             // });
         });
 		// ChatInbox.OnClickChatInboxBtnMobile();
-	}
+	},
+
+	OnClickParticipantAvatarMobile: function(){
+		var avatar = $(ChatPost.page).find('.container_post_chat .user_thumbnail'),
+			user = $(ChatPost.page).attr('data-user-login');
+		avatar.unbind();
+		avatar.on('click', function(e){
+			var user_id = $(e.currentTarget).attr('data-user-id');
+			if (user_id != user){
+				window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_id + "&from=discussion";
+			}
+		});
+	},
 
 }

@@ -57,8 +57,8 @@
 </script>
 <script id="post_list" type="text/x-underscore-template" >
     <% _.each(posts,function(post){ %>
-        <div class="item_post" data-item="<%= post.id %>">
-            <div class="users_avatar">
+        <div class="item_post" data-item="<%= post.id %>" data-user="<%= post.user %>">
+            <div class="users_avatar" data-user-post="<%= post.post_user_id %>">
                 <div class="image"><img src="<%= post.avatar %>"></div>
                 <div class="icon_brillant" data-item="<%= post.id %>">
                     <% if (post.is_vote == 1){%>

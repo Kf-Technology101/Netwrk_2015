@@ -307,7 +307,6 @@ var ChatPrivate = {
 
 		$(ChatPrivate.parent).find(ChatPrivate.container).append(append_html);
 		ChatPrivate.OnClickReceiverAvatar();
-		ChatPrivate.OnClickSendAvatar();
 	},
 
 	RedirectChatPrivatePage: function(PrivateId, chat_type, previous_flag, post_id){
@@ -450,16 +449,7 @@ var ChatPrivate = {
 		avatar.unbind();
 		avatar.on('click', function(){
 			console.log('clicked on avatar has post_id ' + post_id);
-			window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id;
+			window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id + "&from=private";
 		});
 	},
-
-	OnClickSendAvatar: function(){
-		var avatar = $('#private_chat .container_private_chat .message_send .user_thumbnail'),
-			post_id = $('#private_chat').attr('data-private');
-		avatar.unbind();
-		avatar.on('click', function(){
-			console.log('clicked on send avatar has post_id ' + post_id);
-		});
-	}
 }

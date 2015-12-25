@@ -608,6 +608,26 @@ var Ajax ={
             error: defer.reject
         });
         return defer.promise();
+    },
+
+    get_user_met_profile_discussion: function(user_view){
+        var url,defer = $.Deferred();
+        if (isMobile) {
+            url = baseUrl +"/netwrk/meet/get-user-meet-profile-discussion";
+        }else{
+            url = "netwrk/meet/get-user-meet-profile-discussion";
+        }
+
+        $.ajax({
+            url: url,
+            data: {'user_view': user_view},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
     }
 }
 

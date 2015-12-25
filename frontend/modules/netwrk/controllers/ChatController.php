@@ -38,6 +38,7 @@ class ChatController extends BaseController
 
 	public function actionChatPost(){
 		$postId = $_GET['post'];
+		$userCurrent = Yii::$app->user->id;
 
 		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
 		// $post->update();
@@ -49,7 +50,7 @@ class ChatController extends BaseController
 			file_put_contents($statusFile, 1);
 		}
 		$url = Url::base(true).'/netwrk/chat/chat-post?post='.$postId;
-		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post,'url'=> $url] );
+		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post,'url'=> $url,'current_user'=>$userCurrent] );
 	}
 
 	public function actionChatPrivate()
