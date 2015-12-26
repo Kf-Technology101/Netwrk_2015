@@ -25,6 +25,7 @@ class MeetController extends BaseController
     public function actionGetUserMeet()
     {
         $userCurrent = Yii::$app->user->id;
+        $user_meet_rand = [];
 
         // get list user meet owner
         $list_user_meet_owner = UserMeet::find()
@@ -84,8 +85,11 @@ class MeetController extends BaseController
         $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
 
         // collect meet user
-        for ($i=0; $i < count($users); $i++) { 
-            array_push($user_meet_rand, $users[$i]);
+        if($user_meet_rand == null){
+
+            for ($i=0; $i < count($users); $i++) { 
+                array_push($user_meet_rand, $users[$i]);
+            }
         }
 
         if($userLogin->setting){
