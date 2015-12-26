@@ -31,11 +31,27 @@ var ChatInbox = {
 			$(ChatInbox.chat_inbox).animate({
 				"right": "0"
 			}, 500);
+
+            $('.popup-box').each(function(index){
+                var right_now = parseInt($(this).css('right'),10) + 315;
+                $(this).animate({
+                    'right': right_now
+                }, 500);
+            });
+
 			ChatInbox.ActiveReponsiveChatInbox();
 		} else {
 			$(ChatInbox.chat_inbox).animate({
 				"right": "-400px"
 			}, 500);
+
+            $('.popup-box').each(function(index){
+                var right_now = parseInt($(this).css('right'),10) - 315;
+                $(this).animate({
+                    'right': right_now
+                }, 500);
+            });
+            
 			ChatInbox.DeactiveReponsiveChatInbox();
 		}
 	},
@@ -146,6 +162,8 @@ var ChatInbox = {
 				ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
 			}else{
 				ChatPrivate.params.private = userID;
+                PopupChat.params.post = userID;
+                PopupChat.initialize();
 				if(ChatPrivate.temp_private != ChatPrivate.params.private){
 					$('.modal').modal('hide');
 					ChatPrivate.initialize();
@@ -209,6 +227,14 @@ var ChatInbox = {
 				chat_inbox.animate({
 					"right": "-400px"
 				}, 500);
+
+                $('.popup-box').each(function(index){
+                    var right_now = parseInt($(this).css('right'),10) - 315;
+                    $(this).animate({
+                        'right': right_now
+                    }, 500);
+                });
+
 				ChatInbox.DeactiveReponsiveChatInbox();
 			});
 		}

@@ -25,9 +25,7 @@ var PopupChat = {
             if(id == PopupChat.popups[i])
             {
                 PopupChat.Remove(PopupChat.popups, i);
-
-                document.getElementById(id).style.display = "none";
-
+                document.getElementById('popup-chat-' + id).style.display = "none";
                 PopupChat.CalculatePopups();
 
                 return;
@@ -36,14 +34,27 @@ var PopupChat = {
     },
 
     DisplayPopups: function() {
-        var right = 330;
+        var right = 330,
+            popup_rights = [];
+
+        $('.popup-box').each(function(){
+            var parseRight = parseInt($(this).css('right'));
+            if (!isNaN(parseRight)) {
+                popup_rights.push(parseRight);
+            }            
+        });
+
+        min_popup_right = Math.min.apply(Math, popup_rights)
+        if (min_popup_right < right) {
+            right = min_popup_right;
+        }
 
         var i = 0;
         for(i; i < PopupChat.total_popups; i++)
         {
             if(PopupChat.popups[i] != undefined)
             {
-                var element = document.getElementById(PopupChat.popups[i]);
+                var element = document.getElementById('popup-chat-' + PopupChat.popups[i]);
                 element.style.right = right + "px";
                 right = right + 280;
                 element.style.display = "block";
@@ -51,7 +62,7 @@ var PopupChat = {
         }
 
         for (var j = (PopupChat.popups.length - i)-1; j >= 0; j--) {
-            var element = document.getElementById(PopupChat.popups[j]);
+            var element = document.getElementById('popup-chat-' + PopupChat.popups[j]);
             element.style.display = "none";
             PopupChat.ClosePopup(PopupChat.popups[j]);
         }
