@@ -45,8 +45,8 @@
         }
     }
     .popup-messages {
-        height: 100%;
-        overflow-y: scroll;
+        height: 84%;
+        overflow-y: hidden;
         .container_post_chat, .container_private_chat{
             height: auto;
             width: 100%;
@@ -55,6 +55,7 @@
             z-index: 5;
             overflow-y: auto;
             background-color: #f4f4f4;
+            // margin-bottom: 45px;
             .message{
                 padding: 15px;
             }
@@ -142,6 +143,9 @@
                     text-align: right;
                     margin: 0;
                     color: #757575;
+                    display: inline-block;
+                    float: right;
+                    margin-top: 4px;
                 }
             }
             .message_send{
@@ -230,15 +234,20 @@
                     margin: 0;
                     color: #757575;
                     word-wrap: break-word;
+                    display: inline-block;
                 }
             }
+        }
+
+        .mCSB_inside > .mCSB_container {
+            margin-right: 0;
         }
     }
 
     .nav_input_message{
         width: 100%;
         display: block;
-        bottom: 0px;
+        bottom: -1px;
         position: absolute;
         .send_message{
             width: 100%;
