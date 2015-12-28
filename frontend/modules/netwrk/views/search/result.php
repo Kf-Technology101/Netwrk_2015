@@ -24,7 +24,7 @@
 				<% }else{ %>
 					<div class="post-result">
 						<% _.each(result.local.post,function(e){ %>
-							<div class="post-item" data-post="<%= e.id %>">
+							<div class="post-item item-result" data-post="<%= e.id %>">
 								<div class="thumb"><img src="<?= Url::to('@web/img/icon/no_avatar.jpg') ?>"></div>
 								<div class="content-post">
 									<p class="title"><%= e.title %></p>
@@ -41,7 +41,7 @@
 					</div>
 					<div class="topic-result">
 						<% _.each(result.local.topic,function(e){ %>
-							<div class="topic-item" data-topic="<%= e.id %>">
+							<div class="topic-item item-result" data-topic="<%= e.id %>" data-city-id="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
 								<p class="topic-name"><%= e.title %></p>
 								<div class="count-post">
 									<p><%= e.post %><i class="fa fa-file-text"></i></p>
@@ -52,7 +52,7 @@
 					</div>
 					<div class="netwrk-result">
 						<% _.each(result.local.netwrk,function(e){ %>
-							<div class="netwrk-item">
+							<div class="netwrk-item item-result" data-netwrk="<%= e.id %>">
 								<p class="netwrk-name"><%= e.zipcode %></p>
 								<span class="netwrk-arrow"><i class="fa fa-angle-right"></i></span>
 							</div>
@@ -71,7 +71,7 @@
 				<% }else{ %>
 					<div class="post-result">
 						<% _.each(result.global.post,function(e){ %>
-							<div class="post-item">
+							<div class="post-item item-result">
 								<div class="thumb"><img src="<?= Url::to('@web/img/icon/no_avatar.jpg') ?>"></div>
 								<div class="content-post">
 									<p class="title"><%= e.title %></p>
@@ -88,7 +88,7 @@
 					</div>
 					<div class="topic-result">
 						<% _.each(result.global.topic,function(e){ %>
-							<div class="topic-item" data-topic="<%= e.id %>">
+							<div class="topic-item item-result" data-topic="<%= e.id %>" data-city-id="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
 								<p class="topic-name"><%= e.title %></p>
 								<div class="count-post">
 									<p><%= e.post %><i class="fa fa-file-text"></i></p>
@@ -99,7 +99,7 @@
 					</div>
 					<div class="netwrk-result">
 						<% _.each(result.global.netwrk,function(e){ %>
-							<div class="netwrk-item">
+							<div class="netwrk-item item-result" data-netwrk="<%= e.id %>">
 								<p class="netwrk-name"><%= e.zipcode %></p>
 								<span class="netwrk-arrow"><i class="fa fa-angle-right"></i></span>
 							</div>

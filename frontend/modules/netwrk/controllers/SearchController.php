@@ -76,7 +76,9 @@ class SearchController extends BaseController
                 $item_post = [
                     'id'=>$topic->id,
                     'title'=>$topic->title,
-                    'post'=>$topic->post_count
+                    'post'=>$topic->post_count,
+                    'city_id'=> $topic->city->id,
+                    'city_name'=>$topic->city->name
                 ];
                 array_push($topic_local, $item_post);
                 array_push($id_local,$topic->city->id);
@@ -138,7 +140,9 @@ class SearchController extends BaseController
 			$item = [
                 'id'=>$topic_go->id,
                 'title'=>$topic_go->title,
-                'post'=>$topic->post_count,
+                'post'=>$topic_go->post_count,
+                'city_id'=> $topic_go->city->id,
+                'city_name'=>$topic_go->city->name
 			];
 			array_push($topic_global, $item);
 			array_push($id_global,$topic_go->city->id);
