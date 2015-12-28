@@ -628,6 +628,70 @@ var Ajax ={
             error: defer.reject
         });
         return defer.promise();
+    },
+
+    count_unread_message: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/count-unread-message";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    count_unread_msg_from_user: function(sender){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/count-unread-msg-from-user";
+
+        $.ajax({
+            url: url,
+            data: {'sender': sender},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    update_notification_status: function(sender){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/change-status-unread-msg";
+
+        $.ajax({
+            url: url,
+            data: {'sender': sender},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    change_chat_show_message: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/update-chat-show-status";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
     }
 }
 

@@ -26,6 +26,7 @@ class MeetController extends BaseController
     {
         $userCurrent = Yii::$app->user->id;
         $user_meet_rand = [];
+        $users = [];
 
         // get list user meet owner
         $list_user_meet_owner = UserMeet::find()
@@ -85,11 +86,8 @@ class MeetController extends BaseController
         $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
 
         // collect meet user
-        if($user_meet_rand == null){
-
-            for ($i=0; $i < count($users); $i++) { 
-                array_push($user_meet_rand, $users[$i]);
-            }
+        for ($i=0; $i < count($users); $i++) { 
+            array_push($user_meet_rand, $users[$i]);
         }
 
         if($userLogin->setting){
@@ -260,6 +258,8 @@ class MeetController extends BaseController
     public function actionGetUserMeetProfile(){
         $userCurrent = Yii::$app->user->id;
         $chat_post_id = $_POST['post_id'];
+        $user_meet_rand = [];
+        $users = [];
 
         $user_profile = ChatPrivate::find()->where(['user_id'=>$userCurrent, 'post_id'=>$chat_post_id])->one();
 
@@ -443,6 +443,8 @@ class MeetController extends BaseController
 
     public function actionGetUserMeetProfileDiscussion(){
         $userCurrent = Yii::$app->user->id;
+        $user_meet_rand = [];
+        $users = [];
 
         // get topic, post and user_view params
         $user_is_viewed = $_POST['user_view'];

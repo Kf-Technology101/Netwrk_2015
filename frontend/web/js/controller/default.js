@@ -12,6 +12,9 @@ var Default ={
             ResetPass.CheckSessionResetPassword();
         }
         Search.initialize();
+        if(!isGuest){
+            Default.ShowNotificationOnChat();
+        }
     },
 
     getMarkerDefault: function(){
@@ -70,4 +73,19 @@ var Default ={
         $('.navbar-fixed-top').hide();
         $('.navbar-fixed-bottom').hide();
     },
+
+    ShowNotificationOnChat: function(){
+        Ajax.count_unread_message().then(function(data){
+            var json = $.parseJSON(data),
+                notify = $("#chat_inbox_btn, #chat_inbox_btn_mobile").find('.notify');
+            if (json > 0){
+                notify.html(json);
+                notify.removeClass('disable');
+            } else {
+                notify.html(0);
+                notify.addClass('disable');
+            }
+        });
+        Default.clickOnChat = 1;
+    }
 };

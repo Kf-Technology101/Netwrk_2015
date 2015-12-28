@@ -8,6 +8,7 @@ var ChatInbox = {
 	params: {
 		previous: ''
 	},
+	onClickChat: 0,
 	initialize: function(){
 		if(isMobile){
 			ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
@@ -18,6 +19,9 @@ var ChatInbox = {
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
 		} else {
+			if(ChatInbox.onClickChat == 1){
+				Ajax.change_chat_show_message().then(function(data){});
+			}
 			ChatInbox.OnShowListChatPost();
 		}
 		ChatInbox.OnClickHideCloseChatInboxBtn();
@@ -40,6 +44,7 @@ var ChatInbox = {
             });
 
 			ChatInbox.ActiveReponsiveChatInbox();
+			ChatInbox.onClickChat = 1;
 		} else {
 			$(ChatInbox.chat_inbox).animate({
 				"right": "-400px"
@@ -53,6 +58,7 @@ var ChatInbox = {
             });
             
 			ChatInbox.DeactiveReponsiveChatInbox();
+			ChatInbox.onClickChat = 0;
 		}
 	},
 
@@ -93,11 +99,13 @@ var ChatInbox = {
 		parent.append(append_html);
 		for (var i =0;i< data.length; i++) {
 			if(data[i].class_first_met==0) {
-				parent.find('li .chat-post-id .title-description-user .description-chat-inbox').addClass('match-description');
+				parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
+				
 			}
 		};
 		ChatInbox.CustomScrollBarPrivate();
 		ChatInbox.OnClickChatPrivateDetail();
+		ChatInbox.CountMessageUnread();
 	},
 
 	OnClickChatInbox: function() {
@@ -113,6 +121,7 @@ var ChatInbox = {
 			notify.addClass('disable');
 			ChatInbox.initialize();
 		});
+		console.log(ChatInbox.onClickChat);
 	},
 
 	OnClickChatPostDetail: function() {
@@ -158,6 +167,7 @@ var ChatInbox = {
 			var btn = $(this);
 			var userID = $(btn).find('.chat-post-id').attr('data-user');
 			var postID=  $(btn).find('.chat-post-id').attr('data-post');
+			ChatInbox.ChangeStatusUnreadMsg(userID);
 			if(isMobile){
 				ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
 			}else{
@@ -193,11 +203,12 @@ var ChatInbox = {
 			$('#btn_meet').css({'left': '', 'right' : '15px'});
 		},
 
-		DeactiveReponsiveChatInbox: function() {
-			var width = $( window ).width();
-			if (width <= 1366) {
-				$(".modal").removeClass("responsive-chat-inbox");
-			}
+	DeactiveReponsiveChatInbox: function() {
+		var width = $( window ).width();
+		if (width <= 1366) {
+			$(".modal").removeClass("responsive-chat-inbox");
+		}
+		
 
 		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
@@ -305,6 +316,7 @@ var ChatInbox = {
 					}
 				}
 				ChatInbox.CustomScrollBarPrivate();
+				ChatInbox.CountMessageUnread();
 			});
 		};
 	},
@@ -375,5 +387,29 @@ var ChatInbox = {
 				$(ChatInbox.modal).find(ChatInbox.private_chat).removeClass('active');
 			}
 		}
+	},
+
+	CountMessageUnread: function(){
+		$(ChatInbox.modal).find('#chat_private li .chat-post-id').each(function(){
+			var sender = $(this).attr('data-user');
+			Ajax.count_unread_msg_from_user(sender).then(function(data){
+				var json = $.parseJSON(data),
+					row = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-user=' + sender + '] .notify-chat-inbox');
+				if (json > 0){
+					row.html(json);
+					row.removeClass('disable');
+				} else {
+					row.html(0);
+					row.addClass('disable');
+				}
+			});
+		});
+		
+	},
+
+	ChangeStatusUnreadMsg: function(sender){
+		Ajax.update_notification_status(sender).then(function(data){
+			console.log('change status unread message');
+		});
 	}
 }

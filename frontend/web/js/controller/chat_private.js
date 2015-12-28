@@ -258,8 +258,9 @@ var ChatPrivate = {
 				$(ChatPrivate.parent).find('textarea').focus();
 				console.log('Open');
 			},
-			close: function() {
+			close: function(e) {
 				console.log('close');
+				console.log(e);
 			},
 			events: {
 				fetch: function(e) {
@@ -276,6 +277,7 @@ var ChatPrivate = {
 				},
 				onliners: function(e){
 					console.log('onliners');
+					console.log(e);
 				},
 				single: function(e){
 					console.log('single');
@@ -297,6 +299,9 @@ var ChatPrivate = {
 					}
 					ChatPrivate.ScrollTopChat();
 				}
+				// offline: function(e){
+				// 	console.log('offline abc bac cab');
+				// }
 			}
 		});
 	},

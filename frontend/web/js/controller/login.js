@@ -83,6 +83,7 @@ var Login={
 			setTimeout(function(){
 				console.log('show modal callback');
 				Login.modal_callback.initialize();
+				Login.ShowNotificationOnChat();
 			}, 500)
 		}
 	},
@@ -148,5 +149,16 @@ var Login={
         $('.modal-backdrop.in').on('click',function(e) {
             $(Login.parent).modal('hide');
         });
+    },
+
+    ShowNotificationOnChat: function(){
+    	Ajax.count_unread_message().then(function(data){
+    		var json = $.parseJSON(data),
+    			notify = $("#chat_inbox_btn").find('.notify');
+    		if (json > 0){
+				notify.html(json);
+				notify.removeClass('disable');
+			}
+    	});
     },
 };

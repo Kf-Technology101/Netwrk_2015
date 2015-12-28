@@ -277,6 +277,7 @@ var ChatPost = {
 				},
 				onliners: function(e){
 					console.log('onliners');
+					console.log(e);
 				},
 				single: function(e){
 					console.log('single');
