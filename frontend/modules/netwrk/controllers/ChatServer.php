@@ -9,6 +9,7 @@ use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\ChatPrivate;
+use frontend\modules\netwrk\models\Notification;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use Yii;
@@ -20,8 +21,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	protected $current_user;
 	protected $post_id = 0;
 	protected $chat_type;
+	protected $notify;
 
 	private $users = array();
+	private $onl = [];
 
 	public function __construct()
 	{
@@ -31,13 +34,14 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function onOpen(ConnectionInterface $conn)
 	{
-		$this->post_id = $conn->WebSocket->request->getQuery()->get('post');
-		$this->current_user = $conn->WebSocket->request->getQuery()->get('user_id');
-		$this->chat_type = $conn->WebSocket->request->getQuery()->get('chat_type');
+		$user_id = $conn->WebSocket->request->getQuery()->get('user_id');
+		$this->current_user = $user_id;
 		$this->clients->attach($conn);
-		$this->send($conn, "fetch", $this->fetchMessages());
 		$this->checkOnliners();
-		echo "New connection! ({$conn->resourceId})\n";
+		// if($user_id != ""){
+		// 	$this->send($conn, "notify", $this->notify());
+		// }
+		echo $user_id . " is connected on ({$conn->resourceId})\n";
 	}
 
 	public function onMessage(ConnectionInterface $from, $data)
@@ -74,6 +78,20 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->msg_type = $type;
 				$this->ws_messages->post_type = $this->chat_type;
 				$this->ws_messages->save(false);
+
+				$u = ChatPrivate::find()->where(['user_id'=>$this->current_user, 'post_id'=>$room])->one();
+				if(array_search($u->user_id_guest, $this->onl) === false){
+					$this->notify = new Notification();
+					$this->notify->post_id = $room;
+					$this->notify->sender = $this->current_user;
+					$this->notify->receiver = $u->user_id_guest;
+					$this->notify->message = $this->ws_messages->id;
+					$this->notify->status = 0;
+					$this->notify->chat_show = 0;
+					$this->notify->created_at = date('Y-m-d H:i:s');
+					$this->notify->save();
+				}
+
 				if ($this->chat_type == 1) {
 					$this->ws_messages->post->comment_count ++;
 					$this->ws_messages->post->update();
@@ -174,6 +192,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 		/* Send online users to evryone */
 		$data = $this->current_user;
+		array_push($this->onl, $data);
 		foreach ($this->clients as $client) {
 			$this->send($client, "onliners", $data);
 		}
@@ -298,6 +317,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		} else {
 			return false;
 		}
+	}
+
+	public function notify($sender, $receiver, $message){
+
 	}
 }
 ?>

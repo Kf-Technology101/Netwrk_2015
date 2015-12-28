@@ -10,6 +10,12 @@ var PopupChat = {
 
         }else{
             PopupChat.RegisterPopup();
+            PopupChat.ChangeStylePopupChat();
+
+            var parent = $('.popup-box.chat-popup').find('.popup-messages');
+            parent.mCustomScrollbar({
+                theme:"dark"
+            });
         }
     },
 
@@ -85,7 +91,7 @@ var PopupChat = {
     },
 
     getTemplate: function(){
-        var list_template = _.template($("#popup_chat" ).html());
+        var list_template = _.template($("#popup_chat").html());
         var append_html = list_template({post_id: PopupChat.params.post});
 
         $('body').append(append_html);
@@ -110,5 +116,31 @@ var PopupChat = {
         }
 
         PopupChat.DisplayPopups();
+    },
+
+    ChangeStylePopupChat: function() {
+        var id = PopupChat.params.post,
+            inactive_color = "#5888ac",
+            active_color = "#5da5d8";
+
+        $("#textarea-" + id).on("focus", function() {
+            $("#popup-chat-" + id + " .popup-head").css("background-color", active_color);
+        });
+        $("#textarea-" + id).on("focusout", function() {
+            $("#popup-chat-" + id + " .popup-head").css("background-color", inactive_color);
+        });
+
+        $("#popup-chat-" + id).on("click", function() {
+            $(".popup-box.chat-popup .popup-head").css("background-color", inactive_color);
+            $("#popup-chat-" + id + " .popup-head").css("background-color", active_color);
+        });
+
+        $("body").mouseup(function (e) {
+            var container = $("#popup-chat-" + id);
+
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                $("#popup-chat-" + id + " .popup-head").css("background-color", inactive_color);
+            }
+        });
     }
 }
