@@ -21,6 +21,7 @@ module.exports = function(grunt) {
           "frontend/web/css/desktop/chat_inbox.css": "frontend/web/less/desktop/chat_inbox.less",
           "frontend/web/css/desktop/forgot_pass.css": "frontend/web/less/desktop/forgot_pass.less",
           "frontend/web/css/desktop/popup_chat.css": "frontend/web/less/desktop/popup_chat.less",
+          "frontend/web/css/desktop/search.css": "frontend/web/less/desktop/search.less",
           // CSS on Mobile
           "frontend/web/css/mobile/landing.css": "frontend/web/less/mobile/landing.less",
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
