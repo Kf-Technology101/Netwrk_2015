@@ -5,6 +5,7 @@ var ChatInbox = {
 	chat_inbox_mobile: '#chat_inbox_btn_mobile',
 	private_chat: '#chat_private',
 	discussion_chat: '#chat_discussion',
+	list_chat_post_right_hidden: "-400px",
 	params: {
 		previous: ''
 	},
@@ -29,7 +30,7 @@ var ChatInbox = {
 	},
 
 	OnShowListChatPost: function(){
-		if ($(ChatInbox.chat_inbox).css('right') == '-400px') {
+		if ($(ChatInbox.chat_inbox).css('right') == ChatInbox.list_chat_post_right_hidden) {
 			ChatInbox.GetDataListChatPost();
 			ChatInbox.GetDataListChatPrivate();
 			$(ChatInbox.chat_inbox).animate({
@@ -47,7 +48,7 @@ var ChatInbox = {
 			ChatInbox.onClickChat = 1;
 		} else {
 			$(ChatInbox.chat_inbox).animate({
-				"right": "-400px"
+				"right": ChatInbox.list_chat_post_right_hidden
 			}, 500);
 
             $('.popup-box').each(function(index){
@@ -236,7 +237,7 @@ var ChatInbox = {
 			var parent = $(chat_inbox).find('#chat_discussion ul');
 			$(hide_chat_inbox_btn).on("click", function() {
 				chat_inbox.animate({
-					"right": "-400px"
+					"right": ChatInbox.list_chat_post_right_hidden
 				}, 500);
 
                 $('.popup-box').each(function(index){

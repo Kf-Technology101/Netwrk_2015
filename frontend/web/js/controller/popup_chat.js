@@ -3,6 +3,7 @@ var PopupChat = {
         post: ''
     },
     total_popups: 0,
+    max_total_popups: 4,
     popup_chat_class: '.popup-box.chat-popup',
     popups: [],
 
@@ -40,6 +41,11 @@ var PopupChat = {
     DisplayPopups: function() {
         var right = 330,
             popup_rights = [];
+
+
+        if ($(ChatInbox.chat_inbox).css('right') == ChatInbox.list_chat_post_right_hidden) {
+            right = 15;
+        }
 
         $('.popup-box').each(function(){
             var parseRight = parseInt($(this).css('right'));
@@ -109,8 +115,8 @@ var PopupChat = {
             width = width - 200;
             PopupChat.total_popups = parseInt(width/320);
 
-            if (PopupChat.total_popups > 4) {
-                PopupChat.total_popups = 4;
+            if (PopupChat.total_popups > PopupChat.max_total_popups) {
+                PopupChat.total_popups = PopupChat.max_total_popups;
             }
         }
 
