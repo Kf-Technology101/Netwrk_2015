@@ -62,7 +62,7 @@ var Search = {
             }else{
             	// ChatPost.initialize();
             	PopupChat.params.post = rs.attr('data-post');
-                PopupChat.initialize();		
+                PopupChat.initialize();
             }
 
 		});
@@ -79,6 +79,8 @@ var Search = {
             Post.params.city = rs.attr('data-city-id');
             Post.params.city_name = rs.attr('data-city-name');
 
+            Topic.data.city = rs.attr('data-city-id');
+            Topic.data.city_name = rs.attr('data-city-name');
             Search.HideResultSearch();
             if(isMobile){
         		Post.RedirectPostPage(Post.params.topic);
