@@ -57,7 +57,7 @@
 </script>
 <script id="post_list" type="text/x-underscore-template" >
     <% _.each(posts,function(post){ %>
-        <div class="item_post" data-item="<%= post.id %>" data-user="<%= post.user %>">
+        <div class="item_post" data-item="<%= post.id %>" data-user="<%= post.user %>" data-chat-type='1'>
             <div class="users_avatar" data-user-post="<%= post.post_user_id %>">
                 <div class="image"><img src="<%= post.avatar %>"></div>
                 <div class="icon_brillant" data-item="<%= post.id %>">

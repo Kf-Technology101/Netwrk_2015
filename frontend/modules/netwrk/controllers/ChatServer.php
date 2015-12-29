@@ -41,7 +41,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		// if($user_id != ""){
 		// 	$this->send($conn, "notify", $this->notify());
 		// }
-		echo $user_id . " is connected on ({$conn->resourceId})\n";
+		echo "User with id ".$user_id . " is connected on ({$conn->resourceId})\n";
 	}
 
 	public function onMessage(ConnectionInterface $from, $data)
@@ -80,16 +80,18 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->save(false);
 
 				$u = ChatPrivate::find()->where(['user_id'=>$this->current_user, 'post_id'=>$room])->one();
-				if(array_search($u->user_id_guest, $this->onl) === false){
-					$this->notify = new Notification();
-					$this->notify->post_id = $room;
-					$this->notify->sender = $this->current_user;
-					$this->notify->receiver = $u->user_id_guest;
-					$this->notify->message = $this->ws_messages->id;
-					$this->notify->status = 0;
-					$this->notify->chat_show = 0;
-					$this->notify->created_at = date('Y-m-d H:i:s');
-					$this->notify->save();
+				if ($u) {
+					if(array_search($u->user_id_guest, $this->onl) === false){
+						$this->notify = new Notification();
+						$this->notify->post_id = $room;
+						$this->notify->sender = $this->current_user;
+						$this->notify->receiver = $u->user_id_guest;
+						$this->notify->message = $this->ws_messages->id;
+						$this->notify->status = 0;
+						$this->notify->chat_show = 0;
+						$this->notify->created_at = date('Y-m-d H:i:s');
+						$this->notify->save();
+					}
 				}
 
 				if ($this->chat_type == 1) {
@@ -122,6 +124,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				}
 
 			}elseif($type == "fetch"){
+				$this->post_id = $data['data']['post_id'] ? $data['data']['post_id'] : false;
+				$this->chat_type = $data['data']['chat_type'] ? $data['data']['chat_type']: false;
 				$this->send($from, "fetch", $this->fetchMessages());
 			}
 		}

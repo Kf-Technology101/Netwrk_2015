@@ -28,7 +28,7 @@
 <script id="chat_inbox_list" type="text/x-underscore-template" >
 	<% _.each(chat_inbox_list,function(chat_inbox){ %>
 		<li>
-			<div class='chat-post-id' data-post='<%= chat_inbox.id %>'>
+			<div class='chat-post-id' data-post='<%= chat_inbox.id %>' data-chat-type='1'>
 				<span class='avatar-user'>
 					<img class='img_avatar' src='<?= Url::to("@web/") ?><%= chat_inbox.avatar %>' />
 				</span>
@@ -52,7 +52,7 @@
 <script id="chat_private_list" type="text/x-underscore-template" >
 	<% _.each(chat_private_list,function(chat_inbox){ %>
 		<li>
-			<div class='chat-post-id' data-user='<%= chat_inbox.user_id_guest %>' data-post='<%= chat_inbox.post_id %>'>
+			<div class='chat-post-id' data-user='<%= chat_inbox.user_id_guest %>' data-post='<%= chat_inbox.post_id %>' data-chat-type='0'>
 				<span class='avatar-user'>
 					<img class='img_avatar' src='<?= Url::to("@web/") ?><%= chat_inbox.avatar %>' />
 				</span>

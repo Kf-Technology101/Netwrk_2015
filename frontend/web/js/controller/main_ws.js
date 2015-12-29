@@ -10,7 +10,7 @@ var MainWs ={
         if(baseUrl === 'http://netwrk.rubyspace.net'){
             MainWs.url = 'box.rubyspace.net';
         }else{
-            MainWs.url = "127.0.0.1";
+            MainWs.url = window.location.host;
         };
     },
 
@@ -27,7 +27,15 @@ var MainWs ={
             events: {
                 fetch: function(e) {
                     console.log('fetch');
-                    // handle fetch data
+                    PopupChat.msg_lenght = e.data.length;
+                    $.each(e.data, function(i, elem){
+                        PopupChat.getMessageTemplate(elem);
+                        PopupChat.ScrollTopChat(elem.post_id);
+                    });
+                    // if(isMobile){
+                    //     fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+                    // }
+                    PopupChat.FetchEmojiOne({type: 'fetch'}, PopupChat.params.post);
                 },
                 onliners: function(e){
                     // handle user online
@@ -36,6 +44,23 @@ var MainWs ={
                 single: function(e){
                     console.log('single');
                     // handle of chat
+                    var update_list_chat;
+                    var popup_active = e.data[0]['post_id'];
+                    var user_id = e.data[0]['id'];
+                    $.each(e.data, function(i, elem){
+                        PopupChat.message_type = elem.msg_type;
+                        PopupChat.getMessageTemplate(elem);
+                        update_list_chat = $.parseJSON(elem.update_list_chat);
+                    });
+                    if(isMobile){
+                        fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+                    } else {
+                        ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_discussion ul'), update_list_chat, user_id);
+                    }
+                    if(PopupChat.message_type == 1){
+                        PopupChat.FetchEmojiOne({type: 'single'}, popup_active);
+                    }
+                    PopupChat.ScrollTopChat(popup_active);
                 },
                 notify: function(e){
                     // handle notify

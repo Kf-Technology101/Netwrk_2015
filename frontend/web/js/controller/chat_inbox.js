@@ -57,7 +57,7 @@ var ChatInbox = {
                     'right': right_now
                 }, 500);
             });
-            
+
 			ChatInbox.DeactiveReponsiveChatInbox();
 			ChatInbox.onClickChat = 0;
 		}
@@ -83,14 +83,15 @@ var ChatInbox = {
 		};
 	},
 
-	getTemplateChatInbox: function(parent,data){
-		var list_template = _.template($("#chat_inbox_list" ).html());
-		var append_html = list_template({chat_inbox_list: data});
-		console.log(data);
-		parent.find('li').remove();
-		parent.append(append_html);
-		ChatInbox.CustomScrollBar();
-		ChatInbox.OnClickChatPostDetail();
+	getTemplateChatInbox: function(parent,data, user_id){
+		if (user_id == UserLogin) {
+			var list_template = _.template($("#chat_inbox_list" ).html());
+			var append_html = list_template({chat_inbox_list: data});
+			parent.find('li').remove();
+			parent.append(append_html);
+			ChatInbox.CustomScrollBar();
+			ChatInbox.OnClickChatPostDetail();
+		}
 	},
 
 	getTemplateChatPrivate: function(parent,data){
@@ -101,7 +102,7 @@ var ChatInbox = {
 		for (var i =0;i< data.length; i++) {
 			if(data[i].class_first_met==0) {
 				parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
-				
+
 			}
 		};
 		ChatInbox.CustomScrollBarPrivate();
@@ -143,7 +144,12 @@ var ChatInbox = {
 			}else{
 				ChatPost.params.post = item_post;
 				PopupChat.params.post = item_post;
-				PopupChat.initialize();
+				PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
+
+				if ($('#popup_chat_modal #popup-chat-'+PopupChat.params.post).length == 0 || $('#popup_chat_modal #popup-chat-'+PopupChat.params.post).css('display') == 'none') {
+					PopupChat.initialize();
+				}
+
 				if(ChatPost.temp_post != ChatPost.params.post){
 					// $(Topic.modal).modal('hide');
 					// $(ChatPost.modal).modal('hide');
@@ -209,7 +215,7 @@ var ChatInbox = {
 		if (width <= 1366) {
 			$(".modal").removeClass("responsive-chat-inbox");
 		}
-		
+
 
 		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
@@ -261,8 +267,10 @@ var ChatInbox = {
 			processData: false,
 			contentType: false,
 			success: function(result) {
-				result = $.parseJSON(result);
-				ChatInbox.getTemplateChatInbox(parent,result);
+				if (result) {
+					result = $.parseJSON(result);
+					ChatInbox.getTemplateChatInbox(parent,result, UserLogin);
+			}
 			}
 		});
 	},
@@ -405,7 +413,7 @@ var ChatInbox = {
 				}
 			});
 		});
-		
+
 	},
 
 	ChangeStatusUnreadMsg: function(sender){

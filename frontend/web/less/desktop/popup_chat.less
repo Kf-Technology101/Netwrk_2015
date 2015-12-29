@@ -45,15 +45,17 @@
         }
     }
     .popup-messages {
-        height: 84%;
-        overflow-y: hidden;
-        .container_post_chat, .container_private_chat{
-            height: auto;
+        height: 275px;
+        overflow: hidden;
+        .mCSB_container {
+            margin-right: 0;
+        }
+        .popup_chat_container, .container_private_chat{
             width: 100%;
             margin: 0 auto;
             float: left;
             z-index: 5;
-            overflow-y: auto;
+            overflow-y: hidden;
             background-color: #f4f4f4;
             // margin-bottom: 45px;
             .message{
@@ -292,9 +294,9 @@
                 color : #1b1d1d;
                 padding: 4px;
                 .dropdown-menu{
-                    width: 250px;
+                    width: 220px;
                     height: 135px;
-                    left: -155px;
+                    left: -165px;
                     overflow: auto;
                     li{
                         float: left;

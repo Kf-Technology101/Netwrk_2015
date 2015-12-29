@@ -37,17 +37,17 @@
 			</div>
 		</div>
 	</div>
-	<script id="list_emoji" type="text/x-underscore-template">
+<!-- 	<script id="list_emoji" type="text/x-underscore-template">
 		<% _.each(emoji,function(i,e){ %>
 			<li data-value="<%= i %>" data-toggle="tooltip" title="<%= i %>"><%= i %></li>
 		<% })%>
-	</script>
+	</script> -->
 	<script id="chatpost_name" type="text/x-underscore-template">
 		<span id='logo_modal_chat'><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></span>
 		<span><i class="fa fa-angle-right"></i><%= name.topic_name%></span>
 		<span><i class="fa fa-angle-right"></i><%= name.post_name %></span>
 	</script>
-	<script id="message_chat" type="text/x-underscore-template">
+	<!-- <script id="message_chat" type="text/x-underscore-template">
 		<% if ((msg.id == UserLogin)){ %>
 		    <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
 		<% }else{ %>
@@ -69,5 +69,5 @@
 	            <p class="time"><%= msg.created_at %></p>
 	        </div>
 	    </div>
-	</script>
+	</script> -->
 </div>
