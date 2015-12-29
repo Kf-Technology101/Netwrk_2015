@@ -49,7 +49,7 @@ class SearchController extends BaseController
 		// Post Local
         $posts = Post::find()->where(['like','title',$_search])->orderBy(['brilliant_count'=> SORT_DESC])->all();
         foreach ($posts as $key => $post) {
-            echo $cur_lat.' ==== '.$cur_lng.' ==== '.$post->topic->city->lat.' ==== '.$post->topic->city->lng;
+            var_dump( $cur_lat.' ==== '.$cur_lng.' ==== '.$post->topic->city->lat.' ==== '.$post->topic->city->lng);
         	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$post->topic->city->lat,$post->topic->city->lng);
             if($distance <= $radius_local && count($post_local) < $limitResult){
 
