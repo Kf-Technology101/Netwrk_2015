@@ -5,6 +5,8 @@ var PopupChat = {
     total_popups: 0,
     max_total_popups: 4,
     popup_chat_class: '.popup-box.chat-popup',
+    inactive_color: "#5888ac",
+    active_color: "#5da5d8",
     popups: [],
 
     initialize: function() {
@@ -90,6 +92,7 @@ var PopupChat = {
             }
         }
         PopupChat.getTemplate();
+        $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
         PopupChat.popups.push(PopupChat.params.post);
         PopupChat.CalculatePopups();
         PopupChat.MoveMeetButton();
@@ -124,27 +127,25 @@ var PopupChat = {
     },
 
     ChangeStylePopupChat: function() {
-        var id = PopupChat.params.post,
-            inactive_color = "#5888ac",
-            active_color = "#5da5d8";
+        var id = PopupChat.params.post;
 
         $("#textarea-" + id).on("focus", function() {
-            $("#popup-chat-" + id + " .popup-head").css("background-color", active_color);
+            $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.active_color);
         });
         $("#textarea-" + id).on("focusout", function() {
-            $("#popup-chat-" + id + " .popup-head").css("background-color", inactive_color);
+            $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.inactive_color);
         });
 
         $("#popup-chat-" + id).on("click", function() {
-            $(PopupChat.popup_chat_class + " .popup-head").css("background-color", inactive_color);
-            $("#popup-chat-" + id + " .popup-head").css("background-color", active_color);
+            $(PopupChat.popup_chat_class + " .popup-head").css("background-color", PopupChat.inactive_color);
+            $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.active_color);
         });
 
         $("body").mouseup(function (e) {
             var container = $("#popup-chat-" + id);
 
             if (!container.is(e.target) && container.has(e.target).length === 0) {
-                $("#popup-chat-" + id + " .popup-head").css("background-color", inactive_color);
+                $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.inactive_color);
             }
         });
     },
