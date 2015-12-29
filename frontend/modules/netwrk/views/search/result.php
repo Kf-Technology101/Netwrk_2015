@@ -25,7 +25,7 @@
 					<div class="post-result">
 						<% _.each(result.local.post,function(e){ %>
 							<div class="post-item item-result" data-post="<%= e.id %>">
-								<div class="thumb"><img src="<?= Url::to('@web/img/icon/no_avatar.jpg') ?>"></div>
+								<div class="thumb"><img src="<%= e.thumb %>"></div>
 								<div class="content-post">
 									<p class="title title-result"><%= e.title %></p>
 									<p class="container-post"><%= e.content %></p>
@@ -72,9 +72,9 @@
 					<div class="post-result">
 						<% _.each(result.global.post,function(e){ %>
 							<div class="post-item item-result" data-post="<%= e.id %>">
-								<div class="thumb"><img src="<?= Url::to('@web/img/icon/no_avatar.jpg') ?>"></div>
+								<div class="thumb"><img src="<%= e.thumb %>"></div>
 								<div class="content-post">
-									<p class="title"><%= e.title %></p>
+									<p class="title title-result"><%= e.title %></p>
 									<p class="container-post"><%= e.content %></p>
 								</div>
 								<div class="info">
@@ -89,7 +89,7 @@
 					<div class="topic-result">
 						<% _.each(result.global.topic,function(e){ %>
 							<div class="topic-item item-result" data-topic="<%= e.id %>" data-city-id="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
-								<p class="topic-name"><%= e.title %></p>
+								<p class="topic-name title-result"><%= e.title %></p>
 								<div class="count-post">
 									<p><%= e.post %><i class="fa fa-file-text"></i></p>
 								</div>

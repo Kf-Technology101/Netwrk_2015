@@ -44,6 +44,8 @@
 			margin: 10px;
 			float: left;
 			width: 100%;
+		 	font-size: 12px;
+		 	color: #1d1b1b;
 		}
 		.location{
 			width: 100%;
@@ -51,7 +53,7 @@
 			.title{
 				width: 100%;
 				float: left;
-				border: 1px solid #1b1b1b;
+				// border: 1px solid #1b1b1b;
 				background: #4a4c4e;
 				font-size: 120%;
 				color: #fff;
@@ -70,7 +72,7 @@
 						float: left;
 						width: 100%;
 						.thumb{
-							width: 15%;
+							width: 20%;
 							// height: 50px;
 							float: left;
 							img{
@@ -78,8 +80,13 @@
 								// height: 50px;
 							}
 						}
+						.title-result{
+							overflow: hidden;
+			                text-overflow: ellipsis;
+			                white-space: nowrap;
+						}
 						.content-post{
-							width: 65%;
+							width: 60%;
 							float: left;
 							padding: 0 5px;
 							overflow: hidden;
@@ -100,7 +107,7 @@
 								}
 							}
 							.container-post{
-								font-size: 70%;
+								font-size: 80%;
 								color: #1d1b1b;
 								a{
 									color:#5888ac;
@@ -119,20 +126,21 @@
 							float: left;
 							.date{
 								margin-bottom: -5px;
-								font-size: 80%;
+								font-size: 70%;
 								color: #1d1b1b;
-								text-align: center;
+								text-align: right;
 							}
 							.brillant{
 								width: 42px;
 								height: 34px;
-								margin: 10px auto 0;
+								// margin: 10px auto 0;
 								background: url('../../img/icon/brilliant-icon-large.png') no-repeat;
 								background-size: 42px 34px;
+								float: right;
 								p{
 									line-height: 42px;
 									text-align: center;
-									font-size: 50%;
+									font-size: 60%;
 									color: #fff;
 									font-family: 'Verdana';
 								}
@@ -145,22 +153,25 @@
 					float: left;
 					.topic-item{
 						width: 100%;
+						height: 30px;
 						float: left;
 						border-bottom: 1px solid #e3e3e3;
+						background: #fcfcfc;
 						.topic-name{
 							width: 70%;
+							line-height: 30px;
 							float: left;
-							margin:10px 0 10px 5px;
+							margin-left: 5px;
 							font-size: 100%;
 							color: #1d1b1b;
-							font-family: 'ProximaNovaSemibold;';
+							font-family: 'ProximaNovaSemibold';
 						}
 						.count-post{
 							width: 20%;
-							margin:10px 0 ;
 							float: left;
-							font-size: 100%;
+							font-size: 90%;
 							color: #1d1b1b;
+							line-height: 30px;
 							p{
 								margin: 0;
 								text-align: center;
@@ -171,9 +182,9 @@
 							}
 						}
 						.topic-arrow{
-							line-height: 40px;
+							line-height: 30px;
 							i{
-								font-size: 15px;
+								font-size: 18px;
 							}
 						}
 					}
@@ -183,18 +194,22 @@
 					float: left;
 					.netwrk-item{
 						width: 100%;
+						height: 30px;
 						float: left;
 						border-bottom: 1px solid #e3e3e3;
 						.netwrk-name{
+							color: #1d1b1b;
+							font-family: 'ProximaNovaSemibold';
 							width: 80%;
 							float: left;
-							margin: 10px 5px;
+							margin: 0 5px;
 							font-size: 100%;
+							line-height: 30px;
 						}
 						.netwrk-arrow{
 							width: 7%;
 							float: right;
-							line-height: 40px;
+							line-height: 30px;
 							i{
 								font-size: 100%;
 							}
@@ -205,6 +220,9 @@
 		}
 		.notice{
 			padding: 10px;
+			font-size:12px;
+			color: #7f7f7f;
+	 		margin: 0 0 -4px 0;
 		}
 	}
 }

@@ -22,7 +22,7 @@ var Search = {
 	FixHeightSearch: function(){
 		var screen_device = get_size_window();
 		if(isMobile){
-			$(Search.result).css({'max-height': screen_device[1] - 120});
+			$(Search.result).css({'max-height': screen_device[1] - 135});
 		}else{
 			$(Search.result).css({'max-height': screen_device[1] - 74});
 		}

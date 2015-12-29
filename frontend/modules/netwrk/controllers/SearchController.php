@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\controllers;
 use Yii;
 use yii\web\Session;
 use yii\db\Query;
+use yii\helpers\Url;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
@@ -60,8 +61,15 @@ class SearchController extends BaseController
 	                $post->content = $post->content." ...<span class='show_more'>show more</span>";
 	            }
 
+                if ($post->user->profile->photo == null){
+                    $image = Url::to('@web/img/icon/no_avatar.jpg');
+                }else{
+                    $image = Url::to('@web/uploads/'.$post->user->id.'/'.$post->user->profile->photo);
+                }
+
                 $item_post = [
                     'id'=>$post->id,
+                    'thumb'=> $image,
                     'title'=>$post->title,
                     'content'=> $post->content,
                     'brilliant'=> $post->brilliant_count ? $post->brilliant_count : 0,
@@ -123,8 +131,14 @@ class SearchController extends BaseController
                	$post_go->content = $post_go->content." ...<span class='show_more'>show more</span>";
             }
 
+            if ($post_go->user->profile->photo == null){
+                $image = Url::to('@web/img/icon/no_avatar.jpg');
+            }else{
+                $image = Url::to('@web/uploads/'.$post_go->user->id.'/'.$post_go->user->profile->photo);
+            }
 			$item = [
                 'id'=>$post_go->id,
+                'thumb'=>$image,
                 'title'=>$post_go->title,
                 'content'=> $post_go->content,
                 'brilliant'=> $post_go->brilliant_count ? $post_go->brilliant_count : 0,
