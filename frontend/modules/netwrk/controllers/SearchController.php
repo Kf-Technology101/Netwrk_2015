@@ -29,22 +29,28 @@ class SearchController extends BaseController
         $num_search_local = 0;
         $num_search_global = 0;
         $radius_local = 50;
+
+        // Search local in radius 50 miles in current location
         $id_local =[];
         $post_local = [];
         $topic_local = [];
         $netwrk_local = [];
+
+         // Search global all topic and netwrk except result search Local
         $id_global =[];
         $post_global = [];
         $topic_global = [];
         $netwrk_global = [];
-        $maxlength = Yii::$app->params['MaxlenghtMessageDesktop'];
-        $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
+
+        $maxlength = Yii::$app->params['MaxlenghtContentPostDesktop'];
+        $maxlengthMobile = Yii::$app->params['MaxlenghtContentPostMobile'];
+        $limitResult = Yii::$app->params['LimitResultSearch'];
 
 		// Post Local
         $posts = Post::find()->where(['like','title',$_search])->orderBy(['brilliant_count'=> SORT_DESC])->all();
         foreach ($posts as $key => $post) {
         	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$post->topic->city->lat,$post->topic->city->lng);
-            if($distance <= $radius_local && count($post_local) < 2){
+            if($distance <= $radius_local && count($post_local) < $limitResult){
 
 	            if($this->getIsMobile() && strlen($post->content) > $maxlengthMobile){
 	                $post->content = substr($post->content,0,$maxlengthMobile) ;
@@ -59,7 +65,7 @@ class SearchController extends BaseController
                     'title'=>$post->title,
                     'content'=> $post->content,
                     'brilliant'=> $post->brilliant_count ? $post->brilliant_count : 0,
-                    'created_at'=> date_format(date_create($post->created_at),'Y-m-d')
+                    'created_at'=> date_format(date_create($post->created_at),'m/d/Y')
                 ];
 
                 array_push($post_local, $item_post);
@@ -72,7 +78,7 @@ class SearchController extends BaseController
        	$topics = Topic::find()->where(['like','title',$_search])->orderBy(['brilliant_count'=> SORT_DESC])->all();
         foreach ($topics as $key => $topic) {
         	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$topic->city->lat,$topic->city->lng);
-            if($distance <= $radius_local && count($post_local) < 2){
+            if($distance <= $radius_local && count($post_local) < $limitResult){
                 $item_post = [
                     'id'=>$topic->id,
                     'title'=>$topic->title,
@@ -86,7 +92,7 @@ class SearchController extends BaseController
             }
        	}
 
-        $city_local = City::find()->where(['id'=> $id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit(2)->all();
+        $city_local = City::find()->where(['id'=> $id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit($limitResult)->all();
     	foreach ($city_local as $key => $value) {
             $distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$value->lat,$value->lng);
             if($distance <= $radius_local){
@@ -104,7 +110,7 @@ class SearchController extends BaseController
 			        ->where(['like','post.title',$_search])
 			        ->andWhere(['not in','topic.city_id',$id_local])
 			        ->orderBy(['brilliant_count'=> SORT_DESC])
-			        ->limit(2)
+			        ->limit($limitResult)
 			        ->all();
 
 		foreach ($posts_go as $key => $post_go) {
@@ -122,7 +128,7 @@ class SearchController extends BaseController
                 'title'=>$post_go->title,
                 'content'=> $post_go->content,
                 'brilliant'=> $post_go->brilliant_count ? $post_go->brilliant_count : 0,
-                'created_at'=> date_format(date_create($post_go->created_at),'Y-m-d')
+                'created_at'=> date_format(date_create($post_go->created_at),'m/d/Y')
 			];
 			array_push($post_global, $item);
 			array_push($id_global,$post_go->topic->city->id);
@@ -133,7 +139,7 @@ class SearchController extends BaseController
 					->where(['like','title',$_search])
 			        ->andWhere(['not in','city_id',$id_local])
 			        ->orderBy(['brilliant_count'=> SORT_DESC])
-			        ->limit(2)
+			        ->limit($limitResult)
 			        ->all();
 
 		foreach ($topics_go as $key => $topic_go) {
@@ -149,7 +155,7 @@ class SearchController extends BaseController
 			$num_search_global += count($topic_global);
 		}
 
-		$city_go = City::find()->where(['id'=>$id_global])->andwhere(['not in','id',$id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit(2)->all();
+		$city_go = City::find()->where(['id'=>$id_global])->andwhere(['not in','id',$id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit($limitResult)->all();
 
 		foreach ($city_go as $key => $value) {
 			$netwrk = [

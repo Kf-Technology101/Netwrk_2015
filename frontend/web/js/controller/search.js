@@ -24,7 +24,7 @@ var Search = {
 		if(isMobile){
 			$(Search.result).css({'max-height': screen_device[1] - 120});
 		}else{
-			$(Search.result).css({'max-height': screen_device[1] - 80});
+			$(Search.result).css({'max-height': screen_device[1] - 74});
 		}
 	},
 
