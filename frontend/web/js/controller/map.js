@@ -239,8 +239,12 @@ var Map ={
 				            Post.params.city = e.id;
 				            Post.params.city_name = e.name;
 				            Post.params.topic = e.post.topic_id;
-				            ChatPost.params.post = post_id;
-				            ChatPost.initialize();
+
+				            // ChatPost.params.post = post_id;
+				            // ChatPost.initialize();
+
+                            PopupChat.params.post = post_id;
+                            PopupChat.initialize();
 			            }
 	          		});
 	          	});
