@@ -241,4 +241,5 @@ $(document).ready(function(){
   _addListenEventPage();
   Emoji.initialize();
   Search.initialize();
+  MainWs.initialize();
 });

@@ -34,8 +34,7 @@ class Notification extends \yii\db\ActiveRecord
     {
         return [
             [['post_id', 'sender', 'receiver', 'message', 'status'], 'required'],
-            [['message'], 'string'],
-            [['post_id', 'sender', 'receiver'], 'integer'],
+            [['post_id', 'sender', 'receiver', 'message'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['status', 'chat_show'], 'boolean']
         ];
@@ -55,7 +54,7 @@ class Notification extends \yii\db\ActiveRecord
             'status' => 'Read',
             'chat_show' => 'Chat Notify',
             'created_at' => 'Sent Date',
-            'updated_at' => 'Updated At'  
+            'updated_at' => 'Updated At'
         ];
     }
 
