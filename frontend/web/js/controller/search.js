@@ -60,7 +60,9 @@ var Search = {
             if(isMobile){
             	ChatPost.RedirectChatPostPage(ChatPost.params.post,1,0);
             }else{
-            	ChatPost.initialize();
+            	// ChatPost.initialize();
+            	PopupChat.params.post = rs.attr('data-post');
+                PopupChat.initialize();		
             }
 
 		});
