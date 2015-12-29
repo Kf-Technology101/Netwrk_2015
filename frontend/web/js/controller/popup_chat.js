@@ -1,8 +1,9 @@
 var PopupChat = {
     params:{
-        post:''
+        post: ''
     },
     total_popups: 0,
+    popup_chat_class: '.popup-box.chat-popup',
     popups: [],
 
     initialize: function() {
@@ -11,11 +12,7 @@ var PopupChat = {
         }else{
             PopupChat.RegisterPopup();
             PopupChat.ChangeStylePopupChat();
-
-            var parent = $('.popup-box.chat-popup').find('.popup-messages');
-            parent.mCustomScrollbar({
-                theme:"dark"
-            });
+            PopupChat.AddScrollBar();
         }
     },
 
@@ -33,6 +30,7 @@ var PopupChat = {
                 PopupChat.Remove(PopupChat.popups, i);
                 document.getElementById('popup-chat-' + id).style.display = "none";
                 PopupChat.CalculatePopups();
+                PopupChat.MoveMeetButton();
 
                 return;
             }
@@ -88,6 +86,7 @@ var PopupChat = {
         PopupChat.getTemplate();
         PopupChat.popups.push(PopupChat.params.post);
         PopupChat.CalculatePopups();
+        PopupChat.MoveMeetButton();
     },
 
     getTemplate: function(){
@@ -131,7 +130,7 @@ var PopupChat = {
         });
 
         $("#popup-chat-" + id).on("click", function() {
-            $(".popup-box.chat-popup .popup-head").css("background-color", inactive_color);
+            $(PopupChat.popup_chat_class + " .popup-head").css("background-color", inactive_color);
             $("#popup-chat-" + id + " .popup-head").css("background-color", active_color);
         });
 
@@ -142,5 +141,36 @@ var PopupChat = {
                 $("#popup-chat-" + id + " .popup-head").css("background-color", inactive_color);
             }
         });
+    },
+
+    AddScrollBar: function() {
+        var parent = $(PopupChat.popup_chat_class).find('.popup-messages');
+        parent.mCustomScrollbar({
+            theme:"dark"
+        });
+    },
+
+    MoveMeetButton: function() {
+        var have_popup = false,
+            top_btnMeet;
+
+        if (!$('#btn_meet').data('original_top')) {
+            $('#btn_meet').data('original_top', parseInt($('#btn_meet').css('top')))
+        }
+        top_btnMeet = $('#btn_meet').data('original_top');
+
+        $(PopupChat.popup_chat_class).each(function() {
+            var id = this.id
+            if ($('#' + id).css('display') == 'block') {
+                have_popup = true;
+                return false;
+            }
+        });
+
+        if (have_popup && parseInt($('#btn_meet').css('top')) == top_btnMeet) {
+            $('#btn_meet').css('top', top_btnMeet - 322 + 'px');
+        } else if (!have_popup) {
+            $('#btn_meet').css('top', top_btnMeet + 'px');
+        }
     }
 }
