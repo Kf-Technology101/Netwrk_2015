@@ -48,7 +48,7 @@ class SearchController extends BaseController
         $limitResult = Yii::$app->params['LimitResultSearch'];
 
 		// Post Local
-        $posts = Post::find()->where(['like','title',$_search])->andWhere('topic_id != NULL')->orderBy(['brilliant_count'=> SORT_DESC])->all();
+        $posts = Post::find()->where(['like','title',$_search])->andWhere(['not',['topic_id'=> NULL]])->orderBy(['brilliant_count'=> SORT_DESC])->all();
         foreach ($posts as $key => $post) {
         	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$post->topic->city->lat,$post->topic->city->lng);
             if($distance <= $radius_local && count($post_local) < $limitResult){
@@ -117,6 +117,7 @@ class SearchController extends BaseController
         $posts_go = Post::find()->joinWith('topic')
 			        ->where(['like','post.title',$_search])
 			        ->andWhere(['not in','topic.city_id',$id_local])
+                    ->andWhere(['not',['topic_id'=> NULL]])
 			        ->orderBy(['brilliant_count'=> SORT_DESC])
 			        ->limit($limitResult)
 			        ->all();
