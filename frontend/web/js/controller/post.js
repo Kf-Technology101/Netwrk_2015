@@ -66,8 +66,10 @@ var Post ={
 				ChatPost.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				$("#list_post").modal('hide');
-				ChatPost.params.post = item_post;
-				ChatPost.initialize();
+				// ChatPost.params.post = item_post;
+				// ChatPost.initialize();
+                PopupChat.params.post = item_post;
+                PopupChat.initialize();
 			}
 		});
 
