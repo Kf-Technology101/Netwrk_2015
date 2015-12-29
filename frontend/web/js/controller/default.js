@@ -11,7 +11,7 @@ var Default ={
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
         }
-        Search.initialize();
+        
         if(!isGuest){
             Default.ShowNotificationOnChat();
         }

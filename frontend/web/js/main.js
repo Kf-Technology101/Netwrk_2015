@@ -240,4 +240,5 @@ $(document).ready(function(){
   _main();
   _addListenEventPage();
   Emoji.initialize();
+  Search.initialize();
 });
