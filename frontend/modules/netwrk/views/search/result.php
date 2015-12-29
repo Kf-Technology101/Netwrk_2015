@@ -5,7 +5,7 @@
 	</div>
 
 	<p class="notice">
-		Not what your looking for? Bummer,try again with more detail or make it yourself
+		Not what your looking for? Bummer, try again with more detail or make it yourself
 	</p>
 </div>
 <script id="list_result" type="text/x-underscore-template">
@@ -71,7 +71,7 @@
 				<% }else{ %>
 					<div class="post-result">
 						<% _.each(result.global.post,function(e){ %>
-							<div class="post-item item-result">
+							<div class="post-item item-result" data-post="<%= e.id %>">
 								<div class="thumb"><img src="<?= Url::to('@web/img/icon/no_avatar.jpg') ?>"></div>
 								<div class="content-post">
 									<p class="title"><%= e.title %></p>
