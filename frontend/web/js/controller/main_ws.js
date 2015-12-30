@@ -47,6 +47,7 @@ var MainWs ={
                     var update_list_chat;
                     var popup_active = e.data[0]['post_id'];
                     var user_id = e.data[0]['id'];
+                    var chat_type = e.data[0]['chat_type'];
                     $.each(e.data, function(i, elem){
                         PopupChat.message_type = elem.msg_type;
                         PopupChat.getMessageTemplate(elem);
@@ -55,7 +56,11 @@ var MainWs ={
                     if(isMobile){
                         fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
                     } else {
-                        ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_discussion ul'), update_list_chat, user_id);
+                        if (chat_type == 0) {
+                            ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, user_id);
+                        } else {
+                            ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_discussion ul'), update_list_chat, user_id);
+                        }
                     }
                     if(PopupChat.message_type == 1){
                         PopupChat.FetchEmojiOne({type: 'single'}, popup_active);

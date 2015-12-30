@@ -94,20 +94,22 @@ var ChatInbox = {
 		}
 	},
 
-	getTemplateChatPrivate: function(parent,data){
-		var list_template = _.template($("#chat_private_list" ).html());
-		var append_html = list_template({chat_private_list: data});
-		parent.find('li').remove();
-		parent.append(append_html);
-		for (var i =0;i< data.length; i++) {
-			if(data[i].class_first_met==0) {
-				parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
+	getTemplateChatPrivate: function(parent,data, user_id){
+		if (user_id == UserLogin) {
+			var list_template = _.template($("#chat_private_list" ).html());
+			var append_html = list_template({chat_private_list: data});
+			parent.find('li').remove();
+			parent.append(append_html);
+			for (var i =0;i< data.length; i++) {
+				if(data[i].class_first_met==0) {
+					parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
 
-			}
-		};
-		ChatInbox.CustomScrollBarPrivate();
-		ChatInbox.OnClickChatPrivateDetail();
-		ChatInbox.CountMessageUnread();
+				}
+			};
+			ChatInbox.CustomScrollBarPrivate();
+			ChatInbox.OnClickChatPrivateDetail();
+			ChatInbox.CountMessageUnread();
+		}
 	},
 
 	OnClickChatInbox: function() {
@@ -179,13 +181,14 @@ var ChatInbox = {
 				ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
 			}else{
 				ChatPrivate.params.private = userID;
-                PopupChat.params.post = userID;
+                PopupChat.params.post = postID;
+                PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
                 PopupChat.initialize();
-				if(ChatPrivate.temp_private != ChatPrivate.params.private){
-					$('.modal').modal('hide');
-					ChatPrivate.initialize();
-					ChatPrivate.temp_private = ChatPrivate.params.private;
-				}
+				// if(ChatPrivate.temp_private != ChatPrivate.params.private){
+				// 	$('.modal').modal('hide');
+				// 	ChatPrivate.initialize();
+				// 	ChatPrivate.temp_private = ChatPrivate.params.private;
+				// }
 			}
 			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
 			private_notify.html('0');
@@ -285,7 +288,7 @@ var ChatInbox = {
 			contentType: false,
 			success: function(result) {
 				result = $.parseJSON(result);
-				ChatInbox.getTemplateChatPrivate(parent,result);
+				ChatInbox.getTemplateChatPrivate(parent,result, UserLogin);
 			}
 		});
 	},

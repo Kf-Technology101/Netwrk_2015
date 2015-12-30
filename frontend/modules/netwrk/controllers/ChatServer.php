@@ -52,7 +52,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 		if(isset($data['data']) && count($data['data']) != 0){
 			$type = $data['type'];
-
 			$user = isset($this->users[$id]) ? $this->users[$id]['name'] : false;
 
 			// $user = $current_user;
@@ -63,8 +62,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					"name" 	=> $name,
 					"seen"	=> time()
 					);
-			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['user_id'])){
+			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['chat_type']) && isset($data['data']['user_id'])){
 				// make new models to stored data
+				$this->chat_type = $data['data']['chat_type'];
 				$this->ws_messages = new WsMessages();
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
 				$type = $data['data']['type'];
@@ -118,14 +118,15 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														"created_at" => date("h:i A"),
 														'post_id'=> $room,
 														// "user_current" => $userProfile->current,
-														"update_list_chat" => $list_chat_inbox
+														"update_list_chat" => $list_chat_inbox,
+														"chat_type" => $this->chat_type
 														)
 													]);
 				}
 
 			}elseif($type == "fetch"){
-				$this->post_id = $data['data']['post_id'] ? $data['data']['post_id'] : false;
-				$this->chat_type = $data['data']['chat_type'] ? $data['data']['chat_type']: false;
+				$this->post_id = isset($data['data']['post_id']) ? $data['data']['post_id'] : false;
+				$this->chat_type = isset($data['data']['chat_type']) ? $data['data']['chat_type']: false;
 				$this->send($from, "fetch", $this->fetchMessages());
 			}
 		}
@@ -150,7 +151,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	{
 		$data_result=[];
 		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
-
 		if($message) {
 			foreach ($message as $key => $value) {
        			# code...
@@ -173,7 +173,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				);
 
 				array_push($data_result,$item);
-
 			}
 		}
 		return $data_result;
