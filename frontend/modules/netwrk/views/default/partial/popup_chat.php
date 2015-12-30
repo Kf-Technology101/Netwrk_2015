@@ -1,7 +1,7 @@
 <?php use yii\helpers\Url; ?>
 <script id="popup_chat" type="text/x-underscore-template">
     <div id='popup_chat_modal'>
-        <div class="popup-box chat-popup" id="popup-chat-<%= post_id %>" data-id ='<%= post_id %>'>
+        <div class="popup-box chat-popup" id="popup-chat-<%= post_id %>" data-id ='<%= post_id %>' data-chat-type='<%= chat_type %>'>
             <div class="popup-head">
                 <div class="popup-head-left"><%= post_id %></div>
                 <div class="popup-head-right">

@@ -117,7 +117,7 @@ var PopupChat = {
 
     getTemplate: function(){
         var list_template = _.template($("#popup_chat").html());
-        var append_html = list_template({post_id: PopupChat.params.post});
+        var append_html = list_template({post_id: PopupChat.params.post, chat_type: PopupChat.params.chat_type});
 
         $('body').append(append_html);
 
@@ -210,6 +210,7 @@ var PopupChat = {
         // popup.unbind();
         $(document).on('click', popup, function(e) {
             PopupChat.params.post = $(this).attr('data-id');
+            PopupChat.params.chat_type = $(this).attr('data-chat-type');
             PopupChat.OnWsChat();
             PopupChat.OnWsFile();
             PopupChat.HandleWsFile();
@@ -246,7 +247,7 @@ var PopupChat = {
         var parent = $(e).parent();
         var val  = parent.find("textarea").val();
         if(val != ""){
-            window.ws.send("send", {"type": 1, "msg": val,"room": PopupChat.params.post,"user_id": UserLogin});
+            window.ws.send("send", {"type": 1, "msg": val,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
             parent.find("textarea").val("");
             parent.find("textarea").focus();
         }
@@ -330,7 +331,7 @@ var PopupChat = {
                             val  = fileForm.find("textarea").val();
                             if(result != "" && result !== false){
                                 var result = $.parseJSON(result);
-                                window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin});
+                                window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
                                 parentChat.find(".loading_image").css('display', 'none');
                                 fileForm.find("textarea").val('');
                             }
