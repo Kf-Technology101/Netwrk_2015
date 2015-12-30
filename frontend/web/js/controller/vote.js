@@ -9,7 +9,7 @@ var Vote ={
 			}else{
 				target.find('.count').addClass('disable');
 			}
-			
+
 			target.find('.count').text(json.data);
 		});
 	}

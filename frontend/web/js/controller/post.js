@@ -410,7 +410,7 @@ var Post ={
         var append_html = list_template({posts: data});
 
         parent.append(append_html);
-        Post.OnClickAvatarPostListDesktop();
+        // Post.OnClickAvatarPostListDesktop();
     },
 
     getNameTemplate: function(parent,data){

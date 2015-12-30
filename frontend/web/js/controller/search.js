@@ -58,7 +58,7 @@ var Search = {
 			var rs = $(e.currentTarget);
 
             Search.HideResultSearch();
-
+            $('.modal').modal('hide');
         	Topic.initialize(rs.attr('data-netwrk'));
 		});
 	},
@@ -76,6 +76,7 @@ var Search = {
             	ChatPost.RedirectChatPostPage(ChatPost.params.post,1,0);
             }else{
             	// ChatPost.initialize();
+            	$('.modal').modal('hide');
             	PopupChat.params.post = rs.attr('data-post');
                 PopupChat.initialize();
             }
@@ -100,6 +101,7 @@ var Search = {
             if(isMobile){
         		Post.RedirectPostPage(Post.params.topic);
             }else{
+            	$('.modal').modal('hide');
             	Post.initialize();
         	}
 		});
