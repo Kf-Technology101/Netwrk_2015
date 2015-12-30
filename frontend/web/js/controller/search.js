@@ -45,7 +45,7 @@ var Search = {
 	RedirectOnResult: function(){
 		Search.FixHeightPopupSearch();
 		Search.OnClickNetwrkResult();
-		Search.OnClickPostResult()
+		Search.OnClickPostResult();
 		Search.OnClickTopicResult();
 		Search.OnBlurResult();
 	},
@@ -78,6 +78,9 @@ var Search = {
             	// ChatPost.initialize();
             	$('.modal').modal('hide');
             	PopupChat.params.post = rs.attr('data-post');
+            	PopupChat.params.chat_type = 1;
+            	PopupChat.params.post_name = rs.find('.title-result').html();
+				PopupChat.params.post_description = rs.find('.container-post').html();
                 PopupChat.initialize();
             }
 
