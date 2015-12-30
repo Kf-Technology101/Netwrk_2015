@@ -150,6 +150,12 @@ class PostController extends BaseController
     }
 
     public function actionVotePost(){
+        if ($this->getIsMobile() && Yii::$app->user->isGuest) {
+            $post_id = $_POST['post_id'];
+            $post = Post::findOne($post_id);
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post?topic='.$post->topic_id]);
+        }
+
         $currentUser = Yii::$app->user->id;
         $post_id = $_POST['post_id'];
 

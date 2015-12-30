@@ -161,4 +161,7 @@ var Login={
 			}
     	});
     },
+    RedirectLogin: function(){
+    	window.location.href = document.referrer == baseUrl+"/netwrk/user/login";
+    }
 };

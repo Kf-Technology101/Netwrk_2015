@@ -187,7 +187,9 @@ var Post ={
 		btn.on('click',function(e){
 			var post_id = $(e.currentTarget).attr('data-item');
 			var target = $(e.currentTarget);
-			Vote.SetVote(target,post_id);
+			Vote.target = e.currentTarget;
+			Vote.post = post_id;
+			Vote.initialize();
 		});
 	},
 
