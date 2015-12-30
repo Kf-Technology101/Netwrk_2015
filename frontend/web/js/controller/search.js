@@ -136,6 +136,7 @@ var Search = {
 			var len = $(e.currentTarget).val().length;
 			Search.params.text = $(e.currentTarget).val();
 			if(len > 1){
+				console.log('aaaa');
 				Search.ShowResultSearch()
 			}else{
 				Search.HideResultSearch()
@@ -168,7 +169,9 @@ var Search = {
 		var append_html = list_template({result: Search.result_data});
 
 		$(Search.result).find('.result').append(append_html);
-		Search.RedirectOnResult();
+		setTimeout(function(){
+			Search.RedirectOnResult();
+		}, 500);
 	},
 
 	CustomScrollBar: function(){
