@@ -147,6 +147,8 @@ var ChatInbox = {
 				ChatPost.params.post = item_post;
 				PopupChat.params.post = item_post;
 				PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
+				PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
+				PopupChat.params.post_description = $(e.currentTarget).find('.chat-post-id .description-chat-inbox').html();
 
 				if ($('#popup_chat_modal #popup-chat-'+PopupChat.params.post).length == 0 || $('#popup_chat_modal #popup-chat-'+PopupChat.params.post).css('display') == 'none') {
 					PopupChat.initialize();
@@ -183,7 +185,11 @@ var ChatInbox = {
 				ChatPrivate.params.private = userID;
                 PopupChat.params.post = postID;
                 PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
-                PopupChat.initialize();
+                PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
+				PopupChat.params.post_avatar = $(e.currentTarget).find('.img_avatar').attr('src');
+                if ($('#popup_chat_modal #popup-chat-'+PopupChat.params.post).length == 0 || $('#popup_chat_modal #popup-chat-'+PopupChat.params.post).css('display') == 'none') {
+					PopupChat.initialize();
+				}
 				// if(ChatPrivate.temp_private != ChatPrivate.params.private){
 				// 	$('.modal').modal('hide');
 				// 	ChatPrivate.initialize();

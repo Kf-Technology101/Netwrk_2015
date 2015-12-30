@@ -2,6 +2,9 @@ var PopupChat = {
     params:{
         post:'',
         chat_type: 1,
+        post_name: '',
+        post_description: '',
+        post_avatar: '',
     },
     total_popups: 0,
     max_total_popups: 4,
@@ -117,9 +120,13 @@ var PopupChat = {
 
     getTemplate: function(){
         var list_template = _.template($("#popup_chat").html());
-        var append_html = list_template({post_id: PopupChat.params.post, chat_type: PopupChat.params.chat_type});
+        if (PopupChat.params.chat_type == 0) {
+            var append_html = list_template({post_id: PopupChat.params.post, chat_type: PopupChat.params.chat_type, post_name: PopupChat.params.post_name, post_avatar: PopupChat.params.post_avatar});
+        } else {
+            var append_html = list_template({post_id: PopupChat.params.post, chat_type: PopupChat.params.chat_type, post_name: PopupChat.params.post_name, post_description: PopupChat.params.post_description});
+        }
 
-        $('body').append(append_html);
+        $('.map_content').append(append_html);
 
     },
 

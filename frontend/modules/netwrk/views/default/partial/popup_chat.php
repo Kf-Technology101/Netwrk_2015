@@ -2,8 +2,22 @@
 <script id="popup_chat" type="text/x-underscore-template">
     <div id='popup_chat_modal'>
         <div class="popup-box chat-popup" id="popup-chat-<%= post_id %>" data-id ='<%= post_id %>' data-chat-type='<%= chat_type %>'>
+            <% if ((chat_type == 0)){ %>
             <div class="popup-head">
-                <div class="popup-head-left"><%= post_id %></div>
+            <% } else { %>
+            <div class="popup-head chat-discussion">
+            <% } %>
+                <% if ((chat_type == 0)){ %>
+                    <div class="popup-head-left">
+                        <span class='popup-title-avatar'><img  src='<%= post_avatar %>' /></span>
+                        <span class='popup-title-username'><%= post_name %></span>
+                    </div>
+                <% }else{ %>
+                    <div class="popup-head-left">
+                        <span class='popup-title-name'><%= post_name %></span>
+                        <span class='popup-title-description'><%= post_description %></span>
+                    </div>
+                <% } %>
                 <div class="popup-head-right">
                     <a href="javascript:PopupChat.ClosePopup(<%= post_id %>);">&#10005;</a>
                 </div>
