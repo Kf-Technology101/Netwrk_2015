@@ -10,7 +10,7 @@
 </div>
 <script id="list_result" type="text/x-underscore-template">
 	<% if(result.search_local == 0 && result.search_global == 0){ %>
-		<p class="no-result">
+		<p class="no-result all">
 			There is no matching result
 		</p>
 	<% }else{ %>
@@ -25,7 +25,7 @@
 					<div class="post-result">
 						<% _.each(result.local.post,function(e){ %>
 							<div class="post-item item-result" data-post="<%= e.id %>">
-								<div class="thumb"><img src="<%= e.thumb %>"></div>
+								<div class="avatar"><div class="thumb"><img src="<%= e.thumb %>"></div></div>
 								<div class="content-post">
 									<p class="title title-result"><%= e.title %></p>
 									<p class="container-post"><%= e.content %></p>
@@ -72,7 +72,7 @@
 					<div class="post-result">
 						<% _.each(result.global.post,function(e){ %>
 							<div class="post-item item-result" data-post="<%= e.id %>">
-								<div class="thumb"><img src="<%= e.thumb %>"></div>
+								<div class="avatar"><div class="thumb"><img src="<%= e.thumb %>"></div></div>
 								<div class="content-post">
 									<p class="title title-result"><%= e.title %></p>
 									<p class="container-post"><%= e.content %></p>

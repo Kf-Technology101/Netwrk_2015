@@ -15,20 +15,35 @@ var Search = {
 		}else{
 			Search.CustomScrollBar();
 		}
-		Search.FixHeightSearch();
+		// Search.FixHeightPopupSearch();
 		Search.OnKeypress();
 	},
 
-	FixHeightSearch: function(){
+	FixHeightPopupSearch: function(){
 		var screen_device = get_size_window();
-		if(isMobile){
-			$(Search.result).css({'max-height': screen_device[1] - 135});
+		var local_height = $(Search.result).find('#local').height(),
+			global_height = $(Search.result).find('#global').height(),
+			notice = $(Search.result).find('.notice').height() + 20,
+			no_result = $(Search.result).find('.no-result.all').height(),
+			total_search = local_height + global_height + notice + no_result;
+
+		if(screen_device[1] < total_search){
+			if(isMobile){
+				$(Search.result).css({'height': screen_device[1] - 135});
+			}else{
+				$(Search.result).css({'height': screen_device[1] - 74});
+			}
 		}else{
-			$(Search.result).css({'max-height': screen_device[1] - 74});
+			if(isMobile){
+				$(Search.result).css({'height': total_search});
+			}else{
+				$(Search.result).css({'height': total_search});
+			}
 		}
 	},
 
 	RedirectOnResult: function(){
+		Search.FixHeightPopupSearch();
 		Search.OnClickNetwrkResult();
 		Search.OnClickPostResult()
 		Search.OnClickTopicResult();
