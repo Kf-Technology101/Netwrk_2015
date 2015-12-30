@@ -78,28 +78,25 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->msg_type = $type;
 				$this->ws_messages->post_type = $this->chat_type;
 				$this->ws_messages->save(false);
-
 				$u = ChatPrivate::find()->where(['user_id'=>$this->current_user, 'post_id'=>$room])->one();
 				if ($u) {
-					if(array_search($u->user_id_guest, $this->onl) === false){
-						$this->notify = new Notification();
-						$this->notify->post_id = $room;
-						$this->notify->sender = $this->current_user;
-						$this->notify->receiver = $u->user_id_guest;
-						$this->notify->message = $this->ws_messages->id;
-						$this->notify->status = 0;
-						$this->notify->chat_show = 0;
-						$this->notify->created_at = date('Y-m-d H:i:s');
-						$this->notify->save();
-					}
+					$this->notify = new Notification();
+					$this->notify->post_id = $room;
+					$this->notify->sender = $this->current_user;
+					$this->notify->receiver = $u->user_id_guest;
+					$this->notify->message = $this->ws_messages->id;
+					$this->notify->status = 0;
+					$this->notify->chat_show = 0;
+					$this->notify->created_at = date('Y-m-d H:i:s');
+					$this->notify->save();
 				}
-
 				if ($this->chat_type == 1) {
 					$this->ws_messages->post->comment_count ++;
 					$this->ws_messages->post->update();
 					$list_chat_inbox = $this->updateListChatBox($user);
 				} else {
 					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id . ' AND user_id = ' .$user)->one();
+
 					if ($chat_private) {
 						$chat_private->save(false);
 					}
@@ -273,7 +270,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
                     ];
                 array_push($data, $item);
             }
-            // return strtotime($data[0]['real_update_at']) - strtotime($data[1]['real_update_at']);die;
             usort($data, function($a, $b) {
                 return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
             });
@@ -286,26 +282,27 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function updateChatPrivateList($user_id)
 	{
-		$currentUser = $user_id;
-		$chat_list = ChatPrivate::find()->where('user_id = '.$currentUser )->all();
+		$chat_list = ChatPrivate::find()->where('user_id = '.$user_id )->all();
 		if ($chat_list) {
 			$data = [];
 			foreach ($chat_list as $key => $chat) {
 				$num_date = UtilitiesFunc::FormatDateTime($chat->updated_at ? $chat->updated_at : $chat->created_at);
 				$user_photo = User::findOne($chat->user_id_guest)->profile->photo;
-				$content = WsMessages::find()->where('post_id = '.$chat->user_id_guest)->orderBy(['id'=> SORT_DESC])->one();
+				$content = WsMessages::find()->where('post_id = '.$chat->post_id. ' AND post_type = 0')->orderBy(['id'=> SORT_DESC])->one();
 				if ($user_photo == null){
                     $image = 'img/icon/no_avatar.jpg';
                 }else{
                     $image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
                 }
+                $num_date_first_met = date('M d', strtotime($chat->created_at));
+                $content = $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
 				$item = [
 					'user_id_guest' => $chat->user->id,
 					'user_id_guest_first_name' => $chat->user->profile->first_name,
 					'user_id_guest_last_name' => $chat->user->profile->last_name,
 					'updated_at'=> $num_date,
 					'avatar' => $image,
-					'content' => $content ? $content->msg : 'Match!',
+					'content' => $content,
 					'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
 				];
 

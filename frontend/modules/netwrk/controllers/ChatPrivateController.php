@@ -64,7 +64,7 @@ class ChatPrivateController extends BaseController
 				}else{
 					$image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
 				}
-				$num_date_first_met = date('M d');
+				$num_date_first_met = date('M d', strtotime($chat->created_at));
 				$item = [
 				'user_id_guest' => $chat->user->id,
 				'user_id_guest_first_name' => $chat->user->profile->first_name,
