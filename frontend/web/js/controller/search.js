@@ -24,7 +24,7 @@ var Search = {
 		var local_height = $(Search.result).find('#local').height(),
 			global_height = $(Search.result).find('#global').height(),
 			notice = $(Search.result).find('.notice').height() + 20,
-			no_result = $(Search.result).find('.no-result').height(),
+			no_result = $(Search.result).find('.no-result.all').height(),
 			total_search = local_height + global_height + notice + no_result;
 
 		if(screen_device[1] < total_search){

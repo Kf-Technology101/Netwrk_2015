@@ -10,7 +10,7 @@
 </div>
 <script id="list_result" type="text/x-underscore-template">
 	<% if(result.search_local == 0 && result.search_global == 0){ %>
-		<p class="no-result">
+		<p class="no-result all">
 			There is no matching result
 		</p>
 	<% }else{ %>
