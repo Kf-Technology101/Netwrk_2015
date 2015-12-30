@@ -9,6 +9,7 @@ use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\ChatPrivate;
 use yii\helpers\Url;
 
 class ChatController extends BaseController
@@ -38,9 +39,15 @@ class ChatController extends BaseController
 
 	public function actionChatPost(){
 		$postId = $_GET['post'];
+		$chatType = isset($_GET['chat_type']) ? $_GET['chat_type'] : 1;
 		$userCurrent = Yii::$app->user->id;
 
 		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
+		if ($chatType == 0) {
+			$user_id = ChatPrivate::find()->where('post_id ='.$postId)->with('user')->one();
+		} else {
+			$user_id = '';
+		}
 		// $post->update();
 		$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
 		$status = file_get_contents($statusFile);
@@ -49,26 +56,8 @@ class ChatController extends BaseController
 			$this->actionExecInbg("php yii server/run");
 			file_put_contents($statusFile, 1);
 		}
-		$url = Url::base(true).'/netwrk/chat/chat-post?post='.$postId;
-		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['post' =>$post,'url'=> $url,'current_user'=>$userCurrent] );
-	}
-
-	public function actionChatPrivate()
-	{
-		$user_id = $_GET['privateId'];
-
-		$user = User::find()->where('id = '. $user_id)->with('profile')->one();
-
-		$statusFile = Yii::getAlias('@frontend/modules/netwrk')."/bg-file/serverStatus.txt";
-		$status = file_get_contents($statusFile);
-		if($status == 0){
-			/* This means, the WebSocket server is not started. So we, start it */
-			$this->actionExecInbg("php yii server/run");
-			file_put_contents($statusFile, 1);
-		}
-
-		return $this->render($this->getIsMobile() ? 'mobile/private' : '' , ['user'=> $user] );
-
+		$url = Url::base(true).'/netwrk/chat/chat-post?post='.$postId.'&chat_type='.$chatType;
+		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['user_id' => $user_id, 'post' =>$post,'url'=> $url,'current_user'=>$userCurrent] );
 	}
 
 	public function actionUpload()

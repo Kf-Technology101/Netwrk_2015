@@ -1,14 +1,23 @@
 <?php use yii\helpers\Url; ?>
-<div id="post_chat" data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id?>" data-user-login="<?= $current_user ?>">
+<?php if ($post->post_type == 1 ) { ?>
+<div id="post_chat" class='post-id-<?= $post->id ?>' data-topic="<?= $post->topic->id?>" data-post="<?= $post->id?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
+<?php } else { ?>
+<div id="post_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
+<?php } ?>
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
             <span class="title">
+            <?php if ($post->post_type == 1 ) { ?>
                 <span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
                 <span><i class="fa fa-angle-right"></i><?= $post->topic->title ?></span>
                 <span><i class="fa fa-angle-right"></i><?= $post->title ?></span>
+            <?php } else { ?>
+            <span><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
+            <?php } ?>
+
             </span>
         </div>
     </div>

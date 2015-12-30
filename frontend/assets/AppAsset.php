@@ -50,7 +50,7 @@ class AppAsset extends AssetBundle
         'js/controller/profile.js',
         'js/controller/meet_setting.js',
         'js/controller/create_post.js',
-        'js/controller/chat_post.js',
+        // 'js/controller/chat_post.js',
         'js/controller/post.js',
         'js/controller/vote.js',
         'js/controller/emoji.js',
@@ -68,7 +68,7 @@ class AppAsset extends AssetBundle
         'js/controller/chat_inbox.js',
         'js/controller/forgot_password.js',
         'js/controller/reset_password.js',
-        'js/controller/chat_private.js',
+        // 'js/controller/chat_private.js',
         'js/controller/popup_chat.js',
         'js/controller/main_ws.js',
     ];

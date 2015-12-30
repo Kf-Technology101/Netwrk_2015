@@ -53,7 +53,7 @@ class MobileAsset extends AssetBundle
       'js/controller/template.js',
       'js/controller/meet_setting.js',
       'js/controller/create_post.js',
-      'js/controller/chat_post.js',
+      // 'js/controller/chat_post.js',
       'js/controller/post.js',
       'js/controller/vote.js',
       'js/controller/emoji.js',
@@ -70,7 +70,9 @@ class MobileAsset extends AssetBundle
       'js/controller/forgot_password.js',
       'js/controller/reset_password.js',
       'js/controller/chat_inbox.js',
-      'js/controller/chat_private.js'
+      'js/controller/main_ws.js',
+      'js/controller/popup_chat.js',
+      // 'js/controller/chat_private.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

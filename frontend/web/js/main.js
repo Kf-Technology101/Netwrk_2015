@@ -172,7 +172,7 @@ function _main(){
 
 function _addListenEventPage(){
 	var page = this.show_page();
-	var Page = page !== 'Chat-inbox' && page !== 'Chat-private'  ? eval(page) : page;
+	var Page = page !== 'Chat-inbox' ? eval(page) : page;
 	switch(page){
 	case 'Topic':
 		Topic.init();
@@ -187,19 +187,16 @@ function _addListenEventPage(){
 	case 'Post':
     Post.initialize();
 		break;
-  case 'Chat':
-    ChatPost.initialize();
-    break;
   case 'User':
     User.initialize();
+    break;
+  case 'Chat':
+    PopupChat.initialize();
     break;
   case 'Chat-inbox':
     ChatInbox.initialize();
     break;
-  case 'Chat-private':
-    ChatPrivate.initialize();
-    break;
-	default:
+  	default:
 		Default.initialize();
 		break;
 	}
@@ -238,8 +235,8 @@ function CustomScrollBar(){
 
 $(document).ready(function(){
   _main();
+  MainWs.initialize();
   _addListenEventPage();
   Emoji.initialize();
   Search.initialize();
-  MainWs.initialize();
 });

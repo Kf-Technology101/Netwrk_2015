@@ -63,7 +63,7 @@ var Post ={
 		btn.on('click',function(e){
 			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post, 1, 0);
+				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				$("#list_post").modal('hide');
 				// ChatPost.params.post = item_post;
@@ -428,8 +428,8 @@ var Post ={
     },
 
 	RedirectPostPage: function(topic){
-		if (ChatPost.GetSearchParam(window.location.href)["previous-flag"]) {
-			if (ChatPost.GetSearchParam(window.location.href)["previous-flag"] == 0) {
+		if (PopupChat.GetSearchParam(window.location.href)["previous-flag"]) {
+			if (PopupChat.GetSearchParam(window.location.href)["previous-flag"] == 0) {
 				window.location.href = baseUrl + "/netwrk/post?topic="+topic;
 			} else {
 				window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=1';

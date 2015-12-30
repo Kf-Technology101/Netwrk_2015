@@ -303,6 +303,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'updated_at'=> $num_date,
 					'avatar' => $image,
 					'content' => $content,
+					'post_id' => $chat->post_id,
 					'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
 				];
 

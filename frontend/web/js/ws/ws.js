@@ -10,7 +10,7 @@
 (function($){
 $.extend({
 	websocketSettings: {
-		open: function(){alert();},
+		open: function(){alert('open connection');},
 		close: function(){},
 		message: function(){},
 		options: {},

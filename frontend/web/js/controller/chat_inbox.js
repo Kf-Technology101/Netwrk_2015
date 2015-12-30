@@ -7,7 +7,8 @@ var ChatInbox = {
 	discussion_chat: '#chat_discussion',
 	list_chat_post_right_hidden: "-400px",
 	params: {
-		previous: ''
+		previous: '',
+		target_popup: '',
 	},
 	onClickChat: 0,
 	initialize: function(){
@@ -142,30 +143,16 @@ var ChatInbox = {
 			Topic.params.city = btn.find("input[name='city_id']").val();
 			var item_post = $(e.currentTarget).find('.chat-post-id').attr('data-post');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post, 1, 1);
+				PopupChat.RedirectChatPostPage(item_post, 1, 1);
 			}else{
-				ChatPost.params.post = item_post;
 				PopupChat.params.post = item_post;
 				PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
 				PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
 				PopupChat.params.post_description = $(e.currentTarget).find('.chat-post-id .description-chat-inbox').html();
 
-				if ($('#popup_chat_modal #popup-chat-'+PopupChat.params.post).length == 0 || $('#popup_chat_modal #popup-chat-'+PopupChat.params.post).css('display') == 'none') {
+				ChatInbox.params.target_popup = $('#popup_chat_modal #popup-chat-'+PopupChat.params.post);
+                if (ChatInbox.params.target_popup.length == 0 ) {
 					PopupChat.initialize();
-				}
-
-				if(ChatPost.temp_post != ChatPost.params.post){
-					// $(Topic.modal).modal('hide');
-					// $(ChatPost.modal).modal('hide');
-					// $(Post.modal).modal('hide');
-					// $(Topic.modal_create).modal('hide');
-					// $(Post.modal_create).modal('hide');
-					// $(Meet.modal).modal('hide');
-					$('.modal').modal('hide');
-
-					// ChatPost.initialize();
-
-					ChatPost.temp_post = ChatPost.params.post;
 				}
 			}
 		});
@@ -180,16 +167,17 @@ var ChatInbox = {
 			var postID=  $(btn).find('.chat-post-id').attr('data-post');
 			ChatInbox.ChangeStatusUnreadMsg(userID);
 			if(isMobile){
-				ChatPrivate.RedirectChatPrivatePage(userID, 0, 1, postID);
+				PopupChat.RedirectChatPostPage(postID, 0, 0);
 			}else{
-				ChatPrivate.params.private = userID;
                 PopupChat.params.post = postID;
                 PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
                 PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
 				PopupChat.params.post_avatar = $(e.currentTarget).find('.img_avatar').attr('src');
-                if ($('#popup_chat_modal #popup-chat-'+PopupChat.params.post).length == 0 || $('#popup_chat_modal #popup-chat-'+PopupChat.params.post).css('display') == 'none') {
+				ChatInbox.params.target_popup = $('#popup_chat_modal #popup-chat-'+PopupChat.params.post);
+                if (ChatInbox.params.target_popup.length == 0) {
 					PopupChat.initialize();
 				}
+
 				// if(ChatPrivate.temp_private != ChatPrivate.params.private){
 				// 	$('.modal').modal('hide');
 				// 	ChatPrivate.initialize();
@@ -328,7 +316,6 @@ var ChatInbox = {
 				parent.find('li').remove();
 				parent.append(append_html);
 				for(i=0; i < data.length; i++) {
-					console.log(data[i]);
 					if(data[i].class_first_met == 0) {
 						parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
 					}

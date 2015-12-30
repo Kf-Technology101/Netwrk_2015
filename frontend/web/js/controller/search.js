@@ -69,11 +69,9 @@ var Search = {
 		target.unbind();
 		target.on('click',function(e){
 			var rs = $(e.currentTarget);
-			ChatPost.params.post = rs.attr('data-post');
-
             Search.HideResultSearch();
             if(isMobile){
-            	ChatPost.RedirectChatPostPage(ChatPost.params.post,1,0);
+            	PopupChat.RedirectChatPostPage(ChatPost.params.post,1,0);
             }else{
             	// ChatPost.initialize();
             	$('.modal').modal('hide');
