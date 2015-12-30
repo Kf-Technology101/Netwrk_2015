@@ -34,7 +34,7 @@ var ForgotPass = {
 
     OnClickResetPass: function(){
         var btn = $(ForgotPass.modal).find('.send-email');
-        btn.unbind();
+        // btn.unbind();
         btn.on('click',function(){
             $(ForgotPass.form_id).submit(function(e){
                 e.preventDefault();
