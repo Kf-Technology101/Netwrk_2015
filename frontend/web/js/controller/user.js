@@ -2,7 +2,7 @@ var User ={
 	initialize: function(){
 		Login.initialize();
 		Signup.initialize();
-		ForgotPass.initialize();
+		// ForgotPass.initialize();
 		ResetPass.initialize();
 	}
 }

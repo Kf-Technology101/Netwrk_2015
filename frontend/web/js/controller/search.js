@@ -27,22 +27,6 @@ var Search = {
 			no_result = $(Search.result).find('.no-result.all').height(),
 			total_search = local_height + global_height + notice + no_result;
 
-		console.log(total_search);
-		// if(screen_device[1] <= total_search){
-		// 	console.log('M');
-		// 	if(isMobile){
-		// 		$(Search.result).css({'height': screen_device[1] - 135});
-		// 	}else{
-		// 		$(Search.result).css({'height': screen_device[1] - 74});
-		// 	}
-		// }else{
-		// 	console.log('S');
-		// 	if(isMobile){
-		// 		$(Search.result).css({'height': total_search - 100});
-		// 	}else{
-		// 		$(Search.result).css({'height': total_search - 80});
-		// 	}
-		// }
 		if(isMobile){
 			if(screen_device[1] - total_search > 120){
 				$(Search.result).css({'height': total_search})

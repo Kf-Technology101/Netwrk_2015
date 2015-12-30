@@ -16,7 +16,7 @@ var ForgotPass = {
             ForgotPass.showModalForgotPass();
             // ForgotPass.OnAfterValidateForm();
             // ForgotPass.OnBeforeSubmitForm();
-            ForgotPass.onClickSubmit();
+            ForgotPass.OnClickResetPass();
             ForgotPass.OnEventEnterForm();
         }
         // ForgotPass.onChangeEmail();
@@ -24,7 +24,7 @@ var ForgotPass = {
 
     OnEventEnterForm: function(){
         var btn = $(ForgotPass.modal).find('.send-email');
-        btn.unbind();
+        // btn.unbind();
         $(ForgotPass.modal).find(ForgotPass.form_id).keypress(function( event ) {
             if ( event.which == 13 ) {
                 btn.trigger('click');
@@ -32,9 +32,8 @@ var ForgotPass = {
         });
     },
 
-    onClickSubmit: function(){
+    OnClickResetPass: function(){
         var btn = $(ForgotPass.modal).find('.send-email');
-
         btn.unbind();
         btn.on('click',function(){
             $(ForgotPass.form_id).submit(function(e){
@@ -146,6 +145,8 @@ var ForgotPass = {
             target.addClass('active');
             $('.menu_top').removeClass('deactive');
             $('#btn_meet').removeClass('deactive');
+            $(ForgotPass.modal).find('.modal-body').show();
+            $(ForgotPass.modal).find('.alert.alert-success').hide();
         });
     },
 };
