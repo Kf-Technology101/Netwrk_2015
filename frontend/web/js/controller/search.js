@@ -27,17 +27,33 @@ var Search = {
 			no_result = $(Search.result).find('.no-result.all').height(),
 			total_search = local_height + global_height + notice + no_result;
 
-		if(screen_device[1] < total_search){
-			if(isMobile){
-				$(Search.result).css({'height': screen_device[1] - 135});
+		console.log(total_search);
+		// if(screen_device[1] <= total_search){
+		// 	console.log('M');
+		// 	if(isMobile){
+		// 		$(Search.result).css({'height': screen_device[1] - 135});
+		// 	}else{
+		// 		$(Search.result).css({'height': screen_device[1] - 74});
+		// 	}
+		// }else{
+		// 	console.log('S');
+		// 	if(isMobile){
+		// 		$(Search.result).css({'height': total_search - 100});
+		// 	}else{
+		// 		$(Search.result).css({'height': total_search - 80});
+		// 	}
+		// }
+		if(isMobile){
+			if(screen_device[1] - total_search > 120){
+				$(Search.result).css({'height': total_search})
 			}else{
-				$(Search.result).css({'height': screen_device[1] - 74});
+				$(Search.result).css({'height': screen_device[1] - 135})
 			}
 		}else{
-			if(isMobile){
-				$(Search.result).css({'height': total_search});
+			if(total_search >= screen_device[1]){
+				$(Search.result).css({'height': screen_device[1] - 80})
 			}else{
-				$(Search.result).css({'height': total_search});
+				$(Search.result).css({'height': total_search})
 			}
 		}
 	},
@@ -121,7 +137,6 @@ var Search = {
 		target.unbind('click');
 
 		target.on('click',function(e){
-			console.log(e.target.parentElement);
 			if(!$(e.target.parentElement).hasClass('item-result')){
 				Search.HideResultSearch();
 			}
@@ -136,7 +151,6 @@ var Search = {
 			var len = $(e.currentTarget).val().length;
 			Search.params.text = $(e.currentTarget).val();
 			if(len > 1){
-				console.log('aaaa');
 				Search.ShowResultSearch()
 			}else{
 				Search.HideResultSearch()
