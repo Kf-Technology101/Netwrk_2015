@@ -1,8 +1,8 @@
 <?php use yii\helpers\Url; ?>
 <?php if ($post->post_type == 1 ) { ?>
-<div id="post_chat" class='post-id-<?= $post->id ?>' data-topic="<?= $post->topic->id?>" data-post="<?= $post->id?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
+<div id="post_chat" class='post-id-<?= $post->id ?>' data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
 <?php } else { ?>
-<div id="post_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
+<div id="post_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
 <?php } ?>
     <div class="header">
         <div class="back_page">
