@@ -135,20 +135,11 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 				if($receiver != -1 && $room == -1){
 					$num_date_first_met = date('M d');
-					// get info for first message
-					$sender_info = Profile::find()->where(['user_id'=>$sender])->one();
-					$current_date = date('Y-m-d H:i:s');
-		            $time1 = date_create($sender_info->dob);
-		            $time2 = date_create($current_date);
-		            $year_old = $time1->diff($time2)->y;
-
-					$sender_msg = $sender_info->first_name . ' ' . $sender_info->last_name . ',' . $year_old . '<br>Matched on ' . $num_date_first_met;
-
 					$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
 					$checkMet = UserMeet::find()->where(['user_id_1'=>$receiver, 'user_id_2'=>$sender])->one();
 					if(count($checkMet) > 0){
 						$_room = ChatPrivate::find()->where(['user_id'=>$sender, 'user_id_guest'=>$receiver])->one();
-						$ws_msg_id = $this->insertWsMessage($sender, $msg, $_room->post_id, 1, 0, 0, $sender_msg);
+						$ws_msg_id = $this->insertWsMessage($sender, $msg, $_room->post_id, 1, 0, 0);
 						if($ws_msg_id != false){
 							$this->insertNotification($_room->post_id, $sender, $receiver, $ws_msg_id, 0, 0, date('Y-m-d H:i:s'));
 							$this->insertNotification($_room->post_id, $receiver, $sender, $ws_msg_id, 0, 0, date('Y-m-d H:i:s'));
@@ -399,7 +390,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			return 0;
 	}
 
-	public function insertWsMessage($user_id, $msg, $post_id, $msg_type, $post_type, $first_msg, $msg_replace){
+	public function insertWsMessage($user_id, $msg, $post_id, $msg_type, $post_type, $first_msg){
 		$this->ws_messages = new WsMessages();
 		$this->ws_messages->user_id = $user_id;
 		$this->ws_messages->msg = $msg;
@@ -407,7 +398,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		$this->ws_messages->msg_type = $msg_type;
 		$this->ws_messages->post_type = $post_type;
 		$this->ws_messages->first_msg = $first_msg;
-		$this->ws_messages->msg_replace = $msg_replace;
 		if($this->ws_messages->save(false))
 			return $this->ws_messages->id;
 		else
