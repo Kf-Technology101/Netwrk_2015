@@ -188,7 +188,7 @@ var PopupChat = {
         top_btnMeet = $('#btn_meet').data('original_top');
 
         $(PopupChat.popup_chat_class).each(function() {
-            var id = this.id
+            var id = this.id;
             if ($('#' + id).css('display') == 'block') {
                 have_popup = true;
                 return false;

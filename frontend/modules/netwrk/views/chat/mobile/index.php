@@ -15,7 +15,7 @@
                 <span><i class="fa fa-angle-right"></i><?= $post->topic->title ?></span>
                 <span><i class="fa fa-angle-right"></i><?= $post->title ?></span>
             <?php } else { ?>
-            <span><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
+            <span class='title-user-private'><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
             <?php } ?>
 
             </span>
