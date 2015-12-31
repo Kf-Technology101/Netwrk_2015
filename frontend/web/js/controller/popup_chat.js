@@ -37,6 +37,7 @@ var PopupChat = {
             PopupChat.OnclickLogin();
             PopupChat.RegisterPopup();
             PopupChat.ChangeStylePopupChat();
+            PopupChat.OnWsFile();
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
             PopupChat.CustomScrollBar();
@@ -354,15 +355,13 @@ var PopupChat = {
     // Define button file upload
     OnWsFile: function(){
         if (isMobile) {
-            var btn = $(PopupChat.parent).find('#file_btn');
+            var btn = PopupChat.parent+' #file_btn';
             var btn_input = $(PopupChat.parent).find('#file_upload');
         } else {
-            var btn = $('#popup-chat-'+PopupChat.params.post).find('#file_btn');
+            var btn = '#popup-chat-'+PopupChat.params.post+' #file_btn';
             var btn_input = $('#popup-chat-'+PopupChat.params.post).find('#file_upload');
         }
-        btn.unbind();
-        btn.on("click", function(){
-            console.log(btn_input);
+        $(document).on("click", btn, function(){
             btn_input.click();
         });
     },

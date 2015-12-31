@@ -110,9 +110,9 @@ var ChatInbox = {
 				};
 				ChatInbox.CustomScrollBarPrivate();
 				ChatInbox.OnClickChatPrivateDetail();
-				ChatInbox.CountMessageUnread();	
+				ChatInbox.CountMessageUnread();
 			}
-			
+
 		}
 	},
 
