@@ -29,6 +29,7 @@
             </div>
 
             <div class="nav_input_message">
+             <img src='<?= Url::to("@web/img/icon/ajax-loader.gif")?>' class='loading_image' />
                 <div class="send_message input-group no-login">
                     <input type="text" class="form-control" placeholder="You have to log in to chat" disabled="true">
                     <div class="input-group-addon send" id="sizing-addon2">Login</div>
