@@ -65,7 +65,7 @@ var Post ={
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
-				$("#list_post").modal('hide');
+				// $("#list_post").modal('hide');
 				// ChatPost.params.post = item_post;
 				// ChatPost.initialize();
                 PopupChat.params.post = item_post;

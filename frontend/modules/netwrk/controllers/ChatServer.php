@@ -190,12 +190,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		            $year_old = $time1->diff($time2)->y;
 
        				$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
-       				
+
        			} else {
        				$smg = nl2br($value->msg);
        			}
 
-				$time = UtilitiesFunc::FormatTimeChat($value->created_at);				
+				$time = UtilitiesFunc::FormatTimeChat($value->created_at);
 				if ($value->user->profile->photo == null){
 					$image = '/img/icon/no_avatar.jpg';
 				}else{
@@ -371,7 +371,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			$notify = array('sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'message'=>$message, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$room, 'ismeet'=>0);
 		} else {
 			$num_date_first_met = date('M d');
-			
+
 			$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
 			$checkMet = UserMeet::find()->where(['user_id_1'=>$_receiver, 'user_id_2'=>$sender])->one();
 			if(count($checkMet) > 0){
