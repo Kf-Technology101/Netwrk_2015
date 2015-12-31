@@ -28,13 +28,13 @@ var PopupChat = {
         PopupChat.SetUrl();
         PopupChat.SetDataChat();
         PopupChat.FetchDataChat();
-        PopupChat.OnclickLogin();
         if(isMobile){
             PopupChat.SetHeightContainerChat();
             PopupChat.OnClickChatInboxBtnMobile();
             ChatInbox.HideMeetIconMobile();
             PopupChat.OnClickBackBtn();
         }else{
+            PopupChat.OnclickLogin();
             PopupChat.RegisterPopup();
             PopupChat.ChangeStylePopupChat();
             PopupChat.GetListEmoji();
@@ -236,14 +236,14 @@ var PopupChat = {
     },
 
     OnclickLogin: function(){
-        var btn = $(PopupChat.parent).find('.send_message.no-login .input-group-addon');
+        var btn = PopupChat.parent+' .send_message.no-login .input-group-addon';
 
-        btn.unbind();
-        btn.on('click',function(){
+        $(document).on('click', btn, function(){
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/user/login?url_callback="+ $(PopupChat.parent).find('.send_message').attr('data-url');
             }else{
-                $(PopupChat.parent).hide();
+                // $(PopupChat.parent).css('display');
+                $('.modal').modal('hide');
                 Login.modal_callback = PopupChat;
                 Login.initialize();
                 return false;
@@ -315,10 +315,10 @@ var PopupChat = {
     // Define commit message by enter or press send button
     OnWsChat: function(){
         if (isMobile) {
-            var btn = $(PopupChat.parent).find('.send');
+            var btn = $(PopupChat.parent).find('#msgForm .send');
             var formWsChat = $(PopupChat.parent).find('#msgForm');
         } else {
-            var btn = $('#popup-chat-'+PopupChat.params.post).find('.send');
+            var btn = $('#popup-chat-'+PopupChat.params.post).find('#msgForm .send');
             var formWsChat = $('#popup-chat-'+PopupChat.params.post).find('#msgForm');
         }
         formWsChat.on("keydown", function(event){
