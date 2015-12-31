@@ -30,7 +30,7 @@ var ChatPost = {
 			ChatPost.OnClickChatInboxBtnMobile();
 			ChatInbox.HideMeetIconMobile();
 		}else{
-			ChatPost.ShowChatBox();
+			ChatPost.ShowChatBox(ChatPost.params.post);
 			ChatPost.OnShowModalChatPost();
 			ChatPost.ShowModalChatPost();
 			ChatPost.OnHideModalChatPost();
@@ -39,13 +39,23 @@ var ChatPost = {
 		}
 	},
 
-	ShowChatBox: function(){
-		if(isGuest){
-			$(ChatPost.parent).find('.send_message.login').removeClass('active');
-			$(ChatPost.parent).find('.send_message.no-login').addClass('active');
-		}else{
-			$(ChatPost.parent).find('.send_message.no-login').removeClass('active');
-			$(ChatPost.parent).find('.send_message.login').addClass('active');
+	ShowChatBox: function(popup_active){
+		if (isMobile) {
+			if(isGuest){
+				$(ChatPost.parent).find('.send_message.login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.no-login').addClass('active');
+			}else{
+				$(ChatPost.parent).find('.send_message.no-login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.login').addClass('active');
+			}
+		} else {
+			if(isGuest){
+				$(ChatPost.parent).find('.send_message.login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.no-login').addClass('active');
+			}else{
+				$(ChatPost.parent).find('.send_message.no-login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.login').addClass('active');
+			}
 		}
 	},
 

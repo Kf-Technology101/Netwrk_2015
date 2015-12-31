@@ -15,7 +15,7 @@ var PopupChat = {
     popups: [],
     url:'',
     page:'#post_chat',
-    modal:'#popup_chat_modal',
+    modal:'.popup_chat_modal',
     parent: '',
     container: '',
     status_emoji: 1,
@@ -28,6 +28,7 @@ var PopupChat = {
         PopupChat.SetUrl();
         PopupChat.SetDataChat();
         PopupChat.FetchDataChat();
+        PopupChat.OnclickLogin();
         if(isMobile){
             PopupChat.SetHeightContainerChat();
             PopupChat.OnClickChatInboxBtnMobile();
@@ -41,6 +42,7 @@ var PopupChat = {
             PopupChat.HandleEmoji();
             PopupChat.CustomScrollBar();
             // PopupChat.OnClickReceiverAvatar();
+            PopupChat.ShowChatBox(PopupChat.params.post);
         }
     },
 
@@ -203,6 +205,48 @@ var PopupChat = {
         }
     },
 
+    ShowChatBox: function(popup_id){
+        if (isMobile) {
+            var target_form = $(PopupChat.parent);
+            if(isGuest){
+                target_form.find('.send_message.login').removeClass('active');
+                target_form.find('.send_message.no-login').addClass('active');
+            }else{
+                target_form.find('.send_message.no-login').removeClass('active');
+                target_form.find('.send_message.login').addClass('active');
+            }
+        } else {
+            var target_form = $(PopupChat.parent);
+            target_form.each(function(){
+                if(isGuest){
+                    console.log('come here no login');
+                    $(this).find('.send_message.login').removeClass('active');
+                    $(this).find('.send_message.no-login').addClass('active');
+                }else{
+                    console.log('come here  login');
+                    $(this).find('.send_message.no-login').removeClass('active');
+                    $(this).find('.send_message.login').addClass('active');
+                }
+            });
+        }
+    },
+
+    OnclickLogin: function(){
+        var btn = $(PopupChat.parent).find('.send_message.no-login .input-group-addon');
+
+        btn.unbind();
+        btn.on('click',function(){
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/user/login?url_callback="+ $(PopupChat.parent).find('.send_message').attr('data-url');
+            }else{
+                $(PopupChat.parent).hide();
+                Login.modal_callback = PopupChat;
+                Login.initialize();
+                return false;
+            }
+        });
+    },
+
     SetUrl: function(){
         if(baseUrl === 'http://netwrk.rubyspace.net'){
             PopupChat.url = 'box.rubyspace.net';
@@ -224,7 +268,7 @@ var PopupChat = {
         var popup = '#popup-chat-'+PopupChat.params.post;
         // popup.unbind();
         $(document).on('click', popup, function(e) {
-            
+
             PopupChat.params.post = $(this).attr('data-id');
             PopupChat.params.chat_type = $(this).attr('data-chat-type');
             PopupChat.OnWsChat();
@@ -255,6 +299,7 @@ var PopupChat = {
                 PopupChat.HandleWsFile();
                 PopupChat.GetListEmoji();
                 PopupChat.HandleEmoji();
+                PopupChat.ShowChatBox();
               }
         } else {
             // window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
@@ -413,6 +458,7 @@ var PopupChat = {
         }
     },
 
+    // Convert text emoji to icon emoji
     ConvertEmoji: function(){
         if (isMobile) {
             var strs  = $(PopupChat.parent).find('.emoji').find('.dropdown-menu li');
@@ -425,6 +471,7 @@ var PopupChat = {
         });
     },
 
+    //Handle emoji icon from user text or choose from emoji
     HandleEmoji: function(){
         if (isMobile) {
             var btn  = $(PopupChat.parent).find('.emoji').find('.dropdown-menu li');
@@ -442,9 +489,10 @@ var PopupChat = {
         });
     },
 
+    // Convert emoji when load data chat to popup
     FetchEmojiOne: function(data, popup_active){
         if (isMobile) {
-            var messages = $(PopupChat.parent).find(PopupChat.container).find('.message .content_message .content');
+            var messages = $('.post-id-'+popup_active).find(PopupChat.container).find('.message .content_message .content');
         } else {
             var messages = $('#popup-chat-'+popup_active).find(PopupChat.container).find('.message .content_message .content');
         }
@@ -457,6 +505,7 @@ var PopupChat = {
         }
     },
 
+    // Underscore mission to append data
     getMessageTemplate:function(data){
         var popup_id = data["post_id"];
         var template = _.template($("#message_chat").html());
@@ -470,6 +519,7 @@ var PopupChat = {
         PopupChat.OnClickReceiverAvatar();
     },
 
+    //Always scroll to bottom chat
     ScrollTopChat: function(popup_active){
         console.log('scroll');
         var popup_current = $('#popup-chat-'+popup_active);
@@ -492,7 +542,6 @@ var PopupChat = {
     /**
     * Mobile version
     **/
-
     // Redirect to the chat url
     RedirectChatPostPage: function(postId, chat_type, previous_flag)
     {
@@ -566,7 +615,7 @@ var PopupChat = {
 
             if(user_view != UserLogin){
 
-                if(disc.length > 0){    
+                if(disc.length > 0){
                     Meet.pid = 0;
                     Meet.ez = user_view;
                 }else{

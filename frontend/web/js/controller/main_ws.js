@@ -33,10 +33,11 @@ var MainWs ={
                 fetch: function(e) {
                     console.log('fetch');
                     PopupChat.msg_lenght = e.data.length;
-                    var message = $('#popup-chat-'+e.data[0]['post_id']).find(PopupChat.container).find('.message');
-                    if (message.length > 0) {
-                        message.remove();
-                    }
+                    if (PopupChat.msg_lenght > 0) {
+                        var message = $('#popup-chat-'+e.data[0]['post_id']).find(PopupChat.container).find('.message');
+                        if (message.length > 0) {
+                            message.remove();
+                        }
                         $.each(e.data, function(i, elem){
                             PopupChat.getMessageTemplate(elem);
                             PopupChat.ScrollTopChat(elem.post_id);
@@ -46,6 +47,7 @@ var MainWs ={
                             fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
                         }
                         PopupChat.FetchEmojiOne({type: 'fetch'}, PopupChat.params.post);
+                    }
                 },
                 onliners: function(e){
                     console.log('Onliner');

@@ -151,7 +151,7 @@ var ChatInbox = {
 				PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
 				PopupChat.params.post_description = $(e.currentTarget).find('.chat-post-id .description-chat-inbox').html();
 
-				ChatInbox.params.target_popup = $('#popup_chat_modal #popup-chat-'+PopupChat.params.post);
+				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
                 if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
 					PopupChat.initialize();
 				}
@@ -175,7 +175,7 @@ var ChatInbox = {
                 PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
                 PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
 				PopupChat.params.post_avatar = $(e.currentTarget).find('.img_avatar').attr('src');
-				ChatInbox.params.target_popup = $('#popup_chat_modal #popup-chat-'+PopupChat.params.post);
+				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
                 if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
 					PopupChat.initialize();
 				}

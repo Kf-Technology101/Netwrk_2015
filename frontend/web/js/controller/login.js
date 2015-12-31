@@ -85,6 +85,7 @@ var Login={
 				console.log(UserLogin + '---' + isGuest);
 				Login.modal_callback.initialize();
 				Login.ShowNotificationOnChat();
+				PopupChat.ShowChatBox(PopupChat.params.post);
 			}, 500)
 		}
 	},
