@@ -303,7 +303,7 @@ var PopupChat = {
               }
         } else {
             // window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
-            MainWs.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+            window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
         }
     },
 
@@ -333,8 +333,10 @@ var PopupChat = {
         var parent = $(e).parent();
         var val  = parent.find("textarea").val();
         if(val != ""){
-            MainWs.ws.send("send", {"type": 1, "msg": val,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
-            MainWs.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": PopupChat.params.post, "message": val});
+            window.ws.send("send", {"type": 1, "msg": val,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
+            if (PopupChat.params.chat_type == 0) {
+                window.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": PopupChat.params.post, "message": val});
+            }
             parent.find("textarea").val("");
             parent.find("textarea").focus();
 
@@ -425,7 +427,7 @@ var PopupChat = {
                             val  = fileForm.find("textarea").val();
                             if(result != "" && result !== false){
                                 var result = $.parseJSON(result);
-                                MainWs.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
+                                window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
                                 parentChat.find(".loading_image").css('display', 'none');
                                 fileForm.find("textarea").val('');
                             }

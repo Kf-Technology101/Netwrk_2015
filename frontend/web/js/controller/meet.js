@@ -404,7 +404,7 @@ var Meet ={
                     if(!isMobile){
                         ChatInbox.GetDataListChatPrivate();
                     }
-                     MainWs.ws.send("notify", {"sender": UserLogin, "receiver": data[self.user_list.vt].user_id, "room": -1, "message": ''});
+                     window.ws.send("notify", {"sender": UserLogin, "receiver": data[self.user_list.vt].user_id, "room": -1, "message": ''});
                 });
             });
         }

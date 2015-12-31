@@ -90,5 +90,5 @@ var Default ={
                 notify.addClass('disable');
             }
         });
-    }
+    },
 };

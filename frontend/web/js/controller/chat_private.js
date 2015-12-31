@@ -151,8 +151,8 @@ var ChatPrivate = {
 		var parent = $(e).parent();
 		var val	 = parent.find("textarea").val();
 		if(val != ""){
-			MainWs.ws.send("send", {"type": 1, "msg": val,"room": ChatPrivate.params.private,"user_id": UserLogin});
-			MainWs.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": ChatPrivate.params.private, "message": val});
+			window.ws.send("send", {"type": 1, "msg": val,"room": ChatPrivate.params.private,"user_id": UserLogin});
+			window.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": ChatPrivate.params.private, "message": val});
 			parent.find("textarea").val("");
 			parent.find("textarea").focus();
 		}

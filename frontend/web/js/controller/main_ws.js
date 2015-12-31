@@ -2,10 +2,9 @@ var MainWs ={
     url: '',
     ws: '',
     userLogin: '',
-    ws: '',
     initialize: function() {
         MainWs.setUrl();
-        MainWs.wsConnect(UserLogin);
+        window.connect = MainWs.wsConnect(UserLogin);
     },
 
     setUrl: function(){
@@ -18,9 +17,7 @@ var MainWs ={
 
     wsConnect: function(user_id){
         // window.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
-        //     open: function(e) {
-        //         console.log('Open');
-        MainWs.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
+        window.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
             open: function() {
                 console.log('open');
                 // handle when socket is opened
@@ -54,6 +51,7 @@ var MainWs ={
                 },
                 single: function(e){
                     console.log('single');
+                    console.log(e);
                     // handle of chat
                     var update_list_chat;
                     var popup_active = e.data[0]['post_id'];

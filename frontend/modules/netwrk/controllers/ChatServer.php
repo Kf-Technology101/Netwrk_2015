@@ -68,7 +68,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->chat_type = $data['data']['chat_type'];
 				$this->ws_messages = new WsMessages();
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
-				$type = $data['data']['type'];
+				$msg_type = $data['data']['type'];
 				$room = $data['data']['room'];
 				// $this->post_id = $data['data']['room'];
 				$user = $data ['data']['user_id'];
@@ -76,7 +76,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->user_id = $user;
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $room;
-				$this->ws_messages->msg_type = $type;
+				$this->ws_messages->msg_type = $msg_type;
 				$this->ws_messages->post_type = $this->chat_type;
 				$this->ws_messages->save(false);
 
@@ -113,7 +113,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'name'=>$userProfile->name,
 														'avatar'=> $userProfile->image,
 														'msg'=> nl2br($msg),
-														'msg_type' => $type,
+														'msg_type' => $msg_type,
 														"created_at" => date("h:i A"),
 														'post_id'=> $room,
 														// "user_current" => $userProfile->current,
@@ -132,7 +132,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$receiver = $data['data']['receiver'];
 				$room = $data['data']['room'];
 				$message = $data['data']['message'];
-
 				if($receiver != -1 && $room == -1){
 					$num_date_first_met = date('M d');
 					$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';

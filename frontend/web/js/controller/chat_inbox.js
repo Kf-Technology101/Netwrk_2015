@@ -269,7 +269,7 @@ var ChatInbox = {
 				if (result) {
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatInbox(parent,result, UserLogin);
-			}
+				}
 			}
 		});
 	},
