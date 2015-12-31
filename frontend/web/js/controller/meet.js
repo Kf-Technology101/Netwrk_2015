@@ -61,7 +61,7 @@ var Meet ={
             }
             Meet.changefilter(currentTarget);
             Meet.eventClickdiscoverMobile();
-            
+
         }else{
             var parent = $('#modal_meet');
                 currentTarget = parent.find('#meeting'),
@@ -348,11 +348,14 @@ var Meet ={
             target.on('click',function(e){
             var item_post = $(e.currentTarget).attr('data-item');
             if(isMobile){
-                ChatPost.RedirectChatPostPage(item_post);
+                PopupChat.RedirectChatPostPage(item_post, 1, 0);
             }else{
                 $('#modal_meet').modal('hide');
-                ChatPost.params.post = item_post;
-                ChatPost.initialize();
+                PopupChat.params.post = item_post;
+                // PopupChat.params.chat_type = $(e.currentTarget).parent().parent().attr('data-chat-type');
+                // PopupChat.params.post_name = $(e.currentTarget).parent().parent().find('.information .post_name').html();
+                // PopupChat.params.post_description = $(e.currentTarget).parent().parent().find('.information .post_massage').html();
+                PopupChat.initialize();
             }
         });
 
