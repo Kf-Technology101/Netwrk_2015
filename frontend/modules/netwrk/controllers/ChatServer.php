@@ -337,6 +337,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
                     $image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
                 }
                 $num_date_first_met = date('M d', strtotime($chat->created_at));
+                $first_msg = $content ? $content->first_msg : 1;
                 $content = $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
 				$item = [
 					'user_id_guest' => $chat->user->id,
@@ -346,7 +347,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'avatar' => $image,
 					'content' => $content,
 					'post_id' => $chat->post_id,
-					'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
+					'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at,
+					'class_first_met' => $first_msg
 				];
 
 				array_push($data, $item);
