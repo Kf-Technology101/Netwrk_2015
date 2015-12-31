@@ -96,6 +96,7 @@ var MainWs ={
                                             notify.find('.notify-chat-inbox').removeClass('disable');
                                             chat_notify.html(e.data.chat_count);
                                             chat_notify.removeClass('disable');
+                                            notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
                                         }
                                     }
                                 } else {
@@ -105,6 +106,7 @@ var MainWs ={
                                         var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user');
                                         notify.find('.description-chat-inbox').html(e.data.message);
                                         notify.find('.description-chat-inbox').removeClass('match-description');
+                                        notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
                                     }else{
                                         var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
                                             chat_notify = $('#chat_inbox_btn').find('.notify');
@@ -114,6 +116,7 @@ var MainWs ={
                                             notify.find('.notify-chat-inbox').removeClass('disable');
                                             chat_notify.html(e.data.chat_count);
                                             chat_notify.removeClass('disable');
+                                            notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
                                         }
                                     }
                                 }

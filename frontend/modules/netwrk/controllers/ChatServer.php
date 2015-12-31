@@ -364,14 +364,18 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function notify($sender, $room, $message, $_receiver){
 		$notify = [];
+		$current_date = date('Y-m-d H:i:s');
+		$num_date = UtilitiesFunc::FormatDateTime($current_date);
+		$recent_time_msg = '<i class="fa fa-clock-o"></i> ' . $num_date . '</span>';
 		if($_receiver == -1 && $room != -1){
+
 			$receiver = ChatPrivate::find()->where(['user_id'=>$sender, 'post_id'=>$room])->one();
 			$chat_count = Notification::find()->select('sender')->where(['receiver'=>$receiver->user_id_guest, 'status'=>0])->distinct()->count();
 			$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'status'=>0])->count();
-			$notify = array('sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'message'=>$message, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$room, 'ismeet'=>0);
+			$notify = array('sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'message'=>$message, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$room, 'ismeet'=>0, 'recent_time'=>$recent_time_msg);
 		} else {
 			$num_date_first_met = date('M d');
-
+			
 			$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
 			$checkMet = UserMeet::find()->where(['user_id_1'=>$_receiver, 'user_id_2'=>$sender])->one();
 			if(count($checkMet) > 0){
@@ -380,7 +384,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$chat_count = Notification::find()->select('sender')->where(['receiver'=>$_receiver, 'status'=>0])->distinct()->count();
 				$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$_receiver, 'status'=>0])->count();
 
-				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1);
+				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1, 'recent_time'=>$recent_time_msg);
 			}
 		}
 		if(count($notify) > 0)
