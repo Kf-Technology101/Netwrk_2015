@@ -544,7 +544,7 @@ var PopupChat = {
                 $('#post_chat').find(PopupChat.container).scrollTop($(PopupChat.page).find('.container_post_chat')[0.].scrollHeight);
             }
         }else{
-            if (popup_current.length != 0) {
+            if (popup_current.length > 0) {
                 popup_current.find('.popup-messages').mCustomScrollbar("scrollTo",$('#popup-chat-'+popup_active).find(PopupChat.container)[0].scrollHeight);
             }
         }
