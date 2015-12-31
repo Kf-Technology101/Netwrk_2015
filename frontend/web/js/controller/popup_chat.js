@@ -299,6 +299,7 @@ var PopupChat = {
             window.ws.onopen = function(){
                 window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
                 $(PopupChat.parent).find('textarea').focus();
+                PopupChat.OnclickLogin();
                 PopupChat.OnWsChat();
                 PopupChat.OnWsFile();
                 PopupChat.HandleWsFile();
@@ -354,20 +355,27 @@ var PopupChat = {
     OnWsFile: function(){
         if (isMobile) {
             var btn = $(PopupChat.parent).find('#file_btn');
+            var btn_input = $(PopupChat.parent).find('#file_upload');
         } else {
             var btn = $('#popup-chat-'+PopupChat.params.post).find('#file_btn');
+            var btn_input = $('#popup-chat-'+PopupChat.params.post).find('#file_upload');
         }
         btn.unbind();
         btn.on("click", function(){
-            var btn_input = $('#popup-chat-'+PopupChat.params.post).find('#file_upload');
+            console.log(btn_input);
             btn_input.click();
         });
     },
 
     // Handle upload file from chat pop up
     HandleWsFile: function(){
-        var parentChat = $('#popup-chat-'+PopupChat.params.post);
-        var input_change = $('#popup-chat-'+PopupChat.params.post).find('#file_upload');
+        if (isMobile) {
+            var parentChat = $(PopupChat.parent);
+            var input_change = $(PopupChat.parent).find('#file_upload');
+        } else {
+            var parentChat = $('#popup-chat-'+PopupChat.params.post);
+            var input_change = $('#popup-chat-'+PopupChat.params.post).find('#file_upload');
+        }
         input_change.unbind('change');
         input_change.change(function(){
             if(typeof input_change[0].files[0] != "undefined"){

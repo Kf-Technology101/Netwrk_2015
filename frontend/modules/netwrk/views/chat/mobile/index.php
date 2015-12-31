@@ -26,12 +26,12 @@
     <img src='<?= Url::to("@web/img/icon/ajax-loader.gif")?>' class='loading_image' />
     <div class="nav_input_message">
         <?php if(Yii::$app->user->isGuest){?>
-            <div class="send_message input-group" data-url="<?= $url ?>">
+            <div class="send_message input-group no-login" data-url="<?= $url ?>">
                 <input type="text" class="form-control" placeholder="You have to log in to chat" disabled="true">
                 <div class="input-group-addon login" id="sizing-addon2">Login</div>
             </div>
         <?php }else{ ?>
-            <form id='msgForm' class="send_message input-group">
+            <form id='msgForm' class="send_message input-group login">
                 <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
                 <div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
                 <input type='file' id='file_upload' name='file_upload' style="display:none" />
