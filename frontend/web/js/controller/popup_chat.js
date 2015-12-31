@@ -277,7 +277,6 @@ var PopupChat = {
             PopupChat.params.post = $(this).attr('data-id');
             PopupChat.params.chat_type = $(this).attr('data-chat-type');
             PopupChat.OnWsChat();
-            PopupChat.OnWsFile();
             PopupChat.HandleWsFile();
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
