@@ -44,7 +44,7 @@ class ChatController extends BaseController
 
 		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
 		if ($chatType == 0) {
-			$user_id = ChatPrivate::find()->where('post_id ='.$postId)->with('user')->one();
+			$user_id = ChatPrivate::find()->where('post_id ='.$postId.' AND user_id='. $userCurrent)->with('user')->one();
 		} else {
 			$user_id = '';
 		}
