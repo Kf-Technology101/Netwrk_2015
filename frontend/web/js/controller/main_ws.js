@@ -16,7 +16,6 @@ var MainWs ={
     },
 
     wsConnect: function(user_id){
-        // window.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
         window.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
             open: function() {
                 console.log('open');
@@ -77,15 +76,13 @@ var MainWs ={
                     PopupChat.ScrollTopChat(popup_active);
                 },
                 notify: function(e){
-                    console.log(e);
                     if(e!=null){
                         if(e.data.ismeet == 0) {
                             if(e.data.receiver == UserLogin){
                                 if(isMobile){
-                                    var chat_box = $('#private_chat');
+                                    var chat_box = $('#post_chat');
                                     if(chat_box.length != 0){
-                                        var post_id = chat_box.attr('data-private');
-                                        
+                                        var post_id = chat_box.attr('data-post');
                                         if(post_id == e.data.room){
                                             Ajax.update_notification_status(e.data.sender);
                                         }
@@ -103,7 +100,6 @@ var MainWs ={
                                     }
                                 } else {
                                     var pchat = $('#popup-chat-' + e.data.room);
-                                    console.log(pchat);
                                     if(pchat.length != 0 && pchat.css('display') == 'block' && PopupChat.params.post == e.data.room){
                                         Ajax.update_notification_status(e.data.sender);
                                         var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user');
@@ -120,7 +116,6 @@ var MainWs ={
                                             chat_notify.removeClass('disable');
                                         }
                                     }
-                                    console.log(e);
                                 }
                             }
                         } else {
@@ -142,6 +137,5 @@ var MainWs ={
                 }
             }
         });
-
     }
 };

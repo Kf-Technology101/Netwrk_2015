@@ -515,12 +515,13 @@ var PopupChat = {
             var append_html = template({msg: data,baseurl: baseUrl});
             if (isMobile) {
                 $('.post-id-'+popup_id).find(PopupChat.container).append(append_html);
+                PopupChat.OnClickReceiverAvatarMobile();
             } else {
                 $('#popup-chat-'+popup_id).find(PopupChat.container).append(append_html);
+                PopupChat.OnClickReceiverAvatar();
             }
         }
         // PopupChat.OnClickParticipantAvatarMobile();
-        PopupChat.OnClickReceiverAvatar();
     },
 
     //Always scroll to bottom chat
@@ -637,4 +638,21 @@ var PopupChat = {
         });
     },
 
+    OnClickReceiverAvatarMobile: function(){
+        var avatar = $('#post_chat .container_post_chat .message_receiver .user_thumbnail'),
+            post_id = $('#post_chat').attr('data-post'),
+            chat_type = $('#post_chat').attr('data-chat-type');
+        avatar.unbind();
+        avatar.on('click', function(e){
+            console.log('clicked on avatar has post_id ' + post_id);
+            if(chat_type == 1){
+                var user_id = $(e.currentTarget).attr('data-user-id');
+                if (user_id != UserLogin){
+                    window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_id + "&from=discussion";
+                }
+            }else{
+                window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id + "&from=private";
+            }
+        });
+    },
 }

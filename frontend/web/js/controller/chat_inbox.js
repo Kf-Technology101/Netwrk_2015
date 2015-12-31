@@ -98,19 +98,21 @@ var ChatInbox = {
 
 	getTemplateChatPrivate: function(parent,data, user_id){
 		if (user_id == UserLogin) {
-			var list_template = _.template($("#chat_private_list" ).html());
-			var append_html = list_template({chat_private_list: data});
-			parent.find('li').remove();
-			parent.append(append_html);
-			for (var i =0;i< data.length; i++) {
-				if(data[i].class_first_met==0) {
-					parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
-
-				}
-			};
-			ChatInbox.CustomScrollBarPrivate();
-			ChatInbox.OnClickChatPrivateDetail();
-			ChatInbox.CountMessageUnread();
+			if ($("#chat_private_list" ).length > 0) {
+				var list_template = _.template($("#chat_private_list" ).html());
+				var append_html = list_template({chat_private_list: data});
+				parent.find('li').remove();
+				parent.append(append_html);
+				for (var i =0;i< data.length; i++) {
+					if(data[i].class_first_met==0) {
+						parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
+					}
+				};
+				ChatInbox.CustomScrollBarPrivate();
+				ChatInbox.OnClickChatPrivateDetail();
+				ChatInbox.CountMessageUnread();	
+			}
+			
 		}
 	},
 
@@ -411,7 +413,6 @@ var ChatInbox = {
 				}
 			});
 		});
-
 	},
 
 	ChangeStatusUnreadMsg: function(sender){
