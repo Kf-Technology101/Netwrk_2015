@@ -121,6 +121,7 @@ var ChatInbox = {
 		notify = $("#chat_inbox_btn").find('.notify');
 		$("#chat_inbox_btn").on("click", function() {
 			if(isGuest){
+				$('.modal').modal('hide');
 				Login.modal_callback = ChatInbox;
 				Login.initialize();
 				return false;
