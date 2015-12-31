@@ -1,10 +1,11 @@
 var MainWs ={
     url: '',
+    ws: '',
     userLogin: '',
     ws: '',
     initialize: function() {
         MainWs.setUrl();
-        window.connect = MainWs.wsConnect(UserLogin);
+        MainWs.wsConnect(UserLogin);
     },
 
     setUrl: function(){
@@ -16,9 +17,12 @@ var MainWs ={
     },
 
     wsConnect: function(user_id){
-        window.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
-            open: function(e) {
-                console.log('Open');
+        // window.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
+        //     open: function(e) {
+        //         console.log('Open');
+        MainWs.ws = $.websocket("ws://"+MainWs.url+":2311?user_id=" + user_id, {
+            open: function() {
+                console.log('open');
                 // handle when socket is opened
             },
             close: function() {
@@ -36,6 +40,7 @@ var MainWs ={
                         $.each(e.data, function(i, elem){
                             PopupChat.getMessageTemplate(elem);
                             PopupChat.ScrollTopChat(elem.post_id);
+                            
                         });
                         if(isMobile){
                             fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
@@ -72,7 +77,68 @@ var MainWs ={
                     PopupChat.ScrollTopChat(popup_active);
                 },
                 notify: function(e){
-                    // handle notify
+                    console.log(e);
+                    if(e!=null){
+                        if(e.data.ismeet == 0) {
+                            if(e.data.receiver == UserLogin){
+                                if(isMobile){
+                                    var chat_box = $('#private_chat');
+                                    if(chat_box.length != 0){
+                                        var post_id = chat_box.attr('data-private');
+                                        
+                                        if(post_id == e.data.room){
+                                            Ajax.update_notification_status(e.data.sender);
+                                        }
+                                    }else{
+                                        var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
+                                            chat_notify = $('#chat_inbox_btn_mobile').find('.notify');
+                                        if(e.data.msg_count > 0 && e.data.chat_count > 0){
+                                            notify.find('.description-chat-inbox').html(e.data.message);
+                                            notify.find('.description-chat-inbox').removeClass('match-description');
+                                            notify.find('.notify-chat-inbox').html(e.data.msg_count);
+                                            notify.find('.notify-chat-inbox').removeClass('disable');
+                                            chat_notify.html(e.data.chat_count);
+                                            chat_notify.removeClass('disable');
+                                        }
+                                    }
+                                } else {
+                                    var pchat = $('#popup-chat-' + e.data.room);
+                                    console.log(pchat);
+                                    if(pchat.length != 0 && pchat.css('display') == 'block' && PopupChat.params.post == e.data.room){
+                                        Ajax.update_notification_status(e.data.sender);
+                                        var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user');
+                                        notify.find('.description-chat-inbox').html(e.data.message);
+                                        notify.find('.description-chat-inbox').removeClass('match-description');
+                                    }else{
+                                        var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
+                                            chat_notify = $('#chat_inbox_btn').find('.notify');
+                                        if(e.data.msg_count > 0 && e.data.chat_count > 0){
+                                            notify.find('.description-chat-inbox').html(e.data.message);
+                                            notify.find('.notify-chat-inbox').html(e.data.msg_count);
+                                            notify.find('.notify-chat-inbox').removeClass('disable');
+                                            chat_notify.html(e.data.chat_count);
+                                            chat_notify.removeClass('disable');
+                                        }
+                                    }
+                                    console.log(e);
+                                }
+                            }
+                        } else {
+                            ChatInbox.GetDataListChatPrivate();
+                            Default.ShowNotificationOnChat();
+                            setTimeout(function(){
+                                var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
+                                chat_notify = $('#chat_inbox_btn_mobile').find('.notify');
+                                if(e.data.msg_count > 0 && e.data.chat_count > 0){
+                                    notify.find('.description-chat-inbox').html(e.data.message);
+                                    notify.find('.notify-chat-inbox').html(e.data.msg_count);
+                                    notify.find('.notify-chat-inbox').removeClass('disable');
+                                    chat_notify.html(e.data.chat_count);
+                                    chat_notify.removeClass('disable');
+                                }
+                            }, 400);
+                        }
+                    }
                 }
             }
         });

@@ -21,13 +21,14 @@ var ChatInbox = {
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
 		} else {
-			if(ChatInbox.onClickChat == 1){
-				Ajax.change_chat_show_message().then(function(data){});
-			}
+			// if(ChatInbox.onClickChat == 1){
+			// 	Ajax.change_chat_show_message().then(function(data){});
+			// }
 			ChatInbox.OnShowListChatPost();
 		}
 		ChatInbox.OnClickHideCloseChatInboxBtn();
 		ChatInbox.OnClickChatPrivateDetail();
+		Default.ShowNotificationOnChat();
 	},
 
 	OnShowListChatPost: function(){
@@ -122,8 +123,8 @@ var ChatInbox = {
 				Login.initialize();
 				return false;
 			}
-			notify.html('0');
-			notify.addClass('disable');
+			// notify.html('0');
+			// notify.addClass('disable');
 			ChatInbox.initialize();
 		});
 		console.log(ChatInbox.onClickChat);
@@ -166,6 +167,7 @@ var ChatInbox = {
 			var userID = $(btn).find('.chat-post-id').attr('data-user');
 			var postID=  $(btn).find('.chat-post-id').attr('data-post');
 			ChatInbox.ChangeStatusUnreadMsg(userID);
+			Default.ShowNotificationOnChat();
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(postID, 0, 0);
 			}else{
@@ -414,7 +416,9 @@ var ChatInbox = {
 
 	ChangeStatusUnreadMsg: function(sender){
 		Ajax.update_notification_status(sender).then(function(data){
-			console.log('change status unread message');
+			var notify = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-user='+ sender +'] .notify-chat-inbox');
+			notify.html(0);
+			notify.addClass('disable');
 		});
 	}
 }

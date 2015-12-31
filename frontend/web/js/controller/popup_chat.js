@@ -40,6 +40,7 @@ var PopupChat = {
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
             PopupChat.CustomScrollBar();
+            // PopupChat.OnClickReceiverAvatar();
         }
     },
 
@@ -131,7 +132,6 @@ var PopupChat = {
         }
 
         $('.map_content').append(append_html);
-
     },
 
     CalculatePopups: function() {
@@ -156,6 +156,7 @@ var PopupChat = {
 
     ChangeStylePopupChat: function() {
         var id = PopupChat.params.post;
+
 
         $("#textarea-" + id).on("focus", function() {
             $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.active_color);
@@ -223,6 +224,7 @@ var PopupChat = {
         var popup = '#popup-chat-'+PopupChat.params.post;
         // popup.unbind();
         $(document).on('click', popup, function(e) {
+            
             PopupChat.params.post = $(this).attr('data-id');
             PopupChat.params.chat_type = $(this).attr('data-chat-type');
             PopupChat.OnWsChat();
@@ -230,6 +232,12 @@ var PopupChat = {
             PopupChat.HandleWsFile();
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
+
+            var userID = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-post='+ PopupChat.params.post +']').attr('data-user');
+            if(userID){
+                ChatInbox.ChangeStatusUnreadMsg(userID);
+                Default.ShowNotificationOnChat();
+            }
         });
     },
 
@@ -249,7 +257,8 @@ var PopupChat = {
                 PopupChat.HandleEmoji();
               }
         } else {
-            window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+            // window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+            MainWs.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
         }
     },
 
@@ -279,9 +288,13 @@ var PopupChat = {
         var parent = $(e).parent();
         var val  = parent.find("textarea").val();
         if(val != ""){
-            window.ws.send("send", {"type": 1, "msg": val,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
+            MainWs.ws.send("send", {"type": 1, "msg": val,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
+            MainWs.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": PopupChat.params.post, "message": val});
             parent.find("textarea").val("");
             parent.find("textarea").focus();
+
+            // var notify = $('.chat-post-id[data-post='+PopupChat.params.post+']').find('.title-description-user');
+            // notify.find('.description-chat-inbox').html(val);
         }
     },
 
@@ -367,7 +380,7 @@ var PopupChat = {
                             val  = fileForm.find("textarea").val();
                             if(result != "" && result !== false){
                                 var result = $.parseJSON(result);
-                                window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
+                                MainWs.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
                                 parentChat.find(".loading_image").css('display', 'none');
                                 fileForm.find("textarea").val('');
                             }
@@ -454,6 +467,7 @@ var PopupChat = {
             $('#popup-chat-'+popup_id).find(PopupChat.container).append(append_html);
         }
         // PopupChat.OnClickParticipantAvatarMobile();
+        PopupChat.OnClickReceiverAvatar();
     },
 
     ScrollTopChat: function(popup_active){
@@ -538,6 +552,32 @@ var PopupChat = {
                 } else {
                     window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=0';
                 }
+            }
+        });
+    },
+
+    OnClickReceiverAvatar: function(){
+        var avatar = $('.popup-box').find('.message_receiver .user_thumbnail'),
+            disc = $('#popup-chat-' + PopupChat.params.post).find('.chat-discussion');
+        avatar.unbind();
+        avatar.on('click', function(e){
+            user_view = $(e.currentTarget).parent().attr('data-user-id');
+            pid = $(e.currentTarget).parent().attr('data-post-id');
+
+            if(user_view != UserLogin){
+
+                if(disc.length > 0){    
+                    Meet.pid = 0;
+                    Meet.ez = user_view;
+                }else{
+                    Meet.pid = pid;
+                    Meet.ez = 0;
+                }
+
+                $('.modal').modal('hide');
+                $(Post.modal).modal('hide');
+                Meet.initialize();
+
             }
         });
     },

@@ -76,8 +76,12 @@ var Default ={
 
     ShowNotificationOnChat: function(){
         Ajax.count_unread_message().then(function(data){
-            var json = $.parseJSON(data),
-                notify = $("#chat_inbox_btn, #chat_inbox_btn_mobile").find('.notify');
+            var json = $.parseJSON(data), notify;
+            if(isMobile) {
+                notify = $("#chat_inbox_btn_mobile").find('.notify');
+            } else {
+                notify = $("#chat_inbox_btn").find('.notify');
+            }
             if (json > 0){
                 notify.html(json);
                 notify.removeClass('disable');
@@ -86,6 +90,5 @@ var Default ={
                 notify.addClass('disable');
             }
         });
-        Default.clickOnChat = 1;
     }
 };

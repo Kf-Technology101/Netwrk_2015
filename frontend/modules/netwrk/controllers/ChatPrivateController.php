@@ -74,7 +74,7 @@ class ChatPrivateController extends BaseController
 				'content' => $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>',
 				'post_id' => $chat->post_id,
 				'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at,
-				'class_first_met' => $content ? 1 : 0
+				'class_first_met' => $content['first_msg']
 				];
 
 				array_push($data, $item);

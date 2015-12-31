@@ -53,9 +53,9 @@
 
 <script id="message_chat" type="text/x-underscore-template">
     <% if ((msg.id == UserLogin)){ %>
-        <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+        <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>" data-post-id="<%= msg.post_id %>" data-user-id="<%= msg.id %>">
     <% }else{ %>
-        <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
+        <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>" data-post-id="<%= msg.post_id %>" data-user-id="<%= msg.id %>">
     <% } %>
         <div class="user_thumbnail">
             <div class="avatar">

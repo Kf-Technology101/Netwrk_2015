@@ -10,6 +10,7 @@ use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\ChatPrivate;
 use frontend\modules\netwrk\models\Notification;
+use frontend\modules\netwrk\models\UserMeet;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use Yii;
@@ -78,11 +79,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->msg_type = $type;
 				$this->ws_messages->post_type = $this->chat_type;
 				$this->ws_messages->save(false);
-				$u = ChatPrivate::find()->where(['user_id'=>$this->current_user, 'post_id'=>$room])->one();
-				if ($u) {
+
+				$u = ChatPrivate::find()->where(['user_id'=>$user, 'post_id'=>$room])->one();
+				if($u){
 					$this->notify = new Notification();
 					$this->notify->post_id = $room;
-					$this->notify->sender = $this->current_user;
+					$this->notify->sender = $user;
 					$this->notify->receiver = $u->user_id_guest;
 					$this->notify->message = $this->ws_messages->id;
 					$this->notify->status = 0;
@@ -125,6 +127,39 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->post_id = isset($data['data']['post_id']) ? $data['data']['post_id'] : false;
 				$this->chat_type = isset($data['data']['chat_type']) ? $data['data']['chat_type']: false;
 				$this->send($from, "fetch", $this->fetchMessages());
+			}elseif($type == "notify"){
+				$sender = $data['data']['sender'];
+				$receiver = $data['data']['receiver'];
+				$room = $data['data']['room'];
+				$message = $data['data']['message'];
+
+				if($receiver != -1 && $room == -1){
+					$num_date_first_met = date('M d');
+					// get info for first message
+					$sender_info = Profile::find()->where(['user_id'=>$sender])->one();
+					$current_date = date('Y-m-d H:i:s');
+		            $time1 = date_create($sender_info->dob);
+		            $time2 = date_create($current_date);
+		            $year_old = $time1->diff($time2)->y;
+
+					$sender_msg = $sender_info->first_name . ' ' . $sender_info->last_name . ',' . $year_old . '<br>Matched on ' . $num_date_first_met;
+
+					$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
+					$checkMet = UserMeet::find()->where(['user_id_1'=>$receiver, 'user_id_2'=>$sender])->one();
+					if(count($checkMet) > 0){
+						$_room = ChatPrivate::find()->where(['user_id'=>$sender, 'user_id_guest'=>$receiver])->one();
+						$ws_msg_id = $this->insertWsMessage($sender, $msg, $_room->post_id, 1, 0, 0, $sender_msg);
+						if($ws_msg_id != false){
+							$this->insertNotification($_room->post_id, $sender, $receiver, $ws_msg_id, 0, 0, date('Y-m-d H:i:s'));
+							$this->insertNotification($_room->post_id, $receiver, $sender, $ws_msg_id, 0, 0, date('Y-m-d H:i:s'));
+						}
+					}
+				}
+				foreach ($this->clients as $client) {
+					$concept = $this->notify($sender, $room, $message, $receiver);
+					if($concept != 0)
+						$this->send($client, "notify", $concept);
+				}
 			}
 		}
 		$this->checkOnliners($from);
@@ -151,19 +186,36 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		if($message) {
 			foreach ($message as $key => $value) {
        			# code...
-				$time = UtilitiesFunc::FormatTimeChat($value->created_at);
+       			if($value->first_msg == 0){
+       				if($value->user->id == $this->current_user){
+       					$pchat = ChatPrivate::find()->where(['user_id'=>$value->user->id, 'post_id'=>$this->post_id])->one();
+       					$profile = Profile::find()->where(['user_id'=>$pchat->user_id_guest])->one();
+       				} else {
+       					$profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
+       				}
 
+       				$current_date = date('Y-m-d H:i:s');
+		            $time1 = date_create($profile->dob);
+		            $time2 = date_create($current_date);
+		            $year_old = $time1->diff($time2)->y;
+
+       				$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
+       				
+       			} else {
+       				$smg = nl2br($value->msg);
+       			}
+
+				$time = UtilitiesFunc::FormatTimeChat($value->created_at);				
 				if ($value->user->profile->photo == null){
 					$image = '/img/icon/no_avatar.jpg';
 				}else{
 					$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
 				}
-
 				$item = array(
 					'id'=>$value->user->id,
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 					'avatar'=> $image,
-					'msg'=> nl2br($value->msg),
+					'msg'=> $smg,
 					'msg_type' => $value->msg_type,
 					'created_at'=> $time,
 					'post_id'=> $value->post_id,
@@ -320,8 +372,58 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		}
 	}
 
-	public function notify($sender, $receiver, $message){
+	public function notify($sender, $room, $message, $_receiver){
+		$notify = [];
+		if($_receiver == -1 && $room != -1){
+			$receiver = ChatPrivate::find()->where(['user_id'=>$sender, 'post_id'=>$room])->one();
+			$chat_count = Notification::find()->select('sender')->where(['receiver'=>$receiver->user_id_guest, 'status'=>0])->distinct()->count();
+			$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'status'=>0])->count();
+			$notify = array('sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'message'=>$message, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$room, 'ismeet'=>0);
+		} else {
+			$num_date_first_met = date('M d');
+			
+			$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
+			$checkMet = UserMeet::find()->where(['user_id_1'=>$_receiver, 'user_id_2'=>$sender])->one();
+			if(count($checkMet) > 0){
+				$_room = ChatPrivate::find()->where(['user_id'=>$sender, 'user_id_guest'=>$_receiver])->one();
 
+				$chat_count = Notification::find()->select('sender')->where(['receiver'=>$_receiver, 'status'=>0])->distinct()->count();
+				$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$_receiver, 'status'=>0])->count();
+
+				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1);
+			}
+		}
+		if(count($notify) > 0)
+			return $notify;
+		else
+			return 0;
+	}
+
+	public function insertWsMessage($user_id, $msg, $post_id, $msg_type, $post_type, $first_msg, $msg_replace){
+		$this->ws_messages = new WsMessages();
+		$this->ws_messages->user_id = $user_id;
+		$this->ws_messages->msg = $msg;
+		$this->ws_messages->post_id = $post_id;
+		$this->ws_messages->msg_type = $msg_type;
+		$this->ws_messages->post_type = $post_type;
+		$this->ws_messages->first_msg = $first_msg;
+		$this->ws_messages->msg_replace = $msg_replace;
+		if($this->ws_messages->save(false))
+			return $this->ws_messages->id;
+		else
+			return false;
+	}
+
+	public function insertNotification($post_id, $sender, $receiver, $msg, $status, $chat_show, $date){
+		$this->notify = new Notification();
+		$this->notify->post_id = $post_id;
+		$this->notify->sender = $sender;
+		$this->notify->receiver = $receiver;
+		$this->notify->message = $msg;
+		$this->notify->status = $status;
+		$this->notify->chat_show = $chat_show;
+		$this->notify->created_at = $date;
+		return $this->notify->save(false);
 	}
 }
 ?>

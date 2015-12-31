@@ -82,6 +82,7 @@ var Login={
 			console.log('callback');
 			setTimeout(function(){
 				console.log('show modal callback');
+				console.log(UserLogin + '---' + isGuest);
 				Login.modal_callback.initialize();
 				Login.ShowNotificationOnChat();
 			}, 500)

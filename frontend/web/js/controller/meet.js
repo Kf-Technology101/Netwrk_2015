@@ -19,6 +19,8 @@ var Meet ={
     modal: '#modal_meet',
     height: 0,
     infoOf: 0,
+    pid: 0,
+    ez: 0,
     initialize: function() {
         console.log(Meet.filter.active);
         if(Meet.filter.active === 'setting'){
@@ -74,10 +76,11 @@ var Meet ={
                 Login.initialize();
             }else{
                 Meet.changefilter(currentTarget);
-                if(post_id != ""){
-                    Meet.ShowUserMeetProfile(post_id);
-                }else if(Meet.infoOf != 0){
-                    Meet.ShowModalMeetProfile(Meet.infoOf);
+                // console.log(Meet.ez + '---' + Meet.pid);
+                if(Meet.pid != 0){
+                    Meet.ShowUserMeetProfile(Meet.pid);
+                }else if(Meet.ez != 0){
+                    Meet.ShowModalMeetProfile(Meet.ez);
                 }else{
                     Meet.ShowModalMeet();
                 }
@@ -390,14 +393,18 @@ var Meet ={
             btn_met.hide();
             btn_meet.unbind();
             btn_meet.on('click',function(){
-                data[self.user_list.vt].met = 1;
-                btn_meet.hide();
-                btn_met.show();
+                for(i=0;i<data.length;i++)
+                    if(data[i].user_id == data[self.user_list.vt].user_id){
+                    data[i].met = 1;
+                    btn_meet.hide();
+                    btn_met.show();
+                }
                 Ajax.usermeet({user_id: data[self.user_list.vt].user_id }).then(function(res){
                     self.eventMet();
                     if(!isMobile){
                         ChatInbox.GetDataListChatPrivate();
                     }
+                     MainWs.ws.send("notify", {"sender": UserLogin, "receiver": data[self.user_list.vt].user_id, "room": -1, "message": ''});
                 });
             });
         }
@@ -521,6 +528,7 @@ var Meet ={
     },
 
     ShowModalMeetProfile: function(user_view){
+        console.log(user_view);
         var modal = $('#modal_meet'),
             self = this;
 
@@ -560,43 +568,43 @@ var Meet ={
         });
     },
 
-    ShowModalMeetProfile: function(user_view){
-        var modal = $('#modal_meet'),
-            self = this;
+    // ShowModalMeetProfile: function(user_view){
+    //     var modal = $('#modal_meet'),
+    //         self = this;
 
-        Ajax.get_user_met_profile_discussion(user_view).then(function(data){
-            var json = $.parseJSON(data);
-            self.user_list.len = json.data.length;
+    //     Ajax.get_user_met_profile_discussion(user_view).then(function(data){
+    //         var json = $.parseJSON(data);
+    //         self.user_list.len = json.data.length;
 
-            if(self.user_list.len > 0){
-                $('p.no_data').hide();
-                $('.control-btn').show();
-                $('p.default').hide();
-                self.json = json.data;
-                self.showUserMeet();
-            }else{
-                $('.control-btn').hide();
-                $('p.default').show();
-                $('p.no_data').show();
-            }
+    //         if(self.user_list.len > 0){
+    //             $('p.no_data').hide();
+    //             $('.control-btn').show();
+    //             $('p.default').hide();
+    //             self.json = json.data;
+    //             self.showUserMeet();
+    //         }else{
+    //             $('.control-btn').hide();
+    //             $('p.default').show();
+    //             $('p.no_data').show();
+    //         }
 
-            if(!isMobile){
-                modal.modal({
-                    backdrop: true,
-                    keyboard: false
-                });
-                set_heigth_modal_meet($('#modal_meet'), 30);
-                var meet_height = $('#modal_meet .modal-body').height();
-                Meet.height = meet_height;
-            }
-            $('#modal_meet').on('hidden.bs.modal',function() {
-                self.reset_modal();
-                $('#modal_meet').modal('hide');
-            });
-            $('.modal-backdrop.in').click(function(e) {
-                self.reset_modal();
-                $('#modal_meet').modal('hide');
-            });
-        });
-    },
+    //         if(!isMobile){
+    //             modal.modal({
+    //                 backdrop: true,
+    //                 keyboard: false
+    //             });
+    //             set_heigth_modal_meet($('#modal_meet'), 30);
+    //             var meet_height = $('#modal_meet .modal-body').height();
+    //             Meet.height = meet_height;
+    //         }
+    //         $('#modal_meet').on('hidden.bs.modal',function() {
+    //             self.reset_modal();
+    //             $('#modal_meet').modal('hide');
+    //         });
+    //         $('.modal-backdrop.in').click(function(e) {
+    //             self.reset_modal();
+    //             $('#modal_meet').modal('hide');
+    //         });
+    //     });
+    // },
 };

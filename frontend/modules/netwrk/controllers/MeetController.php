@@ -51,8 +51,10 @@ class MeetController extends BaseController
         }
         
         // remove user is met owner
+        $r = [];
         for ($i=0; $i < count($luom); $i++) { 
             if(($key = array_search($luom[$i], $lmo)) !== false){
+                array_push($r, $lmo[$key]);
                 unset($lmo[$key]);
             }
         }
@@ -71,13 +73,18 @@ class MeetController extends BaseController
         }
         if(count($luom) > 0){
             $list_owner_meet = implode(',', $luom);
-            $list_met .= ',' . $list_owner_meet;
+            // $list_met .= ',' . $list_owner_meet;
+        }
+        $l = $userCurrent;
+        if(count($r) > 0){
+            $lst = implode(',', $r);
+            $l.= ',' . $lst;
         }
 
         // get rand other
         $users = User::find()
                         ->addSelect(["*", "RAND() order_num"])
-                        ->where('id NOT IN ('.$list_met.')')
+                        ->where('id NOT IN ('.$l.')')
                         ->with('profile')
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
@@ -88,6 +95,18 @@ class MeetController extends BaseController
         // collect meet user
         for ($i=0; $i < count($users); $i++) { 
             array_push($user_meet_rand, $users[$i]);
+        }
+        $tmp; $index;
+        for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
+            $index = $i + 2;
+            if($i == count($user_meet_rand) - 2){
+                $index = 0;
+            }
+            if($user_meet_rand[$i]->id == $user_meet_rand[$i + 1]->id){
+                $tmp = $user_meet_rand[$i + 1];
+                $user_meet_rand[$i + 1] = $user_meet_rand[$index];
+                $user_meet_rand[$index] = $tmp;
+            }
         }
 
         if($userLogin->setting){
@@ -286,8 +305,10 @@ class MeetController extends BaseController
         }
         
         // remove user is met owner
+        $r = [];
         for ($i=0; $i < count($luom); $i++) { 
             if(($key = array_search($luom[$i], $lmo)) !== false){
+                array_push($r, $lmo[$key]);
                 unset($lmo[$key]);
             }
         }
@@ -306,23 +327,42 @@ class MeetController extends BaseController
         }
         if(count($luom) > 0){
             $list_owner_meet = implode(',', $luom);
-            $list_met .= ',' . $list_owner_meet;
+            // $list_met .= ',' . $list_owner_meet;
         }
+
+        $l = $userCurrent;
+        if(count($r) > 0){
+            $lst = implode(',', $r);
+            $l.= ',' . $lst;
+        }
+
+        $l .= ',' . $user_profile->user_id_guest;
 
         // get rand other
         $users = User::find()
                         ->addSelect(["*", "RAND() order_num"])
-                        ->where('id NOT IN ('.$list_met.')')
+                        ->where('id NOT IN ('.$l.')')
                         ->with('profile')
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
 
         $current_date = date('Y-m-d H:i:s');
         $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
-
         // collect meet user
         for ($i=0; $i < count($users); $i++) { 
             array_push($user_meet_rand, $users[$i]);
+        }
+        $tmp; $index;
+        for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
+            $index = $i + 2;
+            if($i == count($user_meet_rand) - 2){
+                $index = 0;
+            }
+            if($user_meet_rand[$i]->id == $user_meet_rand[$i + 1]->id){
+                $tmp = $user_meet_rand[$i + 1];
+                $user_meet_rand[$i + 1] = $user_meet_rand[$index];
+                $user_meet_rand[$index] = $tmp;
+            }
         }
 
         if($userLogin->setting){
@@ -473,8 +513,10 @@ class MeetController extends BaseController
         }
         
         // remove user is met owner
+        $r = [];
         for ($i=0; $i < count($luom); $i++) { 
             if(($key = array_search($luom[$i], $lmo)) !== false){
+                array_push($r,$lmo[$key]);
                 unset($lmo[$key]);
             }
         }
@@ -493,13 +535,20 @@ class MeetController extends BaseController
         }
         if(count($luom) > 0){
             $list_owner_meet = implode(',', $luom);
-            $list_met .= ',' . $list_owner_meet;
+            // $list_met .= ',' . $list_owner_meet;
         }
+
+        $l = $userCurrent;
+        if(count($r) > 0){
+            $lst = implode(',', $r);
+            $l.= ',' . $lst;
+        }
+        $l .= ',' . $user_is_viewed;
 
         // get rand other
         $users = User::find()
                         ->addSelect(["*", "RAND() order_num"])
-                        ->where('id NOT IN ('.$list_met.')')
+                        ->where('id NOT IN ('.$l.')')
                         ->with('profile')
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
@@ -510,6 +559,18 @@ class MeetController extends BaseController
         // collect meet user
         for ($i=0; $i < count($users); $i++) { 
             array_push($user_meet_rand, $users[$i]);
+        }
+        $tmp; $index;
+        for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
+            $index = $i + 2;
+            if($i == count($user_meet_rand) - 2){
+                $index = 0;
+            }
+            if($user_meet_rand[$i]->id == $user_meet_rand[$i + 1]->id){
+                $tmp = $user_meet_rand[$i + 1];
+                $user_meet_rand[$i + 1] = $user_meet_rand[$index];
+                $user_meet_rand[$index] = $tmp;
+            }
         }
 
         if($userLogin->setting){

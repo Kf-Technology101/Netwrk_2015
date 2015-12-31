@@ -70,7 +70,7 @@ class AppAsset extends AssetBundle
         'js/controller/reset_password.js',
         // 'js/controller/chat_private.js',
         'js/controller/popup_chat.js',
-        'js/controller/main_ws.js',
+        'js/controller/main_ws.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
