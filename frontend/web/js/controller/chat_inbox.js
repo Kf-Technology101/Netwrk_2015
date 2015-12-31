@@ -156,6 +156,10 @@ var ChatInbox = {
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
                 if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
 					PopupChat.initialize();
+				} else {
+		            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+		            $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
+		            $('#popup-chat-'+PopupChat.params.post).find('textarea').focus();
 				}
 			}
 		});
@@ -180,13 +184,11 @@ var ChatInbox = {
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
                 if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
 					PopupChat.initialize();
+				} else {
+		            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+		            $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
+		            $('#popup-chat-'+PopupChat.params.post).find('textarea').focus();
 				}
-
-				// if(ChatPrivate.temp_private != ChatPrivate.params.private){
-				// 	$('.modal').modal('hide');
-				// 	ChatPrivate.initialize();
-				// 	ChatPrivate.temp_private = ChatPrivate.params.private;
-				// }
 			}
 			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
 			private_notify.html('0');

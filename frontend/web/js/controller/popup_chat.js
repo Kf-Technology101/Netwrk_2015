@@ -37,7 +37,6 @@ var PopupChat = {
         }else{
             PopupChat.RegisterPopup();
             PopupChat.ChangeStylePopupChat();
-            PopupChat.HandleWsFile();
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
             PopupChat.CustomScrollBar();
@@ -120,6 +119,7 @@ var PopupChat = {
         }
         PopupChat.getTemplate();
         $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+        $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
         PopupChat.popups.push(PopupChat.params.post);
         PopupChat.CalculatePopups();
         PopupChat.MoveMeetButton();
@@ -159,24 +159,28 @@ var PopupChat = {
     ChangeStylePopupChat: function() {
         var id = PopupChat.params.post;
 
-
+        var target_popup_active = $("#popup-chat-" + id + " .popup-head");
         $("#textarea-" + id).on("focus", function() {
-            $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.active_color);
+            target_popup_active.css("background-color", PopupChat.active_color);
         });
         $("#textarea-" + id).on("focusout", function() {
-            $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.inactive_color);
+            target_popup_active.css("background-color", PopupChat.inactive_color);
         });
 
         $("#popup-chat-" + id).on("click", function() {
             $(PopupChat.popup_chat_class + " .popup-head").css("background-color", PopupChat.inactive_color);
-            $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.active_color);
+            $(PopupChat.popup_chat_class).find('.send').css("background-color", PopupChat.inactive_color);
+            target_popup_active.css("background-color", PopupChat.active_color);
+            $(this).find('.send').css("background-color", PopupChat.active_color);
+            $('#popup-chat-'+id).find('textarea').focus();
         });
 
         $("body").mouseup(function (e) {
             var container = $("#popup-chat-" + id);
 
             if (!container.is(e.target) && container.has(e.target).length === 0) {
-                $("#popup-chat-" + id + " .popup-head").css("background-color", PopupChat.inactive_color);
+                target_popup_active.css("background-color", PopupChat.inactive_color);
+                $("#popup-chat-" + id).find('.send').css("background-color", PopupChat.inactive_color);
             }
         });
     },
@@ -294,6 +298,7 @@ var PopupChat = {
             PopupChat.params.previous_flag = data_link['previous-flag'];
             window.ws.onopen = function(){
                 window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+                $(PopupChat.parent).find('textarea').focus();
                 PopupChat.OnWsChat();
                 PopupChat.OnWsFile();
                 PopupChat.HandleWsFile();
@@ -354,15 +359,15 @@ var PopupChat = {
         }
         btn.unbind();
         btn.on("click", function(){
-            var btn_input = $(PopupChat.parent).find('#file_upload');
+            var btn_input = $('#popup-chat-'+PopupChat.params.post).find('#file_upload');
             btn_input.click();
         });
     },
 
     // Handle upload file from chat pop up
     HandleWsFile: function(){
-        var parentChat = $(PopupChat.parent);
-        var input_change = $(PopupChat.parent).find('#file_upload');
+        var parentChat = $('#popup-chat-'+PopupChat.params.post);
+        var input_change = $('#popup-chat-'+PopupChat.params.post).find('#file_upload');
         input_change.unbind('change');
         input_change.change(function(){
             if(typeof input_change[0].files[0] != "undefined"){

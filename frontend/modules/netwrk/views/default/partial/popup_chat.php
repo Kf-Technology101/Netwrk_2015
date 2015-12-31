@@ -19,7 +19,7 @@
                     </div>
                 <% } %>
                 <div class="popup-head-right">
-                    <a href="javascript:PopupChat.ClosePopup(<%= post_id %>);">&#10005;</a>
+                    <a href="javascript:PopupChat.ClosePopup(<%= post_id %>);"><i class='fa fa-times 2x'></i></a>
                 </div>
                 <div style="clear: both"></div>
             </div>
