@@ -24,8 +24,6 @@ class m151219_032839_create_previous_page_table extends Migration
     public function down()
     {
         $this->dropTable('{{%previous_page}}');
-
-        return false;
     }
 
     /*

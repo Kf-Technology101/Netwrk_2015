@@ -18,8 +18,6 @@ class m151222_111924_add_column_post_type_post_table extends Migration
     public function down()
     {
         $this->dropColumn('post', 'post_type', Schema::TYPE_INTEGER);
-
-        return false;
     }
 
     /*

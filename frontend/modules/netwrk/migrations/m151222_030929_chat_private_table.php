@@ -27,7 +27,6 @@ class m151222_030929_chat_private_table extends Migration
     public function down()
     {
         $this->dropTable('{{%chat_private}}');
-        return false;
     }
 
     /*
