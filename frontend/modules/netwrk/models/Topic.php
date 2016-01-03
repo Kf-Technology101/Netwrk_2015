@@ -102,4 +102,21 @@ class Topic extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+    public function SearchTopic($_search,$type,$except){
+        $limit = Yii::$app->params['LimitResultSearch'];
+        if(isset($type) && $type == 'global'){
+            return Topic::find()
+                    ->where(['like','title',$_search])
+                    ->andWhere(['not in','city_id',$except])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }else{
+            return Topic::find()
+                        ->where(['like','title',$_search])
+                        ->orderBy(['brilliant_count'=> SORT_DESC])
+                        ->all();
+        }
+    }
 }

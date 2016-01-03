@@ -48,7 +48,9 @@ class SearchController extends BaseController
         $limitResult = Yii::$app->params['LimitResultSearch'];
 
 		// Post Local
-        $posts = Post::find()->where(['like','title',$_search])->andWhere(['not',['topic_id'=> NULL]])->orderBy(['brilliant_count'=> SORT_DESC])->all();
+        $type_local = 'local';
+        $posts = Post::SearchPost($_search,$type_local,$id_local);
+
         foreach ($posts as $key => $post) {
         	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$post->topic->city->lat,$post->topic->city->lng);
             if($distance <= $radius_local && count($post_local) < $limitResult){
@@ -83,7 +85,7 @@ class SearchController extends BaseController
        	}
 
        	// Topic Local
-       	$topics = Topic::find()->where(['like','title',$_search])->orderBy(['brilliant_count'=> SORT_DESC])->all();
+       	$topics = Topic::SearchTopic($_search,$type_local,$id_local);
         foreach ($topics as $key => $topic) {
         	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$topic->city->lat,$topic->city->lng);
             if($distance <= $radius_local && count($post_local) < $limitResult){
@@ -100,7 +102,7 @@ class SearchController extends BaseController
             }
        	}
 
-        $city_local = City::find()->where(['id'=> $id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit($limitResult)->all();
+        $city_local = City::SearchCity($id_local,$type_local,$id_global);
     	foreach ($city_local as $key => $value) {
             $distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$value->lat,$value->lng);
             if($distance <= $radius_local){
@@ -113,14 +115,8 @@ class SearchController extends BaseController
                 $num_search_local += count($netwrk_local);
             }
         }
-
-        $posts_go = Post::find()->joinWith('topic')
-			        ->where(['like','post.title',$_search])
-			        ->andWhere(['not in','topic.city_id',$id_local])
-                    ->andWhere(['not',['topic_id'=> NULL]])
-			        ->orderBy(['brilliant_count'=> SORT_DESC])
-			        ->limit($limitResult)
-			        ->all();
+        $type_global ='global';
+        $posts_go = Post::SearchPost($_search,$type_global,$id_local);
 
 		foreach ($posts_go as $key => $post_go) {
 
@@ -150,12 +146,7 @@ class SearchController extends BaseController
 			$num_search_global += count($post_global);
 		}
 
-		$topics_go = Topic::find()
-					->where(['like','title',$_search])
-			        ->andWhere(['not in','city_id',$id_local])
-			        ->orderBy(['brilliant_count'=> SORT_DESC])
-			        ->limit($limitResult)
-			        ->all();
+		$topics_go = Topic::SearchTopic($_search,$type_global,$id_local);
 
 		foreach ($topics_go as $key => $topic_go) {
 			$item = [
@@ -170,7 +161,7 @@ class SearchController extends BaseController
 			$num_search_global += count($topic_global);
 		}
 
-		$city_go = City::find()->where(['id'=>$id_global])->andwhere(['not in','id',$id_local])->orderBy(['brilliant_count'=> SORT_DESC])->limit($limitResult)->all();
+		$city_go = City::SearchCity($_search,$type_global,$id_local);
 
 		foreach ($city_go as $key => $value) {
 			$netwrk = [

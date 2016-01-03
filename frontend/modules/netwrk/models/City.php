@@ -62,4 +62,22 @@ class City extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Topic::className(), ['city_id' => 'id']);
     }
+
+    public function SearchCity($id,$type,$except){
+        $limit = Yii::$app->params['LimitResultSearch'];
+        if(isset($type) && $type == 'global'){
+            return City::find()
+                    ->where(['id'=>$id])
+                    ->andwhere(['not in','id',$except])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }else{
+            return City::find()
+                    ->where(['id'=> $id])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }
+    }
 }

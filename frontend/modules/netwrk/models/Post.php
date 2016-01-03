@@ -125,4 +125,23 @@ class Post extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+    public function SearchPost($_search,$type,$except){
+        $limit = Yii::$app->params['LimitResultSearch'];
+        if(isset($type) && $type == 'global'){
+            return Post::find()->joinWith('topic')
+                    ->where(['like','post.title',$_search])
+                    ->andWhere(['not in','topic.city_id',$except])
+                    ->andWhere(['not',['topic_id'=> NULL]])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }else{
+            return Post::find()
+                    ->where(['like','title',$_search])
+                    ->andWhere(['not',['topic_id'=> NULL]])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->all();
+        }
+    }
 }
