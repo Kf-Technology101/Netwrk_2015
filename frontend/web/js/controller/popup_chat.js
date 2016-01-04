@@ -33,6 +33,7 @@ var PopupChat = {
             PopupChat.OnClickChatInboxBtnMobile();
             ChatInbox.HideMeetIconMobile();
             PopupChat.OnClickBackBtn();
+            Default.ShowNotificationOnChat();
         }else{
             PopupChat.OnclickLogin();
             PopupChat.RegisterPopup();

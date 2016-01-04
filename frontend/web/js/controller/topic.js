@@ -44,6 +44,9 @@ var Topic = {
         Topic.OnClickSelectFilter();
         Topic.OnClickChangeTab();
         Topic.eventClickMeetMobile();
+        if(isMobile){
+            Default.ShowNotificationOnChat();
+        }
     },
 
     initialize: function(city,params){
