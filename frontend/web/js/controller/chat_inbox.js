@@ -288,8 +288,10 @@ var ChatInbox = {
 			processData: false,
 			contentType: false,
 			success: function(result) {
-				result = $.parseJSON(result);
-				ChatInbox.getTemplateChatPrivate(parent,result, UserLogin);
+				if(result){
+					result = $.parseJSON(result);
+					ChatInbox.getTemplateChatPrivate(parent,result, UserLogin);
+				}
 			}
 		});
 	},
