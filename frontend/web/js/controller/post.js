@@ -50,6 +50,7 @@ var Post ={
 			Post.ShowMeetIcon();
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
+			Topic.displayPositionModal();
 		}
 		Post.OnclickBack();
 		Post.OnclickCreate();

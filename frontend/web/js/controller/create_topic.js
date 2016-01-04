@@ -49,6 +49,7 @@ var Create_Topic={
             Create_Topic.showZipcodeBreadcrumb(name);
             Create_Topic.onClickBackZipcodeBreadcrumb();
             Create_Topic.onClickBackNetwrkLogo();
+            Topic.displayPositionModal();
         }
     },
     showZipcodeBreadcrumb: function(zipcode){
