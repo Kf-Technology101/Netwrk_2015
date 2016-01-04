@@ -10,6 +10,7 @@ var Default ={
             self._eventClickMeetBtn();
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
+            Default.onCLickModal();
         }
         
         if(!isGuest){
@@ -91,4 +92,11 @@ var Default ={
             }
         });
     },
+
+    onCLickModal: function(){
+        var modal = $('.modal');
+        modal.on('click', function(e) {
+            $('.popup_chat_modal .popup-box').css('z-index', '1050');
+        });
+    }
 };

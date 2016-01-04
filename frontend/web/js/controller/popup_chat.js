@@ -154,8 +154,12 @@ var PopupChat = {
                 PopupChat.total_popups = PopupChat.max_total_popups;
             }
         }
-
+        
         PopupChat.DisplayPopups();
+        var modal = $('.in');
+        if(modal.length > 0){
+            $('.popup_chat_modal .popup-box').css('z-index', '10500');
+        }
     },
 
     ChangeStylePopupChat: function() {
@@ -274,7 +278,7 @@ var PopupChat = {
         var popup = '#popup-chat-'+PopupChat.params.post;
         // popup.unbind();
         $(document).on('click', popup, function(e) {
-
+            $(e.currentTarget).css('z-index', '10500');
             PopupChat.params.post = $(this).attr('data-id');
             PopupChat.params.chat_type = $(this).attr('data-chat-type');
             PopupChat.OnWsChat();
