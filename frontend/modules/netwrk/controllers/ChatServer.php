@@ -140,8 +140,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						$_room = ChatPrivate::find()->where(['user_id'=>$sender, 'user_id_guest'=>$receiver])->one();
 						$ws_msg_id = $this->insertWsMessage($sender, $msg, $_room->post_id, 1, 0, 0);
 						if($ws_msg_id != false){
-							$this->insertNotification($_room->post_id, $sender, $receiver, $ws_msg_id, 0, 0, date('Y-m-d H:i:s'));
-							$this->insertNotification($_room->post_id, $receiver, $sender, $ws_msg_id, 0, 0, date('Y-m-d H:i:s'));
+							$this->insertNotification($_room->post_id, $sender, $receiver, $ws_msg_id, 0, date('Y-m-d H:i:s'));
+							$this->insertNotification($_room->post_id, $receiver, $sender, $ws_msg_id, 0, date('Y-m-d H:i:s'));
 						}
 					}
 				}
@@ -358,26 +358,38 @@ class ChatServer extends BaseController implements MessageComponentInterface {
                 return strtotime($b['real_updated_at']) - strtotime($a['real_updated_at']);
             });
 			$data = json_encode($data);
+			// var_dump($data);die;
 			return $data;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * [Function is used to sender a notification]
+	 * @param  $sender    
+	 * @param  $room      [as post_id; -1 if first message]
+	 * @param  $message   
+	 * @param  $_receiver [-1 if user is met]
+	 * @return array      [data of notification]
+	 */
 	public function notify($sender, $room, $message, $_receiver){
 		$notify = [];
-		$current_date = date('Y-m-d H:i:s');
-		$num_date = UtilitiesFunc::FormatDateTime($current_date);
-		$recent_time_msg = '<i class="fa fa-clock-o"></i> ' . $num_date . '</span>';
-		if($_receiver == -1 && $room != -1){
 
+		if($_receiver == -1 && $room != -1){
 			$receiver = ChatPrivate::find()->where(['user_id'=>$sender, 'post_id'=>$room])->one();
+			// update chat list
+			$chat_private = ChatPrivate::find()->where('post_id = '.$room . ' AND user_id = ' .$receiver->user_id_guest)->one();
+			if ($chat_private) {
+				$chat_private->save(false);
+			}
+			$list_chat_inbox = $this->updateChatPrivateList($receiver->user_id_guest);
+
 			$chat_count = Notification::find()->select('sender')->where(['receiver'=>$receiver->user_id_guest, 'status'=>0])->distinct()->count();
 			$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'status'=>0])->count();
-			$notify = array('sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'message'=>$message, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$room, 'ismeet'=>0, 'recent_time'=>$recent_time_msg);
+			$notify = array('sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'message'=>$message, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$room, 'ismeet'=>0, 'update_list_chat'=>$list_chat_inbox);
 		} else {
 			$num_date_first_met = date('M d');
-			
 			$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
 			$checkMet = UserMeet::find()->where(['user_id_1'=>$_receiver, 'user_id_2'=>$sender])->one();
 			if(count($checkMet) > 0){
@@ -386,7 +398,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$chat_count = Notification::find()->select('sender')->where(['receiver'=>$_receiver, 'status'=>0])->distinct()->count();
 				$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$_receiver, 'status'=>0])->count();
 
-				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1, 'recent_time'=>$recent_time_msg);
+				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1);
 			}
 		}
 		if(count($notify) > 0)
@@ -395,6 +407,16 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			return 0;
 	}
 
+	/**
+	 * [Function is used to insert new chat message]
+	 * @param  $user_id   [sender]
+	 * @param  $msg       [message]
+	 * @param  $post_id   [chat room]
+	 * @param  $msg_type  [textmessage, emoji or media]
+	 * @param  $post_type [0: private post, 1: discussion post]
+	 * @param  $first_msg [0: message for meet, 1: mormal message]
+	 * @return            [false - insert fail, message_id - insert successful]
+	 */
 	public function insertWsMessage($user_id, $msg, $post_id, $msg_type, $post_type, $first_msg){
 		$this->ws_messages = new WsMessages();
 		$this->ws_messages->user_id = $user_id;
@@ -408,15 +430,24 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		else
 			return false;
 	}
-
-	public function insertNotification($post_id, $sender, $receiver, $msg, $status, $chat_show, $date){
+	
+	/**
+	 * [Function is used to insert new notification]
+	 * @param   $post_id   [chat room]
+	 * @param   $sender    
+	 * @param   $receiver  
+	 * @param   $msg       
+	 * @param   $status    [0: unread, 1: read]
+	 * @param   $date      
+	 * @return             [true/false]
+	 */
+	public function insertNotification($post_id, $sender, $receiver, $msg, $status, $date){
 		$this->notify = new Notification();
 		$this->notify->post_id = $post_id;
 		$this->notify->sender = $sender;
 		$this->notify->receiver = $receiver;
 		$this->notify->message = $msg;
 		$this->notify->status = $status;
-		$this->notify->chat_show = $chat_show;
 		$this->notify->created_at = $date;
 		return $this->notify->save(false);
 	}

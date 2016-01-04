@@ -50,7 +50,6 @@ var MainWs ={
                 },
                 single: function(e){
                     console.log('single');
-                    console.log(e);
                     // handle of chat
                     var update_list_chat;
                     var popup_active = e.data[0]['post_id'];
@@ -76,38 +75,43 @@ var MainWs ={
                     PopupChat.ScrollTopChat(popup_active);
                 },
                 notify: function(e){
-                    if(e!=null){
-                        if(e.data.ismeet == 0) {
-                            if(e.data.receiver == UserLogin){
-                                if(isMobile){
+                    if (e != null) {                                          // check data returned
+                        if (e.data.ismeet == 0) {                             // if message unread
+                            if (e.data.receiver == UserLogin) {               // if receiver is current user, display notification
+                                if (isMobile) {                               // if mobile
                                     var chat_box = $('#post_chat');
-                                    if(chat_box.length != 0){
+                                    if (chat_box.length != 0){                 // if chat page is opened
                                         var post_id = chat_box.attr('data-post');
-                                        if(post_id == e.data.room){
+                                        if (post_id == e.data.room) {
                                             Ajax.update_notification_status(e.data.sender);
                                         }
-                                    }else{
+                                    } else {                                   // if chat page is closed
                                         var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
                                             chat_notify = $('#chat_inbox_btn_mobile').find('.notify');
-                                        if(e.data.msg_count > 0 && e.data.chat_count > 0){
+                                        if (e.data.msg_count > 0 && e.data.chat_count > 0) {
                                             notify.find('.description-chat-inbox').html(e.data.message);
                                             notify.find('.description-chat-inbox').removeClass('match-description');
                                             notify.find('.notify-chat-inbox').html(e.data.msg_count);
                                             notify.find('.notify-chat-inbox').removeClass('disable');
                                             chat_notify.html(e.data.chat_count);
                                             chat_notify.removeClass('disable');
-                                            notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
+                                            // notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
+                                            // update list chat
+                                            update_list_chat = $.parseJSON(e.data.update_list_chat);
+                                            ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, e.data.receiver);
                                         }
                                     }
                                 } else {
                                     var pchat = $('#popup-chat-' + e.data.room);
-                                    if(pchat.length != 0 && pchat.css('display') == 'block' && PopupChat.params.post == e.data.room){
+                                    // if popup chat is opened
+                                    if (pchat.length != 0 && pchat.css('display') == 'block' && PopupChat.params.post == e.data.room) {
                                         Ajax.update_notification_status(e.data.sender);
                                         var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user');
                                         notify.find('.description-chat-inbox').html(e.data.message);
                                         notify.find('.description-chat-inbox').removeClass('match-description');
                                         notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
-                                    }else{
+                                    } else {
+                                        // if popup chat is closed
                                         var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
                                             chat_notify = $('#chat_inbox_btn').find('.notify');
                                         if(e.data.msg_count > 0 && e.data.chat_count > 0){
@@ -116,7 +120,10 @@ var MainWs ={
                                             notify.find('.notify-chat-inbox').removeClass('disable');
                                             chat_notify.html(e.data.chat_count);
                                             chat_notify.removeClass('disable');
-                                            notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
+                                            // notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
+                                            // update list chat
+                                            update_list_chat = $.parseJSON(e.data.update_list_chat);
+                                            ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, e.data.receiver);
                                         }
                                     }
                                 }
@@ -127,7 +134,7 @@ var MainWs ={
                             setTimeout(function(){
                                 var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
                                 chat_notify = $('#chat_inbox_btn_mobile').find('.notify');
-                                if(e.data.msg_count > 0 && e.data.chat_count > 0){
+                                if (e.data.msg_count > 0 && e.data.chat_count > 0) {
                                     notify.find('.description-chat-inbox').html(e.data.message);
                                     notify.find('.notify-chat-inbox').html(e.data.msg_count);
                                     notify.find('.notify-chat-inbox').removeClass('disable');
