@@ -38,6 +38,7 @@ var PopupChat = {
             PopupChat.OnclickLogin();
             PopupChat.RegisterPopup();
             PopupChat.ChangeStylePopupChat();
+            PopupChat.OnWsChat();
             PopupChat.OnWsFile();
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
@@ -155,7 +156,7 @@ var PopupChat = {
                 PopupChat.total_popups = PopupChat.max_total_popups;
             }
         }
-        
+
         PopupChat.DisplayPopups();
         var modal = $('.in');
         if(modal.length > 0){
