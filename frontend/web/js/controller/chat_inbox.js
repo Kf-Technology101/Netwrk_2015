@@ -201,27 +201,30 @@ var ChatInbox = {
 
 	ActiveReponsiveChatInbox: function() {
 		var width = $( window ).width();
-		if (width <= 1366) {
-			$(".modal").addClass("responsive-chat-inbox");
+		$(".modal").addClass("responsive-chat-inbox");
+		if (width <= 1250) {
+			$('#btn_meet').css('z-index', '1050');
 		}
 
-			//set zoom for re-init
-			Map.zoom = Map.map.getZoom();
-			Map.center = Map.map.getCenter();
-			var width_map = width -320;
-			$('.map_content').animate({
-				'width':width_map+'px',
-				'left': 0, 'margin': 0
-			}, 500, 'swing', function(){ Map.initialize(); });
-			$('#btn_meet').css({'left': '', 'right' : '15px'});
-		},
+		//set zoom for re-init
+		Map.zoom = Map.map.getZoom();
+		Map.center = Map.map.getCenter();
+		var width_map = width -320;
+		$('.map_content').animate({
+			'width':width_map+'px',
+			'left': 0, 'margin': 0
+		}, 500, 'swing', function(){ Map.initialize(); });
+		$('#btn_meet').css({'left': '', 'right' : '15px'});
+	},
 
 	DeactiveReponsiveChatInbox: function() {
 		var width = $( window ).width();
-		if (width <= 1366) {
+		// if (width <= 1366) {
 			$(".modal").removeClass("responsive-chat-inbox");
+		// }
+		if (width <= 1250) {
+			$('#btn_meet').css('z-index', '10000');
 		}
-
 
 		//set zoom for re-init
 		Map.zoom = Map.map.getZoom();
