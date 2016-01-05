@@ -44,6 +44,11 @@ var Topic = {
         Topic.OnClickSelectFilter();
         Topic.OnClickChangeTab();
         Topic.eventClickMeetMobile();
+        if(isMobile){
+            Default.ShowNotificationOnChat();
+        } else {
+            Topic.displayPositionModal();
+        }
     },
 
     initialize: function(city,params){
@@ -291,6 +296,7 @@ var Topic = {
         $('#modal_topic').on('shown.bs.modal',function(e) {
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
+            Topic.displayPositionModal();
         });
     },
 
@@ -319,6 +325,7 @@ var Topic = {
             $(e.currentTarget).unbind();
             Topic.reset_modal();
             Map.get_data_marker();
+
         });
     },
 
@@ -506,4 +513,11 @@ var Topic = {
             window.location.href = baseUrl + "/netwrk/meet";
         });
     },
+
+    displayPositionModal: function(){
+        var modal = $('.popup_chat_modal .popup-box');
+        if(modal.length > 0){
+            $('.popup_chat_modal .popup-box').css('z-index', '1050');
+        }
+    }
 };

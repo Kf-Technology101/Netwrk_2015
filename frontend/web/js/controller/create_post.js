@@ -44,6 +44,7 @@ var Create_Post={
             Create_Post.onClickBackTopicBreakcrumb();
             Create_Post.onClickBackNetwrkLogo();
             Create_Post.onClickBackZipcodeBreadcrumb();
+            Topic.displayPositionModal();
         }
     },
     showDataBreadcrumb: function(zipcode, topic){

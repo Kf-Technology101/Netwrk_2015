@@ -10,6 +10,7 @@ var Default ={
             self._eventClickMeetBtn();
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
+            Default.onCLickModal();
         }
         
         if(!isGuest){
@@ -39,6 +40,7 @@ var Default ={
         target.on('click',function(){
             $('.modal').modal('hide');
             Meet.initialize();
+            
         });
     },
 
@@ -91,4 +93,18 @@ var Default ={
             }
         });
     },
+
+    onCLickModal: function(){
+        var modal = $('.modal');
+        modal.on('click', function(e) {
+            $('.popup_chat_modal .popup-box').css('z-index', '1050');
+        });
+    },
+
+    displayPopupOnTop: function(){
+        var modal = $('.in');
+        if(modal.length > 0){
+            $("#popup-chat-" + PopupChat.params.post).css('z-index', '10500');
+        }
+    }
 };

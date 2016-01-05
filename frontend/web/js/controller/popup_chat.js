@@ -33,16 +33,19 @@ var PopupChat = {
             PopupChat.OnClickChatInboxBtnMobile();
             ChatInbox.HideMeetIconMobile();
             PopupChat.OnClickBackBtn();
+            Default.ShowNotificationOnChat();
         }else{
             PopupChat.OnclickLogin();
             PopupChat.RegisterPopup();
             PopupChat.ChangeStylePopupChat();
+            PopupChat.OnWsChat();
             PopupChat.OnWsFile();
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
             PopupChat.CustomScrollBar();
             // PopupChat.OnClickReceiverAvatar();
             PopupChat.ShowChatBox(PopupChat.params.post);
+            PopupChat.ShowPopupChatWhenModalDisplay();
         }
     },
 
@@ -155,6 +158,7 @@ var PopupChat = {
         }
 
         PopupChat.DisplayPopups();
+        Default.displayPopupOnTop();
     },
 
     ChangeStylePopupChat: function() {
@@ -273,7 +277,7 @@ var PopupChat = {
         var popup = '#popup-chat-'+PopupChat.params.post;
         // popup.unbind();
         $(document).on('click', popup, function(e) {
-
+            $(e.currentTarget).css('z-index', '10500');
             PopupChat.params.post = $(this).attr('data-id');
             PopupChat.params.chat_type = $(this).attr('data-chat-type');
             PopupChat.OnWsChat();
@@ -644,7 +648,9 @@ var PopupChat = {
                 $('.modal').modal('hide');
                 $(Post.modal).modal('hide');
                 Meet.initialize();
-
+                setTimeout(function(){
+                    Topic.displayPositionModal();
+                }, 50);
             }
         });
     },
@@ -665,5 +671,11 @@ var PopupChat = {
                 window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id + "&from=private";
             }
         });
+    },
+
+    ShowPopupChatWhenModalDisplay: function(){
+        setTimeout(function(){
+            Default.displayPopupOnTop();
+        }, 100);
     },
 }

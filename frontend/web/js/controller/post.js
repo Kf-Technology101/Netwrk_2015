@@ -38,6 +38,7 @@ var Post ={
 			Post.OnClickSelectFilter();
 			Post.LazyLoading();
 			Create_Post.initialize();
+			Default.ShowNotificationOnChat();
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
@@ -49,6 +50,7 @@ var Post ={
 			Post.ShowMeetIcon();
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
+			Topic.displayPositionModal();
 		}
 		Post.OnclickBack();
 		Post.OnclickCreate();

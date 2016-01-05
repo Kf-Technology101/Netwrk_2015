@@ -66,7 +66,6 @@ var Meet ={
             var parent = $('#modal_meet');
                 currentTarget = parent.find('#meeting'),
                 container = parent.find('.container_meet');
-
             container.find('.page').hide();
             Meet.reset_modal();
             currentTarget.show();
@@ -85,7 +84,7 @@ var Meet ={
             Meet._onClickMeetBack();
             // $('#btn_meet').hide();
             $('.modal-footer').show();
-                // parent.find('.modal-body').addClass('onmeeting');
+             Topic.displayPositionModal();
         }
         Meet.CheckUserLogin();
     },
