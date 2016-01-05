@@ -158,10 +158,7 @@ var PopupChat = {
         }
 
         PopupChat.DisplayPopups();
-        var modal = $('.in');
-        if(modal.length > 0){
-            $('.popup_chat_modal .popup-box').css('z-index', '10500');
-        }
+        Default.displayPopupOnTop();
     },
 
     ChangeStylePopupChat: function() {
@@ -677,11 +674,8 @@ var PopupChat = {
     },
 
     ShowPopupChatWhenModalDisplay: function(){
-        var modal = $('.in');
-        if(modal.length > 0){
-            setTimeout(function(){
-                $('#popup-chat-'+PopupChat.params.post).css('z-index', '10500');   
-            }, 100);
-        }
+        setTimeout(function(){
+            Default.displayPopupOnTop();
+        }, 100);
     },
 }

@@ -162,6 +162,7 @@ var ChatInbox = {
 		            $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
 		            $('#popup-chat-'+PopupChat.params.post).find('textarea').focus();
 				}
+				Default.displayPopupOnTop();
 			}
 		});
 	},
@@ -194,6 +195,7 @@ var ChatInbox = {
 			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
 			private_notify.html('0');
 			private_notify.addClass('disable');
+			Default.displayPopupOnTop();
 		});
 	},
 
