@@ -83,6 +83,7 @@ function set_heigth_modal_meet(target,height_footer){
     wh = 645;
   }
   target.find('.modal-body').css({'height':wh - 120});
+  $('.modal').css({'bottom': size[1] - 750});
 }
 
 function set_heigth_page_mobile(target){
