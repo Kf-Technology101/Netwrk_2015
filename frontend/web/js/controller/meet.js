@@ -71,26 +71,30 @@ var Meet ={
             Meet.reset_modal();
             currentTarget.show();
 
-            if(isGuest){
-                Login.modal_callback = Meet;
-                Login.initialize();
+            Meet.changefilter(currentTarget);
+            // console.log(Meet.ez + '---' + Meet.pid);
+            if(Meet.pid != 0){
+                Meet.ShowUserMeetProfile(Meet.pid);
+            }else if(Meet.ez != 0){
+                Meet.ShowModalMeetProfile(Meet.ez);
             }else{
-                Meet.changefilter(currentTarget);
-                // console.log(Meet.ez + '---' + Meet.pid);
-                if(Meet.pid != 0){
-                    Meet.ShowUserMeetProfile(Meet.pid);
-                }else if(Meet.ez != 0){
-                    Meet.ShowModalMeetProfile(Meet.ez);
-                }else{
-                    Meet.ShowModalMeet();
-                }
-                Meet.eventClickdiscover();
-                Meet.CustomScrollBar();
-                Meet._onClickMeetBack();
-                // $('#btn_meet').hide();
-                $('.modal-footer').show();
-                // parent.find('.modal-body').addClass('onmeeting');
+                Meet.ShowModalMeet();
             }
+            Meet.eventClickdiscover();
+            Meet.CustomScrollBar();
+            Meet._onClickMeetBack();
+            // $('#btn_meet').hide();
+            $('.modal-footer').show();
+                // parent.find('.modal-body').addClass('onmeeting');
+        }
+        Meet.CheckUserLogin();
+    },
+
+    CheckUserLogin:function(){
+        var target = $('#modal_meet,#show_meet').find('.filter_sidebar td');
+        if(isGuest){
+            var target = $('#modal_meet,#show_meet').find('td.setting, td.profile');
+            target.addClass('no-login');
         }
     },
 
@@ -111,17 +115,19 @@ var Meet ={
         target.unbind();
         target.on('click',function(e){
             // target.bind();
+            if(!$(e.currentTarget).hasClass('no-login')){
+                var filter = $(e.currentTarget).attr('class');
+                if(!$(e.currentTarget).hasClass('active')){
+                    $('#modal_meet,#show_meet').find("div[id^='item_list']").hide();
+                    containt.scrollTop(0);
+                    self.filter.active = $.trim(filter);
 
-            var filter = $(e.currentTarget).attr('class');
-            if(!$(e.currentTarget).hasClass('active')){
-                $('#modal_meet,#show_meet').find("div[id^='item_list']").hide();
-                containt.scrollTop(0);
-                self.filter.active = $.trim(filter);
-
-                self.change_button_active(target,$(e.currentTarget),containt);
-                Meet.initialize();
-                // self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
+                    self.change_button_active(target,$(e.currentTarget),containt);
+                    Meet.initialize();
+                    // self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
+                }
             }
+
         });
     },
     change_button_active:function(target,parent,current){

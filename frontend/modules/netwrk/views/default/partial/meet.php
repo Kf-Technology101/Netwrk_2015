@@ -22,9 +22,9 @@
                 <tr>
                     <td class="meeting active">Meet</td>
                     <td class="setting">Settings</td>
-                    <td class="profile ">Profile</td>
+                    <td class="profile">Profile</td>
                 </tr>
-            </table> 
+            </table>
         </div>
       </div>
       <div class="modal-body container_meet">

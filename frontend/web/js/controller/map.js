@@ -517,7 +517,7 @@ var Map ={
 			        map.zoom = 12;
 			        Map.show_marker(map);
 		        }
-		        
+
 		        Ajax.get_position_user().then(function(data){
 			        var json = $.parseJSON(data);
 			        map.setCenter(new google.maps.LatLng(json.lat, json.lng));

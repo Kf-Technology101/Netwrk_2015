@@ -16,46 +16,48 @@ class MeetController extends BaseController
 {
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/meet']);
-        }
+        // if (Yii::$app->user->isGuest) {
+        //     return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/meet']);
+        // }
         return $this->render('mobile/index');
     }
 
-    public function actionGetUserMeet()
+    protected function MixRandUser()
     {
         $userCurrent = Yii::$app->user->id;
         $user_meet_rand = [];
-        $users = [];
 
         // get list user meet owner
         $list_user_meet_owner = UserMeet::find()
-                                    ->addSelect('user_id_1')
-                                    ->where('user_id_2 = ' . $userCurrent . ' AND status = 1')
-                                    ->all();
+                                        ->addSelect('user_id_1')
+                                        ->where('user_id_2 = ' . $userCurrent . ' AND status = 1')
+                                        ->all();
         $lmo = [];
-        for ($i=0; $i < count($list_user_meet_owner); $i++) { 
-            array_push($lmo, $list_user_meet_owner[$i]->user_id_1);
-        }
-
-        // get list user which owner meet
-        $list_user_owner_meet = UserMeet::find()
-                                    ->addSelect('user_id_2')
-                                    ->where('user_id_1 = ' . $userCurrent . ' AND status = 1')
-                                    ->all();
-        $luom = [];
-        for ($i=0; $i < count($list_user_owner_meet); $i++) {
-            if($list_user_owner_meet[$i]->user_id_2 != $userCurrent){
-                array_push($luom, $list_user_owner_meet[$i]->user_id_2);
+        if($list_user_meet_owner){
+            foreach ($list_user_meet_owner as $key => $value) {
+                array_push($lmo, $value->user_id_1);
             }
         }
-        
+
+        $list_user_owner_meet = UserMeet::find()
+                                        ->addSelect('user_id_2')
+                                        ->where('user_id_1 = ' . $userCurrent . ' AND status = 1')
+                                        ->all();
+        $luom = [];
+        if($list_user_owner_meet){
+            foreach ($list_user_owner_meet as $key => $value) {
+                if($value->user_id_2 != $userCurrent){
+                    array_push($luom, $value->user_id_2);
+                }
+            }
+        }
+
         // remove user is met owner
         $r = [];
-        for ($i=0; $i < count($luom); $i++) { 
-            if(($key = array_search($luom[$i], $lmo)) !== false){
-                array_push($r, $lmo[$key]);
-                unset($lmo[$key]);
+        foreach ($luom as $key => $value){
+            if(($k = array_search($value, $lmo)) !== false){
+                array_push($r, $lmo[$k]);
+                unset($lmo[$k]);
             }
         }
 
@@ -75,29 +77,25 @@ class MeetController extends BaseController
             $list_owner_meet = implode(',', $luom);
             // $list_met .= ',' . $list_owner_meet;
         }
+
         $l = $userCurrent;
         if(count($r) > 0){
             $lst = implode(',', $r);
             $l.= ',' . $lst;
         }
-
         // get rand other
         $users = User::find()
-                        ->addSelect(["*", "RAND() order_num"])
-                        ->where('id NOT IN ('.$l.')')
-                        ->with('profile')
-                        ->orderBy(['order_num'=> SORT_DESC])
-                        ->all();
-
-        $current_date = date('Y-m-d H:i:s');
-        $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
-
+                    ->addSelect(["*", "RAND() order_num"])
+                    ->where('id NOT IN ('.$l.')')
+                    ->with('profile')
+                    ->orderBy(['order_num'=> SORT_DESC])
+                    ->all();
         // collect meet user
-        for ($i=0; $i < count($users); $i++) { 
+        for ($i=0; $i < count($users); $i++) {
             array_push($user_meet_rand, $users[$i]);
         }
         $tmp; $index;
-        for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
+        for ($i=0; $i < count($user_meet_rand) - 1; $i++) {
             $index = $i + 2;
             if($i == count($user_meet_rand) - 2){
                 $index = 0;
@@ -109,14 +107,29 @@ class MeetController extends BaseController
             }
         }
 
-        if($userLogin->setting){
-            $filter = true;
-        }else{
+        return $user_meet_rand;
+    }
+
+    public function actionGetUserMeet()
+    {
+        $current_date = date('Y-m-d H:i:s');
+        $filter = false;
+        if(Yii::$app->user->isGuest){
             $filter = false;
+            $userCurrent = 0;
+            $users_rand = User::find()->all();
+
+        }else{
+            $userLogin = User::findOne(Yii::$app->user->id);
+            if($userLogin->setting){
+                $filter = true;
+            }
+            $users_rand = $this->MixRandUser();
+            $userCurrent = Yii::$app->user->id;
         }
 
         $data = [];
-        foreach ($user_meet_rand as $key => $value) {
+        foreach ($users_rand as $key => $value) {
 
             $posts = Post::find()->where('user_id ='.$value->id)->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
             $post_data = [];
@@ -145,8 +158,11 @@ class MeetController extends BaseController
             $time1 = date_create($years);
             $time2 = date_create($current_date);
             $year_old = $time1->diff($time2)->y;
-
-            $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
+            if(Yii::$app->user->isGuest){
+                $distance = 0;
+            }else{
+                $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
+            }
 
             $count_like = 0;
             $count_posts = Post::find()->where('user_id ='.$value->id)->all();
@@ -211,6 +227,7 @@ class MeetController extends BaseController
         $hash = json_encode($temp);
         return $hash;
     }
+
 
     public function get_distance($lat1, $lon1, $lat2, $lon2) {
 
@@ -472,7 +489,7 @@ class MeetController extends BaseController
             }
         }
 
-        for ($i=0; $i < count($data); $i++) { 
+        for ($i=0; $i < count($data); $i++) {
             array_push($newdata, $data[$i]);
         }
 

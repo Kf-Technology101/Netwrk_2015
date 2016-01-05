@@ -502,4 +502,14 @@ class User extends ActiveRecord implements IdentityInterface
 
         return $dropdown;
     }
+
+    public static function getRandomUser($expect)
+    {
+        $users = User::find()
+                ->addSelect(["*", "RAND() order_num"])
+                ->where('id NOT IN ('.$expect.')')
+                ->with('profile')
+                ->orderBy(['order_num'=> SORT_DESC])
+                ->all();
+    }
 }
