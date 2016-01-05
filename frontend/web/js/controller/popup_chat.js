@@ -44,6 +44,7 @@ var PopupChat = {
             PopupChat.CustomScrollBar();
             // PopupChat.OnClickReceiverAvatar();
             PopupChat.ShowChatBox(PopupChat.params.post);
+            PopupChat.ShowPopupChatWhenModalDisplay();
         }
     },
 
@@ -649,7 +650,9 @@ var PopupChat = {
                 $('.modal').modal('hide');
                 $(Post.modal).modal('hide');
                 Meet.initialize();
-
+                setTimeout(function(){
+                    Topic.displayPositionModal();
+                }, 50);
             }
         });
     },
@@ -670,5 +673,14 @@ var PopupChat = {
                 window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id + "&from=private";
             }
         });
+    },
+
+    ShowPopupChatWhenModalDisplay: function(){
+        var modal = $('.in');
+        if(modal.length > 0){
+            setTimeout(function(){
+                $('#popup-chat-'+PopupChat.params.post).css('z-index', '10500');   
+            }, 100);
+        }
     },
 }
