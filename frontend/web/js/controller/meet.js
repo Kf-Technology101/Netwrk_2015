@@ -84,7 +84,7 @@ var Meet ={
             Meet._onClickMeetBack();
             // $('#btn_meet').hide();
             $('.modal-footer').show();
-             Topic.displayPositionModal();
+            Topic.displayPositionModal();
         }
         Meet.CheckUserLogin();
     },
@@ -401,6 +401,16 @@ var Meet ={
             btn_met.hide();
             btn_meet.unbind();
             btn_meet.on('click',function(){
+                if(isGuest){
+                    if(isMobile){
+                        Login.RedirectLogin(window.location.href);
+                    }else{
+                        $('.modal').modal('hide');
+                        Login.modal_callback = Meet;
+                        Login.initialize();
+                        return false
+                    }
+                }
                 for(i=0;i<data.length;i++)
                     if(data[i].user_id == data[self.user_list.vt].user_id){
                     data[i].met = 1;

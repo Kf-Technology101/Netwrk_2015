@@ -117,7 +117,10 @@ class MeetController extends BaseController
         if(Yii::$app->user->isGuest){
             $filter = false;
             $userCurrent = 0;
-            $users_rand = User::find()->all();
+            $users_rand = User::find()
+                                ->addSelect(["*", "RAND() order_num"])
+                                ->orderBy(['order_num'=> SORT_DESC])
+                                ->all();
 
         }else{
             $userLogin = User::findOne(Yii::$app->user->id);

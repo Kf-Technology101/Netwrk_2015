@@ -163,7 +163,7 @@ var Login={
 			}
     	});
     },
-    RedirectLogin: function(){
-    	window.location.href = document.referrer == baseUrl+"/netwrk/user/login";
+    RedirectLogin: function(url_callback){
+    	window.location.href =  baseUrl+"/netwrk/user/login?url_callback="+url_callback;
     }
 };
