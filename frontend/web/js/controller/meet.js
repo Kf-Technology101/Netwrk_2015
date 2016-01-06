@@ -90,10 +90,11 @@ var Meet ={
     },
 
     CheckUserLogin:function(){
-        var target = $('#modal_meet,#show_meet').find('.filter_sidebar td');
+        var target = $('#modal_meet,#show_meet').find('td.setting, td.profile');
         if(isGuest){
-            var target = $('#modal_meet,#show_meet').find('td.setting, td.profile');
             target.addClass('no-login');
+        }else{
+            target.removeClass('no-login');
         }
     },
 
