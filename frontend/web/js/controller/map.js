@@ -123,12 +123,10 @@ var Map ={
 
 	    if(current_zoom == 7){
 	      	Ajax.get_marker_default().then(function(data){
-		        console.log('get marker default');
 		        data_marker = $.parseJSON(data);
 	      	});
 	    }else if(current_zoom == 12){
 	      	Ajax.get_marker_zoom().then(function(data){
-		        console.log('get marker zoom');
 		        data_marker = $.parseJSON(data);
 	      	});
 	    }
@@ -155,7 +153,7 @@ var Map ={
 	          maxWidth: 350
 	        });
 
-		    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		    google.maps.event.addListener(marker, 'click', (function(marker, i){
 		        return function(){
 		        	if(!isMobile){
 		            	infowindow.close();
@@ -165,14 +163,9 @@ var Map ={
 		    })(marker, i));
 
 	      	if(!isMobile){
-	        	var content = '<div id="iw-container" >' +
-	                      '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ e.id +'" onclick="Map.eventOnClickZipcode('+e.id +')"><span class="zipcode">'+ e.zip_code + '</span></a></div>' +
-	                      '<div class="iw-content">' +
-	                        '<div class="iw-subTitle"><span class="post-title">#'+e.post.name_post+'</span></div>' +
-	                        '<p>'+e.post.content+'</p>'+
-	                      '</div>' +
-	                      '<div class="iw-bottom-gradient"></div>' +
-	                    '</div>';
+
+                var marker_template = _.template($( "#maker_popup" ).html());
+        		var content = marker_template({data: e});
 	          	infowindow.content = content;
 	            Map.infowindow.push(infowindow);
 
@@ -194,9 +187,9 @@ var Map ={
 					//    // Since this div is in a position prior to .gm-div style-iw.
 					//    // * We use jQuery and create a iwBackground variable,
 					//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-
+					iwOuter.parent().css({'max-width': 310});
 		            var iwBackground = iwOuter.prev();
-		            iwOuter.children(':nth-child(1)').css({'max-width' : '400px'});
+		            iwOuter.children(':nth-child(1)').css({'max-width' : '310px'});
 		        	// Removes background shadow DIV
 		            iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
@@ -207,19 +200,19 @@ var Map ={
 		            // iwOuter.parent().parent().css({left: '115px'});
 
 		        	//   // Moves the shadow of the arrow 76px to the left margin.
-		            iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+		            iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 175px !important;left: 170px !important;'});
 
 		        	//   // Moves the arrow 76px to the left margin.
-		            iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+		            iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 175px !important;left: 170px !important;'});
 
 		        	//   // Changes the desired tail shadow color.
-		            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+		            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 1px 0px 1px', 'z-index' : '1'});
 
 		        	//   // Reference to the div that groups the close button elements.
 		            var iwCloseBtn = iwOuter.next();
-
+		            iwCloseBtn.hide();
 		        	//   // Apply the desired effect to the close button
-		            iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+		            // iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
 
 					//   // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
 					//   if($('.iw-content').height() < 140){
@@ -227,9 +220,10 @@ var Map ={
 					//   }
 
 					//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-		            iwCloseBtn.mouseout(function(){
-		            	$(this).css({opacity: '0'});
-		            });
+
+		            // iwCloseBtn.mouseout(function(){
+		            // 	$(this).css({opacity: '0'});
+		            // });
 
 		            var post = $("#iw-container .iw-content .iw-subTitle .post-title");
 		            post.unbind();
@@ -633,7 +627,6 @@ var Map ={
 	},
 
   	eventOnClickZipcode: function(city){
-		// console.log(Map.infowindow);
 		$.each(Map.infowindow,function(i,e){
 			e.close();
 			Map.infowindow=[];

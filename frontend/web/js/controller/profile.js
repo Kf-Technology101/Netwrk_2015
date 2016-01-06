@@ -195,7 +195,6 @@ var Profile = {
         self.check_status_change();
         self.onclicksave();
         self.onclickcancel();
-        
     },
 
     check_status_change: function(){
@@ -212,19 +211,17 @@ var Profile = {
         // }
 
         // console.log(Profile.status_change.total);
-        console.log(Profile.status_change);
-        console.log(Profile.zipcode);
+
         if(Profile.status_change.age && Profile.status_change.zipcode && Profile.zipcode){
             if(Profile.status_change.work || Profile.status_change.about){
                 Profile.status_change.total = true;
             }else if(Profile.status_change.work == false && Profile.status_change.about == false){
                 Profile.status_change.total = true;
             }
-            
+
         }else {
             Profile.status_change.total = false;
         }
-        console.log(Profile.status_change.total);
     },
 
     onclicksave: function(){
@@ -408,8 +405,6 @@ var Profile = {
         var target = $('.preview_img_ie').find('img'),
             w = $('.preview_img_ie').find('img').attr('width'),
             h = $('.preview_img_ie').find('img').attr('height');
-            console.log(w);
-            console.log(h);
     },
 
     readURL: function(input) {
