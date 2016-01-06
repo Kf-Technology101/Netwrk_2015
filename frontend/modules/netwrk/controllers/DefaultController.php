@@ -27,9 +27,9 @@ class DefaultController extends BaseController
         }
 
         if ($user->profile->photo == null){
-            $image = '/img/icon/no_avatar.jpg';
+            $image = 'img/icon/no_avatar.jpg';
         }else{
-            $image = '/uploads/'.$user->id.'/'.$user->profile->photo;
+            $image = 'uploads/'.$user->id.'/'.$user->profile->photo;
         }
 
         $data = [
