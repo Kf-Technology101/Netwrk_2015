@@ -529,8 +529,7 @@ class MeetController extends BaseController
                                 ->all();
         }else{
             $userCurrent = Yii::$app->user->id;
-            // get topic, post and user_view params
-            $user_is_viewed = $_POST['user_view'];
+
 
             // get list user meet owner
             $list_user_meet_owner = UserMeet::find()
@@ -586,7 +585,7 @@ class MeetController extends BaseController
                 $lst = implode(',', $r);
                 $l.= ',' . $lst;
             }
-            $l .= ',' . $user_is_viewed;
+            // $l .= ',' . $user_is_viewed;
 
             // get rand other
             $users = User::find()
@@ -596,7 +595,6 @@ class MeetController extends BaseController
                             ->orderBy(['order_num'=> SORT_DESC])
                             ->all();
 
-            
             $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
 
             // collect meet user
