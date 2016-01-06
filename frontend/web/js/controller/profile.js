@@ -114,8 +114,14 @@ var Profile = {
     },
 
     setDatePicker: function(){
+        var dt = new Date();
+        dt.setFullYear(new Date().getFullYear()-18);
+
         $('input.birthday').datepicker({
-            dateFormat: 'yy-mm-dd',
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+            viewMode: "years",
+            endDate : dt
             // startDate: '-3d',
         });
 
