@@ -195,7 +195,7 @@ var Profile = {
         self.check_status_change();
         self.onclicksave();
         self.onclickcancel();
-        
+
     },
 
     check_status_change: function(){
@@ -220,7 +220,7 @@ var Profile = {
             }else if(Profile.status_change.work == false && Profile.status_change.about == false){
                 Profile.status_change.total = true;
             }
-            
+
         }else {
             Profile.status_change.total = false;
         }
@@ -242,11 +242,11 @@ var Profile = {
         }else{
             btn_save.addClass('disable');
         }
-        
+
     },
 
     getDataUpLoad: function(){
-        
+
         var age = $('input.birthday').val(),
         work = $('input.work').val(),
         about = $('textarea.about').val(),
@@ -255,7 +255,7 @@ var Profile = {
         Profile.params.work = work;
         Profile.params.about = about;
         Profile.params.zipcode = zipcode;
-        
+
     },
 
     getDataDefaultUpLoad: function(){
@@ -268,7 +268,7 @@ var Profile = {
 
     onclickcancel: function(){
         var btn_cancel = $('.btn-control').find('.cancel');
-        
+
         btn_cancel.removeClass('disable');
         btn_cancel.unbind();
         btn_cancel.on('click',function(){
@@ -359,12 +359,12 @@ var Profile = {
         var btn = $('#modal_change_avatar').find('.browse');
         btn.unbind();
         btn.on('click',function(e){
-            
+
             $('.preview_img').find('img').remove();
             $('.preview_img_ie').find('img').remove();
             $('.image-preview').find('p').show();
             $('#input_image')[0].click();
-            
+
 
             $('#input_image').unbind();
             $('#input_image').change(function(e) {
@@ -379,10 +379,10 @@ var Profile = {
         var img = new Image(),
             parent_text = $('.image-preview').find('p'),
             btn_control_save = $('.btn-control-modal').find('.save');
-            
+
         if(files.length > 0){
             img.src = window.URL.createObjectURL(files[0]);
-            
+
             // img.className = "preview_img";
             img.onload = function() {
                 window.URL.revokeObjectURL(this.src);
@@ -392,10 +392,10 @@ var Profile = {
             btn_control_save.removeClass('disable');
             parent_text.hide();
 
- 
+
             if (isonIE()){
                 $('.preview_img_ie').append(img);
-               
+
             }else{
                 $('.preview_img').addClass('active');
                 $('.preview_img').append(img);
@@ -459,7 +459,7 @@ var Profile = {
                         Profile.reload_image_update();
                         $('.preview_img').find('img').remove();
                     });
-                
+
                 });
                 $('#upload_image').submit();
             });
@@ -469,12 +469,16 @@ var Profile = {
     reload_image_update: function(){
         $('#modal_change_avatar').modal('hide');
         $('.user_avatar').find('img').attr('src',Profile.img.images);
+        var avatar_dropdown = $('#user_avatar_dashboard');
+        if (avatar_dropdown.length > 0) {
+            avatar_dropdown.find('img').attr('src', Profile.img.images);
+        }
     },
 
     getTemplateTitle: function(parent,target,callback){
         var template = _.template(target.html());
         var append_html = template({data: Profile.data});
-        parent.append(append_html); 
+        parent.append(append_html);
 
         if(_.isFunction(callback)){
             callback();
@@ -484,7 +488,7 @@ var Profile = {
     getTemplateUserInfo: function(parent,target,callback){
         var template = _.template(target.html());
         var append_html = template({data: Profile.data});
-        parent.append(append_html); 
+        parent.append(append_html);
 
         if(_.isFunction(callback)){
             callback();

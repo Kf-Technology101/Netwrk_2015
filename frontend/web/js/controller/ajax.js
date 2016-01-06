@@ -575,21 +575,6 @@ var Ajax ={
         return defer.promise();
     },
 
-    // set_private_post: function(user_id) {
-    //     var url,defer = $.Deferred();
-    //     url = baseUrl +"/netwrk/post/set-private-post";
-
-    //     $.ajax({
-    //         url: url,
-    //         data: null,
-    //         async: false,
-    //         cache: false,
-    //         type: 'POST',
-    //         success: defer.resolve,
-    //         error: defer.reject
-    //     });
-    //     return defer.promise();
-    // }
     get_user_met_profile: function(chat_post_id){
         var url,defer = $.Deferred();
         if (isMobile) {
@@ -714,5 +699,21 @@ var Ajax ={
         });
         return defer.promise();
     },
+
+    get_info_post: function(post_id) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/post/get-info-post";
+
+        $.ajax({
+            url: url,
+            data: {'post_id': post_id},
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    }
 }
 

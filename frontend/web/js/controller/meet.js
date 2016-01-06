@@ -357,11 +357,16 @@ var Meet ={
                 PopupChat.RedirectChatPostPage(item_post, 1, 0);
             }else{
                 $('#modal_meet').modal('hide');
-                PopupChat.params.post = item_post;
-                // PopupChat.params.chat_type = $(e.currentTarget).parent().parent().attr('data-chat-type');
-                // PopupChat.params.post_name = $(e.currentTarget).parent().parent().find('.information .post_name').html();
-                // PopupChat.params.post_description = $(e.currentTarget).parent().parent().find('.information .post_massage').html();
-                PopupChat.initialize();
+                Ajax.get_info_post(item_post).then(function(data){
+                    if (data) {
+                        data = $.parseJSON(data);
+                        PopupChat.params.post = data.id;
+                        PopupChat.params.chat_type = data.post_type;
+                        PopupChat.params.post_name = data.title;
+                        PopupChat.params.post_description = data.content;
+                        PopupChat.initialize();
+                    }
+                });
             }
         });
 
