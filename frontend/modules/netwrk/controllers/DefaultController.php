@@ -20,6 +20,28 @@ class DefaultController extends BaseController
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 
+    public function actionGetUserProfile()
+    {
+        if (Yii::$app->user->id) {
+            $user = User::find()->where('id ='.Yii::$app->user->id)->with('profile')->one();
+        }
+
+        if ($user->profile->photo == null){
+            $image = 'img/icon/no_avatar.jpg';
+        }else{
+            $image = 'uploads/'.$user->id.'/'.$user->profile->photo;
+        }
+
+        $data = [
+                'user_id'=> $user->id,
+                'name'=> $user->profile->first_name." ".$user->profile->last_name,
+                'avatar'=> $image,
+                'created_date' => $user->create_time
+            ];
+        $data = json_encode($data);
+        return $data;
+    }
+
     public function actionGetUserPosition()
     {
 
@@ -78,7 +100,7 @@ class DefaultController extends BaseController
             ->limit(10)
             ->all();
         $zipcodes = array();
-        for ($i=0; $i < count($datas); $i++) { 
+        for ($i=0; $i < count($datas); $i++) {
             array_push($zipcodes, $datas[$i]['id']);
         }
         // $cities = City::find()->with('topics.posts')->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();

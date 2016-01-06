@@ -499,7 +499,7 @@ var PopupChat = {
         }
         btn.unbind();
         btn.on('click',function(e){
-            PopupChat.text_message = $(PopupChat.parent).find('.send_message textarea').val();
+            PopupChat.text_message = $('#popup-chat-'+PopupChat.params.post).find('.send_message textarea').val();
             PopupChat.text_message += $(e.currentTarget).attr('data-value') + ' ';
             parent.find('textarea').val(PopupChat.text_message);
             parent.find('textarea').focus();
