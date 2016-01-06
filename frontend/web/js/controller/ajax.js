@@ -692,6 +692,27 @@ var Ajax ={
             error: defer.reject
         });
         return defer.promise();
-    }
+    },
+
+    /**
+     * [Function is used to get ajax user profile]
+     * @return             [data json]
+     */
+
+     get_user_profile: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/get-user-profile";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
 }
 

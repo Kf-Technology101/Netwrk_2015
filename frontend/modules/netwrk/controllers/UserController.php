@@ -314,4 +314,18 @@ class UserController extends BaseController
             "success" => $success
         ]);
     }
+
+    /**
+     * [Function is used to sign out]
+     * @return             [homepage]
+     */
+
+    public function actionLogout()
+    {
+        $user = Yii::$app->user;
+        if (!$user->isGuest) {
+            $user->logout();
+            return $this->goHome();
+        }
+    }
 }

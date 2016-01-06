@@ -35,7 +35,8 @@ class AppAsset extends AssetBundle
         'css/desktop/chat_inbox.css',
         'css/desktop/forgot_pass.css',
         'css/desktop/search.css',
-        'css/desktop/popup_chat.css'
+        'css/desktop/popup_chat.css',
+        'css/desktop/dropdown_avatar.css'
     ];
     public $js = [
         'js/lib/underscore.js',

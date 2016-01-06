@@ -45,6 +45,8 @@ AppAsset::register($this);
             <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
 
+        <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
+
         <div class="chatting" id='chat_inbox_btn'>
             <span><i class="fa fa-comment"></i><span class='notify disable'>15</span>Chat</span>
         </div>
@@ -87,7 +89,7 @@ AppAsset::register($this);
     isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>";
     var UserLogin = '<?php echo Yii::$app->user->id; ?>';
 </script>
-<?php 
+<?php
     unset(Yii::$app->session['key_reset_password']);
     unset(Yii::$app->session['invalidKey']);
     Yii::$app->session->destroy();
