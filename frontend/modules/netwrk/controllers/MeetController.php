@@ -19,7 +19,11 @@ class MeetController extends BaseController
         // if (Yii::$app->user->isGuest) {
         //     return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/meet']);
         // }
-        return $this->render('mobile/index');
+        if($this->getIsMobile()){
+             return $this->render('mobile/index');
+        }else{
+            return $this->render('@frontend/modules/netwrk/views/marker/popup_marker_content');
+        }
     }
 
     protected function MixRandUser()
@@ -295,100 +299,109 @@ class MeetController extends BaseController
     }
 
     public function actionGetUserMeetProfile(){
-        $userCurrent = Yii::$app->user->id;
+
         $chat_post_id = $_POST['post_id'];
         $user_meet_rand = [];
         $users = [];
-
-        $user_profile = ChatPrivate::find()->where(['user_id'=>$userCurrent, 'post_id'=>$chat_post_id])->one();
-
-        // get list user meet owner
-        $list_user_meet_owner = UserMeet::find()
-                                    ->addSelect('user_id_1')
-                                    ->where('user_id_2 = ' . $userCurrent . ' AND status = 1')
-                                    ->all();
-        $lmo = [];
-        for ($i=0; $i < count($list_user_meet_owner); $i++) { 
-            array_push($lmo, $list_user_meet_owner[$i]->user_id_1);
-        }
-
-        // get list user which owner meet
-        $list_user_owner_meet = UserMeet::find()
-                                    ->addSelect('user_id_2')
-                                    ->where('user_id_1 = ' . $userCurrent . ' AND status = 1')
-                                    ->all();
-        $luom = [];
-        for ($i=0; $i < count($list_user_owner_meet); $i++) {
-            if($list_user_owner_meet[$i]->user_id_2 != $userCurrent && $list_user_owner_meet[$i]->user_id_2 != $user_profile->user_id_guest){
-                array_push($luom, $list_user_owner_meet[$i]->user_id_2);
-            }
-        }
-        
-        // remove user is met owner
-        $r = [];
-        for ($i=0; $i < count($luom); $i++) { 
-            if(($key = array_search($luom[$i], $lmo)) !== false){
-                array_push($r, $lmo[$key]);
-                unset($lmo[$key]);
-            }
-        }
-
-        $list_met = $userCurrent;
-        if(count($lmo) > 0){
-            $list_meet_owner = implode(',', $lmo);
-            $list_met .= ',' . $list_meet_owner;
-            // get rand user meet owner
-            $user_meet_rand = User::find()
-                        ->addSelect(["*", "RAND() order_num"])
-                        ->where('id in ('.$list_meet_owner. ')')
-                        ->with('profile')
-                        ->orderBy(['order_num'=> SORT_DESC])
-                        ->all();
-        }
-        if(count($luom) > 0){
-            $list_owner_meet = implode(',', $luom);
-            // $list_met .= ',' . $list_owner_meet;
-        }
-
-        $l = $userCurrent;
-        if(count($r) > 0){
-            $lst = implode(',', $r);
-            $l.= ',' . $lst;
-        }
-
-        $l .= ',' . $user_profile->user_id_guest;
-
-        // get rand other
-        $users = User::find()
-                        ->addSelect(["*", "RAND() order_num"])
-                        ->where('id NOT IN ('.$l.')')
-                        ->with('profile')
-                        ->orderBy(['order_num'=> SORT_DESC])
-                        ->all();
-
         $current_date = date('Y-m-d H:i:s');
-        $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
-        // collect meet user
-        for ($i=0; $i < count($users); $i++) { 
-            array_push($user_meet_rand, $users[$i]);
-        }
-        $tmp; $index;
-        for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
-            $index = $i + 2;
-            if($i == count($user_meet_rand) - 2){
-                $index = 0;
-            }
-            if($user_meet_rand[$i]->id == $user_meet_rand[$i + 1]->id){
-                $tmp = $user_meet_rand[$i + 1];
-                $user_meet_rand[$i + 1] = $user_meet_rand[$index];
-                $user_meet_rand[$index] = $tmp;
-            }
-        }
-
-        if($userLogin->setting){
-            $filter = true;
-        }else{
+        if(Yii::$app->user->isGuest){
             $filter = false;
+            $userCurrent = 0;
+            $user_meet_rand = User::find()
+                                ->addSelect(["*", "RAND() order_num"])
+                                ->orderBy(['order_num'=> SORT_DESC])
+                                ->all();
+        }else{
+            $userCurrent = Yii::$app->user->id;
+            $user_profile = ChatPrivate::find()->where(['user_id'=>$userCurrent, 'post_id'=>$chat_post_id])->one();
+
+            // get list user meet owner
+            $list_user_meet_owner = UserMeet::find()
+                                        ->addSelect('user_id_1')
+                                        ->where('user_id_2 = ' . $userCurrent . ' AND status = 1')
+                                        ->all();
+            $lmo = [];
+            for ($i=0; $i < count($list_user_meet_owner); $i++) { 
+                array_push($lmo, $list_user_meet_owner[$i]->user_id_1);
+            }
+
+            // get list user which owner meet
+            $list_user_owner_meet = UserMeet::find()
+                                        ->addSelect('user_id_2')
+                                        ->where('user_id_1 = ' . $userCurrent . ' AND status = 1')
+                                        ->all();
+            $luom = [];
+            for ($i=0; $i < count($list_user_owner_meet); $i++) {
+                if($list_user_owner_meet[$i]->user_id_2 != $userCurrent && $list_user_owner_meet[$i]->user_id_2 != $user_profile->user_id_guest){
+                    array_push($luom, $list_user_owner_meet[$i]->user_id_2);
+                }
+            }
+
+            // remove user is met owner
+            $r = [];
+            for ($i=0; $i < count($luom); $i++) { 
+                if(($key = array_search($luom[$i], $lmo)) !== false){
+                    array_push($r, $lmo[$key]);
+                    unset($lmo[$key]);
+                }
+            }
+
+            $list_met = $userCurrent;
+            if(count($lmo) > 0){
+                $list_meet_owner = implode(',', $lmo);
+                $list_met .= ',' . $list_meet_owner;
+                // get rand user meet owner
+                $user_meet_rand = User::find()
+                            ->addSelect(["*", "RAND() order_num"])
+                            ->where('id in ('.$list_meet_owner. ')')
+                            ->with('profile')
+                            ->orderBy(['order_num'=> SORT_DESC])
+                            ->all();
+            }
+            if(count($luom) > 0){
+                $list_owner_meet = implode(',', $luom);
+                // $list_met .= ',' . $list_owner_meet;
+            }
+
+            $l = $userCurrent;
+            if(count($r) > 0){
+                $lst = implode(',', $r);
+                $l.= ',' . $lst;
+            }
+
+            $l .= ',' . $user_profile->user_id_guest;
+
+            // get rand other
+            $users = User::find()
+                            ->addSelect(["*", "RAND() order_num"])
+                            ->where('id NOT IN ('.$l.')')
+                            ->with('profile')
+                            ->orderBy(['order_num'=> SORT_DESC])
+                            ->all();
+
+            $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
+            // collect meet user
+            for ($i=0; $i < count($users); $i++) { 
+                array_push($user_meet_rand, $users[$i]);
+            }
+            $tmp; $index;
+            for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
+                $index = $i + 2;
+                if($i == count($user_meet_rand) - 2){
+                    $index = 0;
+                }
+                if($user_meet_rand[$i]->id == $user_meet_rand[$i + 1]->id){
+                    $tmp = $user_meet_rand[$i + 1];
+                    $user_meet_rand[$i + 1] = $user_meet_rand[$index];
+                    $user_meet_rand[$index] = $tmp;
+                }
+            }
+
+            if($userLogin->setting){
+                $filter = true;
+            }else{
+                $filter = false;
+            }
         }
 
         $data = [];
@@ -502,101 +515,112 @@ class MeetController extends BaseController
     }
 
     public function actionGetUserMeetProfileDiscussion(){
-        $userCurrent = Yii::$app->user->id;
         $user_meet_rand = [];
         $users = [];
-
-        // get topic, post and user_view params
+        $current_date = date('Y-m-d H:i:s');
         $user_is_viewed = $_POST['user_view'];
 
-        // get list user meet owner
-        $list_user_meet_owner = UserMeet::find()
-                                    ->addSelect('user_id_1')
-                                    ->where('user_id_2 = ' . $userCurrent . ' AND status = 1')
-                                    ->all();
-        $lmo = [];
-        for ($i=0; $i < count($list_user_meet_owner); $i++) { 
-            array_push($lmo, $list_user_meet_owner[$i]->user_id_1);
-        }
-        
-
-        // get list user which owner meet
-        $list_user_owner_meet = UserMeet::find()
-                                    ->addSelect('user_id_2')
-                                    ->where('user_id_1 = ' . $userCurrent . ' AND status = 1')
-                                    ->all();
-        $luom = [];
-        for ($i=0; $i < count($list_user_owner_meet); $i++) {
-            if($list_user_owner_meet[$i]->user_id_2 != $userCurrent && $list_user_owner_meet[$i]->user_id_2 != $user_is_viewed){
-                array_push($luom, $list_user_owner_meet[$i]->user_id_2);
-            }
-        }
-        
-        // remove user is met owner
-        $r = [];
-        for ($i=0; $i < count($luom); $i++) { 
-            if(($key = array_search($luom[$i], $lmo)) !== false){
-                array_push($r,$lmo[$key]);
-                unset($lmo[$key]);
-            }
-        }
-
-        $list_met = $userCurrent;
-        if(count($lmo) > 0){
-            $list_meet_owner = implode(',', $lmo);
-            $list_met .= ',' . $list_meet_owner;
-            // get rand user meet owner
-            $user_meet_rand = User::find()
-                        ->addSelect(["*", "RAND() order_num"])
-                        ->where('id in ('.$list_meet_owner. ')')
-                        ->with('profile')
-                        ->orderBy(['order_num'=> SORT_DESC])
-                        ->all();
-        }
-        if(count($luom) > 0){
-            $list_owner_meet = implode(',', $luom);
-            // $list_met .= ',' . $list_owner_meet;
-        }
-
-        $l = $userCurrent;
-        if(count($r) > 0){
-            $lst = implode(',', $r);
-            $l.= ',' . $lst;
-        }
-        $l .= ',' . $user_is_viewed;
-
-        // get rand other
-        $users = User::find()
-                        ->addSelect(["*", "RAND() order_num"])
-                        ->where('id NOT IN ('.$l.')')
-                        ->with('profile')
-                        ->orderBy(['order_num'=> SORT_DESC])
-                        ->all();
-
-        $current_date = date('Y-m-d H:i:s');
-        $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
-
-        // collect meet user
-        for ($i=0; $i < count($users); $i++) { 
-            array_push($user_meet_rand, $users[$i]);
-        }
-        $tmp; $index;
-        for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
-            $index = $i + 2;
-            if($i == count($user_meet_rand) - 2){
-                $index = 0;
-            }
-            if($user_meet_rand[$i]->id == $user_meet_rand[$i + 1]->id){
-                $tmp = $user_meet_rand[$i + 1];
-                $user_meet_rand[$i + 1] = $user_meet_rand[$index];
-                $user_meet_rand[$index] = $tmp;
-            }
-        }
-
-        if($userLogin->setting){
-            $filter = true;
-        }else{
+        if(Yii::$app->user->isGuest){
             $filter = false;
+            $userCurrent = 0;
+            $user_meet_rand = User::find()
+                                ->addSelect(["*", "RAND() order_num"])
+                                ->orderBy(['order_num'=> SORT_DESC])
+                                ->all();
+        }else{
+            $userCurrent = Yii::$app->user->id;
+            // get topic, post and user_view params
+            $user_is_viewed = $_POST['user_view'];
+
+            // get list user meet owner
+            $list_user_meet_owner = UserMeet::find()
+                                        ->addSelect('user_id_1')
+                                        ->where('user_id_2 = ' . $userCurrent . ' AND status = 1')
+                                        ->all();
+            $lmo = [];
+            for ($i=0; $i < count($list_user_meet_owner); $i++) {
+                array_push($lmo, $list_user_meet_owner[$i]->user_id_1);
+            }
+
+
+            // get list user which owner meet
+            $list_user_owner_meet = UserMeet::find()
+                                        ->addSelect('user_id_2')
+                                        ->where('user_id_1 = ' . $userCurrent . ' AND status = 1')
+                                        ->all();
+            $luom = [];
+            for ($i=0; $i < count($list_user_owner_meet); $i++) {
+                if($list_user_owner_meet[$i]->user_id_2 != $userCurrent && $list_user_owner_meet[$i]->user_id_2 != $user_is_viewed){
+                    array_push($luom, $list_user_owner_meet[$i]->user_id_2);
+                }
+            }
+
+            // remove user is met owner
+            $r = [];
+            for ($i=0; $i < count($luom); $i++) {
+                if(($key = array_search($luom[$i], $lmo)) !== false){
+                    array_push($r,$lmo[$key]);
+                    unset($lmo[$key]);
+                }
+            }
+
+            $list_met = $userCurrent;
+            if(count($lmo) > 0){
+                $list_meet_owner = implode(',', $lmo);
+                $list_met .= ',' . $list_meet_owner;
+                // get rand user meet owner
+                $user_meet_rand = User::find()
+                            ->addSelect(["*", "RAND() order_num"])
+                            ->where('id in ('.$list_meet_owner. ')')
+                            ->with('profile')
+                            ->orderBy(['order_num'=> SORT_DESC])
+                            ->all();
+            }
+            if(count($luom) > 0){
+                $list_owner_meet = implode(',', $luom);
+                // $list_met .= ',' . $list_owner_meet;
+            }
+
+            $l = $userCurrent;
+            if(count($r) > 0){
+                $lst = implode(',', $r);
+                $l.= ',' . $lst;
+            }
+            $l .= ',' . $user_is_viewed;
+
+            // get rand other
+            $users = User::find()
+                            ->addSelect(["*", "RAND() order_num"])
+                            ->where('id NOT IN ('.$l.')')
+                            ->with('profile')
+                            ->orderBy(['order_num'=> SORT_DESC])
+                            ->all();
+
+            
+            $userLogin = User::find()->where('id ='.$userCurrent)->with('profile','setting')->one();
+
+            // collect meet user
+            for ($i=0; $i < count($users); $i++) { 
+                array_push($user_meet_rand, $users[$i]);
+            }
+            $tmp; $index;
+            for ($i=0; $i < count($user_meet_rand) - 1; $i++) { 
+                $index = $i + 2;
+                if($i == count($user_meet_rand) - 2){
+                    $index = 0;
+                }
+                if($user_meet_rand[$i]->id == $user_meet_rand[$i + 1]->id){
+                    $tmp = $user_meet_rand[$i + 1];
+                    $user_meet_rand[$i + 1] = $user_meet_rand[$index];
+                    $user_meet_rand[$index] = $tmp;
+                }
+            }
+
+            if($userLogin->setting){
+                $filter = true;
+            }else{
+                $filter = false;
+            }
         }
 
         $data = [];
@@ -631,7 +655,10 @@ class MeetController extends BaseController
             $time2 = date_create($current_date);
             $year_old = $time1->diff($time2)->y;
 
-            $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
+            $distance = 0;
+            if(!Yii::$app->user->isGuest){
+                $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
+            }
 
             $count_like = 0;
             $count_posts = Post::find()->where('user_id ='.$value->id)->all();
