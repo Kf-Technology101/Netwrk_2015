@@ -501,7 +501,11 @@ var PopupChat = {
         }
         btn.unbind();
         btn.on('click',function(e){
-            PopupChat.text_message = $('#popup-chat-'+PopupChat.params.post).find('.send_message textarea').val();
+            if (isMobile) {
+                PopupChat.text_message = $('.nav_input_message').find('.send_message textarea').val();
+            } else {
+                PopupChat.text_message = $('#popup-chat-'+PopupChat.params.post).find('.send_message textarea').val();
+            }
             PopupChat.text_message += $(e.currentTarget).attr('data-value') + ' ';
             parent.find('textarea').val(PopupChat.text_message);
             parent.find('textarea').focus();
