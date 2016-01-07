@@ -11,9 +11,8 @@ var Default ={
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
-            Default.SetAvatarUserDropdown();
         }
-
+        Default.SetAvatarUserDropdown();
         if(!isGuest){
             Default.ShowNotificationOnChat();
         }
@@ -118,6 +117,16 @@ var Default ={
                 $('#user_avatar_wrapper #user_avatar_dashboard').remove();
                 $('#user_avatar_wrapper').append(append_html);
             });
+            if (isMobile) {
+                var btn = '#user_avatar_dashboard';
+                // $(document).on('click', btn, function(){
+                //     if ($(btn).find('ul').css('display') == 'none') {
+                //         $(btn).find('ul').css({'display': 'block', 'visibility': 'visible', 'opacity': 1});
+                //     } else {
+                //         $(btn).find('ul').css({'display': 'none', 'visibility': 'hidden', 'opacity': 0});
+                //     }
+                // });
+            }
         }
     },
 };

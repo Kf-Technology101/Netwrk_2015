@@ -44,6 +44,7 @@ MobileAsset::register($this);
           <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
     	</div>
+      <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
 	</div>
     <div class="container-fuild">
 	    <?= Breadcrumbs::widget([

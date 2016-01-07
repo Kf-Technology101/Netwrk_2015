@@ -36,7 +36,8 @@ class MobileAsset extends AssetBundle
       'css/mobile/forgot_pass.css',
       'css/mobile/chat_inbox.css',
       'css/mobile/forgot_pass.css',
-      'css/mobile/search.css'
+      'css/mobile/search.css',
+      'css/mobile/dropdown_avatar.css'
     ];
     public $js = [
       'js/lib/underscore.js',

@@ -34,6 +34,7 @@ var PopupChat = {
             ChatInbox.HideMeetIconMobile();
             PopupChat.OnClickBackBtn();
             Default.ShowNotificationOnChat();
+            Default.SetAvatarUserDropdown();
         }else{
             PopupChat.OnclickLogin();
             PopupChat.RegisterPopup();
@@ -301,7 +302,7 @@ var PopupChat = {
             PopupChat.params.chat_type = data_link['chat_type'];
             PopupChat.params.previous_flag = data_link['previous-flag'];
             window.ws.onopen = function(){
-                window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+                window.ws.send("fetch", {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
                 $(PopupChat.parent).find('textarea').focus();
                 PopupChat.OnclickLogin();
                 PopupChat.OnWsChat();
@@ -334,6 +335,7 @@ var PopupChat = {
         });
         btn.unbind();
         btn.on("click", function(e){
+            console.log(btn);
             PopupChat.OnWsSendData(e.currentTarget);
         });
     },
