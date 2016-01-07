@@ -446,7 +446,7 @@ var PopupChat = {
                                 var result = $.parseJSON(result);
                                 window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
                                 parentChat.find(".loading_image").css('display', 'none');
-                                fileForm.find("textarea").val('');
+                                // fileForm.find("textarea").val('');
                             }
                         }
                     });
