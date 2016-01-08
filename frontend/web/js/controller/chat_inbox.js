@@ -159,9 +159,13 @@ var ChatInbox = {
                 if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
 					PopupChat.initialize();
 				} else {
+					var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
 		            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
-		            $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
-		            $('#popup-chat-'+PopupChat.params.post).find('textarea').focus();
+		            target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
+		            target_popup_chat.find('textarea').focus();
+		            target_popup_chat.css('height', '330px');
+		            target_popup_chat.find('.nav_input_message').css('display', 'block');
+		            target_popup_chat.find('.minimize-btn').css('bottom', '17px');
 				}
 				Default.displayPopupOnTop();
 			}
@@ -188,9 +192,13 @@ var ChatInbox = {
                 if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
 					PopupChat.initialize();
 				} else {
+					var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
 		            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
-		            $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
-		            $('#popup-chat-'+PopupChat.params.post).find('textarea').focus();
+		            target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
+		            target_popup_chat.find('textarea').focus();
+		            target_popup_chat.css('height', '330px');
+		            target_popup_chat.find('.nav_input_message').css('display', 'block');
+                    target_popup_chat.find('.minimize-btn').css('bottom', '11px');
 				}
 			}
 			private_notify = $(e.currentTarget).find('.notify-chat-inbox');

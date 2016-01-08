@@ -690,13 +690,28 @@ var PopupChat = {
         var btn = $('#popup-chat-'+PopupChat.params.post).find('.minimize-btn');
         btn.unbind();
         btn.on('click', function(){
-            var target = $(this).parents('.popup-box.chat-popup');
-            if (target.css('height') == '28px') {
-                target.css('height', '330px');
-                target.find('.nav_input_message').css('display', 'block');
+            var target = $(this).parents('.popup-box.chat-popup'),
+            target_discussion = $(this).parents('.popup-box.chat-popup').find('.chat-discussion');
+            if (target_discussion.length > 0) {
+                if (target.css('height') == '36px') {
+                    target.css('height', '330px');
+                    target.find('.nav_input_message').css('display', 'block');
+                    btn.css('bottom', '11px');
+                } else {
+                    target.css('height', '36px');
+                    target.find('.nav_input_message').css('display', 'none');
+                    btn.css('bottom', '17px');
+                }
             } else {
-                target.css('height', '28px');
-                target.find('.nav_input_message').css('display', 'none');
+                if (target.css('height') == '28px') {
+                    target.css('height', '330px');
+                    target.find('.nav_input_message').css('display', 'block');
+                    btn.css('bottom', '5px');
+                } else {
+                    target.css('height', '28px');
+                    target.find('.nav_input_message').css('display', 'none');
+                    btn.css('bottom', '11px');
+                }
             }
         });
     },
