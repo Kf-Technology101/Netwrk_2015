@@ -17,6 +17,7 @@ MobileAsset::register($this);
 <head>
   <meta charset="<?= Yii::$app->charset ?>"/>
   <meta http-equiv="Cache-control" content="public">
+  <meta name="msapplication-tap-highlight" content="no"/>
   <meta name="viewport" id="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
   <?= Html::csrfMetaTags() ?>
   <title><?= Html::encode($this->title) ?></title>
