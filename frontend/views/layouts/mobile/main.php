@@ -27,7 +27,7 @@ MobileAsset::register($this);
     var isMobile = true;
   </script>
 </head>
-<body>
+<body ontouchstart="">
 
 
 
