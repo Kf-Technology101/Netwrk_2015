@@ -118,14 +118,21 @@ var Default ={
                 $('#user_avatar_wrapper').append(append_html);
             });
             if (isMobile) {
-                var btn = '#user_avatar_dashboard';
-                // $(document).on('click', btn, function(){
-                //     if ($(btn).find('ul').css('display') == 'none') {
-                //         $(btn).find('ul').css({'display': 'block', 'visibility': 'visible', 'opacity': 1});
-                //     } else {
-                //         $(btn).find('ul').css({'display': 'none', 'visibility': 'hidden', 'opacity': 0});
-                //     }
-                // });
+                var avatar = '#user_avatar_wrapper';
+                var nav = '#user_avatar_wrapper ul';
+                $(document).on('click', avatar, function(e){
+                    e.stopPropagation();
+                    $(nav).slideToggle('fast');
+                    $(avatar).find('#user_avatar_dashboard').toggleClass('bg-blue');
+                });
+                $('body').on( "click", function(e) {
+                    if ($(e.target).parents('#user_avatar_wrapper').length > 0) {
+                        //do nothing
+                    } else {
+                        $(nav).hide();
+                        $(avatar).find('#user_avatar_dashboard').removeClass('bg-blue');
+                    }
+                });
             }
         }
     },
