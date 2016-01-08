@@ -11,9 +11,8 @@ var Default ={
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
-            Default.SetAvatarUserDropdown();
         }
-
+        Default.SetAvatarUserDropdown();
         if(!isGuest){
             Default.ShowNotificationOnChat();
         }
@@ -118,6 +117,33 @@ var Default ={
                 $('#user_avatar_wrapper #user_avatar_dashboard').remove();
                 $('#user_avatar_wrapper').append(append_html);
             });
+            if (isMobile) {
+                var avatar = '#user_avatar_wrapper';
+                var nav = '#user_avatar_wrapper ul';
+                $(document).on('click', avatar, function(e){
+                    e.stopPropagation();
+                    $(nav).slideToggle('fast');
+                    $(avatar).find('#user_avatar_dashboard').toggleClass('bg-blue');
+                    $(nav+' li').removeClass('bg-blue');
+                });
+
+                $('body').on( "click", function(e) {
+                    if ($(e.target).parents('#user_avatar_wrapper').length > 0) {
+                        //do nothing
+                    } else {
+                        $(nav).hide();
+                        $(avatar).find('#user_avatar_dashboard').removeClass('bg-blue');
+                        $(nav+' li').removeClass('bg-blue');
+                    }
+                });
+
+                $(document).on('click', nav+' li', function(e){
+                    e.stopPropagation();
+                    $(nav+' li').removeClass('bg-blue');
+                    $(this).addClass('bg-blue');
+                });
+
+            }
         }
     },
 };

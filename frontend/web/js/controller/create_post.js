@@ -22,6 +22,7 @@ var Create_Post={
             Create_Post.eventClickdiscoverMobile();
             Create_Post.postTitleFocus();
             Create_Post.OnClickChatInboxBtnMobile();
+            Default.SetAvatarUserDropdown();
         }else{
             if(isGuest){
                 Login.modal_callback = Post;

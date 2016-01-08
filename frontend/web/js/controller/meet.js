@@ -30,6 +30,9 @@ var Meet ={
         }else if(Meet.filter.active === 'meeting'){
             Meet._init();
         }
+        if (isMobile) {
+            Default.SetAvatarUserDropdown();
+        }
     },
 
     _init: function(){

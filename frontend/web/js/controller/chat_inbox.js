@@ -20,6 +20,7 @@ var ChatInbox = {
 			ChatInbox.HideMeetIconMobile();
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
+			Default.SetAvatarUserDropdown();
 		} else {
 			// if(ChatInbox.onClickChat == 1){
 			// 	Ajax.change_chat_show_message().then(function(data){});

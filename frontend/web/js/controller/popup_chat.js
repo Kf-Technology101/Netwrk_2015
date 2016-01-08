@@ -34,6 +34,7 @@ var PopupChat = {
             ChatInbox.HideMeetIconMobile();
             PopupChat.OnClickBackBtn();
             Default.ShowNotificationOnChat();
+            Default.SetAvatarUserDropdown();
         }else{
             PopupChat.OnclickLogin();
             PopupChat.RegisterPopup();
@@ -46,6 +47,7 @@ var PopupChat = {
             // PopupChat.OnClickReceiverAvatar();
             PopupChat.ShowChatBox(PopupChat.params.post);
             PopupChat.ShowPopupChatWhenModalDisplay();
+            PopupChat.OnClickMinimizeBtn();
         }
     },
 
@@ -301,7 +303,7 @@ var PopupChat = {
             PopupChat.params.chat_type = data_link['chat_type'];
             PopupChat.params.previous_flag = data_link['previous-flag'];
             window.ws.onopen = function(){
-                window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+                window.ws.send("fetch", {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
                 $(PopupChat.parent).find('textarea').focus();
                 PopupChat.OnclickLogin();
                 PopupChat.OnWsChat();
@@ -334,6 +336,7 @@ var PopupChat = {
         });
         btn.unbind();
         btn.on("click", function(e){
+            console.log(btn);
             PopupChat.OnWsSendData(e.currentTarget);
         });
     },
@@ -444,7 +447,7 @@ var PopupChat = {
                                 var result = $.parseJSON(result);
                                 window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
                                 parentChat.find(".loading_image").css('display', 'none');
-                                fileForm.find("textarea").val('');
+                                // fileForm.find("textarea").val('');
                             }
                         }
                     });
@@ -499,7 +502,11 @@ var PopupChat = {
         }
         btn.unbind();
         btn.on('click',function(e){
-            PopupChat.text_message = $('#popup-chat-'+PopupChat.params.post).find('.send_message textarea').val();
+            if (isMobile) {
+                PopupChat.text_message = $('.nav_input_message').find('.send_message textarea').val();
+            } else {
+                PopupChat.text_message = $('#popup-chat-'+PopupChat.params.post).find('.send_message textarea').val();
+            }
             PopupChat.text_message += $(e.currentTarget).attr('data-value') + ' ';
             parent.find('textarea').val(PopupChat.text_message);
             parent.find('textarea').focus();
@@ -677,5 +684,20 @@ var PopupChat = {
         setTimeout(function(){
             Default.displayPopupOnTop();
         }, 100);
+    },
+
+    OnClickMinimizeBtn: function() {
+        var btn = $('#popup-chat-'+PopupChat.params.post).find('.minimize-btn');
+        btn.unbind();
+        btn.on('click', function(){
+            var target = $(this).parents('.popup-box.chat-popup');
+            if (target.css('height') == '28px') {
+                target.css('height', '330px');
+                target.find('.nav_input_message').css('display', 'block');
+            } else {
+                target.css('height', '28px');
+                target.find('.nav_input_message').css('display', 'none');
+            }
+        });
     },
 }

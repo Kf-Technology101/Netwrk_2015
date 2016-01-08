@@ -30,6 +30,7 @@ var Create_Topic={
             Create_Topic.eventClickMeetMobile();
             Create_Topic.postTitleFocus();
             Create_Topic.OnClickChatInboxBtnMobile();
+            Default.SetAvatarUserDropdown();
         }else{
             if(isGuest){
                 Login.modal_callback = Topic;
