@@ -148,9 +148,10 @@ var Map ={
 		        city_id: parseInt(e.id)
 	      	});
 	        var infowindow = new google.maps.InfoWindow({
-	          content: '',
-	          city_id: e.id,
-	          maxWidth: 350
+				content: '',
+				city_id: e.id,
+				maxWidth: 310,
+           		pixelOffset: new google.maps.Size(0,0),
 	        });
 
 		    google.maps.event.addListener(marker, 'click', (function(marker, i){
@@ -165,7 +166,7 @@ var Map ={
 	      	if(!isMobile){
 
                 var marker_template = _.template($( "#maker_popup" ).html());
-        		var content = marker_template({data: e});
+        		var content = marker_template({marker: e});
 	          	infowindow.content = content;
 	            Map.infowindow.push(infowindow);
 
@@ -200,13 +201,13 @@ var Map ={
 		            // iwOuter.parent().parent().css({left: '115px'});
 
 		        	//   // Moves the shadow of the arrow 76px to the left margin.
-		            iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 175px !important;left: 170px !important;'});
+		            // iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 330px !important;left: 170px !important; z-index: 2!important;'});
 
 		        	//   // Moves the arrow 76px to the left margin.
-		            iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 175px !important;left: 170px !important;'});
+		            // iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 330px !important;left: 170px !important;'});
 
 		        	//   // Changes the desired tail shadow color.
-		            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 1px 0px 1px', 'z-index' : '1'});
+		            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 1px 0px 1px', 'z-index' : '2'});
 
 		        	//   // Reference to the div that groups the close button elements.
 		            var iwCloseBtn = iwOuter.next();

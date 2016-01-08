@@ -119,4 +119,13 @@ class Topic extends \yii\db\ActiveRecord
                         ->all();
         }
     }
+
+    public function Get4Topic($city){
+        return Topic::find()
+                    ->joinWith('city')
+                    ->where(['city.id' => $city])
+                    ->orderBy(['topic.post_count'=> SORT_DESC])
+                    ->limit(4)
+                    ->all();
+    }
 }

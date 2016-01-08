@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\controllers;
 use Yii;
 use yii\web\Session;
 use yii\db\Query;
+use yii\helpers\Url;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
@@ -85,6 +86,66 @@ class DefaultController extends BaseController
         return $hash;
     }
 
+    // Get 4 topic have post most
+    protected static function Top4Topices($city)
+    {
+
+        $topices = Topic::Get4Topic($city);
+        $data =[];
+        foreach ($topices as $key => $value){
+            $item =[
+                'id'=> $value->id,
+                'name'=> $value->title,
+                'num_post'=> $value->post_count
+            ];
+
+            array_push($data, $item);
+        }
+
+        return $data;
+    }
+
+    //Get Similarpost and trending number on top 4 post
+    protected function Trending4Post($city)
+    {
+        $hashtag = [];
+        foreach ($city->topics as $topic){
+            foreach ($topic->posts as $post) {
+                # code...
+                $arr = explode(' ',trim($post->title));
+                $item = [
+                    'post_id'=> $post->id,
+                    'post_name'=> $post->title,
+                    'post_trending'=> Post::SearchHashTagPost($arr[0],$city->id)
+                ];
+                array_push($hashtag, $item);
+            }
+        }
+        $data = $this->GetTop4Trending($hashtag);
+
+        return $data;
+    }
+
+    //Sort 4 post have trending most
+    protected static function GetTop4Trending($hashtag)
+    {
+        $sortArray = [];
+
+        foreach($hashtag as $person){
+            foreach($person as $key=>$value){
+                if(!isset($sortArray[$key])){
+                    $sortArray[$key] = [];
+                }
+                $sortArray[$key][] = $value;
+            }
+        }
+
+        $orderby = "post_trending";
+        array_multisort($sortArray[$orderby],SORT_DESC,$hashtag);
+
+        return array_slice($hashtag, 0, 4);
+    }
+
     public function actionGetMakerDefaultZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
@@ -111,7 +172,11 @@ class DefaultController extends BaseController
         foreach ($cities as $key => $value) {
             if(isset($value->topics[0])) {
                 $post = $value->topics[0]->posts[0];
+                $user_post = $post->user;
                 $content = $post->content;
+                $topices = $this->Top4Topices($value->id);
+                $trending = $this->Trending4Post($value);
+
                 if(strlen($content) > $maxlength ){
                     $content = substr($post->content,0,$maxlength) ;
                     $content = $content."...";
@@ -124,12 +189,22 @@ class DefaultController extends BaseController
                     'zip_code'=> $value->zip_code,
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
-                    'post'=> array(
+                    'topic'=> $topices,
+                    'trending_post'=> $trending,
+                    'user'=>[
+                        'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
+                        'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
+                        'work'      => $user_post->profile->work,
+                        'zipcode'   => $user_post->profile->zip_code,
+                        'place'     => $user_post->profile->city->name
+                    ],
+                    'post'=>[
                         'post_id'=>$post->id,
+                        'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
                         'name_post'=> $post->title,
                         'content' => $content,
                         'topic_id' => $post->topic_id,
-                    )
+                    ]
                 );
                 array_push($data,$netwrk);
             } else {
@@ -168,6 +243,10 @@ class DefaultController extends BaseController
             if(isset($value->topics[0])) {
                 $post = $value->topics[0]->posts[0];
                 $content = $post->content;
+                $user_post = $post->user;
+                $content = $post->content;
+                $topices = $this->Top4Topices($value->id);
+                $trending = $this->Trending4Post($value);
 
                 if(strlen($content) > $maxlength ){
                     $content = substr($post->content,0,$maxlength ) ;
@@ -182,12 +261,22 @@ class DefaultController extends BaseController
                     'zip_code'=> $value->zip_code,
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
-                    'post'=> array(
+                    'topic'=> $topices,
+                    'trending_post'=> $trending,
+                    'user'=>[
+                        'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
+                        'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
+                        'work'      => $user_post->profile->work,
+                        'zipcode'   => $user_post->profile->zip_code,
+                        'place'     => $user_post->profile->city->name
+                    ],
+                    'post'=>[
                         'post_id'=>$post->id,
+                        'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
                         'name_post'=> $post->title,
                         'content' => $content,
                         'topic_id' => $post->topic_id,
-                    )
+                    ]
                 );
                 array_push($data,$netwrk);
             } else {

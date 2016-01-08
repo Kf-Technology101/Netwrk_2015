@@ -91,6 +91,9 @@ class Profile extends ActiveRecord
         return $this->hasOne($user::className(), ['id' => 'user_id']);
     }
 
+    public function getCity(){
+        return $this->hasOne(City::className(), ['zip_code' => 'zip_code']);
+    }
     /**
      * Set user id
      *

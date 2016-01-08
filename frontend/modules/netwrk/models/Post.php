@@ -144,4 +144,13 @@ class Post extends \yii\db\ActiveRecord
                     ->all();
         }
     }
+
+    public function SearchHashTagPost($hashtag,$city){
+        $hashtag = Post::find()
+                        ->joinWith('topic')
+                        ->where(['like','post.title',$hashtag])
+                        ->andWhere(['topic.city_id' => $city])
+                        ->all();
+        return count($hashtag);
+    }
 }
