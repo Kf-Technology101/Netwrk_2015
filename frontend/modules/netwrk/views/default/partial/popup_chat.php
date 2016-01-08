@@ -19,6 +19,7 @@
                     </div>
                 <% } %>
                 <div class="popup-head-right">
+                    <a class='minimize-btn'><i class='fa fa-minus 2x'></i></a>
                     <a href="javascript:PopupChat.ClosePopup(<%= post_id %>);"><i class='fa fa-times 2x'></i></a>
                 </div>
                 <div style="clear: both"></div>

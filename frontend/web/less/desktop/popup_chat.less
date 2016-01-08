@@ -70,6 +70,20 @@
         clear: both;
         box-shadow: inset 0 7px 7px rgba(0,0,0,0.27);
         height: 26px;
+        position: relative;
+        .minimize-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 22px;
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+        }
+
+        .minimize-btn:hover {
+            cursor: pointer;
+        }
+
         .popup-head-left {
             float: left;
             .popup-title-avatar {

@@ -47,6 +47,7 @@ var PopupChat = {
             // PopupChat.OnClickReceiverAvatar();
             PopupChat.ShowChatBox(PopupChat.params.post);
             PopupChat.ShowPopupChatWhenModalDisplay();
+            PopupChat.OnClickMinimizeBtn();
         }
     },
 
@@ -683,5 +684,20 @@ var PopupChat = {
         setTimeout(function(){
             Default.displayPopupOnTop();
         }, 100);
+    },
+
+    OnClickMinimizeBtn: function() {
+        var btn = $('#popup-chat-'+PopupChat.params.post).find('.minimize-btn');
+        btn.unbind();
+        btn.on('click', function(){
+            var target = $(this).parents('.popup-box.chat-popup');
+            if (target.css('height') == '28px') {
+                target.css('height', '330px');
+                target.find('.nav_input_message').css('display', 'block');
+            } else {
+                target.css('height', '28px');
+                target.find('.nav_input_message').css('display', 'none');
+            }
+        });
     },
 }
