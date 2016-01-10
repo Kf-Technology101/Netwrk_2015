@@ -29,8 +29,10 @@
 <?= $this->render('partial/topic');?>
 <?= $this->render('partial/create_topic');?>
 <?= $this->render('partial/meet');?>
-<?= $this->render('partial/create_post');?>
 <?= $this->render('partial/post');?>
+<?= $this->render('partial/create_post');?>
+<?= $this->render('partial/group');?>
+<?= $this->render('partial/create_group');?>
 <?= $this->render('partial/chat_post');?>
 <?= $this->render('partial/login');?>
 <?= $this->render('partial/signup');?>

@@ -231,7 +231,7 @@ var Signup={
     apiZipcode: function(zipcode){
     	var message;
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
-        	console.log(data);
+        	console.log(data, Signup);
             if (data.places[0].state == Signup.state){
             	Signup.zipcode = 1;
             	Signup.lat = data.places[0].latitude;

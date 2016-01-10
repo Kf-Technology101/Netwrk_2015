@@ -285,6 +285,28 @@ var Ajax ={
         return defer.promise();
     },
 
+    show_groups: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/group/get-groups";
+        }else{
+            url = "netwrk/group/get-groups";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     getUserMeeting: function(params){
         var url,defer = $.Deferred();
 
@@ -489,6 +511,26 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         url = baseUrl +"/netwrk/post/new-post";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    create_edit_group: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/group/create-edit-group";
 
         $.ajax({
             url: url,

@@ -16,6 +16,7 @@ var Map ={
   	// center: new google.maps.LatLng(39.7662195,-86.441277),
   	center:'',
   	initialize: function() {
+		console.log("initialize map");
 	    var map_andiana  = {
 	      center: Map.center,
 	      zoom: Map.zoom,
@@ -48,6 +49,8 @@ var Map ={
 	    Map.eventClickMyLocation(Map.map);
 	    Map.show_marker(Map.map);
 	    Map.showHeaderFooter();
+
+		Map.putTestPoint(Map.map);
   	},
 
   	mapBoundaries:function(map){
@@ -161,6 +164,7 @@ var Map ={
 		            	infowindow.close();
 		          	}
 		          	Topic.initialize(marker.city_id);
+					Group.initialize(marker.city_id);
 		        };
 		    })(marker, i));
 
@@ -521,6 +525,42 @@ var Map ={
 	      	}
 	    });
   	},
+
+	putTestPoint: function(map) {
+        var img = './img/icon/map_icon_university_v_2.png';
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(40.41670, -86.87529),
+			map: map,
+			icon: img
+			//city_id: parseInt(e.id)
+		});
+		var infowindow = new google.maps.InfoWindow({
+			content: ''
+		});
+
+        infowindow.content = '<div id="iw-container" >' +
+            '<div class="iw-title"><span class="toppost">Top Post</span></div>' +
+            '<div class="iw-content">' +
+            '<div class="iw-subTitle"><span class="post-title"><a class="a-create-group" href="#">Create group</a></span></div>' +
+            '</div>' +
+            '<div class="iw-bottom-gradient"></div>' +
+            '</div>';
+        Map.infowindow.push(infowindow);
+        google.maps.event.addListener(marker, 'mouseover', function() {
+            // infowindow.setContent(e[0]);
+            infowindow.open(map, this);
+        });
+
+		google.maps.event.addListener(marker, 'click', (function(marker) {
+			return function(){
+				if(!isMobile){
+					infowindow.close();
+				}
+			};
+		})(marker));
+
+		Map.markers.push(marker);
+	},
 
   	eventZoom: function(map){
 	    var mode = true;

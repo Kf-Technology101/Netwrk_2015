@@ -10,9 +10,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => '',
-            'username' => '',
-            'password' => '',
+            'dsn' => 'mysql:host=localhost;dbname=netwrk',
+            'username' => 'root',
+            'password' => 'isdvdsmysql1#$p',
             'charset' => 'utf8',
         ],
     ],

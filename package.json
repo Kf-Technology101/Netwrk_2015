@@ -16,9 +16,9 @@
   "author": "Ngoc Luong-Bao <baongock32@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-less": "^1.1.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "jit-grunt": "^0.9.1"
+    "grunt": "~0.4.5",
+    "grunt-contrib-less": "~1.1.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "jit-grunt": "~0.9.1"
   }
 }

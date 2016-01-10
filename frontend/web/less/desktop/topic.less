@@ -295,6 +295,77 @@
                 }
             }
         }
+        #tab_groups{
+            width: 100%;
+            display: none;
+            #item_group_list_post,#item_group_list_view,#item_group_list_recent{
+                display: none;
+                .no-data{
+                    text-align: center;
+                    font-size: 16px;
+                    padding-top: 20px;
+                    display: none;
+                }
+                .item{
+                    &:nth-of-type(odd) {
+                        background: #ffffff;
+                    }
+                    &:nth-of-type(even) {
+                        background: #fcfcfc;
+                    }
+                    width: 100%;
+                    height: 50px;
+                    padding: 15px;
+                    border-bottom: 1px solid #eee;
+                    cursor: pointer;
+                    p{
+                        color: #1d1b1b;
+                        margin: 0;
+                        font-size: 15px;
+                        text-align: right;
+                    }
+                    .name_group{
+                        font-size: 15px;
+                        width: 45%;
+                        float: left;
+                        overflow: hidden;
+                        p,span{
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            font-size: 18px;
+                            text-align: left;
+                        }
+                    }
+                    .num_count{
+                        width: 12%;
+                        // height: 50px;
+                        float: right;
+                        margin-right: 2%;
+                        i{
+                            margin-right: 3px;
+                        }
+                    }
+                    .num_count_duration{
+                        width: 18%;
+                        float: right;
+                        i{
+                            margin-right: 3px;
+                        }
+                    }
+                    .arrow{
+                        width: 8%;
+                        float: right;
+                        p{
+                            text-align: center;
+                        }
+                        i{
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

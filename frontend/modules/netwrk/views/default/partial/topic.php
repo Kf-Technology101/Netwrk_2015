@@ -9,9 +9,12 @@
             </div>
             <div class="title_page">
             </div>
-            <div class="create_topic">
+            <div class="create_topic" id="create_topic">
               <span><i class="fa fa-plus-circle"></i> Create Topic</span>
             </div>
+              <div class="create_topic" id="create_group">
+                  <span><i class="fa fa-plus-circle"></i>Create Group</span>
+              </div>
           </div>
           <div class="sidebar">
             <div class="title"></div>
@@ -28,6 +31,7 @@
                 <tr>
                     <td class="feed">Feed</td>
                     <td class="topic active">Topics</td>
+                    <td class="groups">Groups</td>
                 </tr>
             </table> 
           </div>
@@ -45,6 +49,17 @@
                   <p class="no-data">There is no data available yet</p>
               </div>
               <div id="item_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+          </div>
+          <div id="tab_groups" class="tab">
+              <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
           </div>

@@ -32,7 +32,7 @@ var Create_Post={
             Create_Post.params.topic = topic;
             Create_Post.params.city_name = name_city;
 
-            Create_Post.showModalCreatePost();
+            Create_Post.showModalCreateGroup();
             // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
             // Create_Post.showSideBar(name_city,name_topic)

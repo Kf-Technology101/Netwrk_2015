@@ -28,7 +28,7 @@ var Topic = {
         zipcode:'',
         name:'',
         lat: '',
-        lng:'',
+        lng:''
     },
     modal: '#modal_topic',
     modal_create: '#create_topic',
@@ -44,6 +44,7 @@ var Topic = {
         Topic.OnClickSelectFilter();
         Topic.OnClickChangeTab();
         Topic.eventClickMeetMobile();
+        Topic.OnClickCreateGroup();
     },
 
     initialize: function(city,params){
@@ -56,6 +57,7 @@ var Topic = {
             Topic._onclickBack();
             Topic.OnClickBackdrop();
             Topic.onNetwrkLogo();
+            Topic.OnClickCreateGroup();
         }
     },
 
@@ -106,6 +108,9 @@ var Topic = {
             case 'topic':
                 Topic.ShowTopicPage();
                 break;
+            case 'groups':
+                Topic.ShowGroupsPage();
+                break;
         }
     },
 
@@ -118,6 +123,9 @@ var Topic = {
         }else{
             parent.find('.dropdown').removeClass('visible');
         }
+
+        $('.create_topic').hide();
+        $('#create_topic').show();
     },
 
     ShowFeedPage: function(){
@@ -132,6 +140,19 @@ var Topic = {
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
         parent.find('.container').removeClass('open');
+
+        $('.create_topic').hide();
+        $('#create_topic').show();
+    },
+
+    ShowGroupsPage: function() {
+        console.log("groups page");
+        var parent = $('#modal_topic,#show-topic');
+        parent.find('#tab_groups').show();
+        parent.find('.dropdown').addClass('visible');
+        $('.create_topic').hide();
+        $('#create_group').show();
+        parent.find('.dropdown').addClass('visible');
     },
 
     OnClickSortBtn: function(){
@@ -291,6 +312,7 @@ var Topic = {
         $('#modal_topic').on('shown.bs.modal',function(e) {
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
+            Group.LoadGroupModal();
         });
     },
 
@@ -302,6 +324,7 @@ var Topic = {
 
         parent.show();
         // sidebar.show();
+        console.log("load topic");
         Ajax.show_topic(params).then(function(data){
             parent.scrollTop(0);
             self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
@@ -506,4 +529,18 @@ var Topic = {
             window.location.href = baseUrl + "/netwrk/meet";
         });
     },
+
+    OnClickCreateGroup: function(){
+        var btn = $('#create_group');
+        btn.unbind();
+        btn.on('click',function(){
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+            }else{
+                $('#modal_topic').modal('hide');
+                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,Topic.params.name);
+            }
+        });
+
+    }
 };
