@@ -174,6 +174,7 @@ var Map ={
 			        // infowindow.setContent(e[0]);
 			        infowindow.open(map, this);
 			        Map.onhoverInfoWindow(e.id,marker);
+			        Map.OnEventInfoWindow();
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
@@ -488,6 +489,18 @@ var Map ={
         });
   	},
   	// End code for get university and government place
+  	OnEventInfoWindow: function(){
+  		Map.OnCreateFirstTopic();
+  	},
+
+  	OnCreateFirstTopic: function(){
+  		var parent = $('.container-popup').find('.create-topic');
+
+  		parent.unbind();
+  		parent.on('click',function(){
+  			alert(1);
+  		});
+  	},
 
   	eventClickMyLocation: function(map){
 	    var btn = $('#btn_my_location');

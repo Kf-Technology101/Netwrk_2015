@@ -196,7 +196,7 @@ class DefaultController extends BaseController
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
                         'work'      => $user_post->profile->work,
                         'zipcode'   => $user_post->profile->zip_code,
-                        'place'     => $user_post->profile->city->name
+                        'place'     => $user_post->profile->city ? $user_post->profile->city->name : ''
                     ],
                     'post'=>[
                         'post_id'=>$post->id,
