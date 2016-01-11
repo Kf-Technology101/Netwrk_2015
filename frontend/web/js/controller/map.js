@@ -174,7 +174,7 @@ var Map ={
 			        // infowindow.setContent(e[0]);
 			        infowindow.open(map, this);
 			        Map.onhoverInfoWindow(e.id,marker);
-			        Map.OnEventInfoWindow();
+			        Map.OnEventInfoWindow(e);
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
@@ -247,9 +247,9 @@ var Map ={
 	      	}
     		Map.markers.push(marker);
     	});
-		
+
 		// Please don't delete code below
-		// 
+		//
 		// if (map.getZoom() == 12) {
 	 	// 		map.addListener('idle', function(){
 		//        // radarSearch --------------------------------------------
@@ -489,16 +489,45 @@ var Map ={
         });
   	},
   	// End code for get university and government place
-  	OnEventInfoWindow: function(){
-  		Map.OnCreateFirstTopic();
+  	OnEventInfoWindow: function(e){
+  		Map.OnCreateFirstTopic(e);
+  		Map.OnEventTopTopic(e);
+  		Map.OnEventTopPost(e);
   	},
 
-  	OnCreateFirstTopic: function(){
+  	OnEventTopPost: function(e){
+  		var parent = $('.container-popup').find('.top-post .post .name');
+  		parent.unbind();
+  		parent.on('click',function(d){
+            PopupChat.params.post = e.post.post_id;
+            PopupChat.params.chat_type = e.post.post_type;
+            PopupChat.params.post_name = e.post.name_post;
+            PopupChat.params.post_description = e.post.content;
+            PopupChat.initialize();
+  		});
+  	},
+
+  	OnEventTopTopic: function(e){
+  		var parent = $('.container-popup').find('.top-topic .name-topic');
+  		// Topic.initialize(city);
+  		parent.unbind();
+  		parent.on('click',function(d){
+  			var topic = e.topic[$(d.currentTarget).attr('data-index')];
+            Post.params.topic = topic.id;
+            Post.params.topic_name = topic.name;
+            Post.params.city = topic.city;
+            Post.params.city_name = topic.city_name;
+            Post.initialize();
+  		});
+  	},
+
+  	OnCreateFirstTopic: function(e){
   		var parent = $('.container-popup').find('.create-topic');
 
   		parent.unbind();
+  		console.log(e);
   		parent.on('click',function(){
-  			alert(1);
+  			Create_Topic.initialize(e.id,e.zip_code);
   		});
   	},
 

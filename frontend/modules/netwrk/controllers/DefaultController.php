@@ -96,6 +96,8 @@ class DefaultController extends BaseController
             $item =[
                 'id'=> $value->id,
                 'name'=> $value->title,
+                'city'=> $value->city->id,
+                'city_name'=>$value->city->zip_code,
                 'num_post'=> $value->post_count
             ];
 
@@ -202,7 +204,8 @@ class DefaultController extends BaseController
                         'post_id'=>$post->id,
                         'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
                         'name_post'=> $post->title,
-                        'content' => $content,
+                        'content' => $post->content,
+                        'post_type'=> $post->post_type,
                         'topic_id' => $post->topic_id,
                     ]
                 );

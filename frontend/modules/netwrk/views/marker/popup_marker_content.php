@@ -22,8 +22,8 @@
 			</div>
 			<div class="top-topic">
 				<p class="title">Top Topics</p>
-				<% _.each(marker.topic,function(e){%>
-					<p class="name-topic"><%= e.name %></p>
+				<% _.each(marker.topic,function(e,i){%>
+					<p class="name-topic" data-index="<%= i %>"><%= e.name %></p>
 				<% }) %>
 			</div>
 			<div class="top-post-trending">
