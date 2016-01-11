@@ -153,4 +153,13 @@ class Post extends \yii\db\ActiveRecord
                         ->all();
         return count($hashtag);
     }
+
+    public function GetPostMostBrilliant($city){
+        $post = Post::find()
+                ->joinWith('topic')
+                ->where(['topic.city_id' => $city])
+                ->orderBy(['post.brilliant_count'=> SORT_DESC])
+                ->one();
+        return $post;
+    }
 }

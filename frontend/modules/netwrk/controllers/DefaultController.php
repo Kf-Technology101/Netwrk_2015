@@ -148,6 +148,22 @@ class DefaultController extends BaseController
         return array_slice($hashtag, 0, 4);
     }
 
+    protected static function GetPostMostBrilliant($city)
+    {
+        $post = Post::GetPostMostBrilliant($city);
+        $item = [
+                    'post_id'=>$post->id,
+                    'brilliant'=>$post->topic->brilliant_count ? $post->topic->brilliant_count : 0,
+                    'name_post'=> $post->title,
+                    'content' => $post->content,
+                    'post_type'=> $post->post_type,
+                    'topic_id' => $post->topic_id,
+                    'user'=> $post->user
+                ];
+
+        return $item;
+    }
+
     public function actionGetMakerDefaultZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
@@ -173,16 +189,16 @@ class DefaultController extends BaseController
 
         foreach ($cities as $key => $value) {
             if(isset($value->topics[0])) {
-                $post = $value->topics[0]->posts[0];
-                $user_post = $post->user;
-                $content = $post->content;
+                $post = $this->GetPostMostBrilliant($value->id);
+                $user_post = $post['user'];
+                $content = $post['content'];
                 $topices = $this->Top4Topices($value->id);
                 $trending = $this->Trending4Post($value);
 
-                if(strlen($content) > $maxlength ){
-                    $content = substr($post->content,0,$maxlength) ;
-                    $content = $content."...";
-                }
+                // if(strlen($content) > $maxlength ){
+                //     $content = substr($post->content,0,$maxlength) ;
+                //     $content = $content."...";
+                // }
                 $netwrk = array(
                     'id'=> $value->id,
                     'name'=> $value->name,
@@ -200,14 +216,7 @@ class DefaultController extends BaseController
                         'zipcode'   => $user_post->profile->zip_code,
                         'place'     => $user_post->profile->city ? $user_post->profile->city->name : ''
                     ],
-                    'post'=>[
-                        'post_id'=>$post->id,
-                        'brilliant'=>$post->topic->brilliant_count ? $post->topic->brilliant_count : 0,
-                        'name_post'=> $post->title,
-                        'content' => $post->content,
-                        'post_type'=> $post->post_type,
-                        'topic_id' => $post->topic_id,
-                    ]
+                    'post'=>$post
                 );
                 array_push($data,$netwrk);
             } else {
