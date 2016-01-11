@@ -11,10 +11,9 @@ function set_size_map(w,h){
 function set_position_btn_meet(w,h){
   var menu_h = $('.menu_top').height();
   var hp = h - 100 - menu_h;
-  var wp = w - 100;
-
-  $('#btn_meet').css({'top': hp,'left': wp});
-  $('#modal_meet #btn_discover').css({'top': hp - 30 ,'left': wp});
+  var wp = w - (w - 15);
+  $('#btn_meet').css({'top': hp,'right': wp});
+  $('#modal_meet #btn_discover').css({'top': hp - 30 ,'right': wp});
 }
 
 function set_position_btn(parent,target,paddingTop,paddingRight){
