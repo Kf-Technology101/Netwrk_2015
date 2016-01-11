@@ -138,7 +138,7 @@ class MeetController extends BaseController
         $data = [];
         foreach ($users_rand as $key => $value) {
 
-            $posts = Post::find()->where('user_id ='.$value->id)->andWhere('topic_id != NULL')->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
+            $posts = Post::find()->where('user_id ='.$value->id)->andWhere(['not',['topic_id'=> NULL]])->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
             $post_data = [];
 
             foreach ($posts as $key => $post){
@@ -408,7 +408,7 @@ class MeetController extends BaseController
         $newdata = [];
         foreach ($user_meet_rand as $key => $value) {
 
-            $posts = Post::find()->where('user_id ='.$value->id)->andWhere('topic_id != NULL')->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
+            $posts = Post::find()->where('user_id ='.$value->id)->andWhere(['not',['topic_id'=> NULL]])->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
             $post_data = [];
 
             foreach ($posts as $key => $post){
@@ -625,7 +625,7 @@ class MeetController extends BaseController
         $newdata = [];
         foreach ($user_meet_rand as $key => $value) {
 
-            $posts = Post::find()->where('user_id ='.$value->id)->andWhere('topic_id != NULL')->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
+            $posts = Post::find()->where('user_id ='.$value->id)->andWhere(['not',['topic_id'=> NULL]])->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
             $post_data = [];
 
             foreach ($posts as $key => $post){
