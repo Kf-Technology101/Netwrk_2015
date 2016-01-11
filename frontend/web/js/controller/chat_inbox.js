@@ -9,6 +9,7 @@ var ChatInbox = {
 	params: {
 		previous: '',
 		target_popup: '',
+		IsOpenChatBox: false,
 	},
 	onClickChat: 0,
 	initialize: function(){
@@ -228,6 +229,8 @@ var ChatInbox = {
 			'left': 0, 'margin': 0
 		}, 500, 'swing', function(){ Map.initialize(); });
 		$('#btn_meet').css({'left': '', 'right' : '15px'});
+		ChatInbox.params.IsOpenChatBox = true;
+		ChatInbox.WindowResize(width_map);
 	},
 
 	DeactiveReponsiveChatInbox: function() {
@@ -247,7 +250,7 @@ var ChatInbox = {
 			'width':'100%',
 			'left': '', 'margin': 'auto'
 		}, 500, 'swing', function(){ Map.initialize(); });
-
+		ChatInbox.params.IsOpenChatBox = false;
 		$('#btn_meet').css({'left': '', 'right' : '15px'});
 	},
 
@@ -444,5 +447,26 @@ var ChatInbox = {
 			notify.html(0);
 			notify.addClass('disable');
 		});
-	}
+	},
+
+	// Change width height map, position meet button when user open chat on post
+	WindowResize: function(width_map) {
+		$(window).resize(function(){
+			ChatInbox.SetSizeMap(ChatInbox.GetSizeWindow()[0], ChatInbox.GetSizeWindow()[1]);
+			PopupChat.MoveMeetButton();
+		});
+	},
+
+	GetSizeWindow: function (){
+		return [$(window).width(),$(window).height()];
+	},
+
+	SetSizeMap: function (w,h){
+		var menu_h = $('.menu_top').height();
+		$('#googleMap').css({'height': h - menu_h,'min-height': h -menu_h});
+		if (ChatInbox.params.IsOpenChatBox == true) {
+			w = w - 320;
+		}
+		$('.map_content').css({'height': h - menu_h,'width': w});
+	},
 }
