@@ -161,6 +161,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			unset($this->users[$conn->resourceId]);
 		}
 		$this->clients->detach($conn);
+		echo "Disconnected on ({$conn->resourceId})\n";
 	}
 
 	public function onError(ConnectionInterface $conn, \Exception $e)
@@ -367,9 +368,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	/**
 	 * [Function is used to sender a notification]
-	 * @param  $sender    
+	 * @param  $sender
 	 * @param  $room      [as post_id; -1 if first message]
-	 * @param  $message   
+	 * @param  $message
 	 * @param  $_receiver [-1 if user is met]
 	 * @return array      [data of notification]
 	 */
@@ -430,15 +431,15 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		else
 			return false;
 	}
-	
+
 	/**
 	 * [Function is used to insert new notification]
 	 * @param   $post_id   [chat room]
-	 * @param   $sender    
-	 * @param   $receiver  
-	 * @param   $msg       
+	 * @param   $sender
+	 * @param   $receiver
+	 * @param   $msg
 	 * @param   $status    [0: unread, 1: read]
-	 * @param   $date      
+	 * @param   $date
 	 * @return             [true/false]
 	 */
 	public function insertNotification($post_id, $sender, $receiver, $msg, $status, $date){

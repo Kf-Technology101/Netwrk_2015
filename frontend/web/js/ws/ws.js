@@ -17,10 +17,21 @@ $.extend({
 		events: {}
 	},
 	websocket: function(url, s) {
-		var ws = WebSocket ? new WebSocket( url ) : {
-			send: function(m){ return false },
-			close: function(){}
-		};
+		var ws;
+		if ("WebSocket" in window) {
+		  // Chrome, MSIE, newer Firefox
+		  ws = new WebSocket(url);
+		} else if ("MozWebSocket" in window) {
+		  // older versions of Firefox prefix the WebSocket object
+		  ws = new MozWebSocket(url);
+		} else {
+		  if (onclose !== undefined) {
+		     return;
+		  } else {
+		  	return;
+		  }
+		}
+
 		$.websocketSettings = $.extend($.websocketSettings, s);
 		$(ws).bind('open', $.websocketSettings.open)
 			.bind('close', $.websocketSettings.close)
