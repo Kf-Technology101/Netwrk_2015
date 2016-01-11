@@ -162,10 +162,12 @@ var ChatInbox = {
 					var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
 		            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
 		            target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
-		            target_popup_chat.find('textarea').focus();
+		            setTimeout(function(){
+            			target_popup_chat.find('textarea').focus()
+        			}, 1);
 		            target_popup_chat.css('height', '330px');
 		            target_popup_chat.find('.nav_input_message').css('display', 'block');
-		            target_popup_chat.find('.minimize-btn').css('bottom', '17px');
+		            target_popup_chat.find('.minimize-btn').css('bottom', '10px');
 				}
 				Default.displayPopupOnTop();
 			}
@@ -195,10 +197,12 @@ var ChatInbox = {
 					var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
 		            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
 		            target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
-		            target_popup_chat.find('textarea').focus();
+		            setTimeout(function(){
+            			target_popup_chat.find('textarea').focus()
+        			}, 1);
 		            target_popup_chat.css('height', '330px');
 		            target_popup_chat.find('.nav_input_message').css('display', 'block');
-                    target_popup_chat.find('.minimize-btn').css('bottom', '11px');
+                    target_popup_chat.find('.minimize-btn').css('bottom', '5px');
 				}
 			}
 			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
