@@ -207,6 +207,9 @@ var Map ={
 		        	//   // Moves the arrow 76px to the left margin.
 		            // iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 330px !important;left: 170px !important;'});
 
+		            //Custom arrow hover popup
+
+		            Map.CustomArrowPopup();
 		        	//   // Changes the desired tail shadow color.
 		            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 1px 0px 1px', 'z-index' : '2'});
 
@@ -285,6 +288,20 @@ var Map ={
 		//     google.maps.event.clearListeners(map, 'idle');
 		// }
   	},
+
+  	//Custom arrow hover popup
+  	CustomArrowPopup: function(){
+  		var iwOuter = $('.gm-style-iw');
+  		var iwBackground = iwOuter.prev();
+        var arrow = iwBackground.children(':nth-child(3)');
+        var arrow_left = arrow.children(':nth-child(1)');
+        var arrow_right = arrow.children(':nth-child(2)');
+
+        iwBackground.children(':nth-child(1)').css({'top': 340});
+        arrow_left.find('div').css({'top':14,'left': 11,'height': 10, 'width': 5});
+        arrow_right.find('div').css({'top':14,'left': 0,'height': 10, 'width': 5});
+  	},
+
   	// Begin code for get university and government place
   	// Please don't delete it
   	checkPlaceZipcode: function(zipcode, place_name, place, service, map, type){
