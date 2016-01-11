@@ -92,24 +92,26 @@ var Group = {
         });
     },
 
-    getTemplate: function(parent,data){
+    getTemplate: function(parent,json){
         var self = this;
-        var json = $.parseJSON(data);
         var list_template = _.template($("#group_list").html());
         var append_html = list_template({groups: json.data});
 
         parent.append(append_html);
         self.onTemplate(json);
+
+        Topic.OnClickEditGroup();
     },
 
-    getTemplateModal: function(parent,data){
+    getTemplateModal: function(parent,json){
         return;
         var self = this;
-        var json = $.parseJSON(data);
         var list_template = _.template($( "#city_name" ).html());
         var append_html = list_template({city: json.city});
         Topic.data.city_name = json.city;
         parent.append(append_html);
+
+        Topic.OnClickEditGroup();
     },
 
     onTemplate: function(json){
@@ -139,13 +141,18 @@ var Group = {
         parent.show();
         // sidebar.show();
         Ajax.show_groups(params).then(function(data){
-            parent.scrollTop(0);
-            self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
-            self.getTemplate(parent,data);
-            self.getTemplateModal(cityname,data);
-            Topic.CustomScrollBar();
-            //Topic.filter_topic(parent);
-            Topic.GetDataOnTab();
+            var json = $.parseJSON(data);
+            console.log("deleting old");
+            $("div[id^='item_group_list'] .item").remove();
+            if (json.data.length > 0) {
+                parent.scrollTop(0);
+                self.list[self.data.filter].loaded = self.list[self.data.filter].paging;
+                self.getTemplate(parent, json);
+                self.getTemplateModal(cityname, json);
+                Topic.CustomScrollBar();
+                //Topic.filter_topic(parent);
+                Topic.GetDataOnTab();
+            }
         });
     }
 

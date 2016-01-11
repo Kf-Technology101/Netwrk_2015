@@ -307,6 +307,28 @@ var Ajax ={
         return defer.promise();
     },
 
+    show_group: function(id) {
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/group/get-group";
+        }else{
+            url = "netwrk/group/get-group";
+        }
+
+        $.ajax({
+            url: url,
+            data: { "id" : id },
+            type: 'POST',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     getUserMeeting: function(params){
         var url,defer = $.Deferred();
 

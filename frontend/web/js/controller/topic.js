@@ -538,9 +538,19 @@ var Topic = {
                 window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
             }else{
                 $('#modal_topic').modal('hide');
-                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,Topic.params.name);
+                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name);
             }
         });
 
+    },
+
+    OnClickEditGroup: function() {
+        console.log("click");
+        $('.edit-group').each(function() {
+            $(this).unbind("click").click(function() {
+                $('#modal_topic').modal('hide');
+                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,$(this).data("id"));
+            });
+        });
     }
 };

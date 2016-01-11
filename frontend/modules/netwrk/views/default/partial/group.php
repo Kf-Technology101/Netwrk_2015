@@ -90,7 +90,8 @@
         <% if (group.owner) { %>
         <div class="num_count_duration">
             <div class="most_post">
-                <p><img src="/img/icon/edit-group.png"></p>
+                <p class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group" src="/img/icon/edit-group.png"></p>
+                <p><img class="delete-group" src="/img/icon/delete-group.png"></p>
             </div>
         </div>
         <% } %>

@@ -11,6 +11,7 @@ use frontend\modules\netwrk\models\WsMessages;
  *
  * @property integer $id
  * @property integer $user_id
+ * @property integer $city_id
  * @property string $name
  * @property integer $permission
  * @property string $created_at
@@ -32,7 +33,7 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'name', 'permission'], 'required'],
+            [['user_id', 'city_id', 'name', 'permission'], 'required'],
             [['name'], 'string'],
             [['permission', 'user_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
@@ -48,6 +49,7 @@ class Group extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'user_id' => 'User ID',
+            'city_id' => 'City ID',
             'permission' => 'Permission',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

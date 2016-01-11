@@ -7,7 +7,9 @@ var Create_Group={
         post:'',
         message: '',
         city:'',
-        city_name: ''
+        city_name: '',
+        id: '',
+        users: []
     },
     status_change:{
         post: false,
@@ -23,7 +25,24 @@ var Create_Group={
     },
     added_users: [],
 
-    initialize: function(city,topic,name_city,name_topic){
+    initialize: function(city,topic,name_city,group_id){
+        console.log("here", group_id);
+        if (typeof group_id != "undefined") {
+            this.params.id = group_id;
+            var error = false;
+            Ajax.show_group(group_id).then(function(data) {
+                var json = $.parseJSON(data);
+                if (json.error) {
+                    alert("Unable to load group");
+                    error = true;
+                } else {
+                    Create_Group.params.name = json.name;
+                    Create_Group.params.permission = json.permission;
+                    Create_Group.added_users = json.users;
+                }
+            });
+            if (error) return;
+        }
         if(isMobile){
             Create_Group.params.topic = $('#create_group').attr('data-topic');
             Create_Group.params.city = $('#create_group').attr('data-city');
@@ -144,7 +163,17 @@ var Create_Group={
     },
     showModalCreateGroup: function(){
         var parent = $('#create_group_modal');
+        $("#group_name").val(Create_Group.params.name);
+        $("#dropdown-permission").html(Create_Group.params.permission == 2 ? "Private" : "Public");
+        Create_Group.RefreshUsersList();
         parent.modal('show');
+
+        $('.group-permission li').each(function() {
+            $(this).unbind().click(function(e) {
+                var name = $(e.currentTarget).text();
+                $("#dropdown-permission").text(name);
+            });
+        });
     },
     onCloseModalCreatePost: function(){
         $('#create_group').on('hidden.bs.modal',function() {
@@ -349,6 +378,14 @@ var Create_Group={
         });
     },
 
+    RefreshUsersList: function() {
+        $('#emails-list').find("li").remove();
+        for (var i in Create_Group.added_users) {
+            if (!Create_Group.added_users.hasOwnProperty(i)) continue;
+            $('#emails-list').append('<li>' + Create_Group.added_users[i] + '<span class="delete"></span></li>');
+        }
+    },
+
     OnClickAddEmail: function() {
         $('#add-email').click(function() {
             //checking emails validity
@@ -366,11 +403,7 @@ var Create_Group={
                     }
                 }
             }
-            $('#emails-list').find("li").remove();
-            for (i in Create_Group.added_users) {
-                if (!Create_Group.added_users.hasOwnProperty(i)) continue;
-                $('#emails-list').append('<li>' + Create_Group.added_users[i] + '<span class="delete"></span></li>');
-            }
+            Create_Group.RefreshUsersList();
         });
     },
 
@@ -379,7 +412,8 @@ var Create_Group={
             Ajax.create_edit_group({
                 emails: Create_Group.added_users,
                 permission: ($('#dropdown-permission').text() == "Private" ? 2 : 1),
-                name: $('#group_name').val()
+                name: $('#group_name').val(),
+                city_id: Create_Group.params.city
             }).then(function(data) {
                 var json = $.parseJSON(data);
                 if (json.error) alert(json.message);

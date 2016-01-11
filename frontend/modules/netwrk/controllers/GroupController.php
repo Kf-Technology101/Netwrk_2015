@@ -10,7 +10,6 @@ use frontend\modules\netwrk\models\UserInvitation;
 use frontend\modules\netwrk\models\City;
 use yii\base\Exception;
 use Yii;
-use yii\helpers\Html;
 
 class GroupController extends BaseController {
     public function actionCreateEditGroup() {
@@ -56,12 +55,14 @@ class GroupController extends BaseController {
                 $group = new Group();
             }
 
+            //todo: validate
             $name = $_POST['name'];
             $permission = $_POST['permission'];
 
             $group->name = $name;
             $group->permission = $permission;
             $group->user_id = $currentUserId;
+            $group->city_id = intval($_POST['city_id']);
             $group->save();
 
             UserGroup::deleteAll(array("group_id" => $group->id));
@@ -106,7 +107,11 @@ class GroupController extends BaseController {
         if(!$cty){
             $zipcode = $_GET['zipcode'];
         }
-        $groups = Group::find()->all();
+        $currentUserId = Yii::$app->user->id;
+        $groups = Group::find()
+            ->where(array("city_id" => $cty->id))
+            ->andWhere('permission = ' . UserGroup::PERMISSION_PUBLIC . ' or user_id = ' . $currentUserId . " or " . $currentUserId . " in (select user_id from user_group where group_id = group.id)")
+            ->all();
         $data = array();
         foreach ($groups as $group) {
             $data[] = array(
@@ -116,9 +121,21 @@ class GroupController extends BaseController {
                 'permission' => $group->permission,
                 'created_at' => date("M d, Y", strtotime($group->created_at)),
                 'users' => UserGroup::find()->where(array("group_id" => $group->id))->count(),
-                'owner' => (Yii::$app->user->id == $group->user_id ? true : false),
+                'owner' => ($currentUserId == $group->user_id ? true : false),
             );
         }
         return json_encode(array('data'=> $data ,'city' => ($cty ? $cty->zip_code : $zipcode)));
+    }
+
+    public function actionGetGroup() {
+        $currentUserId = Yii::$app->user->id;
+        if (empty($_POST['id'])) return json_encode(array('error' => true));
+        /** @var Group $group */
+        $group = Group::find()->where(array("user_id" => $currentUserId, "id" => intval($_POST['id'])))->one();
+        if (empty($group)) return json_encode(array('error' => true));
+        $data = $group->toArray();
+        $data['users'] = array_values(UserGroup::find()->where(array("group_id" => $group->id))->asArray()->all());
+        $data['error'] = false;
+        return json_encode($data);
     }
 }
