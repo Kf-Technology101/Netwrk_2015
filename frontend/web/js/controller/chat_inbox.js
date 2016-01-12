@@ -171,6 +171,7 @@ var ChatInbox = {
 		            target_popup_chat.find('.minimize-btn').css('bottom', '10px');
 				}
 				Default.displayPopupOnTop();
+				PopupChat.MoveMeetButton();
 			}
 		});
 	},

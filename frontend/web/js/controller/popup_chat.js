@@ -194,12 +194,15 @@ var PopupChat = {
 
     MoveMeetButton: function() {
         var have_popup = false,
-            top_btnMeet;
+            max_height = 0,
+            bottom_btnMeet;
 
-        if (!$('#btn_meet').data('original_top')) {
-            $('#btn_meet').data('original_top', parseInt($('#btn_meet').css('top')))
+        if (!$('#btn_meet').data('original_bottom')) {
+            $('#btn_meet').data('original_bottom', parseInt($('#btn_meet').css('bottom')))
         }
-        top_btnMeet = $('#btn_meet').data('original_top');
+        bottom_btnMeet = $('#btn_meet').data('original_bottom');
+        
+        max_height = $('#popup-chat-' + PopupChat.popups[0]).height();
 
         $(PopupChat.popup_chat_class).each(function() {
             var id = this.id;
@@ -209,10 +212,10 @@ var PopupChat = {
             }
         });
 
-        if (have_popup && parseInt($('#btn_meet').css('top')) == top_btnMeet) {
-            $('#btn_meet').css('top', top_btnMeet - 322 + 'px');
-        } else if (!have_popup) {
-            $('#btn_meet').css('top', top_btnMeet + 'px');
+        if (have_popup) {
+            $('#btn_meet').css('bottom', bottom_btnMeet + max_height + 'px');
+        } else {
+            $('#btn_meet').css('bottom', bottom_btnMeet + 'px');
         }
     },
 
@@ -713,6 +716,7 @@ var PopupChat = {
                     btn.css('bottom', '11px');
                 }
             }
+            PopupChat.MoveMeetButton();
         });
     },
 }
