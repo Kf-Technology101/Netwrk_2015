@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\models;
 
 use Yii;
 use yii\base\Behavior;
+use yii\db\Query;
 use yii\db\ActiveRecord;
 use frontend\modules\netwrk\models\WsMessages;
 /**
@@ -75,7 +76,10 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasOne(Topic::className(), ['id' => 'topic_id']);
     }
 
-
+    public function getWsMessages()
+    {
+        return $this->hasMany(WsMessages::className(), ['post_id' => 'id']);
+    }
 
     public function afterSave($insert, $changedAttributes){
         if ($insert) {
@@ -161,5 +165,16 @@ class Post extends \yii\db\ActiveRecord
                 ->orderBy(['post.brilliant_count'=> SORT_DESC])
                 ->one();
         return $post;
+    }
+
+    public function CountUserJoinPost($post){
+        $query = new Query();
+        $datas = $query->select('*,COUNT(DISTINCT ws_messages.user_id) AS count_user_comment')
+            ->from('post')
+            ->where(['post.id'=>$post])
+            ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
+            ->orderBy('count_user_comment DESC')
+            ->one();
+        return $datas['count_user_comment'];
     }
 }
