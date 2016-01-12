@@ -117,7 +117,7 @@ class DefaultController extends BaseController
                 $arr = explode(' ',trim($post->title));
                 $item = [
                     'post_id'=> $post->id,
-                    'post_name'=> $post->title,
+                    'post_name'=> $arr[0],
                     'post_trending'=> Post::SearchHashTagPost($arr[0],$city->id)
                 ];
                 array_push($hashtag, $item);
