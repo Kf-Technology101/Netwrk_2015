@@ -94,6 +94,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				}
 				if ($this->chat_type == 1) {
 					$this->ws_messages->post->comment_count ++;
+					$this->ws_messages->post->chat_updated_time = date('Y-m-d H:i:s');
 					$this->ws_messages->post->update();
 					$list_chat_inbox = $this->updateListChatBox($user);
 				} else {
@@ -293,7 +294,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatDateTime($message->post->created_at);
+                $num_date = UtilitiesFunc::FormatDateTime($message->post->chat_updated_time);
 
                 $item = [
                     'id'=> $message->post->id,
@@ -309,7 +310,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $message->post->updated_at ? $message->post->updated_at : $message->post->created_at
+                    'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
                     ];
                 array_push($data, $item);
             }

@@ -157,19 +157,7 @@ var ChatInbox = {
 				PopupChat.params.post_description = $(e.currentTarget).find('.chat-post-id .description-chat-inbox').html();
 
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
-                // if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
-					PopupChat.initialize();
-				// } else {
-				// 	var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
-		  //           $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
-		  //           target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
-		  //           setTimeout(function(){
-    //         			target_popup_chat.find('textarea').focus()
-    //     			}, 1);
-		  //           target_popup_chat.css('height', '330px');
-		  //           target_popup_chat.find('.nav_input_message').css('display', 'block');
-		  //           target_popup_chat.find('.minimize-btn').css('bottom', '10px');
-				// }
+				PopupChat.initialize();
 				Default.displayPopupOnTop();
 				PopupChat.MoveMeetButton();
 			}
@@ -193,24 +181,13 @@ var ChatInbox = {
                 PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
 				PopupChat.params.post_avatar = $(e.currentTarget).find('.img_avatar').attr('src');
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
-                // if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
-					PopupChat.initialize();
-				// } else {
-				// 	var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
-		  //           $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
-		  //           target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
-		  //           setTimeout(function(){
-    //         			target_popup_chat.find('textarea').focus()
-    //     			}, 1);
-		  //           target_popup_chat.css('height', '330px');
-		  //           target_popup_chat.find('.nav_input_message').css('display', 'block');
-    //                 target_popup_chat.find('.minimize-btn').css('bottom', '5px');
-				// }
+				PopupChat.initialize();
 			}
 			private_notify = $(e.currentTarget).find('.notify-chat-inbox');
 			private_notify.html('0');
 			private_notify.addClass('disable');
 			Default.displayPopupOnTop();
+			PopupChat.MoveMeetButton();
 		});
 	},
 
