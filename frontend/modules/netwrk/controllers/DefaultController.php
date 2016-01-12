@@ -253,17 +253,16 @@ class DefaultController extends BaseController
 
         foreach ($cities as $key => $value) {
             if(isset($value->topics[0])) {
-                $post = $value->topics[0]->posts[0];
-                $content = $post->content;
-                $user_post = $post->user;
-                $content = $post->content;
+				$post = $this->GetPostMostBrilliant($value->id);
+                $user_post = $post['user'];
+                $content = $post['content'];
                 $topices = $this->Top4Topices($value->id);
                 $trending = $this->Trending4Post($value);
 
-                if(strlen($content) > $maxlength ){
-                    $content = substr($post->content,0,$maxlength ) ;
-                    $content = $content."...";
-                }
+                // if(strlen($content) > $maxlength ){
+                //     $content = substr($post->content,0,$maxlength ) ;
+                //     $content = $content."...";
+                // }
 
                 $netwrk = array(
                     'id'=> $value->id,
@@ -282,13 +281,7 @@ class DefaultController extends BaseController
                         'zipcode'   => $user_post->profile->zip_code,
                         'place'     => $user_post->profile->city->name
                     ],
-                    'post'=>[
-                        'post_id'=>$post->id,
-                        'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
-                        'name_post'=> $post->title,
-                        'content' => $content,
-                        'topic_id' => $post->topic_id,
-                    ]
+                    'post'=>$post
                 );
                 array_push($data,$netwrk);
             } else {
