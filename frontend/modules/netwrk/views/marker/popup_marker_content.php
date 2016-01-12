@@ -36,8 +36,10 @@
 				<% })%>
 			</div>
 		<% }else{ %>
-			<p class="notice">Be the first one to create Topic</p>
-			<div class="create-topic">Create Now</div>
+			<div class="no-topic">
+				<p class="notice">Be the first one to create Topic</p>
+				<div class="create-topic">Create Now</div>
+			</div>
 		<% } %>
 
 	</div>
