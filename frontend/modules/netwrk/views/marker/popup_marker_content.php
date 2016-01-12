@@ -11,7 +11,11 @@
 					</div>
 					<div class="information">
 						<p class="username"><%= marker.user.username %></p>
-						<p class="address"><%= marker.user.work %>,<%= marker.user.place %>,USA</p>
+						<p class="address">
+						<% if(marker.user.work){ %>
+							<%= marker.user.work + ',' %>
+						<% } %>
+						<%= marker.user.place %>,USA</p>
 					</div>
 				</div>
 				<div class="brilliant"><p><%= marker.post.brilliant %></p></div>
