@@ -198,15 +198,6 @@ var Map ={
 		        	//   // Removes white background DIV
 		            iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
-		        	//   // Moves the infowindow 115px to the right.
-		            // iwOuter.parent().parent().css({left: '115px'});
-
-		        	//   // Moves the shadow of the arrow 76px to the left margin.
-		            // iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 330px !important;left: 170px !important; z-index: 2!important;'});
-
-		        	//   // Moves the arrow 76px to the left margin.
-		            // iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 330px !important;left: 170px !important;'});
-
 		            //Custom arrow hover popup
 
 		            Map.CustomArrowPopup();
@@ -216,19 +207,6 @@ var Map ={
 		        	//   // Reference to the div that groups the close button elements.
 		            var iwCloseBtn = iwOuter.next();
 		            iwCloseBtn.hide();
-		        	//   // Apply the desired effect to the close button
-		            // iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
-
-					//   // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
-					//   if($('.iw-content').height() < 140){
-					//     $('.iw-bottom-gradient').css({display: 'none'});
-					//   }
-
-					//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-
-		            // iwCloseBtn.mouseout(function(){
-		            // 	$(this).css({opacity: '0'});
-		            // });
 
 		            var post = $("#iw-container .iw-content .iw-subTitle .post-title");
 		            post.unbind();
