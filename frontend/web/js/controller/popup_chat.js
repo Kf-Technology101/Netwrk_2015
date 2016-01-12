@@ -29,6 +29,7 @@ var PopupChat = {
         PopupChat.SetDataChat();
         PopupChat.FetchDataChat();
         if(isMobile){
+            PopupChat.UpdateViewPost();
             PopupChat.SetHeightContainerChat();
             PopupChat.OnClickChatInboxBtnMobile();
             ChatInbox.HideMeetIconMobile();
@@ -37,6 +38,7 @@ var PopupChat = {
             Default.SetAvatarUserDropdown();
         }else{
             if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
+                PopupChat.UpdateViewPost();
                 PopupChat.OnclickLogin();
                 PopupChat.RegisterPopup();
                 PopupChat.ChangeStylePopupChat();
@@ -63,6 +65,14 @@ var PopupChat = {
                     target_popup_chat.find('.minimize-btn').css('bottom', '5px');
                 }
             }
+        }
+    },
+
+    UpdateViewPost: function(){
+        if(!isGuest){
+            Ajax.update_view_post(PopupChat.params).then(function(){
+                console.log('update view count');
+            });
         }
     },
 

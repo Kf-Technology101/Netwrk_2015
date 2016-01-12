@@ -26,6 +26,12 @@ class PostController extends BaseController
         }
     }
 
+    public function actionUpdateViewPost()
+    {
+        $id_post = $_POST['post'];
+        $post = Post::findOne($id_post);
+        $post->update();
+    }
     public function actionIndex()
     {
         $topic_id = $_GET['topic'];
