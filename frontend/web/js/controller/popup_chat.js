@@ -36,18 +36,33 @@ var PopupChat = {
             Default.ShowNotificationOnChat();
             Default.SetAvatarUserDropdown();
         }else{
-            PopupChat.OnclickLogin();
-            PopupChat.RegisterPopup();
-            PopupChat.ChangeStylePopupChat();
-            PopupChat.OnWsChat();
-            PopupChat.OnWsFile();
-            PopupChat.GetListEmoji();
-            PopupChat.HandleEmoji();
-            PopupChat.CustomScrollBar();
-            // PopupChat.OnClickReceiverAvatar();
-            PopupChat.ShowChatBox(PopupChat.params.post);
-            PopupChat.ShowPopupChatWhenModalDisplay();
-            PopupChat.OnClickMinimizeBtn();
+            if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
+                PopupChat.OnclickLogin();
+                PopupChat.RegisterPopup();
+                PopupChat.ChangeStylePopupChat();
+                PopupChat.OnWsChat();
+                PopupChat.OnWsFile();
+                PopupChat.GetListEmoji();
+                PopupChat.HandleEmoji();
+                PopupChat.CustomScrollBar();
+                PopupChat.ShowChatBox(PopupChat.params.post);
+                PopupChat.ShowPopupChatWhenModalDisplay();
+                PopupChat.OnClickMinimizeBtn();
+            } else {
+                var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
+                $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+                target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
+                setTimeout(function(){
+                    target_popup_chat.find('textarea').focus()
+                }, 1);
+                target_popup_chat.css('height', '330px');
+                target_popup_chat.find('.nav_input_message').css('display', 'block');
+                if (target_popup_chat.data('data-chat-type') == 1) {
+                    target_popup_chat.find('.minimize-btn').css('bottom', '10px');
+                } else {
+                    target_popup_chat.find('.minimize-btn').css('bottom', '5px');
+                }
+            }
         }
     },
 

@@ -498,6 +498,7 @@ var Map ={
             PopupChat.params.chat_type = e.post.post_type;
             PopupChat.params.post_name = e.post.name_post;
             PopupChat.params.post_description = e.post.content;
+            ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
             PopupChat.initialize();
   		});
   	},

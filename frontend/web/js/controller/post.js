@@ -76,6 +76,7 @@ var Post ={
                 PopupChat.params.chat_type = $(e.currentTarget).parent().parent().attr('data-chat-type');
 				PopupChat.params.post_name = $(e.currentTarget).parent().parent().find('.information .post_name').html();
 				PopupChat.params.post_description = $(e.currentTarget).parent().parent().find('.information .post_massage').html();
+				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
                 PopupChat.initialize();
 			}
 		});
