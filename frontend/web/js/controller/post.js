@@ -29,33 +29,35 @@ var Post ={
     modal_create: '#create_post',
 	tab_current:'post',
 	initialize: function(){
-		if(isMobile){
-			Post.GetDefaultValue();
-			Post.GetDataOnTab();
-			Post.OnClickSortBtn();
-			Post.FilterTabPost($('body'));
-			Post.OnClickMeetIconMobile();
-			Post.OnClickSelectFilter();
-			Post.LazyLoading();
-			Create_Post.initialize();
-			Default.ShowNotificationOnChat();
-		}else{
-			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
-			Post.ShowModalPost();
-			Post.OnShowModalPost();
-			Post.GetDataOnTab();
-			Post.OnHideModal();
-			Post.FilterTabPost($('.container_post'));
-			Post.getNameTopic();
-			Post.ShowMeetIcon();
-			Post.CustomScrollBar();
-			Post.OnClickBackdrop();
-			Topic.displayPositionModal();
-		}
-		Post.OnclickBack();
-		Post.OnclickCreate();
-		Post.OnChangeTab();
-		Post.OnNetwrkLogo();
+		Ajax.update_view_topic({topic: Post.params.topic}).then(function(){
+			if(isMobile){
+				Post.GetDefaultValue();
+				Post.GetDataOnTab();
+				Post.OnClickSortBtn();
+				Post.FilterTabPost($('body'));
+				Post.OnClickMeetIconMobile();
+				Post.OnClickSelectFilter();
+				Post.LazyLoading();
+				Create_Post.initialize();
+				Default.ShowNotificationOnChat();
+			}else{
+				// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
+				Post.ShowModalPost();
+				Post.OnShowModalPost();
+				Post.GetDataOnTab();
+				Post.OnHideModal();
+				Post.FilterTabPost($('.container_post'));
+				Post.getNameTopic();
+				Post.ShowMeetIcon();
+				Post.CustomScrollBar();
+				Post.OnClickBackdrop();
+				Topic.displayPositionModal();
+			}
+			Post.OnclickBack();
+			Post.OnclickCreate();
+			Post.OnChangeTab();
+			Post.OnNetwrkLogo();
+		});
 	},
 
 	OnClickChat: function(){

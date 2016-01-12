@@ -158,18 +158,16 @@ var Topic = {
         parent.find('.item').unbind();
         parent.find('.item').on('click',function(e){
             var topic = $(e.currentTarget).attr('data-item');
-            Ajax.update_view_topic({topic: topic}).then(function(){
-                if(isMobile){
-                    Post.RedirectPostPage(topic);
-                }else{
-                    $('#modal_topic').modal('hide');
-                    Post.params.topic = topic;
-                    Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();
-                    Post.params.city = Topic.data.city;
-                    Post.params.city_name = Topic.data.city_name;
-                    Post.initialize();
-                }
-            });
+            if(isMobile){
+                Post.RedirectPostPage(topic);
+            }else{
+                $('#modal_topic').modal('hide');
+                Post.params.topic = topic;
+                Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();
+                Post.params.city = Topic.data.city;
+                Post.params.city_name = Topic.data.city_name;
+                Post.initialize();
+            }
         });
 
         parent.find('.item .name_post a').unbind();
