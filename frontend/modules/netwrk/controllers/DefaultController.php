@@ -118,7 +118,8 @@ class DefaultController extends BaseController
                 $item = [
                     'post_id'=> $post->id,
                     'post_name'=> $arr[0],
-                    'post_trending'=> Post::SearchHashTagPost($arr[0],$city->id)
+                    'post_trending'=> Post::SearchHashTagPost($arr[0],$city->id),
+                    'user_join'=>Post::CountUserJoinPost($post->id)
                 ];
                 array_push($hashtag, $item);
             }
@@ -142,7 +143,7 @@ class DefaultController extends BaseController
             }
         }
 
-        $orderby = "post_trending";
+        $orderby = "user_join";
         array_multisort($sortArray[$orderby],SORT_DESC,$hashtag);
 
         return array_slice($hashtag, 0, 4);
