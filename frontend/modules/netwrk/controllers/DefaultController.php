@@ -153,7 +153,7 @@ class DefaultController extends BaseController
         $post = Post::GetPostMostBrilliant($city);
         $item = [
                     'post_id'=>$post->id,
-                    'brilliant'=>$post->topic->brilliant_count ? $post->topic->brilliant_count : 0,
+                    'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
                     'name_post'=> $post->title,
                     'content' => $post->content,
                     'post_type'=> $post->post_type,

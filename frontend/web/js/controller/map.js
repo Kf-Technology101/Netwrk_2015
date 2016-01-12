@@ -522,7 +522,14 @@ var Map ={
   		parent.unbind();
   		console.log(e);
   		parent.on('click',function(){
-  			Create_Topic.initialize(e.id,e.zip_code);
+  			if(isGuest){
+  				Login.modal_callback = Create_Topic;
+  				Create_Topic.params.city = e.id;
+  				Create_Topic.params.city_name = e.zip_code;
+  				Create_Topic.initialize();
+  			}else{
+  				Create_Topic.initialize(e.id,e.zip_code);
+  			}
   		});
   	},
 
