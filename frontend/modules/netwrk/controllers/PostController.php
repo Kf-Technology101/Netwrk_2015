@@ -224,7 +224,7 @@ class PostController extends BaseController
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $message->post->updated_at ? $message->post->updated_at : $message->post->created_at
+                    'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
                     ];
                 array_push($data, $item);
             }
@@ -293,6 +293,18 @@ class PostController extends BaseController
             }
         } else {
             return false;
+        }
+    }
+
+    public function actionUpdateChatTime()
+    {
+        $post = POST::find()->all();
+
+        if ($post) {
+            foreach ($post as $key => $value) {
+                $value->chat_updated_time = $value->updated_at;
+                $value->update();
+            }
         }
     }
 
