@@ -201,7 +201,7 @@ var PopupChat = {
             $('#btn_meet').data('original_bottom', parseInt($('#btn_meet').css('bottom')))
         }
         bottom_btnMeet = $('#btn_meet').data('original_bottom');
-        
+
         max_height = $('#popup-chat-' + PopupChat.popups[0]).height();
 
         $(PopupChat.popup_chat_class).each(function() {
@@ -690,7 +690,7 @@ var PopupChat = {
     },
 
     OnClickMinimizeBtn: function() {
-        var btn = $('#popup-chat-'+PopupChat.params.post).find('.minimize-btn');
+        var btn = $('#popup-chat-'+PopupChat.params.post).find('.minimize-btn, .popup-head-left');
         btn.unbind();
         btn.on('click', function(){
             var target = $(this).parents('.popup-box.chat-popup'),
