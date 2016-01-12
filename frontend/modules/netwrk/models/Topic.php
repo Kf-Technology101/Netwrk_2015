@@ -74,17 +74,17 @@ class Topic extends \yii\db\ActiveRecord
         return $this->hasMany(Post::className(), ['topic_id' => 'id']);
     }
 
-    public function beforeSave($insert){
-        if ($insert) {
-            $user_exits = Topic::find()->where(['user_id'=> 1,'city_id'=>$this->city_id])->one();
-            if(!$user_exits){
-                $this->city->updateAttributes([
-                    'user_count' =>  $this->city->user_count + 1
-                ]);
-            }
-        }
-        return parent::beforeSave($insert);
-    }
+    // public function beforeSave($insert){
+    //     if ($insert) {
+    //         $user_exits = Topic::find()->where(['user_id'=> 1,'city_id'=>$this->city_id])->one();
+    //         if(!$user_exits){
+    //             $this->city->updateAttributes([
+    //                 'user_count' =>  $this->city->user_count + 1
+    //             ]);
+    //         }
+    //     }
+    //     return parent::beforeSave($insert);
+    // }
 
         /**
      * @inheritdoc

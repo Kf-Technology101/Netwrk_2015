@@ -98,17 +98,18 @@ class TopicController extends BaseController
             $city_id = $netwrk->id;
         }
 
-        $Topic = new Topic;
+        $Topic = new Topic();
         $Topic->user_id = $currentUser;
         $Topic->city_id = $city_id;
         $Topic->title = $topic;
         $Topic->save();
 
-        $Post = new Post;
+        $Post = new Post();
         $Post->title = $post;
         $Post->content = $message;
         $Post->topic_id = $Topic->id;
         $Post->user_id = $currentUser;
+        $Post->post_type = 1;
         $Post->save();
 
         $Topic->post_count = 1;
