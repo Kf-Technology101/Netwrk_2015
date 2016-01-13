@@ -89,14 +89,7 @@ class Post extends \yii\db\ActiveRecord
                 $this->topic->city->updateAttributes([
                     'post_count' =>  $this->topic->city->post_count + 1
                 ]);
-
-                $msg = new WsMessages();
-                $msg->user_id = $this->user_id;
-                $msg->post_id = $this->id;
-                $msg->post_type = 1;
-                $msg->msg_type = 1;
-                $msg->msg = $this->content;
-                $msg->save(false);
+                $this->CreateFirstMessage($this);
             }
 
         }else{
@@ -104,6 +97,16 @@ class Post extends \yii\db\ActiveRecord
         }
 
         return parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function CreateFirstMessage($post){
+        $msg = new WsMessages();
+        $msg->user_id = $post->user_id;
+        $msg->post_id = $post->id;
+        $msg->post_type = 1;
+        $msg->msg_type = 1;
+        $msg->msg = $post->content;
+        $msg->save(false);
     }
 
     public function afterDelete(){

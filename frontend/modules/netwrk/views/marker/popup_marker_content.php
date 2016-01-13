@@ -12,10 +12,14 @@
 					<div class="information">
 						<p class="username"><%= marker.user.username %></p>
 						<p class="address">
-						<% if(marker.user.work){ %>
-							<%= marker.user.work + ',' %>
-						<% } %>
-						<%= marker.user.place %>,USA</p>
+							<% if(marker.user.work){ %>
+								<%= marker.user.work + ',' %>
+							<% } %>
+							<% if(marker.user.place){ %>
+								<%= marker.user.place + ',' %>
+							<% } %>
+							USA
+						</p>
 					</div>
 				</div>
 				<div class="brilliant"><p><%= marker.post.brilliant %></p></div>
