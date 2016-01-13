@@ -447,6 +447,7 @@ var PopupChat = {
 
                 fd = new FormData();
                 fd.append('file', file);
+                fd.append('post', PopupChat.params.post);
                 if ((size_file > 12582912) || ($.inArray(type_file, array_type_support) === -1)) {
                     alert("Uploaded file is not supported or it exceeds the allowable limit of 12MB.");
                     input_change.val('');
