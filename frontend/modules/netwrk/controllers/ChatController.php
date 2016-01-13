@@ -10,6 +10,7 @@ use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\ChatPrivate;
+use frontend\modules\netwrk\controllers\Resize;
 use yii\helpers\Url;
 
 class ChatController extends BaseController
@@ -62,7 +63,7 @@ class ChatController extends BaseController
 
 	public function actionUpload()
 	{
-		if(isset($_FILES['file']) && $_FILES['file']['error'] == 0 ){
+		if(isset($_FILES['file']) && $_FILES['file']['error'] == 0 && isset($_POST['post'])){
 			$file = file_get_contents($_FILES['file']['tmp_name']);
 			$f = finfo_open();
 			$mime_type = finfo_buffer($f, $file, FILEINFO_MIME_TYPE);
@@ -100,11 +101,21 @@ class ChatController extends BaseController
 			if (isset($supported_img_types[$mime_type])) {
 				$extension = $supported_img_types[$mime_type];
 				$type = 2;
-				$location = Yii::getAlias('@frontend/web/img/uploads/');
+				$location = Yii::getAlias('@frontend/web/img/uploads/').$_POST['post'].'/';
+
+				if (!is_dir($location)) {
+		            mkdir( $location, 0777, true);
+		        }
+
 			} else if(isset($supported_file_types[$mime_type])) {
 				$extension = $supported_file_types[$mime_type];
 				$type = 3;
-				$location = Yii::getAlias('@frontend/web/files/uploads/');
+				$location = Yii::getAlias('@frontend/web/files/uploads/').$_POST['post'].'/';
+
+				if (!is_dir($location)) {
+		            mkdir( $location, 0777, true);
+		        }
+
 			} else {
 				$extension = false;
 			}
@@ -113,8 +124,28 @@ class ChatController extends BaseController
 				$info = pathinfo($_FILES['file']['name']);
 				$fileName = uniqid(basename($_FILES['file']['name'],'.'.$info['extension']).date("ymd").'_') . "." . $extension;
 
-				$location = $location. $fileName;
-				move_uploaded_file($_FILES['file']['tmp_name'], $location);
+				$target_upload = $location. $fileName;
+				move_uploaded_file($_FILES['file']['tmp_name'], $target_upload);
+
+				if ($type == 2) {
+					$images_size = getimagesize($target_upload);
+					$old_width = $images_size[0];
+					$old_height = $images_size[1];
+					$final_width  = round($old_width/10);
+					$final_height = round($old_height/10);
+					// *** 1) Initialise / load image
+					$resizeObj = new Resize($target_upload);
+
+					// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+					$resizeObj->resizeImage($final_width, $final_height, 'crop');
+
+					// *** 3) Save image
+					if (!is_dir($location.'/thumbnails/')) {
+						mkdir( $location.'/thumbnails/', 0777, true);
+			        }
+					$resizeObj->saveImage($location.'/thumbnails/'.'thumbnail_'.$fileName, 100);
+				}
+
 				 $data = [
 					'file_name' => $fileName,
 					'type' => $type
