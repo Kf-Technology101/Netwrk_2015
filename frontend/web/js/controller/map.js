@@ -198,7 +198,6 @@ var Map ={
 		//         	keyword: 'public school',
 		//         	types: ['university']
 		//         };
-		        
 		//         Map.placeSearch(contentSearch, 'uni', 50);
 
 		//         var contentSearch = {
@@ -206,7 +205,6 @@ var Map ={
 		//         	keyword: 'City Government Hall', // City Government Hall/Center/Townhall
 		//         	types: ['university']
 		//         };
-		        
 		//         Map.placeSearch(contentSearch, 'gov', 50);
 		//     });
 		// } else {
@@ -309,7 +307,7 @@ var Map ={
 
 	            Map.CustomArrowPopup();
 	        	//   // Changes the desired tail shadow color.
-	            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 1px 0px 1px', 'z-index' : '2'});
+	            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 0px 0px 0px', 'z-index' : '2'});
 
 	        	//   // Reference to the div that groups the close button elements.
 	            var iwCloseBtn = iwOuter.next();
@@ -426,7 +424,7 @@ var Map ={
         var arrow_left = arrow.children(':nth-child(1)');
         var arrow_right = arrow.children(':nth-child(2)');
 
-        iwBackground.children(':nth-child(1)').css({'top': 340});
+        iwBackground.children(':nth-child(1)').css({'top': 340}).hide();
         arrow_left.find('div').css({'top':14,'left': 11,'height': 10, 'width': 5});
         arrow_right.find('div').css({'top':14,'left': 0,'height': 10, 'width': 5});
   	},
