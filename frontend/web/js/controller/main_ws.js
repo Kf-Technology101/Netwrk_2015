@@ -1,3 +1,7 @@
+/**
+ * Main controller of socket JS
+ * @type ws
+ */
 var MainWs ={
 
     url: '',
