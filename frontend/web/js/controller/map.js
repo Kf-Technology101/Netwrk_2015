@@ -22,7 +22,7 @@ var Map ={
 	      // disableDoubleClickZoom: true,
 	      disableDefaultUI: true,
 	      streetViewControl: false,
-	      scrollwheel: true,
+	      scrollwheel: false,
 	      mapTypeId:google.maps.MapTypeId.ROADMAP
 	    };
 	    var remove_poi = [
@@ -36,7 +36,7 @@ var Map ={
 
 	    var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 	    Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-	    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
+	    Map.map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
 	    // map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 	    Map.mapBoundaries(Map.map);
 
