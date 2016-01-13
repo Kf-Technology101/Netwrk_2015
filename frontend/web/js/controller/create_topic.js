@@ -155,6 +155,7 @@ var Create_Topic={
         // Create_Topic.hideSideBar();
         Create_Topic.hideNetWrkBtn();
         parent.modal('hide');
+
     },
 
     onclickBack: function(){
@@ -323,6 +324,7 @@ var Create_Topic={
                             Create_Topic.hideModalCreateTopic();
                             Topic.initialize(Create_Topic.params.city);
                             ChatInbox.GetDataListChatPost();
+                            Map.update_marker(Create_Topic.params.city);
                         }
                     },700);
                 });

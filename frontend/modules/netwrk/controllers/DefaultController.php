@@ -11,6 +11,8 @@ use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\WsMessages;
+use frontend\modules\netwrk\models\Temp;
 use frontend\components\UtilitiesFunc;
 
 class DefaultController extends BaseController
@@ -74,7 +76,12 @@ class DefaultController extends BaseController
     {
         $zipcode = $_POST['zipcode'];
         $place_name = $_POST['place_name'];
-        $city = City::find()->where(['zip_code'=>$zipcode, 'office'=>$place_name])->one();
+        $type = $_POST['type'];
+        if($type == 'gov'){
+            $city = City::find()->where(['zip_code'=>$zipcode, 'office_type'=>'government'])->one();
+        }else{
+            $city = City::find()->where(['zip_code'=>$zipcode, 'office_type'=>'university'])->one();
+        }
 
         if($city){
             $data = ['status'=> 1,'city'=>$city->id];
@@ -185,8 +192,14 @@ class DefaultController extends BaseController
         }
         // $cities = City::find()->with('topics.posts')->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
         $cities = City::find()->with('topics.posts')->where(['id' => $zipcodes])->all();
+        // echo '<pre>';var_dump($cities);die;
 
         $data = [];
+        // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment FROM `ws_messages` AS a WHERE post_id = 247;
+        // or
+        // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment, c.post_id  FROM `ws_messages` as a, post as b, topic as
+        // c, city as d WHERE a.post_id=b.id AND b.topic_id=c.id AND c.city_id=d.id GROUP BY a.post_id ORDER BY count_user_comment
+        //  DESC LIMIT 10;
 
         foreach ($cities as $key => $value) {
             if(isset($value->topics[0])) {
@@ -200,9 +213,10 @@ class DefaultController extends BaseController
                 //     $content = substr($post->content,0,$maxlength) ;
                 //     $content = $content."...";
                 // }
+
                 $netwrk = array(
                     'id'=> $value->id,
-                    'name'=> $value->name,
+                    'name'=> ($value->office != '') ? $value->office : $value->name,
                     'lat'=> $value->lat,
                     'lng'=>$value->lng,
                     'zip_code'=> $value->zip_code,
@@ -229,6 +243,7 @@ class DefaultController extends BaseController
                     'zip_code'=> $value->zip_code,
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
+                    'topic' => '',
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -294,6 +309,7 @@ class DefaultController extends BaseController
                     'zip_code'=> $value->zip_code,
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
+                    'topic' => '',
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -307,6 +323,77 @@ class DefaultController extends BaseController
         }
 
         $hash = json_encode($data);
+        return $hash;
+    }
+
+    public function actionGetMarkerUpdate()
+    {
+        $maxlength = Yii::$app->params['MaxlengthContent'];
+        $city_id = $_POST['city'];
+        $city= City::find()->with('topics.posts')->where(['id'=>$city_id])->one();
+
+        $data = [];
+
+        if($city){
+            if(isset($city->topics[0])) {
+                $post = $city->topics[0]->posts[0];
+                $content = $post->content;
+                $user_post = $post->user;
+                $content = $post->content;
+                $topices = $this->Top4Topices($city->id);
+                $trending = $this->Trending4Post($city);
+
+                if(strlen($content) > $maxlength ){
+                    $content = substr($post->content,0,$maxlength ) ;
+                    $content = $content."...";
+                }
+
+                $netwrk = array(
+                    'id'=> $city->id,
+                    'name'=> $city->name,
+                    'lat'=> $city->lat,
+                    'lng'=>$city->lng,
+                    'zip_code'=> $city->zip_code,
+                    'office'=>$city->office,
+                    'office_type'=>$city->office_type,
+                    'topic'=> $topices,
+                    'trending_post'=> $trending,
+                    'user'=>[
+                        'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
+                        'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
+                        'work'      => $user_post->profile->work,
+                        'zipcode'   => $user_post->profile->zip_code,
+                        'place'     => $user_post->profile->city->name
+                    ],
+                    'post'=>[
+                        'post_id'=>$post->id,
+                        'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
+                        'name_post'=> $post->title,
+                        'content' => $content,
+                        'topic_id' => $post->topic_id,
+                    ]
+                );
+            } else {
+                $netwrk = array(
+                    'id'=> $city->id,
+                    'name'=> $city->name,
+                    'lat'=> $city->lat,
+                    'lng'=>$city->lng,
+                    'zip_code'=> $city->zip_code,
+                    'office'=>$city->office,
+                    'office_type'=>$city->office_type,
+                    'topic' => '',
+                    'post'=> array(
+                        'post_id'=>-1,
+                        'name_post'=> '',
+                        'content' => '',
+                        'topic_id' => '',
+                    )
+                );
+            }
+        }
+
+        $hash = json_encode($netwrk);
         return $hash;
     }
 
@@ -329,4 +416,88 @@ class DefaultController extends BaseController
         return json_encode($netwrk->id);
     }
 
+    public function actionInsertLocalUniversity(){
+        $zcodes = City::find()->select(['id', 'zip_code'])->where(['office_type'=>'university'])->all();
+        $datas = City::find()->select(['id', 'zip_code'])->where('office is null')->all();
+        $arrs = [];
+        for ($i=0; $i < count($zcodes); $i++) { 
+            array_push($arrs, $zcodes[$i]->zip_code);
+        }
+
+        $arrs2 = [];
+        for ($i=0; $i < count($datas); $i++) { 
+            array_push($arrs2, $datas[$i]->zip_code);
+        }
+
+        for ($i=0; $i < count($arrs); $i++) {
+            if(($key = array_search($arrs[$i], $arrs2)) !== false){
+                unset($arrs2[$key]);
+            }
+        }
+
+        $ctys = City::find()->where(['zip_code'=>$arrs2])->andWhere('office_type is null')->all();
+
+        for ($i=0; $i < count($ctys); $i++) {
+            $lat = $ctys[$i]->lat + 0.02;
+            $lng = $ctys[$i]->lng + 0.02;
+
+            $temp = Temp::find()->where(['zipcode' => $ctys[$i]->zip_code])->one();
+
+            if($lat >= $temp->lat_max)
+                $lat = $temp->lat_max - 0.005;
+            if($lng >= $temp->lng_max)
+                $lng = $temp->lng_max - 0.005;
+
+            $city = new City();
+            $city->name = $ctys[$i]->name;
+            $city->lat = $lat;
+            $city->lng = $lng;
+            $city->zip_code = $ctys[$i]->zip_code;
+            $city->office = 'Local University';
+            $city->office_type = 'university';
+            $city->save();
+        }
+    }
+
+    public function actionInsertLocalGovernment(){
+        $zcodes = City::find()->select(['id', 'zip_code'])->where(['office_type'=>'government'])->all();
+        $datas = City::find()->select(['id', 'zip_code'])->where('office is null')->all();
+        $arrs = [];
+        for ($i=0; $i < count($zcodes); $i++) { 
+            array_push($arrs, $zcodes[$i]->zip_code);
+        }
+
+        $arrs2 = [];
+        for ($i=0; $i < count($datas); $i++) { 
+            array_push($arrs2, $datas[$i]->zip_code);
+        }
+
+        for ($i=0; $i < count($arrs); $i++) {
+            if(($key = array_search($arrs[$i], $arrs2)) !== false){
+                unset($arrs2[$key]);
+            }
+        }
+
+        $ctys = City::find()->where(['zip_code'=>$arrs2])->andWhere('office_type is null')->all();
+
+        for ($i=0; $i < count($ctys); $i++) { 
+            $lat = $ctys[$i]->lat - 0.02;
+            $lng = $ctys[$i]->lng + 0.02;
+
+            $temp = Temp::find()->where(['zipcode' => $ctys[$i]->zip_code])->one();
+
+            if($lat <= $temp->lat_min)
+                $lat = $temp->lat_min + 0.005;
+            if($lng >= $temp->lng_max)
+                $lng = $temp->lng_max - 0.005;
+            $city = new City();
+            $city->name = $ctys[$i]->name;
+            $city->lat = $lat;
+            $city->lng = $lng;
+            $city->zip_code = $ctys[$i]->zip_code;
+            $city->office = 'Local Government Office';
+            $city->office_type = 'government';
+            $city->save();
+        }
+    }
 }

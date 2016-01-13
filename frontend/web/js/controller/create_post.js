@@ -325,6 +325,7 @@ var Create_Post={
                     },700);
                 });
                 ChatInbox.GetDataListChatPost();
+                Map.update_marker(Create_Post.params.city);
             }
         });
     },

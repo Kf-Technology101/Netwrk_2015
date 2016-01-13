@@ -731,6 +731,54 @@ var Ajax ={
             error: defer.reject
         });
         return defer.promise();
+    },
+
+    insert_local_university: function() {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/insert-local-university";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    insert_local_government: function() {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/insert-local-government";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    get_marker_update: function(city) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/get-marker-update";
+
+        $.ajax({
+            url: url,
+            data: {'city': city},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
     }
 }
 

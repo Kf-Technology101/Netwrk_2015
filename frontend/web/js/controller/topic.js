@@ -322,7 +322,8 @@ var Topic = {
         $('#modal_topic').on('hidden.bs.modal',function(e) {
             $(e.currentTarget).unbind();
             Topic.reset_modal();
-            Map.get_data_marker();
+            // 
+            // Map.get_data_marker();
 
         });
     },
