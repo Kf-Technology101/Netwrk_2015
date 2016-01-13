@@ -42,6 +42,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/lib/underscore.js',
         'js/main.js',
+        'js/vendor/bootbox.min.js',
         'js/controller/ajax.js',
         'js/controller/map.js',
         'js/controller/default.js',
@@ -60,7 +61,8 @@ class AppAsset extends AssetBundle
         'js/controller/login.js',
         'js/controller/signup.js',
         'js/controller/search.js',
-        'js/ws/ws.js',
+        // 'js/ws/ws.js',
+        'js/vendor/reconnecting-websocket.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',
         'js/lib/jquery.ui.touch_punch.js',

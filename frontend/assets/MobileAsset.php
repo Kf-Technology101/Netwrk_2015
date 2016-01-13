@@ -42,7 +42,8 @@ class MobileAsset extends AssetBundle
     public $js = [
       'js/lib/underscore.js',
       'js/main.js',
-      'js/ws/ws.js',
+      'js/vendor/bootbox.min.js',
+      // 'js/ws/ws.js',
       // 'js/ws/chat.js',
       'js/controller/ajax.js',
       'js/controller/map.js',
@@ -71,6 +72,7 @@ class MobileAsset extends AssetBundle
       'js/controller/forgot_password.js',
       'js/controller/reset_password.js',
       'js/controller/chat_inbox.js',
+      'js/vendor/reconnecting-websocket.js',
       'js/controller/main_ws.js',
       'js/controller/popup_chat.js',
       // 'js/controller/chat_private.js'

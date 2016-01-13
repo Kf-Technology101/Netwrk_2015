@@ -10,13 +10,19 @@
 (function($){
 $.extend({
 	websocketSettings: {
-		open: function(){alert('open connection');},
+		open: function(){},
 		close: function(){},
 		message: function(){},
 		options: {},
 		events: {}
 	},
 	websocket: function(url, s) {
+
+		var self = this;
+		console.log(self);
+
+
+
 		var ws;
 		if ("WebSocket" in window) {
 		  // Chrome, MSIE, newer Firefox
@@ -32,10 +38,24 @@ $.extend({
 		  }
 		}
 
+		ws.onopen = function(event) {
+			clearInterval(timeout);
+			console.log('Connection Established!');
+		}
+
+		ws.onclose = function(event) {
+			console.log('Disconnected');
+			bootbox.dialog({
+			  message: '<i class="fa fa-refresh fa-spin"></i> You were disconnected from Chat Server. Waiting to reconnect...',
+			  closeButton: false
+			});
+			var timeout = setInterval(function(){
+				ws = new WebSocket(url);
+            }, 1500);
+		}
+
 		$.websocketSettings = $.extend($.websocketSettings, s);
-		$(ws).bind('open', $.websocketSettings.open)
-			.bind('close', $.websocketSettings.close)
-			.bind('message', $.websocketSettings.message)
+		$(ws).bind('message', $.websocketSettings.message)
 			.bind('message', function(e){
 				var m = $.parseJSON(e.originalEvent.data);
 				var h = $.websocketSettings.events[m.type];

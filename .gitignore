@@ -37,7 +37,7 @@ phpunit.phar
 /phpunit.xml
 
 # composer css frontend dir
-/frontend/web/css/desktop
+frontend/web/css/desktop
 
 # composer css frontend dir
-/frontend/web/css/mobile
+frontend/web/css/mobile
