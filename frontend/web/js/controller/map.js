@@ -224,6 +224,7 @@ var Map ={
 				}
 			}
 		});
+	},
   	//Custom arrow hover popup
   	CustomArrowPopup: function(){
   		var iwOuter = $('.gm-style-iw');
