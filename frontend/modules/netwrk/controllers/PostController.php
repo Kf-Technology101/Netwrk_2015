@@ -301,17 +301,4 @@ class PostController extends BaseController
             return false;
         }
     }
-
-    public function actionUpdateChatTime()
-    {
-        $post = POST::find()->all();
-
-        if ($post) {
-            foreach ($post as $key => $value) {
-                $value->chat_updated_time = $value->updated_at;
-                $value->update();
-            }
-        }
-    }
-
 }
