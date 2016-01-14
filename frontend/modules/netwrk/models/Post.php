@@ -90,6 +90,7 @@ class Post extends \yii\db\ActiveRecord
                     'post_count' =>  $this->topic->city->post_count + 1
                 ]);
                 $this->CreateFirstMessage($this);
+                $this->CreateHashtag($this);
             }
 
         }else{
@@ -97,6 +98,13 @@ class Post extends \yii\db\ActiveRecord
         }
 
         return parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function CreateHashtag($post){
+        $arr = explode(' ',trim($post->title));
+
+        $hashtag = Hashtag::findHashtag($arr[0]);
+        PostHashtag::createPostHashtag($hashtag->id,$post->id);
     }
 
     public function CreateFirstMessage($post){
