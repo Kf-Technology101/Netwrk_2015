@@ -34,8 +34,8 @@ MobileAsset::register($this);
   <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
     <div class="navbar-mobile navbar-fixed-top">
     	<div class="menu_top">
-  			<div class="logo_netwrk">
-  				<a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+  			<div class="logo_netwrk option_logo_netwrk">
+  				<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
   			</div>
         <div class="box-search">
           <div class="search input-group">
