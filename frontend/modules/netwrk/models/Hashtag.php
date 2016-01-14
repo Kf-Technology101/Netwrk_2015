@@ -66,6 +66,11 @@ class Hashtag extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getPost_hashtag()
+    {
+        return $this->hasOne(PostHashtag::className(), ['hashtag_id' => 'id']);
+    }
+
     public function afterSave($insert, $changedAttributes){
         return parent::afterSave($insert, $changedAttributes);
     }

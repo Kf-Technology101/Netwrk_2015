@@ -65,14 +65,25 @@ class PostHashtag extends \yii\db\ActiveRecord
         $model = Hashtag::findOne($this->hashtag_id);
         if($model){
             $model->count_total = $count_hashtag;
-            $model->save(false);
+            if($model->save(false)){
+                echo "create hashtag {$model->id} complete \n";
+            }else{
+                echo "create hashtag {$model->id} failed \n";
+            }
         }
     }
 
     public function createPostHashtag($hashtag,$post){
-        $model = new PostHashtag();
-        $model->post_id = $post;
-        $model->hashtag_id = $hashtag;
-        $model->save(false);
+        $post_hashtag = PostHashtag::findPostHashtag($hashtag,$post);
+        if(!$post_hashtag){
+            $model = new PostHashtag();
+            $model->post_id = $post;
+            $model->hashtag_id = $hashtag;
+            $model->save(false);
+        }
+    }
+
+    public function findPostHashtag($hashtag,$post){
+        return PostHashtag::find()->where(['hashtag_id'=> $hashtag,'post_id'=>$post])->one();
     }
 }

@@ -8,10 +8,10 @@ use frontend\modules\netwrk\models\Post;
 class HelperController extends \yii\console\Controller{
 
 	public function actionUpdateTimeChat(){
-        $post = POST::find()->all();
+        $posts = Post::find()->all();
 
-        if ($post) {
-            foreach ($post as $key => $value) {
+        if ($posts) {
+            foreach ($posts as $key => $value) {
                 $value->chat_updated_time = $value->updated_at;
                 if($value->update()){
                 	echo "Update post {$value->id} complete \n";
@@ -21,4 +21,12 @@ class HelperController extends \yii\console\Controller{
             }
         }
 	}
+
+    public function actionUpdateHashtagOnPost(){
+        $posts = Post::find()->all();
+
+        foreach ($posts as $key => $post) {
+            Post::CreateHashtag($post);
+        }
+    }
 }
