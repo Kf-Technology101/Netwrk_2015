@@ -16,13 +16,18 @@ var Map ={
   	// center: new google.maps.LatLng(39.7662195,-86.441277),
   	center:'',
   	initialize: function() {
+  		if(sessionStorage.map_zoom){
+  			Map.zoom = parseInt(sessionStorage.map_zoom);
+  		} else {
+  			sessionStorage.map_zoom = Map.zoom;
+  		}
 	    var map_andiana  = {
 	      center: Map.center,
 	      zoom: Map.zoom,
 	      // disableDoubleClickZoom: true,
 	      disableDefaultUI: true,
 	      streetViewControl: false,
-	      scrollwheel: false,
+	      scrollwheel: true,
 	      mapTypeId:google.maps.MapTypeId.ROADMAP
 	    };
 	    var remove_poi = [
@@ -36,7 +41,7 @@ var Map ={
 
 	    var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 	    Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-	    Map.map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
+	    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    // map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 	    Map.mapBoundaries(Map.map);
 
@@ -195,15 +200,15 @@ var Map ={
 		//        // radarSearch --------------------------------------------
 		//        	var contentSearch = {
 		//        		bounds: map.getBounds(),
-		//         	keyword: 'public school',
-		//         	types: ['university']
+		//         	keyword: 'high school',
+		//         	types: ['school','university']
 		//         };
 		//         Map.placeSearch(contentSearch, 'uni', 50);
 
 		//         var contentSearch = {
 		//        		bounds: map.getBounds(),
-		//         	keyword: 'City Government Hall', // City Government Hall/Center/Townhall
-		//         	types: ['university']
+		//         	keyword: 'Town Hall', // City Government Hall/Center/Town hall
+		//         	types: ['local_government_office', 'courthouse', 'city_hall']
 		//         };
 		//         Map.placeSearch(contentSearch, 'gov', 50);
 		//     });
@@ -213,12 +218,12 @@ var Map ={
   	},
 
   	placeSearch: function(contentSearch, type, timeDeplay){
-  		var service = new google.maps.places.PlacesService(map);
+  		var service = new google.maps.places.PlacesService(Map.map);
 		service.radarSearch(contentSearch, function(results, status){
 			if (status === google.maps.places.PlacesServiceStatus.OK) {
 				infowindow = new google.maps.InfoWindow();
 				for (var i = 0; i < results.length; i++) {
-					setTimeout(Map.getZipcodeAddress(service, results[i], map, type, results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), timeDeplay);
+					setTimeout(Map.getZipcodeAddress(service, results[i], Map.map, type, results[i].geometry.location.lat(), results[i].geometry.location.lng(), results[i].place_id), timeDeplay);
 				}
 			}
 		});
@@ -330,93 +335,6 @@ var Map ={
 		Map.markers.push(marker);
   	},
 
-  	initialMarker: function(map, position, img, cid, name_of_place){
-  		var marker;
-  		marker = new google.maps.Marker({
-			map: map,
-			position: position,
-			icon: img,
-			city_id: cid,
-			place_name: name_of_place,
-    	});
-
-      	var infowindow = new google.maps.InfoWindow({
-	        content: '',
-	        city_id: cid,
-	        maxWidth: 350
-      	});
-
-      	google.maps.event.addListener(marker, 'click', (function(marker) {
-			return function(){
-				if(!isMobile){
-					infowindow.close();
-				}
-				Topic.init(marker.city_id);
-			};
-	    })(marker));
-
-      	var marker_template = _.template($( "#maker_popup" ).html());
-    	var content = marker_template({marker: e});
-      	infowindow.content = content;
-        Map.infowindow.push(infowindow);
-
-	    google.maps.event.addListener(marker, 'mouseover', function() {
-			infowindow.open(map, this);
-			Map.onhoverInfoWindow(cid,marker);
-	    });
-
-	    google.maps.event.addListener(marker, 'mouseout', function() {
-	      // infowindow.close();
-	    });
-
-		google.maps.event.addListener(infowindow, 'domready', function() {
-
-        	//   // Reference to the DIV that wraps the bottom of infowindow
-            var iwOuter = $('.gm-style-iw');
-
-			//    // Since this div is in a position prior to .gm-div style-iw.
-			//    // * We use jQuery and create a iwBackground variable,
-			//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-			iwOuter.parent().css({'max-width': 310});
-            var iwBackground = iwOuter.prev();
-            iwOuter.children(':nth-child(1)').css({'max-width' : '310px'});
-        	// Removes background shadow DIV
-            iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-
-        	//   // Removes white background DIV
-            iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-
-            //Custom arrow hover popup
-
-            Map.CustomArrowPopup();
-        	//   // Changes the desired tail shadow color.
-            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 1px 0px 1px', 'z-index' : '2'});
-
-        	//   // Reference to the div that groups the close button elements.
-            var iwCloseBtn = iwOuter.next();
-            iwCloseBtn.hide();
-
-            var post = $("#iw-container .iw-content .iw-subTitle .post-title");
-            post.unbind();
-         	post.click(function(ev){
-            	var post_id = e.post.post_id;
-	            if(post_id != -1) {
-		            Post.params.city = e.id;
-		            Post.params.city_name = e.name;
-		            Post.params.topic = e.post.topic_id;
-
-		            // ChatPost.params.post = post_id;
-		            // ChatPost.initialize();
-
-                    PopupChat.params.post = post_id;
-                    PopupChat.initialize();
-	            }
-      		});
-      	});
-
-      	Map.markers.push(marker);
-  	},
-
   	CustomArrowPopup: function(){
   		var iwOuter = $('.gm-style-iw');
   		var iwBackground = iwOuter.prev();
@@ -524,23 +442,99 @@ var Map ={
     	Ajax.new_place(params).then(function(data){
 			var js = $.parseJSON(data);
 			if (type == 'gov') {
-				Map.createMarkerGov(service, place, map, zipcode, office, js);
+				Map.createMarker(service, place, map, zipcode, office, js, type);
 			} else {
-				Map.createMarker(service, place, map, zipcode, office, js);
+				Map.createMarker(service, place, map, zipcode, office, js, type);
 			}
     	});
   	},
 
-  	createMarker: function(service, place, map, zipcode, name_of_place, cid) {
+  	createMarker: function(service, place, map, zipcode, name_of_place, cid, type) {
 	    var placeLoc = place.geometry.location;
-	    var img = './img/icon/map_icon_university_v_2.png';
-	    Map.initialMarker(map, placeLoc, img, cid, name_of_place);
-  	},
+	    var img;
 
-  	createMarkerGov: function(service, place, map, zipcode, name_of_place, cid) {
-    	var placeLoc = place.geometry.location;
-    	var img = './img/icon/map_icon_government_v_2.png';
-	    Map.initialMarker(map, placeLoc, img, cid, name_of_place);
+	    if (type == 'gov') {
+			img = './img/icon/map_icon_government_v_2.png';
+		} else {
+			img = './img/icon/map_icon_university_v_2.png';
+		}
+	    
+	    var marker = new google.maps.Marker({
+			map: map,
+			position: place.geometry.location,
+			icon: img,
+			city_id: cid,
+			place_name: name_of_place,
+    	});
+
+      	var infowindow = new google.maps.InfoWindow({
+	        content: '',
+	        city_id: cid,
+	        maxWidth: 350
+      	});
+
+      	google.maps.event.addListener(marker, 'click', (function(marker) {
+			return function(){
+				if(!isMobile){
+					infowindow.close();
+				}
+				Topic.init(marker.city_id);
+			};
+	    })(marker));
+
+      	var content = '<div id="iw-container" >' +
+                '<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ cid +'" onclick="Map.eventOnClickZipcode('+ cid +')"><span class="zipcode">'+ zipcode + '</span></a></div>' +
+                '<div class="iw-content">' +
+                  '<div class="iw-subTitle">#'+''+'</div>' +
+                  '<p>'+''+'</p>'+
+                '</div>' +
+                '<div class="iw-bottom-gradient"></div>' +
+              '</div>';
+      	infowindow.content = content;
+        Map.infowindow.push(infowindow);
+
+	    google.maps.event.addListener(marker, 'mouseover', function() {
+			infowindow.open(map, this);
+			Map.onhoverInfoWindow(cid,marker);
+	    });
+
+	    google.maps.event.addListener(marker, 'mouseout', function() {
+	      // infowindow.close();
+	    });
+
+		google.maps.event.addListener(infowindow, 'domready', function() {
+			var iwOuter = $('.gm-style-iw');
+
+			var iwBackground = iwOuter.prev();
+			iwOuter.children(':nth-child(1)').css({'max-width' : '400px'});
+			// Removes background shadow DIV
+			iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+			//   // Removes white background DIV
+			iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+			//   // Moves the shadow of the arrow 76px to the left margin.
+			iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+
+			//   // Moves the arrow 76px to the left margin.
+			iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+
+			//   // Changes the desired tail shadow color.
+			iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+
+			//   // Reference to the div that groups the close button elements.
+			var iwCloseBtn = iwOuter.next();
+
+			//   // Apply the desired effect to the close button
+			iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+
+			//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+			iwCloseBtn.mouseout(function(){
+			  $(this).css({opacity: '0'});
+			});
+		});
+
+      	Map.markers.push(marker);
   	},
 
   	getZipcodeAddress: function(service, place, map, type, lat, lng, name_of_place){
@@ -648,6 +642,9 @@ var Map ={
   	eventZoom: function(map){
 	    var mode = true;
 	    map.addListener('dblclick', function(event){
+	    	if(sessionStorage.map_zoom && parseInt(sessionStorage.map_zoom) == 12){
+	    		Map.zoomIn = true;
+	    	}
 	        if(!Map.zoomIn){
 		        Map.smoothZoom(map, 12, map.getZoom() + 1, true);
 		        Map.zoomIn = true;
@@ -655,6 +652,7 @@ var Map ={
 	            Map.deleteNetwrk(map);
 		        map.zoom = 12;
 		        Map.show_marker(map);
+		        sessionStorage.map_zoom = 12;
 	        	// }
 	      	} else {
 	      		$(".map-marker-label").remove();
@@ -664,6 +662,7 @@ var Map ={
 		        Map.deleteNetwrk(map);
 		        map.zoom = 7;
 		        Map.show_marker(map);
+		        sessionStorage.clear();
 	        	// }
 	      	}
 	    });

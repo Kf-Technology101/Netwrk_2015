@@ -438,8 +438,8 @@ class DefaultController extends BaseController
         $ctys = City::find()->where(['zip_code'=>$arrs2])->andWhere('office_type is null')->all();
 
         for ($i=0; $i < count($ctys); $i++) {
-            $lat = $ctys[$i]->lat + 0.02;
-            $lng = $ctys[$i]->lng + 0.02;
+            $lat = $ctys[$i]->lat + 0.01;
+            $lng = $ctys[$i]->lng + 0.01;
 
             $temp = Temp::find()->where(['zipcode' => $ctys[$i]->zip_code])->one();
 
@@ -481,8 +481,8 @@ class DefaultController extends BaseController
         $ctys = City::find()->where(['zip_code'=>$arrs2])->andWhere('office_type is null')->all();
 
         for ($i=0; $i < count($ctys); $i++) { 
-            $lat = $ctys[$i]->lat - 0.02;
-            $lng = $ctys[$i]->lng + 0.02;
+            $lat = $ctys[$i]->lat - 0.01;
+            $lng = $ctys[$i]->lng + 0.01;
 
             $temp = Temp::find()->where(['zipcode' => $ctys[$i]->zip_code])->one();
 

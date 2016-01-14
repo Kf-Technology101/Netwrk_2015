@@ -234,10 +234,19 @@ function CustomScrollBar(){
 
 }
 
+function homePage(){
+    var target = $('.option_logo_netwrk a');
+    target.on('click', function(){
+        sessionStorage.clear();
+        window.location.href = baseUrl;
+    });
+}
+
 $(document).ready(function(){
   _main();
   MainWs.initialize();
   _addListenEventPage();
   Emoji.initialize();
   Search.initialize();
+  homePage();
 });
