@@ -157,7 +157,7 @@ var Map ={
 
 		MarkerLabel.prototype = $.extend(new google.maps.OverlayView(), {
 		    onAdd: function() {
-				this.getPanes().overlayImage.appendChild(this.span);
+				this.getPanes().overlayLayer.appendChild(this.span);
 				var self = this;
 				this.listeners = [
 					google.maps.event.addListener(this, 'position_changed', function() {
