@@ -81,6 +81,11 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(WsMessages::className(), ['post_id' => 'id']);
     }
 
+    public function getPostHashtag()
+    {
+        return $this->hasMany(PostHashtag::className(), ['post_id' => 'id']);
+    }
+
     public function afterSave($insert, $changedAttributes){
         if ($insert) {
             if($this->post_type == 1) {
