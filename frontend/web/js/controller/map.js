@@ -16,17 +16,19 @@ var Map ={
   	// center: new google.maps.LatLng(39.7662195,-86.441277),
   	center:'',
   	initialize: function() {
-  		if(sessionStorage.map_zoom){
-  			Map.zoom = parseInt(sessionStorage.map_zoom);
-  		} else {
-  			sessionStorage.map_zoom = Map.zoom;
-  		}
-  		if(sessionStorage.lat && sessionStorage.lng){
-  			Map.center = new google.maps.LatLng(sessionStorage.lat, sessionStorage.lng);
-  		} else {
-  			sessionStorage.lat = Map.center.lat();
-  			sessionStorage.lng = Map.center.lng();
-  		}
+  		if(isMobile){
+	  		if(sessionStorage.map_zoom){
+	  			Map.zoom = parseInt(sessionStorage.map_zoom);
+	  		} else {
+	  			sessionStorage.map_zoom = Map.zoom;
+	  		}
+	  		if(sessionStorage.lat && sessionStorage.lng){
+	  			Map.center = new google.maps.LatLng(sessionStorage.lat, sessionStorage.lng);
+	  		} else {
+	  			sessionStorage.lat = Map.center.lat();
+	  			sessionStorage.lng = Map.center.lng();
+	  		}
+	  	}
 	    var map_andiana  = {
 	      center: Map.center,
 	      zoom: Map.zoom,
@@ -650,9 +652,11 @@ var Map ={
   	eventZoom: function(map){
 	    var mode = true;
 	    map.addListener('dblclick', function(event){
-	    	if(sessionStorage.map_zoom && parseInt(sessionStorage.map_zoom) == 12){
-	    		Map.zoomIn = true;
-	    	}
+	    	if(isMobile){
+		    	if(sessionStorage.map_zoom && parseInt(sessionStorage.map_zoom) == 12){
+		    		Map.zoomIn = true;
+		    	}
+		    }
 	        if(!Map.zoomIn){
 		        Map.smoothZoom(map, 12, map.getZoom() + 1, true);
 		        Map.zoomIn = true;
@@ -660,7 +664,9 @@ var Map ={
 	            Map.deleteNetwrk(map);
 		        map.zoom = 12;
 		        Map.show_marker(map);
-		        sessionStorage.map_zoom = 12;
+		        if(isMobile){
+			        sessionStorage.map_zoom = 12;
+			    }
 	        	// }
 	      	} else {
 	      		$(".map-marker-label").remove();
@@ -670,7 +676,9 @@ var Map ={
 		        Map.deleteNetwrk(map);
 		        map.zoom = 7;
 		        Map.show_marker(map);
-		        sessionStorage.clear();
+		        if(isMobile){
+		        	sessionStorage.clear();
+		    	}
 	        	// }
 	      	}
 	    });

@@ -34,8 +34,8 @@ AppAsset::register($this);
                 ],
             ]);
         ?>
-        <div class="logo_netwrk option_logo_netwrk">
-            <a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+        <div class="logo_netwrk">
+            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
         </div>
         <div class="box-search">
             <div class="search input-group">

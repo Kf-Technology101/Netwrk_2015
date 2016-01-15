@@ -248,5 +248,7 @@ $(document).ready(function(){
   _addListenEventPage();
   Emoji.initialize();
   Search.initialize();
-  homePage();
+  if(isMobile){
+    homePage();
+  }
 });
