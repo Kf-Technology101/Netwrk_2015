@@ -21,13 +21,19 @@ var Map ={
   		} else {
   			sessionStorage.map_zoom = Map.zoom;
   		}
+  		if(sessionStorage.lat && sessionStorage.lng){
+  			Map.center = new google.maps.LatLng(sessionStorage.lat, sessionStorage.lng);
+  		} else {
+  			sessionStorage.lat = Map.center.lat();
+  			sessionStorage.lng = Map.center.lng();
+  		}
 	    var map_andiana  = {
 	      center: Map.center,
 	      zoom: Map.zoom,
 	      // disableDoubleClickZoom: true,
 	      disableDefaultUI: true,
 	      streetViewControl: false,
-	      scrollwheel: true,
+	      scrollwheel: false,
 	      mapTypeId:google.maps.MapTypeId.ROADMAP
 	    };
 	    var remove_poi = [
@@ -41,7 +47,7 @@ var Map ={
 
 	    var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 	    Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-	    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
+	    Map.map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
 	    // map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
 	    Map.mapBoundaries(Map.map);
 
@@ -196,14 +202,14 @@ var Map ={
     	// Please don't delete code below
 		//
 		// if (map.getZoom() == 12) {
-		// 	 map.addListener('idle', function(){
-		//        // radarSearch --------------------------------------------
-		//        	var contentSearch = {
-		//        		bounds: map.getBounds(),
-		//         	keyword: 'high school',
-		//         	types: ['school','university']
-		//         };
-		//         Map.placeSearch(contentSearch, 'uni', 50);
+		// 	 ap.addListener('idle', function(){
+		//         // radarSearch --------------------------------------------
+		// 		var contentSearch = {
+		// 			bounds: map.getBounds(),
+		// 			keyword: 'school',
+		// 			types: ['school','university']
+		// 		};
+		// 		Map.placeSearch(contentSearch, 'uni', 50);
 
 		//         var contentSearch = {
 		//        		bounds: map.getBounds(),
@@ -266,6 +272,8 @@ var Map ={
 
 	    google.maps.event.addListener(marker, 'click', (function(marker){
 	        return function(){
+	        	sessionStorage.lat = marker.position.lat();
+	        	sessionStorage.lng = marker.position.lng();
 	        	if(!isMobile){
 	            	infowindow.close();
 	          	}
