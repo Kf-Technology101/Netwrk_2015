@@ -81,8 +81,6 @@ var Login={
 		if(Login.modal_callback){
 			console.log('callback');
 			setTimeout(function(){
-				window.ws.close();
-				MainWs.initialize();
 				Login.modal_callback.initialize();
 				Login.ShowNotificationOnChat();
 				Default.SetAvatarUserDropdown();
