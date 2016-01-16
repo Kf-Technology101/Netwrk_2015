@@ -27,7 +27,6 @@ var PopupChat = {
     initialize: function() {
         PopupChat.SetUrl();
         PopupChat.SetDataChat();
-        PopupChat.FetchDataChat();
         if(isMobile){
             PopupChat.UpdateViewPost();
             PopupChat.SetHeightContainerChat();
@@ -66,6 +65,7 @@ var PopupChat = {
                 }
             }
         }
+        PopupChat.FetchDataChat();
     },
 
     UpdateViewPost: function(){
@@ -343,7 +343,7 @@ var PopupChat = {
               }
         } else {
             // window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
-            window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+            window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type, 'current_user': UserLogin});
         }
     },
 
