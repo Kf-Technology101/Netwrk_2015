@@ -52,6 +52,7 @@ var MainWs ={
     events: {
         fetch: function(e) {
             console.log('fetch');
+            console.log(e);
             PopupChat.msg_lenght = e.data.length;
             if (PopupChat.msg_lenght > 0) {
                 var message = $('#popup-chat-'+e.data[0]['post_id']).find(PopupChat.container).find('.message');
