@@ -27,7 +27,6 @@ var PopupChat = {
     initialize: function() {
         PopupChat.SetUrl();
         PopupChat.SetDataChat();
-        PopupChat.FetchDataChat();
         if(isMobile){
             PopupChat.UpdateViewPost();
             PopupChat.SetHeightContainerChat();
@@ -66,6 +65,7 @@ var PopupChat = {
                 }
             }
         }
+        PopupChat.FetchDataChat();
     },
 
     UpdateViewPost: function(){
