@@ -127,6 +127,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			}elseif($type == "fetch"){
 				$this->post_id = isset($data['data']['post_id']) ? $data['data']['post_id'] : false;
 				$this->chat_type = isset($data['data']['chat_type']) ? $data['data']['chat_type']: false;
+				$fetch = $this->fetchMessages();
+				// var_dump($fetch);die;
 				$this->send($from, "fetch", $this->fetchMessages());
 			}elseif($type == "notify"){
 				$sender = $data['data']['sender'];
@@ -175,28 +177,61 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	{
 		$data_result=[];
 		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
-		if($message) {
-			foreach ($message as $key => $value) {
-       			# code...
-       			if($value->first_msg == 0){
-       				if($value->user->id == $this->current_user){
-       					$pchat = ChatPrivate::find()->where(['user_id'=>$value->user->id, 'post_id'=>$this->post_id])->one();
-       					$profile = Profile::find()->where(['user_id'=>$pchat->user_id_guest])->one();
-       				} else {
-       					$profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
-       				}
+		foreach ($message as $key => $value) {
+			# code...
+			if($value->first_msg == 0){
+				if($value->user->id == $this->current_user){
+					$pchat = ChatPrivate::find()->where(['user_id'=>$value->user->id, 'post_id'=>$this->post_id])->one();
+					$profile = Profile::find()->where(['user_id'=>$pchat->user_id_guest])->one();
+            		$current_date = date('Y-m-d H:i:s');
+					$time1 = date_create($profile->dob);
+					$time2 = date_create($current_date);
+					$year_old = $time1->diff($time2)->y;
 
-       				$current_date = date('Y-m-d H:i:s');
-		            $time1 = date_create($profile->dob);
-		            $time2 = date_create($current_date);
-		            $year_old = $time1->diff($time2)->y;
+					$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
+					$time = UtilitiesFunc::FormatTimeChat($value->created_at);
+					if ($profile->photo == null){
+						$image = '/img/icon/no_avatar.jpg';
+					}else{
+						$image = '/uploads/'.$pchat->user_id_guest.'/'.$profile->photo;
+					}
+      
+					$item = array(
+						'id'=>$pchat->user_id_guest,
+						'name'=>$profile->first_name ." ".$profile->last_name,
+						'avatar'=> $image,
+						'msg'=> $smg,
+						'msg_type' => 1,
+						'created_at'=> $time,
+						'post_id'=> $value->post_id,
+					);
+				} else {
+					$profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
+					$current_date = date('Y-m-d H:i:s');
+					$time1 = date_create($profile->dob);
+					$time2 = date_create($current_date);
+					$year_old = $time1->diff($time2)->y;
 
-       				$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
-
-       			} else {
-       				$smg = nl2br($value->msg);
-       			}
-
+					$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
+					$time = UtilitiesFunc::FormatTimeChat($value->created_at);
+					if ($profile->photo == null){
+						$image = '/img/icon/no_avatar.jpg';
+					}else{
+						$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
+					}
+      
+					$item = array(
+						'id'=>$value->user->id,
+						'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
+						'avatar'=> $image,
+						'msg'=> $smg,
+						'msg_type' => 1,
+						'created_at'=> $time,
+						'post_id'=> $value->post_id,
+					);
+				}
+			} else {
+				$smg = nl2br($value->msg);
 				$time = UtilitiesFunc::FormatTimeChat($value->created_at);
 				if ($value->user->profile->photo == null){
 					$image = '/img/icon/no_avatar.jpg';
@@ -212,9 +247,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'created_at'=> $time,
 					'post_id'=> $value->post_id,
 				);
-
-				array_push($data_result,$item);
 			}
+
+			array_push($data_result,$item);
 		}
 		return $data_result;
 	}
