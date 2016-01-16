@@ -127,6 +127,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			}elseif($type == "fetch"){
 				$this->post_id = isset($data['data']['post_id']) ? $data['data']['post_id'] : false;
 				$this->chat_type = isset($data['data']['chat_type']) ? $data['data']['chat_type']: false;
+				$this->current_user = isset($data['data']['current_user']) ? $data['data']['current_user']: $this->current_user;
 				$fetch = $this->fetchMessages();
 				// var_dump($fetch);die;
 				$this->send($from, "fetch", $this->fetchMessages());
