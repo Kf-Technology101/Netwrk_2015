@@ -10,6 +10,7 @@ use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
+use frontend\modules\netwrk\models\Hashtag;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\Temp;
@@ -114,6 +115,24 @@ class DefaultController extends BaseController
         return $data;
     }
 
+    //Get top 4 hashtag in City
+    protected function Trending4Hashtag($city){
+        // Get size hashtag
+        $limit = 4;
+        $hashtags = Hashtag::TopHashtagInCity($city->id,$limit);
+        $data =[];
+        foreach ($hashtags as $hashtag){
+            $item = [
+                'hashtag_id'=> $hashtag['id'],
+                'hashtag_name'=> $hashtag['hashtag'],
+                'hashtag_post'=> $hashtag['count_hash']
+            ];
+            array_push($data, $item);
+        }
+
+        return $data;
+    }
+
     //Get Similarpost and trending number on top 4 post
     protected function Trending4Post($city)
     {
@@ -207,12 +226,8 @@ class DefaultController extends BaseController
                 $user_post = $post['user'];
                 $content = $post['content'];
                 $topices = $this->Top4Topices($value->id);
-                $trending = $this->Trending4Post($value);
-
-                // if(strlen($content) > $maxlength ){
-                //     $content = substr($post->content,0,$maxlength) ;
-                //     $content = $content."...";
-                // }
+                // $trending = $this->Trending4Post($value);
+                $trending_hashtag = $this->Trending4Hashtag($value);
 
                 $netwrk = array(
                     'id'=> $value->id,
@@ -223,7 +238,8 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'topic'=> $topices,
-                    'trending_post'=> $trending,
+                    // 'trending_post'=> $trending,
+                    'trending_hashtag'=> $trending_hashtag,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
@@ -273,7 +289,8 @@ class DefaultController extends BaseController
                 $user_post = $post['user'];
                 $content = $post['content'];
                 $topices = $this->Top4Topices($value->id);
-                $trending = $this->Trending4Post($value);
+                // $trending = $this->Trending4Post($value);
+                $trending_hashtag = $this->Trending4Hashtag($value);
 
                 // if(strlen($content) > $maxlength ){
                 //     $content = substr($post->content,0,$maxlength ) ;
@@ -289,7 +306,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'topic'=> $topices,
-                    'trending_post'=> $trending,
+                    'trending_hashtag'=> $trending_hashtag,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),

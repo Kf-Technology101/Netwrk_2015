@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\models;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 
 /**
  * This is the model class for table "hashtag".
@@ -66,7 +67,7 @@ class Hashtag extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getPost_hashtag()
+    public function getPostHashtag()
     {
         return $this->hasOne(PostHashtag::className(), ['hashtag_id' => 'id']);
     }
@@ -75,6 +76,7 @@ class Hashtag extends \yii\db\ActiveRecord
         return parent::afterSave($insert, $changedAttributes);
     }
 
+    //find hashtag with name
     public function findHashtag($hashtag){
         $tag = Hashtag::find()->where(['hashtag'=>$hashtag])->one();
 
@@ -86,5 +88,28 @@ class Hashtag extends \yii\db\ActiveRecord
             $model->save(false);
             return $model;
         }
+    }
+
+    // top hastag in City
+    public function TopHashtagInCity($city,$limit){
+        // $model = Hashtag::find()
+        //                 ->joinWith('postHashtag')
+        //                 ->joinWith('post','postHashtag.post_id')
+        //                 ->joinwith('topic')
+        //                 ->where(['hashtag'=> $tag])
+        //                 ->andWhere(['topic.city_id' => $city])
+        //                 ->all();
+        $query = new Query();
+        $model = $query->select('count(hashtag.id) as count_hash, hashtag.id,hashtag.hashtag,')
+                    ->from('hashtag')
+                    ->leftJoin('post_hashtag', 'post_hashtag.hashtag_id = hashtag.id')
+                    ->leftJoin('post', 'post_hashtag.post_id = post.id')
+                    ->leftJoin('topic', 'topic.id = post.topic_id')
+                    ->where(['topic.city_id' => $city])
+                    ->groupBy('hashtag.id')
+                    ->orderBy('count_hash DESC')
+                    ->limit($limit)
+                    ->all();
+        return $model;
     }
 }

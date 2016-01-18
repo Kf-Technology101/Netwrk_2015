@@ -36,10 +36,10 @@
 			</div>
 			<div class="top-post-trending">
 				<p class="title">Trending</p>
-				<% _.each(marker.trending_post,function(e){ %>
+				<% _.each(marker.trending_hashtag,function(e){ %>
 					<div class="item-post">
-						<p class="name-post"><%= e.post_name %></p>
-						<p class="num-post"><%= e.post_trending %> Posts</p>
+						<p class="name-post" data-value="<%= e.hashtag_id %>"><%= e.hashtag_name %></p>
+						<p class="num-post"><%= e.hashtag_post %> Posts</p>
 					</div>
 				<% })%>
 			</div>

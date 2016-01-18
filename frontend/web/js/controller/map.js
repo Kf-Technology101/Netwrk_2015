@@ -254,7 +254,7 @@ var Map ={
 
   		text_below = "<span>" + e.zip_code + " " + ((e.office != null) ? e.office : e.name) + "</span>";
       	if(e.topic.length > 0){
-      		text_below += "<br>" + e.topic[0].name + "<br>#" + e.trending_post[0].post_name.split(' ')[0];
+      		text_below += "<br>" + e.topic[0].name + "<br>#" + e.trending_hashtag[0].hashtag_name;
       	}
 
       	marker = new google.maps.Marker({
