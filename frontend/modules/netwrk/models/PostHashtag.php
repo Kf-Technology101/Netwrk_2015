@@ -65,11 +65,7 @@ class PostHashtag extends \yii\db\ActiveRecord
         $model = Hashtag::findOne($this->hashtag_id);
         if($model){
             $model->count_total = $count_hashtag;
-            if($model->save(false)){
-                echo "create hashtag {$model->id} complete \n";
-            }else{
-                echo "create hashtag {$model->id} failed \n";
-            }
+            $model->save(false);
         }
     }
 

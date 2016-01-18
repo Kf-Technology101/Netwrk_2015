@@ -145,7 +145,7 @@ class SettingController extends BaseController
 
         // Close the streams /
         fclose( $fp );
-        fclose( $postdata );   
+        fclose( $postdata );
 
         $user = User::find()->where('id ='.$currentUser)->one();
         $user->profile->photo = $filename;

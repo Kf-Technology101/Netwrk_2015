@@ -3,6 +3,12 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
+use yii\db\Query;
+use frontend\modules\netwrk\models\WsMessages;
+use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\Topic;
+use frontend\modules\netwrk\models\Post;
+use frontend\modules\netwrk\models\Hashtag;
 
 /**
  * This is the model class for table "{{%city}}".
@@ -79,5 +85,33 @@ class City extends \yii\db\ActiveRecord
                     ->limit($limit)
                     ->all();
         }
+    }
+
+    //Get top netwrk have most user
+    public function GetTopCityUserJoinGlobal($limit){
+        $query = new Query();
+        $data = $query ->select('c.id as city_id ,c.name as city_name,t.id as topic_id,t.title as topic_name ,p.id as post_id,ws.msg, count( DISTINCT ws.user_id) as user_join')
+                       ->from('ws_messages ws')
+                       ->leftJoin('post p', 'p.id=ws.post_id')
+                       ->leftJoin('topic t', 't.id=p.topic_id')
+                       ->leftJoin('city c','c.id = t.city_id')
+                       ->where(['not',['p.topic_id'=> null]])
+                       ->groupBy('c.id')
+                       ->orderBy('user_join DESC')
+                       ->limit($limit)
+                       ->all();
+        return $data;
+    }
+
+    //Get tophashtag each top city
+    public function TopHashTag_City($city,$limit){
+
+        foreach ($city as $key => $value) {
+            # code...
+            $model_hashtag = Hashtag::TopHashtagInCity($value['city_id'],$limit);
+            $city[$key]['top_hashtag'] = $model_hashtag;
+        }
+
+        return $city;
     }
 }

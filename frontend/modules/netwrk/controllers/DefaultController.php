@@ -95,10 +95,10 @@ class DefaultController extends BaseController
     }
 
     // Get 4 topic have post most
-    protected static function Top4Topices($city)
+    protected static function Top4Topices($city,$limit)
     {
-
-        $topices = Topic::Get4Topic($city);
+        //$limit get size object
+        $topices = Topic::GetTopTopic($city,$limit);
         $data =[];
         foreach ($topices as $key => $value){
             $item =[
@@ -116,9 +116,7 @@ class DefaultController extends BaseController
     }
 
     //Get top 4 hashtag in City
-    protected function Trending4Hashtag($city){
-        // Get size hashtag
-        $limit = 4;
+    protected function Trending4Hashtag($city,$limit){
         $hashtags = Hashtag::TopHashtagInCity($city->id,$limit);
         $data =[];
         foreach ($hashtags as $hashtag){
@@ -134,7 +132,7 @@ class DefaultController extends BaseController
     }
 
     //Get Similarpost and trending number on top 4 post
-    protected function Trending4Post($city)
+    protected function Trending4Post($city,$limit)
     {
         $hashtag = [];
         foreach ($city->topics as $topic){
@@ -150,13 +148,13 @@ class DefaultController extends BaseController
                 array_push($hashtag, $item);
             }
         }
-        $data = $this->GetTop4Trending($hashtag);
+        $data = $this->GetTop4Trending($hashtag,$limit);
 
         return $data;
     }
 
     //Sort 4 post have trending most
-    protected static function GetTop4Trending($hashtag)
+    protected static function GetTop4Trending($hashtag,$limit)
     {
         $sortArray = [];
 
@@ -172,7 +170,7 @@ class DefaultController extends BaseController
         $orderby = "user_join";
         array_multisort($sortArray[$orderby],SORT_DESC,$hashtag);
 
-        return array_slice($hashtag, 0, 4);
+        return array_slice($hashtag, 0, $limit);
     }
 
     protected static function GetPostMostBrilliant($city)
@@ -194,7 +192,7 @@ class DefaultController extends BaseController
     public function actionGetMakerDefaultZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
-
+        $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
         $query = new Query();
         $datas = $query->select('COUNT(DISTINCT ws_messages.user_id) AS count_user_comment, city.id, COUNT(post.id) AS post_count')
             ->from('city')
@@ -225,9 +223,9 @@ class DefaultController extends BaseController
                 $post = $this->GetPostMostBrilliant($value->id);
                 $user_post = $post['user'];
                 $content = $post['content'];
-                $topices = $this->Top4Topices($value->id);
-                // $trending = $this->Trending4Post($value);
-                $trending_hashtag = $this->Trending4Hashtag($value);
+                $topices = $this->Top4Topices($value->id,$limitHover);
+                // $trending = $this->Trending4Post($value,$limitHover);
+                $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
 
                 $netwrk = array(
                     'id'=> $value->id,
@@ -279,6 +277,7 @@ class DefaultController extends BaseController
     public function actionGetMakerMaxZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
+        $limitHover = null;
         $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
 
         $data = [];
@@ -288,9 +287,9 @@ class DefaultController extends BaseController
 				$post = $this->GetPostMostBrilliant($value->id);
                 $user_post = $post['user'];
                 $content = $post['content'];
-                $topices = $this->Top4Topices($value->id);
+                $topices = $this->Top4Topices($value->id,$limitHover);
                 // $trending = $this->Trending4Post($value);
-                $trending_hashtag = $this->Trending4Hashtag($value);
+                $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
 
                 // if(strlen($content) > $maxlength ){
                 //     $content = substr($post->content,0,$maxlength ) ;
@@ -516,5 +515,23 @@ class DefaultController extends BaseController
             $city->office_type = 'government';
             $city->save();
         }
+    }
+
+    public function actionFeedGlobal(){
+        $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+
+        $top_post = Post::GetTopPostUserJoinGlobal($limit);
+        $top_topic = Topic::GetTopTopicGlobal($limit);
+        $top_city = City::GetTopCityUserJoinGlobal($limit);
+        $top_communities =City::TopHashTag_City($top_city,$limit);
+
+        $item = [
+            'top_post'=> $top_post,
+            'top_topic'=> $top_topic,
+            'top_communities'=> $top_communities
+        ];
+
+        $hash = json_encode($item);
+        return $hash;
     }
 }

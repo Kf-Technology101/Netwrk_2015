@@ -7,7 +7,9 @@ $params = [
     'MaxlenghtMessageMobile'		=> 130,
     'MaxlenghtContentPostDesktop'	=> 70,
     'MaxlenghtContentPostMobile'	=> 70,
-    'LimitResultSearch'				=> 2
+    'LimitResultSearch'				=> 2,
+    'LimitObjectHoverPopup'			=> 4,
+    'LimitObjectFeedGlobal'			=> 3
 ];
 
 return $params;

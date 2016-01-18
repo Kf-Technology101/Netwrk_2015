@@ -120,12 +120,34 @@ class Topic extends \yii\db\ActiveRecord
         }
     }
 
-    public function Get4Topic($city){
+    // Get top $limit topic in City
+    public function GetTopTopic($city,$limit){
         return Topic::find()
                     ->joinWith('city')
                     ->where(['city.id' => $city])
                     ->orderBy(['topic.post_count'=> SORT_DESC])
-                    ->limit(4)
+                    ->limit($limit)
                     ->all();
+    }
+
+    //Get top topic in all netwrk
+    public function GetTopTopicGlobal($limit){
+
+        $model = Topic::find()
+                    ->orderBy(['topic.post_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        $topics = [];
+        foreach ($model as $key => $value) {
+            # code...
+            $item = [
+                'id' => $value->id,
+                'name'=> $value->title,
+                'post_count'=> $value->post_count
+            ];
+            array_push($topics, $item);
+        }
+
+        return $topics;
     }
 }

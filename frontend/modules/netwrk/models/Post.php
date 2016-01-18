@@ -7,6 +7,7 @@ use yii\base\Behavior;
 use yii\db\Query;
 use yii\db\ActiveRecord;
 use frontend\modules\netwrk\models\WsMessages;
+use frontend\modules\netwrk\models\User;
 /**
  * This is the model class for table "post".
  *
@@ -192,5 +193,24 @@ class Post extends \yii\db\ActiveRecord
             ->orderBy('count_user_comment DESC')
             ->one();
         return $datas['count_user_comment'];
+    }
+
+    public function GetTopPostUserJoinGlobal($limit){
+        $query = new Query();
+        $data = $query ->select('post.id,post.title,post.content,post.brilliant_count,ws_messages.user_id,profile.photo,count(DISTINCT ws_messages.user_id) as user_join')
+                       ->from('ws_messages')
+                       ->leftJoin('profile','ws_messages.user_id = profile.user_id')
+                       ->leftJoin('post', 'post.id=ws_messages.post_id')
+                       ->where(['not',['post.topic_id'=> null]])
+                       ->groupBy('post.id')
+                       ->orderBy('user_join DESC')
+                       ->limit($limit)
+                       ->all();
+        foreach ($data as $key => $value) {
+            # code...
+            $url_avatar = User::GetUrlAvatar($value['user_id'],$value['photo']);
+            $data[$key]['photo'] = $url_avatar;
+        }
+        return $data;
     }
 }
