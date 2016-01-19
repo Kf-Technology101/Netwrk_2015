@@ -143,7 +143,9 @@ class Topic extends \yii\db\ActiveRecord
             $item = [
                 'id' => $value->id,
                 'name'=> $value->title,
-                'post_count'=> $value->post_count
+                'post_count'=> $value->post_count,
+                'city_id'=> $value->city_id,
+                'city_name'=> $value->city->name
             ];
             array_push($topics, $item);
         }

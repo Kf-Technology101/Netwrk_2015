@@ -67,9 +67,9 @@
 				_.each(landing.top_topic,function(e,i){
 					console.log(e);
 					if(i == len_topic - 1){ %>
-							<div class="topic-row last-row" data-value="<%= e.id %>">
+							<div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
 					<% }else{ %>
-							<div class="topic-row" data-value="<%= e.id %>">
+							<div class="topic-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
 					<% } %>
 								<p class="topic-title"><%= e.name %></p>
 								<div class="post-counter">
@@ -92,9 +92,9 @@
 		<div class="top-communities-content">
 			<%
 				_.each(landing.top_communities,function(e,i){ %>
-				<div class="communities-row">
+				<div class="communities-row" data-city="<%= e.city_id %>">
 					<div class="com-content">
-						<p class="zipcode" data-city="<%= e.city_id %>"><%= e.zip_code %></p>
+						<p class="zipcode" ><%= e.zip_code %></p>
 						<p class="subtext">
 						<% _.each(e.top_hashtag,function(d,s){ %>
 							<span><%=d.hashtag %></span>

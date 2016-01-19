@@ -130,6 +130,7 @@ var Default ={
     SetAvatarUserDropdown: function() {
         if (UserLogin) {
             Ajax.get_user_profile().then(function(data){
+                sessionStorage.UserInfo = data;
                 data = $.parseJSON(data);
                 var list_template = _.template($("#user_info_dropdown" ).html());
                 var append_html = list_template({user_info: data});

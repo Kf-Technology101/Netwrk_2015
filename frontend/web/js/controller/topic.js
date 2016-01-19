@@ -364,9 +364,9 @@ var Topic = {
 
     show_page_topic: function(city,params){
         if (params){
-            window.location.href = "netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
         }else{
-            window.location.href = "netwrk/topic/topic-page?city="+city;
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city;
         }
     },
 
