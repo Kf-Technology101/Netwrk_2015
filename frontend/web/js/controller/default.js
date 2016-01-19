@@ -26,8 +26,12 @@ var Default ={
             }else{
                 LandingPage.initialize();
             }
-        }else if(sessionStorage.show_landing == 2){
+        }else if(sessionStorage.show_landing == 1){
             if(isMobile){
+                LandingPage.initialize();
+            }
+        }else if(sessionStorage.show_landing == 0){
+            if(sessionStorage.url_landing == location.href){
                 LandingPage.initialize();
             }
         }

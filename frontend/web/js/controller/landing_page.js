@@ -26,11 +26,12 @@ var LandingPage = {
 		fix_width_post(target,160);
 	},
 	SetSession: function(){
-		sessionStorage.show_landing = 2;
+		sessionStorage.show_landing = 1;
 	},
 
 	UnsetSession: function(){
-		sessionStorage.show_landing = 3;
+		sessionStorage.show_landing = 0;
+		sessionStorage.url_landing = location.href;
 	},
 
 	redirect: function(){

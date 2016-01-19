@@ -197,7 +197,7 @@ function _addListenEventPage(){
   case 'Chat-inbox':
     ChatInbox.initialize();
     break;
-	default:
+	case 'Default':
 		Default.initialize();
 		break;
 	}
@@ -237,7 +237,7 @@ function CustomScrollBar(){
 function homePage(){
     var target = $('.option_logo_netwrk a');
     target.on('click', function(){
-        sessionStorage.clear();
+        sessionStorage.map_zoom = 7;
         window.location.href = baseUrl;
     });
 }
