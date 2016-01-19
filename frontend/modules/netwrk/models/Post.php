@@ -197,6 +197,9 @@ class Post extends \yii\db\ActiveRecord
 
     public function GetTopPostUserJoinGlobal($limit){
         $query = new Query();
+        $maxlength = Yii::$app->params['MaxlenghtMessageDesktop'];
+        $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
+
         $data = $query ->select('post.id,post.title,post.content,post.brilliant_count,ws_messages.user_id,profile.photo,count(DISTINCT ws_messages.user_id) as user_join')
                        ->from('ws_messages')
                        ->leftJoin('profile','ws_messages.user_id = profile.user_id')
@@ -210,6 +213,17 @@ class Post extends \yii\db\ActiveRecord
             # code...
             $url_avatar = User::GetUrlAvatar($value['user_id'],$value['photo']);
             $data[$key]['photo'] = $url_avatar;
+
+            #minimize content
+            $content = $value['content'];
+            if($this->getIsMobile() && strlen($content) > $maxlengthMobile){
+                $content = substr($content,0,$maxlengthMobile) ;
+                $content = $content." ...<span class='show_more'>show more</span>";
+            }elseif(!$this->getIsMobile() && strlen($content) > $maxlength){
+                $content = substr($content,0,$maxlength) ;
+                $content = $content." ...<span class='show_more'>show more</span>";
+            }
+            $data[$key]['content'] = $content;
         }
         return $data;
     }

@@ -197,10 +197,11 @@ function _addListenEventPage(){
   case 'Chat-inbox':
     ChatInbox.initialize();
     break;
-	case 'Default':
+	default:
 		Default.initialize();
 		break;
 	}
+  console.log(page);
 }
 
 function shuffle_array(array) {
