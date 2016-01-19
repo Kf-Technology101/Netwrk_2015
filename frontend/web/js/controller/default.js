@@ -31,7 +31,7 @@ var Default ={
                 LandingPage.initialize();
             }
         }else if(sessionStorage.show_landing == 0){
-            if(sessionStorage.url_landing == location.href){
+            if(isMobile && sessionStorage.url_landing == location.href){
                 LandingPage.initialize();
             }
         }
