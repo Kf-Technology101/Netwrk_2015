@@ -38,6 +38,7 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/forgot_pass.css": "frontend/web/less/mobile/forgot_pass.less",
           "frontend/web/css/mobile/search.css": "frontend/web/less/mobile/search.less",
           "frontend/web/css/mobile/dropdown_avatar.css": "frontend/web/less/mobile/dropdown_avatar.less",
+          "frontend/web/css/mobile/landing_page.css": "frontend/web/less/mobile/landing_page.less",
         }
       }
     },

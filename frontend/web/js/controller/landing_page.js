@@ -1,7 +1,8 @@
 var LandingPage = {
 	initialize: function(){
 		if(isMobile){
-
+			var target = $(".top-post-content").find('.post');
+			fix_width_post(target,160);
 		} else {
 			LandingPage.show_landing_page();
 			LandingPage.OnClickBackdrop();

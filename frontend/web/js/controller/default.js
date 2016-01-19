@@ -12,6 +12,9 @@ var Default ={
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
         }
+        if(UserLogin){
+            LandingPage.initialize();
+        }
         Default.SetAvatarUserDropdown();
         if(!isGuest){
             Default.ShowNotificationOnChat();

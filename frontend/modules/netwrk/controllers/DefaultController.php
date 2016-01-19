@@ -534,4 +534,9 @@ class DefaultController extends BaseController
         $hash = json_encode($item);
         return $hash;
     }
+
+    public function actionLandingPage()
+    {
+        return $this->render($this->getIsMobile() ? 'mobile/landing_page' : '');
+    }
 }
