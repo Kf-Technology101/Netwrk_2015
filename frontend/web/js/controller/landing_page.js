@@ -56,6 +56,23 @@ var LandingPage = {
 
 	onTemplateLanding: function(){
 		LandingPage.CustomScrollBar();
+		LandingPage.OnClickCommunities();
+	},
+
+	OnClickCommunities: function(){
+		var target = $(LandingPage.parent).find('.communities-row');
+
+		target.unbind();
+		target.on('click',function(e){
+			var city_id = $(e.currentTarget).attr('data-city');
+			alert(city_id);
+			if(isMobile){
+				Topic.initialize(city_id);
+			}else{
+				$(LandingPage.modal).modal('hide');
+				Topic.initialize(city_id);
+			}
+		});
 	},
 
 	OnShowModalLanding:function(){
@@ -72,7 +89,7 @@ var LandingPage = {
 	},
 
 	ResetData: function(){
-		$(LandingPage.modal).find('.modal-body').remove();
+		$(LandingPage.modal).find('.wrapper-container').remove();
 	},
 
 	show_landing_page: function(){

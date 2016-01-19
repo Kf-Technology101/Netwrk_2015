@@ -10,7 +10,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="ld-modal-body wrapper-container"></div>
+			<div class="ld-modal-body">
+				<div class="wrapper-container"></div>
+			</div>
 		</div>
 	</div>
 	<div class="ld-modal-footer">
@@ -90,7 +92,7 @@
 				_.each(landing.top_communities,function(e,i){ %>
 				<div class="communities-row">
 					<div class="com-content">
-						<p class="zipcode"><%= e.zip_code %></p>
+						<p class="zipcode" data-city="<%= e.city_id %>"><%= e.zip_code %></p>
 						<p class="subtext">
 						<% _.each(e.top_hashtag,function(d,s){ %>
 							<span><%=d.hashtag %></span>

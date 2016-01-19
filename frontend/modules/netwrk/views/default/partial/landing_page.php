@@ -11,8 +11,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal-body wrapper-container">
-
+			<div class="modal-body">
+				<div class="wrapper-container"></div>
 			</div>
 			<div class="modal-footer">
 				<div class="landing-btn btn-meet">Meet</div>
@@ -61,7 +61,7 @@
 			<p class="lp-title">Top Topics</p>
 			<p class="lp-description">Browse these topics of coversations</p>
 		</div>
-		<div class="top-topic-content">
+		<div class="top-topic-content ">
 			<%
 				var len_topic = landing.top_post.length;
 				_.each(landing.top_topic,function(e,i){
@@ -94,7 +94,7 @@
 				_.each(landing.top_communities,function(e,i){ %>
 				<div class="communities-row">
 					<div class="com-content">
-						<p class="zipcode"><%= e.zip_code %></p>
+						<p class="zipcode" data-city="<%= e.city_id %>"><%= e.zip_code %></p>
 						<p class="subtext">
 						<% _.each(e.top_hashtag,function(d,s){ %>
 							<span><%=d.hashtag %></span>
