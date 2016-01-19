@@ -83,17 +83,17 @@
 					<div class="top-topic-content">
 						<div class="topic-row">
 							<p class="topic-title">General Discussion</p>
-							<div class="post-counter">75<i class="fa fa-file-text"></i><span class="arrow">></span></div>
+							<div class="post-counter">75<i class="fa fa-file-text"></i><span class="arrow"><i class="fa fa-angle-right"></i></span></div>
 							<div class="clearfix"></div>
               			</div>
               			<div class="topic-row">
 							<p class="topic-title">General Discussion</p>
-							<div class="post-counter">75<i class="fa fa-file-text"></i><span class="arrow">></span></div>
+							<div class="post-counter">75<i class="fa fa-file-text"></i><span class="arrow"><i class="fa fa-angle-right"></i></span></div>
 							<div class="clearfix"></div>
               			</div>
 						<div class="topic-row last-row">
 							<p class="topic-title">Dogs</p>
-							<div class="post-counter">75<i class="fa fa-file-text"></i><span class="arrow">></span></div>
+							<div class="post-counter">75<i class="fa fa-file-text"></i><span class="arrow"><i class="fa fa-angle-right"></i></span></div>
 							<div class="clearfix"></div>
               			</div>
 					</div><!--end top topic content-->
@@ -110,7 +110,7 @@
 								<p class="zipcode">46202</p>
 								<p class="subtext">Top hastags</p>
 							</div>
-							<span class="arrow">></span>
+							<span class="arrow"><i class="fa fa-angle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
 						<div class="communities-row">
@@ -118,7 +118,7 @@
 								<p class="zipcode">38605</p>
 								<p class="subtext">Top hastags</p>
 							</div>
-							<span class="arrow">></span>
+							<span class="arrow"><i class="fa fa-angle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
 						<div class="communities-row">
@@ -126,7 +126,7 @@
 								<p class="zipcode">47241</p>
 								<p class="subtext">Top hastags</p>
 							</div>
-							<span class="arrow">></span>
+							<span class="arrow"><i class="fa fa-angle-right"></i></span>
 							<div class="clearfix"></div>
 						</div>
 					</div><!--end top communities content-->
