@@ -91,31 +91,40 @@
 				<!--top communities-->
 				<div class="top-communities">
 					<div class="top-header">
-						<div class="com-header">
-							<p class="lp-title">Top Communities</p>
-							<p class="lp-description">These thoughts are building in 46202</p>
-						</div>
-						<div class="btn-explore">Explore</div>
+						<p class="lp-title">Top Communities</p>
+						<p class="lp-description">These thoughts are building in 46202</p>
 					</div>
 					<div class="top-communities-content">
 						<div class="communities-row">
 							<div class="com-content">
 								<p class="zipcode">46202</p>
-								<p class="subtext">Education, Netwrk, Company</p>
+								<p class="subtext">
+									<span>Education</span>
+									<span>Netwrk</span>
+									<span>Company</span>
+								</p>
 							</div>
 							<span class="arrow"><i class="fa fa-angle-right"></i></span>
 						</div>
 						<div class="communities-row">
 							<div class="com-content">
 								<p class="zipcode">38605</p>
-								<p class="subtext">Musics, Singer, Badman</p>
+								<p class="subtext">
+									<span>Musics</span>
+									<span>Singer</span>
+									<span>Badman</span>
+								</p>
 							</div>
 							<span class="arrow"><i class="fa fa-angle-right"></i></span>
 						</div>
 						<div class="communities-row">
 							<div class="com-content">
 								<p class="zipcode">47241</p>
-								<p class="subtext">Traffic, Natural, Animal</p>
+								<p class="subtext">
+									<span>Traffic</span>
+									<span>Natural</span>
+									<span>Animal</span>
+								</p>
 							</div>
 							<span class="arrow"><i class="fa fa-angle-right"></i></span>
 						</div>
@@ -127,6 +136,6 @@
 	<div class="ld-modal-footer">
 		<div class="landing-btn btn-meet">Meet</div>
 		<div class="landing-btn btn-my-community">My Community</div>
-		<div class="landing-btn btn-help">Help</div>
+		<div class="landing-btn btn-explore">Explore</div>
 	</div>
 </div>
