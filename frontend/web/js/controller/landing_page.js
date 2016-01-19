@@ -10,13 +10,14 @@ var LandingPage = {
 			LandingPage.GetDataTopLanding();
 			LandingPage.UnsetSession();
 			LandingPage.FixWidthPostLanding();
-
+			LandingPage.OnClickMeetLandingMobile();
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
 			LandingPage.OnHideModalLanding();
 			LandingPage.show_landing_page();
 			LandingPage.OnClickBackdrop();
+			LandingPage.OnClickMeetLandingDesktop();
 			set_heigth_modal_meet($('#modal_landing_page'), 4);
 		}
 	},
@@ -56,8 +57,8 @@ var LandingPage = {
 
 	onTemplateLanding: function(){
 		LandingPage.CustomScrollBar();
+		LandingPage.OnClickAvatarLanding();
 		LandingPage.OnClickNetwrk();
-
 		LandingPage.OnClickTopic();
 		LandingPage.OnClickPost();
 		LandingPage.OnClickMyCommunities();
@@ -145,6 +146,7 @@ var LandingPage = {
                 Post.initialize();
 			}
 		});
+
 	},
 
 	OnClickNetwrk: function(){
@@ -200,5 +202,42 @@ var LandingPage = {
         $(LandingPage.modal).find('.modal-body').mCustomScrollbar({
             theme:"dark"
         });
+    },
+
+    OnClickAvatarLanding: function(){
+    	var avatar = $('.top-post').find('.top-post-content .post-row .avatar');
+		avatar.unbind();
+		avatar.on('click', function(e){
+			var user_login = $(e.currentTarget).parent().attr('data-user');
+			if(user_login != UserLogin){
+				if(!isMobile){
+					Meet.pid = 0;
+	                Meet.ez = user_login;
+					$('.modal').modal('hide');
+					Meet.initialize();
+				} else {
+					window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_login;
+				}
+			}
+		});
+    },
+
+    OnClickMeetLandingDesktop: function(){
+    	var meet = $(LandingPage.modal).find('.modal-footer .btn-meet');
+		meet.unbind();
+		meet.on('click', function(e){
+			Meet.pid = 0;
+            Meet.ez = 0;
+			$('.modal').modal('hide');
+			Meet.initialize();
+		});
+    },
+
+    OnClickMeetLandingMobile: function(){
+    	var meet = $(LandingPage.mobile).find('.ld-modal-footer .btn-meet');
+		meet.unbind();
+		meet.on('click', function(e){
+			window.location.href = baseUrl + "/netwrk/meet";
+		});
     },
 };
