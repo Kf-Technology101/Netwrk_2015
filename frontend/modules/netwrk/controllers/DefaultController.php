@@ -12,6 +12,7 @@ use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\Hashtag;
 use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\Temp;
 use frontend\components\UtilitiesFunc;
@@ -27,20 +28,21 @@ class DefaultController extends BaseController
     public function actionGetUserProfile()
     {
         if (Yii::$app->user->id) {
-            $user = User::find()->where('id ='.Yii::$app->user->id)->with('profile')->one();
+            $user = Profile::GetCommunities();
         }
 
-        if ($user->profile->photo == null){
+        if ($user['photo'] == null){
             $image = 'img/icon/no_avatar.jpg';
         }else{
-            $image = 'uploads/'.$user->id.'/'.$user->profile->photo;
+            $image = 'uploads/'.$user['user_id'].'/'.$user['photo'];
         }
 
         $data = [
-                'user_id'=> $user->id,
-                'name'=> $user->profile->first_name." ".$user->profile->last_name,
+                'user_id'=> $user['user_id'],
+                'name'=> $user['first_name']." ".$user['last_name'],
                 'avatar'=> $image,
-                'created_date' => $user->create_time
+                'city_id'=>$user['city_id'],
+                'created_date' => $user['create_time']
             ];
         $data = json_encode($data);
         return $data;

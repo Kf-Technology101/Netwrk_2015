@@ -5,6 +5,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\filters\RateLimitInterface;
+use yii\db\Query;
 /**
  * User model
  *
@@ -49,6 +50,9 @@ class User extends ActiveRecord implements IdentityInterface , RateLimitInterfac
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
+
+
+
     /**
      * @inheritdoc
      */

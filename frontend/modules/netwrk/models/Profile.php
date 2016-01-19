@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 
 /**
  * This is the model class for table "profile".
@@ -104,5 +105,20 @@ class Profile extends ActiveRecord
     {
         $this->user_id = $userId;
         return $this;
+    }
+
+    public function GetCommunities(){
+        $user_id = Yii::$app->user->id;
+        $query = new Query();
+
+        $model =  $query->select('city.id as city_id, profile.photo,profile.first_name,profile.last_name,user.id as user_id,user.create_time')
+                        ->from('user')
+                       ->leftJoin('profile','user.id = profile.user_id')
+                       ->leftJoin('city', 'city.zip_code = profile.zip_code')
+                       ->where(['city.office'=> null])
+                       ->andWhere(['city.office_type'=> null])
+                       ->andWhere(['user.id'=> $user_id])
+                       ->one();
+        return $model;
     }
 }
