@@ -128,7 +128,7 @@ var LandingPage = {
 					$('.modal').modal('hide');
 					Meet.initialize();
 				} else {
-					window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_login;
+					window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_login + "&from=discussion";
 				}
 			}
 		});
