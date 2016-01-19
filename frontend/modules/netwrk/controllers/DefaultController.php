@@ -518,21 +518,24 @@ class DefaultController extends BaseController
     }
 
     public function actionFeedGlobal(){
-        $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+        $request = Yii::$app->request->isAjax;
+        if($request){
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
 
-        $top_post = Post::GetTopPostUserJoinGlobal($limit);
-        $top_topic = Topic::GetTopTopicGlobal($limit);
-        $top_city = City::GetTopCityUserJoinGlobal($limit);
-        $top_communities =City::TopHashTag_City($top_city,$limit);
+            $top_post = Post::GetTopPostUserJoinGlobal($limit);
+            $top_topic = Topic::GetTopTopicGlobal($limit);
+            $top_city = City::GetTopCityUserJoinGlobal($limit);
+            $top_communities =City::TopHashTag_City($top_city,$limit);
 
-        $item = [
-            'top_post'=> $top_post,
-            'top_topic'=> $top_topic,
-            'top_communities'=> $top_communities
-        ];
+            $item = [
+                'top_post'=> $top_post,
+                'top_topic'=> $top_topic,
+                'top_communities'=> $top_communities
+            ];
 
-        $hash = json_encode($item);
-        return $hash;
+            $hash = json_encode($item);
+            return $hash;
+        }
     }
 
     public function actionLandingPage()

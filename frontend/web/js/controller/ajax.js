@@ -1,4 +1,20 @@
 var Ajax ={
+    top_landing: function(){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/default/feed-global";
+
+        $.ajax({
+            url: url,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     global_search: function(params){
         var url,defer = $.Deferred();
             url = baseUrl + "/netwrk/search/global-search";

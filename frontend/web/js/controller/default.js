@@ -12,12 +12,20 @@ var Default ={
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
         }
-        if(UserLogin){
-            LandingPage.initialize();
-        }
         Default.SetAvatarUserDropdown();
+        Default.ShowLandingPage();
         if(!isGuest){
             Default.ShowNotificationOnChat();
+        }
+    },
+
+    ShowLandingPage: function(){
+        if(!sessionStorage.show_landing){
+            if(isMobile){
+                LandingPage.redirect();
+            }else{
+                LandingPage.initialize();
+            }
         }
     },
 

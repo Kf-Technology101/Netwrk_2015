@@ -197,7 +197,7 @@ function _addListenEventPage(){
   case 'Chat-inbox':
     ChatInbox.initialize();
     break;
-  	default:
+	default:
 		Default.initialize();
 		break;
 	}
