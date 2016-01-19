@@ -11,7 +11,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body wrapper-container">
 
 			</div>
 			<div class="modal-footer">
@@ -35,9 +35,9 @@
 				_.each(landing.top_post,function(e,i){
 					console.log(e);
 					if(i == len_post - 1){%>
-							<div class="post-row last-row" data-value="<%= e.id %>">
+							<div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
 					<% }else{ %>
-							<div class="post-row" data-value="<%= e.id %>">
+							<div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
 					<% } %>
 							<div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
 
@@ -87,7 +87,7 @@
 	<div class="top-communities">
 		<div class="top-header">
 			<p class="lp-title">Top Communities</p>
-			<p class="lp-description">Browse these netwrks</p>
+			<p class="lp-description">Browse these popular netwrks</p>
 		</div>
 		<div class="top-communities-content">
 			<%

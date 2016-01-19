@@ -26,6 +26,10 @@ var Default ={
             }else{
                 LandingPage.initialize();
             }
+        }else if(sessionStorage.show_landing == 2){
+            if(isMobile){
+                LandingPage.initialize();
+            }
         }
     },
 

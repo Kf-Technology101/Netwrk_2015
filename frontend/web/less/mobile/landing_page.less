@@ -22,6 +22,7 @@
         text-align: center;
         border: none;
         display: block;
+
         .title{
         	font-family: "ProximaNovaRegular";
         	color: #fff;
@@ -44,6 +45,11 @@
         margin-bottom: 34px;
     	// max-height: 530px;
     	// background-color: #fff;
+        p{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     	.top-header{
     		height: auto;
     		// border-bottom: 1px solid #f3f3f3;
@@ -67,15 +73,34 @@
     				border-bottom: 1px solid #e4e4e4;
     				padding: 10px 15px;
                     height: 74px;
-    				img{
-    					width: auto;
-    					height: 50px;
-                        min-width: 50px;
-    					display: block;
-    					float: left;
-    					border-radius: 2px;
-    					border: 1px solid #898989;
-    				}
+    				.avatar{
+                        width: 52px;
+                        height: 52px;
+                        // padding: 15px;
+                        max-width: 52px;
+                        max-height: 52px;
+                        float: left;
+                        display: table;
+                        position: relative;
+                        .image{
+                            height: 50px;
+                            // max-width: 150px;
+                            // max-height: 150px;
+                            width: 50px;
+                            text-align: center;
+                            vertical-align: middle;
+                            display: table-cell;
+                            border: 1px solid #f2f2f2;
+                            background: #e6e6e6;
+                            img{
+                                margin: auto;
+                                max-width: 50px;
+                                width: auto;
+                                height: auto;
+                                max-height: 50px;
+                            }
+                        }
+                    }
     				.post{
     					width: 69%;
     					display: block;

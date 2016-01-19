@@ -1,27 +1,41 @@
 var LandingPage = {
 	modal:'#modal_landing_page',
-	parent:'#modal_landing_page',
+	mobile:'#ld_modal_landing_page',
+	parent:'',
 	data:'',
 	initialize: function(){
 		if(isMobile){
-			var target = $(".top-post-content").find('.post');
-			fix_width_post(target,160);
+			console.log('aaa');
+			LandingPage.parent = LandingPage.mobile;
+			LandingPage.GetDataTopLanding();
+			LandingPage.UnsetSession();
+			LandingPage.FixWidthPostLanding();
+
 		} else {
+			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
 			LandingPage.OnHideModalLanding();
 			LandingPage.show_landing_page();
 			LandingPage.OnClickBackdrop();
 			set_heigth_modal_meet($('#modal_landing_page'), 4);
 		}
-		LandingPage.SetSession();
 	},
 
+	FixWidthPostLanding: function(){
+		var target = $(".top-post-content").find('.post');
+		fix_width_post(target,160);
+	},
 	SetSession: function(){
-		sessionStorage.show_landing = true;
+		sessionStorage.show_landing = 2;
+	},
+
+	UnsetSession: function(){
+		sessionStorage.show_landing = 3;
 	},
 
 	redirect: function(){
-
+		LandingPage.SetSession();
+		window.location.href = baseUrl + "/netwrk/default/landing-page";
 	},
 
 	GetDataTopLanding: function(){
@@ -35,7 +49,7 @@ var LandingPage = {
 		var list_template = _.template($( "#landing_page" ).html());
         var append_html = list_template({landing: LandingPage.data});
 
-        $(LandingPage.parent).find('.modal-body').append(append_html);
+        $(LandingPage.parent).find('.wrapper-container').append(append_html);
         LandingPage.onTemplateLanding();
 	},
 
@@ -45,14 +59,19 @@ var LandingPage = {
 
 	OnShowModalLanding:function(){
         $(LandingPage.parent).on('shown.bs.modal',function(e) {
+        	LandingPage.SetSession();
         	LandingPage.GetDataTopLanding();
         });
 	},
 
 	OnHideModalLanding: function(){
         $(LandingPage.modal).on('hidden.bs.modal',function(e) {
-
+        	LandingPage.ResetData();
         });
+	},
+
+	ResetData: function(){
+		$(LandingPage.modal).find('.modal-body').remove();
 	},
 
 	show_landing_page: function(){
