@@ -48,7 +48,7 @@
 							<div class="action">
 								<div class="chat"><i class="fa fa-comments"></i>Chat</div>
 
-								<span class="brilliant">1K</span>
+								<span class="brilliant"><%= e.brilliant_count%></span>
 							</div>
 						</div>
 			<%
@@ -72,12 +72,40 @@
 							<div class="topic-row" data-value="<%= e.id %>">
 					<% } %>
 								<p class="topic-title"><%= e.name %></p>
-								<div class="post-counter"><%= e.post_count %><i class="fa fa-file-text"></i><span class="arrow"><i class="fa fa-angle-right"></i></span></div>
+								<div class="post-counter">
+									<%= e.post_count %>
+									<span class="arrow"><i class="fa fa-angle-right"></i></span>
+									<i class="fa fa-file-text"></i>
+								</div>
 							</div>
 			<%
 				});
 			%>
 
+		</div>
+	</div>
+	<div class="top-communities">
+		<div class="top-header">
+			<p class="lp-title">Top Communities</p>
+			<p class="lp-description">Browse these netwrks</p>
+		</div>
+		<div class="top-communities-content">
+			<%
+				_.each(landing.top_communities,function(e,i){ %>
+				<div class="communities-row">
+					<div class="com-content">
+						<p class="zipcode"><%= e.zip_code %></p>
+						<p class="subtext">
+						<% _.each(e.top_hashtag,function(d,s){ %>
+							<span><%=d.hashtag %></span>
+						<%})%>
+						</p>
+					</div>
+					<span class="arrow"><i class="fa fa-angle-right"></i></span>
+				</div>
+			<%
+				});
+			%>
 		</div>
 	</div>
 </script>

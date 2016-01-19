@@ -11,7 +11,6 @@ var LandingPage = {
 			LandingPage.OnHideModalLanding();
 			LandingPage.show_landing_page();
 			LandingPage.OnClickBackdrop();
-			// LandingPage.CustomScrollBar();
 			set_heigth_modal_meet($('#modal_landing_page'), 4);
 		}
 		LandingPage.SetSession();
@@ -37,7 +36,11 @@ var LandingPage = {
         var append_html = list_template({landing: LandingPage.data});
 
         $(LandingPage.parent).find('.modal-body').append(append_html);
-        // self.onTemplate(json);
+        LandingPage.onTemplateLanding();
+	},
+
+	onTemplateLanding: function(){
+		LandingPage.CustomScrollBar();
 	},
 
 	OnShowModalLanding:function(){

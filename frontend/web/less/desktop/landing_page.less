@@ -120,8 +120,9 @@
                             }
     						font-family: "ProximaNovaSemibold";
     						font-size: 16px;
-    						color: #1d1b1b;
+    						color: #5888ac;
     						margin-bottom: 0;
+                            cursor: pointer;
     					}
     					.post-content{
     						font-family: "ProximaNovaRegular";
@@ -217,16 +218,6 @@
                 height: 50px;
                 padding: 6px 15px;
                 cursor: pointer;
-                &:hover{
-                    .com-content{
-                        .zipcode, .subtext{
-                            color: #5da5d8;
-                        }
-                    }
-                    .arrow{
-                        color: #5da5d8;
-                    }
-                }
                 .com-content{
                     width: 90%;
                     float: left;
@@ -243,6 +234,13 @@
                         font-size: 14px;
     	    			margin-bottom: 0;
                         line-height: 14px;
+                        span{
+                            color: #5888ac;
+                            cursor: pointer;
+                            &:before{
+                                content: "#";
+                            }
+                        }
     	    		}
                 }
                 .arrow{
@@ -269,7 +267,7 @@
             padding: 5px 10px;
             display: inline-block;
             width: auto;
-            cursor: default;
+            cursor: pointer;
             &:hover{
                 background: #5da5d8;
             }

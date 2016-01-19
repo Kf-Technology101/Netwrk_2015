@@ -84,7 +84,7 @@
     					.post-title{
     						font-family: "ProximaNovaSemibold";
     						font-size: 14px;
-    						color: #1d1b1b;
+    						color: #5888ac;
     						margin-bottom: 0;
     					}
     					.post-content{
@@ -179,41 +179,12 @@
     		}
     	}
     	.top-communities{
-            .top-header{
-                .btn-explore{
-                    float: right;
-                    font-size: 14px;
-                    border: 1px solid #fff;
-                    text-align: center;
-                    height: 30px;
-                    color: #fff;
-                    padding: 5px 10px;
-                    display: inline-block;
-                    width: auto;
-                    cursor: default;
-                    margin-top: -33px;
-                    background: #5888ac;
-                    &:hover{
-                        background: #5da5d8;
-                    }
-                }
-            }
     		background-color: #fff;
     		.communities-row{
 	    		border-bottom: 1px solid #e4e4e4;
                 height: 50px;
                 padding: 6px 15px;
                 cursor: pointer;
-                &:hover{
-                    .com-content{
-                        .zipcode, .subtext{
-                            color: #5da5d8;
-                        }
-                    }
-                    .arrow{
-                        color: #5da5d8;
-                    }
-                }
                 .com-content{
                     width: 90%;
                     float: left;
@@ -230,10 +201,16 @@
                         font-size: 14px;
     	    			margin-bottom: 0;
                         line-height: 14px;
+                        span{
+                            color: #5888ac;
+                            &:before{
+                                content: "#";
+                            }
+                        }
     	    		}
                 }
                 .arrow{
-                    width: 3%;
+                    width: 2%;
                     float: right;
                     margin-left: 2px;
                     padding-top: 10px;
