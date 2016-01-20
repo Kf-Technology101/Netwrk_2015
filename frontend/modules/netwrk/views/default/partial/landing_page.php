@@ -7,7 +7,7 @@
 					<img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>">
 					<div class="title">
 						<p class="main-header">Welcome to <span>Netwrk</span></p>
-						<p class="sub-header">Where we facilitate comunity communications.</p>
+						<p class="sub-header">Where we facilitate community communications.</p>
 					</div>
 				</div>
 			</div>
@@ -26,7 +26,7 @@
 <script id="landing_page" type="text/x-underscore-template">
 	<div class="top-post">
 		<div class="top-header">
-			<p class="lp-title">Top Post</p>
+			<p class="lp-title">Top Posts</p>
 			<p class="lp-description">Check out some of the discussions on some of your favorite subjects</p>
 		</div>
 		<div class="top-post-content">
@@ -59,7 +59,7 @@
 	<div class="top-topic">
 		<div class="top-header">
 			<p class="lp-title">Top Topics</p>
-			<p class="lp-description">Browse these topics of coversations</p>
+			<p class="lp-description">Browse these topics of conversations</p>
 		</div>
 		<div class="top-topic-content ">
 			<%

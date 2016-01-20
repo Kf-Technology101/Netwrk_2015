@@ -9,7 +9,7 @@ var LandingPage = {
 			LandingPage.parent = LandingPage.mobile;
 			LandingPage.GetDataTopLanding();
 			LandingPage.UnsetSession();
-			LandingPage.FixWidthPostLanding();
+			
 			LandingPage.OnClickMeetLandingMobile();
 		} else {
 			LandingPage.parent = LandingPage.modal;
@@ -18,13 +18,14 @@ var LandingPage = {
 			LandingPage.show_landing_page();
 			LandingPage.OnClickBackdrop();
 			LandingPage.OnClickMeetLandingDesktop();
-			set_heigth_modal_meet($('#modal_landing_page'), 4);
+			// set_heigth_modal_meet($('#modal_landing_page'), 4);
 		}
 	},
 
 	FixWidthPostLanding: function(){
 		var target = $(".top-post-content").find('.post');
 		fix_width_post(target,160);
+		console.log('in fix post landing');
 	},
 	SetSession: function(){
 		sessionStorage.show_landing = 1;
@@ -65,6 +66,9 @@ var LandingPage = {
 		LandingPage.OnClickExplore();
 		LandingPage.OnClickVote();
 		LandingPage.OnClickChat();
+		if(isMobile){
+			LandingPage.FixWidthPostLanding();
+		}
 	},
 
 	OnClickChat: function(){
