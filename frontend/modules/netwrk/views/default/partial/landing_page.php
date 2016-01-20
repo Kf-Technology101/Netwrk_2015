@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="header">
-					<img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>">
+					<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
 					<div class="title">
 						<p class="main-header">Welcome to <span>Netwrk</span></p>
 						<p class="sub-header">Where we facilitate community communications.</p>

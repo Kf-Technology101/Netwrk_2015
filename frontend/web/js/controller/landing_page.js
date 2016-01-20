@@ -10,6 +10,7 @@ var LandingPage = {
 			LandingPage.GetDataTopLanding();
 			LandingPage.UnsetSession();
 			LandingPage.OnClickMeetLandingMobile();
+			$('.navbar-fixed-bottom').hide();
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
@@ -68,6 +69,7 @@ var LandingPage = {
 		if(isMobile){
 			LandingPage.FixWidthPostLanding();
 		}
+		LandingPage.onNetwrkLogo();
 	},
 
 	OnClickChat: function(){
@@ -281,5 +283,11 @@ var LandingPage = {
 		meet.on('click', function(e){
 			window.location.href = baseUrl + "/netwrk/meet";
 		});
+    },
+
+    onNetwrkLogo: function(){
+        $('#modal_landing_page .modal-header .header a').click(function(){
+            $('#modal_landing_page').modal('hide');
+        });
     },
 };
