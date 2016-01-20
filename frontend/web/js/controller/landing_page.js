@@ -137,6 +137,9 @@ var LandingPage = {
 				$(LandingPage.modal).modal('hide');
 				Topic.initialize(infoUser.city_id);
 			}
+			var parent = $('#modal_topic,#show-topic');
+        	var btn = parent.find('.filter_sidebar td.feed');
+        	btn.trigger('click');
 		}
 	},
 
@@ -151,7 +154,7 @@ var LandingPage = {
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(post_id, 1, 1);
 			}else{
-				$(LandingPage.modal).modal('hide');
+				// $(LandingPage.modal).modal('hide');
 				PopupChat.params.post = post_id;
                 PopupChat.params.chat_type = 1;
                 PopupChat.params.post_name = post_name;
