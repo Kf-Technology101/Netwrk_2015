@@ -94,7 +94,7 @@
 				_.each(landing.top_communities,function(e,i){ %>
 				<div class="communities-row" data-city="<%= e.city_id %>">
 					<div class="com-content">
-						<p class="zipcode" ><%= e.zip_code %></p>
+						<p class="zipcode" ><%= e.zip_code %> - <%= (e.office_name != null) ? e.office_name : e.city_name %></p>
 						<p class="subtext">
 						<% _.each(e.top_hashtag,function(d,s){ %>
 							<span><%=d.hashtag %></span>

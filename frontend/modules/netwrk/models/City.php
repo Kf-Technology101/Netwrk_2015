@@ -90,7 +90,7 @@ class City extends \yii\db\ActiveRecord
     //Get top netwrk have most user
     public function GetTopCityUserJoinGlobal($limit){
         $query = new Query();
-        $data = $query ->select('c.id as city_id ,c.name as city_name,c.zip_code as zip_code,t.id as topic_id,t.title as topic_name ,p.id as post_id,ws.msg, count( DISTINCT ws.user_id) as user_join')
+        $data = $query ->select('c.id as city_id ,c.name as city_name, c.office as office_name,c.zip_code as zip_code,t.id as topic_id,t.title as topic_name ,p.id as post_id,ws.msg, count( DISTINCT ws.user_id) as user_join')
                        ->from('ws_messages ws')
                        ->leftJoin('post p', 'p.id=ws.post_id')
                        ->leftJoin('topic t', 't.id=p.topic_id')
