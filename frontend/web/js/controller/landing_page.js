@@ -9,7 +9,6 @@ var LandingPage = {
 			LandingPage.parent = LandingPage.mobile;
 			LandingPage.GetDataTopLanding();
 			LandingPage.UnsetSession();
-			
 			LandingPage.OnClickMeetLandingMobile();
 		} else {
 			LandingPage.parent = LandingPage.modal;

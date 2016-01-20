@@ -677,7 +677,7 @@ var Map ={
 		        map.zoom = 7;
 		        Map.show_marker(map);
 		        if(isMobile){
-		        	sessionStorage.clear();
+		        	sessionStorage.map_zoom = 7;
 		    	}
 	        	// }
 	      	}
