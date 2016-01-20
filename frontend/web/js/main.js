@@ -75,14 +75,14 @@ function set_heigth_modal(target,height_footer){
   $('.modal').css({'bottom': size[1] - 590});
 }
 
-function set_heigth_modal_meet(target,height_footer){
+function set_heigth_modal_meet(target,height_footer, limit_width, range_width){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
-  if(wh - 120 > 570){
-    wh = 645;
+  if(wh - 120 > range_width){
+    wh = limit_width;
   }
   target.find('.modal-body').css({'height':wh - 120});
-  $('.modal').css({'bottom': size[1] - 750});
+  $('.modal').css({'bottom': size[1] - range_width});
 }
 
 function set_heigth_page_mobile(target){

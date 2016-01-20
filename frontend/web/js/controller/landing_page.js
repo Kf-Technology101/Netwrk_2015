@@ -18,7 +18,7 @@ var LandingPage = {
 			LandingPage.show_landing_page();
 			LandingPage.OnClickBackdrop();
 			LandingPage.OnClickMeetLandingDesktop();
-			set_heigth_modal_meet($('#modal_landing_page'), 0);
+			set_heigth_modal_meet($('#modal_landing_page'), 0, 550, 430);
 		}
 	},
 

@@ -235,7 +235,7 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal_meet($('#modal_meet'), 30);
+                set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
                 var meet_height = $('#modal_meet .modal-body').height();
                 Meet.height = meet_height;
             }
@@ -524,7 +524,7 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal_meet($('#modal_meet'), 30);
+                set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
                 var meet_height = $('#modal_meet .modal-body').height();
                 Meet.height = meet_height;
             }
@@ -580,7 +580,7 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal_meet($('#modal_meet'), 30);
+                set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
                 var meet_height = $('#modal_meet .modal-body').height();
                 Meet.height = meet_height;
             }
@@ -620,7 +620,7 @@ var Meet ={
     //                 backdrop: true,
     //                 keyboard: false
     //             });
-    //             set_heigth_modal_meet($('#modal_meet'), 30);
+    //             set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
     //             var meet_height = $('#modal_meet .modal-body').height();
     //             Meet.height = meet_height;
     //         }
