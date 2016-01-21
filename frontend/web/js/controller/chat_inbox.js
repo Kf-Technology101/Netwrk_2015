@@ -237,8 +237,8 @@ var ChatInbox = {
 		$(hide_chat_inbox_btn).unbind();
 		if (isMobile) {
 			$(hide_chat_inbox_btn).on("click", function() {
-				var previous_link = sessionStorage.url !== undefined ? sessionStorage.url : baseUrl;
-				sessionStorage.url = '';
+				var previous_link = sessionStorage.url != '' ? sessionStorage.url : baseUrl ;
+				sessionStorage.url = baseUrl;
 				sessionStorage.show_landing = 1;
 				window.location.href = previous_link;
 			});

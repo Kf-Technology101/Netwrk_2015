@@ -28,7 +28,6 @@ var PopupChat = {
         PopupChat.SetUrl();
         PopupChat.SetDataChat();
         if(isMobile){
-            PopupChat.UpdateViewPost();
             PopupChat.SetHeightContainerChat();
             PopupChat.OnClickChatInboxBtnMobile();
             ChatInbox.HideMeetIconMobile();
@@ -37,7 +36,6 @@ var PopupChat = {
             Default.SetAvatarUserDropdown();
         }else{
             if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
-                PopupChat.UpdateViewPost();
                 PopupChat.OnclickLogin();
                 PopupChat.RegisterPopup();
                 PopupChat.ChangeStylePopupChat();
@@ -66,6 +64,7 @@ var PopupChat = {
             }
         }
         PopupChat.FetchDataChat();
+        PopupChat.UpdateViewPost();
     },
 
     UpdateViewPost: function(){
@@ -654,7 +653,12 @@ var PopupChat = {
         BackBtn.unbind();
         BackBtn.on('click',function(){
             if(isMobile){
-                if (PopupChat.params.chat_type == 1 ) {
+                if(sessionStorage.show_landing){
+                    //Go to post by landing page
+                    window.location.href = sessionStorage.url_landing;
+                }
+                else if (PopupChat.params.chat_type == 1 ) {
+                    //Go to post
                     Post.RedirectPostPage($(PopupChat.parent).attr('data-topic'));
                 } else {
                     window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=0';

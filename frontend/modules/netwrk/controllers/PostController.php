@@ -30,7 +30,7 @@ class PostController extends BaseController
     {
         $id_post = $_POST['post'];
         $post = Post::findOne($id_post);
-        $post->update();
+        $post->update(false);
     }
     public function actionIndex()
     {
