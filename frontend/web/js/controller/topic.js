@@ -49,6 +49,18 @@ var Topic = {
         } else {
             Topic.displayPositionModal();
         }
+        Topic.CheckTabCurrent();
+    },
+
+    CheckTabCurrent: function(){
+        if(sessionStorage.topic_tab_current == 'feed'){
+            var parent = $('#modal_topic,#show-topic');
+            var btn = parent.find('.filter_sidebar td.feed');
+            btn.trigger('click');
+            sessionStorage.topic_tab_current == 'topic'
+        }else{
+            Topic.tab_current = sessionStorage.topic_tab_current;
+        }
     },
 
     initialize: function(city,params){
@@ -61,6 +73,7 @@ var Topic = {
             Topic._onclickBack();
             Topic.OnClickBackdrop();
             Topic.onNetwrkLogo();
+            Topic.CheckTabCurrent();
         }
     },
 

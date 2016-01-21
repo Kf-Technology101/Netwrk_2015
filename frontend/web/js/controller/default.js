@@ -19,21 +19,24 @@ var Default ={
         }
     },
 
+    UnsetLanding: function(){
+        sessionStorage.show_landing = 0;
+    },
+
     ShowLandingPage: function(){
-        if(!sessionStorage.show_landing){
-            if(isMobile){
+        if(isMobile){
+            if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
                 LandingPage.redirect();
-            }else{
-                LandingPage.initialize();
+            }else if(sessionStorage.show_landing == 1){
+                Default.UnsetLanding();
             }
-        }else if(sessionStorage.show_landing == 1){
-            if(isMobile){
-                LandingPage.initialize();
+            else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
+                if(isMobile){
+                    LandingPage.initialize();
+                }
             }
-        }else if(sessionStorage.show_landing == 0){
-            if(isMobile && sessionStorage.url_landing == location.href){
-                LandingPage.initialize();
-            }
+        }else{
+            LandingPage.initialize();
         }
     },
 
