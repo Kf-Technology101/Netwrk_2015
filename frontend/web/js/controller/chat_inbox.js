@@ -239,6 +239,7 @@ var ChatInbox = {
 			$(hide_chat_inbox_btn).on("click", function() {
 				var previous_link = sessionStorage.url !== undefined ? sessionStorage.url : baseUrl;
 				sessionStorage.url = '';
+				sessionStorage.show_landing = 1;
 				window.location.href = previous_link;
 			});
 		} else {

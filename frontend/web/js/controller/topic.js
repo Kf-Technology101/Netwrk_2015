@@ -57,7 +57,7 @@ var Topic = {
             var parent = $('#modal_topic,#show-topic');
             var btn = parent.find('.filter_sidebar td.feed');
             btn.trigger('click');
-            sessionStorage.topic_tab_current == 'topic'
+            sessionStorage.topic_tab_current = 'topic';
         }else{
             Topic.tab_current = sessionStorage.topic_tab_current;
         }
@@ -386,6 +386,7 @@ var Topic = {
     _onclickBack: function(){
         if(isMobile){
             $('#show-topic .back_page span').click(function(){
+                sessionStorage.show_landing = 1;
                 window.location.href = baseUrl;
             })
         }else{

@@ -85,7 +85,6 @@ var Login={
 				Login.ShowNotificationOnChat();
 				Default.SetAvatarUserDropdown();
 				PopupChat.ShowChatBox(PopupChat.params.post);
-				LandingPage.initialize();
 			}, 500)
 		}
 	},

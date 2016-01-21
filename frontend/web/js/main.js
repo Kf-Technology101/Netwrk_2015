@@ -239,7 +239,6 @@ function homePage(){
     var target = $('.option_logo_netwrk a');
     target.on('click', function(){
         sessionStorage.map_zoom = 7;
-        sessionStorage.show_landing = 1;
         window.location.href = baseUrl;
     });
 }
