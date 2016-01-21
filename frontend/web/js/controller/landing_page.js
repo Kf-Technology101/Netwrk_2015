@@ -112,6 +112,7 @@ var LandingPage = {
 		target.unbind();
 		target.on('click',function(e){
 			if(isMobile){
+				sessionStorage.show_landing = 1;
 				window.location.href = baseUrl;
 			}else{
 				$(LandingPage.parent).modal('hide');

@@ -31,9 +31,9 @@ var Default ={
                 Default.UnsetLanding();
             }
             else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
-                if(isMobile){
-                    LandingPage.initialize();
-                }
+                LandingPage.initialize();
+            }else if(sessionStorage.show_landing == 2){
+                LandingPage.redirect();
             }
         }else{
             LandingPage.initialize();
