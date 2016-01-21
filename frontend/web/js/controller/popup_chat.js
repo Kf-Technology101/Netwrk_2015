@@ -653,8 +653,9 @@ var PopupChat = {
         BackBtn.unbind();
         BackBtn.on('click',function(){
             if(isMobile){
-                if(sessionStorage.show_landing){
+                if(sessionStorage.landing_post == 1){
                     //Go to post by landing page
+                    sessionStorage.landing_post = 0 ;
                     window.location.href = sessionStorage.url_landing;
                 }
                 else if (PopupChat.params.chat_type == 1 ) {
