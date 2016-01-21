@@ -82,6 +82,7 @@ var LandingPage = {
 					post_name = $(e.currentTarget).parent().parent().find('.post-title').text(),
 					post_content = $(e.currentTarget).parent().parent().find('.post-content').text();
 			if(isMobile){
+				sessionStorage.landing_post = 1;
 				PopupChat.RedirectChatPostPage(post_id, 1, 1);
 			}else{
 				$(LandingPage.modal).modal('hide');
