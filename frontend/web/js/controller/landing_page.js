@@ -3,12 +3,13 @@ var LandingPage = {
 	mobile:'#ld_modal_landing_page',
 	parent:'',
 	data:'',
+	check_landing: 0,
 	initialize: function(){
 		if(isMobile){
 			console.log('aaa');
 			LandingPage.parent = LandingPage.mobile;
 			LandingPage.GetDataTopLanding();
-			LandingPage.UnsetSession();
+			LandingPage.SetUrl();
 			LandingPage.OnClickMeetLandingMobile();
 			$('.navbar-fixed-bottom').hide();
 		} else {
@@ -27,12 +28,12 @@ var LandingPage = {
 		fix_width_post(target,160);
 		console.log('in fix post landing');
 	},
+
 	SetSession: function(){
-		sessionStorage.show_landing = 1;
+		sessionStorage.show_landing = 2;
 	},
 
-	UnsetSession: function(){
-		sessionStorage.show_landing = 0;
+	SetUrl: function(){
 		sessionStorage.url_landing = location.href;
 	},
 
@@ -142,9 +143,7 @@ var LandingPage = {
 				$(LandingPage.modal).modal('hide');
 				Topic.initialize(infoUser.city_id);
 			}
-			var parent = $('#modal_topic,#show-topic');
-        	var btn = parent.find('.filter_sidebar td.feed');
-        	btn.trigger('click');
+			sessionStorage.topic_tab_current = 'feed';
 		}
 	},
 
