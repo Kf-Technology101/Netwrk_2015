@@ -139,6 +139,7 @@ var Default ={
                 var append_html = list_template({user_info: data});
                 $('#user_avatar_wrapper #user_avatar_dashboard').remove();
                 $('#user_avatar_wrapper').append(append_html);
+                Default.OnHoverAvatarDropdown();
             });
             if (isMobile) {
                 var avatar = '#user_avatar_wrapper';
@@ -168,5 +169,18 @@ var Default ={
 
             }
         }
+    },
+
+    OnHoverAvatarDropdown: function() {
+        var btn = $('#user_avatar_dashboard');
+        btn.hover(
+            function(){
+                console.log('on hover avtar');
+                $(ChatInbox.modal).css('z-index','999');
+            }
+            , function(){
+                console.log('on leave avtar');
+            $(ChatInbox.modal).css('z-index','9999');
+        });
     },
 };
