@@ -13,10 +13,6 @@
                     </div>
                 </div>
                 <div class="scrumb">
-<!--                     <div class="logo">
-                        <img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>">
-                    </div>
-                    <p class="break"> > </p> -->
                     <p class="zipcode"></p>
                     <div class="clearfix"></div>
                 </div>

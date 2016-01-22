@@ -226,6 +226,6 @@ class TopicController extends BaseController
     public function actionGetTopic(){
         $id = $_POST['topic'];
         $topic = Topic::findOne($id);
-        return $topic->title;
+        return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
     }
 }

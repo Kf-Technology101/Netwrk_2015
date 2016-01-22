@@ -53,7 +53,7 @@
     </div>
 </div>
 <script id="name_post_list" type="text/x-underscore-template" >
-    <span class="title"><%= name %></span>
+    <span class="title"><%= name.zipcode %> > <%= name.title %></span>
 </script>
 <script id="post_list" type="text/x-underscore-template" >
     <% _.each(posts,function(post){ %>
