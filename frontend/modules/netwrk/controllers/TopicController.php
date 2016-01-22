@@ -66,7 +66,7 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/create',['city_id' =>$city_id,'data'=> (object)$object]);
+        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
     }
 
     public function actionNewTopic() {

@@ -240,6 +240,7 @@ var Post ={
 	getNameTopic: function(){
 		var name = $('#list_post').find('.header .title_page');
 		Ajax.get_topic(Post.params).then(function(data){
+			console.log(data);
 			Post.getNameTemplate(name,data);
 		});
 	},

@@ -7,11 +7,11 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title">Create a Topic</span>
+            <span class="title"><?= $city->zip_code ?> > Create a Topic</span>
         </div>
     </div>
     <div class="container">
-        
+
         <div class="topic">
             <p class="title"> Topic </p>
             <input type="text" class="name_topic" maxlength="128" placeholder="Topic Title">
