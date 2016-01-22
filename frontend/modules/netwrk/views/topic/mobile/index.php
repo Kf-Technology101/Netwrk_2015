@@ -8,7 +8,7 @@
         </div>
 
         <div class="title_page">
-            <span class="title"><a href="<?php echo Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><?php print $data->zipcode?></span>
+            <span class="title"><?php print $data->zipcode?></span>
         </div>
         <div class="create_topic">
             <span><i class="fa fa-plus-circle"></i> Create Topic</span>

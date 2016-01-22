@@ -77,7 +77,6 @@ var LandingPage = {
 		var target = $(LandingPage.parent).find('.top-post .action .chat');
 		target.unbind();
 		target.on('click',function(e){
-			console.log($(e.currentTarget));
 				var post_id = $(e.currentTarget).parent().parent().attr('data-value'),
 					post_name = $(e.currentTarget).parent().parent().find('.post-title').text(),
 					post_content = $(e.currentTarget).parent().parent().find('.post-content').text();

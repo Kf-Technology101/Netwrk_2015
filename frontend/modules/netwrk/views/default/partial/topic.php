@@ -53,7 +53,7 @@
   </div>
 </div>
   <script id="city_name" type="text/x-underscore-template">
-    <span class="title"><a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= city %></span>
+    <span class="title"><%= city %></span>
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
       <% _.each(topices,function(topic){ %>

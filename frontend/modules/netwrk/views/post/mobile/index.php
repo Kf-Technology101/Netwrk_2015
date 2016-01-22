@@ -5,7 +5,7 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title"><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><?= $topic->title ?></span>
+            <span class="title"><?= $topic->title ?></span>
         </div>
         <div class="create_post">
             <span><i class="fa fa-plus-circle"></i> Create Post</span>
