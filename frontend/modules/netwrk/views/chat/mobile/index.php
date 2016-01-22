@@ -11,7 +11,7 @@
         <div class="title_page">
             <span class="title">
             <?php if ($post->post_type == 1 ) { ?>
-                <span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
+                <!-- <span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span> -->
                 <span><i class="fa fa-angle-right"></i><?= $post->topic->title ?></span>
                 <span><i class="fa fa-angle-right"></i><?= $post->title ?></span>
             <?php } else { ?>
