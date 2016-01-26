@@ -133,6 +133,7 @@ var Map ={
   	},
 
   	show_marker: function(map){
+  		var startTime = (new Date()).getTime(); 
 	    var json,data_marker;
 	    var current_zoom = map.getZoom();
 	    var markerSize = {
@@ -200,7 +201,10 @@ var Map ={
 
 	      	Map.initializeMarker(e, map, img);
     	});
+		var endTime = (new Date()).getTime();
+		var millisecondsLoading = endTime - startTime;
 
+        console.log(millisecondsLoading);
     	// Please don't delete code below
 		//
 		// if (map.getZoom() == 12) {
