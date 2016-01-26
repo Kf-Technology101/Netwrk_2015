@@ -16,6 +16,7 @@ var Map ={
   	// center: new google.maps.LatLng(39.7662195,-86.441277),
   	center:'',
   	initialize: function() {
+  		var startTime = (new Date()).getTime(); 
   		if(isMobile){
 	  		if(sessionStorage.map_zoom){
 	  			Map.zoom = parseInt(sessionStorage.map_zoom);
@@ -63,6 +64,10 @@ var Map ={
 	    Map.showHeaderFooter();
 	    // Map.insertLocalUniversity();
 	    // Map.insertLocalGovernment();
+	    var endTime = (new Date()).getTime();
+		var millisecondsLoading = endTime - startTime;
+
+        console.log('Time loading map zoom 7' + millisecondsLoading);
   	},
 
   	mapBoundaries:function(map){
@@ -204,7 +209,7 @@ var Map ={
 		var endTime = (new Date()).getTime();
 		var millisecondsLoading = endTime - startTime;
 
-        console.log(millisecondsLoading);
+        console.log('Time append marker' + millisecondsLoading);
     	// Please don't delete code below
 		//
 		// if (map.getZoom() == 12) {
@@ -662,6 +667,7 @@ var Map ={
 		    	}
 		    }
 	        if(!Map.zoomIn){
+	        	var startTime = (new Date()).getTime();
 		        Map.smoothZoom(map, 12, map.getZoom() + 1, true);
 		        Map.zoomIn = true;
 		        // if(map.getZoom() == 12) {
@@ -671,6 +677,10 @@ var Map ={
 		        if(isMobile){
 			        sessionStorage.map_zoom = 12;
 			    }
+			     var endTime = (new Date()).getTime();
+		        var millisecondsLoading = endTime - startTime;
+
+		        console.log('Time loading map zoom 12'+millisecondsLoading);
 	        	// }
 	      	} else {
 	      		$(".map-marker-label").remove();
