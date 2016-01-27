@@ -92,7 +92,6 @@
       <%
         var len_post = feed.top_post.length;
         _.each(feed.top_post,function(e,i){
-          console.log(e);
           if(i == len_post - 1){%>
               <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
           <% }else{ %>
@@ -124,7 +123,6 @@
       <%
         var len_topic = feed.top_post.length;
         _.each(feed.top_topic,function(e,i){
-          console.log(e);
           if(i == len_topic - 1){ %>
               <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
           <% }else{ %>
@@ -151,17 +149,21 @@
     <div class="top-feed-content">
       <%
         _.each(feed.feed,function(e,i){ %>
-        <div class="feed-row" data-city="<%= e.city_id %>">
-          <div class="feed-content">
-            <p class="zipcode" ><%= e.zip_code %> - <%= (e.office_name != null) ? e.office_name : e.city_name %></p>
-            <p class="subtext">
-            <% _.each(e.top_hashtag,function(d,s){ %>
-              <span><%=d.hashtag %></span>
-            <%})%>
-            </p>
+          <% if ((e.is_post == 1)){ %>
+            <div class="feed-row feed-post" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
+            <div class="feed-content">
+              <p class="subtext">
+              </p>
+            </div>
           </div>
-          <span class="arrow"><i class="fa fa-angle-right"></i></span>
-        </div>
+          <% }else{ %>
+            <div class="feed-row feed-topic" data-city="<%= e.city_id %>">
+            <div class="feed-content">
+              <p class="subtext">
+              </p>
+            </div>
+          </div>
+          <% } %>
       <%
         });
       %>

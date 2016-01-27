@@ -323,18 +323,79 @@ var Topic = {
             self.getTemplateModal(cityname,data);
             Topic.CustomScrollBar();
             Topic.GetDataOnTab();
+            Topic.OnClickPostFeed();
+            Topic.OnClickVoteFeed();
+            Topic.OnClickTopicFeed();
         });
     },
 
     getTemplateFeed: function(parent,data){
-        var self = this;
         var json = $.parseJSON(data);
         parent.find('.no-data').hide();
         var list_template = _.template($( "#feed_list" ).html());
         var append_html = list_template({feed: json});
+        parent.html('');
         parent.append(append_html);
     },
 
+    OnClickPostFeed: function(){
+        var target = $(Topic.modal).find('.top-post .post');
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+                var post_id = $(e.currentTarget).parent().attr('data-value'),
+                    post_name = $(e.currentTarget).find('.post-title').text(),
+                    post_content = $(e.currentTarget).find('.post-content').text();
+            if(isMobile){
+                sessionStorage.landing_post = 1;
+                PopupChat.RedirectChatPostPage(post_id, 1, 1);
+            }else{
+                // $(LandingPage.modal).modal('hide');
+                PopupChat.params.post = post_id;
+                PopupChat.params.chat_type = 1;
+                PopupChat.params.post_name = post_name;
+                PopupChat.params.post_description = post_content;
+                PopupChat.initialize();
+            }
+        });
+    },
+
+    OnClickVoteFeed: function() {
+        var target = $(Topic.modal).find('.top-post .action .brilliant');
+        target.unbind();
+        target.on('click',function(e){
+            var post_id = $(e.currentTarget).parent().parent().attr('data-value');
+            Ajax.vote_post({post_id: post_id}).then(function(res){
+                var json = $.parseJSON(res);
+                console.log($(e.currentTarget));
+                $(e.currentTarget).text(json.data);
+            });
+        });
+    },
+
+    OnClickTopicFeed: function(){
+        var target = $(Topic.modal).find('.topic-row');
+
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+            var city_id = $(e.currentTarget).attr('data-city'),
+                city_name = $(e.currentTarget).attr('data-city-name'),
+                topic_id = $(e.currentTarget).attr('data-value'),
+                topic_name = $(e.currentTarget).find('.topic-title').text();
+            if(isMobile){
+                Post.RedirectPostPage(topic_id);
+            }else{
+                $(Topic.modal).modal('hide');
+                Post.params.topic = topic_id;
+                Post.params.topic_name = topic_name;
+                Post.params.city = city_id;
+                Post.params.city_name = city_name;
+                Post.initialize();
+            }
+        });
+
+    },
 
     load_topic_modal: function(){
         var self = this;
@@ -395,7 +456,7 @@ var Topic = {
                 $(s).removeClass('active');
             }
         });
-        $(target[1]).addClass('active');
+        $(target[0]).addClass('active');
 
         Topic.tab_current ='feed';
     },

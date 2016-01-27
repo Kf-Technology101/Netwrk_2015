@@ -146,7 +146,6 @@ class TopicController extends BaseController
         $topices = $topices->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
-
         $data = [];
         foreach ($topices as $key => $value) {
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count);
@@ -177,7 +176,6 @@ class TopicController extends BaseController
                 );
             array_push($data,$topic);
         }
-
         $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode);
         $hash = json_encode($temp);
         return $hash;
@@ -237,6 +235,8 @@ class TopicController extends BaseController
      */
     public function actionGetFeed() {
         $city = isset($_GET['city']) && $_GET['city'] != null ? $_GET['city'] : null;
+        $pageSize = isset($_GET['size']) && $_GET['size'] != null ? $_GET['size'] : null;
+        $page = isset($_GET['page']) && $_GET['page'] != null ? $_GET['page'] : null;
         $request = Yii::$app->request->isAjax;
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
@@ -262,6 +262,7 @@ class TopicController extends BaseController
                 $num_date = UtilitiesFunc::FormatDateTime($value['created_at']);
                 $value['appear_day'] = $num_date;
                 $value['posted_by'] = $value['first_name'] ." ".$value['last_name'];
+                $value['is_post'] = 1;
                 array_push($feed, $value);
             }
 
@@ -281,16 +282,18 @@ class TopicController extends BaseController
                     'created_at' => $value->created_at,
                     'appear_day' => $num_date,
                     'created_by' => $value['user']['profile']['first_name']." ".  $value['user']['profile']['last_name'],
+                    'is_post' => 0
                 ];
                 array_push($feed, $item);
             }
             usort($feed, function($a, $b) {
                 return strtotime($b['created_at']) - strtotime($a['created_at']);
             });
+
             $item = [
                 'top_post'=> $top_post,
                 'top_topic'=> $top_topic,
-                'feed' => $feed
+                // 'feed' => $feed
             ];
 
             $hash = json_encode($item);
