@@ -152,7 +152,7 @@ var Signup={
 			if(!Signup.zipcode){
 				var zip = $(Signup.parent).find('#profile-zip_code').val();
 				Signup.CheckZipcode(zip);
-				return false
+				return false;
 			}
 		});
 	},
@@ -163,7 +163,7 @@ var Signup={
 			if(!Signup.zipcode){
 				var zip = $(Signup.parent).find('#profile-zip_code').val();
 				Signup.CheckZipcode(zip);
-				return false
+				return false;
 			}
 		});
 	},
@@ -201,17 +201,15 @@ var Signup={
 	validateZipcode: function(){
 		var target = $(Signup.parent).find('#profile-zip_code');
 
-		target.unbind('keyup');
 		target.unbind('change');
-		target.unbind('blur');
 
-		target.on('blur change keyup',function(e){
+		target.on('change',function(e){
 			Signup.CheckZipcode($(e.currentTarget).val()) ;
 		})
 	},
 
 	CheckZipcode: function(zipcode){
-		var val = zipcode;
+		var val = parseInt(zipcode,10);
 		var message ;
 
 		if(val > 9999 && val < 99999){
@@ -220,32 +218,36 @@ var Signup={
 			message = "Zip Code is invalid";
 			Signup.OnShowZipcodeErrors(message);
 			Signup.zipcode = 0;
+			return false;
 		}
 		else{
 			message = "Zip Code is invalid";
 			Signup.OnShowZipcodeErrors(message);
 			Signup.zipcode = 0;
+			return false;
 		}
 	},
 
     apiZipcode: function(zipcode){
     	var message;
-        $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
-        	console.log(data);
-            if (data.places[0].state == Signup.state){
-            	Signup.zipcode = 1;
-            	Signup.lat = data.places[0].latitude;
-            	Signup.lng = data.places[0].longitude;
-            	Signup.OnShowZipcodeValid();
-            }else{
-            	message = "Zip Code is invalid";
-            	Signup.zipcode = 0;
-            	Signup.OnShowZipcodeErrors(message);
-            }
-        }).fail(function(jqXHR) {
-        	message = "Zip Code is invalid";
-        	Signup.zipcode = 0;
-        	Signup.OnShowZipcodeErrors(message);
+        $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address="+zipcode ,function(data){
+        	var address = data.results[0].address_components;
+        	var geometry = data.results[0].geometry.location;
+        	$.each(address,function(i,e){
+        		if(e.types[0] == 'administrative_area_level_1' && e.long_name == Signup.state){
+        			console.log('valid zipcode');
+        			Signup.OnShowZipcodeValid();
+        			Signup.zipcode = 1;
+	            	Signup.lat = geometry.lat;
+	            	Signup.lng = geometry.lng;
+	            	return false;
+        		}else{
+        			console.log('invalid zipcode');
+        			message = "Zip Code is invalid";
+	            	Signup.zipcode = 0;
+	            	Signup.OnShowZipcodeErrors(message);
+        		}
+        	});
         });
     },
 
