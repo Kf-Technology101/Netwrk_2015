@@ -10,7 +10,6 @@ var Signup={
 	lng: 0,
 	data_validate:'',
 	initialize:function(){
-		console.log('signup');
 		if(isMobile){
 			Default.hideHeaderFooter();
 			$('body').addClass('no-login');
@@ -94,8 +93,6 @@ var Signup={
 					setTimeout(function(){
 						Signup.ShowErrorValidate('user-username');
 					}, 500);
-				}else{
-					console.log('signup')
 				}
 			});
 		}
@@ -103,13 +100,10 @@ var Signup={
 		$(Signup.parent).find('#user-username').on('blur',function(){
 			Ajax.user_signup($(Signup.form_id)).then(function(data){
 				Signup.data_validate = $.parseJSON(data);
-				console.log(Signup.data_validate);
 				if(Signup.data_validate.status == 0){
 					setTimeout(function(){
 						Signup.ShowErrorValidate('user-username');
 					}, 500);
-				}else{
-					console.log('signup')
 				}
 			});
 		});
@@ -127,7 +121,6 @@ var Signup={
 						Signup.data_validate = data;
 						Signup.ShowErrorValidate();
 					}else{
-						console.log(Signup.data_validate);
 						isGuest = '';
 						UserLogin = Signup.data_validate.data;
 						Login.OnCallBackAfterLogin();
@@ -152,18 +145,17 @@ var Signup={
 			if(!Signup.zipcode){
 				var zip = $(Signup.parent).find('#profile-zip_code').val();
 				Signup.CheckZipcode(zip);
-				return false
+				return false;
 			}
 		});
 	},
 
 	OnAfterValidateForm: function(){
 		$(Signup.parent).on('afterValidate',Signup.form_id,function(e,data,error){
-			console.log(data);
 			if(!Signup.zipcode){
 				var zip = $(Signup.parent).find('#profile-zip_code').val();
 				Signup.CheckZipcode(zip);
-				return false
+				return false;
 			}
 		});
 	},
@@ -201,17 +193,15 @@ var Signup={
 	validateZipcode: function(){
 		var target = $(Signup.parent).find('#profile-zip_code');
 
-		target.unbind('keyup');
 		target.unbind('change');
-		target.unbind('blur');
 
-		target.on('blur change keyup',function(e){
+		target.on('change',function(e){
 			Signup.CheckZipcode($(e.currentTarget).val()) ;
 		})
 	},
 
 	CheckZipcode: function(zipcode){
-		var val = zipcode;
+		var val = parseInt(zipcode,10);
 		var message ;
 
 		if(val > 9999 && val < 99999){
@@ -220,32 +210,34 @@ var Signup={
 			message = "Zip Code is invalid";
 			Signup.OnShowZipcodeErrors(message);
 			Signup.zipcode = 0;
+			return false;
 		}
 		else{
 			message = "Zip Code is invalid";
 			Signup.OnShowZipcodeErrors(message);
 			Signup.zipcode = 0;
+			return false;
 		}
 	},
 
     apiZipcode: function(zipcode){
     	var message;
-        $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
-        	console.log(data);
-            if (data.places[0].state == Signup.state){
-            	Signup.zipcode = 1;
-            	Signup.lat = data.places[0].latitude;
-            	Signup.lng = data.places[0].longitude;
-            	Signup.OnShowZipcodeValid();
-            }else{
-            	message = "Zip Code is invalid";
-            	Signup.zipcode = 0;
-            	Signup.OnShowZipcodeErrors(message);
-            }
-        }).fail(function(jqXHR) {
-        	message = "Zip Code is invalid";
-        	Signup.zipcode = 0;
-        	Signup.OnShowZipcodeErrors(message);
+        $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address="+zipcode ,function(data){
+        	var address = data.results[0].address_components;
+        	var geometry = data.results[0].geometry.location;
+        	$.each(address,function(i,e){
+        		if(e.types[0] == 'administrative_area_level_1' && e.long_name == Signup.state){
+        			Signup.OnShowZipcodeValid();
+        			Signup.zipcode = 1;
+	            	Signup.lat = geometry.lat;
+	            	Signup.lng = geometry.lng;
+	            	return false;
+        		}else{
+        			message = "Zip Code is invalid";
+	            	Signup.zipcode = 0;
+	            	Signup.OnShowZipcodeErrors(message);
+        		}
+        	});
         });
     },
 
