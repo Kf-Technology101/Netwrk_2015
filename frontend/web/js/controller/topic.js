@@ -32,7 +32,7 @@ var Topic = {
     },
     modal: '#modal_topic',
     modal_create: '#create_topic',
-    tab_current: 'topic',
+    tab_current: 'feed',
     init: function(){
         Topic._onclickBack();
         Topic.GetDataOnTab();
@@ -301,15 +301,40 @@ var Topic = {
         });
     },
 
-
     OnShowModalPost: function(){
         $('#modal_topic').unbind('shown.bs.modal');
         $('#modal_topic').on('shown.bs.modal',function(e) {
+            Topic.LoadFeedModal();
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
             Topic.displayPositionModal();
         });
     },
+
+    LoadFeedModal: function() {
+        var self = this;
+        var parent = $('#tab_feed');
+        var cityname = $('#modal_topic').find('.title_page');
+        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
+        parent.show();
+        Ajax.show_feed(params).then(function(data){
+            parent.scrollTop(0);
+            self.getTemplateFeed(parent,data);
+            self.getTemplateModal(cityname,data);
+            Topic.CustomScrollBar();
+            Topic.GetDataOnTab();
+        });
+    },
+
+    getTemplateFeed: function(parent,data){
+        var self = this;
+        var json = $.parseJSON(data);
+        parent.find('.no-data').hide();
+        var list_template = _.template($( "#feed_list" ).html());
+        var append_html = list_template({feed: json});
+        parent.append(append_html);
+    },
+
 
     load_topic_modal: function(){
         var self = this;
@@ -335,7 +360,7 @@ var Topic = {
         $('#modal_topic').on('hidden.bs.modal',function(e) {
             $(e.currentTarget).unbind();
             Topic.reset_modal();
-            // 
+            //
             // Map.get_data_marker();
 
         });
@@ -372,7 +397,7 @@ var Topic = {
         });
         $(target[1]).addClass('active');
 
-        Topic.tab_current ='topic';
+        Topic.tab_current ='feed';
     },
 
     show_page_topic: function(city,params){
@@ -479,7 +504,6 @@ var Topic = {
             });
         }
     },
-
 
     getTemplate: function(parent,data){
         var self = this;

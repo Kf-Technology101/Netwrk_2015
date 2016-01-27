@@ -438,12 +438,12 @@ class DefaultController extends BaseController
         $zcodes = City::find()->select(['id', 'zip_code'])->where(['office_type'=>'university'])->all();
         $datas = City::find()->select(['id', 'zip_code'])->where('office is null')->all();
         $arrs = [];
-        for ($i=0; $i < count($zcodes); $i++) { 
+        for ($i=0; $i < count($zcodes); $i++) {
             array_push($arrs, $zcodes[$i]->zip_code);
         }
 
         $arrs2 = [];
-        for ($i=0; $i < count($datas); $i++) { 
+        for ($i=0; $i < count($datas); $i++) {
             array_push($arrs2, $datas[$i]->zip_code);
         }
 
@@ -481,12 +481,12 @@ class DefaultController extends BaseController
         $zcodes = City::find()->select(['id', 'zip_code'])->where(['office_type'=>'government'])->all();
         $datas = City::find()->select(['id', 'zip_code'])->where('office is null')->all();
         $arrs = [];
-        for ($i=0; $i < count($zcodes); $i++) { 
+        for ($i=0; $i < count($zcodes); $i++) {
             array_push($arrs, $zcodes[$i]->zip_code);
         }
 
         $arrs2 = [];
-        for ($i=0; $i < count($datas); $i++) { 
+        for ($i=0; $i < count($datas); $i++) {
             array_push($arrs2, $datas[$i]->zip_code);
         }
 
@@ -498,7 +498,7 @@ class DefaultController extends BaseController
 
         $ctys = City::find()->where(['zip_code'=>$arrs2])->andWhere('office_type is null')->all();
 
-        for ($i=0; $i < count($ctys); $i++) { 
+        for ($i=0; $i < count($ctys); $i++) {
             $lat = $ctys[$i]->lat - 0.01;
             $lng = $ctys[$i]->lng + 0.01;
 
@@ -523,9 +523,8 @@ class DefaultController extends BaseController
         $request = Yii::$app->request->isAjax;
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-
-            $top_post = Post::GetTopPostUserJoinGlobal($limit);
-            $top_topic = Topic::GetTopTopicGlobal($limit);
+            $top_post = Post::GetTopPostUserJoinGlobal($limit,null);
+            $top_topic = Topic::GetTopTopicGlobal($limit, null);
             $top_city = City::GetTopCityUserJoinGlobal($limit);
             $top_communities =City::TopHashTag_City($top_city,$limit);
 

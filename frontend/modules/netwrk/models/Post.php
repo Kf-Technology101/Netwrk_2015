@@ -195,12 +195,25 @@ class Post extends \yii\db\ActiveRecord
         return $datas['count_user_comment'];
     }
 
-    public function GetTopPostUserJoinGlobal($limit){
+    public function GetTopPostUserJoinGlobal($limit, $city){
         $query = new Query();
         $maxlength = Yii::$app->params['MaxlenghtContentLanding'];
         $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
-
-        $data = $query ->select('post.id,post.title,post.content,post.brilliant_count,ws_messages.user_id,profile.photo,count(DISTINCT ws_messages.user_id) as user_join')
+        if ($city != null) {
+            $data = $query ->select('post.id,post.title,post.content,post.brilliant_count,ws_messages.user_id,profile.photo, topic.id as topic_id, topic.title as topic_title, city.zip_code, count(DISTINCT ws_messages.user_id) as user_join')
+                       ->from('ws_messages')
+                       ->leftJoin('profile','ws_messages.user_id = profile.user_id')
+                       ->innerJoin('post', 'post.id=ws_messages.post_id')
+                       ->innerJoin('topic', 'post.topic_id=topic.id')
+                       ->innerJoin('city', 'topic.city_id=city.id')
+                       ->where(['not',['post.topic_id'=> null]])
+                       ->andWhere('topic.city_id = '.$city)
+                       ->groupBy('post.id')
+                       ->orderBy('user_join DESC')
+                       ->limit($limit)
+                       ->all();
+        } else {
+            $data = $query ->select('post.id,post.title,post.content,post.brilliant_count,ws_messages.user_id,profile.photo,count(DISTINCT ws_messages.user_id) as user_join')
                        ->from('ws_messages')
                        ->leftJoin('profile','ws_messages.user_id = profile.user_id')
                        ->leftJoin('post', 'post.id=ws_messages.post_id')
@@ -209,6 +222,8 @@ class Post extends \yii\db\ActiveRecord
                        ->orderBy('user_join DESC')
                        ->limit($limit)
                        ->all();
+        }
+
         foreach ($data as $key => $value) {
             # code...
             $url_avatar = User::GetUrlAvatar($value['user_id'],$value['photo']);

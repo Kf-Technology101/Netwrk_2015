@@ -335,6 +335,28 @@ var Ajax ={
         return defer.promise();
     },
 
+    show_feed: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/topic/get-feed";
+        }else{
+            url = "netwrk/topic/get-feed";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     getUserMeeting: function(params){
         var url,defer = $.Deferred();
 

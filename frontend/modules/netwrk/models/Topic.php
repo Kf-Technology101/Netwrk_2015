@@ -62,7 +62,7 @@ class Topic extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getCity()
-    {   
+    {
         return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
 
@@ -131,12 +131,20 @@ class Topic extends \yii\db\ActiveRecord
     }
 
     //Get top topic in all netwrk
-    public function GetTopTopicGlobal($limit){
-
-        $model = Topic::find()
+    public function GetTopTopicGlobal($limit, $city){
+        if ($city != null) {
+            $model = Topic::find()
+                    ->where('city_id ='.$city)
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
+        } else {
+            $model = Topic::find()
+                    ->orderBy(['topic.post_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }
+
         $topics = [];
         foreach ($model as $key => $value) {
             # code...

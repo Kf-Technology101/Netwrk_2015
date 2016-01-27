@@ -7,6 +7,7 @@ use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
+use frontend\modules\netwrk\models\User;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -227,5 +228,32 @@ class TopicController extends BaseController
         $id = $_POST['topic'];
         $topic = Topic::findOne($id);
         return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
+    }
+
+    /**
+     * [Function is used to get  List out ALL created Topic/ Post within that netwrk, 3 posts within that netwrk and have most number of users joining the post discussion, 3 topics which have most posts within this zip code]
+     * @param  $zipcode
+     * @return array      [data of json]
+     */
+    public function actionGetFeed() {
+        $city = isset($_GET['city']) && $_GET['city'] != null ? $_GET['city'] : null;
+        $request = Yii::$app->request->isAjax;
+        if($request){
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+
+            $top_post = Post::GetTopPostUserJoinGlobal($limit, $city);
+            $top_topic = Topic::GetTopTopicGlobal($limit, $city);
+            $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
+            $feed = [];
+
+            $item = [
+                'top_post'=> $top_post,
+                'top_topic'=> $top_topic,
+                'feed' => $feed
+            ];
+
+            $hash = json_encode($item);
+            return $hash;
+        }
     }
 }

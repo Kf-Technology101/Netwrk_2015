@@ -175,11 +175,9 @@ var Default ={
         var btn = $('#user_avatar_dashboard');
         btn.hover(
             function(){
-                console.log('on hover avtar');
                 $(ChatInbox.modal).css('z-index','999');
             }
             , function(){
-                console.log('on leave avtar');
             $(ChatInbox.modal).css('z-index','9999');
         });
     },
