@@ -74,6 +74,14 @@ class Topic extends \yii\db\ActiveRecord
         return $this->hasMany(Post::className(), ['topic_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
     // public function beforeSave($insert){
     //     if ($insert) {
     //         $user_exits = Topic::find()->where(['user_id'=> 1,'city_id'=>$this->city_id])->one();

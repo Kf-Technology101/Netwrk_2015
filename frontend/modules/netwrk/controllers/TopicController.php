@@ -245,7 +245,48 @@ class TopicController extends BaseController
             $top_topic = Topic::GetTopTopicGlobal($limit, $city);
             $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
             $feed = [];
+            $query = new Query();
+            $feed_post = $query->select('post.id,post.title,post.content, post.user_id, profile.photo as photo, post.created_at as created_at, profile.first_name, profile.last_name, topic.id as topic_id, topic.title as topic_title, city.zip_code as zip_code')
+                       ->from('post')
+                       ->innerJoin('profile','post.user_id = profile.user_id')
+                       ->innerJoin('topic', 'post.topic_id=topic.id')
+                       ->innerJoin('city', 'topic.city_id=city.id')
+                       ->where(['not',['post.topic_id'=> null]])
+                       ->andWhere('topic.city_id = '.$city)
+                       ->orderBy(['post.created_at'=> SORT_DESC])
+                       ->all();
 
+            foreach ($feed_post as $key => $value) {
+                $url_avatar = User::GetUrlAvatar($value['user_id'],$value['photo']);
+                $value['photo'] = $url_avatar;
+                $num_date = UtilitiesFunc::FormatDateTime($value['created_at']);
+                $value['appear_day'] = $num_date;
+                $value['posted_by'] = $value['first_name'] ." ".$value['last_name'];
+                array_push($feed, $value);
+            }
+
+            $feed_topic = Topic::find()
+                    ->where('city_id ='.$city)
+                    ->with('user')
+                    ->orderBy(['topic.created_at'=> SORT_DESC])
+                    ->all();
+
+            foreach ($feed_topic as $key => $value) {
+                $num_date = UtilitiesFunc::FormatDateTime($value['created_at']);
+                $item = [
+                    'id' => $value->id,
+                    'title'=> $value->title,
+                    'city_id'=> $value->city_id,
+                    'city_name'=> $value->city->name,
+                    'created_at' => $value->created_at,
+                    'appear_day' => $num_date,
+                    'created_by' => $value['user']['profile']['first_name']." ".  $value['user']['profile']['last_name'],
+                ];
+                array_push($feed, $item);
+            }
+            usort($feed, function($a, $b) {
+                return strtotime($b['created_at']) - strtotime($a['created_at']);
+            });
             $item = [
                 'top_post'=> $top_post,
                 'top_topic'=> $top_topic,
