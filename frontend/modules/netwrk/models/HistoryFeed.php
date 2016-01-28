@@ -47,4 +47,13 @@ class HistoryFeed extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+
+    public function getItem()
+    {
+        if($this->type_item == 'post'){
+            return $this->hasOne(Post::className(), ['id' => 'id_item']);
+        }elseif($this->type_item == 'topic'){
+            return $this->hasOne(Topic::className(), ['id' => 'id_item']);
+        }
+    }
 }
