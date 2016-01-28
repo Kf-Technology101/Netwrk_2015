@@ -228,13 +228,13 @@ var Post ={
 
 		name.find('span.title').remove();
 		btn_map.show();
-		Post.tab_current = "feed";
+		Post.tab_current = "post";
 		Post.params.filter = "post";
 		var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
 		$('#list_post').find('.tab').hide();
 		$('#list_post').find('.dropdown-toggle').text(selecFilter);
 		$('#list_post').find('.filter_sidebar td').removeClass('active');
-		$('#list_post').find('.filter_sidebar .feed').addClass('active');
+		$('#list_post').find('.filter_sidebar .post').addClass('active');
 	},
 
 	getNameTopic: function(){
@@ -286,7 +286,7 @@ var Post ={
 		if(isMobile){
 			$('#list_post').find('span.filter').addClass('visible');
 			$('#list_post').find('span.filter').removeClass('active');
-		$('#list_post').find('.filter_sort').removeClass('active');
+			$('#list_post').find('.filter_sort').removeClass('active');
 			$('#list_post').find('.container_post').removeClass('open');
 		}else{
 			$('#list_post').find('.dropdown').addClass('visible');
@@ -299,6 +299,9 @@ var Post ={
 		var parent = $('#list_post').find('#tab_feed');
 		Ajax.show_feed(params).then(function(res){
 			Post.getTemplateFeed(parent,res);
+			Post.OnClickPostFeed();
+	        Post.OnClickVoteFeed();
+	        Post.OnClickTopicFeed();
 		});
 	},
 
@@ -310,12 +313,72 @@ var Post ={
         parent.html('');
         parent.append(append_html);
     },
+
+    OnClickPostFeed: function() {
+    	var target = $(Post.modal).find('.top-post .post');
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+                var post_id = $(e.currentTarget).parent().attr('data-value'),
+                    post_name = $(e.currentTarget).find('.post-title').text(),
+                    post_content = $(e.currentTarget).find('.post-content').text();
+            if(isMobile){
+                sessionStorage.landing_post = 1;
+                PopupChat.RedirectChatPostPage(post_id, 1, 1);
+            }else{
+                PopupChat.params.post = post_id;
+                PopupChat.params.chat_type = 1;
+                PopupChat.params.post_name = post_name;
+                PopupChat.params.post_description = post_content;
+                PopupChat.initialize();
+            }
+        });
+    },
+
+    OnClickVoteFeed: function() {
+        var target = $(Post.modal).find('.top-post .action .brilliant');
+        target.unbind();
+        target.on('click',function(e){
+            var post_id = $(e.currentTarget).parent().parent().attr('data-value');
+            Ajax.vote_post({post_id: post_id}).then(function(res){
+                var json = $.parseJSON(res);
+                console.log($(e.currentTarget));
+                $(e.currentTarget).text(json.data);
+            });
+        });
+    },
+
+    OnClickTopicFeed: function(){
+        var target = $(Post.modal).find('.topic-row');
+
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+            var city_id = $(e.currentTarget).attr('data-city'),
+                city_name = $(e.currentTarget).attr('data-city-name'),
+                topic_id = $(e.currentTarget).attr('data-value'),
+                topic_name = $(e.currentTarget).find('.topic-title').text();
+            if(isMobile){
+                Post.RedirectPostPage(topic_id);
+            }else{
+                $(Topic.modal).modal('hide');
+                Post.params.topic = topic_id;
+                Post.params.topic_name = topic_name;
+                Post.params.city = city_id;
+                Post.params.city_name = city_name;
+                Post.initialize();
+            }
+        });
+
+    },
+
 	ShowPostPage: function(){
 		if(isMobile){
 			$('#list_post').find('span.filter').removeClass('visible');
 		}else{
 			$('#list_post').find('.dropdown').removeClass('visible');
 		}
+		$('.container_post .tab').hide();
 		$('#tab_post').show();
 		Post.ResetTabPost();
 		Post.GetTabPost();
@@ -378,7 +441,7 @@ var Post ={
 
 	GetTabPost: function(){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
-
+		console.log('post here');
 		Ajax.get_post_by_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);

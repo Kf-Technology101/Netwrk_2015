@@ -341,7 +341,7 @@ var Topic = {
     },
 
     OnClickPostFeed: function(){
-        var target = $(Topic.modal + ','+ Post.modal).find('.top-post .post');
+        var target = $(Topic.modal).find('.top-post .post');
         target.unbind();
         target.on('click',function(e){
             console.log($(e.currentTarget));
@@ -363,7 +363,7 @@ var Topic = {
     },
 
     OnClickVoteFeed: function() {
-        var target = $(Topic.modal + ','+ Post.modal).find('.top-post .action .brilliant');
+        var target = $(Topic.modal).find('.top-post .action .brilliant');
         target.unbind();
         target.on('click',function(e){
             var post_id = $(e.currentTarget).parent().parent().attr('data-value');
@@ -376,7 +376,7 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $(Topic.modal + ','+ Post.modal).find('.topic-row');
+        var target = $(Topic.modal).find('.topic-row');
 
         target.unbind();
         target.on('click',function(e){
