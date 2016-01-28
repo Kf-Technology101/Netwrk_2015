@@ -13,7 +13,9 @@ function Label(opt_options) {
 	div.appendChild(span);
 	div.style.cssText = 'position: absolute; display: none';
 };
-Label.prototype = new google.maps.OverlayView;
+if (typeof google !== "undefined") {
+	Label.prototype = new google.maps.OverlayView;
+}
 
 // Implement onAdd
 Label.prototype.onAdd = function() {
