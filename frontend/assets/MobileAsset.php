@@ -42,6 +42,7 @@ class MobileAsset extends AssetBundle
     ];
     public $js = [
       'js/lib/underscore.js',
+      'js/lib/label.js',
       'js/main.js',
       'js/vendor/bootbox.min.js',
       // 'js/ws/ws.js',

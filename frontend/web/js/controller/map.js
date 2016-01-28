@@ -15,8 +15,10 @@ var Map ={
   	zoom: 7,
   	// center: new google.maps.LatLng(39.7662195,-86.441277),
   	center:'',
+  	zoom7: '',
+  	zoom12: '',
   	initialize: function() {
-  		var startTime = (new Date()).getTime(); 
+  		
   		if(isMobile){
 	  		if(sessionStorage.map_zoom){
 	  			Map.zoom = parseInt(sessionStorage.map_zoom);
@@ -36,38 +38,66 @@ var Map ={
 	      // disableDoubleClickZoom: true,
 	      disableDefaultUI: true,
 	      streetViewControl: false,
-	      scrollwheel: false,
+	      scrollwheel: true,
 	      mapTypeId:google.maps.MapTypeId.ROADMAP
 	    };
 	    var remove_poi = [
 	        {
-	          	featureType: "poi",
-	       		stylers: [
-	            	{ visibility: "off" }
-	        	]
-	        }
+				stylers: [
+					{ hue: "#00ffe6" },
+					{ saturation: -20 }
+				]
+			},{
+				featureType: "road",
+				elementType: "geometry",
+				stylers: [
+					{ lightness: 100 },
+					{ visibility: "simplified" }
+				]
+			},{
+				featureType: "road",
+				elementType: "labels",
+				stylers: [
+					{ visibility: "off" }
+				]
+			},{
+				featureType: "city",
+				elementType: "labels",
+				stylers: [
+					{ visibility: "off" }
+				]
+			},{
+				featureType: "poi",
+				stylers: [
+					{ visibility: "off" }
+				]
+			}
+
 	    ];
 
 	    var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 	    Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-	    Map.map.setOptions({zoomControl: false, scrollwheel: false, styles: remove_poi});
+	    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    // map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
-	    Map.mapBoundaries(Map.map);
 
 	    Map.data_map = Map.map;
 	    Map.min_max_zoom(Map.map);
 	    // Map.eventOnclick(map);
-
-	    Map.eventZoom(Map.map);
-	    Map.eventClickMyLocation(Map.map);
-	    Map.show_marker(Map.map);
-	    Map.showHeaderFooter();
+	    google.maps.event.addListenerOnce(Map.map, 'idle', function(){
+			Ajax.get_marker_default().then(function(data){
+				Map.zoom7 = $.parseJSON(data);
+			});
+			Ajax.get_marker_zoom().then(function(data){
+				Map.zoom12 = $.parseJSON(data);
+			});
+			Map.mapBoundaries(Map.map);
+			Map.eventZoom(Map.map);
+			Map.eventClickMyLocation(Map.map);
+			Map.show_marker(Map.map);
+			Map.showHeaderFooter();
+		});
 	    // Map.insertLocalUniversity();
 	    // Map.insertLocalGovernment();
-	    var endTime = (new Date()).getTime();
-		var millisecondsLoading = endTime - startTime;
-
-        console.log('Time loading map zoom 7' + millisecondsLoading);
   	},
 
   	mapBoundaries:function(map){
@@ -138,60 +168,17 @@ var Map ={
   	},
 
   	show_marker: function(map){
-  		var startTime = (new Date()).getTime(); 
 	    var json,data_marker;
 	    var current_zoom = map.getZoom();
-	    var markerSize = {
-			x: 32,
-			y: 60
-		};
-
-		$(".map-marker-label").remove();
-
-	    google.maps.Marker.prototype.setLabel = function(label) {
-		    this.label = new MarkerLabel({
-				map: this.map,
-				marker: this,
-				text: label
-		    });
-		    this.label.bindTo('position', this, 'position');
-		};
-
-		var MarkerLabel = function(options) {
-		    this.setValues(options);
-		    this.span = document.createElement('span');
-		    this.span.className = 'map-marker-label cid-' + options.marker.city_id;
-		};
-
-		MarkerLabel.prototype = $.extend(new google.maps.OverlayView(), {
-		    onAdd: function() {
-				this.getPanes().overlayLayer.appendChild(this.span);
-				var self = this;
-				this.listeners = [
-					google.maps.event.addListener(this, 'position_changed', function() {
-						self.draw();
-					})
-				];
-		    },
-		    draw: function() {
-		    	if(map.getZoom() == 12){
-					var text = String(this.get('text'));
-					var position = this.getProjection().fromLatLngToDivPixel(this.get('position'));
-					this.span.innerHTML = text;
-					this.span.style.left = (position.x - (markerSize.x / 2)) -  60 + 'px';
-					this.span.style.top = (position.y - markerSize.y + 50) + 'px';
-				}
-		    }
-		});
 
 	    if(current_zoom == 7){
-	      	Ajax.get_marker_default().then(function(data){
-		        data_marker = $.parseJSON(data);
-	      	});
+	      	// Ajax.get_marker_default().then(function(data){
+		        data_marker = Map.zoom7; //$.parseJSON(data);
+	      	// });
 	    }else if(current_zoom == 12){
-	      	Ajax.get_marker_zoom().then(function(data){
-		        data_marker = $.parseJSON(data);
-	      	});
+	      	// Ajax.get_marker_zoom().then(function(data){
+		        data_marker = Map.zoom12; //$.parseJSON(data);
+	      	// });
 	    }
 
     	$.each(data_marker,function(i,e){
@@ -206,10 +193,7 @@ var Map ={
 
 	      	Map.initializeMarker(e, map, img);
     	});
-		var endTime = (new Date()).getTime();
-		var millisecondsLoading = endTime - startTime;
 
-        console.log('Time append marker' + millisecondsLoading);
     	// Please don't delete code below
 		//
 		// if (map.getZoom() == 12) {
@@ -271,8 +255,16 @@ var Map ={
 	        map: map,
 	        icon: img,
 	        city_id: parseInt(e.id),
-	        label: text_below
+	        // label: text_below
       	});
+
+      	var label = new Label({
+	       map: map,
+	       text: text_below,
+	       cid: parseInt(e.id)
+	    });
+
+	    label.bindTo('position', marker, 'position');
 
         var infowindow = new google.maps.InfoWindow({
 			content: '',
@@ -311,29 +303,23 @@ var Map ={
 	        });
 
           	google.maps.event.addListener(infowindow, 'domready', function() {
-
-	        	//   // Reference to the DIV that wraps the bottom of infowindow
+	        	// Reference to the DIV that wraps the bottom of infowindow
 	            var iwOuter = $('.gm-style-iw');
-
-				//    // Since this div is in a position prior to .gm-div style-iw.
-				//    // * We use jQuery and create a iwBackground variable,
-				//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+				// Since this div is in a position prior to .gm-div style-iw.
+				// * We use jQuery and create a iwBackground variable,
+				// * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 				iwOuter.parent().css({'max-width': 310});
 	            var iwBackground = iwOuter.prev();
 	            iwOuter.children(':nth-child(1)').css({'max-width' : '310px'});
 	        	// Removes background shadow DIV
 	            iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-
-	        	//   // Removes white background DIV
+	        	// Removes white background DIV
 	            iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-
 	            //Custom arrow hover popup
-
 	            Map.CustomArrowPopup();
-	        	//   // Changes the desired tail shadow color.
+	        	// Changes the desired tail shadow color.
 	            iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#eee 0px 0px 0px 0px', 'z-index' : '2'});
-
-	        	//   // Reference to the div that groups the close button elements.
+	        	// Reference to the div that groups the close button elements.
 	            var iwCloseBtn = iwOuter.next();
 	            iwCloseBtn.hide();
 
@@ -379,48 +365,6 @@ var Map ={
 				Map.markers[i].setMap(null);
 			}
 		}
-	    google.maps.Marker.prototype.setLabel = function(label) {
-		    this.label = new MarkerLabel({
-				map: this.map,
-				marker: this,
-				text: label
-		    });
-		    this.label.bindTo('position', this, 'position');
-		};
-
-		var MarkerLabel = function(options) {
-		    this.setValues(options);
-		    this.span = document.createElement('span');
-		    this.span.className = 'map-marker-label cid-' + city;
-		};
-
-		MarkerLabel.prototype = $.extend(new google.maps.OverlayView(), {
-		    onAdd: function() {
-				this.getPanes().overlayImage.appendChild(this.span);
-				var self = this;
-				this.listeners = [
-					google.maps.event.addListener(this, 'position_changed', function() {
-						self.draw();
-					})
-				];
-		    },
-		    onRemove: function() { 
-		 		this.div.parentNode.removeChild(this.div); 
-		 		// Label is removed from the map, stop updating its position/text 
-		 		for (var i = 0, l = this.listeners.length; i < l; ++i) { 
-		 			google.maps.event.removeListener(this.listeners[i]); 
-		 		} 
-		 	},
-		    draw: function() {
-		    	if(Map.map.getZoom() == 12){
-					var text = String(this.get('text'));
-					var position = this.getProjection().fromLatLngToDivPixel(this.get('position'));
-					this.span.innerHTML = text;
-					this.span.style.left = (position.x - (markerSize.x / 2)) -  60 + 'px';
-					this.span.style.top = (position.y - markerSize.y + 50) + 'px';
-				}
-		    }
-		});
 
       	Ajax.get_marker_update(city).then(function(data){
 	        data_marker = $.parseJSON(data);
@@ -637,17 +581,26 @@ var Map ={
 		            lng: position.coords.longitude
 		        	};
 		            map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
-		            map.setZoom(12);
-		            // Map.initialize();
+		            if(map.getZoom() <= 12) {
+		            	map.setZoom(12);
+		        	}else{
+		        		map.setZoom(18);
+		        	}
 		        });
 	      	} else {
 		        var zoom_current = map.getZoom();
-		        if (zoom_current == 7) {
-			        Map.smoothZoom(map, 13, zoom_current, true);
-			        Map.zoomIn = true;
-			        Map.deleteNetwrk(map);
+		        if (zoom_current <= 12) {
+			        Map.smoothZoom(map, 12, zoom_current, true);
+			        // Map.zoomIn = true;
+			        // Map.deleteNetwrk(map);
 			        map.zoom = 12;
-			        Map.show_marker(map);
+			        // Map.show_marker(map);
+		        }else{
+		        	Map.smoothZoom(map, 18, zoom_current, true);
+			        // Map.zoomIn = true;
+			        // Map.deleteNetwrk(map);
+			        map.zoom = 18;
+			        // Map.show_marker(map);
 		        }
 
 		        Ajax.get_position_user().then(function(data){
@@ -661,41 +614,104 @@ var Map ={
   	eventZoom: function(map){
 	    var mode = true;
 	    map.addListener('dblclick', function(event){
-	    	if(isMobile){
-		    	if(sessionStorage.map_zoom && parseInt(sessionStorage.map_zoom) == 12){
-		    		Map.zoomIn = true;
-		    	}
-		    }
-	        if(!Map.zoomIn){
-	        	var startTime = (new Date()).getTime();
-		        Map.smoothZoom(map, 12, map.getZoom() + 1, true);
-		        Map.zoomIn = true;
-		        // if(map.getZoom() == 12) {
-	            Map.deleteNetwrk(map);
-		        map.zoom = 12;
-		        Map.show_marker(map);
-		        if(isMobile){
-			        sessionStorage.map_zoom = 12;
-			    }
-			     var endTime = (new Date()).getTime();
-		        var millisecondsLoading = endTime - startTime;
+	    	// if(isMobile){
+		    // 	if(sessionStorage.map_zoom && parseInt(sessionStorage.map_zoom) == 18){
+		    // 		Map.zoomIn = true;
+		    // 	}
+		    // }
+			if(map.getZoom() == 7 || (map.getZoom() > 7 && map.getZoom() < 12)){
+				Map.smoothZoom(map, 12, map.getZoom() + 1, true);
+				Map.deleteNetwrk(map);
+				$(".map-marker-label").remove();
+				map.zoom = 12;
+				Map.show_marker(map);
+				if(isMobile){
+					sessionStorage.map_zoom = 12;
+				}
+			} else if(map.getZoom() == 12 || (map.getZoom() > 12 && map.getZoom() < 18)){
+				Map.smoothZoom(map, 18, map.getZoom() + 1, true);
+				Map.zoomIn = true;
+				map.zoom = 18;
+				if(isMobile){
+				    sessionStorage.map_zoom = 18;
+				}
+			}
+		});
 
-		        console.log('Time loading map zoom 12'+millisecondsLoading);
-	        	// }
-	      	} else {
-	      		$(".map-marker-label").remove();
-		        Map.smoothZoom(map, 7, map.getZoom(), false);
-		        Map.zoomIn = false;
-		        // if(map.getZoom() == 7) {
-		        Map.deleteNetwrk(map);
-		        map.zoom = 7;
-		        Map.show_marker(map);
-		        if(isMobile){
-		        	sessionStorage.map_zoom = 7;
-		    	}
-	        	// }
-	      	}
-	    });
+		map.addListener('zoom_changed', function(){
+			var data_marker;
+			if(map.getZoom() == 18){
+    			Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: null});
+    		} else {
+    			var remove_poi = [
+			        {
+						stylers: [
+							{ hue: "#00ffe6" },
+							{ saturation: -20 }
+						]
+					},{
+						featureType: "road",
+						elementType: "geometry",
+						stylers: [
+							{ lightness: 100 },
+							{ visibility: "simplified" }
+						]
+					},{
+						featureType: "road",
+						elementType: "labels",
+						stylers: [
+							{ visibility: "off" }
+						]
+					},{
+						featureType: "city",
+						elementType: "labels",
+						stylers: [
+							{ visibility: "off" }
+						]
+					},{
+						featureType: "poi",
+						stylers: [
+							{ visibility: "off" }
+						]
+					}
+			    ];
+			    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
+    		}
+    		if(map.zoom == 12 && Map.markers.length == 10){
+    			$(".map-marker-label").remove();
+    			data_marker = Map.zoom12;
+    			Map.deleteNetwrk(map);
+				$.each(data_marker,function(i,e){
+					var img;
+					if(e.office_type == 'university'){
+						img = './img/icon/map_icon_university_v_2.png';
+					} else if(e.office_type == 'government'){
+						img = './img/icon/map_icon_government_v_2.png';
+					} else {
+						img = './img/icon/map_icon_community_v_2.png';
+					}
+
+					Map.initializeMarker(e, map, img);
+				});
+    		}
+    		if(map.zoom == 11 && Map.markers.length > 10){
+    			$(".map-marker-label").remove();
+    			data_marker = Map.zoom7;
+    			Map.deleteNetwrk(map);
+				$.each(data_marker,function(i,e){
+					var img;
+					if(e.office_type == 'university'){
+						img = './img/icon/map_icon_university_v_2.png';
+					} else if(e.office_type == 'government'){
+						img = './img/icon/map_icon_government_v_2.png';
+					} else {
+						img = './img/icon/map_icon_community_v_2.png';
+					}
+
+					Map.initializeMarker(e, map, img);
+				});
+    		}
+		});
   	},
 
   	smoothZoom: function(map, level, cnt, mode) {
@@ -707,14 +723,14 @@ var Map ={
 		    } else {
 		        var z = google.maps.event.addListener(map, 'zoom_changed', function(event){
 		          google.maps.event.removeListener(z);
-		          Map.smoothZoom(map, level, cnt + Map.incre, true);
+		          Map.smoothZoom(map, level, cnt + 1, true);		          
 		        });
-	        	setTimeout(function(){map.setZoom(cnt)}, 0);
-		        if (Map.incre < 2) {
-		        	Map.incre++;
-		        } else {
-		        	Map.incre = 2;
-		        }
+	        	setTimeout(function(){map.setZoom(cnt)}, 50);
+		        // if (Map.incre < 2) {
+		        // 	Map.incre++;
+		        // } else {
+		        // 	Map.incre = 2;
+		        // }
 	      	}
 	    } else {
 		    if (cnt < level) {
@@ -753,7 +769,7 @@ var Map ={
 	    //Gets the specified MapType
 	    var mapType = mapTypeRegistry.get(mapTypeId);
 	    //Sets limits to MapType
-	    mapType.maxZoom = 12;  //It doesn't work with SATELLITE and HYBRID maptypes.
+	    mapType.maxZoom = 18;  //It doesn't work with SATELLITE and HYBRID maptypes.
 	    mapType.minZoom = 7;
   	},
 

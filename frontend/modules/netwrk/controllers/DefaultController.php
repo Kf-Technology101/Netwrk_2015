@@ -354,17 +354,17 @@ class DefaultController extends BaseController
 
         if($city){
             if(isset($city->topics[0])) {
-                $post = $city->topics[0]->posts[0];
-                $content = $post->content;
-                $user_post = $post->user;
-                $content = $post->content;
-                $topices = $this->Top4Topices($city->id);
-                $trending = $this->Trending4Post($city);
+                $post = $this->GetPostMostBrilliant($city->id);
+                $user_post = $post['user'];
+                $content = $post['content'];
+                $topices = $this->Top4Topices($city->id, null);
+                // $trending = $this->Trending4Post($city);
+                $trending_hashtag = $this->Trending4Hashtag($city,null);
 
-                if(strlen($content) > $maxlength ){
-                    $content = substr($post->content,0,$maxlength ) ;
-                    $content = $content."...";
-                }
+                // if(strlen($content) > $maxlength ){
+                //     $content = substr($post->content,0,$maxlength ) ;
+                //     $content = $content."...";
+                // }
 
                 $netwrk = array(
                     'id'=> $city->id,
@@ -375,21 +375,16 @@ class DefaultController extends BaseController
                     'office'=>$city->office,
                     'office_type'=>$city->office_type,
                     'topic'=> $topices,
-                    'trending_post'=> $trending,
+                    // 'trending_post'=> $trending,
+                    'trending_hashtag'=> $trending_hashtag,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
                         'work'      => $user_post->profile->work,
                         'zipcode'   => $user_post->profile->zip_code,
-                        'place'     => $user_post->profile->city->name
+                        'place'     => $user_post->profile->city ? $user_post->profile->city->name : ''
                     ],
-                    'post'=>[
-                        'post_id'=>$post->id,
-                        'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
-                        'name_post'=> $post->title,
-                        'content' => $content,
-                        'topic_id' => $post->topic_id,
-                    ]
+                    'post'=>$post
                 );
             } else {
                 $netwrk = array(
