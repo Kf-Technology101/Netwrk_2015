@@ -314,7 +314,7 @@ var Topic = {
 
     LoadFeedModal: function() {
         var self = this;
-        var parent = $('#modal_topic,#show-topic').find('#tab_feed');
+        var parent = $('#modal_topic,#list_post').find('#tab_feed');
         var cityname = $('#modal_topic').find('.title_page');
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
         parent.show();
@@ -324,7 +324,6 @@ var Topic = {
             }
             parent.scrollTop(0);
             self.getTemplateFeed(parent,data);
-            Topic.CustomScrollBar();
             Topic.GetDataOnTab();
             Topic.OnClickPostFeed();
             Topic.OnClickVoteFeed();
@@ -342,7 +341,7 @@ var Topic = {
     },
 
     OnClickPostFeed: function(){
-        var target = $(Topic.modal).find('.top-post .post');
+        var target = $(Topic.modal + ','+ Post.modal).find('.top-post .post');
         target.unbind();
         target.on('click',function(e){
             console.log($(e.currentTarget));
@@ -364,7 +363,7 @@ var Topic = {
     },
 
     OnClickVoteFeed: function() {
-        var target = $(Topic.modal).find('.top-post .action .brilliant');
+        var target = $(Topic.modal + ','+ Post.modal).find('.top-post .action .brilliant');
         target.unbind();
         target.on('click',function(e){
             var post_id = $(e.currentTarget).parent().parent().attr('data-value');
@@ -377,7 +376,7 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $(Topic.modal).find('.topic-row');
+        var target = $(Topic.modal + ','+ Post.modal).find('.topic-row');
 
         target.unbind();
         target.on('click',function(e){

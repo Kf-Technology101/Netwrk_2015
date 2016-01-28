@@ -228,13 +228,13 @@ var Post ={
 
 		name.find('span.title').remove();
 		btn_map.show();
-		Post.tab_current = "post";
+		Post.tab_current = "feed";
 		Post.params.filter = "post";
 		var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
 		$('#list_post').find('.tab').hide();
 		$('#list_post').find('.dropdown-toggle').text(selecFilter);
 		$('#list_post').find('.filter_sidebar td').removeClass('active');
-		$('#list_post').find('.filter_sidebar .post').addClass('active');
+		$('#list_post').find('.filter_sidebar .feed').addClass('active');
 	},
 
 	getNameTopic: function(){
@@ -291,6 +291,7 @@ var Post ={
 		}else{
 			$('#list_post').find('.dropdown').addClass('visible');
 		}
+		Topic.LoadFeedModal();
 	},
 
 	ShowPostPage: function(){
