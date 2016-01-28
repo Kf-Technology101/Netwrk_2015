@@ -27,7 +27,7 @@ var Post ={
     },
     modal: '#list_post',
     modal_create: '#create_post',
-	tab_current:'post',
+	tab_current:'feed',
 	initialize: function(){
 		if(isMobile){
 			Post.GetDefaultValue();
