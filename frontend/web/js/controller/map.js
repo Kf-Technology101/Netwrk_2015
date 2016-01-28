@@ -49,22 +49,15 @@ var Map ={
 				]
 			},{
 				featureType: "road",
-				elementType: "geometry",
+				elementType: "labels",
 				stylers: [
-					{ lightness: 100 },
-					{ visibility: "simplified" }
+					{ visibility: "off" }
 				]
 			},{
 				featureType: "road",
-				elementType: "labels",
+				elementType: "geometry",
 				stylers: [
-					{ visibility: "off" }
-				]
-			},{
-				featureType: "city",
-				elementType: "labels",
-				stylers: [
-					{ visibility: "off" }
+					{ lightness: 100 }
 				]
 			},{
 				featureType: "poi",
@@ -72,7 +65,6 @@ var Map ={
 					{ visibility: "off" }
 				]
 			}
-
 	    ];
 
 	    var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
@@ -651,22 +643,15 @@ var Map ={
 						]
 					},{
 						featureType: "road",
-						elementType: "geometry",
+						elementType: "labels",
 						stylers: [
-							{ lightness: 100 },
-							{ visibility: "simplified" }
+							{ visibility: "off" }
 						]
 					},{
 						featureType: "road",
-						elementType: "labels",
+						elementType: "geometry",
 						stylers: [
-							{ visibility: "off" }
-						]
-					},{
-						featureType: "city",
-						elementType: "labels",
-						stylers: [
-							{ visibility: "off" }
+							{ lightness: 100 }
 						]
 					},{
 						featureType: "poi",
@@ -674,7 +659,7 @@ var Map ={
 							{ visibility: "off" }
 						]
 					}
-			    ];
+				];
 			    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
     		}
     		if(map.zoom == 12 && Map.markers.length == 10){
