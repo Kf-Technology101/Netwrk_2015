@@ -366,6 +366,9 @@ var Post ={
                 Post.params.topic_name = topic_name;
                 Post.params.city = city_id;
                 Post.params.city_name = city_name;
+                Post.tab_current = 'post';
+                $(Post.modal).find('.filter_sidebar td').removeClass('active');
+				$(Post.modal).find('.filter_sidebar .post').addClass('active');
                 Post.initialize();
             }
         });
@@ -441,7 +444,6 @@ var Post ={
 
 	GetTabPost: function(){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
-		console.log('post here');
 		Ajax.get_post_by_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
