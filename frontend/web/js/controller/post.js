@@ -27,7 +27,7 @@ var Post ={
     },
     modal: '#list_post',
     modal_create: '#create_post',
-	tab_current:'feed',
+	tab_current:'post',
 	initialize: function(){
 		if(isMobile){
 			Post.GetDefaultValue();
@@ -286,14 +286,30 @@ var Post ={
 		if(isMobile){
 			$('#list_post').find('span.filter').addClass('visible');
 			$('#list_post').find('span.filter').removeClass('active');
-			$('#list_post').find('.filter_sort').removeClass('active');
+		$('#list_post').find('.filter_sort').removeClass('active');
 			$('#list_post').find('.container_post').removeClass('open');
 		}else{
 			$('#list_post').find('.dropdown').addClass('visible');
 		}
-		Topic.LoadFeedModal();
+		Post.LoadFeedModal();
 	},
 
+	LoadFeedModal: function(){
+		var params = {'city': Post.params.city,'size': Post.params.city.size,'page':Post.params.page};
+		var parent = $('#list_post').find('#tab_feed');
+		Ajax.show_feed(params).then(function(res){
+			Post.getTemplateFeed(parent,res);
+		});
+	},
+
+    getTemplateFeed: function(parent,data){
+        var json = $.parseJSON(data);
+        parent.find('.no-data').hide();
+        var list_template = _.template($( "#feed_list" ).html());
+        var append_html = list_template({feed: json});
+        parent.html('');
+        parent.append(append_html);
+    },
 	ShowPostPage: function(){
 		if(isMobile){
 			$('#list_post').find('span.filter').removeClass('visible');

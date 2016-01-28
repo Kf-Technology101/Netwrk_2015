@@ -15,8 +15,8 @@
         <span class="filter"><i class="fa fa-filter"></i></span>
         <table class="filter_sidebar">
             <tr>
-                <td class="feed active">Feed</td>
-                <td class="post">Posts</td>
+                <td class="feed">Feed</td>
+                <td class="post active">Posts</td>
             </tr>
         </table>
     </div>
