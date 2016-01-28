@@ -97,6 +97,7 @@ class Post extends \yii\db\ActiveRecord
                 ]);
                 $this->CreateFirstMessage($this);
                 $this->CreateHashtag($this);
+                $this->CreaetHistoryFeed($this);
             }
 
         }else{
@@ -104,6 +105,15 @@ class Post extends \yii\db\ActiveRecord
         }
 
         return parent::afterSave($insert, $changedAttributes);
+    }
+    public function CreaetHistoryFeed($post){
+        $hfp = new HistoryFeed();
+        $hfp = new HistoryFeed();
+        $hfp->id_item = $post->id;
+        $hfp->type_item = 'post';
+        $hfp->city_id = $post->topic->city_id;
+        $hfp->created_at = $post->created_at;
+        $hfp->save(false);
     }
 
     public function CreateHashtag($post){

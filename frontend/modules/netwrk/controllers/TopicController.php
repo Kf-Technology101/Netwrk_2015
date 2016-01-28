@@ -8,6 +8,7 @@ use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\HistoryFeed;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -104,6 +105,13 @@ class TopicController extends BaseController
         $Topic->city_id = $city_id;
         $Topic->title = $topic;
         $Topic->save();
+
+        $hft = new HistoryFeed();
+        $hft->id_item = $Topic->id;
+        $hft->type_item = 'topic';
+        $hft->city_id = $Topic->city_id;
+        $hft->created_at = $Topic->created_at;
+        $hft->save();
 
         $Post = new Post();
         $Post->title = $post;
