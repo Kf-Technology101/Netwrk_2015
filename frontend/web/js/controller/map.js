@@ -69,8 +69,15 @@ var Map ={
 
 	    var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 	    Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
-	    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
-	    // map.setOptions({zoomControl: false, disableDoubleClickZoom: true,styles: remove_poi});
+	    if(isMobile){
+	    	if(sessionStorage.map_zoom && sessionStorage.map_zoom < 18){
+	    		Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
+	    	} else {
+	    		 Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: null});
+	    	}
+	    }else{
+	    	Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
+	    }
 
 	    Map.data_map = Map.map;
 	    Map.min_max_zoom(Map.map);
@@ -163,11 +170,11 @@ var Map ={
 	    var json,data_marker;
 	    var current_zoom = map.getZoom();
 
-	    if(current_zoom == 7){
+	    if(current_zoom < 12){
 	      	// Ajax.get_marker_default().then(function(data){
 		        data_marker = Map.zoom7; //$.parseJSON(data);
 	      	// });
-	    }else if(current_zoom == 12){
+	    }else if(current_zoom >= 12){
 	      	// Ajax.get_marker_zoom().then(function(data){
 		        data_marker = Map.zoom12; //$.parseJSON(data);
 	      	// });
@@ -606,23 +613,14 @@ var Map ={
   	eventZoom: function(map){
 	    var mode = true;
 	    map.addListener('dblclick', function(event){
-	    	// if(isMobile){
-		    // 	if(sessionStorage.map_zoom && parseInt(sessionStorage.map_zoom) == 18){
-		    // 		Map.zoomIn = true;
-		    // 	}
-		    // }
 			if(map.getZoom() == 7 || (map.getZoom() > 7 && map.getZoom() < 12)){
 				Map.smoothZoom(map, 12, map.getZoom() + 1, true);
-				Map.deleteNetwrk(map);
-				$(".map-marker-label").remove();
 				map.zoom = 12;
-				Map.show_marker(map);
 				if(isMobile){
 					sessionStorage.map_zoom = 12;
 				}
 			} else if(map.getZoom() == 12 || (map.getZoom() > 12 && map.getZoom() < 18)){
 				Map.smoothZoom(map, 18, map.getZoom() + 1, true);
-				Map.zoomIn = true;
 				map.zoom = 18;
 				if(isMobile){
 				    sessionStorage.map_zoom = 18;
@@ -632,6 +630,9 @@ var Map ={
 
 		map.addListener('zoom_changed', function(){
 			var data_marker;
+			if(isMobile){
+			    sessionStorage.map_zoom = map.getZoom();
+			}
 			if(map.getZoom() == 18){
     			Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: null});
     		} else {
@@ -708,14 +709,14 @@ var Map ={
 		    } else {
 		        var z = google.maps.event.addListener(map, 'zoom_changed', function(event){
 		          google.maps.event.removeListener(z);
-		          Map.smoothZoom(map, level, cnt + 1, true);		          
+		          Map.smoothZoom(map, level, cnt + 1, true);          
 		        });
 	        	setTimeout(function(){map.setZoom(cnt)}, 50);
-		        // if (Map.incre < 2) {
-		        // 	Map.incre++;
-		        // } else {
-		        // 	Map.incre = 2;
-		        // }
+				// if (Map.incre < 2) {
+				// 	Map.incre++;
+				// } else {
+				// 	Map.incre = 2;
+				// }
 	      	}
 	    } else {
 		    if (cnt < level) {
@@ -727,11 +728,11 @@ var Map ={
 		         	Map.smoothZoom(map, level, cnt - 1, false);
 		        });
 	        	setTimeout(function(){map.setZoom(cnt)}, 110);
-		        if (Map.incre < 2)
-		        	Map.incre++;
-		        else {
-		        	Map.incre = 1;
-		        }
+				// if (Map.incre < 2)
+				// 	Map.incre++;
+				// else {
+				// 	Map.incre = 1;
+				// }
 	      	}
 	    }
   	},
