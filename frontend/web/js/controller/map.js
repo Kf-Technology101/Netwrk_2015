@@ -580,7 +580,7 @@ var Map ={
 		            lng: position.coords.longitude
 		        	};
 		            map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
-		            if(map.getZoom() <= 12) {
+		            if(map.getZoom() < 12) {
 		            	map.setZoom(12);
 		        	}else{
 		        		map.setZoom(18);
@@ -588,7 +588,7 @@ var Map ={
 		        });
 	      	} else {
 		        var zoom_current = map.getZoom();
-		        if (zoom_current <= 12) {
+		        if (zoom_current < 12) {
 			        Map.smoothZoom(map, 12, zoom_current, true);
 			        // Map.zoomIn = true;
 			        // Map.deleteNetwrk(map);
