@@ -303,6 +303,9 @@ var Post ={
 	        Post.OnClickVoteFeed();
 	        Post.OnClickTopicFeed();
 		});
+		if (isMobile) {
+			LandingPage.FixWidthPostLanding();
+		}
 	},
 
     getTemplateFeed: function(parent,data){
@@ -323,7 +326,7 @@ var Post ={
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
-                sessionStorage.landing_post = 1;
+            	sessionStorage.url = window.location.href;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 PopupChat.params.post = post_id;

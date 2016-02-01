@@ -399,6 +399,11 @@
                         .topic-title {
                             font-size: 16px;
                             color:#1d1b1b;
+                            width: 300px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: inline-block;
                             &:hover {
                                 color: #5da5d8;
                             }
@@ -454,9 +459,16 @@
                             margin-left: 60px;
                             width: 550px;
                             .post-title {
+                                &::before{
+                                    content: '#';
+                                }
                                 font-size: 16px;
                                 color:#1d1b1b;
                                 font-family: "ProximaNovaSemibold";
+                                width: 500px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
                             }
                             .post-content {
                                 font-size: 13px;

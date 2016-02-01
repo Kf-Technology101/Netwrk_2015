@@ -154,7 +154,7 @@
             <div class="feed-content">
               <div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
               <div class='post'>
-                <div class='post-title'>#<%= e.title %></div>
+                <div class='post-title'><%= e.title %></div>
                 <div class='post-content'><%= e.content %></div>
               </div>
               <span class='post-create-by'>Posted by: <%= e.posted_by %></span>

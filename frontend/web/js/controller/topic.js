@@ -52,6 +52,7 @@ var Topic = {
         Topic.LoadFeedModal();
         if(isMobile){
             Default.ShowNotificationOnChat();
+            LandingPage.FixWidthPostLanding();
         } else {
             Topic.displayPositionModal();
         }
@@ -346,7 +347,7 @@ var Topic = {
     },
 
     OnClickPostFeed: function(){
-        var target = $(Topic.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
+        var target = $('#modal_topic,#show-topic').find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
         target.on('click',function(e){
             console.log($(e.currentTarget));
@@ -354,7 +355,7 @@ var Topic = {
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
-                sessionStorage.landing_post = 1;
+                sessionStorage.url = window.location.href;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 // $(LandingPage.modal).modal('hide');
@@ -368,7 +369,7 @@ var Topic = {
     },
 
     OnClickVoteFeed: function() {
-        var target = $(Topic.modal).find('.top-post .action .brilliant');
+        var target = $('#modal_topic,#show-topic').find('.top-post .action .brilliant');
         target.unbind();
         target.on('click',function(e){
             var post_id = $(e.currentTarget).parent().parent().attr('data-value');
@@ -381,7 +382,7 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $(Topic.modal).find('.topic-row, .feed-row.feed-topic');
+        var target = $('#modal_topic,#show-topic').find('.topic-row, .feed-row.feed-topic');
 
         target.unbind();
         target.on('click',function(e){

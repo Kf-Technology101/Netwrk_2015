@@ -63,7 +63,7 @@
                 <div class="icon_brillant" data-item="<%= post.id %>">
                     <% if (post.is_vote == 1){%>
                         <div class="count"><%= post.num_brilliant %></div>
-                    <% }else{ %> 
+                    <% }else{ %>
                         <div class="count disable"><%= post.num_brilliant %></div>
                     <% } %>
                 </div>
@@ -143,7 +143,7 @@
           <%
             _.each(feed.feed,function(e,i){ %>
               <% if ((e.is_post == 1)){ %>
-                <div class="feed-row feed-post" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
+                <div class="feed-row feed-post" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
                     <div class="feed-content">
                         <div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
                         <div class='post'>
@@ -161,7 +161,7 @@
                     </div>
                 </div>
               <% }else{ %>
-                <div class="feed-row feed-topic" data-city="<%= e.city_id %>">
+                <div class="feed-row feed-topic" data-value="<%= e.id %>" data-city-name="<%= e.city_name %>" data-city="<%= e.city_id %>">
                 <div class="feed-content">
                     <span class='topic-title'><%= e.title %></span>
                     <span class='topic-create-by'>Topic created by: <%= e.created_by %></span>

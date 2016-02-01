@@ -2,7 +2,7 @@
     display: none;
 }
 #show-topic{
-    overflow: auto;    
+    overflow: auto;
     .header{
         background: #5888ac;
         width: 100%;
@@ -99,7 +99,7 @@
             margin: auto;
             float: right;
             width: 55%;
-            td{ 
+            td{
                 width: 50px;
                 font-size: 16px;
                 border: 1px solid #eee;
@@ -107,7 +107,7 @@
                 cursor: pointer;
                 text-align: center;
                 &.active{
-                   background: #5da5d8; 
+                   background: #5da5d8;
                 }
             }
             td:first-child{
@@ -191,11 +191,11 @@
             margin: 110px 0 65px;
         }
         .tab{
-            display: none; 
+            display: none;
             .no-data{
                 text-align: center;
                 font-size: 16px;
-                padding-top: 20px;  
+                padding-top: 20px;
             }
         }
         #tab_feed{
@@ -290,7 +290,7 @@
                                 display: block;
                                 padding: 10px 0;
                                 margin-left: 9px;
-                                cursor: pointer;   
+                                cursor: pointer;
                             }
                             .chat{
                                 color: #5888ac;
@@ -338,6 +338,7 @@
                             text-overflow: ellipsis;
                             overflow: hidden;
                         }
+
                         .post-counter{
                             padding-top: 5px;
                             width: auto;
@@ -372,10 +373,16 @@
                 }
                 .feed-row.feed-topic{
                     padding: 3px 15px;
+                    height: 50px;
                     .feed-content {
                         .topic-title {
                             font-size: 16px;
                             color:#1d1b1b;
+                            width: 300px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: inline-block;
                             &:hover {
                                 color: #5da5d8;
                             }
@@ -384,21 +391,22 @@
                             font-size: 13px;
                             color: #797979;
                             position: absolute;
-                            left: 350px;
+                            left: 15px;
+                            bottom: 5px;
                         }
                         .appear-day {
                             font-size : 12px;
                             color : #797979;
                             position: absolute;
                             right: 15px;
-                            top: 6px;
+                            bottom: 5px;
                         }
                     }
                 }
 
                 .feed-row.feed-post{
                     padding: 3px 15px;
-                    height: 50px;
+                    height: 70px;
                     .feed-content {
                         .avatar-poster {
                             width: 40px;
@@ -428,18 +436,22 @@
                             }
                         }
                         .post {
-                            margin-left: 60px;
-                            width: 550px;
+                            margin-left: 50px;
+                            width: 100%;
                             .post-title {
                                 font-size: 16px;
                                 color:#1d1b1b;
                                 font-family: "ProximaNovaSemibold";
+                                width: 75%;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
                             }
                             .post-content {
                                 font-size: 13px;
                                 color: #1d1b1b;
                                 line-height: 14px;
-                                width: 500px;
+                                width: 80%;
                                 white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
@@ -449,15 +461,15 @@
                             font-size: 13px;
                             color: #797979;
                             position: absolute;
-                            right: 15px;
-                            top: 5px;
+                            left: 65px;
+                            bottom: 5px;
                         }
                         .appear-day {
                             font-size : 12px;
                             color : #797979;
                             position: absolute;
                             right: 15px;
-                            top: 25px;
+                            bottom: 5px;
                         }
                     }
                 }
@@ -567,7 +579,7 @@
             //         &:link, &:visited, &:hover, &:active{
             //             text-decoration: none;
             //         }
-            //     }                
+            //     }
             //     i{
             //         font-size: 14px;
             //         color: #eee;
