@@ -138,46 +138,46 @@
         </div>
     </div>
     <div class="top-feed">
-    <div class="top-header"><p class="lp-title">Feed</p></div>
-    <div class="top-feed-content">
-      <%
-        _.each(feed.feed,function(e,i){ %>
-          <% if ((e.is_post == 1)){ %>
-            <div class="feed-row feed-post" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
-                <div class="feed-content">
-                    <div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
-                    <div class='post'>
-                        <div class='post-title'>#<%= e.title %></div>
-                        <div class='post-content'><%= e.content %></div>
+        <div class="top-header"><p class="lp-title">Feed</p></div>
+        <div class="top-feed-content">
+          <%
+            _.each(feed.feed,function(e,i){ %>
+              <% if ((e.is_post == 1)){ %>
+                <div class="feed-row feed-post" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
+                    <div class="feed-content">
+                        <div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
+                        <div class='post'>
+                            <div class='post-title'>#<%= e.title %></div>
+                            <div class='post-content'><%= e.content %></div>
+                        </div>
+                        <span class='post-create-by'>Posted by: <%= e.posted_by %></span>
+                        <span class='appear-day'>
+                            <% if ((e.appear_day == 'Now')){ %>
+                              Just Now
+                            <% }else{ %>
+                              <%= e.appear_day %> ago
+                            <% } %>
+                        </span>
                     </div>
-                    <span class='post-create-by'>Posted by: <%= e.posted_by %></span>
+                </div>
+              <% }else{ %>
+                <div class="feed-row feed-topic" data-city="<%= e.city_id %>">
+                <div class="feed-content">
+                    <span class='topic-title'><%= e.title %></span>
+                    <span class='topic-create-by'>Topic created by: <%= e.created_by %></span>
                     <span class='appear-day'>
                         <% if ((e.appear_day == 'Now')){ %>
                           Just Now
                         <% }else{ %>
                           <%= e.appear_day %> ago
                         <% } %>
-                    </span>
-                </div>
-            </div>
-          <% }else{ %>
-            <div class="feed-row feed-topic" data-city="<%= e.city_id %>">
-            <div class="feed-content">
-                <span class='topic-title'><%= e.title %></span>
-                <span class='topic-create-by'>Topic created by: <%= e.created_by %></span>
-                <span class='appear-day'>
-                    <% if ((e.appear_day == 'Now')){ %>
-                      Just Now
-                    <% }else{ %>
-                      <%= e.appear_day %> ago
-                    <% } %>
-                    </span>
-                </div>
-          </div>
-          <% } %>
-      <%
-        });
-      %>
-    </div>
+                        </span>
+                    </div>
+              </div>
+              <% } %>
+          <%
+            });
+          %>
+        </div>
   </div>
 </script>

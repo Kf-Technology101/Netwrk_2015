@@ -319,7 +319,7 @@ var Topic = {
 
     LoadFeedModal: function() {
         var self = this;
-        var parent = $('#modal_topic,#list_post').find('#tab_feed');
+        var parent = $('#modal_topic,#show-topic').find('#tab_feed');
         var cityname = $('#modal_topic').find('.title_page');
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
         parent.show();
