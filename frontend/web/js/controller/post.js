@@ -38,6 +38,7 @@ var Post ={
 			Post.OnClickSelectFilter();
 			Post.LazyLoading();
 			Create_Post.initialize();
+			Default.ShowNotificationOnChat();
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
@@ -49,7 +50,9 @@ var Post ={
 			Post.ShowMeetIcon();
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
+			Topic.displayPositionModal();
 		}
+		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
 		Post.OnclickCreate();
 		Post.OnChangeTab();
@@ -63,11 +66,17 @@ var Post ={
 		btn.on('click',function(e){
 			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
 			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post, 1, 0);
+				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
-				$("#list_post").modal('hide');
-				ChatPost.params.post = item_post;
-				ChatPost.initialize();
+				// $("#list_post").modal('hide');
+				// ChatPost.params.post = item_post;
+				// ChatPost.initialize();
+                PopupChat.params.post = item_post;
+                PopupChat.params.chat_type = $(e.currentTarget).parent().parent().attr('data-chat-type');
+				PopupChat.params.post_name = $(e.currentTarget).parent().parent().find('.information .post_name').html();
+				PopupChat.params.post_description = $(e.currentTarget).parent().parent().find('.information .post_massage').html();
+				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
+                PopupChat.initialize();
 			}
 		});
 
@@ -80,8 +89,8 @@ var Post ={
 				ChatPost.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				$("#list_post").modal('hide');
-				ChatPost.params.post = item_post;
-				ChatPost.initialize();
+                ChatPost.params.post = item_post;
+                ChatPost.initialize();
 			}
 		});
 	},
@@ -182,7 +191,9 @@ var Post ={
 		btn.on('click',function(e){
 			var post_id = $(e.currentTarget).attr('data-item');
 			var target = $(e.currentTarget);
-			Vote.SetVote(target,post_id);
+			Vote.target = e.currentTarget;
+			Vote.post = post_id;
+			Vote.initialize();
 		});
 	},
 
@@ -229,7 +240,8 @@ var Post ={
 	getNameTopic: function(){
 		var name = $('#list_post').find('.header .title_page');
 		Ajax.get_topic(Post.params).then(function(data){
-			Post.getNameTemplate(name,data);
+			var json = $.parseJSON(data);
+			Post.getNameTemplate(name,json);
 		});
 	},
 
@@ -279,7 +291,89 @@ var Post ={
 		}else{
 			$('#list_post').find('.dropdown').addClass('visible');
 		}
+		Post.LoadFeedModal();
 	},
+
+	LoadFeedModal: function(){
+		var params = {'city': Post.params.city,'size': Post.params.city.size,'page':Post.params.page};
+		var parent = $('#list_post').find('#tab_feed');
+		Ajax.show_feed(params).then(function(res){
+			Post.getTemplateFeed(parent,res);
+			Post.OnClickPostFeed();
+	        Post.OnClickVoteFeed();
+	        Post.OnClickTopicFeed();
+		});
+	},
+
+    getTemplateFeed: function(parent,data){
+        var json = $.parseJSON(data);
+        parent.find('.no-data').hide();
+        var list_template = _.template($( "#feed_list" ).html());
+        var append_html = list_template({feed: json});
+        parent.html('');
+        parent.append(append_html);
+    },
+
+    OnClickPostFeed: function() {
+    	var target = $(Post.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+                var post_id = $(e.currentTarget).parent().attr('data-value'),
+                    post_name = $(e.currentTarget).find('.post-title').text(),
+                    post_content = $(e.currentTarget).find('.post-content').text();
+            if(isMobile){
+                sessionStorage.landing_post = 1;
+                PopupChat.RedirectChatPostPage(post_id, 1, 1);
+            }else{
+                PopupChat.params.post = post_id;
+                PopupChat.params.chat_type = 1;
+                PopupChat.params.post_name = post_name;
+                PopupChat.params.post_description = post_content;
+                PopupChat.initialize();
+            }
+        });
+    },
+
+    OnClickVoteFeed: function() {
+        var target = $(Post.modal).find('.top-post .action .brilliant');
+        target.unbind();
+        target.on('click',function(e){
+            var post_id = $(e.currentTarget).parent().parent().attr('data-value');
+            Ajax.vote_post({post_id: post_id}).then(function(res){
+                var json = $.parseJSON(res);
+                console.log($(e.currentTarget));
+                $(e.currentTarget).text(json.data);
+            });
+        });
+    },
+
+    OnClickTopicFeed: function(){
+        var target = $(Post.modal).find('.topic-row, .feed-row.feed-topic');
+
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+            var city_id = $(e.currentTarget).attr('data-city'),
+                city_name = $(e.currentTarget).attr('data-city-name'),
+                topic_id = $(e.currentTarget).attr('data-value'),
+                topic_name = $(e.currentTarget).find('.topic-title').text();
+            if(isMobile){
+                Post.RedirectPostPage(topic_id);
+            }else{
+                $(Topic.modal).modal('hide');
+                Post.params.topic = topic_id;
+                Post.params.topic_name = topic_name;
+                Post.params.city = city_id;
+                Post.params.city_name = city_name;
+                Post.tab_current = 'post';
+                $(Post.modal).find('.filter_sidebar td').removeClass('active');
+				$(Post.modal).find('.filter_sidebar .post').addClass('active');
+                Post.initialize();
+            }
+        });
+
+    },
 
 	ShowPostPage: function(){
 		if(isMobile){
@@ -287,6 +381,7 @@ var Post ={
 		}else{
 			$('#list_post').find('.dropdown').removeClass('visible');
 		}
+		$('.container_post .tab').hide();
 		$('#tab_post').show();
 		Post.ResetTabPost();
 		Post.GetTabPost();
@@ -349,7 +444,6 @@ var Post ={
 
 	GetTabPost: function(){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
-
 		Ajax.get_post_by_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
@@ -408,6 +502,7 @@ var Post ={
         var append_html = list_template({posts: data});
 
         parent.append(append_html);
+        // Post.OnClickAvatarPostListDesktop();
     },
 
     getNameTemplate: function(parent,data){
@@ -420,14 +515,29 @@ var Post ={
     },
 
 	RedirectPostPage: function(topic){
-		if (ChatPost.GetSearchParam(window.location.href)["previous-flag"]) {
-			if (ChatPost.GetSearchParam(window.location.href)["previous-flag"] == 0) {
+		if (PopupChat.GetSearchParam(window.location.href)["previous-flag"]) {
+			if (PopupChat.GetSearchParam(window.location.href)["previous-flag"] == 0) {
 				window.location.href = baseUrl + "/netwrk/post?topic="+topic;
 			} else {
-				window.location.href = baseUrl+"/netwrk/chat-inbox";
+				window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=1';
 			}
 		} else {
 			window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
 		}
+	},
+
+	OnClickAvatarPostListDesktop: function(){
+		var avatar = $(Post.modal).find('#tab_post .item_post .users_avatar');
+		avatar.unbind();
+		avatar.on('click', function(e){
+			var user_login = $(e.currentTarget).parent().attr('data-user'),
+				user_view = $(e.currentTarget).attr('data-user-post');
+			if(user_view != user_login){
+				Meet.infoOf = user_view;
+				$('.modal').modal('hide');
+				// $(Post.modal).modal('hide');
+				Meet.initialize();
+			}
+		});
 	}
 };

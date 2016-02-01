@@ -4,8 +4,10 @@ namespace frontend\modules\netwrk\models;
 
 use Yii;
 use yii\base\Behavior;
+use yii\db\Query;
 use yii\db\ActiveRecord;
 use frontend\modules\netwrk\models\WsMessages;
+use frontend\modules\netwrk\models\User;
 /**
  * This is the model class for table "post".
  *
@@ -75,7 +77,15 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasOne(Topic::className(), ['id' => 'topic_id']);
     }
 
+    public function getWsMessages()
+    {
+        return $this->hasMany(WsMessages::className(), ['post_id' => 'id']);
+    }
 
+    public function getPostHashtag()
+    {
+        return $this->hasMany(PostHashtag::className(), ['post_id' => 'id']);
+    }
 
     public function afterSave($insert, $changedAttributes){
         if ($insert) {
@@ -85,14 +95,9 @@ class Post extends \yii\db\ActiveRecord
                 $this->topic->city->updateAttributes([
                     'post_count' =>  $this->topic->city->post_count + 1
                 ]);
-
-                $msg = new WsMessages();
-                $msg->user_id = $this->user_id;
-                $msg->post_id = $this->id;
-                $msg->post_type = 1;
-                $msg->msg_type = 1;
-                $msg->msg = $this->content;
-                $msg->save(false);
+                $this->CreateFirstMessage($this);
+                $this->CreateHashtag($this);
+                $this->CreaetHistoryFeed($this);
             }
 
         }else{
@@ -100,6 +105,32 @@ class Post extends \yii\db\ActiveRecord
         }
 
         return parent::afterSave($insert, $changedAttributes);
+    }
+    public function CreaetHistoryFeed($post){
+        $hfp = new HistoryFeed();
+        $hfp = new HistoryFeed();
+        $hfp->id_item = $post->id;
+        $hfp->type_item = 'post';
+        $hfp->city_id = $post->topic->city_id;
+        $hfp->created_at = $post->created_at;
+        $hfp->save(false);
+    }
+
+    public function CreateHashtag($post){
+        $arr = explode(' ',trim($post->title));
+
+        $hashtag = Hashtag::findHashtag($arr[0]);
+        PostHashtag::createPostHashtag($hashtag->id,$post->id);
+    }
+
+    public function CreateFirstMessage($post){
+        $msg = new WsMessages();
+        $msg->user_id = $post->user_id;
+        $msg->post_id = $post->id;
+        $msg->post_type = 1;
+        $msg->msg_type = 1;
+        $msg->msg = $post->content;
+        $msg->save(false);
     }
 
     public function afterDelete(){
@@ -124,5 +155,101 @@ class Post extends \yii\db\ActiveRecord
                 ],
             ],
         ];
+    }
+
+    public function SearchPost($_search,$type,$except){
+        $limit = Yii::$app->params['LimitResultSearch'];
+        if(isset($type) && $type == 'global'){
+            return Post::find()->joinWith('topic')
+                    ->where(['like','post.title',$_search])
+                    ->andWhere(['not in','topic.city_id',$except])
+                    ->andWhere(['not',['topic_id'=> NULL]])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }else{
+            return Post::find()
+                    ->where(['like','title',$_search])
+                    ->andWhere(['not',['topic_id'=> NULL]])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->all();
+        }
+    }
+
+    public function SearchHashTagPost($hashtag,$city){
+        $hashtag = Post::find()
+                        ->joinWith('topic')
+                        ->where(['like','post.title',$hashtag])
+                        ->andWhere(['topic.city_id' => $city])
+                        ->all();
+        return count($hashtag);
+    }
+
+    public function GetPostMostBrilliant($city){
+        $post = Post::find()
+                ->joinWith('topic')
+                ->where(['topic.city_id' => $city])
+                ->orderBy(['post.brilliant_count'=> SORT_DESC])
+                ->one();
+        return $post;
+    }
+
+    public function CountUserJoinPost($post){
+        $query = new Query();
+        $datas = $query->select('*,COUNT(DISTINCT ws_messages.user_id) AS count_user_comment')
+            ->from('post')
+            ->where(['post.id'=>$post])
+            ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
+            ->orderBy('count_user_comment DESC')
+            ->one();
+        return $datas['count_user_comment'];
+    }
+
+    public function GetTopPostUserJoinGlobal($limit, $city){
+        $query = new Query();
+        $maxlength = Yii::$app->params['MaxlenghtContentLanding'];
+        $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
+        if ($city != null) {
+            $data = $query ->select('post.id,post.title,post.content,post.brilliant_count,ws_messages.user_id,profile.photo, topic.id as topic_id, topic.title as topic_title, city.zip_code, count(DISTINCT ws_messages.user_id) as user_join')
+                       ->from('ws_messages')
+                       ->leftJoin('profile','ws_messages.user_id = profile.user_id')
+                       ->innerJoin('post', 'post.id=ws_messages.post_id')
+                       ->innerJoin('topic', 'post.topic_id=topic.id')
+                       ->innerJoin('city', 'topic.city_id=city.id')
+                       ->where(['not',['post.topic_id'=> null]])
+                       ->andWhere('topic.city_id = '.$city)
+                       ->groupBy('post.id')
+                       ->orderBy('user_join DESC')
+                       ->limit($limit)
+                       ->all();
+        } else {
+            $data = $query ->select('post.id,post.title,post.content,post.brilliant_count,ws_messages.user_id,profile.photo,count(DISTINCT ws_messages.user_id) as user_join')
+                       ->from('ws_messages')
+                       ->leftJoin('profile','ws_messages.user_id = profile.user_id')
+                       ->leftJoin('post', 'post.id=ws_messages.post_id')
+                       ->where(['not',['post.topic_id'=> null]])
+                       ->groupBy('post.id')
+                       ->orderBy('user_join DESC')
+                       ->limit($limit)
+                       ->all();
+        }
+
+        foreach ($data as $key => $value) {
+            # code...
+            $url_avatar = User::GetUrlAvatar($value['user_id'],$value['photo']);
+            $data[$key]['photo'] = $url_avatar;
+
+            #minimize content
+            $content = $value['content'];
+            if($this->getIsMobile() && strlen($content) > $maxlengthMobile){
+                $content = substr($content,0,$maxlengthMobile) ;
+                $content = $content." ...<span class='show_more'>show more</span>";
+            }elseif(!$this->getIsMobile() && strlen($content) > $maxlength){
+                $content = substr($content,0,$maxlength) ;
+                $content = $content." ...<span class='show_more'>show more</span>";
+            }
+            $data[$key]['content'] = $content;
+        }
+        return $data;
     }
 }

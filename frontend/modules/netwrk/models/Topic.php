@@ -34,7 +34,7 @@ class Topic extends \yii\db\ActiveRecord
     {
         return [
             [['city_id', 'user_id', 'title'], 'required'],
-            [['city_id', 'user_id', 'post_count', 'view_count'], 'integer'],
+            [['city_id', 'user_id', 'post_count', 'view_count','brilliant_count'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255]
         ];
@@ -54,6 +54,7 @@ class Topic extends \yii\db\ActiveRecord
             'view_count' => 'View Count',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'brilliant_count'=> 'Brilliant Count',
         ];
     }
 
@@ -61,7 +62,7 @@ class Topic extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getCity()
-    {   
+    {
         return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
 
@@ -73,17 +74,25 @@ class Topic extends \yii\db\ActiveRecord
         return $this->hasMany(Post::className(), ['topic_id' => 'id']);
     }
 
-    public function beforeSave($insert){
-        if ($insert) {
-            $user_exits = Topic::find()->where(['user_id'=> 1,'city_id'=>$this->city_id])->one();
-            if(!$user_exits){
-                $this->city->updateAttributes([
-                    'user_count' =>  $this->city->user_count + 1
-                ]);
-            }
-        }
-        return parent::beforeSave($insert);
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    // public function beforeSave($insert){
+    //     if ($insert) {
+    //         $user_exits = Topic::find()->where(['user_id'=> 1,'city_id'=>$this->city_id])->one();
+    //         if(!$user_exits){
+    //             $this->city->updateAttributes([
+    //                 'user_count' =>  $this->city->user_count + 1
+    //             ]);
+    //         }
+    //     }
+    //     return parent::beforeSave($insert);
+    // }
 
         /**
      * @inheritdoc
@@ -100,5 +109,63 @@ class Topic extends \yii\db\ActiveRecord
                 ],
             ],
         ];
+    }
+
+    public function SearchTopic($_search,$type,$except){
+        $limit = Yii::$app->params['LimitResultSearch'];
+        if(isset($type) && $type == 'global'){
+            return Topic::find()
+                    ->where(['like','title',$_search])
+                    ->andWhere(['not in','city_id',$except])
+                    ->orderBy(['brilliant_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }else{
+            return Topic::find()
+                        ->where(['like','title',$_search])
+                        ->orderBy(['brilliant_count'=> SORT_DESC])
+                        ->all();
+        }
+    }
+
+    // Get top $limit topic in City
+    public function GetTopTopic($city,$limit){
+        return Topic::find()
+                    ->joinWith('city')
+                    ->where(['city.id' => $city])
+                    ->orderBy(['topic.post_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+    }
+
+    //Get top topic in all netwrk
+    public function GetTopTopicGlobal($limit, $city){
+        if ($city != null) {
+            $model = Topic::find()
+                    ->where('city_id ='.$city)
+                    ->orderBy(['topic.post_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        } else {
+            $model = Topic::find()
+                    ->orderBy(['topic.post_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+        }
+
+        $topics = [];
+        foreach ($model as $key => $value) {
+            # code...
+            $item = [
+                'id' => $value->id,
+                'name'=> $value->title,
+                'post_count'=> $value->post_count,
+                'city_id'=> $value->city_id,
+                'city_name'=> $value->city->name
+            ];
+            array_push($topics, $item);
+        }
+
+        return $topics;
     }
 }

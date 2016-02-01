@@ -138,6 +138,9 @@ class UserController extends BaseController
         $url_callback='';
         if(isset($_GET['url_callback'])){
            $url_callback =  $_GET['url_callback'];
+           if (isset($_GET['chat_type'])) {
+               $url_callback = $url_callback. '&chat_type='.$_GET['chat_type'];
+           }
         }
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -310,5 +313,19 @@ class UserController extends BaseController
             "userKey" => $userKey,
             "success" => $success
         ]);
+    }
+
+    /**
+     * [Function is used to sign out]
+     * @return             [homepage]
+     */
+
+    public function actionLogout()
+    {
+        $user = Yii::$app->user;
+        if (!$user->isGuest) {
+            $user->logout();
+            return $this->goHome();
+        }
     }
 }

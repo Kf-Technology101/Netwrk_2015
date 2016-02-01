@@ -30,14 +30,20 @@ var Create_Topic={
             Create_Topic.eventClickMeetMobile();
             Create_Topic.postTitleFocus();
             Create_Topic.OnClickChatInboxBtnMobile();
+            Default.SetAvatarUserDropdown();
         }else{
             if(isGuest){
-                Login.modal_callback = Topic;
+                if(!Login.modal_callback){
+                    Login.modal_callback = Topic;
+                }
                 Login.initialize();
                 return false;
             }
-            Create_Topic.params.city = city;
-            Create_Topic.params.city_name = name;
+            if(city && name){
+                Create_Topic.params.city = city;
+                Create_Topic.params.city_name = name;
+            }
+
             Create_Topic.showModalCreateTopic();
             // Create_Topic.showSideBar();
             Create_Topic.onCloseModalCreateTopic();
@@ -46,9 +52,10 @@ var Create_Topic={
             // Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickdiscover();
             Create_Topic.postTitleFocus();
-            Create_Topic.showZipcodeBreadcrumb(name);
+            Create_Topic.showZipcodeBreadcrumb(Create_Topic.params.city_name);
             Create_Topic.onClickBackZipcodeBreadcrumb();
             Create_Topic.onClickBackNetwrkLogo();
+            Topic.displayPositionModal();
         }
     },
     showZipcodeBreadcrumb: function(zipcode){
@@ -148,6 +155,7 @@ var Create_Topic={
         // Create_Topic.hideSideBar();
         Create_Topic.hideNetWrkBtn();
         parent.modal('hide');
+
     },
 
     onclickBack: function(){
@@ -316,6 +324,7 @@ var Create_Topic={
                             Create_Topic.hideModalCreateTopic();
                             Topic.initialize(Create_Topic.params.city);
                             ChatInbox.GetDataListChatPost();
+                            Map.update_marker(Create_Topic.params.city);
                         }
                     },700);
                 });
@@ -327,9 +336,11 @@ var Create_Topic={
         var target = $('#chat_inbox_btn_mobile');
         target.unbind();
         target.on('click',function(){
-            Ajax.set_previous_page(window.location.href).then(function(data){
-                ChatInbox.OnClickChatInboxMobile();
-            });
+            sessionStorage.url = window.location.href;
+            ChatInbox.OnClickChatInboxMobile();
+            // Ajax.set_previous_page(window.location.href).then(function(data){
+            //     ChatInbox.OnClickChatInboxMobile();
+            // });
         });
     }
 };

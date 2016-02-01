@@ -89,6 +89,9 @@
                 &.active{
                    background: #5da5d8; 
                 }
+                &.no-login{
+                    opacity: 0.5;
+                }
             }
             td:first-child{
                 border-right: none;
@@ -177,6 +180,13 @@
                                     position: relative;
                                     margin-left: 0px;
                                 }
+                            }
+                            &:after{
+                                content: "";
+                                display: block;
+                                height: 0;
+                                clear: both;
+                                visibility: hidden;
                             }
                         }
                         

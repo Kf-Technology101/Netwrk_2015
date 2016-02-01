@@ -81,8 +81,10 @@ var Login={
 		if(Login.modal_callback){
 			console.log('callback');
 			setTimeout(function(){
-				console.log('show modal callback');
 				Login.modal_callback.initialize();
+				Login.ShowNotificationOnChat();
+				Default.SetAvatarUserDropdown();
+				PopupChat.ShowChatBox(PopupChat.params.post);
 			}, 500)
 		}
 	},
@@ -149,4 +151,18 @@ var Login={
             $(Login.parent).modal('hide');
         });
     },
+
+    ShowNotificationOnChat: function(){
+    	Ajax.count_unread_message().then(function(data){
+    		var json = $.parseJSON(data),
+    			notify = $("#chat_inbox_btn").find('.notify');
+    		if (json > 0){
+				notify.html(json);
+				notify.removeClass('disable');
+			}
+    	});
+    },
+    RedirectLogin: function(url_callback){
+    	window.location.href =  baseUrl+"/netwrk/user/login?url_callback="+url_callback;
+    }
 };

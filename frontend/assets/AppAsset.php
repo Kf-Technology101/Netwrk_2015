@@ -34,11 +34,17 @@ class AppAsset extends AssetBundle
         'css/emojione/css/emojione.min.css',
         'css/desktop/chat_inbox.css',
         'css/desktop/forgot_pass.css',
-        'css/desktop/search.css'
+        'css/desktop/search.css',
+        'css/desktop/popup_chat.css',
+        'css/desktop/marker_popup.css',
+        'css/desktop/dropdown_avatar.css',
+        'css/desktop/landing_page.css'
     ];
     public $js = [
         'js/lib/underscore.js',
+        'js/lib/label.js',
         'js/main.js',
+        'js/vendor/bootbox.min.js',
         'js/controller/ajax.js',
         'js/controller/map.js',
         'js/controller/default.js',
@@ -49,7 +55,7 @@ class AppAsset extends AssetBundle
         'js/controller/profile.js',
         'js/controller/meet_setting.js',
         'js/controller/create_post.js',
-        'js/controller/chat_post.js',
+        // 'js/controller/chat_post.js',
         'js/controller/post.js',
         'js/controller/vote.js',
         'js/controller/emoji.js',
@@ -57,7 +63,8 @@ class AppAsset extends AssetBundle
         'js/controller/login.js',
         'js/controller/signup.js',
         'js/controller/search.js',
-        'js/ws/ws.js',
+        // 'js/ws/ws.js',
+        'js/vendor/reconnecting-websocket.js',
         'js/lib/jquery.ui.js',
         'js/lib/jquery.ui.pips.js',
         'js/lib/jquery.ui.touch_punch.js',
@@ -67,7 +74,10 @@ class AppAsset extends AssetBundle
         'js/controller/chat_inbox.js',
         'js/controller/forgot_password.js',
         'js/controller/reset_password.js',
-        'js/controller/chat_private.js'
+        // 'js/controller/chat_private.js',
+        'js/controller/popup_chat.js',
+        'js/controller/main_ws.js',
+        'js/controller/landing_page.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -11,10 +11,9 @@ function set_size_map(w,h){
 function set_position_btn_meet(w,h){
   var menu_h = $('.menu_top').height();
   var hp = h - 100 - menu_h;
-  var wp = w - 100;
-
-  $('#btn_meet').css({'top': hp,'left': wp});
-  $('#modal_meet #btn_discover').css({'top': hp - 30 ,'left': wp});
+  var wp = w - (w - 15);
+  $('#btn_meet').css({'bottom': 20,'right': wp});
+  $('#modal_meet #btn_discover').css({'top': hp - 30 ,'right': wp});
 }
 
 function set_position_btn(parent,target,paddingTop,paddingRight){
@@ -73,15 +72,17 @@ function set_heigth_modal(target,height_footer){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
   target.find('.modal-body').css({'max-height':wh - 120});
+  $('.modal').css({'bottom': size[1] - 590});
 }
 
-function set_heigth_modal_meet(target,height_footer){
+function set_heigth_modal_meet(target,height_footer, limit_width, range_width){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
-  if(wh - 120 > 570){
-    wh = 645;
+  if(wh - 120 > range_width){
+    wh = limit_width;
   }
   target.find('.modal-body').css({'height':wh - 120});
+  $('.modal').css({'bottom': size[1] - range_width});
 }
 
 function set_heigth_page_mobile(target){
@@ -172,7 +173,7 @@ function _main(){
 
 function _addListenEventPage(){
 	var page = this.show_page();
-	var Page = page !== 'Chat-inbox' && page !== 'Chat-private'  ? eval(page) : page;
+	var Page = page !== 'Chat-inbox' ? eval(page) : page;
 	switch(page){
 	case 'Topic':
 		Topic.init();
@@ -187,22 +188,20 @@ function _addListenEventPage(){
 	case 'Post':
     Post.initialize();
 		break;
-  case 'Chat':
-    ChatPost.initialize();
-    break;
   case 'User':
     User.initialize();
     break;
+  case 'Chat':
+    PopupChat.initialize();
+    break;
   case 'Chat-inbox':
     ChatInbox.initialize();
-    break;
-  case 'Chat-private':
-    ChatPrivate.initialize();
     break;
 	default:
 		Default.initialize();
 		break;
 	}
+  console.log(page);
 }
 
 function shuffle_array(array) {
@@ -236,8 +235,21 @@ function CustomScrollBar(){
 
 }
 
+function homePage(){
+    var target = $('.option_logo_netwrk a');
+    target.on('click', function(){
+        sessionStorage.map_zoom = 7;
+        window.location.href = baseUrl;
+    });
+}
+
 $(document).ready(function(){
   _main();
+  MainWs.initialize();
   _addListenEventPage();
   Emoji.initialize();
+  Search.initialize();
+  if(isMobile){
+    homePage();
+  }
 });

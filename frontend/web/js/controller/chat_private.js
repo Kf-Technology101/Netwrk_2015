@@ -17,7 +17,7 @@ var ChatPrivate = {
 		ChatPrivate.SetUrl();
 		ChatPrivate.SetDataPrivateChat();
 		ChatPrivate.OnClickBackBtn(ChatPrivate.parent);
-		ChatPrivate.WsConnect(ChatPrivate.container);
+		// ChatPrivate.WsConnect(ChatPrivate.container);
 		ChatPrivate.OnWsChatPrivate();
 		ChatPrivate.OnWsFilePrivate();
 		ChatPrivate.HandleWsFilePrivate();
@@ -29,6 +29,7 @@ var ChatPrivate = {
 			ChatPrivate.OnClickMeetMobile();
 			ChatPrivate.OnClickChatInboxBtnMobile();
 			ChatInbox.HideMeetIconMobile();
+			Default.ShowNotificationOnChat();
 		}else{
 			ChatPrivate.ShowChatBox();
 			ChatPrivate.OnShowModalChatPrivate();
@@ -150,7 +151,8 @@ var ChatPrivate = {
 		var parent = $(e).parent();
 		var val	 = parent.find("textarea").val();
 		if(val != ""){
-			ChatPrivate.ws.send("send", {"type": 1, "msg": val,"room": ChatPrivate.params.private,"user_id": UserLogin});
+			window.ws.send("send", {"type": 1, "msg": val,"room": ChatPrivate.params.private,"user_id": UserLogin});
+			window.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": ChatPrivate.params.private, "message": val});
 			parent.find("textarea").val("");
 			parent.find("textarea").focus();
 		}
@@ -251,61 +253,67 @@ var ChatPrivate = {
 		});
 	},
 
-	WsConnect: function(parent){
-		ChatPrivate.ws = $.websocket("ws://"+ChatPrivate.url+":2311/?post="+ChatPrivate.params.private+"&user_id="+UserLogin+"&chat_type="+ChatPrivate.params.chat_type, {
-			open: function(data) {
-				// ChatPrivate.ws.send("regeister", {"room": ChatPrivate.params.Private,"user_id": UserLogin});
-				$(ChatPrivate.parent).find('textarea').focus();
-				console.log('Open');
-			},
-			close: function() {
-				console.log('close');
-			},
-			events: {
-				fetch: function(e) {
-					console.log('fetch');
-					ChatPrivate.msg_lenght = e.data.length;
-					$.each(e.data, function(i, elem){
-						ChatPrivate.getMessageTemplate(elem);
-						ChatPrivate.ScrollTopChat();
-					});
-					if(isMobile){
-						fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-					}
-					ChatPrivate.FetchEmojiOne({type: 'fetch'});
-				},
-				onliners: function(e){
-					console.log('onliners');
-				},
-				single: function(e){
-					console.log('single');
-					var update_list_chat;
-					$.each(e.data, function(i, elem){
-						if(ChatPrivate.params.private == elem.post_id){
-							ChatPrivate.message_type = elem.msg_type;
-							ChatPrivate.getMessageTemplate(elem);
-							update_list_chat = $.parseJSON(elem.update_list_chat);
-						}
-					});
-					if(isMobile){
-						fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-					} else {
-						ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_dicussion ul'), update_list_chat);
-					}
-					if(ChatPrivate.message_type == 1){
-						ChatPrivate.FetchEmojiOne({type: 'single'});
-					}
-					ChatPrivate.ScrollTopChat();
-				}
-			}
-		});
-	},
+	// WsConnect: function(parent){
+	// 	ChatPrivate.ws = $.websocket("ws://"+ChatPrivate.url+":2311/?post="+ChatPrivate.params.private+"&user_id="+UserLogin+"&chat_type="+ChatPrivate.params.chat_type, {
+	// 		open: function(data) {
+	// 			// ChatPrivate.ws.send("regeister", {"room": ChatPrivate.params.Private,"user_id": UserLogin});
+	// 			$(ChatPrivate.parent).find('textarea').focus();
+	// 			console.log('Open');
+	// 		},
+	// 		close: function(e) {
+	// 			console.log('close');
+	// 			console.log(e);
+	// 		},
+	// 		events: {
+	// 			fetch: function(e) {
+	// 				console.log('fetch');
+	// 				ChatPrivate.msg_lenght = e.data.length;
+	// 				$.each(e.data, function(i, elem){
+	// 					ChatPrivate.getMessageTemplate(elem);
+	// 					ChatPrivate.ScrollTopChat();
+	// 				});
+	// 				if(isMobile){
+	// 					fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+	// 				}
+	// 				ChatPrivate.FetchEmojiOne({type: 'fetch'});
+	// 			},
+	// 			onliners: function(e){
+	// 				console.log('onliners');
+	// 				console.log(e);
+	// 			},
+	// 			single: function(e){
+	// 				console.log('single');
+	// 				var update_list_chat;
+	// 				$.each(e.data, function(i, elem){
+	// 					if(ChatPrivate.params.private == elem.post_id){
+	// 						ChatPrivate.message_type = elem.msg_type;
+	// 						ChatPrivate.getMessageTemplate(elem);
+	// 						update_list_chat = $.parseJSON(elem.update_list_chat);
+	// 					}
+	// 				});
+	// 				if(isMobile){
+	// 					fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
+	// 				} else {
+	// 					ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat);
+	// 				}
+	// 				if(ChatPrivate.message_type == 1){
+	// 					ChatPrivate.FetchEmojiOne({type: 'single'});
+	// 				}
+	// 				ChatPrivate.ScrollTopChat();
+	// 			}
+	// 			// offline: function(e){
+	// 			// 	console.log('offline abc bac cab');
+	// 			// }
+	// 		}
+	// 	});
+	// },
 
 	getMessageTemplate:function(data){
 		var template = _.template($( "#message_chat" ).html());
 		var append_html = template({msg: data,baseurl: baseUrl});
 
 		$(ChatPrivate.parent).find(ChatPrivate.container).append(append_html);
+		ChatPrivate.OnClickReceiverAvatar();
 	},
 
 	RedirectChatPrivatePage: function(PrivateId, chat_type, previous_flag, post_id){
@@ -436,11 +444,19 @@ var ChatPrivate = {
 		var target = $('#chat_inbox_btn_mobile');
         target.unbind();
         target.on('click',function(){
-            Ajax.set_previous_page(window.location.href).then(function(data){
-                ChatInbox.OnClickChatInboxMobile();
-            });
+        	sessionStorage.url = window.location.href;
+            ChatInbox.OnClickChatInboxMobile();
         });
 		// ChatInbox.OnClickChatInboxBtnMobile();
-	}
+	},
 
+	OnClickReceiverAvatar: function(){
+		var avatar = $('#private_chat .container_private_chat .message_receiver .user_thumbnail'),
+			post_id = $('#private_chat').attr('data-private');
+		avatar.unbind();
+		avatar.on('click', function(){
+			console.log('clicked on avatar has post_id ' + post_id);
+			window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id + "&from=private";
+		});
+	},
 }

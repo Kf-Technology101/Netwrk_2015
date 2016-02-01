@@ -40,10 +40,12 @@ AppAsset::register($this);
         <div class="box-search">
             <div class="search input-group">
                 <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="What are your interests?">
+                <input type="text" class="form-control input-search" placeholder="What are your interests?">
             </div>
             <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
+
+        <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
 
         <div class="chatting" id='chat_inbox_btn'>
             <span><i class="fa fa-comment"></i><span class='notify disable'>15</span>Chat</span>
@@ -87,7 +89,7 @@ AppAsset::register($this);
     isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>";
     var UserLogin = '<?php echo Yii::$app->user->id; ?>';
 </script>
-<?php 
+<?php
     unset(Yii::$app->session['key_reset_password']);
     unset(Yii::$app->session['invalidKey']);
     Yii::$app->session->destroy();

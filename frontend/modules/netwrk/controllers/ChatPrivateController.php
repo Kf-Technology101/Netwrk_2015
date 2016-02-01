@@ -58,21 +58,23 @@ class ChatPrivateController extends BaseController
 			foreach ($chat_list as $key => $chat) {
 				$num_date = UtilitiesFunc::FormatDateTime($chat->updated_at ? $chat->updated_at : $chat->created_at);
 				$user_photo = User::findOne($chat->user_id_guest)->profile->photo;
-				$content = WsMessages::find()->where('post_id = '.$chat->user_id_guest)->orderBy(['id'=> SORT_DESC])->one();
+				$content = WsMessages::find()->where('post_id = '.$chat->post_id)->orderBy(['id'=> SORT_DESC])->one();
 				if ($user_photo == null){
 					$image = 'img/icon/no_avatar.jpg';
 				}else{
 					$image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
 				}
+				$num_date_first_met = date('M d', strtotime($chat->created_at));
 				$item = [
 				'user_id_guest' => $chat->user->id,
 				'user_id_guest_first_name' => $chat->user->profile->first_name,
 				'user_id_guest_last_name' => $chat->user->profile->last_name,
 				'updated_at'=> $num_date,
 				'avatar' => $image,
-				'content' => $content ? $content->msg : 'Match!',
+				'content' => $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>',
 				'post_id' => $chat->post_id,
-				'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
+				'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at,
+				'class_first_met' => $content['first_msg']
 				];
 
 				array_push($data, $item);

@@ -75,6 +75,23 @@ body{
       right: 5%;
       color: #fff;
       font-size: 20px;
+      .notify{
+        font-family: "ProximaNovaRegular";
+        font-size: 12px;
+        padding-top: 2px;
+        background: #f95e65;
+        border-radius: 20px;
+        border: 1px solid;
+        margin-top: -3px;
+        position: absolute;
+        margin-left: -10px;
+        text-align: center;
+        width: 21px;
+        height: 21px;
+      }
+      .disable{
+        display: none;
+      }
     }
 	.chatting{
       float: right;
@@ -150,3 +167,18 @@ body{
   color: #eee;
 }
 
+.map-marker-label {
+  width: 150px;
+  position: absolute;
+  font-size: 12px;
+  font-weight: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
+  color: #1d1d1d;
+  font-family: "ProximaNovaRegular";
+  span {
+    font-family: "ProximaNovaBold";
+  }
+}

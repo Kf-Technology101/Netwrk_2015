@@ -37,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	<script id="list_emoji" type="text/x-underscore-template">
+	<!-- <script id="list_emoji" type="text/x-underscore-template">
 		<% _.each(emoji,function(i,e){ %>
 			<li data-value="<%= i %>" data-toggle="tooltip" title="<%= i %>"><%= i %></li>
 		<% })%>
@@ -69,5 +69,5 @@
 	            <p class="time"><%= msg.created_at %></p>
 	        </div>
 	    </div>
-	</script>
+	</script> -->
 </div>

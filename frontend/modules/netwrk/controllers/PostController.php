@@ -26,6 +26,12 @@ class PostController extends BaseController
         }
     }
 
+    public function actionUpdateViewPost()
+    {
+        $id_post = $_POST['post'];
+        $post = Post::findOne($id_post);
+        $post->update(false);
+    }
     public function actionIndex()
     {
         $topic_id = $_GET['topic'];
@@ -136,7 +142,9 @@ class PostController extends BaseController
                 'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                 'avatar'=> $image,
                 'update_at'=>$num_date,
-                'is_vote'=> $isVote
+                'is_vote'=> $isVote,
+                'post_user_id' => $value->user_id,
+                'user' => $currentUser,
                 );
 
             array_push($data,$post);
@@ -148,6 +156,12 @@ class PostController extends BaseController
     }
 
     public function actionVotePost(){
+        if ($this->getIsMobile() && Yii::$app->user->isGuest) {
+            $post_id = $_POST['post_id'];
+            $post = Post::findOne($post_id);
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post?topic='.$post->topic_id]);
+        }
+
         $currentUser = Yii::$app->user->id;
         $post_id = $_POST['post_id'];
 
@@ -216,7 +230,7 @@ class PostController extends BaseController
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $message->post->updated_at ? $message->post->updated_at : $message->post->created_at
+                    'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
                     ];
                 array_push($data, $item);
             }
@@ -232,6 +246,11 @@ class PostController extends BaseController
         }
     }
 
+    /**
+     * [Function is used to create private post for 2 user want to chat private]
+     * @param   $user_id   []
+     * @return             [true/false]
+     */
     public function actionSetPrivatePost()
     {
         $currentUser = Yii::$app->user->id;
@@ -245,6 +264,41 @@ class PostController extends BaseController
         } else {
             return false;
         }
+    }
 
+    /**
+     * [Function is used to get info of post when user click on one post of list post in meet page]
+     * @param   $post_id   [post]
+     * @param   $user_id
+     * @return             [data]
+     */
+
+    public function actionGetInfoPost()
+    {
+        $post_id = isset($_GET['post_id']) ? $_GET['post_id'] : false;
+        if ($post_id) {
+            $post = POST::find()->where('id = '. $post_id . ' AND post_type = 1')->one();
+            if ($post) {
+                $data = [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'content' => $post->content,
+                    'topic_id' => $post->topic_id,
+                    'user_id' => $post->user_id,
+                    'created_at' => $post->created_at,
+                    'updated_at' => $post->updated_at,
+                    'view_count' => $post->view_count,
+                    'brilliant_count' => $post->brilliant_count,
+                    'comment_count' => $post->comment_count,
+                    'post_type' => $post->post_type
+                ];
+                $data = json_encode($data);
+                return $data;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

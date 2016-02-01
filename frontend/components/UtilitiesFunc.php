@@ -3,6 +3,16 @@ namespace frontend\components;
 use Yii;
 class UtilitiesFunc
 {
+	public static function CalculatorDistance($lat1, $lon1, $lat2, $lon2){
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+
+        return $miles;
+	}
+
 	public static function GetUserCurrent(){
 		$currentUser = 0;
 		if(!Yii::$app->user->isGuest){
@@ -66,7 +76,7 @@ class UtilitiesFunc
 		$timestampformat = date_format(date_create($date),'Y-m-d');
 		$date1 = date_create($timestampformat);
 		$date2 = date_create($current_date);
-		
+
 		$diff=$date2->diff($date1)->d;
 
 		if(intval($diff) >= 1){

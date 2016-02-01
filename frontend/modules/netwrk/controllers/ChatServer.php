@@ -9,6 +9,8 @@ use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\ChatPrivate;
+use frontend\modules\netwrk\models\Notification;
+use frontend\modules\netwrk\models\UserMeet;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use Yii;
@@ -20,8 +22,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	protected $current_user;
 	protected $post_id = 0;
 	protected $chat_type;
+	protected $notify;
 
 	private $users = array();
+	private $onl = [];
 
 	public function __construct()
 	{
@@ -31,13 +35,14 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function onOpen(ConnectionInterface $conn)
 	{
-		$this->post_id = $conn->WebSocket->request->getQuery()->get('post');
-		$this->current_user = $conn->WebSocket->request->getQuery()->get('user_id');
-		$this->chat_type = $conn->WebSocket->request->getQuery()->get('chat_type');
+		$user_id = $conn->WebSocket->request->getQuery()->get('user_id');
+		$this->current_user = $user_id;
 		$this->clients->attach($conn);
-		$this->send($conn, "fetch", $this->fetchMessages());
-		// $this->checkOnliners();
-		echo "New connection! ({$conn->resourceId})\n";
+		$this->checkOnliners();
+		// if($user_id != ""){
+		// 	$this->send($conn, "notify", $this->notify());
+		// }
+		echo "User with id ".$user_id . " is connected on ({$conn->resourceId})\n";
 	}
 
 	public function onMessage(ConnectionInterface $from, $data)
@@ -48,7 +53,6 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 		if(isset($data['data']) && count($data['data']) != 0){
 			$type = $data['type'];
-
 			$user = isset($this->users[$id]) ? $this->users[$id]['name'] : false;
 
 			// $user = $current_user;
@@ -59,11 +63,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					"name" 	=> $name,
 					"seen"	=> time()
 					);
-			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['user_id'])){
+			}elseif($type == "send" && isset($data['data']['type']) && isset($data['data']['chat_type']) && isset($data['data']['user_id'])){
 				// make new models to stored data
+				$this->chat_type = $data['data']['chat_type'];
 				$this->ws_messages = new WsMessages();
 				$msg = $data['data']['type'] == 1 ? htmlspecialchars($data['data']['msg']) : $data['data']['file_name'];
-				$type = $data['data']['type'];
+				$msg_type = $data['data']['type'];
 				$room = $data['data']['room'];
 				// $this->post_id = $data['data']['room'];
 				$user = $data ['data']['user_id'];
@@ -71,16 +76,33 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$this->ws_messages->user_id = $user;
 				$this->ws_messages->msg = $msg;
 				$this->ws_messages->post_id = $room;
-				$this->ws_messages->msg_type = $type;
+				$this->ws_messages->msg_type = $msg_type;
 				$this->ws_messages->post_type = $this->chat_type;
 				$this->ws_messages->save(false);
+
+				$u = ChatPrivate::find()->where(['user_id'=>$user, 'post_id'=>$room])->one();
+				if($u){
+					$this->notify = new Notification();
+					$this->notify->post_id = $room;
+					$this->notify->sender = $user;
+					$this->notify->receiver = $u->user_id_guest;
+					$this->notify->message = $this->ws_messages->id;
+					$this->notify->status = 0;
+					$this->notify->chat_show = 0;
+					$this->notify->created_at = date('Y-m-d H:i:s');
+					$this->notify->save();
+				}
 				if ($this->chat_type == 1) {
 					$this->ws_messages->post->comment_count ++;
+					$this->ws_messages->post->chat_updated_time = date('Y-m-d H:i:s');
 					$this->ws_messages->post->update();
 					$list_chat_inbox = $this->updateListChatBox($user);
 				} else {
 					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id . ' AND user_id = ' .$user)->one();
-					$chat_private->save(false);
+
+					if ($chat_private) {
+						$chat_private->save(false);
+					}
 					$list_chat_inbox = $this->updateChatPrivateList($user);
 				}
 				$userProfile = json_decode($this->userProfile($user));
@@ -92,17 +114,46 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'name'=>$userProfile->name,
 														'avatar'=> $userProfile->image,
 														'msg'=> nl2br($msg),
-														'msg_type' => $type,
+														'msg_type' => $msg_type,
 														"created_at" => date("h:i A"),
 														'post_id'=> $room,
 														// "user_current" => $userProfile->current,
-														"update_list_chat" => $list_chat_inbox
+														"update_list_chat" => $list_chat_inbox,
+														"chat_type" => $this->chat_type
 														)
 													]);
 				}
 
 			}elseif($type == "fetch"){
+				$this->post_id = isset($data['data']['post_id']) ? $data['data']['post_id'] : false;
+				$this->chat_type = isset($data['data']['chat_type']) ? $data['data']['chat_type']: false;
+				$this->current_user = isset($data['data']['current_user']) ? $data['data']['current_user']: $this->current_user;
+				$fetch = $this->fetchMessages();
+				// var_dump($fetch);die;
 				$this->send($from, "fetch", $this->fetchMessages());
+			}elseif($type == "notify"){
+				$sender = $data['data']['sender'];
+				$receiver = $data['data']['receiver'];
+				$room = $data['data']['room'];
+				$message = $data['data']['message'];
+				if($receiver != -1 && $room == -1){
+					$num_date_first_met = date('M d');
+					$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
+					$checkMet = UserMeet::find()->where(['user_id_1'=>$receiver, 'user_id_2'=>$sender])->one();
+					if(count($checkMet) > 0){
+						$_room = ChatPrivate::find()->where(['user_id'=>$sender, 'user_id_guest'=>$receiver])->one();
+						$ws_msg_id = $this->insertWsMessage($sender, $msg, $_room->post_id, 1, 0, 0);
+						if($ws_msg_id != false){
+							$this->insertNotification($_room->post_id, $sender, $receiver, $ws_msg_id, 0, date('Y-m-d H:i:s'));
+							$this->insertNotification($_room->post_id, $receiver, $sender, $ws_msg_id, 0, date('Y-m-d H:i:s'));
+						}
+					}
+				}
+				foreach ($this->clients as $client) {
+					$concept = $this->notify($sender, $room, $message, $receiver);
+					if($concept != 0)
+						$this->send($client, "notify", $concept);
+				}
 			}
 		}
 		$this->checkOnliners($from);
@@ -114,6 +165,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			unset($this->users[$conn->resourceId]);
 		}
 		$this->clients->detach($conn);
+		echo "Disconnected on ({$conn->resourceId})\n";
 	}
 
 	public function onError(ConnectionInterface $conn, \Exception $e)
@@ -126,31 +178,79 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	{
 		$data_result=[];
 		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
+		foreach ($message as $key => $value) {
+			# code...
+			if($value->first_msg == 0){
+				if($value->user->id == $this->current_user){
+					$pchat = ChatPrivate::find()->where(['user_id'=>$value->user->id, 'post_id'=>$this->post_id])->one();
+					$profile = Profile::find()->where(['user_id'=>$pchat->user_id_guest])->one();
+            		$current_date = date('Y-m-d H:i:s');
+					$time1 = date_create($profile->dob);
+					$time2 = date_create($current_date);
+					$year_old = $time1->diff($time2)->y;
 
-		if($message) {
-			foreach ($message as $key => $value) {
-       			# code...
+					$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
+					$time = UtilitiesFunc::FormatTimeChat($value->created_at);
+					if ($profile->photo == null){
+						$image = '/img/icon/no_avatar.jpg';
+					}else{
+						$image = '/uploads/'.$pchat->user_id_guest.'/'.$profile->photo;
+					}
+      
+					$item = array(
+						'id'=>$pchat->user_id_guest,
+						'name'=>$profile->first_name ." ".$profile->last_name,
+						'avatar'=> $image,
+						'msg'=> $smg,
+						'msg_type' => 1,
+						'created_at'=> $time,
+						'post_id'=> $value->post_id,
+					);
+				} else {
+					$profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
+					$current_date = date('Y-m-d H:i:s');
+					$time1 = date_create($profile->dob);
+					$time2 = date_create($current_date);
+					$year_old = $time1->diff($time2)->y;
+
+					$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
+					$time = UtilitiesFunc::FormatTimeChat($value->created_at);
+					if ($profile->photo == null){
+						$image = '/img/icon/no_avatar.jpg';
+					}else{
+						$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
+					}
+      
+					$item = array(
+						'id'=>$value->user->id,
+						'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
+						'avatar'=> $image,
+						'msg'=> $smg,
+						'msg_type' => 1,
+						'created_at'=> $time,
+						'post_id'=> $value->post_id,
+					);
+				}
+			} else {
+				$smg = nl2br($value->msg);
 				$time = UtilitiesFunc::FormatTimeChat($value->created_at);
-
 				if ($value->user->profile->photo == null){
 					$image = '/img/icon/no_avatar.jpg';
 				}else{
 					$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
 				}
-
 				$item = array(
 					'id'=>$value->user->id,
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 					'avatar'=> $image,
-					'msg'=> nl2br($value->msg),
+					'msg'=> $smg,
 					'msg_type' => $value->msg_type,
 					'created_at'=> $time,
 					'post_id'=> $value->post_id,
 				);
-
-				array_push($data_result,$item);
-
 			}
+
+			array_push($data_result,$item);
 		}
 		return $data_result;
 	}
@@ -171,7 +271,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		}
 
 		/* Send online users to evryone */
-		$data = $this->users;
+		$data = $this->current_user;
+		array_push($this->onl, $data);
 		foreach ($this->clients as $client) {
 			$this->send($client, "onliners", $data);
 		}
@@ -229,7 +330,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatDateTime($message->post->created_at);
+                $num_date = UtilitiesFunc::FormatDateTime($message->post->chat_updated_time);
 
                 $item = [
                     'id'=> $message->post->id,
@@ -245,11 +346,10 @@ class ChatServer extends BaseController implements MessageComponentInterface {
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $message->post->updated_at ? $message->post->updated_at : $message->post->created_at
+                    'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
                     ];
                 array_push($data, $item);
             }
-            // return strtotime($data[0]['real_update_at']) - strtotime($data[1]['real_update_at']);die;
             usort($data, function($a, $b) {
                 return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
             });
@@ -262,27 +362,31 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function updateChatPrivateList($user_id)
 	{
-		$currentUser = $user_id;
-		$chat_list = ChatPrivate::find()->where('user_id = '.$currentUser )->all();
+		$chat_list = ChatPrivate::find()->where('user_id = '.$user_id )->all();
 		if ($chat_list) {
 			$data = [];
 			foreach ($chat_list as $key => $chat) {
 				$num_date = UtilitiesFunc::FormatDateTime($chat->updated_at ? $chat->updated_at : $chat->created_at);
 				$user_photo = User::findOne($chat->user_id_guest)->profile->photo;
-				$content = WsMessages::find()->where('post_id = '.$chat->user_id_guest)->orderBy(['id'=> SORT_DESC])->one();
+				$content = WsMessages::find()->where('post_id = '.$chat->post_id. ' AND post_type = 0')->orderBy(['id'=> SORT_DESC])->one();
 				if ($user_photo == null){
                     $image = 'img/icon/no_avatar.jpg';
                 }else{
                     $image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
                 }
+                $num_date_first_met = date('M d', strtotime($chat->created_at));
+                $first_msg = $content ? $content->first_msg : 1;
+                $content = $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
 				$item = [
 					'user_id_guest' => $chat->user->id,
 					'user_id_guest_first_name' => $chat->user->profile->first_name,
 					'user_id_guest_last_name' => $chat->user->profile->last_name,
 					'updated_at'=> $num_date,
 					'avatar' => $image,
-					'content' => $content ? $content->msg : 'Match!',
-					'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at
+					'content' => $content,
+					'post_id' => $chat->post_id,
+					'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at,
+					'class_first_met' => $first_msg
 				];
 
 				array_push($data, $item);
@@ -292,10 +396,98 @@ class ChatServer extends BaseController implements MessageComponentInterface {
                 return strtotime($b['real_updated_at']) - strtotime($a['real_updated_at']);
             });
 			$data = json_encode($data);
+			// var_dump($data);die;
 			return $data;
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * [Function is used to sender a notification]
+	 * @param  $sender
+	 * @param  $room      [as post_id; -1 if first message]
+	 * @param  $message
+	 * @param  $_receiver [-1 if user is met]
+	 * @return array      [data of notification]
+	 */
+	public function notify($sender, $room, $message, $_receiver){
+		$notify = [];
+
+		if($_receiver == -1 && $room != -1){
+			$receiver = ChatPrivate::find()->where(['user_id'=>$sender, 'post_id'=>$room])->one();
+			// update chat list
+			$chat_private = ChatPrivate::find()->where('post_id = '.$room . ' AND user_id = ' .$receiver->user_id_guest)->one();
+			if ($chat_private) {
+				$chat_private->save(false);
+			}
+			$list_chat_inbox = $this->updateChatPrivateList($receiver->user_id_guest);
+
+			$chat_count = Notification::find()->select('sender')->where(['receiver'=>$receiver->user_id_guest, 'status'=>0])->distinct()->count();
+			$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'status'=>0])->count();
+			$notify = array('sender'=>$sender, 'receiver'=>$receiver->user_id_guest, 'message'=>$message, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$room, 'ismeet'=>0, 'update_list_chat'=>$list_chat_inbox);
+		} else {
+			$num_date_first_met = date('M d');
+			$msg = 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
+			$checkMet = UserMeet::find()->where(['user_id_1'=>$_receiver, 'user_id_2'=>$sender])->one();
+			if(count($checkMet) > 0){
+				$_room = ChatPrivate::find()->where(['user_id'=>$sender, 'user_id_guest'=>$_receiver])->one();
+
+				$chat_count = Notification::find()->select('sender')->where(['receiver'=>$_receiver, 'status'=>0])->distinct()->count();
+				$msg_count = Notification::find()->where(['sender'=>$sender, 'receiver'=>$_receiver, 'status'=>0])->count();
+
+				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1);
+			}
+		}
+		if(count($notify) > 0)
+			return $notify;
+		else
+			return 0;
+	}
+
+	/**
+	 * [Function is used to insert new chat message]
+	 * @param  $user_id   [sender]
+	 * @param  $msg       [message]
+	 * @param  $post_id   [chat room]
+	 * @param  $msg_type  [textmessage, emoji or media]
+	 * @param  $post_type [0: private post, 1: discussion post]
+	 * @param  $first_msg [0: message for meet, 1: mormal message]
+	 * @return            [false - insert fail, message_id - insert successful]
+	 */
+	public function insertWsMessage($user_id, $msg, $post_id, $msg_type, $post_type, $first_msg){
+		$this->ws_messages = new WsMessages();
+		$this->ws_messages->user_id = $user_id;
+		$this->ws_messages->msg = $msg;
+		$this->ws_messages->post_id = $post_id;
+		$this->ws_messages->msg_type = $msg_type;
+		$this->ws_messages->post_type = $post_type;
+		$this->ws_messages->first_msg = $first_msg;
+		if($this->ws_messages->save(false))
+			return $this->ws_messages->id;
+		else
+			return false;
+	}
+
+	/**
+	 * [Function is used to insert new notification]
+	 * @param   $post_id   [chat room]
+	 * @param   $sender
+	 * @param   $receiver
+	 * @param   $msg
+	 * @param   $status    [0: unread, 1: read]
+	 * @param   $date
+	 * @return             [true/false]
+	 */
+	public function insertNotification($post_id, $sender, $receiver, $msg, $status, $date){
+		$this->notify = new Notification();
+		$this->notify->post_id = $post_id;
+		$this->notify->sender = $sender;
+		$this->notify->receiver = $receiver;
+		$this->notify->message = $msg;
+		$this->notify->status = $status;
+		$this->notify->created_at = $date;
+		return $this->notify->save(false);
 	}
 }
 ?>

@@ -36,12 +36,16 @@ class MobileAsset extends AssetBundle
       'css/mobile/forgot_pass.css',
       'css/mobile/chat_inbox.css',
       'css/mobile/forgot_pass.css',
-      'css/mobile/search.css'
+      'css/mobile/search.css',
+      'css/mobile/dropdown_avatar.css',
+      'css/mobile/landing_page.css'
     ];
     public $js = [
       'js/lib/underscore.js',
+      'js/lib/label.js',
       'js/main.js',
-      'js/ws/ws.js',
+      'js/vendor/bootbox.min.js',
+      // 'js/ws/ws.js',
       // 'js/ws/chat.js',
       'js/controller/ajax.js',
       'js/controller/map.js',
@@ -53,7 +57,7 @@ class MobileAsset extends AssetBundle
       'js/controller/template.js',
       'js/controller/meet_setting.js',
       'js/controller/create_post.js',
-      'js/controller/chat_post.js',
+      // 'js/controller/chat_post.js',
       'js/controller/post.js',
       'js/controller/vote.js',
       'js/controller/emoji.js',
@@ -70,7 +74,11 @@ class MobileAsset extends AssetBundle
       'js/controller/forgot_password.js',
       'js/controller/reset_password.js',
       'js/controller/chat_inbox.js',
-      'js/controller/chat_private.js'
+      'js/vendor/reconnecting-websocket.js',
+      'js/controller/main_ws.js',
+      'js/controller/popup_chat.js',
+      // 'js/controller/chat_private.js',
+      'js/controller/landing_page.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

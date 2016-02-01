@@ -202,6 +202,266 @@
             width: 100%;
             display: none;
             margin: 80px auto;
+            .top-header{
+                height: auto;
+                background-color: #cacaca;
+                padding: 5px;
+                .lp-title{
+                    font-family: "ProximaNovaBold";
+                    font-size: 100%;
+                    margin-bottom: 0;
+                }
+                .lp-description{
+                    font-size: 90%;
+                    color: #1d1b1b;
+                    margin-bottom: 0;
+                }
+            }
+            .top-post{
+                .top-post-content{
+                    background-color: #fff;
+                    .post-row{
+                        border-bottom: 1px solid #e4e4e4;
+                        padding: 10px 15px;
+                        height: 74px;
+                        .avatar{
+                            width: 50px;
+                            height: 50px;
+                            max-width: 50px;
+                            max-height: 50px;
+                            float: left;
+                            display: table;
+                            position: relative;
+                            border-radius: 2px;
+                            border: 1px solid #898989;
+                            background: #fff;
+                            .image{
+                                height: 50px;
+                                width: 50px;
+                                text-align: center;
+                                vertical-align: middle;
+                                display: table-cell;
+                                img{
+                                    margin: auto;
+                                    max-width: 50px;
+                                    width: auto;
+                                    height: auto;
+                                    max-height: 50px;
+                                }
+                            }
+                        }
+                        .post{
+                            width: 69%;
+                            display: block;
+                            margin: 0 0 0 15px;
+                            float: left;
+                            .post-title{
+                                font-family: "ProximaNovaSemibold";
+                                font-size: 100%;
+                                color: #5888ac;
+                                margin-bottom: 0;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+                            .post-content{
+                                font-family: "ProximaNovaRegular";
+                                font-size: 75%;
+                                line-height: 13px;
+                                color: #1d1b1b;
+                                .show_more{
+                                    color: #337ab7;
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .action{
+                            float: right;
+                            width: 50px;
+                            text-align: center;
+                            .brilliant{
+                                font-family: "Verdana";
+                                font-size: 75%;
+                                color: #fff;
+                                width: 36px;
+                                height: 30px;
+                                background: url('../../img/icon/brilliant-icon-medium.png') no-repeat;
+                                background-size: 36px 30px;
+                                display: block;
+                                padding: 10px 0;
+                                margin-left: 9px;
+                                cursor: pointer;   
+                            }
+                            .chat{
+                                color: #5888ac;
+                                cursor: pointer;
+                                text-align: right;
+                                .fa{
+                                    margin-right: 5px;
+                                }
+                                &:hover{
+                                    color: #5da5d8;
+                                }
+                            }
+                        }
+                    }
+                    .last-row{
+                        border: none;
+                    }
+                }
+            }
+            .top-topic{
+                .top-topic-content{
+                    .topic-row{
+                        border-bottom: 1px solid #e4e4e4;
+                        height: 30px;
+                        padding: 0 15px;
+                        background: #fff;
+                        width: 100%;
+                        &:hover{
+                            .topic-title{
+                                color: #5da5d8;
+                            }
+                            .arrow{
+                                color: #5da5d8;
+                            }
+                        }
+                        .topic-title{
+                            font-size: 110%;
+                            color: #1d1b1b;
+                            width: 70%;
+                            line-height: 30px;
+                            float: left;
+                            margin-bottom: 0;
+                            cursor: pointer;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+                        .post-counter{
+                            padding-top: 5px;
+                            width: auto;
+                            float: right;
+                            text-align: right;
+                            color: #1d1b1b;
+                            .fa{
+                                margin-left: 5px;
+                                float: right;
+                                padding-top: 2px;
+                            }
+                            .arrow{
+                                margin-left: 15px;
+                                cursor: pointer;
+                                float: right;
+                            }
+                        }
+                    }
+                    .last-row{
+                        border: none;
+                    }
+                }
+            }
+            .top-feed{
+                background-color: #fff;
+                .feed-row{
+                    border-bottom: 1px solid #e4e4e4;
+                    position: relative;
+                    &:hover{
+                            cursor: pointer;
+                    }
+                }
+                .feed-row.feed-topic{
+                    padding: 3px 15px;
+                    .feed-content {
+                        .topic-title {
+                            font-size: 16px;
+                            color:#1d1b1b;
+                            &:hover {
+                                color: #5da5d8;
+                            }
+                        }
+                        .topic-create-by {
+                            font-size: 13px;
+                            color: #797979;
+                            position: absolute;
+                            left: 350px;
+                        }
+                        .appear-day {
+                            font-size : 12px;
+                            color : #797979;
+                            position: absolute;
+                            right: 15px;
+                            top: 6px;
+                        }
+                    }
+                }
+
+                .feed-row.feed-post{
+                    padding: 3px 15px;
+                    height: 50px;
+                    .feed-content {
+                        .avatar-poster {
+                            width: 40px;
+                            height: 40px;
+                            max-width: 40px;
+                            max-height: 40px;
+                            float: left;
+                            display: table;
+                            position: relative;
+                            background: #fff;
+                            border-radius: 2px;
+                            border: 1px solid #898989;
+                            .image{
+                                height: 40px;
+                                width: 40px;
+                                text-align: center;
+                                vertical-align: middle;
+                                display: table-cell;
+                                cursor: pointer;
+                                img{
+                                    margin: auto;
+                                    max-width: 40px;
+                                    width: auto;
+                                    height: auto;
+                                    max-height: 40px;
+                                }
+                            }
+                        }
+                        .post {
+                            margin-left: 60px;
+                            width: 550px;
+                            .post-title {
+                                font-size: 16px;
+                                color:#1d1b1b;
+                                font-family: "ProximaNovaSemibold";
+                            }
+                            .post-content {
+                                font-size: 13px;
+                                color: #1d1b1b;
+                                line-height: 14px;
+                                width: 500px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+                        .post-create-by {
+                            font-size: 13px;
+                            color: #797979;
+                            position: absolute;
+                            right: 15px;
+                            top: 5px;
+                        }
+                        .appear-day {
+                            font-size : 12px;
+                            color : #797979;
+                            position: absolute;
+                            right: 15px;
+                            top: 25px;
+                        }
+                    }
+                }
+            }
         }
         #tab_topic{
             width: 100%;

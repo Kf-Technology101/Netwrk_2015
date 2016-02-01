@@ -28,7 +28,7 @@
 <script id="chat_inbox_list" type="text/x-underscore-template" >
 	<% _.each(chat_inbox_list,function(chat_inbox){ %>
 		<li>
-			<div class='chat-post-id' data-post='<%= chat_inbox.id %>'>
+			<div class='chat-post-id' data-post='<%= chat_inbox.id %>' data-chat-type='1'>
 				<span class='avatar-user'>
 					<img class='img_avatar' src='<?= Url::to("@web/") ?><%= chat_inbox.avatar %>' />
 				</span>
@@ -48,3 +48,28 @@
 
 		<% }); %>
 	</script>
+
+<script id="chat_private_list" type="text/x-underscore-template" >
+	<% _.each(chat_private_list,function(chat_inbox){ %>
+		<li>
+			<div class='chat-post-id' data-user='<%= chat_inbox.user_id_guest %>' data-post='<%= chat_inbox.post_id %>' data-chat-type='0'>
+				<span class='avatar-user'>
+					<img class='img_avatar' src='<?= Url::to("@web/") ?><%= chat_inbox.avatar %>' />
+				</span>
+				<div class='title-description-user'>
+					<div class='title-chat-inbox'><%= chat_inbox.user_id_guest_first_name + ' '+ chat_inbox.user_id_guest_last_name %></div>
+					<span class='notify-chat-inbox disable'>0</span>
+					<div class='description-chat-inbox'><%= chat_inbox.content %></div>
+				</div>
+				<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> <%= chat_inbox.updated_at %></span>
+				<i class='fa fa-2x fa-angle-right'></i>
+			</div>
+			<input type='hidden' value='<%= chat_inbox.topic_id %>' name='topic_id' />
+			<input type='hidden' value='<%= chat_inbox.topic_name %>' name='topic_name'/>
+			<input type='hidden' value='<%= chat_inbox.city_id %>' name='city_id' />
+			<input type='hidden' value='<%= chat_inbox.city_name %>' name='city_name'/>
+		</li>
+
+		<% }); %>
+	</script>
+

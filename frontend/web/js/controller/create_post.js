@@ -22,6 +22,7 @@ var Create_Post={
             Create_Post.eventClickdiscoverMobile();
             Create_Post.postTitleFocus();
             Create_Post.OnClickChatInboxBtnMobile();
+            Default.SetAvatarUserDropdown();
         }else{
             if(isGuest){
                 Login.modal_callback = Post;
@@ -44,6 +45,7 @@ var Create_Post={
             Create_Post.onClickBackTopicBreakcrumb();
             Create_Post.onClickBackNetwrkLogo();
             Create_Post.onClickBackZipcodeBreadcrumb();
+            Topic.displayPositionModal();
         }
     },
     showDataBreadcrumb: function(zipcode, topic){
@@ -323,6 +325,7 @@ var Create_Post={
                     },700);
                 });
                 ChatInbox.GetDataListChatPost();
+                Map.update_marker(Create_Post.params.city);
             }
         });
     },
@@ -331,9 +334,11 @@ var Create_Post={
         var target = $('#chat_inbox_btn_mobile');
         target.unbind();
         target.on('click',function(){
-            Ajax.set_previous_page(window.location.href).then(function(data){
-                ChatInbox.OnClickChatInboxMobile();
-            });
+            sessionStorage.url = window.location.href;
+            ChatInbox.OnClickChatInboxMobile();
+            // Ajax.set_previous_page(window.location.href).then(function(data){
+            //     ChatInbox.OnClickChatInboxMobile();
+            // });
         });
     }
 

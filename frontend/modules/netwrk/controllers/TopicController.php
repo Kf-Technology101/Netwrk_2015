@@ -7,6 +7,8 @@ use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
+use frontend\modules\netwrk\models\User;
+use frontend\modules\netwrk\models\HistoryFeed;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -66,7 +68,7 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/create',['city_id' =>$city_id,'data'=> (object)$object]);
+        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
     }
 
     public function actionNewTopic() {
@@ -98,17 +100,25 @@ class TopicController extends BaseController
             $city_id = $netwrk->id;
         }
 
-        $Topic = new Topic;
+        $Topic = new Topic();
         $Topic->user_id = $currentUser;
         $Topic->city_id = $city_id;
         $Topic->title = $topic;
         $Topic->save();
 
-        $Post = new Post;
+        $hft = new HistoryFeed();
+        $hft->id_item = $Topic->id;
+        $hft->type_item = 'topic';
+        $hft->city_id = $Topic->city_id;
+        $hft->created_at = $Topic->created_at;
+        $hft->save();
+
+        $Post = new Post();
         $Post->title = $post;
         $Post->content = $message;
         $Post->topic_id = $Topic->id;
         $Post->user_id = $currentUser;
+        $Post->post_type = 1;
         $Post->save();
 
         $Topic->post_count = 1;
@@ -144,7 +154,6 @@ class TopicController extends BaseController
         $topices = $topices->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
-
         $data = [];
         foreach ($topices as $key => $value) {
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count);
@@ -175,7 +184,6 @@ class TopicController extends BaseController
                 );
             array_push($data,$topic);
         }
-
         $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode);
         $hash = json_encode($temp);
         return $hash;
@@ -225,6 +233,75 @@ class TopicController extends BaseController
     public function actionGetTopic(){
         $id = $_POST['topic'];
         $topic = Topic::findOne($id);
-        return $topic->title;
+        return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
+    }
+
+    /**
+     * [Function is used to get  List out ALL created Topic/ Post within that netwrk, 3 posts within that netwrk and have most number of users joining the post discussion, 3 topics which have most posts within this zip code]
+     * @param  $zipcode
+     * @return array      [data of json]
+     */
+    public function actionGetFeed() {
+        $city = isset($_GET['city']) && $_GET['city'] != null ? $_GET['city'] : null;
+        $pageSize = isset($_GET['size']) && $_GET['size'] != null ? $_GET['size'] : null;
+        $page = isset($_GET['page']) && $_GET['page'] != null ? $_GET['page'] : null;
+        $request = Yii::$app->request->isAjax;
+        if($request){
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+
+            $top_post = Post::GetTopPostUserJoinGlobal($limit, $city);
+            $top_topic = Topic::GetTopTopicGlobal($limit, $city);
+            $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
+
+            $htf = new HistoryFeed();
+            $query_feed = $htf->find()->where('city_id = '. $city)->orderBy(['created_at'=> SORT_DESC]);
+            $countQuery = clone $query_feed;
+            $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+            $data_feed = $query_feed->offset($pages->offset)
+                                    ->limit($pages->limit)
+                                    ->all();
+            $feeds =[];
+            foreach ($data_feed as $key => $value) {
+                if ($value->type_item == 'post') {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $url_avatar = User::GetUrlAvatar($value->item->user->id,$value->item->user->profile->photo);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'content'=> $value->item->content,
+                        'topic_id' => $value->item->topic_id,
+                        'photo' => $url_avatar,
+                        'city_id'=> $value->item->topic->city_id,
+                        'city_name'=> $value->item->topic->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
+                        'is_post' => 1
+                        ];
+                } else {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'city_id'=> $value->item->city_id,
+                        'city_name'=> $value->item->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'created_by' => $value->item->user['profile']['first_name']." ".$value->item->user['profile']['last_name'],
+                        'is_post' => 0
+                        ];
+                }
+                array_push($feeds, $item);
+            }
+
+            $item = [
+                'top_post'=> $top_post,
+                'top_topic'=> $top_topic,
+                'feed' => $feeds
+            ];
+
+            $hash = json_encode($item);
+            return $hash;
+        }
     }
 }

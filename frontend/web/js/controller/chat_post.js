@@ -30,7 +30,7 @@ var ChatPost = {
 			ChatPost.OnClickChatInboxBtnMobile();
 			ChatInbox.HideMeetIconMobile();
 		}else{
-			ChatPost.ShowChatBox();
+			ChatPost.ShowChatBox(ChatPost.params.post);
 			ChatPost.OnShowModalChatPost();
 			ChatPost.ShowModalChatPost();
 			ChatPost.OnHideModalChatPost();
@@ -39,13 +39,23 @@ var ChatPost = {
 		}
 	},
 
-	ShowChatBox: function(){
-		if(isGuest){
-			$(ChatPost.parent).find('.send_message.login').removeClass('active');
-			$(ChatPost.parent).find('.send_message.no-login').addClass('active');
-		}else{
-			$(ChatPost.parent).find('.send_message.no-login').removeClass('active');
-			$(ChatPost.parent).find('.send_message.login').addClass('active');
+	ShowChatBox: function(popup_active){
+		if (isMobile) {
+			if(isGuest){
+				$(ChatPost.parent).find('.send_message.login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.no-login').addClass('active');
+			}else{
+				$(ChatPost.parent).find('.send_message.no-login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.login').addClass('active');
+			}
+		} else {
+			if(isGuest){
+				$(ChatPost.parent).find('.send_message.login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.no-login').addClass('active');
+			}else{
+				$(ChatPost.parent).find('.send_message.no-login').removeClass('active');
+				$(ChatPost.parent).find('.send_message.login').addClass('active');
+			}
 		}
 	},
 
@@ -277,6 +287,7 @@ var ChatPost = {
 				},
 				onliners: function(e){
 					console.log('onliners');
+					console.log(e);
 				},
 				single: function(e){
 					console.log('single');
@@ -307,6 +318,7 @@ var ChatPost = {
 		var append_html = template({msg: data,baseurl: baseUrl});
 
 		$(ChatPost.parent).find(ChatPost.container).append(append_html);
+		ChatPost.OnClickParticipantAvatarMobile();
 	},
 
 	RedirectChatPostPage: function(postId, chat_type, previous_flag){
@@ -437,11 +449,25 @@ var ChatPost = {
 		var target = $('#chat_inbox_btn_mobile');
         target.unbind();
         target.on('click',function(){
-            Ajax.set_previous_page(window.location.href).then(function(data){
-                ChatInbox.OnClickChatInboxMobile();
-            });
+        	sessionStorage.url = window.location.href;
+            ChatInbox.OnClickChatInboxMobile();
+            // Ajax.set_previous_page(window.location.href).then(function(data){
+            //     ChatInbox.OnClickChatInboxMobile();
+            // });
         });
 		// ChatInbox.OnClickChatInboxBtnMobile();
-	}
+	},
+
+	OnClickParticipantAvatarMobile: function(){
+		var avatar = $(ChatPost.page).find('.container_post_chat .user_thumbnail'),
+			user = $(ChatPost.page).attr('data-user-login');
+		avatar.unbind();
+		avatar.on('click', function(e){
+			var user_id = $(e.currentTarget).attr('data-user-id');
+			if (user_id != user){
+				window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_id + "&from=discussion";
+			}
+		});
+	},
 
 }

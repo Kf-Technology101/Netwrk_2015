@@ -3,6 +3,7 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
+use yii\helpers\Url;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -169,6 +170,18 @@ class User extends ActiveRecord implements IdentityInterface
         if (!$this->validatePassword($this->currentPassword)) {
             $this->addError("currentPassword", "Current password incorrect");
         }
+    }
+
+    //Get Url avatar User have photo
+    public function GetUrlAvatar($id,$photo)
+    {
+        $url = Url::to('@web/img/icon/no_avatar.jpg');
+        // $user = User::findOne($id);
+        // $photo = $user->profile->photo;
+        if($photo){
+            $url = Url::to('@web/uploads/'.$id.'/'.$photo);
+        }
+        return $url;
     }
 
     /**
@@ -501,5 +514,15 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         return $dropdown;
+    }
+
+    public static function getRandomUser($expect)
+    {
+        $users = User::find()
+                ->addSelect(["*", "RAND() order_num"])
+                ->where('id NOT IN ('.$expect.')')
+                ->with('profile')
+                ->orderBy(['order_num'=> SORT_DESC])
+                ->all();
     }
 }

@@ -57,14 +57,36 @@ class Vote extends \yii\db\ActiveRecord
             $this->post->updateAttributes([
                 'brilliant_count' =>  $this->post->brilliant_count + 1
             ]);
+
+            $this->post->topic->updateAttributes([
+                'brilliant_count' =>  $this->post->topic->brilliant_count + 1
+            ]);
+
+            $this->post->topic->city->updateAttributes([
+                'brilliant_count' =>  $this->post->topic->city->brilliant_count + 1
+            ]);
         }else{
             if($this->status == 1){
                 $this->post->updateAttributes([
                     'brilliant_count' =>  $this->post->brilliant_count + 1
                 ]);
+                $this->post->topic->updateAttributes([
+                    'brilliant_count' =>  $this->post->topic->brilliant_count + 1
+                ]);
+
+                $this->post->topic->city->updateAttributes([
+                    'brilliant_count' =>  $this->post->topic->city->brilliant_count + 1
+                ]);
             }else{
                 $this->post->updateAttributes([
                     'brilliant_count' =>  $this->post->brilliant_count - 1
+                ]);
+                $this->post->topic->updateAttributes([
+                    'brilliant_count' =>  $this->post->topic->brilliant_count - 1
+                ]);
+
+                $this->post->topic->city->updateAttributes([
+                    'brilliant_count' =>  $this->post->topic->city->brilliant_count - 1
                 ]);
             }
         }

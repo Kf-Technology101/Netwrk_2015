@@ -1,14 +1,23 @@
 <?php use yii\helpers\Url; ?>
-<div id="post_chat" data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id?>">
+<?php if ($post->post_type == 1 ) { ?>
+<div id="post_chat" class='post-id-<?= $post->id ?>' data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
+<?php } else { ?>
+<div id="post_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
+<?php } ?>
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
             <span class="title">
-                <span><a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a></span>
+            <?php if ($post->post_type == 1 ) { ?>
+                <span><?= $post->topic->city->zip_code?></span>
                 <span><i class="fa fa-angle-right"></i><?= $post->topic->title ?></span>
                 <span><i class="fa fa-angle-right"></i><?= $post->title ?></span>
+            <?php } else { ?>
+            <span class='title-user-private'><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
+            <?php } ?>
+
             </span>
         </div>
     </div>
@@ -17,12 +26,12 @@
     <img src='<?= Url::to("@web/img/icon/ajax-loader.gif")?>' class='loading_image' />
     <div class="nav_input_message">
         <?php if(Yii::$app->user->isGuest){?>
-            <div class="send_message input-group" data-url="<?= $url ?>">
+            <div class="send_message input-group no-login" data-url="<?= $url ?>">
                 <input type="text" class="form-control" placeholder="You have to log in to chat" disabled="true">
                 <div class="input-group-addon login" id="sizing-addon2">Login</div>
             </div>
         <?php }else{ ?>
-            <form id='msgForm' class="send_message input-group">
+            <form id='msgForm' class="send_message input-group login">
                 <textarea type="text" class="form-control" placeholder="Type message here..." maxlength="1024"></textarea>
                 <div id='file_btn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
                 <input type='file' id='file_upload' name='file_upload' style="display:none" />
@@ -47,7 +56,7 @@
    <% }else{ %>
         <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
     <% } %>
-        <div class="user_thumbnail">
+        <div class="user_thumbnail" data-user-id='<%= msg.id %>'>
             <div class="avatar">
                 <img src="<%= baseurl %><%=  msg.avatar %>">
             </div>

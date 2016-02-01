@@ -69,6 +69,10 @@
                     white-space: nowrap;
                     display: inline-block;
                 }
+                .title-user-private {
+                    text-align: left;
+                    max-width: 200px;
+                }
                 i{
                     margin-right: 5px;
                 }
@@ -82,6 +86,7 @@
         float: left;
         z-index: 5;
         overflow-y: auto;
+        background-color: #f4f4f4;
         .message{
             padding: 15px;
         }
@@ -96,7 +101,7 @@
                 display: table;
                 .avatar{
                     background: #e6e6e6;
-                    border-radius: 50%;
+                    border-radius: 20px;
                     width: 40px;
                     height: 40px;
                     display: table-cell;
@@ -145,7 +150,7 @@
                 }
                 p{
                     color: #1d1b1b;
-                    font-size: 14px;
+                    font-size: 13px;
                     word-wrap: break-word;
                 }
                 p.time{
@@ -180,7 +185,7 @@
                 display: table;
                 .avatar{
                     background: #e6e6e6;
-                    border-radius: 50%;
+                    border-radius: 20px;
                     width: 40px;
                     height: 40px;
                     display: table-cell;
@@ -229,7 +234,7 @@
                 }
                 p{
                     color: #1d1b1b;
-                    font-size: 14px;
+                    font-size: 13px;
                     word-wrap: break-word;
                 }
                 p.time{
@@ -259,7 +264,7 @@
         width: 100%;
         display: block;
         position: fixed;
-        bottom: 40px;
+        bottom: 34px;
         background: blue;
         .send_message{
             width: 100%;
@@ -282,7 +287,7 @@
                 outline: none;
                 box-shadow: none;
                 text-align: center;
-                font-size: 20px;
+                font-size: 18px;
             }
             .send,.login{
                 background: #5888ac;
@@ -308,6 +313,18 @@
                         cursor: pointer;
                     }
                 }
+            }
+        }
+    }
+}
+
+#private_chat {
+    .header {
+        .title_page {
+            .title {
+                text-align: left;
+                font-size: 16px;
+                padding-left: 15px;
             }
         }
     }

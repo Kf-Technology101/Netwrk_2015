@@ -18,29 +18,7 @@
     }
   }
   .collapse{
-    .search{
-      width: 350px;
-      height: 34px;
-      float: left;
-      margin: 13px 0 ;
-      span.input-group-addon{
-        background: #fff;
-        border: none;
-        i{
-          font-size: 14px;
-          color: #8f8f8f;
-        }
-      }
-      input{
-        border: none;
-        outline: none;
-        box-shadow: none;
-        padding: 0;
-        &:focus{
-          outline: none;
-        }
-      }
-    }
+
     .logo_netwrk{
       width: 60px;
       height: 60px;
@@ -53,7 +31,7 @@
     }
     .chatting{
       float: right;
-      padding: 15px 10px;
+      padding: 17px 10px;
       span{
         color: #fff;
         font-size: 20px;
@@ -62,16 +40,19 @@
           margin-right: 5px;
         }
         .notify{
-          font-family: "ProximaNovaSemibold";
-          font-size: 10px;
-          padding: 2px 4px;
+          font-family: "ProximaNovaRegular";
+          font-size: 12px;
+          padding-top: 2px;
+          padding-left: 1px;
           background: #f95e65;
           border-radius: 20px;
           border: 1px solid;
-          margin-top: -2px;
+          margin-top: -3px;
           position: absolute;
-          margin-left: -15px;
+          margin-left: -16px;
           text-align: center;
+          width: 21px;
+          height: 21px;
         }
         .disable{
           display: none;
@@ -187,81 +168,21 @@
     }
   }
 }
-.gm-sm {
-    display: none !important;
-}
-.gm-style-iw {
-  width: 400px !important;
-  height: 160px;
-  top: 15px !important;
-  left: 0px !important;
-  background-color: #fff;
-  box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
-  border: 2px solid #477499;
-  border-radius: 10px;
-}
-.gm-style-iw > div{
-  max-width: 400px !important;
-  width: 400px !important;
-}
-#iw-container {
-  margin-bottom: 10px;
-  width: 400px;
-}
-#iw-container .iw-title {
-  font-family: 'Open Sans Condensed', sans-serif;
-  font-size: 22px;
-  font-weight: 400;
-  padding: 5px 10px;
-  color: #477499;
-  margin: 0;
-  border-radius: 2px 2px 0 0;
-  width: 100%;
-  float: left;
-  .toppost{
-    float: left;
-  }
-  .zipcode{
-    float: right;
-    cursor: pointer;
-  }
-}
-#iw-container .iw-content {
-  width: 100%;
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: 400;
-  margin-right: 1px;
-  padding: 5px 10px;
-  max-height: 140px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  float: left;
-  p{
-    width: 100%;
-    word-wrap: break-word;
-  }
-}
-.iw-content img {
-  float: right;
-  margin: 0 5px 5px 10px;
-}
-.iw-subTitle {
-  font-size: 16px;
-  font-weight: 700;
-  padding: 5px 0;
-  .post-title{
-    cursor: pointer;
-  }
-}
-.iw-bottom-gradient {
+.map-marker-label {
+  width: 150px;
   position: absolute;
-  width: 326px;
-  height: 25px;
-  bottom: 10px;
-  right: 18px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  font-size: 12px;
+  font-weight: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
+  color: #1d1d1d;
+  font-family: "ProximaNovaRegular";
+  span {
+    font-family: "ProximaNovaBold";
+  }
+}
+.loader{
+  z-index: 999999;
 }

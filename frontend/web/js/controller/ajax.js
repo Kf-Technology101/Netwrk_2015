@@ -1,4 +1,37 @@
 var Ajax ={
+    top_landing: function(){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/default/feed-global";
+
+        $.ajax({
+            url: url,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    global_search: function(params){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/search/global-search";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     reset_password: function(params){
         var url,defer = $.Deferred();
             url = baseUrl + "/netwrk/user/user-reset-password";
@@ -121,6 +154,23 @@ var Ajax ={
         var url,defer = $.Deferred();
 
             url = baseUrl + "/netwrk/topic/update-view-topic";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    update_view_post: function(params){
+        var url,defer = $.Deferred();
+
+            url = baseUrl + "/netwrk/post/update-view-post";
 
         $.ajax({
             url: url,
@@ -270,6 +320,28 @@ var Ajax ={
             url = baseUrl +"/netwrk/topic/get-topic-mobile";
         }else{
             url = "netwrk/topic/get-topic-mobile";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    show_feed: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/topic/get-feed";
+        }else{
+            url = "netwrk/topic/get-feed";
         }
 
         $.ajax({
@@ -542,38 +614,6 @@ var Ajax ={
         return defer.promise();
     },
 
-    set_previous_page: function(previous_link){
-        var url,defer = $.Deferred();
-        url = baseUrl +"/netwrk/previous-page/set-previous-page";
-
-        $.ajax({
-            url: url,
-            data: {previous: previous_link},
-            async: false,
-            cache: false,
-            type: 'GET',
-            success: defer.resolve,
-            error: defer.reject
-        });
-        return defer.promise();
-    },
-
-    get_previous_page: function(){
-        var url,defer = $.Deferred();
-        url = baseUrl +"/netwrk/previous-page/get-previous-page";
-
-        $.ajax({
-            url: url,
-            data: null,
-            async: false,
-            cache: false,
-            type: 'GET',
-            success: defer.resolve,
-            error: defer.reject
-        });
-        return defer.promise();
-    },
-
     get_chat_private_list: function(user_id) {
         var url,defer = $.Deferred();
         url = baseUrl +"/netwrk/chat-private/get-chat-private-list";
@@ -590,20 +630,193 @@ var Ajax ={
         return defer.promise();
     },
 
-    // set_private_post: function(user_id) {
-    //     var url,defer = $.Deferred();
-    //     url = baseUrl +"/netwrk/post/set-private-post";
+    get_user_met_profile: function(chat_post_id){
+        var url,defer = $.Deferred();
+        if (isMobile) {
+            url = baseUrl +"/netwrk/meet/get-user-meet-profile";
+        }else{
+            url = "netwrk/meet/get-user-meet-profile";
+        }
 
-    //     $.ajax({
-    //         url: url,
-    //         data: null,
-    //         async: false,
-    //         cache: false,
-    //         type: 'POST',
-    //         success: defer.resolve,
-    //         error: defer.reject
-    //     });
-    //     return defer.promise();
-    // }
+        $.ajax({
+            url: url,
+            data: {'post_id': chat_post_id},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    get_user_met_profile_discussion: function(user_view){
+        var url,defer = $.Deferred();
+        if (isMobile) {
+            url = baseUrl +"/netwrk/meet/get-user-meet-profile-discussion";
+        }else{
+            url = "netwrk/meet/get-user-meet-profile-discussion";
+        }
+
+        $.ajax({
+            url: url,
+            data: {'user_view': user_view},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    count_unread_message: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/count-unread-message";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    count_unread_msg_from_user: function(sender){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/count-unread-msg-from-user";
+
+        $.ajax({
+            url: url,
+            data: {'sender': sender},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    update_notification_status: function(sender){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/change-status-unread-msg";
+
+        $.ajax({
+            url: url,
+            data: {'sender': sender},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    change_chat_show_message: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/update-chat-show-status";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    /**
+     * [Function is used to get ajax user profile]
+     * @return             [data json]
+     */
+
+     get_user_profile: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/get-user-profile";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    get_info_post: function(post_id) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/post/get-info-post";
+
+        $.ajax({
+            url: url,
+            data: {'post_id': post_id},
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    insert_local_university: function() {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/insert-local-university";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    insert_local_government: function() {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/insert-local-government";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
+
+    get_marker_update: function(city) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/get-marker-update";
+
+        $.ajax({
+            url: url,
+            data: {'city': city},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    }
 }
 

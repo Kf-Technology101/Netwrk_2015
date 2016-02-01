@@ -13,10 +13,10 @@
                     </div>
                 </div>
                 <div class="scrumb">
-                    <div class="logo">
-                        <img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>">
+<!--                     <div class="logo">
+                        <img src="<?#= Url::to('@web/img/icon/netwrk-logo.png'); ?>">
                     </div>
-                    <p class="break"> > </p>
+                    <p class="break"> > </p> -->
                     <p class="zipcode"> 46975 </p>
                     <p class="break"> > </p>
                     <p class="topic"> Discussion over Democratic Primary </p>

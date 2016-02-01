@@ -24,6 +24,11 @@ var Topic = {
             loaded: 0
         }
     },
+    feed:{
+        paging:1,
+        status_paging: 1,
+        loaded: 0
+    },
     params:{
         zipcode:'',
         name:'',
@@ -32,7 +37,7 @@ var Topic = {
     },
     modal: '#modal_topic',
     modal_create: '#create_topic',
-    tab_current: 'topic',
+    tab_current: 'feed',
     init: function(){
         Topic._onclickBack();
         Topic.GetDataOnTab();
@@ -44,6 +49,24 @@ var Topic = {
         Topic.OnClickSelectFilter();
         Topic.OnClickChangeTab();
         Topic.eventClickMeetMobile();
+        Topic.LoadFeedModal();
+        if(isMobile){
+            Default.ShowNotificationOnChat();
+        } else {
+            Topic.displayPositionModal();
+        }
+        Topic.CheckTabCurrent();
+    },
+
+    CheckTabCurrent: function(){
+        if(sessionStorage.topic_tab_current == 'feed'){
+            var parent = $('#modal_topic,#show-topic');
+            var btn = parent.find('.filter_sidebar td.feed');
+            btn.trigger('click');
+            sessionStorage.topic_tab_current = 'topic';
+        }else{
+            Topic.tab_current = sessionStorage.topic_tab_current;
+        }
     },
 
     initialize: function(city,params){
@@ -56,6 +79,7 @@ var Topic = {
             Topic._onclickBack();
             Topic.OnClickBackdrop();
             Topic.onNetwrkLogo();
+            Topic.CheckTabCurrent();
         }
     },
 
@@ -153,18 +177,16 @@ var Topic = {
         parent.find('.item').unbind();
         parent.find('.item').on('click',function(e){
             var topic = $(e.currentTarget).attr('data-item');
-            Ajax.update_view_topic({topic: topic}).then(function(){
-                if(isMobile){
-                    Post.RedirectPostPage(topic);
-                }else{
-                    $('#modal_topic').modal('hide');
-                    Post.params.topic = topic;
-                    Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();
-                    Post.params.city = Topic.data.city;
-                    Post.params.city_name = Topic.data.city_name;
-                    Post.initialize();
-                }
-            });
+            if(isMobile){
+                Post.RedirectPostPage(topic);
+            }else{
+                $('#modal_topic').modal('hide');
+                Post.params.topic = topic;
+                Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();
+                Post.params.city = Topic.data.city;
+                Post.params.city_name = Topic.data.city_name;
+                Post.initialize();
+            }
         });
 
         parent.find('.item .name_post a').unbind();
@@ -285,13 +307,101 @@ var Topic = {
         });
     },
 
-
     OnShowModalPost: function(){
         $('#modal_topic').unbind('shown.bs.modal');
         $('#modal_topic').on('shown.bs.modal',function(e) {
+            Topic.LoadFeedModal();
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
+            Topic.displayPositionModal();
         });
+    },
+
+    LoadFeedModal: function() {
+        var self = this;
+        var parent = $('#modal_topic,#show-topic').find('#tab_feed');
+        var cityname = $('#modal_topic').find('.title_page');
+        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
+        parent.show();
+        Ajax.show_feed(params).then(function(data){
+            if(!isMobile){
+                self.getTemplateModal(cityname,data);
+            }
+            parent.scrollTop(0);
+            self.getTemplateFeed(parent,data);
+            Topic.GetDataOnTab();
+            Topic.OnClickPostFeed();
+            Topic.OnClickVoteFeed();
+            Topic.OnClickTopicFeed();
+        });
+    },
+
+    getTemplateFeed: function(parent,data){
+        var json = $.parseJSON(data);
+        parent.find('.no-data').hide();
+        var list_template = _.template($( "#feed_list" ).html());
+        var append_html = list_template({feed: json});
+        parent.html('');
+        parent.append(append_html);
+    },
+
+    OnClickPostFeed: function(){
+        var target = $(Topic.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+                var post_id = $(e.currentTarget).parent().attr('data-value'),
+                    post_name = $(e.currentTarget).find('.post-title').text(),
+                    post_content = $(e.currentTarget).find('.post-content').text();
+            if(isMobile){
+                sessionStorage.landing_post = 1;
+                PopupChat.RedirectChatPostPage(post_id, 1, 1);
+            }else{
+                // $(LandingPage.modal).modal('hide');
+                PopupChat.params.post = post_id;
+                PopupChat.params.chat_type = 1;
+                PopupChat.params.post_name = post_name;
+                PopupChat.params.post_description = post_content;
+                PopupChat.initialize();
+            }
+        });
+    },
+
+    OnClickVoteFeed: function() {
+        var target = $(Topic.modal).find('.top-post .action .brilliant');
+        target.unbind();
+        target.on('click',function(e){
+            var post_id = $(e.currentTarget).parent().parent().attr('data-value');
+            Ajax.vote_post({post_id: post_id}).then(function(res){
+                var json = $.parseJSON(res);
+                console.log($(e.currentTarget));
+                $(e.currentTarget).text(json.data);
+            });
+        });
+    },
+
+    OnClickTopicFeed: function(){
+        var target = $(Topic.modal).find('.topic-row, .feed-row.feed-topic');
+
+        target.unbind();
+        target.on('click',function(e){
+            console.log($(e.currentTarget));
+            var city_id = $(e.currentTarget).attr('data-city'),
+                city_name = $(e.currentTarget).attr('data-city-name'),
+                topic_id = $(e.currentTarget).attr('data-value'),
+                topic_name = $(e.currentTarget).find('.topic-title').text();
+            if(isMobile){
+                Post.RedirectPostPage(topic_id);
+            }else{
+                $(Topic.modal).modal('hide');
+                Post.params.topic = topic_id;
+                Post.params.topic_name = topic_name;
+                Post.params.city = city_id;
+                Post.params.city_name = city_name;
+                Post.initialize();
+            }
+        });
+
     },
 
     load_topic_modal: function(){
@@ -318,7 +428,9 @@ var Topic = {
         $('#modal_topic').on('hidden.bs.modal',function(e) {
             $(e.currentTarget).unbind();
             Topic.reset_modal();
-            Map.get_data_marker();
+            //
+            // Map.get_data_marker();
+
         });
     },
 
@@ -351,22 +463,23 @@ var Topic = {
                 $(s).removeClass('active');
             }
         });
-        $(target[1]).addClass('active');
+        $(target[0]).addClass('active');
 
-        Topic.tab_current ='topic';
+        Topic.tab_current ='feed';
     },
 
     show_page_topic: function(city,params){
         if (params){
-            window.location.href = "netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
         }else{
-            window.location.href = "netwrk/topic/topic-page?city="+city;
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city;
         }
     },
 
     _onclickBack: function(){
         if(isMobile){
             $('#show-topic .back_page span').click(function(){
+                sessionStorage.show_landing = 1;
                 window.location.href = baseUrl;
             })
         }else{
@@ -460,7 +573,6 @@ var Topic = {
         }
     },
 
-
     getTemplate: function(parent,data){
         var self = this;
         var json = $.parseJSON(data);
@@ -506,4 +618,11 @@ var Topic = {
             window.location.href = baseUrl + "/netwrk/meet";
         });
     },
+
+    displayPositionModal: function(){
+        var modal = $('.popup_chat_modal .popup-box');
+        if(modal.length > 0){
+            $('.popup_chat_modal .popup-box').css('z-index', '1050');
+        }
+    }
 };

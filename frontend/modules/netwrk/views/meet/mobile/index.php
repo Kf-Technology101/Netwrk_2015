@@ -6,7 +6,7 @@
           <tr>
               <td class="meeting active">Meet</td>
               <td class="setting">Settings</td>
-              <td class="profile ">Profile</td>
+              <td class="profile">Profile</td>
           </tr>
      </table> 
   </div>

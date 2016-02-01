@@ -18,6 +18,9 @@ var Meet ={
     },
     modal: '#modal_meet',
     height: 0,
+    infoOf: 0,
+    pid: 0,
+    ez: 0,
     initialize: function() {
         console.log(Meet.filter.active);
         if(Meet.filter.active === 'setting'){
@@ -27,10 +30,15 @@ var Meet ={
         }else if(Meet.filter.active === 'meeting'){
             Meet._init();
         }
+        if (isMobile) {
+            Default.SetAvatarUserDropdown();
+        }
     },
 
     _init: function(){
-
+        var post_id = Meet.getParameterByName('post_id'),
+            user_view = Meet.getParameterByName('user_id'),
+            from = Meet.getParameterByName('from');
         if(isMobile){
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
@@ -47,31 +55,49 @@ var Meet ={
 
             Meet.reset_page();
             Meet._onclickBack();
-            Meet.GetUserMeet();
+            if(post_id != "" && from != "" && from == "private"){
+                Meet.GetUserMeetProfile(post_id);
+            } else if (user_view != "" && from != "" && from == "discussion"){
+                Meet.GetUserMeetProfileDiscussion(user_view);
+            }else{
+                Meet.GetUserMeet();
+            }
             Meet.changefilter(currentTarget);
             Meet.eventClickdiscoverMobile();
+
         }else{
             var parent = $('#modal_meet');
                 currentTarget = parent.find('#meeting'),
                 container = parent.find('.container_meet');
-
             container.find('.page').hide();
             Meet.reset_modal();
             currentTarget.show();
 
-            if(isGuest){
-                Login.modal_callback = Meet;
-                Login.initialize();
+            Meet.changefilter(currentTarget);
+            // console.log(Meet.ez + '---' + Meet.pid);
+            if(Meet.pid != 0){
+                Meet.ShowUserMeetProfile(Meet.pid);
+            }else if(Meet.ez != 0){
+                Meet.ShowModalMeetProfile(Meet.ez);
             }else{
-                Meet.changefilter(currentTarget);
                 Meet.ShowModalMeet();
-                Meet.eventClickdiscover();
-                Meet.CustomScrollBar();
-                Meet._onClickMeetBack();
-                // $('#btn_meet').hide();
-                $('.modal-footer').show();
-                // parent.find('.modal-body').addClass('onmeeting');
             }
+            Meet.eventClickdiscover();
+            Meet.CustomScrollBar();
+            Meet._onClickMeetBack();
+            // $('#btn_meet').hide();
+            $('.modal-footer').show();
+            Topic.displayPositionModal();
+        }
+        Meet.CheckUserLogin();
+    },
+
+    CheckUserLogin:function(){
+        var target = $('#modal_meet,#show_meet').find('td.setting, td.profile');
+        if(isGuest){
+            target.addClass('no-login');
+        }else{
+            target.removeClass('no-login');
         }
     },
 
@@ -92,17 +118,19 @@ var Meet ={
         target.unbind();
         target.on('click',function(e){
             // target.bind();
+            if(!$(e.currentTarget).hasClass('no-login')){
+                var filter = $(e.currentTarget).attr('class');
+                if(!$(e.currentTarget).hasClass('active')){
+                    $('#modal_meet,#show_meet').find("div[id^='item_list']").hide();
+                    containt.scrollTop(0);
+                    self.filter.active = $.trim(filter);
 
-            var filter = $(e.currentTarget).attr('class');
-            if(!$(e.currentTarget).hasClass('active')){
-                $('#modal_meet,#show_meet').find("div[id^='item_list']").hide();
-                containt.scrollTop(0);
-                self.filter.active = $.trim(filter);
-
-                self.change_button_active(target,$(e.currentTarget),containt);
-                Meet.initialize();
-                // self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
+                    self.change_button_active(target,$(e.currentTarget),containt);
+                    Meet.initialize();
+                    // self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
+                }
             }
+
         });
     },
     change_button_active:function(target,parent,current){
@@ -207,7 +235,7 @@ var Meet ={
                     backdrop: true,
                     keyboard: false
                 });
-                set_heigth_modal_meet($('#modal_meet'), 30);
+                set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
                 var meet_height = $('#modal_meet .modal-body').height();
                 Meet.height = meet_height;
             }
@@ -329,11 +357,19 @@ var Meet ={
             target.on('click',function(e){
             var item_post = $(e.currentTarget).attr('data-item');
             if(isMobile){
-                ChatPost.RedirectChatPostPage(item_post);
+                PopupChat.RedirectChatPostPage(item_post, 1, 0);
             }else{
                 $('#modal_meet').modal('hide');
-                ChatPost.params.post = item_post;
-                ChatPost.initialize();
+                Ajax.get_info_post(item_post).then(function(data){
+                    if (data) {
+                        data = $.parseJSON(data);
+                        PopupChat.params.post = data.id;
+                        PopupChat.params.chat_type = data.post_type;
+                        PopupChat.params.post_name = data.title;
+                        PopupChat.params.post_description = data.content;
+                        PopupChat.initialize();
+                    }
+                });
             }
         });
 
@@ -374,11 +410,28 @@ var Meet ={
             btn_met.hide();
             btn_meet.unbind();
             btn_meet.on('click',function(){
-                data[self.user_list.vt].met = 1;
-                btn_meet.hide();
-                btn_met.show();
+                if(isGuest){
+                    if(isMobile){
+                        Login.RedirectLogin(window.location.href);
+                    }else{
+                        $('.modal').modal('hide');
+                        Login.modal_callback = Meet;
+                        Login.initialize();
+                        return false
+                    }
+                }
+                for(i=0;i<data.length;i++)
+                    if(data[i].user_id == data[self.user_list.vt].user_id){
+                    data[i].met = 1;
+                    btn_meet.hide();
+                    btn_met.show();
+                }
                 Ajax.usermeet({user_id: data[self.user_list.vt].user_id }).then(function(res){
                     self.eventMet();
+                    if(!isMobile){
+                        ChatInbox.GetDataListChatPrivate();
+                    }
+                     window.ws.send("notify", {"sender": UserLogin, "receiver": data[self.user_list.vt].user_id, "room": -1, "message": ''});
                 });
             });
         }
@@ -422,5 +475,163 @@ var Meet ={
         var append_html = template({user: data.information ,vt: vt});
 
         parent.append(append_html);
-    }
+    },
+
+    getParameterByName: function(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    },
+
+    GetUserMeetProfile: function(post_id){
+        Ajax.get_user_met_profile(post_id).then(function(data){
+            var json = $.parseJSON(data);
+            if(json.data.length >0){
+                $('p.no_data').hide();
+                Meet.user_list.len = json.data.length;
+                Meet.json = json.data;
+                Meet.showUserMeet();
+                $('.control-btn').show();
+            }else{
+                $('p.no_data').show();
+            }
+        });
+    },
+
+    ShowUserMeetProfile: function(post_id){
+        var modal = $('#modal_meet'),
+            self = this;
+
+        Ajax.get_user_met_profile(post_id).then(function(data){
+            var json = $.parseJSON(data);
+            self.user_list.len = json.data.length;
+
+            if(self.user_list.len > 0){
+                $('p.no_data').hide();
+                $('.control-btn').show();
+                $('p.default').hide();
+                self.json = json.data;
+                self.showUserMeet();
+            }else{
+                $('.control-btn').hide();
+                $('p.default').show();
+                $('p.no_data').show();
+            }
+
+            if(!isMobile){
+                modal.modal({
+                    backdrop: true,
+                    keyboard: false
+                });
+                set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
+                var meet_height = $('#modal_meet .modal-body').height();
+                Meet.height = meet_height;
+            }
+            $('#modal_meet').on('hidden.bs.modal',function() {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+            $('.modal-backdrop.in').click(function(e) {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+        });
+    },
+
+    GetUserMeetProfileDiscussion: function(user_view){
+        Ajax.get_user_met_profile_discussion(user_view).then(function(data){
+            var json = $.parseJSON(data);
+            if(json.data.length >0){
+                $('p.no_data').hide();
+                Meet.user_list.len = json.data.length;
+                Meet.json = json.data;
+                Meet.showUserMeet();
+                $('.control-btn').show();
+            }else{
+                $('p.no_data').show();
+            }
+        });
+    },
+
+    ShowModalMeetProfile: function(user_view){
+        console.log(user_view);
+        var modal = $('#modal_meet'),
+            self = this;
+
+        Ajax.get_user_met_profile_discussion(user_view).then(function(data){
+            var json = $.parseJSON(data);
+            self.user_list.len = json.data.length;
+
+            if(self.user_list.len > 0){
+                $('p.no_data').hide();
+                $('.control-btn').show();
+                $('p.default').hide();
+                self.json = json.data;
+                self.showUserMeet();
+            }else{
+                $('.control-btn').hide();
+                $('p.default').show();
+                $('p.no_data').show();
+            }
+
+            if(!isMobile){
+                modal.modal({
+                    backdrop: true,
+                    keyboard: false
+                });
+                set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
+                var meet_height = $('#modal_meet .modal-body').height();
+                Meet.height = meet_height;
+            }
+            $('#modal_meet').on('hidden.bs.modal',function() {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+            $('.modal-backdrop.in').click(function(e) {
+                self.reset_modal();
+                $('#modal_meet').modal('hide');
+            });
+        });
+    },
+
+    // ShowModalMeetProfile: function(user_view){
+    //     var modal = $('#modal_meet'),
+    //         self = this;
+
+    //     Ajax.get_user_met_profile_discussion(user_view).then(function(data){
+    //         var json = $.parseJSON(data);
+    //         self.user_list.len = json.data.length;
+
+    //         if(self.user_list.len > 0){
+    //             $('p.no_data').hide();
+    //             $('.control-btn').show();
+    //             $('p.default').hide();
+    //             self.json = json.data;
+    //             self.showUserMeet();
+    //         }else{
+    //             $('.control-btn').hide();
+    //             $('p.default').show();
+    //             $('p.no_data').show();
+    //         }
+
+    //         if(!isMobile){
+    //             modal.modal({
+    //                 backdrop: true,
+    //                 keyboard: false
+    //             });
+    //             set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
+    //             var meet_height = $('#modal_meet .modal-body').height();
+    //             Meet.height = meet_height;
+    //         }
+    //         $('#modal_meet').on('hidden.bs.modal',function() {
+    //             self.reset_modal();
+    //             $('#modal_meet').modal('hide');
+    //         });
+    //         $('.modal-backdrop.in').click(function(e) {
+    //             self.reset_modal();
+    //             $('#modal_meet').modal('hide');
+    //         });
+    //     });
+    // },
 };

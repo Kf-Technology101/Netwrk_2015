@@ -6,7 +6,7 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title">Create a Post</span>
+            <span class="title"><?= $city->zip_code ?> > Create a Post</span>
         </div>
     </div>
     <div class="container">

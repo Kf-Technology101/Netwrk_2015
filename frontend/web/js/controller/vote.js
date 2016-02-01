@@ -1,16 +1,34 @@
 var Vote ={
+	target:'',
+	post:'',
+	initialize: function(){
 
-	SetVote: function(target,post){
-		Ajax.vote_post({post_id: post}).then(function(data){
+        if(isGuest){
+        	if(isMobile){
+        		Vote.SetVote();
+        	}else{
+	        	$('.modal').modal('hide');
+		        Login.modal_callback = Post;
+		        Login.initialize();
+		        return false;
+        	}
+        }else{
+        	Vote.SetVote();
+        }
+
+	},
+
+	SetVote: function(){
+		Ajax.vote_post({post_id: Vote.post}).then(function(data){
 			var json = $.parseJSON(data);
 
-			if(target.find('.count').hasClass('disable')){
-				target.find('.count').removeClass('disable');
+			if($(Vote.target).find('.count').hasClass('disable')){
+				$(Vote.target).find('.count').removeClass('disable');
 			}else{
-				target.find('.count').addClass('disable');
+				$(Vote.target).find('.count').addClass('disable');
 			}
-			
-			target.find('.count').text(json.data);
+
+			$(Vote.target).find('.count').text(json.data);
 		});
 	}
 }
