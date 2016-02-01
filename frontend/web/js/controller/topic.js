@@ -24,6 +24,11 @@ var Topic = {
             loaded: 0
         }
     },
+    feed:{
+        paging:1,
+        status_paging: 1,
+        loaded: 0
+    },
     params:{
         zipcode:'',
         name:'',

@@ -258,8 +258,8 @@ class TopicController extends BaseController
             $countQuery = clone $query_feed;
             $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
             $data_feed = $query_feed->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+                                    ->limit($pages->limit)
+                                    ->all();
             $feeds =[];
             foreach ($data_feed as $key => $value) {
                 if ($value->type_item == 'post') {
