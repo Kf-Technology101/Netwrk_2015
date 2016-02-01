@@ -341,7 +341,7 @@ var Topic = {
     },
 
     OnClickPostFeed: function(){
-        var target = $(Topic.modal).find('.top-post .post');
+        var target = $(Topic.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
         target.on('click',function(e){
             console.log($(e.currentTarget));
@@ -376,7 +376,7 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $(Topic.modal).find('.topic-row');
+        var target = $(Topic.modal).find('.topic-row, .feed-row.feed-topic');
 
         target.unbind();
         target.on('click',function(e){
