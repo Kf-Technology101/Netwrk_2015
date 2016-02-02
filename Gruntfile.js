@@ -20,7 +20,11 @@ module.exports = function(grunt) {
           "frontend/web/css/desktop/signup.css": "frontend/web/less/desktop/signup.less",
           "frontend/web/css/desktop/chat_inbox.css": "frontend/web/less/desktop/chat_inbox.less",
           "frontend/web/css/desktop/forgot_pass.css": "frontend/web/less/desktop/forgot_pass.less",
+          "frontend/web/css/desktop/popup_chat.css": "frontend/web/less/desktop/popup_chat.less",
           "frontend/web/css/desktop/search.css": "frontend/web/less/desktop/search.less",
+          "frontend/web/css/desktop/marker_popup.css": "frontend/web/less/desktop/marker_popup.less",
+          "frontend/web/css/desktop/dropdown_avatar.css": "frontend/web/less/desktop/dropdown_avatar.less",
+          "frontend/web/css/desktop/landing_page.css": "frontend/web/less/desktop/landing_page.less",
           // CSS on Mobile
           "frontend/web/css/mobile/landing.css": "frontend/web/less/mobile/landing.less",
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
@@ -33,6 +37,8 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/chat_inbox.css": "frontend/web/less/mobile/chat_inbox.less",
           "frontend/web/css/mobile/forgot_pass.css": "frontend/web/less/mobile/forgot_pass.less",
           "frontend/web/css/mobile/search.css": "frontend/web/less/mobile/search.less",
+          "frontend/web/css/mobile/dropdown_avatar.css": "frontend/web/less/mobile/dropdown_avatar.less",
+          "frontend/web/css/mobile/landing_page.css": "frontend/web/less/mobile/landing_page.less",
         }
       }
     },

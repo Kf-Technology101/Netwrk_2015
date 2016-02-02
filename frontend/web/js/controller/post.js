@@ -25,6 +25,11 @@ var Post ={
             loaded: 0
         }
     },
+    feed:{
+        paging:1,
+        status_paging: 1,
+        loaded: 0
+    },
     modal: '#list_post',
     modal_create: '#create_post',
 	tab_current:'post',
@@ -114,8 +119,11 @@ var Post ={
             theme:"dark",
             callbacks:{
                 onTotalScroll: function(){
-                    if (Post.list[Post.params.filter].status_paging == 1){
+                    if (Post.list[Post.params.filter].status_paging == 1 && Post.tab_current == 'post'){
                         Post.GetTabPost();
+                    }else if(Post.tab_current == 'feed' && Post.feed.status_paging == 1){
+                    	Post.feed.paging ++;
+                        Post.LoadMoreFeed();
                     }
                 }
             }
@@ -230,6 +238,8 @@ var Post ={
 		btn_map.show();
 		Post.tab_current = "post";
 		Post.params.filter = "post";
+		Post.feed.paging = 1;
+		Post.feed.status_paging = 1;
 		var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
 		$('#list_post').find('.tab').hide();
 		$('#list_post').find('.dropdown-toggle').text(selecFilter);
@@ -248,26 +258,18 @@ var Post ={
     LazyLoading: function(){
         var self = this;
         var containt = $('.container_post');
-        if (isMobile) {
-            $(window).scroll(function() {
-                if( $(window).scrollTop() + $(window).height() == $(document).height() && Post.list[Post.params.filter].status_paging == 1) {
-                    setTimeout(function(){
-                    	self.GetTabPost();
-                    },300);
-                }
-            });
-        }else{
-            containt.scroll(function(e){
-                var parent = $('#filter_'+self.params.filter);
-                var  hp = parent.height();
-                if(containt.scrollTop() + containt.height() == hp && Post.list[Post.params.filter].status_paging == 1){
-                    Post.list[Post.params.filter].status_paging = 0;
-                    setTimeout(function(){
-                        self.GetTabPost();
-                    },300);
-                }
-            });
-        }
+        $(window).scroll(function() {
+            if( $(window).scrollTop() + $(window).height() == $(document).height() && Post.list[Post.params.filter].status_paging == 1) {
+                setTimeout(function(){
+                	self.GetTabPost();
+                },300);
+            }else if(Post.feed.status_paging == 1 && $(window).scrollTop() + $(window).height() == $(document).height()){
+                setTimeout(function(){
+                    self.feed.paging ++;
+                    self.LoadMoreFeed();
+                },300);
+            }
+        });
     },
 
 	GetDataOnTab: function(){
@@ -295,14 +297,28 @@ var Post ={
 	},
 
 	LoadFeedModal: function(){
-		var params = {'city': Post.params.city,'size': Post.params.city.size,'page':Post.params.page};
+		var params = {'city': Post.params.city,'size': Post.params.size,'page':Post.feed.paging};
 		var parent = $('#list_post').find('#tab_feed');
 		Ajax.show_feed(params).then(function(res){
 			Post.getTemplateFeed(parent,res);
+			Post.getTemplateHistory(parent,res);
 			Post.OnClickPostFeed();
 	        Post.OnClickVoteFeed();
 	        Post.OnClickTopicFeed();
 		});
+		if (isMobile) {
+			LandingPage.FixWidthPostLanding();
+		}
+	},
+
+	getTemplateHistory: function(parent,data){
+		var json = $.parseJSON(data);
+        var target = parent.find('.top-feed .top-feed-content');
+
+        var list_template = _.template($( "#top_feed" ).html());
+        var append_html = list_template({feed: json});
+
+        target.append(append_html);
 	},
 
     getTemplateFeed: function(parent,data){
@@ -314,6 +330,22 @@ var Post ={
         parent.append(append_html);
     },
 
+    LoadMoreFeed: function(){
+    	var params = {'city': Post.params.city,'size': Post.params.size,'page':Post.feed.paging};
+        var parent = $('#list_post').find('#tab_feed');
+        Ajax.show_feed(params).then(function(data){
+            Post.CheckPagingFeed(data);
+            Post.getTemplateHistory(parent,data);
+        });
+    },
+
+    CheckPagingFeed: function(data){
+        var json = $.parseJSON(data);
+        if(json.feed.length < Topic.data.size){
+            Post.feed.status_paging = 0;
+        }
+    },
+
     OnClickPostFeed: function() {
     	var target = $(Post.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
@@ -323,7 +355,7 @@ var Post ={
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
-                sessionStorage.landing_post = 1;
+            	sessionStorage.url = window.location.href;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 PopupChat.params.post = post_id;

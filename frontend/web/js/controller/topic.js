@@ -52,6 +52,7 @@ var Topic = {
         Topic.LoadFeedModal();
         if(isMobile){
             Default.ShowNotificationOnChat();
+            LandingPage.FixWidthPostLanding();
         } else {
             Topic.displayPositionModal();
         }
@@ -64,8 +65,6 @@ var Topic = {
             var btn = parent.find('.filter_sidebar td.feed');
             btn.trigger('click');
             sessionStorage.topic_tab_current = 'topic';
-        }else{
-            Topic.tab_current = sessionStorage.topic_tab_current;
         }
     },
 
@@ -92,8 +91,11 @@ var Topic = {
             theme:"dark",
             callbacks:{
                 onTotalScroll: function(){
-                    if (Topic.list[Topic.data.filter].status_paging == 1){
+                    if (Topic.list[Topic.data.filter].status_paging == 1 && Topic.tab_current == "topic"){
                         Topic.load_topic_more();
+                    }else if(Topic.feed.status_paging == 1 &&Topic.tab_current == "feed"){
+                        Topic.feed.paging ++;
+                        Topic.LoadMoreFeed();
                     }
                 }
             }
@@ -113,12 +115,18 @@ var Topic = {
         var parent = $('#modal_topic,#show-topic');
         var btn = parent.find('.filter_sidebar td');
 
+        btn.unbind();
         btn.on('click',function(e){
             btn.removeClass('active');
             parent.find('.tab').hide();
             Topic.tab_current = $(e.currentTarget).attr('class');
             $(e.currentTarget).addClass('active');
             Topic.GetDataOnTab();
+            if(isMobile){
+                $(window).scrollTop(0);
+            }else{
+                parent.find('.modal-body').mCustomScrollbar("scrollTo",0);
+            }
         });
     },
 
@@ -126,9 +134,11 @@ var Topic = {
         switch(Topic.tab_current) {
             case 'feed':
                 Topic.ShowFeedPage();
+                Topic.tab_current = 'feed';
                 break;
             case 'topic':
                 Topic.ShowTopicPage();
+                Topic.tab_current = 'topic';
                 break;
         }
     },
@@ -262,26 +272,18 @@ var Topic = {
     scroll_bot: function(){
         var self = this;
         var containt = $('.containt');
-        if (isMobile) {
-            $(window).scroll(function() {
-                if( $(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 ) {
-                    setTimeout(function(){
-                        self.load_topic_more();
-                    },300);
-                }
-            });
-        }else{
-            containt.scroll(function(e){
-                var parent = $('#item_list_'+self.data.filter);
-                var  hp = parent.height() + 20;
-                if(containt.scrollTop() + containt.height() == hp && self.list[self.data.filter].status_paging == 1){
-                    self.list[self.data.filter].status_paging = 0;
-                    setTimeout(function(){
-                        self.load_topic_more();
-                    },300);
-                }
-            });
-        }
+        $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() == $(document).height() && self.list[self.data.filter].status_paging == 1 && Topic.tab_current == "topic") {
+                setTimeout(function(){
+                    self.load_topic_more();
+                },300);
+            }else if(Topic.feed.status_paging == 1 && $(window).scrollTop() + $(window).height() == $(document).height()){
+                setTimeout(function(){
+                    Topic.feed.paging ++;
+                    Topic.LoadMoreFeed();
+                },300);
+            }
+        });
     },
 
 
@@ -321,14 +323,15 @@ var Topic = {
         var self = this;
         var parent = $('#modal_topic,#show-topic').find('#tab_feed');
         var cityname = $('#modal_topic').find('.title_page');
-        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
+        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':Topic.feed.paging};
         parent.show();
         Ajax.show_feed(params).then(function(data){
             if(!isMobile){
                 self.getTemplateModal(cityname,data);
             }
             parent.scrollTop(0);
-            self.getTemplateFeed(parent,data);
+            Topic.getTemplateFeed(parent,data);
+            Topic.getTemplateHistory(parent,data);
             Topic.GetDataOnTab();
             Topic.OnClickPostFeed();
             Topic.OnClickVoteFeed();
@@ -336,17 +339,45 @@ var Topic = {
         });
     },
 
+    LoadMoreFeed: function(){
+        var params = {'city': Topic.data.city,'zipcode': Topic.data.zipcode, 'filter': Topic.data.filter,'size': Topic.data.size,'page':Topic.feed.paging};
+        var parent = $('#modal_topic,#show-topic').find('#tab_feed');
+        Ajax.show_feed(params).then(function(data){
+            Topic.CheckPagingFeed(data);
+            Topic.getTemplateHistory(parent,data);
+        });
+    },
+
+    CheckPagingFeed: function(data){
+        var json = $.parseJSON(data);
+        if(json.feed.length < Topic.data.size){
+            Topic.feed.status_paging = 0;
+        }
+    },
+
+    getTemplateHistory: function(parent,data){
+        var json = $.parseJSON(data);
+        var target = parent.find('.top-feed .top-feed-content');
+
+        var list_template = _.template($( "#top_feed" ).html());
+        var append_html = list_template({feed: json});
+
+        target.append(append_html);
+    },
+
     getTemplateFeed: function(parent,data){
         var json = $.parseJSON(data);
-        parent.find('.no-data').hide();
-        var list_template = _.template($( "#feed_list" ).html());
-        var append_html = list_template({feed: json});
-        parent.html('');
-        parent.append(append_html);
+        if(json.feed.length > 0){
+            parent.find('.no-data').hide();
+            var list_template = _.template($( "#feed_list" ).html());
+            var append_html = list_template({feed: json});
+            parent.html('');
+            parent.append(append_html);
+        }
     },
 
     OnClickPostFeed: function(){
-        var target = $(Topic.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
+        var target = $('#modal_topic,#show-topic').find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
         target.on('click',function(e){
             console.log($(e.currentTarget));
@@ -354,7 +385,7 @@ var Topic = {
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
-                sessionStorage.landing_post = 1;
+                sessionStorage.url = window.location.href;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 // $(LandingPage.modal).modal('hide');
@@ -368,7 +399,7 @@ var Topic = {
     },
 
     OnClickVoteFeed: function() {
-        var target = $(Topic.modal).find('.top-post .action .brilliant');
+        var target = $('#modal_topic,#show-topic').find('.top-post .action .brilliant');
         target.unbind();
         target.on('click',function(e){
             var post_id = $(e.currentTarget).parent().parent().attr('data-value');
@@ -381,7 +412,7 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $(Topic.modal).find('.topic-row, .feed-row.feed-topic');
+        var target = $('#modal_topic,#show-topic').find('.topic-row, .feed-row.feed-topic');
 
         target.unbind();
         target.on('click',function(e){
@@ -465,7 +496,9 @@ var Topic = {
         });
         $(target[0]).addClass('active');
 
-        Topic.tab_current ='feed';
+        Topic.tab_current = 'feed';
+        Topic.feed.paging = 1;
+        Topic.feed.status_paging = 1;
     },
 
     show_page_topic: function(city,params){

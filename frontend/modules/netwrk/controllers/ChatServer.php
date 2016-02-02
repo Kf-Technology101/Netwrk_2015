@@ -196,7 +196,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					}else{
 						$image = '/uploads/'.$pchat->user_id_guest.'/'.$profile->photo;
 					}
-      
+
 					$item = array(
 						'id'=>$pchat->user_id_guest,
 						'name'=>$profile->first_name ." ".$profile->last_name,
@@ -220,7 +220,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					}else{
 						$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
 					}
-      
+
 					$item = array(
 						'id'=>$value->user->id,
 						'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,

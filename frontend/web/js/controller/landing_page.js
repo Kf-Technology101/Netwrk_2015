@@ -26,7 +26,6 @@ var LandingPage = {
 	FixWidthPostLanding: function(){
 		var target = $(".top-post-content").find('.post');
 		fix_width_post(target,160);
-		console.log('in fix post landing');
 	},
 
 	SetSession: function(){
