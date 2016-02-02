@@ -137,13 +137,14 @@
 
     </div>
   </div>
-</script>
-<script id="top_feed" type="text/x-underscore-template">
   <div class="top-feed">
     <div class="top-header">
       <p class="lp-title">Feed</p>
     </div>
-    <div class="top-feed-content">
+    <div class="top-feed-content"></div>
+  </div>
+</script>
+<script id="top_feed" type="text/x-underscore-template">
       <%
         _.each(feed.feed,function(e,i){ %>
           <% if ((e.is_post == 1)){ %>
@@ -182,6 +183,4 @@
       <%
         });
       %>
-    </div>
-  </div>
 </script>
