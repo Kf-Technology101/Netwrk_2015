@@ -46,7 +46,7 @@ Label.prototype.onRemove = function() {
 
 // Implement draw
 Label.prototype.draw = function() {
-	if(Map.map.getZoom() >= 12){
+	if(this.map !== null && this.map.getZoom() >= 12){
 		var projection = this.getProjection();
 		var position = projection.fromLatLngToDivPixel(this.get('position'));
 
