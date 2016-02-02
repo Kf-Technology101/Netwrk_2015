@@ -517,6 +517,11 @@ var Post ={
                 self.tab_current = filter;
                 self.ChangeTabActive(target,$(e.currentTarget));
                 self.GetDataOnTab();
+                if(isMobile){
+                	$(window).scrollTop(0);
+		        }else{
+		            $('#list_post').find('.modal-body').mCustomScrollbar("scrollTo",0);
+		        }
             }
         });
     },
