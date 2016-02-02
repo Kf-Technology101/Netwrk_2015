@@ -137,7 +137,8 @@
 
     </div>
   </div>
-
+</script>
+<script id="top_feed" type="text/x-underscore-template">
   <div class="top-feed">
     <div class="top-header">
       <p class="lp-title">Feed</p>

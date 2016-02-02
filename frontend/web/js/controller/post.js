@@ -299,6 +299,7 @@ var Post ={
 		var parent = $('#list_post').find('#tab_feed');
 		Ajax.show_feed(params).then(function(res){
 			Post.getTemplateFeed(parent,res);
+			Post.getTemplateHistory(parent,res);
 			Post.OnClickPostFeed();
 	        Post.OnClickVoteFeed();
 	        Post.OnClickTopicFeed();
@@ -306,6 +307,10 @@ var Post ={
 		if (isMobile) {
 			LandingPage.FixWidthPostLanding();
 		}
+	},
+
+	getTemplateHistory: function(){
+
 	},
 
     getTemplateFeed: function(parent,data){
