@@ -305,6 +305,9 @@ var Post ={
 			Post.OnClickPostFeed();
 	        Post.OnClickVoteFeed();
 	        Post.OnClickTopicFeed();
+	        Post.OnClickAvatarTopPostFeed();
+            Post.OnClickAvatarTopFeed();
+            Post.OnClickChatTopPostFeed();
 		});
 		if (isMobile) {
 			LandingPage.FixWidthPostLanding();
@@ -344,6 +347,52 @@ var Post ={
         if(json.feed.length < Topic.data.size){
             Post.feed.status_paging = 0;
         }
+    },
+
+    OnClickAvatarTopPostFeed: function() {
+        Topic.OnClickAvatarFeed($('.top-post').find('.top-post-content .post-row .avatar'));
+    },
+
+    OnClickAvatarTopFeed: function() {
+        Topic.OnClickAvatarFeed($('.top-feed .top-feed-content').find('.feed-post .avatar-poster'));
+    },
+
+    OnClickAvatarFeed: function(target){
+        var avatar = target;
+        avatar.unbind();
+        avatar.on('click', function(e){
+            var user_login = $(e.currentTarget).parent().attr('data-user');
+            if(user_login != UserLogin){
+                if(!isMobile){
+                    Meet.pid = 0;
+                    Meet.ez = user_login;
+                    $('.modal').modal('hide');
+                    Meet.initialize();
+                } else {
+                    window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_login + "&from=discussion";
+                }
+            }
+        });
+    },
+
+    OnClickChatTopPostFeed: function(){
+        var target = $(Post.modal).find('.top-post .action .chat');
+        target.unbind();
+        target.on('click',function(e){
+                var post_id = $(e.currentTarget).parent().parent().attr('data-value'),
+                    post_name = $(e.currentTarget).parent().parent().find('.post-title').text(),
+                    post_content = $(e.currentTarget).parent().parent().find('.post-content').text();
+            if(isMobile){
+                sessionStorage.url = window.location.href;
+                PopupChat.RedirectChatPostPage(post_id, 1, 1);
+            }else{
+                PopupChat.params.post = post_id;
+                PopupChat.params.chat_type = 1;
+                PopupChat.params.post_name = post_name;
+                PopupChat.params.post_description = post_content;
+                PopupChat.initialize();
+            }
+        });
     },
 
     OnClickPostFeed: function() {
