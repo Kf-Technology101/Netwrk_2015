@@ -38,7 +38,8 @@ class MobileAsset extends AssetBundle
       'css/mobile/forgot_pass.css',
       'css/mobile/search.css',
       'css/mobile/dropdown_avatar.css',
-      'css/mobile/landing_page.css'
+      'css/mobile/landing_page.css',
+      'css/mobile/cover_page.css'
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -79,6 +80,7 @@ class MobileAsset extends AssetBundle
       'js/controller/popup_chat.js',
       // 'js/controller/chat_private.js',
       'js/controller/landing_page.js',
+      'js/controller/cover_page.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
