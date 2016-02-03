@@ -387,9 +387,9 @@ class DefaultController extends BaseController
                 //     $content = substr($post->content,0,$maxlength ) ;
                 //     $content = $content."...";
                 // }
-                if($value->office_type == 'university'){
+                if($city->office_type == 'university'){
                     $img = './img/icon/map_icon_university_v_2.png';
-                } else if($value->office_type == 'government'){
+                } else if($city->office_type == 'government'){
                     $img = './img/icon/map_icon_government_v_2.png';
                 } else {
                     $img = './img/icon/map_icon_community_v_2.png';
