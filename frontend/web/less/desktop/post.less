@@ -110,6 +110,10 @@
                 line-height: 25px;
                 float: left;
                 cursor: pointer;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 90%;
             }
         }
     }
@@ -281,8 +285,9 @@
         width: 725px;
         min-height: 250px;
         margin: auto;
-        border-radius: 5px;
+        border-radius: 4px;
         box-shadow: 1px 3px 5px 2px rgba(136, 136, 136, 0.38);
+        height: 525px;
     }
     .modal-content{
         background: #e2e3e4;
@@ -476,7 +481,7 @@
         min-height: 300px;
         width: 100%;
         padding: 0;
-        height: 390px;
+        height: 427px;
         border-radius: 0 0 4px 4px;
         .tab{
             width: 100%;
