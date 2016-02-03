@@ -38,7 +38,8 @@ class AppAsset extends AssetBundle
         'css/desktop/popup_chat.css',
         'css/desktop/marker_popup.css',
         'css/desktop/dropdown_avatar.css',
-        'css/desktop/landing_page.css'
+        'css/desktop/landing_page.css',
+        'css/desktop/cover_page.css'
     ];
     public $js = [
         'js/lib/underscore.js',
@@ -77,7 +78,8 @@ class AppAsset extends AssetBundle
         // 'js/controller/chat_private.js',
         'js/controller/popup_chat.js',
         'js/controller/main_ws.js',
-        'js/controller/landing_page.js'
+        'js/controller/landing_page.js',
+        'js/controller/cover_page.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
