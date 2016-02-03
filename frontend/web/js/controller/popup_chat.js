@@ -657,6 +657,13 @@ var PopupChat = {
                     //Go to post by landing page
                     sessionStorage.landing_post = 0 ;
                     window.location.href = sessionStorage.url_landing;
+                }else if(sessionStorage.feed_topic == 1){
+                    sessionStorage.feed_topic = 0;
+                    window.location.href = sessionStorage.url;
+                }
+                else if(sessionStorage.feed_post == 1){
+                    sessionStorage.feed_post = 0;
+                    window.location.href = sessionStorage.url;
                 }
                 else if (PopupChat.params.chat_type == 1 ) {
                     //Go to post

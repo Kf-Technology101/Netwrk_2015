@@ -388,6 +388,7 @@ var Post ={
                     post_content = $(e.currentTarget).parent().parent().find('.post-content').text();
             if(isMobile){
                 sessionStorage.url = window.location.href;
+                sessionStorage.feed_post = 1;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 PopupChat.params.post = post_id;
@@ -409,6 +410,7 @@ var Post ={
                     post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
             	sessionStorage.url = window.location.href;
+            	sessionStorage.feed_post = 1;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 PopupChat.params.post = post_id;
