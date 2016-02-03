@@ -474,6 +474,7 @@ var Post ={
         parent.find('.header .create_post').removeClass('on-feed');
 
 		Post.ResetTabPost();
+		Post.ResetTabFeed();
 		Post.GetTabPost();
 	},
 
