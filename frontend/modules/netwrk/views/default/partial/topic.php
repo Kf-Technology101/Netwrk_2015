@@ -106,7 +106,13 @@
               <div class="action">
                 <div class="chat"><i class="fa fa-comments"></i>Chat</div>
 
-                <span class="brilliant"><%= e.brilliant_count%></span>
+                <span class="brilliant">
+                  <% if (e.brilliant_count) { %>
+                    <%= e.brilliant_count%>
+                  <%}else{%>
+                    <%= 0 %>
+                  <%}%>
+                </span>
               </div>
             </div>
       <%
