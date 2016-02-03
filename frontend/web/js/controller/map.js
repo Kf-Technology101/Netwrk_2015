@@ -321,7 +321,7 @@
 	          		});
 	          	});
 	      	}
-			
+
 			google.maps.event.addListener(marker, 'click', (function(marker){
 		        return function(){
 		        	sessionStorage.lat = marker.position.lat();

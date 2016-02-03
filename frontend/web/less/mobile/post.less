@@ -227,7 +227,6 @@
             margin: auto;
             float: left;
             z-index: 20;
-            border-right: 1px solid #fff;
             img{
                 width: 20px;
                 margin-right: 5px;
@@ -242,12 +241,16 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
+            &.on-feed{
+                width: 80%;
+            }
         }
         .create_post{
             float: left;
             width: 30%;
             height: 40px;
             cursor: pointer;
+            border-left: 1px solid #fff;
             span{
                 color: #fff;
                 font-size: 12px;
@@ -256,6 +259,9 @@
                 i{
                     color: #fff;
                 }
+            }
+            &.on-feed{
+                display: none;
             }
         }
     }

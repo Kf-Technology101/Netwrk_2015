@@ -152,6 +152,10 @@ var Topic = {
         }else{
             parent.find('.dropdown').removeClass('visible');
         }
+
+        //enable btn create topic
+        parent.find('.header .title_page').removeClass('on-feed');
+        parent.find('.header .create_topic').removeClass('on-feed');
     },
 
     ShowFeedPage: function(){
@@ -166,6 +170,10 @@ var Topic = {
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
         parent.find('.container').removeClass('open');
+
+        //disable btn create topic
+        parent.find('.header .title_page').addClass('on-feed');
+        parent.find('.header .create_topic').addClass('on-feed');
     },
 
     OnClickSortBtn: function(){

@@ -335,7 +335,6 @@
             .title_page{
                 width: 475px;
                 height: 40px;
-                border-right: 1px solid #fff;
                 float: left;
                 img{
                     width: 25px;
@@ -352,6 +351,9 @@
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
+                &.on-feed{
+                    width: 630px;
+                }
             }
             .create_post{
                 float: left;
@@ -359,6 +361,7 @@
                 height: 40px;
                 cursor: pointer;
                 font-size: 18px;
+                border-left: 1px solid #fff;
                 border-radius: 0 4px 0 0;
                 -webkit-border-radius: 0 4px 0 0;
                 span{
@@ -374,6 +377,9 @@
                 &:hover{
                     background: #5DA5D8;
                     height: 39px;
+                }
+                &.on-feed{
+                    display: none;
                 }
             }
         }

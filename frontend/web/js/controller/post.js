@@ -284,15 +284,21 @@ var Post ={
 	},
 
 	ShowFeedPage: function(){
-		$('#list_post').find('#tab_feed').show();
+
+		var parent = $('#list_post');
+		parent.find('#tab_feed').show();
 		if(isMobile){
-			$('#list_post').find('span.filter').addClass('visible');
-			$('#list_post').find('span.filter').removeClass('active');
-			$('#list_post').find('.filter_sort').removeClass('active');
-			$('#list_post').find('.container_post').removeClass('open');
+			parent.find('span.filter').addClass('visible');
+			parent.find('span.filter').removeClass('active');
+			parent.find('.filter_sort').removeClass('active');
+			parent.find('.container_post').removeClass('open');
 		}else{
-			$('#list_post').find('.dropdown').addClass('visible');
+			parent.find('.dropdown').addClass('visible');
 		}
+    	//disable btn create topic
+        parent.find('.header .title_page').addClass('on-feed');
+        parent.find('.header .create_post').addClass('on-feed');
+
 		Post.LoadFeedModal();
 	},
 
@@ -457,13 +463,19 @@ var Post ={
     },
 
 	ShowPostPage: function(){
+		var parent = $('#list_post');
 		if(isMobile){
-			$('#list_post').find('span.filter').removeClass('visible');
+			parent.find('span.filter').removeClass('visible');
 		}else{
-			$('#list_post').find('.dropdown').removeClass('visible');
+			parent.find('.dropdown').removeClass('visible');
 		}
 		$('.container_post .tab').hide();
 		$('#tab_post').show();
+
+    	//disable btn create post
+        parent.find('.header .title_page').removeClass('on-feed');
+        parent.find('.header .create_post').removeClass('on-feed');
+
 		Post.ResetTabPost();
 		Post.GetTabPost();
 	},
