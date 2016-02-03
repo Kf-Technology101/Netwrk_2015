@@ -236,15 +236,13 @@ var Post ={
 
 		name.find('span.title').remove();
 		btn_map.show();
-		Post.tab_current = "post";
-		Post.params.filter = "post";
-		Post.feed.paging = 1;
-		Post.feed.status_paging = 1;
 		var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
 		$('#list_post').find('.tab').hide();
 		$('#list_post').find('.dropdown-toggle').text(selecFilter);
 		$('#list_post').find('.filter_sidebar td').removeClass('active');
 		$('#list_post').find('.filter_sidebar .post').addClass('active');
+
+		Post.ResetTabFeed();
 	},
 
 	getNameTopic: function(){
@@ -335,7 +333,6 @@ var Post ={
         parent.find('.no-data').hide();
         var list_template = _.template($( "#feed_list" ).html());
         var append_html = list_template({feed: json});
-        parent.html('');
         parent.append(append_html);
     },
 
@@ -527,12 +524,21 @@ var Post ={
 	},
 
 	ResetTabPost: function(){
-		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
+		var parent = $('#list_post #tab_post').find('#filter_'+Post.params.filter);
 		$('#tab_post').find('.filter_page').hide();
 		parent.find('.item_post').remove();
 		parent.find('.no-data').show();
 		Post.params.page = 1;
 		Post.list[Post.params.filter].status_paging = 1;
+	},
+
+	ResetTabFeed: function(){
+        var parent = $('#list_post #tab_feed');
+        parent.find('.top-post,.top-topic,.top-feed').remove();
+        parent.find('.no-data').show();
+        Post.tab_current = 'post';
+        Post.feed.paging = 1;
+        Post.feed.status_paging = 1;
 	},
 
 	GetTabPost: function(){

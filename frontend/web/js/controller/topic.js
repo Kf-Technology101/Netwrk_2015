@@ -382,7 +382,6 @@ var Topic = {
             parent.find('.no-data').hide();
             var list_template = _.template($( "#feed_list" ).html());
             var append_html = list_template({feed: json});
-            parent.html('');
             parent.append(append_html);
         }
     },
@@ -553,6 +552,13 @@ var Topic = {
         });
         $(target[0]).addClass('active');
 
+        Topic.ResetModalTabFeed();
+    },
+
+    ResetModalTabFeed: function(){
+        var parent = $('#modal_topic').find('#tab_feed');
+        parent.find('.top-post,.top-topic,.top-feed').remove();
+        parent.find('.no-data').show();
         Topic.tab_current = 'feed';
         Topic.feed.paging = 1;
         Topic.feed.status_paging = 1;
