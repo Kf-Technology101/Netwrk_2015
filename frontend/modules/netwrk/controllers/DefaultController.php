@@ -289,7 +289,7 @@ class DefaultController extends BaseController
     public function actionGetMakerMaxZoom()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
-        $limitHover = null;
+        $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
         $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
 
         $data = [];
