@@ -79,6 +79,7 @@ var Topic = {
             Topic.OnClickBackdrop();
             Topic.onNetwrkLogo();
             Topic.CheckTabCurrent();
+            Default.onCLickModal();
         }
     },
 

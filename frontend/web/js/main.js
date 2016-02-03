@@ -72,7 +72,9 @@ function set_heigth_modal(target,height_footer){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
   target.find('.modal-body').css({'max-height':wh - 120});
-  $('.modal').css({'bottom': size[1] - 590});
+  console.log(wh-120);
+  console.log(size[1]);
+  $('.modal').css({'bottom': size[1] - (wh + 70)});//590
 }
 
 function set_heigth_modal_meet(target,height_footer, limit_width, range_width){

@@ -56,6 +56,7 @@ var Post ={
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
 			Topic.displayPositionModal();
+			Default.onCLickModal();
 		}
 		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
