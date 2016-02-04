@@ -4,7 +4,8 @@ var Create_Post={
         post:'',
         message: '',
         city:'',
-        city_name: ''
+        city_name: '',
+        group:null
     },
     status_change:{
         post: false,
@@ -12,7 +13,7 @@ var Create_Post={
         total: false
     },
 
-    initialize: function(city,topic,name_city,name_topic){
+    initialize: function(city,topic,name_city,name_topic,group){
         if(isMobile){
             Create_Post.params.topic = $('#create_post').attr('data-topic');
             Create_Post.params.city = $('#create_post').attr('data-city');
@@ -22,7 +23,6 @@ var Create_Post={
             Create_Post.eventClickdiscoverMobile();
             Create_Post.postTitleFocus();
             Create_Post.OnClickChatInboxBtnMobile();
-            Default.SetAvatarUserDropdown();
         }else{
             if(isGuest){
                 Login.modal_callback = Post;
@@ -32,6 +32,10 @@ var Create_Post={
             Create_Post.params.city = city;
             Create_Post.params.topic = topic;
             Create_Post.params.city_name = name_city;
+
+            if (typeof group != "undefined") {
+                Create_Post.params.group = group;
+            }
 
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
@@ -247,7 +251,17 @@ var Create_Post={
                 Create_Post.redirect();
             }else{
                 Create_Post.hideModalCreatePost();
-                Post.initialize();
+                if (Create_Post.params.group != null) {
+                    Topic.initialize(Create_Post.params.city, {});
+                    //Group.initialize(Create_Post.params.city)
+                    Topic.ShowGroupsPage();
+                    Group.GetTabPost();
+                    Group.onclickBackFromPosts();
+                    $("div[id^='item_list']").hide();
+                } else {
+                    Create_Post.hideModalCreatePost();
+                    Post.initialize();
+                }
             }
         });
     },
@@ -320,7 +334,17 @@ var Create_Post={
                             Create_Post.redirect();
                         }else{
                             Create_Post.hideModalCreatePost();
-                            Post.initialize();
+                            if (Create_Post.params.group != null) {
+                                Topic.initialize(Create_Post.params.city, {});
+                                //Group.initialize(Create_Post.params.city)
+                                Topic.ShowGroupsPage();
+                                Group.GetTabPost();
+                                Group.onclickBackFromPosts();
+                                $("div[id^='item_list']").hide();
+                            } else {
+                                Create_Post.hideModalCreatePost();
+                                Post.initialize();
+                            }
                         }
                     },700);
                 });

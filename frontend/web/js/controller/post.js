@@ -6,7 +6,9 @@ var Post ={
 		topic:'',
 		topic_name:'',
 		size: 30,
-		page: 1
+		page: 1,
+		by_group: false,
+		group_id: null
 	},
     list:{
         post:{
@@ -426,14 +428,25 @@ var Post ={
 	},
 
 	OnclickBack: function(){
-        $('#list_post').find('.back_page span').click(function(){
-        	if(isMobile){
-        		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city;
-        	}else{
-        		$('#list_post').modal('hide');
-        		Topic.initialize(Post.params.city);
-        	}
-        })
+		if (Post.params.by_group) {
+			$('#list_post').find('.back_page span').click(function () {
+				if (isMobile) {
+					window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + Post.params.city;
+				} else {
+					$('#list_post').modal('hide');
+					Group_Loc.initialize(Post.params.group_id);
+				}
+			});
+		} else {
+			$('#list_post').find('.back_page span').click(function () {
+				if (isMobile) {
+					window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + Post.params.city;
+				} else {
+					$('#list_post').modal('hide');
+					Topic.initialize(Post.params.city);
+				}
+			})
+		}
 	},
 
 	OnclickCreate: function(){
@@ -476,6 +489,7 @@ var Post ={
 
 	GetTabPost: function(){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
+
 		Ajax.get_post_by_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
