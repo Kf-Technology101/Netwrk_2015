@@ -92,12 +92,15 @@ class Post extends \yii\db\ActiveRecord
             if($this->post_type == 1) {
                 $this->topic->updateCounters(['post_count' => 1]);
                 $this->updateCounters(['comment_count' => 1]);
-                $this->topic->city->updateAttributes([
-                    'post_count' =>  $this->topic->city->post_count + 1
-                ]);
-                $this->CreateFirstMessage($this);
-                $this->CreateHashtag($this);
-                $this->CreaetHistoryFeed($this);
+                if (!empty($this->topic->city)) {
+                    $this->topic->city->updateAttributes([
+                        'post_count' => $this->topic->city->post_count + 1
+                    ]);
+                    $this->CreateFirstMessage($this);
+                    $this->CreateHashtag($this);
+                    $this->CreaetHistoryFeed($this);
+                }
+
             }
 
         }else{
@@ -106,6 +109,7 @@ class Post extends \yii\db\ActiveRecord
 
         return parent::afterSave($insert, $changedAttributes);
     }
+
     public function CreaetHistoryFeed($post){
         $hfp = new HistoryFeed();
         $hfp = new HistoryFeed();

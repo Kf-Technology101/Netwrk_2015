@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property integer $user_id
  * @property string $msg
  * @property integer $post_id
+ * @property integer $group_id
  * @property string $msg_type   1: text, 2: image, 3: file
  * @property integer $post_type 0: public, 1:private
  * @property string $created_at
@@ -33,8 +34,8 @@ class WsMessages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'post_id', 'msg_type', 'post_type', 'created_at', 'updated_at'], 'required'],
-            [['user_id', 'post_id', 'post_type'], 'integer'],
+            [['user_id', 'msg_type', 'post_type', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'post_id', 'group_id', 'post_type'], 'integer'],
             [['msg_type'], 'string'],
             [['msg', 'msg_replace'], 'string', 'max' => 255],
             [['created_at', 'updated_at'], 'string', 'max' => 20],
@@ -52,6 +53,7 @@ class WsMessages extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'msg' => 'Msg',
             'post_id' => 'Post ID',
+            'group_id' => 'Post ID',
             'msg_type' => 'Msg Type',
             'post_type' => 'Post Type',
             'first_msg' => 'First Message',
@@ -95,5 +97,10 @@ class WsMessages extends \yii\db\ActiveRecord
     public function getPost()
     {
         return $this->hasOne(Post::className(), ['id' => 'post_id']);
+    }
+
+    public function getGroup()
+    {
+        return $this->hasOne(Group::className(), ['id' => 'group_id']);
     }
 }
