@@ -112,7 +112,7 @@ var LandingPage = {
 		target.on('click',function(e){
 			if(isMobile){
 				sessionStorage.show_landing = 1;
-				window.location.href = baseUrl;
+				window.location.href = baseUrl + "/netwrk/default/home";
 			}else{
 				$(LandingPage.parent).modal('hide');
 			}

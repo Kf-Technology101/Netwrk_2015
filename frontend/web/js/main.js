@@ -72,7 +72,7 @@ function set_heigth_modal(target,height_footer){
   var size = get_size_window();
   var wh = size[1] - height_footer - 100;
   target.find('.modal-body').css({'max-height':wh - 120});
-  $('.modal').css({'bottom': size[1] - 590});
+  $('.modal').css({'bottom': size[1] - (wh + 70)});
 }
 
 function set_heigth_modal_meet(target,height_footer, limit_width, range_width){
@@ -239,7 +239,7 @@ function homePage(){
     var target = $('.option_logo_netwrk a');
     target.on('click', function(){
         sessionStorage.map_zoom = 7;
-        window.location.href = baseUrl;
+        window.location.href = baseUrl + '/netwrk/default/home';
     });
 }
 

@@ -13,7 +13,25 @@ var Default ={
             Default.onCLickModal();
         }
         Default.SetAvatarUserDropdown();
-        Default.ShowLandingPage();
+        // Default.ShowLandingPage();
+        if (isCoverPage){
+            if (accepted) {
+                $("body").css('background', 'f2f2f2');
+                Default.ShowLandingPage();
+            } else {
+                CoverPage.initialize();
+            }           
+        } else {
+            if (!accepted) {
+                window.location.href = baseUrl;
+            } else {
+                if (isMobile) {
+                    Default.ShowLandingPage();
+                } else {
+                    LandingPage.initialize();
+                }
+            }
+        }
         if(!isGuest){
             Default.ShowNotificationOnChat();
         }
@@ -36,7 +54,15 @@ var Default ={
                 LandingPage.redirect();
             }
         }else{
-            LandingPage.initialize();
+            if (isCoverPage) {
+                if (sessionStorage.redirected) {
+                    sessionStorage.removeItem('redirected');
+                    LandingPage.initialize();
+                } else {
+                    sessionStorage.redirected = true;
+                    window.location.href = baseUrl + "/netwrk/default/home";
+                }
+            }
         }
     },
 
