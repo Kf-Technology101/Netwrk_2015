@@ -15,15 +15,13 @@ var Default ={
         Default.SetAvatarUserDropdown();
         // Default.ShowLandingPage();
         if (isCoverPage){
-            if (sessionStorage.accepted) {
+            if (accepted) {
                 Default.ShowLandingPage();
             } else {
-                // $(".navbar-fixed-top").addClass("hidden");
-                // $(".navbar-fixed-bottom").addClass("hidden");
                 CoverPage.initialize();
             }           
         } else {
-            if (!sessionStorage.accepted) {
+            if (!accepted) {
                 window.location.href = baseUrl;
             } else {
                 if (isMobile) {
@@ -56,7 +54,13 @@ var Default ={
             }
         }else{
             if (isCoverPage) {
-                window.location.href = baseUrl + "/netwrk/default/home";
+                if (sessionStorage.redirected) {
+                    sessionStorage.removeItem('redirected');
+                    LandingPage.initialize();
+                } else {
+                    sessionStorage.redirected = true;
+                    window.location.href = baseUrl + "/netwrk/default/home";
+                }
             }
         }
     },

@@ -5,16 +5,30 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
+use yii\web\Cookie;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 MobileAsset::register($this);
 $controller = Yii::$app->controller;
+$cookies = Yii::$app->request->cookies;
 $isCoverPage = 0;
-if ( $controller->id == 'default' && $controller->action->id == 'index' ) {
-    $isCoverPage = 1;
+$accepted = 0;
+if (isset($cookies["isCoverPage"])) {
+  $isCoverPage = $cookies->getValue('isCoverPage');//$cookies['isCoverPage']->value;
+  $accepted = $cookies->getValue('accepted');
+} else {
+  $c = Yii::$app->response->cookies;
+  $cookie = new Cookie(['name'=>'isCoverPage', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+  $c->add($cookie);
+  $cookie = new Cookie(['name'=>'accepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+  $c->add($cookie);
+  $isCoverPage = 1;
 }
+// if ( $controller->id == 'default' && $controller->action->id == 'index' ) {
+//     $isCoverPage = 1;
+// }
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -31,7 +45,7 @@ if ( $controller->id == 'default' && $controller->action->id == 'index' ) {
     var baseUrl = '<?php echo Url::base(true); ?>';
     var isMobile = true;
     var isCoverPage = <?php echo $isCoverPage; ?>;
-    
+    var accepted = <?php echo $accepted; ?>;
   </script>
 </head>
 <body ontouchstart="">
@@ -89,10 +103,10 @@ if ( $controller->id == 'default' && $controller->action->id == 'index' ) {
   var isMobile = true;
   var isGuest = '<?php echo Yii::$app->user->isGuest; ?>';
   var UserLogin = '<?php echo Yii::$app->user->id; ?>';
-  if (isCoverPage) {
-      document.getElementById('myHeader').classList.add("hidden");
-      document.getElementById('myFooter').classList.add("hidden");
-    }
+  // if (isCoverPage) {
+  //     document.getElementById('myHeader').classList.add("hidden");
+  //     document.getElementById('myFooter').classList.add("hidden");
+  // }
 </script>
 </html>
 <?php $this->endPage() ?>

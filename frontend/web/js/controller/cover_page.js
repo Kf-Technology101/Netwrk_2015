@@ -5,13 +5,13 @@ var CoverPage = {
 	zcode: '',
 	initialize: function(){
 		CoverPage.getObject();
-		// CoverPage.hiddenMenuTop();
+		CoverPage.hiddenMenuTop();
 		CoverPage.onClickKey();
 		CoverPage.onEnterZipcode();
 		CoverPage.hiddenError();
-		// if(isMobile){
-		// 	CoverPage.hiddenMobileFooter();
-		// }
+		if(isMobile){
+			CoverPage.hiddenMobileFooter();
+		}
 	},
 
 	getObject: function(){
