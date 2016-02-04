@@ -10,6 +10,7 @@ var CoverPage = {
 		CoverPage.onEnterZipcode();
 		CoverPage.hiddenError();
 		if(isMobile){
+			$("body").css('background', '#fff');
 			CoverPage.hiddenMobileFooter();
 		}
 	},

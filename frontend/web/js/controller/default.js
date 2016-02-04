@@ -16,6 +16,7 @@ var Default ={
         // Default.ShowLandingPage();
         if (isCoverPage){
             if (accepted) {
+                $("body").css('background', 'f2f2f2');
                 Default.ShowLandingPage();
             } else {
                 CoverPage.initialize();
