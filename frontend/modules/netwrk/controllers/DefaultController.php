@@ -22,7 +22,7 @@ class DefaultController extends BaseController
 
     public function actionIndex()
     {
-        return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
+        return $this->render($this->getIsMobile() ? 'mobile/cover_page' : 'cover_page');
     }
 
     public function actionGetUserProfile()
@@ -214,7 +214,7 @@ class DefaultController extends BaseController
         // echo '<pre>';var_dump($cities);die;
 
         $data = [];
-        $img = './img/icon/map_icon_community_v_2.png';
+        $img = '/img/icon/map_icon_community_v_2.png';
         // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment FROM `ws_messages` AS a WHERE post_id = 247;
         // or
         // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment, c.post_id  FROM `ws_messages` as a, post as b, topic as
@@ -230,11 +230,11 @@ class DefaultController extends BaseController
                 // $trending = $this->Trending4Post($value,$limitHover);
                 $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
                 if($value->office_type == 'university'){
-                    $img = './img/icon/map_icon_university_v_2.png';
+                    $img = '/img/icon/map_icon_university_v_2.png';
                 } else if($value->office_type == 'government'){
-                    $img = './img/icon/map_icon_government_v_2.png';
+                    $img = '/img/icon/map_icon_government_v_2.png';
                 } else {
-                    $img = './img/icon/map_icon_community_v_2.png';
+                    $img = '/img/icon/map_icon_community_v_2.png';
                 }
 
                 $netwrk = array(
@@ -293,7 +293,7 @@ class DefaultController extends BaseController
         $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
 
         $data = [];
-        $img = './img/icon/map_icon_community_v_2.png';
+        $img = '/img/icon/map_icon_community_v_2.png';
 
         foreach ($cities as $key => $value) {
             if(isset($value->topics[0])) {
@@ -310,11 +310,11 @@ class DefaultController extends BaseController
                 // }
 
                 if($value->office_type == 'university'){
-                    $img = './img/icon/map_icon_university_v_2.png';
+                    $img = '/img/icon/map_icon_university_v_2.png';
                 } else if($value->office_type == 'government'){
-                    $img = './img/icon/map_icon_government_v_2.png';
+                    $img = '/img/icon/map_icon_government_v_2.png';
                 } else {
-                    $img = './img/icon/map_icon_community_v_2.png';
+                    $img = '/img/icon/map_icon_community_v_2.png';
                 }
 
                 $netwrk = array(
@@ -372,7 +372,7 @@ class DefaultController extends BaseController
         $city= City::find()->with('topics.posts')->where(['id'=>$city_id])->one();
 
         $data = [];
-        $img = './img/icon/map_icon_community_v_2.png';
+        $img = '/img/icon/map_icon_community_v_2.png';
 
         if($city){
             if(isset($city->topics[0])) {
@@ -392,7 +392,7 @@ class DefaultController extends BaseController
                 } else if($city->office_type == 'government'){
                     $img = './img/icon/map_icon_government_v_2.png';
                 } else {
-                    $img = './img/icon/map_icon_community_v_2.png';
+                    $img = '/img/icon/map_icon_community_v_2.png';
                 }
 
                 $netwrk = array(
@@ -568,5 +568,10 @@ class DefaultController extends BaseController
     public function actionLandingPage()
     {
         return $this->render($this->getIsMobile() ? 'mobile/landing_page' : '');
+    }
+
+    public function actionHome()
+    {
+        return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
     }
 }

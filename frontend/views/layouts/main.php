@@ -11,6 +11,11 @@ use yii\helpers\Url;
 /* @var $content string */
 
 AppAsset::register($this);
+$controller = Yii::$app->controller;
+$isCoverPage = 0;
+if ( $controller->id == 'default' && $controller->action->id == 'index' ) {
+    $isCoverPage = 1;
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -22,7 +27,11 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-
+    <script type="text/javascript">
+    var baseUrl = '<?php echo Url::base(true); ?>';
+    var isMobile = true;
+    var isCoverPage = <?php echo $isCoverPage; ?>;
+  </script>
 </head>
 <body>
     <?php $this->beginBody() ?>
@@ -88,6 +97,9 @@ AppAsset::register($this);
     isResetPassword ="<?= Yii::$app->session['key_reset_password'] ?>",
     isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>";
     var UserLogin = '<?php echo Yii::$app->user->id; ?>';
+    if (isCoverPage) {
+      document.getElementById('w0').classList.add("hidden");
+    }
 </script>
 <?php
     unset(Yii::$app->session['key_reset_password']);

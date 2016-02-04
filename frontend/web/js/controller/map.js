@@ -248,7 +248,7 @@
 	      	marker = new google.maps.Marker({
 		        position: new google.maps.LatLng(e.lat, e.lng),
 		        map: map,
-		        icon: e.mapicon,
+		        icon: baseUrl + e.mapicon,
 		        city_id: parseInt(e.id),
 		        // label: text_below
 	      	});
@@ -660,6 +660,7 @@
 				    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    		}
 	    		if (currentZoom == 12 && Map.markers.length <= 10) {
+	    			console.log('zoom ...');
 	    			Map.deleteNetwrk(map);
 				    Map.loadMapLabel(0);
 					for (var i = 0; i < Map.zoom12.length; i++) {

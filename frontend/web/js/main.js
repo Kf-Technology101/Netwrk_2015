@@ -241,7 +241,7 @@ function homePage(){
     var target = $('.option_logo_netwrk a');
     target.on('click', function(){
         sessionStorage.map_zoom = 7;
-        window.location.href = baseUrl;
+        window.location.href = baseUrl + '/netwrk/default/home';
     });
 }
 

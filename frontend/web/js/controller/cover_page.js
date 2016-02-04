@@ -1,11 +1,23 @@
 var CoverPage = {
 	accepted: false,
+	btn: '',
+	err: '',
+	zcode: '',
 	initialize: function(){
-		CoverPage.hiddenMenuTop();
+		CoverPage.getObject();
+		// CoverPage.hiddenMenuTop();
 		CoverPage.onClickKey();
-		if(isMobile){
-			CoverPage.hiddenMobileFooter();
-		}
+		CoverPage.onEnterZipcode();
+		CoverPage.hiddenError();
+		// if(isMobile){
+		// 	CoverPage.hiddenMobileFooter();
+		// }
+	},
+
+	getObject: function(){
+		CoverPage.btn = $("#cover-page").find(".input-group-addon");
+		CoverPage.err = $("#cover-page").find(".error");
+		CoverPage.zcode = $("#cover-page").find("#cv-password");
 	},
 
 	hiddenMenuTop: function(){
@@ -19,24 +31,50 @@ var CoverPage = {
 	},
 
 	onClickKey: function(){
-		var target = $("#cover-page").find(".input-group-addon");
+		var target = CoverPage.btn;
 		target.unbind();
-		target.on("click", function(){
-
-			var zcode = $("#cover-page").find("#cv-password");
-			var res = /^\d{5}(-\d{4})?$/.test(zcode.val());
+		target.on("click", function(e){
 			
-			if (res) {
-				sessionStorage.accepted = true;
-				if (isMobile){
-					window.location.href = baseUrl + "/netwrk/default/home";
-				} else {
-					//
-				}
-			} else {
-				var error = $("#cover-page").find(".error");
-				error.removeClass("hidden");
-			}
+			var zcode = CoverPage.zcode;
+			// var res = /^\d{5}(-\d{4})?$/.test(zcode.val());
+			CoverPage.checkzipcode(zcode.val());
+			e.preventDefault();
+		});
+	},
+
+	hiddenError: function(){
+		var zcode = CoverPage.zcode;
+		var target = CoverPage.err;
+		zcode.on("input focusout", function(){
+			target.addClass('hidden');
+		});
+		
+	},
+
+	onEnterZipcode: function(){
+        var btn = CoverPage.btn;
+        var zcode = CoverPage.zcode;
+        // btn.unbind();
+        zcode.keypress(function( event ) {
+            if ( event.which == 13 ) {
+                btn.trigger('click');
+            }
+        });
+    },
+
+    checkzipcode: function(zipcode){
+		$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+			sessionStorage.accepted = true;
+			// if (isMobile){
+				window.location.href = baseUrl + "/netwrk/default/home";
+			// } else {
+				// window.location.href = baseUrl + "/netwrk/default/home";
+			// }
+		}).fail(function(jqXHR) {
+			var error = CoverPage.err;
+			var zcode = CoverPage.zcode;
+			zcode.val(null);
+			error.removeClass("hidden");
 		});
 	},
 }

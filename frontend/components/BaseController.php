@@ -2,6 +2,7 @@
 namespace frontend\components;
 
 use yii\web\Controller;
+use \Yii;
 
 class BaseController extends Controller
 {
@@ -19,7 +20,8 @@ class BaseController extends Controller
 
     public function init()
     {
-        if ($this->getIsMobile())
+        if ($this->getIsMobile()) {
             $this->layout='/mobile/main';
+        }
     }
 }

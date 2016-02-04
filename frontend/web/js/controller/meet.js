@@ -160,7 +160,7 @@ var Meet ={
     },
 
     showUserMeetMobile: function(){
-        window.location.href = "netwrk/meet";
+        window.location.href = baseUrl + "/netwrk/meet";
     },
 
     GetUserMeet: function(){

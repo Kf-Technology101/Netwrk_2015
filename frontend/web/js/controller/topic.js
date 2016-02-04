@@ -579,7 +579,7 @@ var Topic = {
         if(isMobile){
             $('#show-topic .back_page span').click(function(){
                 sessionStorage.show_landing = 1;
-                window.location.href = baseUrl;
+                window.location.href = baseUrl + "/netwrk/default/home";
             })
         }else{
             $('#modal_topic .back_page span').click(function(){

@@ -319,7 +319,7 @@ var Ajax ={
         if (isMobile) {
             url = baseUrl +"/netwrk/topic/get-topic-mobile";
         }else{
-            url = "netwrk/topic/get-topic-mobile";
+            url = baseUrl + "/netwrk/topic/get-topic-mobile";
         }
 
         $.ajax({
@@ -341,7 +341,7 @@ var Ajax ={
         if (isMobile) {
             url = baseUrl +"/netwrk/topic/get-feed";
         }else{
-            url = "netwrk/topic/get-feed";
+            url = baseUrl + "/netwrk/topic/get-feed";
         }
 
         $.ajax({
@@ -363,7 +363,7 @@ var Ajax ={
         if (isMobile) {
             url = baseUrl +"/netwrk/meet/get-user-meet";
         }else{
-            url = "netwrk/meet/get-user-meet";
+            url = baseUrl + "/netwrk/meet/get-user-meet";
         }
 
         $.ajax({
@@ -635,7 +635,7 @@ var Ajax ={
         if (isMobile) {
             url = baseUrl +"/netwrk/meet/get-user-meet-profile";
         }else{
-            url = "netwrk/meet/get-user-meet-profile";
+            url = baseUrl + "/netwrk/meet/get-user-meet-profile";
         }
 
         $.ajax({
@@ -655,7 +655,7 @@ var Ajax ={
         if (isMobile) {
             url = baseUrl +"/netwrk/meet/get-user-meet-profile-discussion";
         }else{
-            url = "netwrk/meet/get-user-meet-profile-discussion";
+            url = baseUrl + "/netwrk/meet/get-user-meet-profile-discussion";
         }
 
         $.ajax({
@@ -817,6 +817,23 @@ var Ajax ={
             error: defer.reject
         });
         return defer.promise();
-    }
+    },
+
+    redirect_cover_page: function(){
+        var url,defer = $.Deferred();
+            url = baseUrl + "/netwrk/default/home";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: true,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 }
 

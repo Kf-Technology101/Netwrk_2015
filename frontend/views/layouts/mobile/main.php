@@ -10,6 +10,11 @@ use yii\helpers\Url;
 /* @var $content string */
 
 MobileAsset::register($this);
+$controller = Yii::$app->controller;
+$isCoverPage = 0;
+if ( $controller->id == 'default' && $controller->action->id == 'index' ) {
+    $isCoverPage = 1;
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -25,6 +30,8 @@ MobileAsset::register($this);
   <script type="text/javascript">
     var baseUrl = '<?php echo Url::base(true); ?>';
     var isMobile = true;
+    var isCoverPage = <?php echo $isCoverPage; ?>;
+    
   </script>
 </head>
 <body ontouchstart="">
@@ -32,7 +39,8 @@ MobileAsset::register($this);
 
 
   <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
-    <div class="navbar-mobile navbar-fixed-top">
+  
+    <div id="myHeader" class="navbar-mobile navbar-fixed-top">
     	<div class="menu_top">
   			<div class="logo_netwrk option_logo_netwrk">
   				<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
@@ -46,14 +54,16 @@ MobileAsset::register($this);
         </div>
     	</div>
       <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
-	</div>
+	  </div>
+  
     <div class="container-fuild">
 	    <?= Breadcrumbs::widget([
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	    ]) ?>
 	    <?= $content ?>
     </div>
-    <div class="navbar-mobile navbar-fixed-bottom">
+  
+    <div id="myFooter" class="navbar-mobile navbar-fixed-bottom">
       <div class="menu_bottom">
         <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
         <!-- <div id="btn_discover_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div> -->
@@ -65,7 +75,7 @@ MobileAsset::register($this);
       </div>
     </div>
   </div>
-
+  
   <!-- <footer class="footer">
       <div class="container">
       <p class="pull-left">&copy; Netwrk <?= date('Y') ?></p>
@@ -79,6 +89,10 @@ MobileAsset::register($this);
   var isMobile = true;
   var isGuest = '<?php echo Yii::$app->user->isGuest; ?>';
   var UserLogin = '<?php echo Yii::$app->user->id; ?>';
+  if (isCoverPage) {
+      document.getElementById('myHeader').classList.add("hidden");
+      document.getElementById('myFooter').classList.add("hidden");
+    }
 </script>
 </html>
 <?php $this->endPage() ?>
