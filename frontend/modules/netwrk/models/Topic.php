@@ -95,7 +95,7 @@ class Topic extends \yii\db\ActiveRecord
     //     return parent::beforeSave($insert);
     // }
 
-        /**
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -116,47 +116,48 @@ class Topic extends \yii\db\ActiveRecord
         $limit = Yii::$app->params['LimitResultSearch'];
         if(isset($type) && $type == 'global'){
             return Topic::find()
-                    ->where(['like','title',$_search])
-                    ->andWhere(['not in','city_id',$except])
-                    ->orderBy(['brilliant_count'=> SORT_DESC])
-                    ->limit($limit)
-                    ->all();
+                ->where(['like','title',$_search])
+                ->andWhere(['not in','city_id',$except])
+                ->orderBy(['brilliant_count'=> SORT_DESC])
+                ->limit($limit)
+                ->all();
         }else{
             return Topic::find()
-                        ->where(['like','title',$_search])
-                        ->orderBy(['brilliant_count'=> SORT_DESC])
-                        ->all();
+                ->where(['like','title',$_search])
+                ->orderBy(['brilliant_count'=> SORT_DESC])
+                ->all();
         }
     }
 
     // Get top $limit topic in City
     public function GetTopTopic($city,$limit){
         return Topic::find()
-                    ->joinWith('city')
-                    ->where(['city.id' => $city])
-                    ->orderBy(['topic.post_count'=> SORT_DESC])
-                    ->limit($limit)
-                    ->all();
+            ->joinWith('city')
+            ->where(['city.id' => $city])
+            ->orderBy(['topic.post_count'=> SORT_DESC])
+            ->limit($limit)
+            ->all();
     }
 
     //Get top topic in all netwrk
     public function GetTopTopicGlobal($limit, $city){
         if ($city != null) {
             $model = Topic::find()
-                    ->where('city_id ='.$city)
-                    ->orderBy(['topic.post_count'=> SORT_DESC])
-                    ->limit($limit)
-                    ->all();
+                ->where('city_id ='.$city)
+                ->orderBy(['topic.post_count'=> SORT_DESC])
+                ->limit($limit)
+                ->all();
         } else {
             $model = Topic::find()
-                    ->orderBy(['topic.post_count'=> SORT_DESC])
-                    ->limit($limit)
-                    ->all();
+                ->orderBy(['topic.post_count'=> SORT_DESC])
+                ->limit($limit)
+                ->all();
         }
 
         $topics = [];
         foreach ($model as $key => $value) {
             # code...
+            if (empty($value->city)) continue;
             $item = [
                 'id' => $value->id,
                 'name'=> $value->title,

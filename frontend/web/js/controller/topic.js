@@ -50,6 +50,7 @@ var Topic = {
         Topic.OnClickChangeTab();
         Topic.eventClickMeetMobile();
         Topic.LoadFeedModal();
+        Topic.OnClickCreateGroup();
         if(isMobile){
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
@@ -79,6 +80,7 @@ var Topic = {
             Topic.OnClickBackdrop();
             Topic.onNetwrkLogo();
             Topic.CheckTabCurrent();
+            Topic.OnClickCreateGroup();
         }
     },
 
@@ -257,7 +259,7 @@ var Topic = {
             btn.on('click',function(e){
                 var target = $(e.currentTarget).parents('.item').eq(0),
                     topic_id = target.attr('data-item');
-                    toptic_name = target.find('.name_topic p').text();
+                toptic_name = target.find('.name_topic p').text();
                 $('#modal_topic').modal('hide');
                 // Topic.reset_modal();
                 Create_Post.initialize(Topic.data.city,topic_id,Topic.data.city_name,toptic_name);
@@ -335,6 +337,7 @@ var Topic = {
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
             Topic.displayPositionModal();
+            Group.LoadGroupModal();
         });
     },
 
@@ -400,9 +403,9 @@ var Topic = {
         target.unbind();
         target.on('click',function(e){
             console.log($(e.currentTarget));
-                var post_id = $(e.currentTarget).parent().attr('data-value'),
-                    post_name = $(e.currentTarget).find('.post-title').text(),
-                    post_content = $(e.currentTarget).find('.post-content').text();
+            var post_id = $(e.currentTarget).parent().attr('data-value'),
+                post_name = $(e.currentTarget).find('.post-title').text(),
+                post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
                 sessionStorage.url = window.location.href;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
@@ -561,7 +564,7 @@ var Topic = {
         self.data.city = city;
 
         $(window).scrollTop(0);
-        if($('#Topic').attr('data-action') == 'topic-page'){
+        if($('#Topic').attr('data-action') == 'topic-page') {
             if(self.list[self.data.filter].status_paging == 1){
                 Ajax.show_topic(params).then(function(data){
                     var parent = $('#show-topic').find('#item_list_'+self.data.filter);
@@ -686,7 +689,7 @@ var Topic = {
         }
     },
 
-    OnClickCreateGroup: function(){
+    OnClickCreateGroup: function() {
         var btn = $('#create_group');
         btn.unbind();
         btn.on('click',function(){
