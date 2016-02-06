@@ -242,15 +242,16 @@
 	  		var text_below, marker;
 
 	  		text_below = "<span>" + e.zip_code + " " + ((e.office != null) ? e.office : e.name) + "</span>";
-	      	if(e.topic.length > 0 && e.trending_hashtag.length > 0) {
+
+	      	if(e.topic && e.topic.length > 0 && e.trending_hashtag.length > 0) {
 	      		text_below += "<br>" + e.topic[0].name + "<br>#" + e.trending_hashtag[0].hashtag_name;
 	      	}
 
 	      	marker = new google.maps.Marker({
 		        position: new google.maps.LatLng(e.lat, e.lng),
 		        map: map,
-		        icon: e.mapicon,
-		        city_id: parseInt(e.id),
+		        icon: baseUrl + e.mapicon,
+		        city_id: parseInt(e.id)
 		        // label: text_below
 	      	});
 
@@ -278,7 +279,7 @@
 
 		        google.maps.event.addListener(marker, 'mouseover', function() {
 			        // infowindow.setContent(e[0]);
-			        infowindow.open(map, this);
+			        infowindow.open(Map.map, this);
 			        Map.onhoverInfoWindow(e.id,marker);
 			        Map.OnEventInfoWindow(e);
 		        });
@@ -322,7 +323,7 @@
 	          		});
 	          	});
 	      	}
-			
+
 			google.maps.event.addListener(marker, 'click', (function(marker){
 		        return function(){
 		        	sessionStorage.lat = marker.position.lat();

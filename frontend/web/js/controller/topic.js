@@ -81,6 +81,7 @@ var Topic = {
             Topic.onNetwrkLogo();
             Topic.CheckTabCurrent();
             Topic.OnClickCreateGroup();
+            Default.onCLickModal();
         }
     },
 
@@ -159,6 +160,10 @@ var Topic = {
 
         $('.create_topic').hide();
         $('#create_topic').show();
+
+        //enable btn create topic
+        parent.find('.header .title_page').removeClass('on-feed');
+        parent.find('.header .create_topic').removeClass('on-feed');
     },
 
     ShowFeedPage: function(){
@@ -173,6 +178,9 @@ var Topic = {
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
         parent.find('.container').removeClass('open');
+        //disable btn create topic
+        parent.find('.header .title_page').addClass('on-feed');
+        parent.find('.header .create_topic').addClass('on-feed');
 
         $('.create_topic').hide();
         $('#create_topic').show();
@@ -358,6 +366,9 @@ var Topic = {
             Topic.OnClickPostFeed();
             Topic.OnClickVoteFeed();
             Topic.OnClickTopicFeed();
+            Topic.OnClickAvatarTopPostFeed();
+            Topic.OnClickAvatarTopFeed();
+            Topic.OnClickChatTopPostFeed();
         });
     },
 
@@ -393,9 +404,55 @@ var Topic = {
             parent.find('.no-data').hide();
             var list_template = _.template($( "#feed_list" ).html());
             var append_html = list_template({feed: json});
-            parent.html('');
             parent.append(append_html);
         }
+    },
+
+    OnClickAvatarTopPostFeed: function() {
+        Topic.OnClickAvatarFeed($('.top-post').find('.top-post-content .post-row .avatar'));
+    },
+
+    OnClickAvatarTopFeed: function() {
+        Topic.OnClickAvatarFeed($('.top-feed .top-feed-content').find('.feed-post .avatar-poster'));
+    },
+
+    OnClickAvatarFeed: function(target){
+        var avatar = target;
+        avatar.unbind();
+        avatar.on('click', function(e){
+            var user_login = $(e.currentTarget).parent().attr('data-user');
+            if(user_login != UserLogin){
+                if(!isMobile){
+                    Meet.pid = 0;
+                    Meet.ez = user_login;
+                    $('.modal').modal('hide');
+                    Meet.initialize();
+                } else {
+                    window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_login + "&from=discussion";
+                }
+            }
+        });
+    },
+
+    OnClickChatTopPostFeed: function(){
+        var target = $('#modal_topic,#show-topic').find('.top-post .action .chat');
+        target.unbind();
+        target.on('click',function(e){
+                var post_id = $(e.currentTarget).parent().parent().attr('data-value'),
+                    post_name = $(e.currentTarget).parent().parent().find('.post-title').text(),
+                    post_content = $(e.currentTarget).parent().parent().find('.post-content').text();
+            if(isMobile){
+                sessionStorage.url = window.location.href;
+                sessionStorage.feed_topic = 1;
+                PopupChat.RedirectChatPostPage(post_id, 1, 1);
+            }else{
+                PopupChat.params.post = post_id;
+                PopupChat.params.chat_type = 1;
+                PopupChat.params.post_name = post_name;
+                PopupChat.params.post_description = post_content;
+                PopupChat.initialize();
+            }
+        });
     },
 
     OnClickPostFeed: function(){
@@ -408,6 +465,7 @@ var Topic = {
                     post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
                 sessionStorage.url = window.location.href;
+                sessionStorage.feed_topic = 1;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 // $(LandingPage.modal).modal('hide');
@@ -518,6 +576,13 @@ var Topic = {
         });
         $(target[0]).addClass('active');
 
+        Topic.ResetModalTabFeed();
+    },
+
+    ResetModalTabFeed: function(){
+        var parent = $('#modal_topic').find('#tab_feed');
+        parent.find('.top-post,.top-topic,.top-feed').remove();
+        parent.find('.no-data').show();
         Topic.tab_current = 'feed';
         Topic.feed.paging = 1;
         Topic.feed.status_paging = 1;
@@ -535,7 +600,7 @@ var Topic = {
         if(isMobile){
             $('#show-topic .back_page span').click(function(){
                 sessionStorage.show_landing = 1;
-                window.location.href = baseUrl;
+                window.location.href = baseUrl + "/netwrk/default/home";
             })
         }else{
             $('#modal_topic .back_page span').click(function(){

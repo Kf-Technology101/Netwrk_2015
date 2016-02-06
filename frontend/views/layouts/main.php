@@ -6,11 +6,27 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
+use yii\web\Cookie;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 AppAsset::register($this);
+$controller = Yii::$app->controller;
+$cookies = Yii::$app->request->cookies;
+$isCoverPage = 0;
+$accepted = 0;
+if (isset($cookies["isCoverPage"])) {
+  $isCoverPage = $cookies->getValue('isCoverPage');//$cookies['isCoverPage']->value;
+  $accepted = $cookies->getValue('accepted');
+} else {
+  $c = Yii::$app->response->cookies;
+  $cookie = new Cookie(['name'=>'isCoverPage', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+  $c->add($cookie);
+  $cookie = new Cookie(['name'=>'accepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+  $c->add($cookie);
+  $isCoverPage = 1;
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -22,7 +38,12 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-
+    <script type="text/javascript">
+    var baseUrl = '<?php echo Url::base(true); ?>';
+    var isMobile = true;
+    var isCoverPage = <?php echo $isCoverPage; ?>;
+    var accepted = <?php echo $accepted; ?>;
+  </script>
 </head>
 <body>
     <?php $this->beginBody() ?>
