@@ -313,6 +313,25 @@ var Ajax ={
 
     },
 
+    get_marker_groups_loc: function(groupId){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/default/get-groups-loc" + (groupId != null ? "?groupId = " + groupId : "");
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+
+    },
+
     show_topic: function(params){
         var url,defer = $.Deferred();
 
@@ -348,6 +367,112 @@ var Ajax ={
             url: url,
             data: params,
             type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    show_groups: function(params){
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/group/get-groups";
+        }else{
+            url = "netwrk/group/get-groups";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    show_group: function(id) {
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/group/get-group";
+        }else{
+            url = "netwrk/group/get-group";
+        }
+
+        $.ajax({
+            url: url,
+            data: { "id" : id },
+            type: 'POST',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    create_edit_group: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/group/create-edit-group";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    delete_group: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/group/delete-group";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    get_users: function(group_id) {
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/group/get-users";
+        }else{
+            url = "netwrk/group/get-users";
+        }
+
+        $.ajax({
+            url: url,
+            data: { "id" : group_id },
+            type: 'POST',
             async: false,
             cache: false,
             success: defer.resolve,
