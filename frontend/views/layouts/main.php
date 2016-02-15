@@ -56,7 +56,7 @@ if (isset($cookies["isCoverPage"])) {
             ]);
         ?>
         <div class="logo_netwrk">
-            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue_large.png'); ?>"></a>
         </div>
         <div class="box-search">
             <div class="search input-group">
@@ -66,11 +66,35 @@ if (isset($cookies["isCoverPage"])) {
             <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
 
-        <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
-
-        <div class="chatting" id='chat_inbox_btn'>
-            <span><i class="fa fa-comment"></i><span class='notify disable'>15</span>Chat</span>
+        <div class="box-navigation">
+            <div class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" id="">
+                    <i class="navigation-icon fa fa-globe"></i>
+                    <span class="navigation-text">Map</span>
+                </button>
+                <button id="chat_inbox_btn" type="button" class="btn btn-default">
+                    <i class="navigation-icon fa fa-comment"></i>
+                    <span class="navigation-text"><span class='notify hide'>15</span>Chat</span>
+                </button>
+                <button id="btn_nav_meet" type="button" class="btn btn-default">
+                    <i class="navigation-icon fa fa-comment"></i>
+                    <span class="navigation-text">Meet</span>
+                </button>
+                <div class="btn-group profile-dropdown" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <i class="navigation-icon fa fa-user"></i>
+                        <span class="navigation-text">Profile</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class='avatar-dropdown-menu'><a><i class="fa fa-tachometer"></i> Dashboard</a></li>
+                        <li class='avatar-dropdown-menu'><a><i class="fa fa-user"></i> Profile</a></li>
+                        <li class='avatar-dropdown-menu sign-out'><a href="<?= Url::base(true); ?>/netwrk/user/logout"><i class="fa fa-sign-out"></i> Sign Out</a></li>
+                        <li class='avatar-dropdown-menu'><a><i class='fa fa-question-circle'></i> Help</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        <?php /*echo $this->render('@frontend/modules/netwrk/views/user/userinfo') */?>
         <?php
             // $menuItems = [
             //     ['label' => 'Menu'],

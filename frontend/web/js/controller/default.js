@@ -82,7 +82,7 @@ var Default ={
     },
 
     _eventClickMeetBtn: function() {
-        var target = $('#btn_meet'),
+        var target = $('#btn_meet, #btn_nav_meet'),
             self = this;
 
         target.on('click',function(){
@@ -93,7 +93,7 @@ var Default ={
     },
 
     _eventClickMeetBtnMobile: function(){
-        var target = $('#btn_meet_mobile');
+        var target = $('#btn_meet_mobile, #btn_nav_meet_mobile');
 
         target.on('click',function(){
             Meet.showUserMeetMobile();
@@ -101,7 +101,7 @@ var Default ={
     },
 
     _eventClickChatInboxBtnMobile: function() {
-        var target = $('#chat_inbox_btn_mobile');
+        var target = $('#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile');
         target.unbind();
         target.on('click',function(){
             sessionStorage.url = window.location.href;
