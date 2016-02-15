@@ -17,7 +17,7 @@ var MainWs ={
         if(baseUrl === 'http://netwrk.rubyspace.net'){
             MainWs.url = 'box.rubyspace.net';
         }else{
-            MainWs.url = '192.168.1.172';
+            MainWs.url = window.location.host;
         };
     },
 
@@ -25,7 +25,7 @@ var MainWs ={
 
         var _self = this;
 
-        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+":9300?user_id=" + user_id);
+        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+":2311?user_id=" + user_id);
 
         window.ws.onmessage = function(e){
             if (e.data) {
