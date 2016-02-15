@@ -161,10 +161,10 @@ var Default ={
             Ajax.get_user_profile().then(function(data){
                 sessionStorage.UserInfo = data;
                 data = $.parseJSON(data);
-                var list_template = _.template($("#user_info_dropdown" ).html());
+                /*var list_template = _.template($("#user_info_dropdown" ).html());
                 var append_html = list_template({user_info: data});
                 $('#user_avatar_wrapper #user_avatar_dashboard').remove();
-                $('#user_avatar_wrapper').append(append_html);
+                $('#user_avatar_wrapper').append(append_html);*/
                 Default.OnHoverAvatarDropdown();
             });
             if (isMobile) {
