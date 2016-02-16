@@ -56,7 +56,7 @@ if (isset($cookies["isCoverPage"])) {
             ]);
         ?>
         <div class="logo_netwrk">
-            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue_large.png'); ?>"></a>
+            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
         </div>
         <div class="box-search">
             <div class="search input-group">
@@ -77,7 +77,7 @@ if (isset($cookies["isCoverPage"])) {
                     <span class="navigation-text"><span class='notify hide'>15</span>Chat</span>
                 </button>
                 <button id="btn_nav_meet" type="button" class="btn btn-default">
-                    <i class="navigation-icon fa fa-comment"></i>
+                    <i class="navigation-icon ci-meet"></i>
                     <span class="navigation-text">Meet</span>
                 </button>
                 <div class="btn-group profile-dropdown" role="group">
