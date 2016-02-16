@@ -112,11 +112,11 @@ var Group_Loc = {
 
     onclickBackFromTopics: function(){
         if (isMobile) {
-            $('#modal_group .back_page span').unbind("click").click(function() {
+            $('#modal_group .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 window.location.href = baseUrl;
             });
         } else {
-            $('#modal_group .back_page span').unbind("click").click(function() {
+            $('#modal_group .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 //show again list of groups
                 $('#modal_group').hide();
                 //Group_Loc.LoadGroupModal();
@@ -126,11 +126,11 @@ var Group_Loc = {
 
     onclickBackFromPosts: function(){
         if (isMobile) {
-            $('#modal_group .back_page span').unbind("click").click(function() {
+            $('#modal_group .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 window.location.href = baseUrl;
             });
         } else {
-            $('#modal_group .back_page span').unbind("click").click(function() {
+            $('#modal_group .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 console.log("back posts");
                 var parent = $('#item_topic_group_loc_list_' + Group.data.filter);
                 Group_Loc.ShowTopics(parent, Group_Loc.post_params.group_back, Group_Loc.post_params.group_back_name);
@@ -504,11 +504,11 @@ var Group_Loc = {
 
     _onclickBack: function(){
         if(isMobile){
-            $('#show-topic .back_page span').click(function(){
+            $('#show-topic .back_page span, .box-navigation .btn_nav_map').click(function(){
                 window.location.href = baseUrl;
             })
         }else{
-            $('#modal_group .back_page span').click(function(){
+            $('#modal_group .back_page span, .box-navigation .btn_nav_map').click(function(){
                 console.log("back"); return;
                 $('#modal_group').modal('hide');
             })
@@ -715,11 +715,11 @@ var Group_Loc = {
 
     onclickBackFromUsers: function() {
         if (isMobile) {
-            $('#modal_group .back_page span').unbind("click").click(function() {
+            $('#modal_group .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 window.location.href = baseUrl;
             });
         } else {
-            $('#modal_group .back_page span').unbind("click").click(function() {
+            $('#modal_group .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 var parent = $('#item_topic_group_loc_list_' + Group_Loc.data.filter);
                 Group_Loc.ShowTopics(parent, Group_Loc.data.id, Group_Loc.data.name);
             });

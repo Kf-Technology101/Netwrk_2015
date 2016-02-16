@@ -429,7 +429,7 @@ var Post ={
 
 	OnclickBack: function(){
 		if (Post.params.by_group) {
-			$('#list_post').find('.back_page span').click(function () {
+			$('#list_post').find('.back_page span').add($('.box-navigation .btn_nav_map')).click(function () {
 				if (isMobile) {
 					window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + Post.params.city;
 				} else {
@@ -438,7 +438,7 @@ var Post ={
 				}
 			});
 		} else {
-			$('#list_post').find('.back_page span').click(function () {
+			$('#list_post').find('.back_page span').add($('.box-navigation .btn_nav_map')).click(function () {
 				if (isMobile) {
 					window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + Post.params.city;
 				} else {

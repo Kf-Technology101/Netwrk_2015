@@ -254,8 +254,8 @@ var Create_Group={
     },
 
     onclickBack: function(){
-        var parent = $('#create_group_modal').find('.back_page span');
 
+        var parent = $('#create_group_modal').find('.back_page span').add($('.box-navigation .btn_nav_map'));
         parent.unbind();
         parent.click(function(){
             if(isMobile){

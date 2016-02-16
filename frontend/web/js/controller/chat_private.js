@@ -338,7 +338,7 @@ var ChatPrivate = {
 
 	OnClickBackBtn: function(){
 
-		var BackBtn = $(ChatPrivate.parent).find('.back_page');
+		var BackBtn = $(ChatPrivate.parent).find('.back_page').add($('.box-navigation .btn_nav_map'));
 		BackBtn.unbind();
 		BackBtn.on('click',function(){
 			if(isMobile){

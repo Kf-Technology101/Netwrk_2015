@@ -389,11 +389,11 @@ var Topic_Group = {
 
     _onclickBack: function(){
         if(isMobile){
-            $('#show-topic .back_page span').click(function(){
+            $('#show-topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
                 window.location.href = baseUrl;
             })
         }else{
-            $('#modal_topic .back_page span').click(function(){
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
                 $('#modal_topic').modal('hide');
             })
         }
