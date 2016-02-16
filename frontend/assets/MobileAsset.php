@@ -22,7 +22,7 @@ class MobileAsset extends AssetBundle
       'css/font/font.css',
       'css/mobile/landing.css',
       'css/mobile/topic.css',
-      'css/mobile/groups_loc.css',
+      'css/mobile/groups.css',
       'css/mobile/meet.css',
       'css/mobile/setting.css',
       'css/mobile/post.css',
