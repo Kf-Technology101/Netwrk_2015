@@ -67,7 +67,7 @@ if (isset($cookies["isCoverPage"])) {
         </div>
 
         <div class="box-navigation">
-            <div class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
+            <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" id="">
                     <i class="navigation-icon fa fa-globe"></i>
                     <span class="navigation-text">Map</span>
@@ -80,23 +80,11 @@ if (isset($cookies["isCoverPage"])) {
                     <i class="navigation-icon ci-meet"></i>
                     <span class="navigation-text">Meet</span>
                 </button>
-                <?php if(Yii::$app->user->id) : ?>
-                    <div class="btn-group profile-dropdown" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <i class="navigation-icon fa fa-user"></i>
-                            <span class="navigation-text">Profile</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li class='avatar-dropdown-menu'><a><i class="fa fa-tachometer"></i> Dashboard</a></li>
-                            <li class='avatar-dropdown-menu'><a><i class="fa fa-user"></i> Profile</a></li>
-                            <li class='avatar-dropdown-menu sign-out'><a href="<?= Url::base(true); ?>/netwrk/user/logout"><i class="fa fa-sign-out"></i> Sign Out</a></li>
-                            <li class='avatar-dropdown-menu'><a><i class='fa fa-question-circle'></i> Help</a></li>
-                        </ul>
-                    </div>
-                <?php endif; ?>
             </div>
         </div>
-        <?php /*echo $this->render('@frontend/modules/netwrk/views/user/userinfo') */?>
+
+        <?php echo $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
+
         <?php
             // $menuItems = [
             //     ['label' => 'Menu'],

@@ -161,44 +161,15 @@ var Default ={
             Ajax.get_user_profile().then(function(data){
                 sessionStorage.UserInfo = data;
                 data = $.parseJSON(data);
-                /*var list_template = _.template($("#user_info_dropdown" ).html());
+                var list_template = _.template($("#account_nav_dropdown" ).html());
                 var append_html = list_template({user_info: data});
-                $('#user_avatar_wrapper #user_avatar_dashboard').remove();
-                $('#user_avatar_wrapper').append(append_html);*/
-                Default.OnHoverAvatarDropdown();
+                $('#nav_wrapper').append(append_html);
             });
-            if (isMobile) {
-                var avatar = '#user_avatar_wrapper';
-                var nav = '#user_avatar_wrapper ul';
-                $(document).on('click', avatar, function(e){
-                    e.stopPropagation();
-                    $(nav).slideToggle('fast');
-                    $(avatar).find('#user_avatar_dashboard').toggleClass('bg-blue');
-                    $(nav+' li').removeClass('bg-blue');
-                });
-
-                $('body').on( "click", function(e) {
-                    if ($(e.target).parents('#user_avatar_wrapper').length > 0) {
-                        //do nothing
-                    } else {
-                        $(nav).hide();
-                        $(avatar).find('#user_avatar_dashboard').removeClass('bg-blue');
-                        $(nav+' li').removeClass('bg-blue');
-                    }
-                });
-
-                $(document).on('click', nav+' li', function(e){
-                    e.stopPropagation();
-                    $(nav+' li').removeClass('bg-blue');
-                    $(this).addClass('bg-blue');
-                });
-
-            }
         }
     },
 
     OnHoverAvatarDropdown: function() {
-        var btn = $('#user_avatar_dashboard');
+        var btn = $('#account_nav_profile');
         btn.hover(
             function(){
                 $(ChatInbox.modal).css('z-index','999');
