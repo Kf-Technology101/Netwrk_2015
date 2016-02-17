@@ -4,7 +4,7 @@
 var Common = {
     contexts : {
         'boxNavigation': '.box-navigation',
-        'btnExplore': '.box-navigation .btn-explore',
+        'btnExplore': '.btn-explore',
         'chatInboxNavBtnMobile': '#chat_inbox_nav_btn_mobile',
         'btnNavMeetMobile' : '#btn_nav_meet_mobile'
     },
@@ -17,8 +17,8 @@ var Common = {
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
     eventClickExplore: function(){
-        var target = $(Common.contexts.btnExplore);
-        
+        var target = $(Common.contexts.btnExplore, Common.contexts.boxNavigation);
+
         target.unbind();
         target.on('click',function(e){
             if(isMobile){
@@ -28,7 +28,7 @@ var Common = {
         });
     },
     eventClickChatInboxBtnMobile: function() {
-        var target = $(Common.contexts.chatInboxNavBtnMobile);
+        var target = $(Common.contexts.chatInboxNavBtnMobile, Common.contexts.boxNavigation);
         target.unbind();
         target.on('click',function(){
             sessionStorage.url = window.location.href;
@@ -43,7 +43,7 @@ var Common = {
         }
     },
     eventClickMeetBtnMobile: function(){
-        var target = $(Common.contexts.btnNavMeetMobile);
+        var target = $(Common.contexts.btnNavMeetMobile, Common.contexts.boxNavigation);
 
         target.unbind();
         target.on('click',function(){
