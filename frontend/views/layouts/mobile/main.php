@@ -72,7 +72,7 @@ if (isset($cookies["isCoverPage"])) {
 
     <div class="box-navigation">
       <div id="nav_wrapper" class="navigation-btn-group btn-group-vertical btn-group-default btn-group-type" role="group" aria-label="...">
-        <button type="button" class="btn btn-default back_page" id="">
+        <button type="button" class="btn btn-default btn-explore">
           <i class="navigation-icon fa fa-globe"></i>
           <div class="navigation-text">Map</div>
         </button>

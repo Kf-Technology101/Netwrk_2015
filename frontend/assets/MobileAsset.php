@@ -68,6 +68,7 @@ class MobileAsset extends AssetBundle
       'js/controller/login.js',
       'js/controller/signup.js',
       'js/controller/search.js',
+      'js/controller/common.js',
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',
