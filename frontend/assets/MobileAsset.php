@@ -45,6 +45,7 @@ class MobileAsset extends AssetBundle
     public $js = [
       'js/lib/underscore.js',
       'js/lib/label.js',
+      'js/controller/common.js',
       'js/main.js',
       'js/vendor/bootbox.min.js',
       // 'js/ws/ws.js',
@@ -68,7 +69,6 @@ class MobileAsset extends AssetBundle
       'js/controller/login.js',
       'js/controller/signup.js',
       'js/controller/search.js',
-      'js/controller/common.js',
       'js/lib/jquery.ui.js',
       'js/lib/jquery.ui.pips.js',
       'js/lib/jquery.ui.touch_punch.js',
