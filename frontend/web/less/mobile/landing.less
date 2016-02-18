@@ -110,34 +110,56 @@ body{
     }
   }
 }
-.box-navigation {
+
+.navigation-wrapper {
+  bottom: 35px;
   position: fixed;
-  left: 0px;
-  top: 35%;
-  z-index: 999;
-  .navigation-btn-group {
-    .btn {
-      border: none;
-      margin-bottom: 2px;
-      .ci-meet {
-        background:url("../../img/icon/meet_icon.png") no-repeat;
-        background-size: contain;
-        display:block;
-        height:12px;
-        width:15px;
-        margin: 2px auto 0;
+  width: 100%;
+  z-index: 999999;
+  .box-navigation {
+    .navigation-btn-group {
+      .btn {
+        border-right: 1px solid #fff;
+        border-left: none;
+        border-top: none;
+        border-bottom: none;
+        margin-right: 1px;
+        background-color: #5888ac;
+        border-radius: 4px;
+        color: #fff;
+        padding: 2px 4px;
+        line-height: 10px;
+        height: 34px;
+        width: 40px;
+        .ci-meet {
+          background: url("../../img/icon/meet_icon.png") no-repeat;
+          background-size: contain;
+          display: block;
+          height: 12px;
+          width: 15px;
+          margin: 2px auto 0;
+        }
+        .navigation-icon {
+          font-size: 16px;
+
+        }
+        .navigation-text {
+          font-size: 12px;
+        }
       }
-    }
-    .btn-default {
-      color: #fff;
-      background: #5888ac;
-      padding: 2px 4px;
-      font-size: 12px;
-    }
-    .btn-default:hover {
-      cursor: pointer;
-      color: #fff;
-      background: #5da5d8;
+      .btn:hover {
+        cursor: pointer;
+        background: #5da5d8;
+      }
+      .btn:last-child {
+        border: none;
+        margin-right: 0;
+      }
+
+      .profile-dropdown > .btn:first-child {
+        border: none;
+        margin-right: 0;
+      }
     }
   }
 }
