@@ -8,7 +8,59 @@
       }
   }
   .navbar-inverse{
-    background: #5888ac;
+    background: transparent;
+    /*background: #5888ac;*/
+
+    .box-search {
+      .search {
+        border: 1px solid #333;
+        border-radius: 4px;
+      }
+    }
+    .box-navigation {
+      .navigation-btn-group {
+        margin: 13px 0 13px 20px;
+        .btn {
+          height: 36px;
+          padding: 4px 17px;
+          border: none;
+          margin-right: 2px;
+
+          .navigation-icon {
+            display: block;
+            line-height: 1;
+          }
+          .navigation-text {
+            font-size: 12px;
+            line-height: 12px;
+            vertical-align: top;
+          }
+          .ci-meet {
+            background:url("../../img/icon/meet_icon.png") no-repeat;
+            background-size: contain;
+            display:block;
+            height:12px;
+            width:15px;
+            margin: 2px auto 0;
+          }
+        }
+        .btn-default {
+          color: #fff;
+          background: #5888ac;
+        }
+        .btn-default:hover {
+          cursor: pointer;
+          background: #5da5d8;
+        }
+        #btn_meet {
+          bottom: 0 !important;
+          right: 0 !important;
+        }
+        .profile-dropdown:hover .dropdown-menu {
+          display: block;
+        }
+      }
+    }
   }
   .menu_top {
     border:none;
@@ -73,7 +125,7 @@
     display: block;
   }
   .map-padding{
-    padding: 60px 0px 0px;
+    padding: 0;
   }
   .map_content{
     display: block;
@@ -119,12 +171,12 @@
     #btn_my_location{
       width: 30px;
       position: absolute;
-      top:5px;
-      right: 5px;
+      top:15px;
+      right: 15px;
       background: #5888ac;
       border-radius: 15px;
       display: block;
-      z-index: 6;
+      z-index: 99999;
       cursor: pointer;
       i{
         color: #fff;

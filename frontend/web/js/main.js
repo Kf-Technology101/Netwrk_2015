@@ -249,6 +249,7 @@ $(document).ready(function(){
   _addListenEventPage();
   Emoji.initialize();
   Search.initialize();
+  Common.initialize();
   if(isMobile){
     homePage();
   }

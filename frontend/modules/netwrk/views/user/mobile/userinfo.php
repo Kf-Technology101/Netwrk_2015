@@ -3,7 +3,7 @@
     <div id='account_nav_wrapper' class="btn-group profile-dropdown" role="group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <i class="navigation-icon fa fa-user"></i>
-            <span class="navigation-text">Profile</span>
+            <div class="navigation-text">Profile</div>
         </button>
         <ul class="dropdown-menu">
             <li class='avatar-dropdown-menu'><a><i class="fa fa-tachometer"></i> Dashboard</a></li>

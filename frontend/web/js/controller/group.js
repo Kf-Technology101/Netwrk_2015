@@ -83,11 +83,11 @@ var Group = {
 
     onclickBackFromTopics: function(){
         if (isMobile) {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 window.location.href = baseUrl;
             });
         } else {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 //show again list of groups
                 Group.LoadGroupModal();
             });
@@ -96,11 +96,11 @@ var Group = {
 
     onclickBackFromPosts: function(){
         if (isMobile) {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 window.location.href = baseUrl;
             });
         } else {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 var parent = $('#item_topic_group_list_' + Group.data.filter);
                 Group.ShowTopics(parent, Group.post_params.group_back, Group.post_params.group_back_name);
             });
@@ -109,11 +109,11 @@ var Group = {
 
     onclickBackFromUsers: function() {
         if (isMobile) {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 window.location.href = baseUrl;
             });
         } else {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind("click").click(function() {
                 var parent = $('#item_topic_group_list_' + Group.data.filter);
                 Group.ShowTopics(parent, Group.data.id, Group.data.name);
             });

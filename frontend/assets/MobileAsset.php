@@ -22,7 +22,7 @@ class MobileAsset extends AssetBundle
       'css/font/font.css',
       'css/mobile/landing.css',
       'css/mobile/topic.css',
-      'css/mobile/groups_loc.css',
+      'css/mobile/groups.css',
       'css/mobile/meet.css',
       'css/mobile/setting.css',
       'css/mobile/post.css',
@@ -45,6 +45,7 @@ class MobileAsset extends AssetBundle
     public $js = [
       'js/lib/underscore.js',
       'js/lib/label.js',
+      'js/controller/common.js',
       'js/main.js',
       'js/vendor/bootbox.min.js',
       // 'js/ws/ws.js',

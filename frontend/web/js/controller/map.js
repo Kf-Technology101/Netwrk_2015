@@ -690,7 +690,7 @@
 				data_marker = $.parseJSON(data);
 				console.log(data_marker);
 				$.each(data_marker,function(i,e){
-					var img = './img/icon/map_icon_community_v_2.png';
+					var img = '/img/icon/map_icon_community_v_2.png';
 
 					marker = new google.maps.Marker({
 						position: new google.maps.LatLng(e.lat, e.lng),

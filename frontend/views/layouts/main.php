@@ -56,7 +56,7 @@ if (isset($cookies["isCoverPage"])) {
             ]);
         ?>
         <div class="logo_netwrk">
-            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
         </div>
         <div class="box-search">
             <div class="search input-group">
@@ -66,11 +66,25 @@ if (isset($cookies["isCoverPage"])) {
             <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
 
-        <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
-
-        <div class="chatting" id='chat_inbox_btn'>
-            <span><i class="fa fa-comment"></i><span class='notify disable'>15</span>Chat</span>
+        <div class="box-navigation">
+            <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
+                <button id="btn_nav_map" type="button" class="btn btn-default btn_nav_map">
+                    <i class="navigation-icon fa fa-globe"></i>
+                    <span class="navigation-text">Map</span>
+                </button>
+                <button id="chat_inbox_btn" type="button" class="btn btn-default">
+                    <i class="navigation-icon fa fa-comment"></i>
+                    <span class="navigation-text"><span class='notify hide'>15</span>Chat</span>
+                </button>
+                <button id="btn_nav_meet" type="button" class="btn btn-default">
+                    <i class="navigation-icon ci-meet"></i>
+                    <span class="navigation-text">Meet</span>
+                </button>
+            </div>
         </div>
+
+        <?php echo $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
+
         <?php
             // $menuItems = [
             //     ['label' => 'Menu'],
