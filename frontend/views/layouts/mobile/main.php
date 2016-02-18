@@ -70,8 +70,9 @@ if (isset($cookies["isCoverPage"])) {
 	  </div>
     </div>
 
-    <div class="box-navigation">
-      <div id="nav_wrapper" class="navigation-btn-group btn-group-vertical btn-group-default btn-group-type" role="group" aria-label="...">
+    <section class="navigation-wrapper text-center">
+      <div class="box-navigation">
+      <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
         <button type="button" class="btn btn-default btn-explore">
           <i class="navigation-icon fa fa-globe"></i>
           <div class="navigation-text">Map</div>
@@ -86,10 +87,11 @@ if (isset($cookies["isCoverPage"])) {
         </button>
       </div>
     </div>
+    </section>
 
     <?php echo $this->render('@frontend/modules/netwrk/views/user/mobile/userinfo') ?>
 
-    <div class="container-fuild">
+    <div class="container">
 	    <?= Breadcrumbs::widget([
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	    ]) ?>

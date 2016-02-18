@@ -21,22 +21,31 @@
       .navigation-btn-group {
         margin: 13px 0 13px 20px;
         .btn {
-          height: 36px;
+          height: 34px;
           padding: 4px 17px;
-          border: none;
-          margin-right: 2px;
+
+          margin-right: 1px;
+          width: 60px;
+          border-right: 1px solid #fff;
+          border-left: none;
+          border-top: none;
+          border-bottom: none;
+          color: #fff;
+          background: #5888ac;
 
           .navigation-icon {
             display: block;
             line-height: 1;
+            font-size: 16px;
           }
           .navigation-text {
             font-size: 12px;
             line-height: 12px;
             vertical-align: top;
+            color: #fff;
           }
           .ci-meet {
-            background:url("../../img/icon/meet_icon.png") no-repeat;
+            background:url("../../img/icon/meet-icon-nav.png") no-repeat;
             background-size: contain;
             display:block;
             height:12px;
@@ -44,14 +53,21 @@
             margin: 2px auto 0;
           }
         }
-        .btn-default {
-          color: #fff;
-          background: #5888ac;
-        }
-        .btn-default:hover {
+        .btn:hover {
           cursor: pointer;
           background: #5da5d8;
         }
+
+        .btn:last-child {
+          border: none;
+          margin-right: 0;
+        }
+
+        .profile-dropdown > .btn:first-child {
+          border: none;
+          margin-right: 0;
+        }
+
         #btn_meet {
           bottom: 0 !important;
           right: 0 !important;
