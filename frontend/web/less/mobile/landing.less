@@ -112,10 +112,10 @@ body{
 }
 
 .navigation-wrapper {
-  bottom: 35px;
+  bottom: 34px;
   position: fixed;
   width: 100%;
-  z-index: 999999;
+  z-index: 999;
   .box-navigation {
     .navigation-btn-group {
       .btn {
@@ -125,7 +125,6 @@ body{
         border-bottom: none;
         margin-right: 1px;
         background-color: #5888ac;
-        border-radius: 4px;
         color: #fff;
         padding: 2px 4px;
         line-height: 10px;
@@ -163,6 +162,19 @@ body{
     }
   }
 }
+
+#Meet.wrap-mobile {
+  .navigation-wrapper {
+    bottom: 45px;
+  }
+}
+
+#Chat-inbox.wrap-mobile, #Default.wrap-mobile {
+  .navigation-wrapper {
+    bottom: 40px;
+  }
+}
+
 .map_content_mobile{
   /*max-width: 786px;*/
   width: 100%;
