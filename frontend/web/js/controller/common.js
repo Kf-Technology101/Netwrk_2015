@@ -13,6 +13,7 @@ var Common = {
         Common.eventClickExplore();
         Common.eventClickChatInboxBtnMobile();
         Common.eventClickMeetBtnMobile();
+        Common._eventClickProfileNavMenu();
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
@@ -49,5 +50,23 @@ var Common = {
         target.on('click',function(){
             Meet.showUserMeetMobile();
         });
-    }
+    },
+
+    _eventClickProfileNavMenu: function() {
+        var target = $('.profile-trigger'),
+            self = this;
+
+        target.on('click',function(){
+            $('.modal').modal('hide');
+            User_Profile.initialize();
+        });
+    },
+
+    CustomScrollBar: function(taget,options){
+        options = (options) ? options : {
+                theme:"dark"
+            };
+
+        taget.mCustomScrollbar(options);
+    },
 };
