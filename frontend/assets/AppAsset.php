@@ -41,7 +41,8 @@ class AppAsset extends AssetBundle
         'css/desktop/marker_popup.css',
         'css/desktop/dropdown_avatar.css',
         'css/desktop/landing_page.css',
-        'css/desktop/cover_page.css'
+        'css/desktop/cover_page.css',
+        'css/desktop/profile.css',
     ];
     public $js = [
         'js/lib/underscore.js',
@@ -57,6 +58,7 @@ class AppAsset extends AssetBundle
         'js/controller/meet.js',
         'js/controller/template.js',
         'js/controller/profile.js',
+        'js/controller/user_profile.js',
         'js/controller/meet_setting.js',
         'js/controller/create_post.js',
         'js/controller/group.js',

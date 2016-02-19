@@ -42,5 +42,6 @@
 <?= $this->render('partial/reset_password');?>
 <?= $this->render('partial/popup_chat');?>
 <?= $this->render('partial/landing_page');?>
+<?= $this->render('partial/profile');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>

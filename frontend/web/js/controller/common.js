@@ -21,6 +21,8 @@ var Common = {
 
         //init nav login btn. open login modal box on desktop
         Common.eventLoginTrigger();
+
+        Common._eventClickProfileNavMenu();
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
@@ -58,6 +60,7 @@ var Common = {
             Meet.showUserMeetMobile();
         });
     },
+
     eventLoginTrigger: function() {
         var target = $(Common.contexts.loginTrigger, Common.contexts.boxNavigation);
         target.unbind();
@@ -67,5 +70,23 @@ var Common = {
                 Login.initialize();
             }
         });
-    }
+    },
+
+    _eventClickProfileNavMenu: function() {
+        var target = $('.profile-trigger'),
+            self = this;
+
+        target.on('click',function(){
+            $('.modal').modal('hide');
+            User_Profile.initialize();
+        });
+    },
+
+    CustomScrollBar: function(taget,options){
+        options = (options) ? options : {
+                theme:"dark"
+            };
+
+        taget.mCustomScrollbar(options);
+    },
 };

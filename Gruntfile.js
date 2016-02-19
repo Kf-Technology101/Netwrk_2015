@@ -28,6 +28,7 @@ module.exports = function(grunt) {
           "frontend/web/css/desktop/dropdown_avatar.css": "frontend/web/less/desktop/dropdown_avatar.less",
           "frontend/web/css/desktop/landing_page.css": "frontend/web/less/desktop/landing_page.less",
           "frontend/web/css/desktop/cover_page.css": "frontend/web/less/desktop/cover_page.less",
+          "frontend/web/css/desktop/profile.css": "frontend/web/less/desktop/profile.less",
           // CSS on Mobile
           "frontend/web/css/mobile/landing.css": "frontend/web/less/mobile/landing.less",
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
