@@ -6,6 +6,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
 use yii\web\Cookie;
+use yii\widgets\ActiveForm;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -85,6 +86,12 @@ if (isset($cookies["isCoverPage"])) {
           <i class="navigation-icon ci-meet"></i>
           <div class="navigation-text">Meet</div>
         </button>
+        <?php if (Yii::$app->user->isGuest):?>
+          <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
+            <i class="navigation-icon fa fa-sign-in"></i>
+            <div class="navigation-text">Login</div>
+          </a>
+        <?php endif; ?>
       </div>
     </div>
     </section>

@@ -6,13 +6,21 @@ var Common = {
         'boxNavigation': '.box-navigation',
         'btnExplore': '.btn-explore',
         'chatInboxNavBtnMobile': '#chat_inbox_nav_btn_mobile',
-        'btnNavMeetMobile' : '#btn_nav_meet_mobile'
+        'btnNavMeetMobile' : '#btn_nav_meet_mobile',
+        'loginTrigger' : '.login-trigger'
     },
 
     initialize: function() {
         Common.eventClickExplore();
+
+        //init the nav chat inbox for mobile
         Common.eventClickChatInboxBtnMobile();
+
+        //init nav meet btn on mobile
         Common.eventClickMeetBtnMobile();
+
+        //init nav login btn. open login modal box on desktop
+        Common.eventLoginTrigger();
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
@@ -48,6 +56,16 @@ var Common = {
         target.unbind();
         target.on('click',function(){
             Meet.showUserMeetMobile();
+        });
+    },
+    eventLoginTrigger: function() {
+        var target = $(Common.contexts.loginTrigger, Common.contexts.boxNavigation);
+        target.unbind();
+        target.on("click", function() {
+            if(isGuest){
+                $('.modal').modal('hide');
+                Login.initialize();
+            }
         });
     }
 };

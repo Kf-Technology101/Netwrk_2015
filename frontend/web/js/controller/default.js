@@ -166,6 +166,8 @@ var Default ={
                 $('#nav_wrapper #account_nav_wrapper').remove();
                 $('#nav_wrapper').append(append_html);
             });
+            //Hide the sign in button from nav
+            $(Common.contexts.loginTrigger, Common.contexts.boxNavigation).hide();
         }
     },
 

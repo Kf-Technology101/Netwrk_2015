@@ -80,6 +80,12 @@ if (isset($cookies["isCoverPage"])) {
                     <i class="navigation-icon ci-meet"></i>
                     <span class="navigation-text">Meet</span>
                 </button>
+                <?php if (Yii::$app->user->isGuest):?>
+                    <button type="button" class="btn btn-default login-trigger">
+                        <i class="navigation-icon fa fa-sign-in"></i>
+                        <div class="navigation-text">Login</div>
+                    </button>
+                <?php endif; ?>
             </div>
         </div>
 

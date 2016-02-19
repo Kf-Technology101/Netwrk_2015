@@ -17,8 +17,9 @@
 	</div>
 	<div class="ld-modal-footer">
 		<!--<div class="landing-btn btn-meet">Meet</div>-->
-		<div class="landing-btn btn-my-community">My Community</div>
 		<div class="landing-btn btn-explore">Explore</div>
+		<div class="landing-btn btn-my-community">My Community</div>
+		<div class="landing-btn btn-explore">Help</div>
 	</div>
 </div>
 <script id="landing_page" type="text/x-underscore-template">
