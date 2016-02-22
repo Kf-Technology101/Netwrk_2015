@@ -43,6 +43,7 @@ class AppAsset extends AssetBundle
         'css/desktop/landing_page.css',
         'css/desktop/cover_page.css',
         'css/desktop/profile.css',
+        'css/desktop/password_setting.css',
     ];
     public $js = [
         'js/lib/underscore.js',
@@ -59,6 +60,7 @@ class AppAsset extends AssetBundle
         'js/controller/template.js',
         'js/controller/profile.js',
         'js/controller/user_profile.js',
+        'js/controller/password_setting.js',
         'js/controller/meet_setting.js',
         'js/controller/create_post.js',
         'js/controller/group.js',
