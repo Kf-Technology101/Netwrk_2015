@@ -618,7 +618,7 @@
 
 					if (Map.center_marker != null) Map.center_marker.setMap(null);
 
-					var img = './img/icon/pale-blue-dot.png';
+					var img = '/img/icon/pale-blue-dot.png';
 					Map.center_marker = new google.maps.Marker({
 						position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
 						map: map,
