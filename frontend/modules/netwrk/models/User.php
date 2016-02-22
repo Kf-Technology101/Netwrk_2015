@@ -94,13 +94,13 @@ class User extends ActiveRecord implements IdentityInterface
             // password rules
             [['newPassword'], 'string', 'min'=> 8, 'max'=> 255,'message'=> 'Password should contain at least 8 characters.'],
             [['newPassword'], 'filter', 'filter' => 'trim'],
-            [['newPassword'], 'required', 'on' => ['register', 'reset'],'message'=>'Password should contain at least 8 characters.'],
-            [['newPasswordConfirm'], 'required', 'on' => ['reset']],
+            [['newPassword'], 'required', 'on' => ['register', 'reset', 'password_setting'],'message'=>'Password should contain at least 8 characters.'],
+            [['newPasswordConfirm'], 'required', 'on' => ['reset', 'password_setting']],
             [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'message' => 'Passwords do not match'],
 
             // account page
-            [['currentPassword'], 'required', 'on' => ['account']],
-            [['currentPassword'], 'validateCurrentPassword', 'on' => ['account']],
+            [['currentPassword'], 'required', 'on' => ['account', 'password_setting']],
+            [['currentPassword'], 'validateCurrentPassword', 'on' => ['account', 'password_setting']],
 
             // admin crud rules
             [['role_id', 'status'], 'required', 'on' => ['admin']],

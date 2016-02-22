@@ -93,7 +93,7 @@
               <i class="fa fa-gears"></i>
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
-              <li class=''><a><i class="fa fa-key"></i> Password setting</a></li>
+              <li class=''><a href="javascript:" id="password_setting"><i class="fa fa-key"></i> Password setting</a></li>
               <li class=''><a><i class="fa fa-search"></i> Search setting</a></li>
               <li class=''><a><i class='fa fa-user'></i> My profile info</a></li>
               <li class=''><a href="<?= Url::base(true); ?>/netwrk/user/logout"><i class="fa fa-power-off"></i> Sign Out</a></li>

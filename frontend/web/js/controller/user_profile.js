@@ -28,6 +28,7 @@ var User_Profile = {
         User_Profile.resetProfile();
         User_Profile.getProfileInfo();
         User_Profile.ShowModalProfile();
+        User_Profile._eventClickPasswordSetting();
     },
 
     resetProfile: function(){
@@ -38,7 +39,7 @@ var User_Profile = {
         var self = this,
             profile_data = $('#profile_info');
 
-        Ajax.userprofile().then(function(data){
+        Ajax.getUserProfile().then(function(data){
             var json = $.parseJSON(data);
             User_Profile.data = json;
 
@@ -137,7 +138,7 @@ var User_Profile = {
                     event.preventDefault();
                     var formData = new FormData(this);
 
-                    Ajax.upload_image(formData).then(function(data){
+                    Ajax.uploadProfileImage(formData).then(function(data){
                         var json = $.parseJSON(data);
                         User_Profile.img.images = json.data_image;
                         User_Profile.reloadProfilePicture();
@@ -201,5 +202,19 @@ var User_Profile = {
         $('.modal-backdrop.in').click(function(e) {
             profileModal.modal('hide');
         });
-    }
+    },
+
+    _eventClickPasswordSetting: function() {
+        var target = $('#password_setting'),
+            self = this;
+
+        target.unbind();
+        target.click(function(){
+            if(isMobile){
+            } else {
+                $('.modal').modal('hide');
+                Password_Setting.initialize();
+            }
+        });
+    },
 };
