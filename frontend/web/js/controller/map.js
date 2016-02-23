@@ -283,7 +283,7 @@
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
-		        	// infowindow.close();
+		        	setTimeout(function(){infowindow.close();}, 600);
 		        });
 
 	          	google.maps.event.addListener(infowindow, 'domready', function() {
@@ -327,7 +327,7 @@
 		        	sessionStorage.lat = marker.position.lat();
 		        	sessionStorage.lng = marker.position.lng();
 		        	if(!isMobile){
-		            	infowindow.close();
+		            	setTimeout(function(){infowindow.close();}, 600);
 		          	}
 		          	Topic.initialize(marker.city_id);
 		        };
@@ -442,7 +442,7 @@
 	      	google.maps.event.addListener(marker, 'click', (function(marker) {
 				return function(){
 					if(!isMobile){
-						infowindow.close();
+						setTimeout(function(){infowindow.close();}, 600);
 					}
 					Topic.init(marker.city_id);
 				};
@@ -465,7 +465,7 @@
 		    });
 
 		    google.maps.event.addListener(marker, 'mouseout', function() {
-		      // infowindow.close();
+		      setTimeout(function(){infowindow.close();}, 600);
 		    });
 
 			google.maps.event.addListener(infowindow, 'domready', function() {
