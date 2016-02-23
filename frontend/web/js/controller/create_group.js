@@ -144,7 +144,7 @@ var Create_Group={
         $("#group_name").val(Create_Group.params.name);
         $("#dropdown-permission").html(Create_Group.params.permission == 2 ? "Private" : "Public");
         Create_Group.RefreshUsersList();
-        parent.modal('show');
+        parent.modal('show').removeAttr("style").css("display", "block");
 
         $('.group-permission li').each(function() {
             $(this).unbind().click(function(e) {
