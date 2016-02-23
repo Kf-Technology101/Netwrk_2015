@@ -611,6 +611,12 @@
 	  	},
 
 		requestPositionFunction: function(map) {
+			if (map.getZoom() != 18) {
+				if (typeof Map.center_marker != "undefined" && Map.center_marker != null) {
+					Map.center_marker.setMap(null);
+				}
+				return;
+			}
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 
@@ -674,6 +680,10 @@
 				Map.requestPositionFunction(map);
 			}, 30000);
 			Map.requestPositionFunction(map);
+			google.maps.event.addListener(map, 'bounds_changed', function() {
+				console.log(map.getZoom());
+				Map.requestPositionFunction(map);
+			});
 		},
 
 		CreateLocationGroup: function() {
