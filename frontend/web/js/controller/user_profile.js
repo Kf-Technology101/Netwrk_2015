@@ -1,5 +1,10 @@
 var User_Profile = {
     data:{},
+    templateData:{
+        groups:{},
+        topics:{},
+        posts:{}
+    },
     params:{
         age: 0,
         work: '',
@@ -8,6 +13,24 @@ var User_Profile = {
         lat:'',
         lng:''
     },
+    list:{
+        post:{
+            paging:1,
+            status_paging: 1,
+            loaded: 0
+        },
+        view:{
+            paging:1,
+            status_paging: 1,
+            loaded: 0
+        },
+        recent:{
+            paging:1,
+            status_paging: 1,
+            loaded: 0
+        }
+    },
+    tabCurrent: '',
     img:{
         image:''
     },
@@ -27,6 +50,10 @@ var User_Profile = {
     initialize: function(){
         User_Profile.resetProfile();
         User_Profile.getProfileInfo();
+
+        //Init the recent activities button group and get data according to tab.
+        User_Profile.getDataOnTab();
+
         User_Profile.ShowModalProfile();
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
@@ -232,4 +259,82 @@ var User_Profile = {
             }
         });
     },
+
+    getTemplateGroupInfo: function(parent,target,callback){
+        var template = _.template(target.html());
+        var append_html = template({groups: User_Profile.templateData.groups});
+        parent.append(append_html);
+
+        if(_.isFunction(callback)){
+            callback();
+        }
+    },
+
+    //set selected navigation like group, topic or post as active.
+    setTabActive: function(){
+        var target = $('.navigation-btn-group', '.profile-activity-wrapper');
+
+        //Remove active class from button.
+        target.find('.btn').each(function(){
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active');
+            }
+        });
+
+        //Check profiles current tab and set selected tab active.
+        switch(Profile.tab_current) {
+            case 'post':
+                target.find('.post').addClass('active');
+                break;
+            case 'topic':
+                target.find('.topic').addClass('active');
+                break;
+            case 'group':
+                target.find('.group').addClass('active');
+                break;
+        }
+    },
+
+    //Show group information of users
+    ShowGroups: function(){
+        var self = this;
+        var profileGroupInfoWrapper = $('#profile_group_info_wrapper');
+        var templateData = $('#profile_group_info');
+        var params = {'filter': 'recent'};
+
+        //show tamplate
+        profileGroupInfoWrapper.removeClass('hidden');
+
+        //set tab current as group
+        Profile.tab_current = 'group';
+        User_Profile.setTabActive();
+
+        Ajax.show_groups(params).then(function(data){
+            var json = $.parseJSON(data);
+
+            //assign ajax data to template data
+            User_Profile.templateData.groups = json.data;
+
+            if (json.data.length > 0) {
+                profileGroupInfoWrapper.scrollTop(0);
+                //hide no data section
+                profileGroupInfoWrapper.find('.no-data').hide();
+                User_Profile.getTemplateGroupInfo(profileGroupInfoWrapper, templateData);
+            }
+        });
+    },
+
+    getDataOnTab: function(){
+        switch(Profile.tab_current) {
+            case 'post':
+                Topic_Group.ShowFeedPage();
+                break;
+            case 'topic':
+                Topic_Group.ShowTopic_GroupPage();
+                break;
+            case 'group':
+                User_Profile.ShowGroups();
+                break;
+        }
+    }
 };
