@@ -277,13 +277,14 @@
 
 		        google.maps.event.addListener(marker, 'mouseover', function() {
 			        // infowindow.setContent(e[0]);
+			        clearTimeout(Map.timeout);
 			        infowindow.open(Map.map, this);
 			        Map.onhoverInfoWindow(e.id,marker);
 			        Map.OnEventInfoWindow(e);
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
-		        	setTimeout(function(){infowindow.close();}, 600);
+		        	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
 		        });
 
 	          	google.maps.event.addListener(infowindow, 'domready', function() {
@@ -327,7 +328,7 @@
 		        	sessionStorage.lat = marker.position.lat();
 		        	sessionStorage.lng = marker.position.lng();
 		        	if(!isMobile){
-		            	setTimeout(function(){infowindow.close();}, 600);
+		            	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
 		          	}
 		          	Topic.initialize(marker.city_id);
 		        };
@@ -442,7 +443,7 @@
 	      	google.maps.event.addListener(marker, 'click', (function(marker) {
 				return function(){
 					if(!isMobile){
-						setTimeout(function(){infowindow.close();}, 600);
+						Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
 					}
 					Topic.init(marker.city_id);
 				};
@@ -465,7 +466,7 @@
 		    });
 
 		    google.maps.event.addListener(marker, 'mouseout', function() {
-		      setTimeout(function(){infowindow.close();}, 600);
+		    	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
 		    });
 
 			google.maps.event.addListener(infowindow, 'domready', function() {
