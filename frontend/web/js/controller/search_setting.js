@@ -22,14 +22,24 @@ var Search_Setting={
         if(isMobile) {
 
         } else {
-            console.log('Search setting initialized');
             Search_Setting.resetPage();
+            Search_Setting.onClickBack();
             Search_Setting.getSearchSetting();
             Search_Setting.ShowModalSearchSetting();
-            /*Meet_setting.reset_page();
-             Meet_setting._init();
-             Meet_setting.get_setting();*/
         }
+    },
+
+    onClickBack: function(){
+        var parent = Search_Setting.modal.find('.back-page span');
+
+        parent.unbind();
+        parent.click(function(){
+            if(isMobile){
+            } else {
+                $('.modal').modal('hide');
+                User_Profile.initialize();
+            }
+        });
     },
 
     setDefaultBtn: function(){
