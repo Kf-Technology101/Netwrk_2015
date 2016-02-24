@@ -44,5 +44,6 @@
 <?= $this->render('partial/landing_page');?>
 <?= $this->render('partial/profile');?>
 <?= $this->render('partial/password_setting');?>
+<?= $this->render('partial/search_setting');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>

@@ -690,6 +690,47 @@ var Ajax ={
         return defer.promise();
     },
 
+    getSearchSetting: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/setting/get-user-setting";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    updateSearchSetting: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/setting/update-user-setting";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    // TODO : Need to remove from this after completion on profile task
     get_setting: function(params){
         var url,defer = $.Deferred();
 
@@ -737,6 +778,7 @@ var Ajax ={
 
         return defer.promise();
     },
+    // TODO : Need to remove upto this after completion on profile task
 
     new_topic: function(params){
         var url,defer = $.Deferred();

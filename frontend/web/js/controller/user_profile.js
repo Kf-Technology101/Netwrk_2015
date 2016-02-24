@@ -29,6 +29,7 @@ var User_Profile = {
         User_Profile.getProfileInfo();
         User_Profile.ShowModalProfile();
         User_Profile._eventClickPasswordSetting();
+        User_Profile._eventClickSearchSetting();
     },
 
     resetProfile: function(){
@@ -214,6 +215,20 @@ var User_Profile = {
             } else {
                 $('.modal').modal('hide');
                 Password_Setting.initialize();
+            }
+        });
+    },
+
+    _eventClickSearchSetting: function() {
+        var target = $('#search_setting'),
+            self = this;
+
+        target.unbind();
+        target.click(function(){
+            if(isMobile){
+            } else {
+                $('.modal').modal('hide');
+                Search_Setting.initialize();
             }
         });
     },
