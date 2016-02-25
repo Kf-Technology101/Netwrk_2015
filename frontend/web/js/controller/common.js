@@ -76,6 +76,7 @@ var Common = {
         var target = $('.profile-trigger'),
             self = this;
 
+        target.unbind();
         target.on('click',function(){
             $('.modal').modal('hide');
             User_Profile.initialize();
