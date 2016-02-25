@@ -3,7 +3,8 @@ var User_Profile = {
     templateData:{
         groups:{},
         topics:{},
-        posts:{}
+        posts:{},
+        items:{}
     },
     params:{
         age: 0,
@@ -30,7 +31,7 @@ var User_Profile = {
             loaded: 0
         }
     },
-    tabCurrent: '',
+    tab_current: 'group',
     img:{
         image:''
     },
@@ -51,12 +52,15 @@ var User_Profile = {
         User_Profile.resetProfile();
         User_Profile.getProfileInfo();
 
+        User_Profile.OnClickTabBtn();
+
         //Init the recent activities button group and get data according to tab.
         User_Profile.getDataOnTab();
 
         User_Profile.ShowModalProfile();
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
+
     },
 
     resetProfile: function(){
@@ -269,6 +273,24 @@ var User_Profile = {
             callback();
         }
     },
+    getTemplateTopicInfo: function(parent,target,callback){
+        var template = _.template(target.html());
+        var append_html = template({topics: User_Profile.templateData.topics});
+        parent.append(append_html);
+
+        if(_.isFunction(callback)){
+            callback();
+        }
+    },
+    getTemplatePostInfo: function(parent,target,callback){
+        var template = _.template(target.html());
+        var append_html = template({posts: User_Profile.templateData.posts});
+        parent.append(append_html);
+
+        if(_.isFunction(callback)){
+            callback();
+        }
+    },
 
     //set selected navigation like group, topic or post as active.
     setTabActive: function(){
@@ -282,7 +304,7 @@ var User_Profile = {
         });
 
         //Check profiles current tab and set selected tab active.
-        switch(Profile.tab_current) {
+        switch(User_Profile.tab_current) {
             case 'post':
                 target.find('.post').addClass('active');
                 break;
@@ -297,16 +319,16 @@ var User_Profile = {
 
     //Show group information of users
     ShowGroups: function(){
-        var self = this;
-        var profileGroupInfoWrapper = $('#profile_group_info_wrapper');
+        var template = $('#recent_activity_container');
         var templateData = $('#profile_group_info');
         var params = {'filter': 'recent'};
 
         //show tamplate
-        profileGroupInfoWrapper.removeClass('hidden');
+        template.removeClass('hidden');
+        template.find('.activity-details').html('');
 
         //set tab current as group
-        Profile.tab_current = 'group';
+        User_Profile.tab_current = 'group';
         User_Profile.setTabActive();
 
         Ajax.show_groups(params).then(function(data){
@@ -316,21 +338,103 @@ var User_Profile = {
             User_Profile.templateData.groups = json.data;
 
             if (json.data.length > 0) {
-                profileGroupInfoWrapper.scrollTop(0);
+                template.scrollTop(0);
                 //hide no data section
-                profileGroupInfoWrapper.find('.no-data').hide();
-                User_Profile.getTemplateGroupInfo(profileGroupInfoWrapper, templateData);
+                template.find('.no-data').hide();
+                User_Profile.getTemplateGroupInfo(template, templateData);
             }
         });
     },
 
-    getDataOnTab: function(){
-        switch(Profile.tab_current) {
+    //Show Topics information of users
+    ShowTopics: function(){
+        var template = $('#recent_activity_container');
+        var templateData = $('#profile_topic_info');
+        var params = {'filter': 'recent'};
+
+        //show tamplate
+        template.removeClass('hidden');
+        template.find('.activity-details').html('');
+
+        //set tab current as group
+        User_Profile.tab_current = 'topic';
+        User_Profile.setTabActive();
+
+        Ajax.show_user_topics(params).then(function(data){
+            var json = $.parseJSON(data);
+
+            //assign ajax data to template data
+            User_Profile.templateData.topics = json.data;
+
+            if (json.data.length > 0) {
+                template.scrollTop(0);
+                //hide no data section
+                template.find('.no-data').hide();
+                User_Profile.getTemplateTopicInfo(template, templateData);
+            }
+        });
+    },
+    //Show Topics information of users
+    ShowPosts: function(){
+        var template = $('#recent_activity_container');
+        var templateData = $('#profile_post_info');
+        var params = {'filter': 'recent'};
+
+        //show tamplate
+        template.removeClass('hidden');
+        template.find('.activity-details').html('');
+
+        //set tab current as group
+        User_Profile.tab_current = 'post';
+        User_Profile.setTabActive();
+
+        Ajax.show_user_posts(params).then(function(data){
+            var json = $.parseJSON(data);
+
+            //assign ajax data to template data
+            User_Profile.templateData.posts = json.data;
+
+            if (json.data.length > 0) {
+                template.scrollTop(0);
+                //hide no data section
+                template.find('.no-data').hide();
+                User_Profile.getTemplatePostInfo(template, templateData);
+            }
+        });
+    },
+
+    OnClickTabBtn: function () {
+        var Context = '.recent_activities_wrapper',
+            Topic = '.topic',
+            Group = '.group',
+            Post  = '.post';
+
+        $(Topic, Context).unbind();
+        $(Topic, Context).on('click', function(){
+            User_Profile.tab_current = 'topic';
+            User_Profile.getDataOnTab();
+        });
+
+        $(Group, Context).unbind();
+        $(Group, Context).on('click', function(){
+            User_Profile.tab_current = 'group';
+            User_Profile.getDataOnTab();
+        });
+
+        $(Post, Context).unbind();
+        $(Post, Context).on('click', function(){
+            User_Profile.tab_current = 'post';
+            User_Profile.getDataOnTab();
+        });
+
+    },
+    getDataOnTab: function() {
+        switch(User_Profile.tab_current) {
             case 'post':
-                Topic_Group.ShowFeedPage();
+                User_Profile.ShowPosts();
                 break;
             case 'topic':
-                Topic_Group.ShowTopic_GroupPage();
+                User_Profile.ShowTopics();
                 break;
             case 'group':
                 User_Profile.ShowGroups();

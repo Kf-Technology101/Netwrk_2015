@@ -35,14 +35,13 @@
                     </p>
                 </article>
 
-                <section>
+                <section class="recent_activities_wrapper">
                     <div class="activity-header pull-left">Recent Activities</div>
                     <div class="seperator-line pull-right">
                         <hr>
                     </div>
                     <div class="clearfix form-group"></div>
-                </section>
-                <section>
+
                     <article class="row">
                         <div class="col-sm-6">
                             <div role="group" class="btn-group btn-group-default navigation-btn-group">
@@ -63,17 +62,12 @@
                             </div>
                         </div>
                     </article>
-                    <article>
-                        <div id="profile_group_info_wrapper" class="hidden" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                            <p class="no-data">There is no data available yet</p>
+                    <article class="">
 
-                        </div>
-                        <div id="profile_posts_info_wrapper" class="hidden" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                        <div id="recent_activity_container" class="hidden" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                             <p class="no-data">There is no data available yet</p>
                         </div>
-                        <div id="profile_topics_info_wrapper" class="hidden" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                            <p class="no-data">There is no data available yet</p>
-                        </div>
+
                     </article>
                 </section>
             </div>
@@ -156,7 +150,7 @@
     </div>
 </script>
 <script id="profile_group_info" type="text/x-underscore-template">
-    <div class="table-responsive group-details">
+    <div class="table-responsive group-details activity-details">
         <table class="table">
             <thead>
             <tr>
@@ -178,6 +172,64 @@
                             </span>
                     </td>
                 </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</script>
+
+<script id="profile_topic_info" type="text/x-underscore-template">
+    <div class="table-responsive topic-details activity-details">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-xs-8"></th>
+                <th class="col-xs-4"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% _.each(topics,function(group){ %>
+            <tr>
+                <td><a href="javascript:"><b><%= group.title %></b></a></td>
+                <td class="topic-actions text-right">
+                    <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
+                    <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                    <span class="date-details">
+                        <%= group.created_at %>
+                    </span>
+                </td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</script>
+
+<script id="profile_post_info" type="text/x-underscore-template">
+    <div class="table-responsive post-details activity-details">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-xs-8"></th>
+                <th class="col-xs-4"></th>
+                <th class="col-xs-4"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% _.each(posts,function(item){ %>
+            <tr>
+                <td>
+                    <div class="post-title"><a href="javascript:"><b><%= item.title %></b></a></div>
+                    <div class="post-content"><%= item.content %></div>
+                </td>
+                <td class="topic-actions text-right">
+                    <div class="post-date"><%= _.date(y, m, d, [h, m, s])item.created_at %></div>
+                    <div class="post-actions text-right">
+                        <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
+                        <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                    </div>
+                </td>
+            </tr>
             <% }); %>
             </tbody>
         </table>
