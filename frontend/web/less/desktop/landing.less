@@ -76,6 +76,40 @@
           display: block;
         }
       }
+      .navbar-right {
+        margin: 0;
+        position: fixed;
+        right: 0;
+        top: 50%;
+        margin-top: -80px;
+        .btn {
+          float: none;
+          display: block;
+          border-radius: 0;
+          border-right: 0;
+          border-bottom: 1px solid #fff;
+          height: 40px;
+          margin-right: 0;
+          margin-left: 0;
+          &:first-child {
+            border-radius: 4px 0 0;
+          }
+          &:last-child {
+            border-radius: 0 0 0 4px;
+          }
+        }
+
+        .profile-dropdown {
+          margin-left: 0;
+          .btn {
+            border-radius: 0 0 0 4px;
+          }
+          .dropdown-menu {
+            right: 60px;
+            top: -3px;
+          }
+        }
+      }
     }
   }
   .menu_top {
