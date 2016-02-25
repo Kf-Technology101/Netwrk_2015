@@ -223,7 +223,7 @@
                     <div class="post-content"><%= item.content %></div>
                 </td>
                 <td class="topic-actions text-right">
-                    <div class="post-date"><%= _.date(y, m, d, [h, m, s])item.created_at %></div>
+                    <div class="post-date"><%= item.created_at %></div>
                     <div class="post-actions text-right">
                         <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
                         <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
