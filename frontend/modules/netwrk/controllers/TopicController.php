@@ -191,6 +191,7 @@ class TopicController extends BaseController
 
     public function actionTopicPage() {
         $city = $_GET['city'];
+        $title = @Yii::$app->request->get('title');
 
         $object = array();
 
@@ -201,7 +202,8 @@ class TopicController extends BaseController
             $object = array(
                 'city_name'=> $name,
                 'zipcode'=> $cty->zip_code,
-                'status'=> 1
+                'status'=> 1,
+                'title' => $title
                 );
         }else{
 
