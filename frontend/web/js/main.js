@@ -3,8 +3,9 @@ function get_size_window(){
 }
 
 function set_size_map(w,h){
-  var menu_h = $('.menu_top').height();
-  $('#googleMap').css({'height': h - menu_h,'min-height': h -menu_h});
+  //var menu_h = $('.menu_top').height();
+  //$('#googleMap').css({'height': h - menu_h,'min-height': h -menu_h});
+  $('#googleMap').css({'height': h,'min-height': h});
   // $('.map_content').css({'height': h - menu_h,'width': w});
 }
 
