@@ -34,7 +34,7 @@ class Topic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'title'], 'required'],
+            [['user_id', 'city_id', 'title'], 'required'],
             [['city_id', 'group_id', 'user_id', 'post_count', 'view_count','brilliant_count'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255]

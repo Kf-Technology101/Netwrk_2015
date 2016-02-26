@@ -97,7 +97,13 @@
               <div class="action">
                 <div class="chat"><i class="fa fa-comments"></i>Chat</div>
 
-                <span class="brilliant"><%= e.brilliant_count%></span>
+                <span class="brilliant">
+                  <% if (e.brilliant_count) { %>
+                    <%= e.brilliant_count%>
+                  <%}else{%>
+                    <%= 0 %>
+                  <%}%>
+                </span>
               </div>
             </div>
       <%
@@ -143,9 +149,9 @@
       <%
         _.each(feed.feed,function(e,i){ %>
           <% if ((e.is_post == 1)){ %>
-            <div class="feed-row feed-post" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
+          <div class="feed-row feed-post" data-user="<%= e.user_id %>" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
+            <div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
             <div class="feed-content">
-              <div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
               <div class='post'>
                 <div class='post-title'><%= e.title %></div>
                 <div class='post-content'><%= e.content %></div>

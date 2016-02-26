@@ -1104,6 +1104,23 @@ var Ajax ={
         });
 
         return defer.promise();
-    }
+    },
+
+    redirect_cover_page: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/default/home";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: true,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 }
 
