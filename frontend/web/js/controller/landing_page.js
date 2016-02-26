@@ -235,6 +235,7 @@ var LandingPage = {
 	OnHideModalLanding: function(){
         $(LandingPage.modal).on('hidden.bs.modal',function(e) {
         	LandingPage.ResetData();
+        	$('.logo_netwrk > a').removeClass('landing-shown');
         });
 	},
 
@@ -255,7 +256,6 @@ var LandingPage = {
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').click(function(e) {
             $(LandingPage.modal).modal('hide');
-            $('.logo_netwrk > a').removeClass('landing-shown');
         });
     },
 
