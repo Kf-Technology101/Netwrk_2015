@@ -300,15 +300,17 @@ var Topic = {
         var self = this;
         var parent = $('#item_list_'+self.data.filter);
         var sidebar = $('.map_content .sidebar');
+        console.log(new_params);
 
         if(new_params){
             self.data.zipcode = new_params.zipcode;
+            self.data.name = new_params.name;
         }
         if(city){
             self.data.city = city;
         }
 
-        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
+        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'name': self.data.name, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
         parent.show();
         set_heigth_modal($('#modal_topic'),0);
@@ -662,7 +664,7 @@ var Topic = {
         var parent = $('#modal_topic,#show-topic').find('#item_list_'+self.data.filter);
         var params = {'city': self.data.city, 'filter': self.data.filter,'size': self.data.size,'page':self.list[self.data.filter].paging};
 
-        parent.show();
+        parent.show();   
 
         if (self.list[self.data.filter].paging != self.list[self.data.filter].loaded){
             Ajax.show_topic(params).then(function(data){
@@ -704,9 +706,12 @@ var Topic = {
         var self = this;
         var json = $.parseJSON(data);
         var list_template = _.template($( "#city_name" ).html());
-        var append_html = list_template({city: json.city});
-        Topic.data.city_name = json.city;
-        parent.append(append_html);
+        var append_html = '';
+        if (Topic.data.name) {
+            append_html = list_template({city: Topic.data.name});
+        } else
+            append_html = list_template({city: json.city});
+        parent.html(append_html);
     },
 
     eventClickMeetMobile: function(){

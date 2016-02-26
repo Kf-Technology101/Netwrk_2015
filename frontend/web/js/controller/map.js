@@ -383,6 +383,8 @@
 		        data_marker = $.parseJSON(data);
 	      	});
 
+	      	console.log('Data maker: %o', data_marker);
+	      	console.log('Zoom: %s', Map.map.getZoom());
 	      	Map.initializeMarker(data_marker, Map.map, Map.map.getZoom());
 	  	},
 	  	// Begin code for get university and government place
@@ -625,11 +627,13 @@
 			});
 
 			map.addListener('zoom_changed', function(){
+				console.log('zoom changed help');
 				var data_marker;
 				var currentZoom = map.getZoom();
 				if(isMobile){
 				    sessionStorage.map_zoom = currentZoom;
 				}
+				console.log(currentZoom);
 				if(currentZoom == 18){
 	    			Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: null});
 	    		} else {

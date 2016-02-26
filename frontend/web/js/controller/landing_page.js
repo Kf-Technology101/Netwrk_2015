@@ -66,6 +66,7 @@ var LandingPage = {
 		LandingPage.OnClickExplore();
 		LandingPage.OnClickVote();
 		LandingPage.OnClickChat();
+		LandingPage.onClickHelpLandingDesktop();
 		if(isMobile){
 			LandingPage.FixWidthPostLanding();
 		}
@@ -307,4 +308,32 @@ var LandingPage = {
             $('#modal_landing_page').modal('hide');
         });
     },
+
+    /**
+     * Listen event `click` on Help Button of Landing Page
+     *
+     * @return boolean
+     */
+    onClickHelpLandingDesktop: function() {
+    	// listening event
+    	$('.landing-btn.btn-help').on('click', function(evt){
+    		// prevent other binding
+    		evt.preventDefault();
+    		// begin loading pop-up
+    		// define location
+    		Ajax.get_marker_help().then(function(data){
+    			$(LandingPage.modal).modal('hide');
+	    		var _location = $.parseJSON(data);
+	    		console.log('Help location: %o', _location);
+	    		var _map  = Map.map;
+	    		var _zoom = 18;
+	    		_map.setCenter(new google.maps.LatLng(_location.lat, _location.lng));
+			    _map.setZoom(_zoom);
+			    setTimeout(function(){
+			    	Topic.data.name = 'Netwrk hq';
+			    	Topic.initialize(_location.id, {name: 'Netwrk hq'});}, 500);
+			    Map.initializeMarker(_location, _map, _zoom);
+    		});
+    	})
+    }
 };
