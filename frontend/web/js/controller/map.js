@@ -18,6 +18,7 @@
 	  	zoom7: [],
 	  	zoom12: [],
 	  	timeout: '',
+		zoomBlueDot: 18,
 	  	initialize: function() {
 	  		
 	  		if(isMobile){
@@ -612,8 +613,22 @@
 		    });
 	  	},
 
+		findCurrentZip: function(lat, lng) {
+			$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
+				var len = data.results[0].address_components.length;
+				for (var i = 0; i < len; i++) {
+					if (data.results[0].address_components[i].types[0] == 'postal_code') {
+						// console.log(data);
+						var zip = data.results[0].address_components[i].long_name;
+						console.log("cmzip: ", $("#cm-zip").html());
+						$("#cm-zip span").eq(0).html(zip);
+					}
+				}
+			});
+		},
+
 		requestPositionFunction: function(map) {
-			if (map.getZoom() != 18) {
+			if (map.getZoom() != Map.zoomBlueDot) {
 				if (typeof Map.center_marker != "undefined" && Map.center_marker != null) {
 					Map.center_marker.setMap(null);
 				}
@@ -635,13 +650,24 @@
 						//city_id: parseInt(e.id)
 					});
 
+					google.maps.event.addListener(Map.center_marker, 'dragstart', function(e) {
+						Map.center_marker.setIcon('/img/icon/pale-blue-dot-bg.png');
+					});
+
+					google.maps.event.addListener(Map.center_marker, 'dragend', function(e) {
+						Map.center_marker.setIcon('/img/icon/pale-blue-dot.png');
+						Map.findCurrentZip(Map.center_marker.getPosition().lat(),
+							Map.center_marker.getPosition().lng());
+					});
+
 					var infowindow = new google.maps.InfoWindow({
 						content: ''
 					});
 
 					infowindow.content = '<div id="iw-container" >' +
-						'<div class="iw-title"><span class="toppost">Top Post</span></div>' +
 						'<div class="iw-content">' +
+						'<div class="iw-subTitle" id="cm-coords"></div>' +
+						'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +
 						'<div class="iw-subTitle"><span class="post-title"><a id="create-location-group" class="a-create-group" href="#" onclick="Map.CreateLocationGroup();">Create group</a></span></div>' +
 						'</div>' +
 						'<div class="iw-bottom-gradient"></div>' +
@@ -650,7 +676,15 @@
 					Map.infowindow.push(infowindow);
 					google.maps.event.addListener(Map.center_marker, 'mouseover', function() {
 						// infowindow.setContent(e[0]);
+						Map.findCurrentZip(position.coords.latitude, position.coords.longitude);
 						infowindow.open(map, this);
+						var lat = parseFloat(Map.center_marker.getPosition().lat());
+						var lng = parseFloat(Map.center_marker.getPosition().lng());
+						var dec = (lat - Math.floor(lat)) * 60;
+						var latGrad = Math.round(lat) + "&deg; " + Math.round(dec) + "' " + Math.round((dec - Math.floor(dec)) * 60) + "''";
+						var dec2 = (lng - Math.floor(lng)) * 60;
+						var lngGrad = Math.round(lng) + "&deg; " + Math.round(dec2) + "' " + Math.round((dec2 - Math.floor(dec2)) * 60) + "''";
+						$('#cm-coords').html(latGrad + "<br>" + lngGrad);
 					});
 
 					google.maps.event.addListener(Map.center_marker, 'click', (function() {
@@ -702,7 +736,7 @@
 				data_marker = $.parseJSON(data);
 				console.log(data_marker);
 				$.each(data_marker,function(i,e){
-					var img = './img/icon/map_icon_community_v_2.png';
+					var img = '/img/icon/map_icon_community_v_2.png';
 
 					marker = new google.maps.Marker({
 						position: new google.maps.LatLng(e.lat, e.lng),

@@ -379,11 +379,7 @@ var Ajax ={
     show_groups: function(params){
         var url,defer = $.Deferred();
 
-        if (isMobile) {
-            url = baseUrl +"/netwrk/group/get-groups";
-        }else{
-            url = "netwrk/group/get-groups";
-        }
+        url = "/netwrk/group/get-groups";
 
         $.ajax({
             url: url,
