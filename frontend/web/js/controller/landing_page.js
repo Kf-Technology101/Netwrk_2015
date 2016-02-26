@@ -327,7 +327,10 @@ var LandingPage = {
 	    			}
 		    		var _location = $.parseJSON(data);
 		    		if(isMobile) {
-		    			window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + _location.id + '&title=Netwrk hq';
+		    			sessionStorage.map_zoom = 18;
+		    			sessionStorage.lat = _location.lat;
+		    			sessionStorage.lng = _location.lng;
+		    			window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + _location.id + '&title=Netwrk hq&current=help';
 		    		} else {
 			    		var _map  = Map.map;
 			    		var _zoom = 18;
@@ -339,6 +342,6 @@ var LandingPage = {
 					    Map.initializeMarker(_location, _map, _zoom);
 					}
 	    		});
-    	})
+    	});
     }
 };

@@ -3,7 +3,7 @@
 ?>
 <div id="show-topic" data-city="<?= $city_id ?>" <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'" data-name="'.$data->city_name.'"'; } ?>>
     <div class="header">
-        <div class="back_page">
+        <div class="back_page <?php if($data->title) print 'back_help';?>">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
 
