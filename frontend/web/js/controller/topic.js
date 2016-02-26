@@ -141,6 +141,7 @@ var Topic = {
                 break;
             case 'topic':
                 Topic.ShowTopicPage();
+                Topic.tab_current = 'topic';
                 break;
             case 'groups':
                 Topic.ShowGroupsPage();
@@ -336,7 +337,6 @@ var Topic = {
             keyboard: false
         });
     },
-
 
     OnShowModalPost: function(){
         $('#modal_topic').unbind('shown.bs.modal');
@@ -701,7 +701,6 @@ var Topic = {
             });
         }
     },
-
 
     getTemplate: function(parent,data){
         var self = this;

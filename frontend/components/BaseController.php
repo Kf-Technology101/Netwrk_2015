@@ -2,6 +2,7 @@
 namespace frontend\components;
 
 use yii\web\Controller;
+use \Yii;
 
 class BaseController extends Controller
 {

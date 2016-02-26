@@ -34,7 +34,7 @@ class WsMessages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'msg_type', 'post_type', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'post_id', 'msg_type', 'post_type', 'created_at', 'updated_at'], 'required'],
             [['user_id', 'post_id', 'group_id', 'post_type'], 'integer'],
             [['msg_type'], 'string'],
             [['msg', 'msg_replace'], 'string', 'max' => 255],
@@ -53,7 +53,7 @@ class WsMessages extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'msg' => 'Msg',
             'post_id' => 'Post ID',
-            'group_id' => 'Post ID',
+            'group_id' => 'Group ID',
             'msg_type' => 'Msg Type',
             'post_type' => 'Post Type',
             'first_msg' => 'First Message',
