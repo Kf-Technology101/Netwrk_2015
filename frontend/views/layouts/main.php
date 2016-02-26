@@ -66,8 +66,8 @@ if (isset($cookies["isCoverPage"])) {
             <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
 
-        <div class="box-navigation">
-            <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type navbar-right" role="group" aria-label="...">
+        <div class="box-navigation pull-right">
+            <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
                 <button id="btn_nav_map" type="button" class="btn btn-default btn_nav_map">
                     <i class="navigation-icon fa fa-globe"></i>
                     <span class="navigation-text">Map</span>
