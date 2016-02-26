@@ -213,7 +213,23 @@ var LandingPage = {
         $(LandingPage.parent).on('shown.bs.modal',function(e) {
         	LandingPage.SetSession();
         	LandingPage.GetDataTopLanding();
+			console.log('test landing shown');
+		  	$('.logo_netwrk > a').addClass('landing-shown');
         });
+        // on Click logo when modal was shown
+        $('.logo_netwrk > a').on('click', function(evt){
+        	evt.preventDefault();
+        	var _this = $(this);
+        	if (_this.hasClass('landing-shown')) {
+        		_this.removeClass('landing-shown');
+        		$(LandingPage.modal).modal('hide');
+        		return false;
+        	} else {
+        		var _href = _this.attr('href');
+        		window.location.href = _href;
+        		return true;
+        	}
+        })
 	},
 
 	OnHideModalLanding: function(){
@@ -239,6 +255,7 @@ var LandingPage = {
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').click(function(e) {
             $(LandingPage.modal).modal('hide');
+            $('.logo_netwrk > a').removeClass('landing-shown');
         });
     },
 
