@@ -28,6 +28,9 @@ module.exports = function(grunt) {
           "frontend/web/css/desktop/dropdown_avatar.css": "frontend/web/less/desktop/dropdown_avatar.less",
           "frontend/web/css/desktop/landing_page.css": "frontend/web/less/desktop/landing_page.less",
           "frontend/web/css/desktop/cover_page.css": "frontend/web/less/desktop/cover_page.less",
+          "frontend/web/css/desktop/profile.css": "frontend/web/less/desktop/profile.less",
+          "frontend/web/css/desktop/password_setting.css": "frontend/web/less/desktop/password_setting.less",
+          "frontend/web/css/desktop/search_setting.css": "frontend/web/less/desktop/search_setting.less",
           // CSS on Mobile
           "frontend/web/css/mobile/landing.css": "frontend/web/less/mobile/landing.less",
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
@@ -43,6 +46,7 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/dropdown_avatar.css": "frontend/web/less/mobile/dropdown_avatar.less",
           "frontend/web/css/mobile/landing_page.css": "frontend/web/less/mobile/landing_page.less",
           "frontend/web/css/mobile/cover_page.css": "frontend/web/less/mobile/cover_page.less",
+          "frontend/web/css/mobile/groups.css": "frontend/web/less/mobile/groups.less",
         }
       }
     },

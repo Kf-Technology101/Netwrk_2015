@@ -26,6 +26,9 @@ return [
                 ],
             ],
         ],
+        'session' => [
+            'class' => 'yii\web\Session'
+        ],
     ],
     'params' => $params,
 ];

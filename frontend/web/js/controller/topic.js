@@ -38,6 +38,7 @@ var Topic = {
     modal: '#modal_topic',
     modal_create: '#create_topic',
     tab_current: 'feed',
+    btn_nav_map: '.box-navigation .btn_nav_map',
     init: function(){
         Topic._onclickBack();
         Topic.GetDataOnTab();
@@ -141,6 +142,7 @@ var Topic = {
                 break;
             case 'topic':
                 Topic.ShowTopicPage();
+                Topic.tab_current = 'topic';
                 break;
             case 'groups':
                 Topic.ShowGroupsPage();
@@ -336,7 +338,6 @@ var Topic = {
             keyboard: false
         });
     },
-
 
     OnShowModalPost: function(){
         $('#modal_topic').unbind('shown.bs.modal');
@@ -598,12 +599,12 @@ var Topic = {
 
     _onclickBack: function(){
         if(isMobile){
-            $('#show-topic .back_page span').click(function(){
+            $('#show-topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
                 sessionStorage.show_landing = 1;
                 window.location.href = baseUrl + "/netwrk/default/home";
             })
         }else{
-            $('#modal_topic .back_page span').click(function(){
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
                 $('#modal_topic').modal('hide');
             })
         }
@@ -701,7 +702,6 @@ var Topic = {
             });
         }
     },
-
 
     getTemplate: function(parent,data){
         var self = this;

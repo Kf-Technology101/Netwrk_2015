@@ -1,0 +1,106 @@
+Netwrk Deployment Guideline
+
+1. Clone project from git repo
+
+2. Create virtual host in web server (apache or nginx), with root directory point to /frontend/web
+
+3. Set up Development mode
+
+php init
+> choose option 0
+
+4. Create database and update config in file common/config/main-local
+
+5. Install package
+
+composer install
+
+6. Install grunt
+
+npm install grunt grunt-contrib-less grunt-contrib-watch jit-grunt --save-dev
+
+7. Migrate data
+
+php yii migrate/up --migrationPath=frontend/modules/netwrk/migrations
+
+8. Build asset file
+
+- Go to project vendor, change name of directory bower-assets into bower
+- Run "grunt" command to build less file into css file
+
+9. Deploy Chat Server
+
+9.1 Open Connection Limit
+
+- Check limit for other user
+$ sudo su - root -c 'ulimit -aHS' -s '/bin/bash'
+- Check limits of a running process:
+$ ps aux | grep process-name
+$ cat /proc/XXX/limits
+
+- Edit file: /etc/security/limits.conf . Add the following lines:
+*         hard    nofile      500000
+*         soft    nofile      500000
+root      hard    nofile      500000
+root      soft    nofile      500000
+
+- If it doesn't work, edit file: /etc/sysctl.conf . Add the new line:
+fs.file-max = 2097152
+- Run:
+$ sysctl -p
+
+9.2 Disable XDebug
+
+9.3 Install Libevent
+
+- Install libevent-dev
+$ sudo apt-get install libevent-dev
+
+- Install PHP libevent extension
+(This action will restart Apache server)
+$ sudo apt-get install php-pear
+$ sudo apt-get install php5-dev
+$ sudo apt-get install libcurl3-openssl-dev
+$ sudo pecl install channel://pecl.php.net/libevent-0.1.0
+Add "extension=libevent.so" to php.ini
+
+- Install Supervisor
+$ sudo apt-get install supervisor
+$ cd /etc/supervisor
+$ sudo nano supervisor.conf
+<<<
+[unix_http_server]
+file = /tmp/supervisor.sock
+
+[supervisord]
+logfile          = ./logs/supervisord.log
+logfile_maxbytes = 50MB
+logfile_backups  = 10
+loglevel         = info
+pidfile          = /tmp/supervisord.pid
+nodaemon         = false
+minfds           = 1024
+minprocs         = 200
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl = unix:///tmp/supervisor.sock
+
+[program:ratchet]
+command                 = bash -c "ulimit -n 10000; exec /usr/bin/php /path/to/yii server/run"
+process_name            = Ratchet
+numprocs                = 1
+autostart               = true
+autorestart             = true
+user                    = root
+stdout_logfile          = ./logs/info.log
+stdout_logfile_maxbytes = 1MB
+stderr_logfile          = ./logs/error.log
+stderr_logfile_maxbytes = 1MB
+<<<
+$ sudo supervisord -c supervisor.conf
+
+
+

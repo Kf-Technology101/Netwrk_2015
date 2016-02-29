@@ -154,7 +154,7 @@ var Meet ={
     },
 
     _onClickMeetBack: function(){
-        $('#modal_meet .back_page span').click(function(){
+        $('#modal_meet .back_page span, .box-navigation .btn_nav_map').click(function(){
             $('#modal_meet').modal('hide');
         })
     },

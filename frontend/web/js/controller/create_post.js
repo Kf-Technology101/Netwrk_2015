@@ -23,6 +23,7 @@ var Create_Post={
             Create_Post.eventClickdiscoverMobile();
             Create_Post.postTitleFocus();
             Create_Post.OnClickChatInboxBtnMobile();
+            Default.SetAvatarUserDropdown();
         }else{
             if(isGuest){
                 Login.modal_callback = Post;
@@ -242,7 +243,7 @@ var Create_Post={
     },
 
     onclickBack: function(){
-        var parent = $('#create_post').find('.back_page span');
+        var parent = $('#create_post').find('.back_page span').add($('.box-navigation .btn_nav_map'));
         var city = Create_Post.params.city;
 
         parent.unbind();

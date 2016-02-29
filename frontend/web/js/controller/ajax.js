@@ -542,6 +542,7 @@ var Ajax ={
         return defer.promise();
     },
 
+    // TODO : Need to remove from this after completion on profile task
     userprofile: function(){
         var url,defer = $.Deferred();
 
@@ -610,6 +611,122 @@ var Ajax ={
         return defer.promise();
     },
 
+    // TODO : Need to remove upto this after completion on profile task
+
+    getUserProfile: function(){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/profile/get-profile";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    updateUserProfile: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/profile/update-profile";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    uploadProfileImage:function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/profile/upload-image";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    passwordSetting: function(form){
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/profile/password-setting";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    getSearchSetting: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/setting/get-user-setting";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    updateSearchSetting: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/setting/update-user-setting";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    // TODO : Need to remove from this after completion on profile task
     get_setting: function(params){
         var url,defer = $.Deferred();
 
@@ -657,6 +774,7 @@ var Ajax ={
 
         return defer.promise();
     },
+    // TODO : Need to remove upto this after completion on profile task
 
     new_topic: function(params){
         var url,defer = $.Deferred();
@@ -938,6 +1056,67 @@ var Ajax ={
             error: defer.reject
         });
         return defer.promise();
-    }
+    },
+
+    show_user_topics: function(params) {
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/topic/get-topics-by-user";
+        }else{
+            url = baseUrl +"/netwrk/topic/get-topics-by-user";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    show_user_posts: function(params) {
+        var url,defer = $.Deferred();
+
+        if (isMobile) {
+            url = baseUrl +"/netwrk/post/get-posts-by-user";
+        }else{
+            url = baseUrl +"/netwrk/post/get-posts-by-user";
+        }
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    redirect_cover_page: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/default/home";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: true,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 }
 

@@ -12,7 +12,7 @@
       <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
     </div>
   </div>
-  <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"/></div>
+  <div id="btn_meet" class="btn-meet-lg"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"/></div>
   <div id="googleMap" style=""></div>
 </div>
 <script id="netwrk_place" type="text/x-underscore-template">
@@ -42,5 +42,8 @@
 <?= $this->render('partial/reset_password');?>
 <?= $this->render('partial/popup_chat');?>
 <?= $this->render('partial/landing_page');?>
+<?= $this->render('partial/profile');?>
+<?= $this->render('partial/password_setting');?>
+<?= $this->render('partial/search_setting');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>

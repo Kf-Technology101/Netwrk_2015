@@ -46,6 +46,7 @@ var Post ={
 			Post.LazyLoading();
 			Create_Post.initialize();
 			Default.ShowNotificationOnChat();
+			Post.getBrilliantCode();
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
@@ -58,6 +59,8 @@ var Post ={
 			Post.CustomScrollBar();
 			Post.OnClickBackdrop();
 			Topic.displayPositionModal();
+			Post.getBrilliantCode();
+			Default.onCLickModal();
 		}
 		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
@@ -247,6 +250,7 @@ var Post ={
 		$('#list_post').find('.dropdown-toggle').text(selecFilter);
 		$('#list_post').find('.filter_sidebar td').removeClass('active');
 		$('#list_post').find('.filter_sidebar .post').addClass('active');
+		Post.ResetTabFeed();
 	},
 
 	getNameTopic: function(){
@@ -286,15 +290,20 @@ var Post ={
 	},
 
 	ShowFeedPage: function(){
-		$('#list_post').find('#tab_feed').show();
+		var parent = $('#list_post');
+		parent.find('#tab_feed').show();
 		if(isMobile){
-			$('#list_post').find('span.filter').addClass('visible');
-			$('#list_post').find('span.filter').removeClass('active');
-			$('#list_post').find('.filter_sort').removeClass('active');
-			$('#list_post').find('.container_post').removeClass('open');
+			parent.find('span.filter').addClass('visible');
+			parent.find('span.filter').removeClass('active');
+			parent.find('.filter_sort').removeClass('active');
+			parent.find('.container_post').removeClass('open');
 		}else{
-			$('#list_post').find('.dropdown').addClass('visible');
+			parent.find('.dropdown').addClass('visible');
 		}
+    	//disable btn create topic
+        parent.find('.header .title_page').addClass('on-feed');
+        parent.find('.header .create_post').addClass('on-feed');
+
 		Post.LoadFeedModal();
 	},
 
@@ -307,6 +316,9 @@ var Post ={
 			Post.OnClickPostFeed();
 	        Post.OnClickVoteFeed();
 	        Post.OnClickTopicFeed();
+	        Post.OnClickAvatarTopPostFeed();
+            Post.OnClickAvatarTopFeed();
+            Post.OnClickChatTopPostFeed();
 		});
 		if (isMobile) {
 			LandingPage.FixWidthPostLanding();
@@ -348,6 +360,53 @@ var Post ={
         }
     },
 
+    OnClickAvatarTopPostFeed: function() {
+        Topic.OnClickAvatarFeed($('.top-post').find('.top-post-content .post-row .avatar'));
+    },
+
+    OnClickAvatarTopFeed: function() {
+        Topic.OnClickAvatarFeed($('.top-feed .top-feed-content').find('.feed-post .avatar-poster'));
+    },
+
+    OnClickAvatarFeed: function(target){
+        var avatar = target;
+        avatar.unbind();
+        avatar.on('click', function(e){
+            var user_login = $(e.currentTarget).parent().attr('data-user');
+            if(user_login != UserLogin){
+                if(!isMobile){
+                    Meet.pid = 0;
+                    Meet.ez = user_login;
+                    $('.modal').modal('hide');
+                    Meet.initialize();
+                } else {
+                    window.location.href = baseUrl + "/netwrk/meet?user_id=" + user_login + "&from=discussion";
+                }
+            }
+        });
+    },
+
+    OnClickChatTopPostFeed: function(){
+        var target = $(Post.modal).find('.top-post .action .chat');
+        target.unbind();
+        target.on('click',function(e){
+                var post_id = $(e.currentTarget).parent().parent().attr('data-value'),
+                    post_name = $(e.currentTarget).parent().parent().find('.post-title').text(),
+                    post_content = $(e.currentTarget).parent().parent().find('.post-content').text();
+            if(isMobile){
+                sessionStorage.url = window.location.href;
+                sessionStorage.feed_post = 1;
+                PopupChat.RedirectChatPostPage(post_id, 1, 1);
+            }else{
+                PopupChat.params.post = post_id;
+                PopupChat.params.chat_type = 1;
+                PopupChat.params.post_name = post_name;
+                PopupChat.params.post_description = post_content;
+                PopupChat.initialize();
+            }
+        });
+    },
+
     OnClickPostFeed: function() {
     	var target = $(Post.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
@@ -358,6 +417,7 @@ var Post ={
                     post_content = $(e.currentTarget).find('.post-content').text();
             if(isMobile){
             	sessionStorage.url = window.location.href;
+            	sessionStorage.feed_post = 1;
                 PopupChat.RedirectChatPostPage(post_id, 1, 1);
             }else{
                 PopupChat.params.post = post_id;
@@ -410,14 +470,21 @@ var Post ={
     },
 
 	ShowPostPage: function(){
+		var parent = $('#list_post');
 		if(isMobile){
-			$('#list_post').find('span.filter').removeClass('visible');
+			parent.find('span.filter').removeClass('visible');
 		}else{
-			$('#list_post').find('.dropdown').removeClass('visible');
+			parent.find('.dropdown').removeClass('visible');
 		}
 		$('.container_post .tab').hide();
 		$('#tab_post').show();
+
+    	//disable btn create post
+        parent.find('.header .title_page').removeClass('on-feed');
+        parent.find('.header .create_post').removeClass('on-feed');
+
 		Post.ResetTabPost();
+		Post.ResetTabFeed();
 		Post.GetTabPost();
 	},
 
@@ -429,7 +496,7 @@ var Post ={
 
 	OnclickBack: function(){
 		if (Post.params.by_group) {
-			$('#list_post').find('.back_page span').click(function () {
+			$('#list_post').find('.back_page span').add($('.box-navigation .btn_nav_map')).click(function () {
 				if (isMobile) {
 					window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + Post.params.city;
 				} else {
@@ -438,7 +505,7 @@ var Post ={
 				}
 			});
 		} else {
-			$('#list_post').find('.back_page span').click(function () {
+			$('#list_post').find('.back_page span').add($('.box-navigation .btn_nav_map')).click(function () {
 				if (isMobile) {
 					window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + Post.params.city;
 				} else {
@@ -479,7 +546,7 @@ var Post ={
 	},
 
 	ResetTabPost: function(){
-		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
+		var parent = $('#list_post #tab_post').find('#filter_'+Post.params.filter);
 		$('#tab_post').find('.filter_page').hide();
 		parent.find('.item_post').remove();
 		parent.find('.no-data').show();
@@ -487,9 +554,17 @@ var Post ={
 		Post.list[Post.params.filter].status_paging = 1;
 	},
 
+	ResetTabFeed: function(){
+        var parent = $('#list_post #tab_feed');
+        parent.find('.top-post,.top-topic,.top-feed').remove();
+        parent.find('.no-data').show();
+        Post.tab_current = 'post';
+        Post.feed.paging = 1;
+        Post.feed.status_paging = 1;
+	},
+
 	GetTabPost: function(){
 		var parent = $('#tab_post').find('#filter_'+Post.params.filter);
-
 		Ajax.get_post_by_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
@@ -531,6 +606,12 @@ var Post ={
                 self.tab_current = filter;
                 self.ChangeTabActive(target,$(e.currentTarget));
                 self.GetDataOnTab();
+
+                if(isMobile){
+                	$(window).scrollTop(0);
+		        }else{
+		            $('#list_post').find('.modal-body').mCustomScrollbar("scrollTo",0);
+		        }
             }
         });
     },
@@ -585,5 +666,28 @@ var Post ={
 				Meet.initialize();
 			}
 		});
+	},
+	getBrilliantCode: function(brilliantCount) {
+		var code = '';
+		if (brilliantCount == undefined) {
+			return ;
+		}
+
+		if (brilliantCount >= 200) {
+			code = 'brilliant-yellow';
+		} else if(brilliantCount >= 100 && brilliantCount < 200) {
+			code = 'brilliant-yellow-green';
+		} else if(brilliantCount >= 20 && brilliantCount < 100) {
+			code = 'brilliant-green-blue';
+		} else if(brilliantCount >= -20 && brilliantCount < 20) {
+			code = 'brilliant-blue-violet';
+		} else if(brilliantCount >= -100 && brilliantCount  < -20) {
+			code = 'brilliant-blue-pink';
+		} else if(brilliantCount < -100) {
+			code = 'brilliant-pink';
+		} else {
+			code = 'disable';
+		}
+		return code;
 	}
 };

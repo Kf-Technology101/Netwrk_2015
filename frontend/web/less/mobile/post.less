@@ -193,6 +193,7 @@
 }
 #list_post{
     overflow-y: auto;
+    overflow-x: hidden;
     .header{
         background: #5888ac;
         width: 100%;
@@ -242,12 +243,16 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
+            &.on-feed{
+                width: 80%;
+            }
         }
         .create_post{
             float: left;
             width: 30%;
             height: 40px;
             cursor: pointer;
+            border-left: 1px solid #fff;
             span{
                 color: #fff;
                 font-size: 12px;
@@ -256,6 +261,9 @@
                 i{
                     color: #fff;
                 }
+            }
+            &.on-feed{
+                display: none;
             }
         }
     }
@@ -602,34 +610,34 @@
                 .feed-row.feed-post{
                     padding: 3px 15px;
                     height: 70px;
-                    .feed-content {
-                        .avatar-poster {
-                            width: 40px;
+                    .avatar-poster {
+                        width: 40px;
+                        height: 40px;
+                        max-width: 40px;
+                        max-height: 40px;
+                        float: left;
+                        display: table;
+                        position: relative;
+                        background: #fff;
+                        border-radius: 2px;
+                        border: 1px solid #898989;
+                        .image{
                             height: 40px;
-                            max-width: 40px;
-                            max-height: 40px;
-                            float: left;
-                            display: table;
-                            position: relative;
-                            background: #fff;
-                            border-radius: 2px;
-                            border: 1px solid #898989;
-                            .image{
-                                height: 40px;
-                                width: 40px;
-                                text-align: center;
-                                vertical-align: middle;
-                                display: table-cell;
-                                cursor: pointer;
-                                img{
-                                    margin: auto;
-                                    max-width: 40px;
-                                    width: auto;
-                                    height: auto;
-                                    max-height: 40px;
-                                }
+                            width: 40px;
+                            text-align: center;
+                            vertical-align: middle;
+                            display: table-cell;
+                            cursor: pointer;
+                            img{
+                                margin: auto;
+                                max-width: 40px;
+                                width: auto;
+                                height: auto;
+                                max-height: 40px;
                             }
                         }
+                    }
+                    .feed-content {
                         .post {
                             margin-left: 50px;
                             width: 100%;
@@ -735,6 +743,30 @@
                                 &.disable{
                                     background: url('../../img/icon/brilliant-icon-large-zero-state.png') no-repeat center;
                                     background-size: 40px 35px;
+                                }
+                                &.brilliant-yellow{
+                                    background: url('../../img/icon/brilliant-icons/brilliant-yellow.png') no-repeat center !important;
+                                    background-size: 40px 35px !important;
+                                }
+                                &.brilliant-blue-pink{
+                                    background: url('../../img/icon/brilliant-icons/brilliant-blue-pink.png') no-repeat center !important;
+                                    background-size: 40px 35px !important;
+                                }
+                                &.brilliant-blue-violet{
+                                    background: url('../../img/icon/brilliant-icons/brilliant-blue-violet.png') no-repeat center !important;
+                                    background-size: 40px 35px !important;
+                                }
+                                &.brilliant-green-blue{
+                                    background: url('../../img/icon/brilliant-icons/brilliant-green-blue.png') no-repeat center !important;
+                                    background-size: 40px 35px !important;
+                                }
+                                &.brilliant-pink{
+                                    background: url('../../img/icon/brilliant-icons/brilliant-pink.png') no-repeat center !important;
+                                    background-size: 40px 35px !important;
+                                }
+                                &.brilliant-yellow-green{
+                                    background: url('../../img/icon/brilliant-icons/brilliant-yellow-green.png') no-repeat center !important;
+                                    background-size: 40px 35px !important;
                                 }
                             }
                             p{

@@ -70,11 +70,13 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/create',['city_id' =>$city_id,'data'=> (object)$object]);
+
+        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
     }
 
     public function actionNewTopic() {
         $currentUser = Yii::$app->user->id;
+        $city = $_POST['city'];
         $topic = $_POST['topic'];
         $post = $_POST['post'];
         $message = $_POST['message'];
@@ -305,6 +307,7 @@ class TopicController extends BaseController
                         'created_at' => $value->created_at,
                         'appear_day' => $num_date,
                         'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
+                        'user_id' => $value->item->user_id,
                         'is_post' => 1
                         ];
                 } else {
@@ -332,5 +335,51 @@ class TopicController extends BaseController
             $hash = json_encode($item);
             return $hash;
         }
+    }
+
+    public function actionGetTopicsByUser()
+    {
+        $filter = $_GET['filter'];
+        $pageSize = $_GET['size'];
+        $page = $_GET['page'];
+        $currentUserId = $_GET['user'] ? $_GET['user'] : Yii::$app->user->id;
+
+        $where['user_id'] = $currentUserId;
+
+        if (empty($currentUserId)) {
+            throw new Exception("wrong parametres");
+        }
+
+        switch ($filter) {
+            case 'recent':
+                $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                break;
+            default:
+                $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                break;
+        }
+
+        $countQuery = clone $topices;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+        $topices = $topices->offset($pages->offset)
+          ->limit($pages->limit)
+          ->all();
+
+        $data = [];
+        foreach ($topices as $key => $value) {
+            $topic = array(
+              'id'=> $value->id,
+              'city_id'=>$value->city_id,
+              'title'=>$value->title,
+              'img'=> Url::to('@web/img/icon/timehdpi.png'),
+              'created_at'=>$value->created_at
+            );
+            array_push($data,$topic);
+        }
+
+        $temp = array('data' => $data);
+
+        $hash = json_encode($temp);
+        return $hash;
     }
 }
