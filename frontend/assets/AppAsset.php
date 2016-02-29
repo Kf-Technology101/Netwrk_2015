@@ -45,6 +45,7 @@ class AppAsset extends AssetBundle
         'css/desktop/profile.css',
         'css/desktop/password_setting.css',
         'css/desktop/search_setting.css',
+      'css/desktop/profile_info.css',
     ];
     public $js = [
         'js/lib/underscore.js',
@@ -91,7 +92,8 @@ class AppAsset extends AssetBundle
         'js/controller/popup_chat.js',
         'js/controller/main_ws.js',
         'js/controller/landing_page.js',
-        'js/controller/cover_page.js'
+        'js/controller/cover_page.js',
+        'js/controller/profile_info.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

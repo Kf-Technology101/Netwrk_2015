@@ -60,6 +60,7 @@ var User_Profile = {
         User_Profile.ShowModalProfile();
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
+        User_Profile._eventClickProfileInfo();
 
     },
 
@@ -237,7 +238,7 @@ var User_Profile = {
     },
 
     _eventClickPasswordSetting: function() {
-        var target = $('#password_setting'),
+        var target = $('#password_setting','.user-details-wrapper'),
             self = this;
 
         target.unbind();
@@ -251,7 +252,7 @@ var User_Profile = {
     },
 
     _eventClickSearchSetting: function() {
-        var target = $('#search_setting'),
+        var target = $('#search_setting','.user-details-wrapper'),
             self = this;
 
         target.unbind();
@@ -260,6 +261,20 @@ var User_Profile = {
             } else {
                 $('.modal').modal('hide');
                 Search_Setting.initialize();
+            }
+        });
+    },
+
+    _eventClickProfileInfo: function() {
+        var target = $('#my_profile_info','.user-details-wrapper'),
+            self = this;
+
+        target.unbind();
+        target.click(function(){
+            if(isMobile){
+            } else {
+                $('.modal').modal('hide');
+                ProfileInfo.initialize();
             }
         });
     },
