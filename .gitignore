@@ -8,6 +8,9 @@ frontend/web/css/
 /frontend/web/css/*
 /frontend/web/img/uploads
 /frontend/web/uploads
+backend/config/main.php
+console/config/main.php
+frontend/config/main.php
 
 # yii console command
 /yii
