@@ -1,4 +1,7 @@
 /.idea
+vendor
+/vendor/
+vendor/
 /frontend/web/css
 /frontend/web/css/
 frontend/web/css/
