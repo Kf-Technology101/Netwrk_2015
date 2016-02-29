@@ -49,6 +49,9 @@ class TopicController extends BaseController
         if ($cty){
             $city_id = $cty->id;
             $name = $cty->name;
+            if ($cty->office == 'Ritchey Woods Nature Preserve') {
+                $cty->zip_code = 'Netwrk hq';
+            }
             $object = array(
                 'city_name'=> $name,
                 'status'=> 1
@@ -136,6 +139,9 @@ class TopicController extends BaseController
         $cty = City::findOne($city);
         if(!$cty){
             $zipcode = $_GET['zipcode'];
+        }
+        if ($cty->office == 'Ritchey Woods Nature Preserve') {
+            $cty->zip_code = 'Netwrk hq';
         }
         switch ($filter) {
             case 'recent':
