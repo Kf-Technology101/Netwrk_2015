@@ -221,7 +221,7 @@ var Search_Setting={
     },
 
     getSearchSetting: function(){
-        Ajax.get_setting().then(function(data){
+        Ajax.getSearchSetting().then(function(data){
             var json = $.parseJSON(data);
 
             Search_Setting.setting.age = json.age;
