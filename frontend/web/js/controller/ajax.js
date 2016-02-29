@@ -726,6 +726,24 @@ var Ajax ={
         return defer.promise();
     },
 
+    getProfileBasicInfo: function(){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/profile/get-profile-basic-info";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     // TODO : Need to remove from this after completion on profile task
     get_setting: function(params){
         var url,defer = $.Deferred();

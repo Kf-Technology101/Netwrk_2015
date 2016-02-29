@@ -23,42 +23,7 @@
                 </div>
             </section>
             <div class="profile-basic-info clearfix">
-                <div class="basic-info-section pull-left">
-                    <div class="info-row">
-                        <div class="info-label">Email:</div>
-                        <div class="info-text">shailesh.bonzer@gmail.com</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Home zip:</div>
-                        <div class="info-text">462002</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Marital status:</div>
-                        <div class="info-text">Married</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Education:</div>
-                        <div class="info-text">MCA</div>
-                    </div>
-                </div>
-                <div class="basic-info-section pull-right">
-                    <div class="info-row">
-                        <div class="info-label">Gender:</div>
-                        <div class="info-text">Male</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Date of birth:</div>
-                        <div class="info-text">1987-03-09</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Work:</div>
-                        <div class="info-text">Software Developer</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Hobbies:</div>
-                        <div class="info-text">Music, Bike riding</div>
-                    </div>
-                </div>
+
             </div>
 
             <section class="heading-wrapper bio clearfix">
@@ -68,10 +33,7 @@
                 </div>
             </section>
 
-            <div class="profile-bio-info">
-                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-
-                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+            <div class="profile-bio">
             </div>
         </div>
     </div>
@@ -79,6 +41,44 @@
 </div>
 
 <script id="profile_basic_info" type="text/x-underscore-template">
-
+    <div class="basic-info-section pull-left">
+        <div class="info-row">
+            <div class="info-label">Email:</div>
+            <div class="info-text"><%= data.email %></div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Home zip:</div>
+            <div class="info-text"><%= data.zip %></div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Marital status:</div>
+            <div class="info-text"><%= data.marital_status %></div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Education:</div>
+            <div class="info-text"><%= data.education %></div>
+        </div>
+    </div>
+    <div class="basic-info-section pull-right">
+        <div class="info-row">
+            <div class="info-label">Gender:</div>
+            <div class="info-text"><%= data.gender %></div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Date of birth:</div>
+            <div class="info-text"><%= data.dob %></div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Work:</div>
+            <div class="info-text"><%= data.work %></div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Hobbies:</div>
+            <div class="info-text"><%= data.hobbies %></div>
+        </div>
+    </div>
 </script>
 
+<script id="profile_bio" type="text/x-underscore-template">
+    <%= data.bio %>
+</script>

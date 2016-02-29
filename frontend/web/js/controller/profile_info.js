@@ -1,10 +1,15 @@
 var ProfileInfo = {
     data:{},
     params:{
-        age: 0,
+        email: '',
+        gender: '',
+        zip: 0,
+        dob: 0,
+        marital_status: 'Single',
         work: '',
-        about: '',
-        zipcode:0,
+        education: '',
+        hobbies: '',
+        bio: '',
         lat:'',
         lng:''
     },
@@ -19,9 +24,18 @@ var ProfileInfo = {
     },
     state: 'Indiana',
     modal:$('#modal_profile_info'),
+    profileBasicInfo: $('.profile-basic-info'),
+    profileBio : $('.profile-bio'),
     initialize: function(){
+        ProfileInfo.resetProfileInfo();
         ProfileInfo.onClickBack();
+        ProfileInfo.getProfileBasicInfo();
         ProfileInfo.ShowModalProfileInfo();
+    },
+
+    resetProfileInfo: function(){
+        ProfileInfo.profileBasicInfo.html('');
+        ProfileInfo.profileBio.html('');
     },
 
     onClickBack: function(){
@@ -35,6 +49,42 @@ var ProfileInfo = {
                 User_Profile.initialize();
             }
         });
+    },
+
+    getProfileBasicInfo: function(){
+        var self = this,
+            profile_basic_info = $('#profile_basic_info'),
+            profile_bio = $('#profile_bio');
+
+        Ajax.getProfileBasicInfo().then(function(data){
+            var json = $.parseJSON(data);
+            ProfileInfo.data = json;
+
+            if(ProfileInfo.data.status == 1){
+                ProfileInfo.params.email = json.email;
+                ProfileInfo.params.gender = json.gender;
+                ProfileInfo.params.zip = json.zip;
+                ProfileInfo.params.dob = json.dob;
+                ProfileInfo.params.marital_status = json.marital_status;
+                ProfileInfo.params.work = json.work;
+                ProfileInfo.params.education = json.education;
+                ProfileInfo.params.hobbies = json.hobbies;
+                ProfileInfo.params.bio = json.bio;
+
+                ProfileInfo.getTemplateProfileBasicInfo(ProfileInfo.profileBasicInfo,profile_basic_info);
+                ProfileInfo.getTemplateProfileBasicInfo(ProfileInfo.profileBio,profile_bio);
+            }
+        });
+    },
+
+    getTemplateProfileBasicInfo: function(parent,target,callback){
+        var template = _.template(target.html());
+        var append_html = template({data: ProfileInfo.data});
+        parent.append(append_html);
+
+        if(_.isFunction(callback)){
+            callback();
+        }
     },
 
     ShowModalProfileInfo: function(){

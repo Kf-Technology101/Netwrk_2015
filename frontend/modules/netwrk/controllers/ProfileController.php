@@ -183,6 +183,37 @@ class ProfileController extends BaseController
         $hash = json_encode($data);
         return $hash;
     }
+
+    public function actionGetProfileBasicInfo()
+    {
+        $currentUser = Yii::$app->user->id;
+        $current_date = date('Y-m-d H:i:s');
+        $user = User::find()->where('id ='.$currentUser)->with('profile')->one();
+
+        if($user && $user->profile){
+            $birthday = new \DateTime($user->profile->dob);
+            $birthday = $birthday->format('Y-m-d');
+
+            $info = array(
+              'status' => 1,
+              'email' => $user->email,
+              'gender' => $user->profile->gender,
+              'zip'=> $user->profile->zip_code,
+              'dob'=> $birthday,
+              'marital_status' => 'single',
+              'work'=> $user->profile->work,
+              'education' => 'MCA',
+              'hobbies' => 'Music, Bike riding',
+              'bio'=> $user->profile->about,
+            );
+        }else{
+            $info = array(
+              'status' => 0
+            );
+        }
+        $hash = json_encode($info);
+        return $hash;
+    }
 }
 
 ?>
