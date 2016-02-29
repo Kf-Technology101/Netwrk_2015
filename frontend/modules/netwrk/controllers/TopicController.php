@@ -197,6 +197,9 @@ class TopicController extends BaseController
 
         $cty = City::findOne($city);
         if ($cty){
+            if ($cty->office == 'Ritchey Woods Nature Preserve') {
+                $title = 'Netwrk hq';
+            }
             $city_id = $cty->id;
             $name = $cty->name;
             $object = array(
@@ -206,7 +209,6 @@ class TopicController extends BaseController
                 'title' => $title
                 );
         }else{
-
             $name = $_GET['name'];
             $zip_code = $_GET['zipcode'];
             $lat = $_GET['lat'];

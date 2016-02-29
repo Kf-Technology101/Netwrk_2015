@@ -580,7 +580,7 @@ var Topic = {
     _onclickBack: function(){
         if(isMobile){
             $('#show-topic .back_page span').click(function(){
-                    sessionStorage.show_landing = 1;
+                sessionStorage.show_landing = 1;
                 if($('.back_page').hasClass('back_help')){
                     window.location.href = baseUrl + "/netwrk/default/home?current=help";
                 } else {

@@ -330,7 +330,9 @@ var LandingPage = {
 		    			sessionStorage.map_zoom = 18;
 		    			sessionStorage.lat = _location.lat;
 		    			sessionStorage.lng = _location.lng;
-		    			window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + _location.id + '&title=Netwrk hq&current=help';
+					    setTimeout(function(){
+		    				window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + _location.id + '&current=help';
+					    }, 500);
 		    		} else {
 			    		var _map  = Map.map;
 			    		var _zoom = 18;
