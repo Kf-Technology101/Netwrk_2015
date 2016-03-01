@@ -1,5 +1,8 @@
 var User_Profile = {
     data:{},
+    contexts: {
+        modalProfile: '.modal-profile'
+    },
     templateData:{
         groups:{},
         topics:{},
@@ -325,7 +328,7 @@ var User_Profile = {
 
         //show tamplate
         template.removeClass('hidden');
-        template.find('.activity-details').html('');
+        template.html('');
 
         //set tab current as group
         User_Profile.tab_current = 'group';
@@ -337,12 +340,10 @@ var User_Profile = {
             //assign ajax data to template data
             User_Profile.templateData.groups = json.data;
 
-            if (json.data.length > 0) {
-                template.scrollTop(0);
-                //hide no data section
-                template.find('.no-data').hide();
-                User_Profile.getTemplateGroupInfo(template, templateData);
-            }
+            template.scrollTop(0);
+            //hide no data section
+            template.find('.no-data').hide();
+            User_Profile.getTemplateGroupInfo(template, templateData);
         });
     },
 
@@ -354,7 +355,7 @@ var User_Profile = {
 
         //show tamplate
         template.removeClass('hidden');
-        template.find('.activity-details').html('');
+        template.html('');
 
         //set tab current as group
         User_Profile.tab_current = 'topic';
@@ -366,23 +367,21 @@ var User_Profile = {
             //assign ajax data to template data
             User_Profile.templateData.topics = json.data;
 
-            if (json.data.length > 0) {
-                template.scrollTop(0);
-                //hide no data section
-                template.find('.no-data').hide();
-                User_Profile.getTemplateTopicInfo(template, templateData);
-            }
+            template.scrollTop(0);
+            //hide no data section
+            template.find('.no-data').hide();
+            User_Profile.getTemplateTopicInfo(template, templateData);
         });
     },
     //Show Topics information of users
     ShowPosts: function(){
-        var template = $('#recent_activity_container');
+        var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
         var templateData = $('#profile_post_info');
         var params = {'filter': 'recent'};
 
         //show tamplate
         template.removeClass('hidden');
-        template.find('.activity-details').html('');
+        template.html('');
 
         //set tab current as group
         User_Profile.tab_current = 'post';
@@ -394,12 +393,11 @@ var User_Profile = {
             //assign ajax data to template data
             User_Profile.templateData.posts = json.data;
 
-            if (json.data.length > 0) {
-                template.scrollTop(0);
-                //hide no data section
-                template.find('.no-data').hide();
-                User_Profile.getTemplatePostInfo(template, templateData);
-            }
+            template.scrollTop(0);
+            //hide no data section
+            template.find('.no-data').hide();
+            User_Profile.getTemplatePostInfo(template, templateData);
+
         });
     },
 

@@ -310,10 +310,10 @@ class PostController extends BaseController
 
     public function actionGetPostsByUser()
     {
-        $filter = $_GET['filter'];
-        $pageSize = $_GET['size'];
-        $page = $_GET['page'];
-        $currentUserId = $_GET['user'] ? $_GET['user'] : Yii::$app->user->id;
+        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+        $pageSize = isset($_GET['size']) ? $_GET['size'] : '';
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        $currentUserId = isset($_GET['user']) ? $_GET['user'] : Yii::$app->user->id;
         $where['user_id'] = $currentUserId;
 
 
