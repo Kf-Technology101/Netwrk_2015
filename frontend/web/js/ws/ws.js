@@ -19,13 +19,13 @@ $.extend({
 	websocket: function(url, s) {
 
 		var self = this;
-		console.log(self);
-
-
 
 		var ws;
 		if ("WebSocket" in window) {
 		  // Chrome, MSIE, newer Firefox
+		  	if (url == "undefined") {
+		  		url = $('ws_uri').val();
+			}
 		  ws = new WebSocket(url);
 		} else if ("MozWebSocket" in window) {
 		  // older versions of Firefox prefix the WebSocket object

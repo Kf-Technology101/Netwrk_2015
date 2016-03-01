@@ -27,10 +27,7 @@ class ServerController extends \yii\console\Controller
 					new WsServer(
 						new ChatServer()
 						)
-					),
-				2311,
-				"0.0.0.0"
-				);
+					),2311);
 			$server->run();
 		}
 	}
