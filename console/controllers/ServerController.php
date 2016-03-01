@@ -9,6 +9,9 @@ use Ratchet\WebSocket\WsServer;
 use frontend\modules\netwrk\controllers\ChatServer;
 use frontend\modules\netwrk\controllers\ChatController;
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 class ServerController extends \yii\console\Controller
 {
 	public function actionShutdown()
