@@ -198,19 +198,6 @@ var Profile = {
     },
 
     check_status_change: function(){
-        // console.log(Profile.status_change);
-        // console.log(Profile.zipcode);
-        // if(Profile.zipcode && Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about)){
-        //     Profile.status_change.total = true;
-        // // }else if(Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about)){
-        // //     Profile.status_change.total = true;
-        // }else if(!Profile.zipcode && Profile.status_change.age && Profile.status_change.zipcode && (Profile.status_change.work || Profile.status_change.about)){
-        //      Profile.status_change.total = false;
-        // }else{
-        //     Profile.status_change.total = false;
-        // }
-
-        // console.log(Profile.status_change.total);
 
         if(Profile.status_change.age && Profile.status_change.zipcode && Profile.zipcode){
             if(Profile.status_change.work || Profile.status_change.about){

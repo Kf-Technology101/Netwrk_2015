@@ -217,7 +217,6 @@ var Topic = {
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').click(function(e) {
-            console.log('click backdrop');
             $('#modal_topic').modal('hide');
         });
     },
@@ -300,7 +299,6 @@ var Topic = {
         var self = this;
         var parent = $('#item_list_'+self.data.filter);
         var sidebar = $('.map_content .sidebar');
-        console.log(new_params);
 
         if(new_params){
             self.data.zipcode = new_params.zipcode;
@@ -440,7 +438,6 @@ var Topic = {
         var target = $('#modal_topic,#show-topic').find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
         target.on('click',function(e){
-            console.log($(e.currentTarget));
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();
@@ -466,7 +463,6 @@ var Topic = {
             var post_id = $(e.currentTarget).parent().parent().attr('data-value');
             Ajax.vote_post({post_id: post_id}).then(function(res){
                 var json = $.parseJSON(res);
-                console.log($(e.currentTarget));
                 $(e.currentTarget).text(json.data);
             });
         });
@@ -477,7 +473,6 @@ var Topic = {
 
         target.unbind();
         target.on('click',function(e){
-            console.log($(e.currentTarget));
             var city_id = $(e.currentTarget).attr('data-city'),
                 city_name = $(e.currentTarget).attr('data-city-name'),
                 topic_id = $(e.currentTarget).attr('data-value'),
@@ -637,7 +632,6 @@ var Topic = {
     },
 
     filter_topic: function(contain){
-        console.log('filter_topic');
         var target = $('#modal_topic,#show-topic').find('.dropdown-menu li');
         var self = this;
 
@@ -668,7 +662,7 @@ var Topic = {
         var parent = $('#modal_topic,#show-topic').find('#item_list_'+self.data.filter);
         var params = {'city': self.data.city, 'filter': self.data.filter,'size': self.data.size,'page':self.list[self.data.filter].paging};
 
-        parent.show();   
+        parent.show();
 
         if (self.list[self.data.filter].paging != self.list[self.data.filter].loaded){
             Ajax.show_topic(params).then(function(data){

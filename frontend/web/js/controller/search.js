@@ -163,7 +163,6 @@ var Search = {
 	},
 
 	GetTemplateSearch: function(){
-		console.log(Search.result_data);
 		var list_template = _.template($("#list_result" ).html());
 		var append_html = list_template({result: Search.result_data});
 

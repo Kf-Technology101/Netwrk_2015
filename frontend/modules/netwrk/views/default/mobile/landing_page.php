@@ -32,7 +32,6 @@
 			<%
 				var len_post = landing.top_post.length;
 				_.each(landing.top_post,function(e,i){
-					console.log(e);
 					if(i == len_post - 1){%>
 							<div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
 					<% }else{ %>
@@ -64,7 +63,6 @@
 			<%
 				var len_topic = landing.top_post.length;
 				_.each(landing.top_topic,function(e,i){
-					console.log(e);
 					if(i == len_topic - 1){ %>
 							<div class="topic-row last-row" data-value="<%= e.id %>">
 					<% }else{ %>

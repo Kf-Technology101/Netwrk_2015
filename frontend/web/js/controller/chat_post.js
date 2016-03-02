@@ -1,3 +1,4 @@
+console.log('load chat post');
 var ChatPost = {
 	params:{
 		post:'',
@@ -167,7 +168,6 @@ var ChatPost = {
 	},
 
 	ScrollTopChat: function(){
-		console.log('scroll');
 		if(isMobile){
 			$(ChatPost.parent).find(ChatPost.container).scrollTop($(ChatPost.parent).find(ChatPost.container)[0].scrollHeight);
 		}else{
@@ -265,16 +265,12 @@ var ChatPost = {
 
 		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post+"&user_id="+UserLogin+"&chat_type="+ChatPost.params.chat_type, {
 			open: function(data) {
-				// ChatPost.ws.send("regeister", {"room": ChatPost.params.post,"user_id": UserLogin});
 				$(ChatPost.parent).find('textarea').focus();
-				console.log('Open');
 			},
 			close: function() {
-				console.log('close');
 			},
 			events: {
 				fetch: function(e) {
-					console.log('fetch');
 					ChatPost.msg_lenght = e.data.length;
 					$.each(e.data, function(i, elem){
 						ChatPost.getMessageTemplate(elem);
@@ -286,11 +282,8 @@ var ChatPost = {
 					ChatPost.FetchEmojiOne({type: 'fetch'});
 				},
 				onliners: function(e){
-					console.log('onliners');
-					console.log(e);
 				},
 				single: function(e){
-					console.log('single');
 					var update_list_chat;
 					$.each(e.data, function(i, elem){
 						if(ChatPost.params.post == elem.post_id){

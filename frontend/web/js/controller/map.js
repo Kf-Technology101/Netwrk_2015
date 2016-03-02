@@ -335,7 +335,6 @@
 		    })(marker));
 
 			if (map == null) {
-				// console.log(Map.map.getZoom());
 				if (currentZoom < 12 ) {
 					Map.zoom7.push({
 						marker: marker
@@ -383,8 +382,6 @@
 		        data_marker = $.parseJSON(data);
 	      	});
 
-	      	console.log('Data maker: %o', data_marker);
-	      	console.log('Zoom: %s', Map.map.getZoom());
 	      	Map.initializeMarker(data_marker, Map.map, Map.map.getZoom());
 	  	},
 	  	// Begin code for get university and government place
@@ -396,7 +393,6 @@
 		        if (json.status == 0){
 		        	Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service);
 		        }else{
-		        	// console.log('existing......');
 		        }
 	      	});
 	  	},
@@ -511,11 +507,9 @@
 	          var len = data.results[0].address_components.length;
 	          for(var i=0; i<len; i++) {
 	          	if(data.results[0].address_components[i].types[0] == 'postal_code') {
-	            	// console.log(data);
 	            	var zip = data.results[0].address_components[i].long_name;
 	            	service.getDetails(place, function(_place, status) {
 						if (status === google.maps.places.PlacesServiceStatus.OK) {
-							// console.log(place);
 							Map.checkPlaceZipcode(zip, _place.name, place, service, map, type);
 						}
 					});
@@ -627,13 +621,11 @@
 			});
 
 			map.addListener('zoom_changed', function(){
-				console.log('zoom changed help');
 				var data_marker;
 				var currentZoom = map.getZoom();
 				if(isMobile){
 				    sessionStorage.map_zoom = currentZoom;
 				}
-				console.log(currentZoom);
 				if(currentZoom == 18){
 	    			Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: null});
 	    		} else {
@@ -665,7 +657,6 @@
 				    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    		}
 	    		if (currentZoom == 12 && Map.markers.length <= 10) {
-	    			console.log('zoom ...');
 	    			Map.deleteNetwrk(map);
 				    Map.loadMapLabel(0);
 					for (var i = 0; i < Map.zoom12.length; i++) {
@@ -859,13 +850,11 @@
 
 	    insertLocalUniversity: function(){
 	    	Ajax.insert_local_university().then(function(data){
-	    		console.log('inserted');
 	    	});
 	    },
 
 	    insertLocalGovernment: function(){
 	    	Ajax.insert_local_government().then(function(data){
-	    		console.log('local government is inserted');
 	    	});
 	    }
 	}

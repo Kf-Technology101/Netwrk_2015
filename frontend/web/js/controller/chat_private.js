@@ -159,7 +159,6 @@ var ChatPrivate = {
 	},
 
 	ScrollTopChat: function(){
-		console.log('scroll');
 		if(isMobile){
 			$(ChatPrivate.parent).find(ChatPrivate.container).scrollTop($(ChatPrivate.parent).find(ChatPrivate.container)[0].scrollHeight);
 		}else{
@@ -252,61 +251,6 @@ var ChatPrivate = {
 			}
 		});
 	},
-
-	// WsConnect: function(parent){
-	// 	ChatPrivate.ws = $.websocket("ws://"+ChatPrivate.url+":2311/?post="+ChatPrivate.params.private+"&user_id="+UserLogin+"&chat_type="+ChatPrivate.params.chat_type, {
-	// 		open: function(data) {
-	// 			// ChatPrivate.ws.send("regeister", {"room": ChatPrivate.params.Private,"user_id": UserLogin});
-	// 			$(ChatPrivate.parent).find('textarea').focus();
-	// 			console.log('Open');
-	// 		},
-	// 		close: function(e) {
-	// 			console.log('close');
-	// 			console.log(e);
-	// 		},
-	// 		events: {
-	// 			fetch: function(e) {
-	// 				console.log('fetch');
-	// 				ChatPrivate.msg_lenght = e.data.length;
-	// 				$.each(e.data, function(i, elem){
-	// 					ChatPrivate.getMessageTemplate(elem);
-	// 					ChatPrivate.ScrollTopChat();
-	// 				});
-	// 				if(isMobile){
-	// 					fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-	// 				}
-	// 				ChatPrivate.FetchEmojiOne({type: 'fetch'});
-	// 			},
-	// 			onliners: function(e){
-	// 				console.log('onliners');
-	// 				console.log(e);
-	// 			},
-	// 			single: function(e){
-	// 				console.log('single');
-	// 				var update_list_chat;
-	// 				$.each(e.data, function(i, elem){
-	// 					if(ChatPrivate.params.private == elem.post_id){
-	// 						ChatPrivate.message_type = elem.msg_type;
-	// 						ChatPrivate.getMessageTemplate(elem);
-	// 						update_list_chat = $.parseJSON(elem.update_list_chat);
-	// 					}
-	// 				});
-	// 				if(isMobile){
-	// 					fix_width_chat_post($(ChatPrivate.parent).find('.content_message'),$($(ChatPrivate.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-	// 				} else {
-	// 					ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat);
-	// 				}
-	// 				if(ChatPrivate.message_type == 1){
-	// 					ChatPrivate.FetchEmojiOne({type: 'single'});
-	// 				}
-	// 				ChatPrivate.ScrollTopChat();
-	// 			}
-	// 			// offline: function(e){
-	// 			// 	console.log('offline abc bac cab');
-	// 			// }
-	// 		}
-	// 	});
-	// },
 
 	getMessageTemplate:function(data){
 		var template = _.template($( "#message_chat" ).html());
@@ -455,7 +399,6 @@ var ChatPrivate = {
 			post_id = $('#private_chat').attr('data-private');
 		avatar.unbind();
 		avatar.on('click', function(){
-			console.log('clicked on avatar has post_id ' + post_id);
 			window.location.href = baseUrl + "/netwrk/meet?post_id=" + post_id + "&from=private";
 		});
 	},

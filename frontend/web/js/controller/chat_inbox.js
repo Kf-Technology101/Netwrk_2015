@@ -128,11 +128,8 @@ var ChatInbox = {
 				Login.initialize();
 				return false;
 			}
-			// notify.html('0');
-			// notify.addClass('disable');
 			ChatInbox.initialize();
 		});
-		console.log(ChatInbox.onClickChat);
 	},
 
 	OnClickChatPostDetail: function() {

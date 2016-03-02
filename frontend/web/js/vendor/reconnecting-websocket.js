@@ -314,7 +314,6 @@
          * @param data a text string, ArrayBuffer or Blob to send to the server.
          */
         this.send = function(type, data) {
-            console.log('Data to send: {type: %s, data: %o}', type, data);
             if (ws) {
                 if (self.debug || ReconnectingWebSocket.debugAll) {
                     console.debug('ReconnectingWebSocket', 'send', self.url, data);

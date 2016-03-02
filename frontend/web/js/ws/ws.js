@@ -40,11 +40,9 @@ $.extend({
 
 		ws.onopen = function(event) {
 			clearInterval(timeout);
-			console.log('Connection Established!');
 		}
 
 		ws.onclose = function(event) {
-			console.log('Disconnected');
 			bootbox.dialog({
 			  message: '<i class="fa fa-refresh fa-spin"></i> You were disconnected from Chat Server. Waiting to reconnect...',
 			  closeButton: false

@@ -6,7 +6,6 @@ var LandingPage = {
 	check_landing: 0,
 	initialize: function(){
 		if(isMobile){
-			console.log('aaa');
 			LandingPage.parent = LandingPage.mobile;
 			LandingPage.GetDataTopLanding();
 			LandingPage.SetUrl();
@@ -152,7 +151,6 @@ var LandingPage = {
 		var target = $(LandingPage.parent).find('.top-post .post');
 		target.unbind();
 		target.on('click',function(e){
-			console.log($(e.currentTarget));
 				var post_id = $(e.currentTarget).parent().attr('data-value'),
 					post_name = $(e.currentTarget).find('.post-title').text(),
 					post_content = $(e.currentTarget).find('.post-content').text();
@@ -175,7 +173,6 @@ var LandingPage = {
 
 		target.unbind();
 		target.on('click',function(e){
-			console.log($(e.currentTarget));
 			var city_id = $(e.currentTarget).attr('data-city'),
 				city_name = $(e.currentTarget).attr('data-city-name'),
 				topic_id = $(e.currentTarget).attr('data-value'),
@@ -199,7 +196,6 @@ var LandingPage = {
 
 		target.unbind();
 		target.on('click',function(e){
-			console.log($(e.currentTarget));
 			var city_id = $(e.currentTarget).attr('data-city');
 			if(isMobile){
 				Topic.initialize(city_id);
@@ -214,7 +210,6 @@ var LandingPage = {
         $(LandingPage.parent).on('shown.bs.modal',function(e) {
         	LandingPage.SetSession();
         	LandingPage.GetDataTopLanding();
-			console.log('test landing shown');
 		  	$('.logo_netwrk > a').addClass('landing-shown');
         });
         // on Click logo when modal was shown

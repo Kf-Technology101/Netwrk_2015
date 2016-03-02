@@ -14,20 +14,19 @@ var MainWs ={
     },
 
     setUrl: function(){
-        if(baseUrl === 'http://netwrk.rubyspace.net'){
-            MainWs.url = 'box.rubyspace.net';
-        }else{
-            MainWs.url = window.location.host;
-        };
+        MainWs.url = window.location.host;
     },
 
     wsConnect: function(user_id){
 
         var _self = this;
 
-        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+":2311?user_id=" + user_id);
+        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+":2311?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000});
 
         window.ws.onmessage = function(e){
+          console.group("WS SEND");
+          console.log("Sending: %o", $.parseJSON(e.data));
+          console.groupEnd();
             if (e.data) {
                 msg = $.parseJSON(e.data);
                 switch(msg.type) {
@@ -47,11 +46,22 @@ var MainWs ={
             }
         }
 
+        window.ws.onopen = function() {
+          console.group("WS OPEN");
+          console.log("Open connection");
+          console.log(window.ws);
+          console.groupEnd();
+        }
+
+        window.ws.onclose = function(e) {
+          console.group("WS LOSING");
+          console.log("Disconnected");
+          console.groupEnd();
+        }
     },
 
     events: {
         fetch: function(e) {
-            console.log('fetch');
             PopupChat.msg_lenght = e.data.length;
             if (PopupChat.msg_lenght > 0) {
                 var message = $('#popup-chat-'+e.data[0]['post_id']).find(PopupChat.container).find('.message');
@@ -70,10 +80,8 @@ var MainWs ={
             }
         },
         onliners: function(e){
-            console.log('Onliner');
         },
         single: function(e){
-            console.log('single');
             // handle of chat
             var update_list_chat;
             var popup_active = e.data[0]['post_id'];

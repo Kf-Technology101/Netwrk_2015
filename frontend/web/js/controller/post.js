@@ -104,7 +104,6 @@ var Post ={
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
-        	console.log('click backdrop post');
             $('#list_post').modal('hide');
         });
     },
@@ -404,7 +403,7 @@ var Post ={
     	var target = $(Post.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
         target.on('click',function(e){
-            console.log($(e.currentTarget));
+            ;
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();
@@ -429,7 +428,6 @@ var Post ={
             var post_id = $(e.currentTarget).parent().parent().attr('data-value');
             Ajax.vote_post({post_id: post_id}).then(function(res){
                 var json = $.parseJSON(res);
-                console.log($(e.currentTarget));
                 $(e.currentTarget).text(json.data);
             });
         });
@@ -440,7 +438,6 @@ var Post ={
 
         target.unbind();
         target.on('click',function(e){
-            console.log($(e.currentTarget));
             var city_id = $(e.currentTarget).attr('data-city'),
                 city_name = $(e.currentTarget).attr('data-city-name'),
                 topic_id = $(e.currentTarget).attr('data-value'),
@@ -518,7 +515,6 @@ var Post ={
 		var selecFilter = $('#list_post').find('.dropdown-menu li');
 		selecFilter.unbind('click');
 		selecFilter.on('click',function(e){
-			// console.log($(e.currentTarget).attr('data-value'));
 			body.scrollTop(0);
 			var name = $(e.currentTarget).text();
 			$('#list_post').find('.dropdown-toggle').text(name);

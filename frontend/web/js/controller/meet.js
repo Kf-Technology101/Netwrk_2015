@@ -22,7 +22,6 @@ var Meet ={
     pid: 0,
     ez: 0,
     initialize: function() {
-        console.log(Meet.filter.active);
         if(Meet.filter.active === 'setting'){
             Meet_setting.initialize();
         }else if(Meet.filter.active === 'profile'){
@@ -74,7 +73,6 @@ var Meet ={
             currentTarget.show();
 
             Meet.changefilter(currentTarget);
-            // console.log(Meet.ez + '---' + Meet.pid);
             if(Meet.pid != 0){
                 Meet.ShowUserMeetProfile(Meet.pid);
             }else if(Meet.ez != 0){
@@ -112,7 +110,6 @@ var Meet ={
     },
 
     changefilter: function(containt){
-        console.log(containt);
         var target = $('#modal_meet,#show_meet').find('.filter_sidebar td');
         var self = this;
         target.unbind();
@@ -555,7 +552,6 @@ var Meet ={
     },
 
     ShowModalMeetProfile: function(user_view){
-        console.log(user_view);
         var modal = $('#modal_meet'),
             self = this;
 
@@ -594,44 +590,4 @@ var Meet ={
             });
         });
     },
-
-    // ShowModalMeetProfile: function(user_view){
-    //     var modal = $('#modal_meet'),
-    //         self = this;
-
-    //     Ajax.get_user_met_profile_discussion(user_view).then(function(data){
-    //         var json = $.parseJSON(data);
-    //         self.user_list.len = json.data.length;
-
-    //         if(self.user_list.len > 0){
-    //             $('p.no_data').hide();
-    //             $('.control-btn').show();
-    //             $('p.default').hide();
-    //             self.json = json.data;
-    //             self.showUserMeet();
-    //         }else{
-    //             $('.control-btn').hide();
-    //             $('p.default').show();
-    //             $('p.no_data').show();
-    //         }
-
-    //         if(!isMobile){
-    //             modal.modal({
-    //                 backdrop: true,
-    //                 keyboard: false
-    //             });
-    //             set_heigth_modal_meet($('#modal_meet'), 30, 645, 570);
-    //             var meet_height = $('#modal_meet .modal-body').height();
-    //             Meet.height = meet_height;
-    //         }
-    //         $('#modal_meet').on('hidden.bs.modal',function() {
-    //             self.reset_modal();
-    //             $('#modal_meet').modal('hide');
-    //         });
-    //         $('.modal-backdrop.in').click(function(e) {
-    //             self.reset_modal();
-    //             $('#modal_meet').modal('hide');
-    //         });
-    //     });
-    // },
 };
