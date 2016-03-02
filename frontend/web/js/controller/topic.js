@@ -302,13 +302,12 @@ var Topic = {
 
         if(new_params){
             self.data.zipcode = new_params.zipcode;
-            self.data.name = new_params.name;
         }
         if(city){
             self.data.city = city;
         }
 
-        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'name': self.data.name, 'filter': self.data.filter,'size': self.data.size,'page':1};
+        var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
         parent.show();
         set_heigth_modal($('#modal_topic'),0);
@@ -705,10 +704,8 @@ var Topic = {
         var json = $.parseJSON(data);
         var list_template = _.template($( "#city_name" ).html());
         var append_html = '';
-        if (Topic.data.name) {
-            append_html = list_template({city: Topic.data.name});
-        } else
-            append_html = list_template({city: json.city});
+        append_html = list_template({city: json.city});
+        Topic.data.city_name = json.city;
         parent.html(append_html);
     },
 
