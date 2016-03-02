@@ -64,7 +64,7 @@ class GroupController extends BaseController {
             $group->permission = $permission;
             $group->user_id = $currentUserId;
 
-            if (!empty($_POST['byGroup']) && $_POST['byGroup']) {
+            if (!empty($_POST['byGroup']) && ($_POST['byGroup'] == 'true')) {
                 $group->latitude = doubleval($_POST['latitude']);
                 $group->longitude = doubleval($_POST['longitude']);
             } else {
