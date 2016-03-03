@@ -335,7 +335,6 @@
 		    })(marker));
 
 			if (map == null) {
-				// console.log(Map.map.getZoom());
 				if (currentZoom < 12 ) {
 					Map.zoom7.push({
 						marker: marker
@@ -394,7 +393,6 @@
 		        if (json.status == 0){
 		        	Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service);
 		        }else{
-		        	// console.log('existing......');
 		        }
 	      	});
 	  	},
@@ -509,11 +507,9 @@
 	          var len = data.results[0].address_components.length;
 	          for(var i=0; i<len; i++) {
 	          	if(data.results[0].address_components[i].types[0] == 'postal_code') {
-	            	// console.log(data);
 	            	var zip = data.results[0].address_components[i].long_name;
 	            	service.getDetails(place, function(_place, status) {
 						if (status === google.maps.places.PlacesServiceStatus.OK) {
-							// console.log(place);
 							Map.checkPlaceZipcode(zip, _place.name, place, service, map, type);
 						}
 					});
@@ -661,7 +657,6 @@
 				    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    		}
 	    		if (currentZoom == 12 && Map.markers.length <= 10) {
-	    			console.log('zoom ...');
 	    			Map.deleteNetwrk(map);
 				    Map.loadMapLabel(0);
 					for (var i = 0; i < Map.zoom12.length; i++) {
@@ -855,13 +850,11 @@
 
 	    insertLocalUniversity: function(){
 	    	Ajax.insert_local_university().then(function(data){
-	    		console.log('inserted');
 	    	});
 	    },
 
 	    insertLocalGovernment: function(){
 	    	Ajax.insert_local_government().then(function(data){
-	    		console.log('local government is inserted');
 	    	});
 	    }
 	}

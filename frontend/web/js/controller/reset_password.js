@@ -60,7 +60,6 @@ var ResetPass = {
             ResetPass.params.newPasswordConfirm = $(ResetPass.modal).find('input#user-newpasswordconfirm').val();
             Ajax.reset_password(ResetPass.params).then(function(data){
                 var json = $.parseJSON(data);
-                console.log(json.status);
                 if(json.status == 1){
                     $(ResetPass.modal).modal('hide');
                     Login.initialize();
@@ -135,7 +134,7 @@ var ResetPass = {
         } else {
             var btn_reset = $('#reset-password').find('.modal-body .reset');
         }
-        
+
         if(ResetPass.status_change.new_pass && ResetPass.status_change.confirm_pass){
             btn_reset.removeClass('disable');
             // btn_save.one('click',function(){
@@ -149,7 +148,7 @@ var ResetPass = {
         }else{
             btn_reset.addClass('disable');
         }
-        
+
     },
 
     setDefaultBtnReset: function(){

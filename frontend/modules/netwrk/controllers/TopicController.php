@@ -49,6 +49,9 @@ class TopicController extends BaseController
         if ($cty){
             $city_id = $cty->id;
             $name = $cty->name;
+            if ($cty->office == 'Ritchey Woods Nature Preserve') {
+                $cty->zip_code = 'Netwrk hq';
+            }
             $object = array(
                 'city_name'=> $name,
                 'status'=> 1
@@ -137,6 +140,9 @@ class TopicController extends BaseController
         if(!$cty){
             $zipcode = $_GET['zipcode'];
         }
+        if ($cty->office == 'Ritchey Woods Nature Preserve') {
+            $cty->zip_code = 'Netwrk hq';
+        }
         switch ($filter) {
             case 'recent':
             $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['created_at'=> SORT_DESC]);
@@ -191,20 +197,24 @@ class TopicController extends BaseController
 
     public function actionTopicPage() {
         $city = $_GET['city'];
+        $title = @Yii::$app->request->get('title');
 
         $object = array();
 
         $cty = City::findOne($city);
         if ($cty){
+            if ($cty->office == 'Ritchey Woods Nature Preserve') {
+                $title = 'Netwrk hq';
+            }
             $city_id = $cty->id;
             $name = $cty->name;
             $object = array(
                 'city_name'=> $name,
                 'zipcode'=> $cty->zip_code,
-                'status'=> 1
+                'status'=> 1,
+                'title' => $title
                 );
         }else{
-
             $name = $_GET['name'];
             $zip_code = $_GET['zipcode'];
             $lat = $_GET['lat'];

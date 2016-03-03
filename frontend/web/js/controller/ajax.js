@@ -835,5 +835,23 @@ var Ajax ={
 
         return defer.promise();
     },
+
+    /**
+     * GET LOCATION of HELP
+     */
+    get_marker_help: function() {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/get-marker-help";
+
+        $.ajax({
+            url: url,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    }
 }
 
