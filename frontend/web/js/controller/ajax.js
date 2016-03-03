@@ -1079,11 +1079,7 @@ var Ajax ={
     show_user_topics: function(params) {
         var url,defer = $.Deferred();
 
-        if (isMobile) {
-            url = baseUrl +"/netwrk/topic/get-topics-by-user";
-        }else{
-            url = baseUrl +"/netwrk/topic/get-topics-by-user";
-        }
+        url = baseUrl +"/netwrk/topic/get-topics-by-user";
 
         $.ajax({
             url: url,
@@ -1101,11 +1097,7 @@ var Ajax ={
     show_user_posts: function(params) {
         var url,defer = $.Deferred();
 
-        if (isMobile) {
-            url = baseUrl +"/netwrk/post/get-posts-by-user";
-        }else{
-            url = baseUrl +"/netwrk/post/get-posts-by-user";
-        }
+        url = baseUrl +"/netwrk/post/get-posts-by-user";
 
         $.ajax({
             url: url,

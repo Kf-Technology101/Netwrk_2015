@@ -165,6 +165,7 @@ var Default ={
                 var append_html = list_template({user_info: data});
                 $('#nav_wrapper #account_nav_wrapper').remove();
                 $('#nav_wrapper').append(append_html);
+                Common._eventClickProfileNavMenu();
             });
             //Hide the sign in button from nav
             $(Common.contexts.loginTrigger, Common.contexts.boxNavigation).hide();

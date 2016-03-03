@@ -151,7 +151,8 @@
 </script>
 <script id="profile_group_info" type="text/x-underscore-template">
     <div class="table-responsive group-details activity-details">
-        <table class="table">
+        <table class="table no-border">
+            <% if(groups.length < 0) {%>
             <thead>
             <tr>
                 <th class="col-xs-8"></th>
@@ -160,27 +161,42 @@
             </thead>
             <tbody>
             <% _.each(groups,function(group){ %>
-                <tr>
-                    <td><a href="javascript:"><b><%= group.name %></b></a></td>
-                    <td class="group-actions text-right">
-                        <% if (group.owner) { %>
-                        <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
-                        <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
-                        <% } %>
-                            <span class="date-details">
-                                <%= group.created_at %>
-                            </span>
-                    </td>
-                </tr>
+            <tr>
+                <td><a href="javascript:" class="title"><b><%= group.name %></b></a></td>
+                <td class="group-actions text-right">
+                    <% if (group.owner) { %>
+                    <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
+                    <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                    <% } %>
+                        <span class="date-details">
+                            <%= group.created_at %>
+                        </span>
+                </td>
+            </tr>
             <% }); %>
             </tbody>
+            <% } else {%>
+            <thead>
+            <tr>
+                <th class="col-xs-12"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="alert alert-info">There is no groups data available yet</div>
+                </td>
+            </tr>
+            </tbody>
+            <% } %>
         </table>
     </div>
 </script>
 
 <script id="profile_topic_info" type="text/x-underscore-template">
     <div class="table-responsive topic-details activity-details">
-        <table class="table">
+        <table class="table no-border">
+            <% if(topics.length > 0) {%>
             <thead>
             <tr>
                 <th class="col-xs-8"></th>
@@ -190,28 +206,43 @@
             <tbody>
             <% _.each(topics,function(group){ %>
             <tr>
-                <td><a href="javascript:"><b><%= group.title %></b></a></td>
+                <td><a href="javascript:" class="title"><b><%= group.title %></b></a></td>
                 <td class="topic-actions text-right">
                     <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
                     <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
-                    <span class="date-details">
-                        <%= group.created_at %>
-                    </span>
+                        <span class="date-details">
+                            <%= group.created_at %>
+                        </span>
                 </td>
             </tr>
             <% }); %>
             </tbody>
+            <% } else {%>
+            <thead>
+            <tr>
+                <th class="col-xs-12"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="alert alert-info">There is no topics you created yet</div>
+                </td>
+            </tr>
+            </tbody>
+            <% } %>
         </table>
     </div>
 </script>
 
+
 <script id="profile_post_info" type="text/x-underscore-template">
     <div class="table-responsive post-details activity-details">
-        <table class="table">
+        <table class="table no-border">
+            <% if(posts.length > 0) {%>
             <thead>
             <tr>
                 <th class="col-xs-8"></th>
-                <th class="col-xs-4"></th>
                 <th class="col-xs-4"></th>
             </tr>
             </thead>
@@ -219,20 +250,39 @@
             <% _.each(posts,function(item){ %>
             <tr>
                 <td>
-                    <div class="post-title"><a href="javascript:"><b><%= item.title %></b></a></div>
+                    <div class="title"><a href="javascript:"><b><%= item.title %></b></a></div>
                     <div class="post-content"><%= item.content %></div>
                 </td>
-                <td class="topic-actions text-right">
-                    <div class="post-date"><%= item.created_at %></div>
+                <td class="text-right">
+                    <div class="date-details"><%
+
+                        print(item.created_at)
+                        %></div>
                     <div class="post-actions text-right">
-                        <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
+                        <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
                         <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
                     </div>
                 </td>
             </tr>
             <% }); %>
             </tbody>
+            <% } else {%>
+            <thead>
+            <tr>
+                <th class="col-xs-12"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="alert alert-info">There is no posts you created yet</div>
+                </td>
+            </tr>
+            </tbody>
+            <% } %>
         </table>
     </div>
 </script>
+
+
 
