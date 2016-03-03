@@ -400,7 +400,7 @@ var Ajax ={
         if (isMobile) {
             url = baseUrl +"/netwrk/group/get-group";
         }else{
-            url = "netwrk/group/get-group";
+            url = baseUrl +"/netwrk/group/get-group";
         }
 
         $.ajax({
