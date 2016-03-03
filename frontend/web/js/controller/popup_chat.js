@@ -70,7 +70,6 @@ var PopupChat = {
     UpdateViewPost: function(){
         if(!isGuest){
             Ajax.update_view_post(PopupChat.params).then(function(){
-                console.log('update view count');
             });
         }
     },
@@ -257,11 +256,9 @@ var PopupChat = {
             var target_form = $(PopupChat.parent);
             target_form.each(function(){
                 if(isGuest){
-                    console.log('come here no login');
                     $(this).find('.send_message.login').removeClass('active');
                     $(this).find('.send_message.no-login').addClass('active');
                 }else{
-                    console.log('come here  login');
                     $(this).find('.send_message.no-login').removeClass('active');
                     $(this).find('.send_message.login').addClass('active');
                 }
@@ -276,7 +273,6 @@ var PopupChat = {
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/user/login?url_callback="+ $(PopupChat.parent).find('.send_message').attr('data-url');
             }else{
-                // $(PopupChat.parent).css('display');
                 $('.modal').modal('hide');
                 Login.modal_callback = PopupChat;
                 Login.initialize();
@@ -363,13 +359,13 @@ var PopupChat = {
         });
         btn.unbind();
         btn.on("click", function(e){
-            console.log(btn);
             PopupChat.OnWsSendData(e.currentTarget);
         });
     },
 
     // Handle send data chat message
     OnWsSendData: function(e) {
+      console.log('ws send data');
         var parent = $(e).parent();
         var val  = parent.find("textarea").val();
         if(val != ""){
@@ -576,7 +572,6 @@ var PopupChat = {
 
     //Always scroll to bottom chat
     ScrollTopChat: function(popup_active){
-        console.log('scroll');
         var popup_current = $('#popup-chat-'+popup_active);
         if(isMobile){
             if ($('#post_chat').length > 0) {
@@ -709,7 +704,6 @@ var PopupChat = {
             chat_type = $('#post_chat').attr('data-chat-type');
         avatar.unbind();
         avatar.on('click', function(e){
-            console.log('clicked on avatar has post_id ' + post_id);
             if(chat_type == 1){
                 var user_id = $(e.currentTarget).attr('data-user-id');
                 if (user_id != UserLogin){

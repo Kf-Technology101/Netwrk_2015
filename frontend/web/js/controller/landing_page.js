@@ -6,7 +6,6 @@ var LandingPage = {
 	check_landing: 0,
 	initialize: function(){
 		if(isMobile){
-			console.log('aaa');
 			LandingPage.parent = LandingPage.mobile;
 			LandingPage.GetDataTopLanding();
 			LandingPage.SetUrl();
@@ -66,6 +65,7 @@ var LandingPage = {
 		LandingPage.OnClickExplore();
 		LandingPage.OnClickVote();
 		LandingPage.OnClickChat();
+		LandingPage.onClickHelpLandingDesktop();
 		if(isMobile){
 			LandingPage.FixWidthPostLanding();
 		}
@@ -151,7 +151,6 @@ var LandingPage = {
 		var target = $(LandingPage.parent).find('.top-post .post');
 		target.unbind();
 		target.on('click',function(e){
-			console.log($(e.currentTarget));
 				var post_id = $(e.currentTarget).parent().attr('data-value'),
 					post_name = $(e.currentTarget).find('.post-title').text(),
 					post_content = $(e.currentTarget).find('.post-content').text();
@@ -174,7 +173,6 @@ var LandingPage = {
 
 		target.unbind();
 		target.on('click',function(e){
-			console.log($(e.currentTarget));
 			var city_id = $(e.currentTarget).attr('data-city'),
 				city_name = $(e.currentTarget).attr('data-city-name'),
 				topic_id = $(e.currentTarget).attr('data-value'),
@@ -198,7 +196,6 @@ var LandingPage = {
 
 		target.unbind();
 		target.on('click',function(e){
-			console.log($(e.currentTarget));
 			var city_id = $(e.currentTarget).attr('data-city');
 			if(isMobile){
 				Topic.initialize(city_id);
@@ -213,12 +210,28 @@ var LandingPage = {
         $(LandingPage.parent).on('shown.bs.modal',function(e) {
         	LandingPage.SetSession();
         	LandingPage.GetDataTopLanding();
+		  	$('.logo_netwrk > a').addClass('landing-shown');
         });
+        // on Click logo when modal was shown
+        $('.logo_netwrk > a').on('click', function(evt){
+        	evt.preventDefault();
+        	var _this = $(this);
+        	if (_this.hasClass('landing-shown')) {
+        		_this.removeClass('landing-shown');
+        		$(LandingPage.modal).modal('hide');
+        		return false;
+        	} else {
+        		var _href = _this.attr('href');
+        		window.location.href = _href;
+        		return true;
+        	}
+        })
 	},
 
 	OnHideModalLanding: function(){
         $(LandingPage.modal).on('hidden.bs.modal',function(e) {
         	LandingPage.ResetData();
+        	$('.logo_netwrk > a').removeClass('landing-shown');
         });
 	},
 
@@ -290,4 +303,42 @@ var LandingPage = {
             $('#modal_landing_page').modal('hide');
         });
     },
+
+    /**
+     * Listen event `click` on Help Button of Landing Page
+     *
+     * @return boolean
+     */
+    onClickHelpLandingDesktop: function() {
+    	// listening event
+    	$('.landing-btn.btn-help').on('click', function(evt){
+    		// prevent other binding
+    		evt.preventDefault();
+	    		// begin loading pop-up
+	    		// define location
+	    		Ajax.get_marker_help().then(function(data){
+    				if(!isMobile) {
+	    				$(LandingPage.modal).modal('hide');
+	    			}
+		    		var _location = $.parseJSON(data);
+		    		if(isMobile) {
+		    			sessionStorage.map_zoom = 18;
+		    			sessionStorage.lat = _location.lat;
+		    			sessionStorage.lng = _location.lng;
+					    setTimeout(function(){
+		    				window.location.href = baseUrl + "/netwrk/topic/topic-page?city=" + _location.id + '&current=help';
+					    }, 500);
+		    		} else {
+			    		var _map  = Map.map;
+			    		var _zoom = 18;
+			    		_map.setCenter(new google.maps.LatLng(_location.lat, _location.lng));
+					    _map.setZoom(_zoom);
+					    setTimeout(function(){
+					    	Topic.data.name = 'Netwrk hq';
+					    	Topic.initialize(_location.id, {name: 'Netwrk hq'});}, 500);
+					    Map.initializeMarker(_location, _map, _zoom);
+					}
+	    		});
+    	});
+    }
 };

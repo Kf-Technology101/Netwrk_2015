@@ -79,7 +79,6 @@ var Login={
 
 	OnCallBackAfterLogin: function(){
 		if(Login.modal_callback){
-			console.log('callback');
 			setTimeout(function(){
 				Login.modal_callback.initialize();
 				Login.ShowNotificationOnChat();

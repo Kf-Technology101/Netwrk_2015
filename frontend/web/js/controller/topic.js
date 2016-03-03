@@ -238,7 +238,6 @@ var Topic = {
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').click(function(e) {
-            console.log('click backdrop');
             $('#modal_topic').modal('hide');
         });
     },
@@ -460,7 +459,6 @@ var Topic = {
         var target = $('#modal_topic,#show-topic').find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
         target.on('click',function(e){
-            console.log($(e.currentTarget));
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();
@@ -486,7 +484,6 @@ var Topic = {
             var post_id = $(e.currentTarget).parent().parent().attr('data-value');
             Ajax.vote_post({post_id: post_id}).then(function(res){
                 var json = $.parseJSON(res);
-                console.log($(e.currentTarget));
                 $(e.currentTarget).text(json.data);
             });
         });
@@ -497,7 +494,6 @@ var Topic = {
 
         target.unbind();
         target.on('click',function(e){
-            console.log($(e.currentTarget));
             var city_id = $(e.currentTarget).attr('data-city'),
                 city_name = $(e.currentTarget).attr('data-city-name'),
                 topic_id = $(e.currentTarget).attr('data-value'),
@@ -601,7 +597,11 @@ var Topic = {
         if(isMobile){
             $('#show-topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
                 sessionStorage.show_landing = 1;
-                window.location.href = baseUrl + "/netwrk/default/home";
+                if($('.back_page').hasClass('back_help')){
+                    window.location.href = baseUrl + "/netwrk/default/home?current=help";
+                } else {
+                    window.location.href = baseUrl + "/netwrk/default/home";
+                }
             })
         }else{
             $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
@@ -661,8 +661,7 @@ var Topic = {
         });
     },
 
-    filter_topic: function(contain) {
-        console.log('filter_topic');
+    filter_topic: function(contain){
         var target = $('#modal_topic,#show-topic').find('.dropdown-menu li');
         var self = this;
 
@@ -735,9 +734,10 @@ var Topic = {
         var self = this;
         var json = $.parseJSON(data);
         var list_template = _.template($( "#city_name" ).html());
-        var append_html = list_template({city: json.city});
+        var append_html = '';
+        append_html = list_template({city: json.city});
         Topic.data.city_name = json.city;
-        parent.append(append_html);
+        parent.html(append_html);
     },
 
     eventClickMeetMobile: function(){

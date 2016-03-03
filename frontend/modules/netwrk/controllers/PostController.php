@@ -46,6 +46,9 @@ class PostController extends BaseController
         }
         $top = Topic::findOne($topic);
         $cty = City::findOne($city);
+        if ($cty->office == 'Ritchey Woods Nature Preserve') {
+            $cty->zip_code = 'Netwrk hq';
+        }
         return $this->render('mobile/create',['topic' =>$top,'city' =>$cty]);
     }
 

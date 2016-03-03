@@ -19,7 +19,7 @@
 		<!--<div class="landing-btn btn-meet">Meet</div>-->
 		<div class="landing-btn btn-explore">Explore</div>
 		<div class="landing-btn btn-my-community">My Community</div>
-		<div class="landing-btn btn-explore">Help</div>
+		<div class="landing-btn btn-help">Help</div>
 	</div>
 </div>
 <script id="landing_page" type="text/x-underscore-template">
@@ -32,7 +32,6 @@
 			<%
 				var len_post = landing.top_post.length;
 				_.each(landing.top_post,function(e,i){
-					console.log(e);
 					if(i == len_post - 1){%>
 							<div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
 					<% }else{ %>
@@ -64,7 +63,6 @@
 			<%
 				var len_topic = landing.top_post.length;
 				_.each(landing.top_topic,function(e,i){
-					console.log(e);
 					if(i == len_topic - 1){ %>
 							<div class="topic-row last-row" data-value="<%= e.id %>">
 					<% }else{ %>

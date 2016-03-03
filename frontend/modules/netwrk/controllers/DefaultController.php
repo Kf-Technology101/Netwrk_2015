@@ -441,6 +441,44 @@ class DefaultController extends BaseController
         return $hash;
     }
 
+    /**
+     * GET Help location, currently using static location, need to be updated on database later
+     *
+     *  
+     * 
+     * @return Array Maker
+     */
+    public function actionGetMarkerHelp()
+    {
+        $maxlength = Yii::$app->params['MaxlengthContent'];
+        // hard code for `Fishers` city
+        $city= City::find()->with('topics.posts')->where(['office'=> 'Ritchey Woods Nature Preserve'])->one();
+
+        $data = [];
+        $img = '/img/icon/map_icon_community_v_2.png';
+
+        $netwrk = array(
+                'id'=> $city->id,
+                'name'=> $city->name,
+                'lat'=> $city->lat,
+                'lng'=> $city->lng,
+                'zip_code'=> $city->zip_code,
+                'office'=>$city->office,
+                'office_type'=>$city->office_type,
+                'topic' => '',
+                'mapicon'=>$img,
+                'post'=> array(
+                    'post_id'=>-1,
+                    'name_post'=> '',
+                    'content' => '',
+                    'topic_id' => '',
+                )
+            );
+
+        $hash = json_encode($netwrk);
+        return $hash;
+    }
+
     public function actionPlaceSave(){
         $zipcode = $_POST['zip_code'];
         $city_name = $_POST['netwrk_name'];

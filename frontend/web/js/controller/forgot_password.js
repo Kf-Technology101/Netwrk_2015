@@ -42,7 +42,6 @@ var ForgotPass = {
 
             Ajax.forgot_password(ForgotPass.form_id).then(function(res){
                 ForgotPass.data = $.parseJSON(res);
-                console.log(ForgotPass.data);
                 if(ForgotPass.data.status == 1){
                     $(ForgotPass.modal).find('.modal-body').hide();
                     $(ForgotPass.modal).find('.alert.alert-success').show();

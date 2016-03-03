@@ -37,11 +37,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	{
 		$user_id = $conn->WebSocket->request->getQuery()->get('user_id');
 		$this->current_user = $user_id;
+		Yii::info($conn);
 		$this->clients->attach($conn);
 		$this->checkOnliners();
-		// if($user_id != ""){
-		// 	$this->send($conn, "notify", $this->notify());
-		// }
 		echo "User with id ".$user_id . " is connected on ({$conn->resourceId})\n";
 	}
 

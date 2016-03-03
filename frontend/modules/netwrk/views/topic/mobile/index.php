@@ -3,12 +3,12 @@
 ?>
 <div id="show-topic" data-city="<?= $city_id ?>" <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'" data-name="'.$data->city_name.'"'; } ?>>
     <div class="header">
-        <div class="back_page">
+        <div class="back_page <?php if($data->title) print 'back_help';?>">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
 
         <div class="title_page">
-            <span class="title"><?php print $data->zipcode?></span>
+            <span class="title"><?php if($data->title) print $data->title; else print $data->zipcode?></span>
         </div>
         <div class="create_topic">
             <span><i class="fa fa-plus-circle"></i> Create Topic</span>
@@ -86,7 +86,6 @@
                   <%
                     var len_post = feed.top_post.length;
                     _.each(feed.top_post,function(e,i){
-                      console.log(e);
                       if(i == len_post - 1){%>
                           <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
                       <% }else{ %>
@@ -124,7 +123,6 @@
                 <%
                   var len_topic = feed.top_post.length;
                   _.each(feed.top_topic,function(e,i){
-                    console.log(e);
                     if(i == len_topic - 1){ %>
                         <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
                     <% }else{ %>

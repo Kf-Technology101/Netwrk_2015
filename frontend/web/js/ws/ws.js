@@ -19,13 +19,13 @@ $.extend({
 	websocket: function(url, s) {
 
 		var self = this;
-		console.log(self);
-
-
 
 		var ws;
 		if ("WebSocket" in window) {
 		  // Chrome, MSIE, newer Firefox
+		  	if (url == "undefined") {
+		  		url = $('ws_uri').val();
+			}
 		  ws = new WebSocket(url);
 		} else if ("MozWebSocket" in window) {
 		  // older versions of Firefox prefix the WebSocket object
@@ -40,11 +40,9 @@ $.extend({
 
 		ws.onopen = function(event) {
 			clearInterval(timeout);
-			console.log('Connection Established!');
 		}
 
 		ws.onclose = function(event) {
-			console.log('Disconnected');
 			bootbox.dialog({
 			  message: '<i class="fa fa-refresh fa-spin"></i> You were disconnected from Chat Server. Waiting to reconnect...',
 			  closeButton: false

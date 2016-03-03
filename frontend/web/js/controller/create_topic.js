@@ -221,7 +221,6 @@ var Create_Topic={
     },
 
     redirect: function(){
-        console.log(Create_Topic.params.zip_code);
         if(Create_Topic.params.zip_code){
             window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;
         }else{
