@@ -13,7 +13,7 @@
               <span><i class="fa fa-plus-circle"></i> Create Topic</span>
             </div>
               <div class="create_topic" id="create_group">
-                  <span><i class="fa fa-plus-circle"></i>Create Group</span>
+                  <span><i class="fa fa-plus-circle"></i> Create Group</span>
               </div>
           </div>
           <div class="sidebar">
