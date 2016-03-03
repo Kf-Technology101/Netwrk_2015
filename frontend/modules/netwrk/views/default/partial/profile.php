@@ -184,7 +184,7 @@
             <tbody>
             <tr>
                 <td>
-                    <div class="alert alert-info">There is no groups data available yet</div>
+                    <div class="alert alert-info">You haven't created any group yet. Please check out any community and create a group.</div>
                 </td>
             </tr>
             </tbody>
@@ -226,7 +226,7 @@
             <tbody>
             <tr>
                 <td>
-                    <div class="alert alert-info">There is no topics you created yet</div>
+                    <div class="alert alert-info">You haven't created any topic yet. Please check out any community and create a topic.</div>
                 </td>
             </tr>
             </tbody>
@@ -275,7 +275,7 @@
             <tbody>
             <tr>
                 <td>
-                    <div class="alert alert-info">There is no posts you created yet</div>
+                    <div class="alert alert-info">You haven't created any post yet. Please check out any community and create a post.</div>
                 </td>
             </tr>
             </tbody>
