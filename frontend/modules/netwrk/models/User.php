@@ -94,13 +94,13 @@ class User extends ActiveRecord implements IdentityInterface
             // password rules
             [['newPassword'], 'string', 'min'=> 8, 'max'=> 255,'message'=> 'Password should contain at least 8 characters.'],
             [['newPassword'], 'filter', 'filter' => 'trim'],
-            [['newPassword'], 'required', 'on' => ['register', 'reset'],'message'=>'Password should contain at least 8 characters.'],
-            [['newPasswordConfirm'], 'required', 'on' => ['reset']],
+            [['newPassword'], 'required', 'on' => ['register', 'reset', 'password_setting'],'message'=>'Password should contain at least 8 characters.'],
+            [['newPasswordConfirm'], 'required', 'on' => ['reset', 'password_setting']],
             [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'message' => 'Passwords do not match'],
 
             // account page
-            [['currentPassword'], 'required', 'on' => ['account']],
-            [['currentPassword'], 'validateCurrentPassword', 'on' => ['account']],
+            [['currentPassword'], 'required', 'on' => ['account', 'password_setting']],
+            [['currentPassword'], 'validateCurrentPassword', 'on' => ['account', 'password_setting']],
 
             // admin crud rules
             [['role_id', 'status'], 'required', 'on' => ['admin']],
@@ -108,7 +108,8 @@ class User extends ActiveRecord implements IdentityInterface
             [['ban_time'], 'integer', 'on' => ['admin']],
             [['ban_reason'], 'string', 'max' => 255, 'on' => 'admin'],
         ];
-                // add required rules for email/username depending on module properties
+
+        // add required rules for email/username depending on module properties
         $requireFields = ["requireEmail", "requireUsername"];
         foreach ($requireFields as $requireField) {
             if (Yii::$app->getModule("netwrk")->$requireField) {
@@ -408,7 +409,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function can($permissionName, $params = [], $allowCaching = true)
     {
-         // check for auth manager rbac
+        // check for auth manager rbac
         $auth = Yii::$app->getAuthManager();
         if ($auth) {
             if ($allowCaching && empty($params) && isset($this->_access[$permissionName])) {

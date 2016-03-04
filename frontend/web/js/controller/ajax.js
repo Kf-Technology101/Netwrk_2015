@@ -421,6 +421,7 @@ var Ajax ={
         return defer.promise();
     },
 
+    // TODO : Need to remove from this after completion on profile task
     userprofile: function(){
         var url,defer = $.Deferred();
 
@@ -530,6 +531,138 @@ var Ajax ={
             // contentType: false,
             // processData: false,
             type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    // TODO : Need to remove upto this after completion on profile task
+
+    getUserProfile: function(){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/profile/get-profile";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    updateUserProfile: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/profile/update-profile";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    uploadProfileImage:function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/profile/upload-image";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    passwordSetting: function(form){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/profile/password-setting";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    getSearchSetting: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/setting/get-user-setting";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    updateSearchSetting: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/setting/update-user-setting";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    getProfileBasicInfo: function(){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/profile/get-profile-basic-info";
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
             success: defer.resolve,
             error: defer.reject
         });

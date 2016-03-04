@@ -166,6 +166,7 @@ var Default ={
                 $('#user_avatar_wrapper #user_avatar_dashboard').remove();
                 $('#user_avatar_wrapper').append(append_html);
                 Default.OnHoverAvatarDropdown();
+                Common._eventClickProfileNavMenu();
             });
             if (isMobile) {
                 var avatar = '#user_avatar_wrapper';
