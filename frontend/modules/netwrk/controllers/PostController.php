@@ -304,4 +304,61 @@ class PostController extends BaseController
             return false;
         }
     }
+
+    /**
+     * [Function is to get posts by user id]
+     *
+     * @return array
+     */
+
+    public function actionGetPostsByUser()
+    {
+        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+        $pageSize = isset($_GET['size']) ? $_GET['size'] : '';
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        $currentUserId = isset($_GET['user']) ? $_GET['user'] : Yii::$app->user->id;
+        $where['user_id'] = $currentUserId;
+
+
+
+        switch ($filter) {
+            case 'recent':
+                $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                break;
+            default:
+                $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                break;
+        }
+
+
+        $countQuery = clone $posts;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+        $posts = $posts->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        $data = [];
+        foreach ($posts as $key => $post) {
+            $num_date = UtilitiesFunc::FormatDateTime($post->created_at);
+            $postArray = [
+                'id' => $post->id,
+                'title' => $post->title,
+                'content' => $post->content,
+                'topic_id' => $post->topic_id,
+                'user_id' => $post->user_id,
+                'created_at' => $post->created_at,
+                'updated_at' => $post->updated_at,
+                'view_count' => $post->view_count,
+                'brilliant_count' => $post->brilliant_count,
+                'comment_count' => $post->comment_count,
+                'post_type' => $post->post_type
+            ];
+            array_push($data, $postArray);
+        }
+
+        $temp = array('data' => $data);
+
+        $hash = json_encode($temp);
+        return $hash;
+    }
 }

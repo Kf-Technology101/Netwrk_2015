@@ -315,4 +315,51 @@ class TopicController extends BaseController
             return $hash;
         }
     }
+
+    public function actionGetTopicsByUser()
+    {
+        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+        $pageSize = isset($_GET['size']) ? $_GET['size'] : '';
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
+
+        $currentUserId = isset($_GET['user']) ? $_GET['user'] : Yii::$app->user->id;
+
+        $where['user_id'] = $currentUserId;
+
+        if (empty($currentUserId)) {
+            throw new Exception("wrong parametres");
+        }
+
+        switch ($filter) {
+            case 'recent':
+                $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                break;
+            default:
+                $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                break;
+        }
+
+        $countQuery = clone $topices;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+        $topices = $topices->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        $data = [];
+        foreach ($topices as $key => $value) {
+            $topic = array(
+                'id'=> $value->id,
+                'city_id'=>$value->city_id,
+                'title'=>$value->title,
+                'img'=> Url::to('@web/img/icon/timehdpi.png'),
+                'created_at'=>$value->created_at
+            );
+            array_push($data,$topic);
+        }
+
+        $temp = array('data' => $data);
+
+        $hash = json_encode($temp);
+        return $hash;
+    }
 }

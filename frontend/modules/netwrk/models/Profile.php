@@ -14,6 +14,7 @@ use yii\db\Query;
  * @property string $last_name
  * @property string $dob
  * @property integer $age
+ * @property string $education
  * @property string $work
  * @property string $photo
  * @property string $about
@@ -43,7 +44,7 @@ class Profile extends ActiveRecord
             [['dob'], 'safe'],
             [['about','dob'], 'string'],
             [['lat', 'lng'], 'number'],
-            [['first_name', 'last_name', 'work'], 'string', 'max' => 45],
+            [['first_name', 'last_name', 'work', 'education'], 'string', 'max' => 45],
             [['photo', 'gender'], 'string', 'max' => 255]
         ];
     }
@@ -60,6 +61,7 @@ class Profile extends ActiveRecord
             'dob' => 'Dob',
             'age' => 'Age',
             'work' => 'Work',
+            'education' => 'Education',
             'photo' => 'Photo',
             'about' => 'About',
             'gender' => 'Gender',

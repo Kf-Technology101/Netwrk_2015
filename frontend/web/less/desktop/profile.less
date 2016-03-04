@@ -247,6 +247,8 @@
           color: #fff;
           background: #5888ac;
           outline: none;
+          font-family: 'ProximaNovaRegular';
+          font-size: 16px;
           &.active {
             cursor: pointer;
             background: #5da5d8;
@@ -279,8 +281,43 @@
               padding-right: 5px;
             }
           }
-          span.date-details {
-            color: #ccc;
+          .title {
+            font-size: 16px;
+          }
+        }
+        .date-details {
+          color: #ccc;
+        }
+        .post-actions {
+          a {
+            text-decoration: none;
+            color: #333;
+            i {
+              padding-right: 5px;
+            }
+            &.post-edit {
+              padding-right: 20px;
+            }
+          }
+        }
+        table.no-border {
+          td {
+            padding: 8px 0;
+            border: none;
+          }
+          thead {
+            tr {
+              border: none;
+              border: none;
+              th {
+                border: none;
+              }
+            }
+          }
+          tbody {
+            tr {
+              border-bottom: 1px solid rgba(136, 136, 136, 0.38);
+            }
           }
         }
       }
