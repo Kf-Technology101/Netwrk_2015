@@ -6,6 +6,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
 use yii\web\Cookie;
+use yii\widgets\ActiveForm;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -57,20 +58,43 @@ if (isset($cookies["isCoverPage"])) {
     <div id="myHeader" class="navbar-mobile navbar-fixed-top">
     	<div class="menu_top">
   			<div class="logo_netwrk option_logo_netwrk">
-  				<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+  				<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
   			</div>
-        <div class="box-search">
-          <div class="search input-group">
-            <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
-            <input type="text" class="form-control input-search" placeholder="What are your interests?">
-          </div>
-          <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
-        </div>
+            <div class="box-search">
+              <div class="search input-group">
+                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control input-search" placeholder="What are your interests?">
+              </div>
+            </div>
+          <!-- <?php/* echo $this->render('@frontend/modules/netwrk/views/user/userinfo') */?>-->
     	</div>
-      <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
-	  </div>
-  
-    <div class="container-fuild">
+	</div>
+    <section class="navigation-wrapper text-center">
+      <div class="box-navigation">
+        <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
+          <button type="button" class="btn btn-default btn-explore">
+            <i class="navigation-icon fa fa-globe"></i>
+            <div class="navigation-text">Map</div>
+          </button>
+          <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
+            <i class="navigation-icon fa fa-comment"></i>
+            <div class="navigation-text"><span class='notify hide'>15</span>Chat</div>
+          </button>
+          <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
+            <i class="navigation-icon ci-meet"></i>
+            <div class="navigation-text">Meet</div>
+          </button>
+          <?php if (Yii::$app->user->isGuest):?>
+            <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
+              <i class="navigation-icon fa fa-sign-in"></i>
+              <div class="navigation-text">Login</div>
+            </a>
+          <?php endif; ?>
+        </div>
+      </div>
+    </section>
+    <?php echo $this->render('@frontend/modules/netwrk/views/user/mobile/userinfo') ?>
+    <div class="container">
 	    <?= Breadcrumbs::widget([
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	    ]) ?>

@@ -336,7 +336,7 @@ var ChatPost = {
 
 	OnClickBackBtn: function(){
 
-		var BackBtn = $(ChatPost.parent).find('.back_page');
+		var BackBtn = $(ChatPost.parent).find('.back_page').add($('.box-navigation .btn_nav_map'));
 		BackBtn.unbind();
 		BackBtn.on('click',function(){
 			if(isMobile){

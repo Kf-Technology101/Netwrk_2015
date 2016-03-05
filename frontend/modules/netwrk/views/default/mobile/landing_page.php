@@ -5,8 +5,8 @@
 			<div class="ld-modal-header">
 				<div class="header">
 					<div class="title">
-						<p class="main-header">Welcome to <span>Netwrk</span></p>
-						<p class="sub-header">Where we facilitate community communications.</p>
+						<p class="main-header">Welcome</p>
+						<p class="sub-header">Here's what's happening in society today.</p>
 					</div>
 				</div>
 			</div>
@@ -16,10 +16,10 @@
 		</div>
 	</div>
 	<div class="ld-modal-footer">
-		<div class="landing-btn btn-meet">Meet</div>
-		<div class="landing-btn btn-my-community">My Community</div>
+		<!--<div class="landing-btn btn-meet">Meet</div>-->
 		<div class="landing-btn btn-explore">Explore</div>
-				<div class="landing-btn btn-help">Help</div>
+		<div class="landing-btn btn-my-community">My Community</div>
+		<div class="landing-btn btn-help">Help</div>
 	</div>
 </div>
 <script id="landing_page" type="text/x-underscore-template">
