@@ -159,7 +159,7 @@ var Create_Topic={
     },
 
     onclickBack: function(){
-        var parent = $('#create_topic').find('.back_page span');
+        var parent = $('#create_topic').find('.back_page span').add($('.box-navigation .btn_nav_map'));
         var city = Create_Topic.params.city;
         var params = {zipcode: Create_Topic.params.city_name};
         parent.unbind();

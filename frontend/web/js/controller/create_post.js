@@ -238,7 +238,7 @@ var Create_Post={
     },
 
     onclickBack: function(){
-        var parent = $('#create_post').find('.back_page span');
+        var parent = $('#create_post').find('.back_page span').add($('.box-navigation .btn_nav_map'));
         var city = Create_Post.params.city;
 
         parent.unbind();

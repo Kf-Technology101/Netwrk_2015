@@ -38,6 +38,7 @@ var Topic = {
     modal: '#modal_topic',
     modal_create: '#create_topic',
     tab_current: 'feed',
+    btn_nav_map: '.box-navigation .btn_nav_map',
     init: function(){
         Topic._onclickBack();
         Topic.GetDataOnTab();
@@ -573,7 +574,7 @@ var Topic = {
 
     _onclickBack: function(){
         if(isMobile){
-            $('#show-topic .back_page span').click(function(){
+            $('#show-topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
                 sessionStorage.show_landing = 1;
                 if($('.back_page').hasClass('back_help')){
                     window.location.href = baseUrl + "/netwrk/default/home?current=help";
@@ -582,7 +583,7 @@ var Topic = {
                 }
             })
         }else{
-            $('#modal_topic .back_page span').click(function(){
+            $('#modal_topic .back_page span, .box-navigation .btn_nav_map').unbind('click').click(function(){
                 $('#modal_topic').modal('hide');
             })
         }

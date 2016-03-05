@@ -35,11 +35,14 @@ body{
   	width: 100%;
   	height: 60px;
     padding: 0 15px;
+    position: absolute;
 
     .logo_netwrk{
       width: 20%;
       height: auto;
       float: left;
+      z-index: 1000;
+      position: relative;
       img{
         width: 44px;
         height: 44px;
@@ -106,21 +109,83 @@ body{
       }
     }
   }
-} 
+}
+
+.navigation-wrapper {
+  bottom: 34px;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  .box-navigation {
+    .navigation-btn-group {
+      .btn {
+        border-right: 1px solid #fff;
+        border-left: none;
+        border-top: none;
+        border-bottom: none;
+        margin-right: 1px;
+        background-color: #5888ac;
+        color: #fff;
+        padding: 2px 4px;
+        line-height: 10px;
+        height: 34px;
+        width: 40px;
+        .ci-meet {
+          background: url("../../img/icon/meet_icon.png") no-repeat;
+          background-size: contain;
+          display: block;
+          height: 12px;
+          width: 15px;
+          margin: 2px auto 0;
+        }
+        .navigation-icon {
+          font-size: 16px;
+        }
+        .navigation-text {
+          font-size: 12px;
+        }
+      }
+      .btn:hover {
+        cursor: pointer;
+        background: #5da5d8;
+      }
+      .btn:last-child {
+        border: none;
+        margin-right: 0;
+      }
+      .profile-dropdown > .btn:first-child {
+        border: none;
+        margin-right: 0;
+      }
+    }
+  }
+}
+#Meet.wrap-mobile {
+  .navigation-wrapper {
+    bottom: 45px;
+  }
+}
+#Chat-inbox.wrap-mobile {
+  .navigation-wrapper {
+    bottom: 40px;
+  }
+}
+
 .map_content_mobile{
   /*max-width: 786px;*/
   width: 100%;
-  margin: 60px auto 0;
+  margin: 0 auto 0;
   position: relative;
   #btn_my_location{
     width: 30px;
     position: absolute;
-    top:5px;
+    top:15px;
     right: 5px;
     background: #5888ac;
     border-radius: 15px;
     display: block;
-    z-index: 6;
+    z-index: 99999;
+    cursor: pointer;
     i{
       color: #fff;
       font-size: 25px;

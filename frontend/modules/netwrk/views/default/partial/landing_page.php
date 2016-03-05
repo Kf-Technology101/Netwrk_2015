@@ -6,8 +6,8 @@
 				<div class="header">
 					<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
 					<div class="title">
-						<p class="main-header">Welcome to <span>Netwrk</span></p>
-						<p class="sub-header">Where we facilitate community communications.</p>
+						<p class="main-header">Welcome</p>
+						<p class="sub-header">Here's what's happening in society today.</p>
 					</div>
 				</div>
 			</div>
@@ -15,10 +15,10 @@
 				<div class="wrapper-container"></div>
 			</div>
 			<div class="modal-footer">
-				<div class="landing-btn btn-meet">Meet</div>
-				<div class="landing-btn btn-my-community">My Community</div>
+				<!--<div class="landing-btn btn-meet">Meet</div>-->
 				<div class="landing-btn btn-explore">Explore</div>
-				<div class="landing-btn btn-help">Help</div>
+				<div class="landing-btn btn-my-community">My Community</div>
+				<div class="landing-btn btn-explore">Help</div>
 			</div>
 		</div>
 	</div>
