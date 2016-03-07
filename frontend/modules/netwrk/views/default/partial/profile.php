@@ -191,107 +191,100 @@
 </script>
 
 <script id="profile_topic_info" type="text/x-underscore-template">
-    <div class="table-responsive topic-details activity-details">
-        <table class="table no-border">
-            <% if(topics.length > 0) {%>
-                <thead>
-                    <tr>
-                        <th class="col-xs-8"></th>
-                        <th class="col-xs-4"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr class="month-details">
-                    <td colspan="2">
-                        <div class="strike">
-                            <span>January 2015</span>
+    <div class="topic-details activity-details">
+        <% if(!_.isEmpty(topics)) {%>
+            <% _.each(topics,function(items, key){ %>
+                <div class="group-item">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="strike">
+                                <span><%= key %></span>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-                    <% _.each(topics,function(item){ %>
-                        <tr>
-                            <td><a href="javascript:" class="title"><b><%= item.title %></b></a></td>
-                            <td class="topic-actions text-right">
-                                <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
-                                <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
-                                    <span class="date-details">
-                                        <%= item.formatted_created_date %>
-                                        <%= item.total_count %>
-                                    </span>
-                            </td>
-                        </tr>
+                    </div>
+                    <% _.each(items,function(item, index){ %>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="item">
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            <a href="javascript:" class="title"><b><%= item.title %></b></a>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="topic-actions text-right">
+                                                <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
+                                                <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                            <span class="date-details">
+                                               <%= item.formatted_created_date %>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <% }); %>
-                </tbody>
-            <% } else {%>
-                <thead>
-                    <tr>
-                        <th class="col-xs-12"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="alert alert-info">You haven't created any topic yet. Please check out any community and create a topic.</div>
-                        </td>
-                    </tr>
-                </tbody>
-            <% } %>
-        </table>
+                </div>
+            <% }); %>
+        <% } else {%>
+            <div class="group-item">
+                <div class="alert alert-info">You haven't created any topic yet. Please check out any community and create a topic.</div>
+            </div>
+        <% } %>
     </div>
 </script>
 
 
 <script id="profile_post_info" type="text/x-underscore-template">
-    <div class="table-responsive post-details activity-details">
-        <table class="table no-border">
-            <% if(posts.length > 0) {%>
-                <thead>
-                    <tr>
-                        <th class="col-xs-8"></th>
-                        <th class="col-xs-4"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr class="month-details">
-                    <td colspan="2">
-                        <div class="strike">
-                            <span>January 2015</span>
+    <div class="post-details activity-details">
+        <% if(!_.isEmpty(posts)) {%>
+            <% _.each(posts,function(items, key){ %>
+                <div class="group-item">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="strike">
+                                <span><%= key %></span>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-                    <% _.each(posts,function(item){ %>
-                        <tr>
-                            <td>
-                                <div class="title"><a href="javascript:"><b><%= item.title %></b></a></div>
-                                <div class="post-content"><%= item.content %></div>
-                            </td>
-                            <td class="text-right">
-                                <div class="date-details"><%
-                                    print(item.formatted_created_date)
-                                    %></div>
-                                <div class="post-actions text-right">
-                                    <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
-                                    <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                    </div>
+                    <% _.each(items,function(item, index){ %>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="item">
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            <a href="javascript:" class="title"><b><%= item.title %></b></a>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="text-right">
+                                                <div class="date-details">
+                                                    <% print(item.formatted_created_date) %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            <div class="post-content"><%= item.content %></div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="post-actions text-right">
+                                                <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
+                                                <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                     <% }); %>
-                </tbody>
-            <% } else {%>
-                <thead>
-                    <tr>
-                        <th class="col-xs-12"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="alert alert-info">You haven't created any post yet. Please check out any community and create a post.</div>
-                        </td>
-                    </tr>
-                </tbody>
-            <% } %>
-        </table>
+                </div>
+            <% }); %>
+        <% } else {%>
+            <div class="group-item">
+                <div class="alert alert-info">You haven't created any post yet. Please check out any community and create a post.</div>
+            </div>
+        <% } %>
     </div>
 </script>
 

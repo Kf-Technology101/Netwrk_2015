@@ -354,12 +354,18 @@ class TopicController extends BaseController
                 'title'=>$value->title,
                 'img'=> Url::to('@web/img/icon/timehdpi.png'),
                 'created_at'=>$value->created_at,
-                'formatted_created_date' => date('M d', strtotime($value->created_at))
+                'formatted_created_date' => date('M d', strtotime($value->created_at)),
+                'formatted_created_date_month_year' => date('F Y', strtotime($value->created_at))
             );
             array_push($data,$topic);
         }
 
-        $temp = array('data' => $data, 'total_count' => $totalCount);
+        //Grouped activity in month
+        $topicArray = array();
+        foreach ($data as $item) {
+            $topicArray[$item['formatted_created_date_month_year']][] = $item;
+        }
+        $temp = array('data' => $topicArray, 'total_count' => $totalCount);
 
         $hash = json_encode($temp);
         return $hash;

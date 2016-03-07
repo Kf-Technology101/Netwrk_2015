@@ -349,6 +349,7 @@ class PostController extends BaseController
                 'user_id' => $post->user_id,
                 'created_at' => $post->created_at,
                 'formatted_created_date' => date('M d', strtotime($post->created_at)),
+                'formatted_created_date_month_year' => date('F Y', strtotime($post->created_at)),
                 'updated_at' => $post->updated_at,
                 'view_count' => $post->view_count,
                 'brilliant_count' => $post->brilliant_count,
@@ -358,7 +359,13 @@ class PostController extends BaseController
             array_push($data, $postArray);
         }
 
-        $temp = array('data' => $data, 'total_count' => $totalCount);
+        //Grouped activity in month
+        $postsArray = array();
+        foreach ($data as $item) {
+            $postsArray[$item['formatted_created_date_month_year']][] = $item;
+        }
+
+        $temp = array('data' => $postsArray, 'total_count' => $totalCount);
 
         $hash = json_encode($temp);
         return $hash;
