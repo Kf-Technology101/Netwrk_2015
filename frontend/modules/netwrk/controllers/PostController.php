@@ -332,6 +332,7 @@ class PostController extends BaseController
 
 
         $countQuery = clone $posts;
+        $totalCount = $countQuery->count();
         $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)
             ->limit($pages->limit)
@@ -347,6 +348,7 @@ class PostController extends BaseController
                 'topic_id' => $post->topic_id,
                 'user_id' => $post->user_id,
                 'created_at' => $post->created_at,
+                'formatted_created_date' => date('M d', strtotime($post->created_at)),
                 'updated_at' => $post->updated_at,
                 'view_count' => $post->view_count,
                 'brilliant_count' => $post->brilliant_count,
@@ -356,7 +358,7 @@ class PostController extends BaseController
             array_push($data, $postArray);
         }
 
-        $temp = array('data' => $data);
+        $temp = array('data' => $data, 'total_count' => $totalCount);
 
         $hash = json_encode($temp);
         return $hash;

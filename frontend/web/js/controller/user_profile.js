@@ -34,7 +34,7 @@ var User_Profile = {
             loaded: 0
         }
     },
-    tab_current: 'group',
+    tab_current: 'topic',
     img:{
         image:''
     },
@@ -381,6 +381,11 @@ var User_Profile = {
             //assign ajax data to template data
             User_Profile.templateData.topics = json.data;
 
+            //set my topics count on recent activity section
+            if (json.total_count) {
+                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Topics: '+json.total_count);
+            }
+
             template.scrollTop(0);
             //hide no data section
             template.find('.no-data').hide();
@@ -406,6 +411,11 @@ var User_Profile = {
 
             //assign ajax data to template data
             User_Profile.templateData.posts = json.data;
+
+            //set my topics count on recent activity section
+            if (json.total_count) {
+                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Posts: '+json.total_count);
+            }
 
             template.scrollTop(0);
             //hide no data section

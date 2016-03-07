@@ -340,7 +340,8 @@ class TopicController extends BaseController
         }
 
         $countQuery = clone $topices;
-        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+        $totalCount = $countQuery->count();
+        $pages = new Pagination(['totalCount' => $totalCount,'pageSize'=>$pageSize,'page'=> $page - 1]);
         $topices = $topices->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
@@ -352,12 +353,13 @@ class TopicController extends BaseController
                 'city_id'=>$value->city_id,
                 'title'=>$value->title,
                 'img'=> Url::to('@web/img/icon/timehdpi.png'),
-                'created_at'=>$value->created_at
+                'created_at'=>$value->created_at,
+                'formatted_created_date' => date('M d', strtotime($value->created_at))
             );
             array_push($data,$topic);
         }
 
-        $temp = array('data' => $data);
+        $temp = array('data' => $data, 'total_count' => $totalCount);
 
         $hash = json_encode($temp);
         return $hash;

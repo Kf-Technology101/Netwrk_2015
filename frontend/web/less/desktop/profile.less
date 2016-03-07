@@ -321,6 +321,43 @@
           }
         }
       }
+
+      tr.month-details {
+        border-bottom: none !important;
+      }
+      .strike {
+        display: block;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .strike > span {
+        position: relative;
+        display: inline-block;
+        background: #F3F3F3;
+        padding: 2px 10px;
+      }
+
+      .strike > span:before,
+      .strike > span:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 9999px;
+        height: 1px;
+        background: rgba(136,136,136,0.38);
+      }
+
+      .strike > span:before {
+        right: 100%;
+        margin-right: 0;
+      }
+
+      .strike > span:after {
+        left: 100%;
+        margin-left: 0;
+      }
     }
   }
 }

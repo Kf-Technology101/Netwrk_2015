@@ -156,6 +156,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <% _.each(groups,function(group){ %>
                         <tr>
                             <td><a href="javascript:" class="title"><b><%= group.name %></b></a></td>
@@ -200,14 +201,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% _.each(topics,function(group){ %>
+                <tr class="month-details">
+                    <td colspan="2">
+                        <div class="strike">
+                            <span>January 2015</span>
+                        </div>
+                    </td>
+                </tr>
+                    <% _.each(topics,function(item){ %>
                         <tr>
-                            <td><a href="javascript:" class="title"><b><%= group.title %></b></a></td>
+                            <td><a href="javascript:" class="title"><b><%= item.title %></b></a></td>
                             <td class="topic-actions text-right">
                                 <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
                                 <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                     <span class="date-details">
-                                        <%= group.created_at %>
+                                        <%= item.formatted_created_date %>
+                                        <%= item.total_count %>
                                     </span>
                             </td>
                         </tr>
@@ -243,6 +252,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                <tr class="month-details">
+                    <td colspan="2">
+                        <div class="strike">
+                            <span>January 2015</span>
+                        </div>
+                    </td>
+                </tr>
                     <% _.each(posts,function(item){ %>
                         <tr>
                             <td>
@@ -251,8 +267,7 @@
                             </td>
                             <td class="text-right">
                                 <div class="date-details"><%
-
-                                    print(item.created_at)
+                                    print(item.formatted_created_date)
                                     %></div>
                                 <div class="post-actions text-right">
                                     <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
