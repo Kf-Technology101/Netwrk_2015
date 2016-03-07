@@ -44,6 +44,7 @@ var Post ={
 			Post.LazyLoading();
 			Create_Post.initialize();
 			Default.ShowNotificationOnChat();
+			Post.getBrilliantCode();
 		}else{
 			// Post.ShowSideBar(Post.params.city_name,Post.params.topic_name);
 			Post.ShowModalPost();
@@ -57,6 +58,7 @@ var Post ={
 			Post.OnClickBackdrop();
 			Topic.displayPositionModal();
 			Default.onCLickModal();
+			Post.getBrilliantCode();
 		}
 		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
@@ -643,5 +645,29 @@ var Post ={
 				Meet.initialize();
 			}
 		});
+	},
+
+	getBrilliantCode: function(brilliantCount) {
+		var code = '';
+		if (brilliantCount == undefined) {
+			return ;
+		}
+
+		if (brilliantCount >= 200) {
+			code = 'brilliant-yellow';
+		} else if(brilliantCount >= 100 && brilliantCount < 200) {
+			code = 'brilliant-yellow-green';
+		} else if(brilliantCount >= 20 && brilliantCount < 100) {
+			code = 'brilliant-green-blue';
+		} else if(brilliantCount >= -20 && brilliantCount < 20) {
+			code = 'brilliant-blue-violet';
+		} else if(brilliantCount >= -100 && brilliantCount  < -20) {
+			code = 'brilliant-blue-pink';
+		} else if(brilliantCount < -100) {
+			code = 'brilliant-pink';
+		} else {
+			code = 'disable';
+		}
+		return code;
 	}
 };

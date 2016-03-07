@@ -61,11 +61,7 @@
             <div class="users_avatar">
                 <div class="image"><img src="<%= post.avatar %>"></div>
                 <div class="icon_brillant" data-item="<%= post.id %>">
-                    <% if (post.is_vote == 1){%>
-                        <div class="count"><%= post.num_brilliant %></div>
-                    <% }else{ %>
-                        <div class="count disable"><%= post.num_brilliant %></div>
-                    <% } %>
+                    <div class="count <%= Post.getBrilliantCode(post.num_brilliant) %>"><%= post.num_brilliant %></div>
                 </div>
             </div>
             <div class="information">
