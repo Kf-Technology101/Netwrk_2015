@@ -1,4 +1,4 @@
-var ProfileInfo = {
+var ProfileEdit = {
     data:{},
     params:{
         email: '',
@@ -23,34 +23,56 @@ var ProfileInfo = {
         total:false
     },
     state: 'Indiana',
-    modal:$('#modal_profile_info'),
-    profileBasicInfo: $('.profile-basic-info'),
-    profileBio : $('.profile-bio'),
+    modal:$('#modal_profile_edit'),
     initialize: function(){
-        ProfileInfo.resetProfileInfo();
-        ProfileInfo.onClickBack();
-        ProfileInfo.onClickEditProfile();
-        ProfileInfo.getProfileBasicInfo();
-        ProfileInfo.ShowModalProfileInfo();
-    },
+        ProfileEdit.onClickBack();
+        ProfileEdit.ShowModalProfileEdit();
 
-    resetProfileInfo: function(){
-        ProfileInfo.profileBasicInfo.html('');
-        ProfileInfo.profileBio.html('');
+        /*ProfileInfo.resetProfileInfo();
+        ProfileInfo.onClickEditProfile();
+        ProfileInfo.getProfileBasicInfo();*/
+
     },
 
     onClickBack: function(){
-        var parent = ProfileInfo.modal.find('.back-page span');
+        var parent = ProfileEdit.modal.find('.back-page span');
 
         parent.unbind();
         parent.click(function(){
             if(isMobile){
             } else {
                 $('.modal').modal('hide');
-                User_Profile.initialize();
+                ProfileInfo.initialize();
             }
         });
     },
+
+    ShowModalProfileEdit: function(){
+        var self = this;
+
+        ProfileEdit.modal.modal({
+            backdrop: true,
+            keyboard: false
+        });
+
+        Common.CustomScrollBar(ProfileEdit.modal.find('.modal-body'));
+
+        ProfileEdit.modal.on('hidden.bs.modal',function() {
+            ProfileEdit.modal.modal('hide');
+        });
+        $('.modal-backdrop.in').click(function(e) {
+            ProfileEdit.modal.modal('hide');
+        });
+    },
+
+
+
+
+    resetProfileInfo: function(){
+        ProfileInfo.profileBasicInfo.html('');
+        ProfileInfo.profileBio.html('');
+    },
+
 
     onClickEditProfile: function(){
         var parent = ProfileInfo.modal.find('.edit-profile');
@@ -101,21 +123,5 @@ var ProfileInfo = {
         }
     },
 
-    ShowModalProfileInfo: function(){
-        var self = this;
 
-        ProfileInfo.modal.modal({
-            backdrop: true,
-            keyboard: false
-        });
-
-        Common.CustomScrollBar(ProfileInfo.modal.find('.modal-body'));
-
-        ProfileInfo.modal.on('hidden.bs.modal',function() {
-            ProfileInfo.modal.modal('hide');
-        });
-        $('.modal-backdrop.in').click(function(e) {
-            ProfileInfo.modal.modal('hide');
-        });
-    }
 };
