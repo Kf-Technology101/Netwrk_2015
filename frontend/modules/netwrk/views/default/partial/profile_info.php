@@ -80,5 +80,5 @@
 </script>
 
 <script id="profile_bio" type="text/x-underscore-template">
-    <%= data.bio %>
+    <%= data.about %>
 </script>

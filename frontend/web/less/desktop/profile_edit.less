@@ -86,10 +86,15 @@
 
           .dropdown{
             font-size: 14px;
-            float: right;
-            width: 20%;
+            width: 100%;
             padding: 0;
             cursor: pointer;
+            .marital-status-dropdown {
+              border-bottom-right-radius: 0;
+              border-top-right-radius: 0;
+              padding: 4px 10px !important;
+              color:  #1d1b1b;
+            }
             .dropdown-toggle{
               width: 297px;
               height: 30px;
@@ -98,6 +103,11 @@
               border: 1px solid #bcbcbc;
               border-top-left-radius: 2px;
               border-bottom-left-radius: 2px;
+              &.disabled{
+                background-color: #eee;
+                opacity: 0.6;
+                cursor: not-allowed;
+              }
             }
             .input-group-addon{
               border: 1px solid #bcbcbc;
@@ -105,6 +115,11 @@
               border-bottom-right-radius: 2px;
               border-left: none;
               color: #000000;
+              &.disabled{
+                background-color: #eee;
+                opacity: 0.6;
+                cursor: not-allowed;
+              }
             }
             .dropdown-menu{
               padding: 0;

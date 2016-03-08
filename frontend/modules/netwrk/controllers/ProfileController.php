@@ -196,15 +196,21 @@ class ProfileController extends BaseController
 
             $info = array(
                 'status' => 1,
+                'first_name' => $user->profile->first_name,
+                'last_name' => $user->profile->last_name,
+                'user_name' => $user->username,
                 'email' => $user->email,
                 'gender' => $user->profile->gender,
                 'zip'=> $user->profile->zip_code,
                 'dob'=> $birthday,
-                'marital_status' => 'single',
+                'marital_status' => $user->profile->marital_status,
                 'work'=> $user->profile->work,
-                'education' => 'MCA',
-                'hobbies' => 'Music, Bike riding',
-                'bio'=> $user->profile->about,
+                'education' => $user->profile->education,
+                'country' => $user->profile->country,
+                'state' => $user->profile->state,
+                'city' => $user->profile->city,
+                'hobbies' => $user->profile->hobbies,
+                'about'=> $user->profile->about,
             );
         }else{
             $info = array(
@@ -212,6 +218,74 @@ class ProfileController extends BaseController
             );
         }
         $hash = json_encode($info);
+        return $hash;
+    }
+
+    public function actionUpdateProfileEdit()
+    {
+        $currentUser = Yii::$app->user->id;
+        $status = 0;
+
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $user_name = $_POST['user_name'];
+        $email = $_POST['email'];
+        $gender = $_POST['gender'];
+        $zip = $_POST['zip'];
+        $dob = $_POST['dob'];
+        $marital_status = $_POST['marital_status'];
+        $work = $_POST['work'];
+        $education = $_POST['education'];
+        $country = $_POST['country'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+        $hobbies = $_POST['hobbies'];
+        $about = $_POST['about'];
+        $lat = $_POST['lat'];
+        $lng = $_POST['lng'];
+
+        $user = User::find()->where('id ='.$currentUser)->with('profile')->one();
+        $profile = $user->profile;
+
+        $user->profile->first_name = $first_name;
+        $user->profile->last_name = $last_name;
+        $user->profile->gender = $gender;
+        $user->profile->zip_code = $zip;
+        $user->profile->dob = $dob;
+        $user->profile->marital_status = $marital_status;
+        $user->profile->work = $work;
+        $user->profile->education = $education;
+        $user->profile->country = $country;
+        $user->profile->state = $state;
+        $user->profile->city = $city;
+        $user->profile->hobbies = $hobbies;
+        $user->profile->about = $about;
+        $user->profile->lat = $lat;
+        $user->profile->lng = $lng;
+
+        $user->profile->update();
+        $birthday = new \DateTime($user->profile->dob);
+        $birthday = $birthday->format('Y-m-d');
+
+        $data = array(
+            'status' => 1,
+            'first_name' => $user->profile->first_name,
+            'last_name' => $user->profile->last_name,
+            'user_name' => $user->username,
+            'email' => $user->email,
+            'gender' => $user->profile->gender,
+            'zip'=> $user->profile->zip_code,
+            'dob'=> $birthday,
+            'marital_status' => $user->profile->marital_status,
+            'work'=> $user->profile->work,
+            'education' => $user->profile->education,
+            'country' => $user->profile->country,
+            'state' => $user->profile->state,
+            'city' => $user->profile->city,
+            'hobbies' => $user->profile->hobbies,
+            'about'=> $user->profile->about,
+        );
+        $hash = json_encode($data);
         return $hash;
     }
 }
