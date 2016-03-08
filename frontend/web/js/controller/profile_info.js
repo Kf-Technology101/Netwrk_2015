@@ -29,6 +29,7 @@ var ProfileInfo = {
     initialize: function(){
         ProfileInfo.resetProfileInfo();
         ProfileInfo.onClickBack();
+        ProfileInfo.onClickEditProfile();
         ProfileInfo.getProfileBasicInfo();
         ProfileInfo.ShowModalProfileInfo();
     },
@@ -47,6 +48,19 @@ var ProfileInfo = {
             } else {
                 $('.modal').modal('hide');
                 User_Profile.initialize();
+            }
+        });
+    },
+
+    onClickEditProfile: function(){
+        var parent = ProfileInfo.modal.find('.edit-profile');
+
+        parent.unbind();
+        parent.click(function(){
+            if(isMobile){
+            } else {
+                $('.modal').modal('hide');
+                ProfileEdit.initialize();
             }
         });
     },

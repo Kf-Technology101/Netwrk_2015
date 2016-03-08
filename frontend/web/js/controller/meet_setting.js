@@ -135,7 +135,7 @@ var Meet_setting={
     },
 
     gender_radio: function(){
-        $.each($('input.input_radio'),function(i,e){
+        $.each($('input.input_radio', '#modal_meet'),function(i,e){
             if (Meet_setting.setting.gender == $(e).val()) {
                 $(e).prop("checked", true);
             }

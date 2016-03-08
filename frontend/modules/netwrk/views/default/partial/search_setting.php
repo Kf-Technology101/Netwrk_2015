@@ -16,9 +16,9 @@
           <div class="show_me">
             <p>Show me</p>
             <div class="radio_gender">
-              <input type="radio" class="input_radio fa fa-check-square-o" name="sex" id="all" value="All"><label for="all"> All</label>
-              <input type="radio" class="input_radio" name="sex" id="female" value="Female"><label for="female"> Female</label>
-              <input type="radio" class="input_radio" name="sex" id="male" value="Male"> <label for="male"> Male </label>
+              <input type="radio" class="input_radio fa fa-check-square-o" name="sex" id="searchSettingAll" value="All"><label for="searchSettingAll"> All</label>
+              <input type="radio" class="input_radio" name="sex" id="searchSettingFemale" value="Female"><label for="searchSettingFemale"> Female</label>
+              <input type="radio" class="input_radio" name="sex" id="searchSettingMale" value="Male"> <label for="searchSettingMale"> Male </label>
             </div>
           </div>
           <div class="search_area">
