@@ -81,6 +81,7 @@ var Topic = {
             Topic.onNetwrkLogo();
             Topic.CheckTabCurrent();
             Default.onCLickModal();
+            Topic.OnClickFavorite();
         }
     },
 
@@ -495,6 +496,7 @@ var Topic = {
         var self = this;
         var parent = $('#item_list_'+self.data.filter);
         var cityname = $('#modal_topic').find('.title_page');
+        var favorite = $('#modal_topic').find('.Favorite-btn-wrap');
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
         parent.show();
@@ -504,6 +506,7 @@ var Topic = {
             self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
             self.getTemplate(parent,data);
             self.getTemplateModal(cityname,data);
+            self.getFavoriteTemplate(favorite, data);
             Topic.CustomScrollBar();
             Topic.filter_topic(parent);
             Topic.GetDataOnTab();
@@ -724,5 +727,31 @@ var Topic = {
         if(modal.length > 0){
             $('.popup_chat_modal .popup-box').css('z-index', '1050');
         }
+    },
+    OnClickFavorite: function(){
+        var target = $('.btn-favorite', '#modal_topic'),
+            params = {
+                'object_type': target.attr('data-object-type'),
+                'object_id' : target.attr('data-object-id')
+            };
+
+        target.unbind();
+        target.on('click',function(){
+            Ajax.favorite(params).then(function(data){
+                var json = $.parseJSON(data);
+                target.find('.favorite-status').html(json.status);
+                console.log(json);
+            });
+
+        });
+    },
+    getFavoriteTemplate: function(parent,data){
+        var json = $.parseJSON(data);
+
+        var template = _.template($("#favorite_btn_template").html());
+        var append_html = '';
+        append_html = template({city: json.city, city_id: json.city_id});
+
+        parent.html(append_html);
     }
 };

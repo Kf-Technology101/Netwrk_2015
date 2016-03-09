@@ -7,6 +7,8 @@
             <div class="back_page">
               <span><i class="fa fa-arrow-circle-left"></i> Back </span>
             </div>
+            <div class="Favorite-btn-wrap">
+            </div>
             <div class="title_page">
             </div>
             <div class="create_topic">
@@ -54,6 +56,12 @@
 </div>
   <script id="city_name" type="text/x-underscore-template">
     <span class="title"><%= city %></span>
+  </script>
+  <script id="favorite_btn_template" type="text/x-underscore-template">
+    <a href="javascript:" class="btn-favorite" data-object-type="<%= 'city' %>"
+       data-object-id="<%= city_id %>">
+        <span class="favorite-status">Favorite</span>
+    </a>
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
       <% _.each(topices,function(topic){ %>

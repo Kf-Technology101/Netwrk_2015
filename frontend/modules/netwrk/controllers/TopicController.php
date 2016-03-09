@@ -190,7 +190,7 @@ class TopicController extends BaseController
                 );
             array_push($data,$topic);
         }
-        $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode);
+        $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode, 'city_id' => $cty ? $cty->id : '');
         $hash = json_encode($temp);
         return $hash;
     }

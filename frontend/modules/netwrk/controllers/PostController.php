@@ -319,8 +319,6 @@ class PostController extends BaseController
         $currentUserId = isset($_GET['user']) ? $_GET['user'] : Yii::$app->user->id;
         $where['user_id'] = $currentUserId;
 
-
-
         switch ($filter) {
             case 'recent':
                 $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
@@ -329,7 +327,6 @@ class PostController extends BaseController
                 $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
                 break;
         }
-
 
         $countQuery = clone $posts;
         $totalCount = $countQuery->count();
