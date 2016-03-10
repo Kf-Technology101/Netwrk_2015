@@ -29,6 +29,7 @@ class FavoriteController extends BaseController
 
         //If user already favorite/Unfavorite the object then UPDATE existing record else INSERT new record.
         if ($favorite) {
+            $favorite->updated_at = date('Y-m-d H:i:s');
             if ($favorite->status == 1) {
                 $favorite->status = 0;
                 $favorite->save();
@@ -46,6 +47,7 @@ class FavoriteController extends BaseController
             }
             $favorite->type = $object_type;
             $favorite->status = 1;
+            $favorite->created_at = date('Y-m-d H:i:s');
             $favorite->save();
             $returnData['status'] = 'Favorited';
         }
@@ -56,7 +58,9 @@ class FavoriteController extends BaseController
                 'user_id' => $favorite->user_id,
                 'city_id' => $favorite->city_id,
                 'type' => $favorite->type,
-                'status' => $favorite->status
+                'status' => $favorite->status,
+                'created_at' => $favorite->created_at,
+                'updated_at' => $favorite->updated_at
             ];
         }
 
