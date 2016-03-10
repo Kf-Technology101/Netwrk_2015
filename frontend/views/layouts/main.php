@@ -55,8 +55,14 @@ if (isset($cookies["isCoverPage"])) {
                 ],
             ]);
         ?>
-        <div class="logo_netwrk">
-            <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
+        <div class="logo_netwrk logo-glow">
+            <span class="logo-active">
+                <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>" alt="logo"/></a>
+            </span>
+            <span class="logo-inactive">
+                <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-icon-inactive.png'); ?>" alt="logo"/></a>
+            </span>
+
         </div>
         <div class="box-search">
             <div class="search input-group">
