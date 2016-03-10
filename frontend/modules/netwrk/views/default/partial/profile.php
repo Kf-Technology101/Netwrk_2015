@@ -25,7 +25,7 @@
                     </div>
                     <div class="clearfix form-group"></div>
                 </section>
-                <article>
+                <article class="fav-communities_content-wrapper">
                     <p>
                         <div class="alert alert-info">Currently there is no favorite communities</div>
                     </p>
@@ -234,7 +234,6 @@
     </div>
 </script>
 
-
 <script id="profile_post_info" type="text/x-underscore-template">
     <div class="post-details activity-details">
         <% if(!_.isEmpty(posts)) {%>
@@ -285,6 +284,29 @@
                 <div class="alert alert-info">You haven't created any post yet. Please check out any community and create a post.</div>
             </div>
         <% } %>
+    </div>
+</script>
+
+<script id="profile_fav-communities_template" type="text/x-underscore-template">
+    <div class="fav-communities_list clearfix">
+        <table class="table">
+            <% if(!_.isEmpty(items)) {%>
+                <tr>
+                    <% _.each(items, function(item, key){ %>
+                        <td>
+                            <span class="fav-zipcode pull-left"><a href="javascript:"><%= item.city_zipcode %></a></span>
+                            <span class="fav-action pull-right"><i class="fa fa-trash-o"></i></span>
+                        </td>
+                    <% }); %>
+                </tr>
+            <% } else {%>
+                <tr>
+                    <td>
+                        <div class="alert alert-info">Currently there is no favorite communities</div>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
     </div>
 </script>
 

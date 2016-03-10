@@ -71,4 +71,26 @@ class FavoriteController extends BaseController
         return $hash;
     }
 
+    public function actionGetFavoriteCommunitiesByUser()
+    {
+        $returnData = array();
+        $communities = Favorite::getFavoriteCommunitiesByUser(Yii::$app->user->id);
+
+        $data = [];
+        foreach ($communities as $key => $value) {
+
+            $item = array(
+                'city_id'=> $value['city_id'],
+                'city_zipcode'=>$value['zip_code'],
+                'city_name'=>$value['name'],
+                'user_id' => $value['user_id'],
+                'status' => $value['status']
+            );
+            array_push($data,$item);
+
+        }
+        $returnData['data'] = $data;
+        $hash = json_encode($returnData);
+        return $hash;
+    }
 }

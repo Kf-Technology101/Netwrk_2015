@@ -7,7 +7,8 @@ var User_Profile = {
         groups:{},
         topics:{},
         posts:{},
-        items:{}
+        items:{},
+        favoriteCommunities: {}
     },
     params:{
         age: 0,
@@ -64,6 +65,9 @@ var User_Profile = {
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
         User_Profile._eventClickProfileInfo();
+
+        //Show favorite communites of currentUser on profile modal
+        User_Profile.ShowFavoriteCommunities();
     },
 
     resetProfile: function(){
@@ -462,5 +466,37 @@ var User_Profile = {
                 User_Profile.ShowGroups();
                 break;*/
         }
+    },
+    getTemplateFavoriteInfo: function(parent,target,callback){
+        console.log('in getTemplateFavoriteInfo');
+        var template = _.template(target.html());
+        console.log(User_Profile.templateData.favoriteCommunities);
+
+        var append_html = template({items: User_Profile.templateData.favoriteCommunities});
+        parent.append(append_html);
+
+        if(_.isFunction(callback)){
+            callback();
+        }
+    },
+    ShowFavoriteCommunities: function(){
+        console.log('in ShowFavoriteCommunities');
+        var parent = $('.fav-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        var content = $('#profile_fav-communities_template');
+        var params = {'filter': 'recent'};
+
+        parent.html('');
+
+        //Todo: fetch favorite communities of user
+        Ajax.show_user_favorite_communities(params).then(function(data){
+            var json = $.parseJSON(data);
+            console.log(json);
+
+            //assign ajax data to template data
+            User_Profile.templateData.favoriteCommunities = json.data;
+
+            //set the template data
+            User_Profile.getTemplateFavoriteInfo(parent, content);
+        });
     }
 };

@@ -57,10 +57,9 @@ class Favorite extends \yii\db\ActiveRecord
     public static function isFavoritedByUser($objectType, $objectId, $userId)
     {
         $userId = $userId ? $userId : Yii::$app->user->id;
-        //$favorite = Favorite::find()->where('user_id = '.$userId.' AND city_id = '.$objectId)->one();
 
-        $favorite = Favorite::find()->where('user_id = :userId and city_id = :cityId and type= :type',
-            ['userId'=>$userId, 'cityId'=>$objectId, 'type'=>$objectType])
+        $favorite = Favorite::find()->where('user_id = :userId and city_id = :cityId and type= :type')
+            ->addParams(['userId'=>$userId, 'cityId'=>$objectId, 'type'=>$objectType])
             ->one();
 
         if ($favorite) {
@@ -68,6 +67,19 @@ class Favorite extends \yii\db\ActiveRecord
         } else {
             return FALSE;
         }
+    }
 
+    //Get top netwrk have most user
+    public function getFavoriteCommunitiesByUser($userId){
+        $userId = $userId ? $userId : Yii::$app->user->id;
+
+        $query = new Query();
+        $data = $query->select('favorite.id as favorite_id, favorite.user_id, favorite.status, city.id as city_id, city.zip_code, city.name')
+            ->from('favorite')
+            ->join('INNER JOIN', 'city', 'city.id = favorite.city_id')
+            ->where(['favorite.user_id' => $userId, 'favorite.status' => 1])
+            ->all();
+
+        return $data;
     }
 }

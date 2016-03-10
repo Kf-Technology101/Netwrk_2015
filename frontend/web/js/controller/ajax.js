@@ -1056,6 +1056,23 @@ var Ajax ={
         });
 
         return defer.promise();
+    },
+    show_user_favorite_communities: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/favorite/get-favorite-communities-by-user";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 }
 
