@@ -60,7 +60,13 @@
   <script id="favorite_btn_template" type="text/x-underscore-template">
     <a href="javascript:" class="btn-favorite" data-object-type="<%= 'city' %>"
        data-object-id="<%= city_id %>">
-        <span class="favorite-status">Favorite</span>
+        <span class="favorite-status">
+            <% if(is_favorite == true){%>
+                Favorited
+            <% }else{ %>
+                Favorite
+            <% } %>
+        </span>
     </a>
   </script>
   <script id="topic_list" type="text/x-underscore-template" >

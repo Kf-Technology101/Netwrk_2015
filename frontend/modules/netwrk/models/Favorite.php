@@ -13,6 +13,8 @@ use yii\db\Query;
  * @property integer $user_id
  * @property string $type
  * @property integer $status
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Favorite extends \yii\db\ActiveRecord
 {
@@ -45,8 +47,27 @@ class Favorite extends \yii\db\ActiveRecord
             'status' => 'Status',
             'user_id' => 'User ID',
             'city_id' => 'City ID',
-            'type'  => 'Type'
+            'type'  => 'Type',
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at'
+
         ];
     }
 
+    public static function isFavoritedByUser($objectType, $objectId, $userId)
+    {
+        $userId = $userId ? $userId : Yii::$app->user->id;
+        //$favorite = Favorite::find()->where('user_id = '.$userId.' AND city_id = '.$objectId)->one();
+
+        $favorite = Favorite::find()->where('user_id = :userId and city_id = :cityId and type= :type',
+            ['userId'=>$userId, 'cityId'=>$objectId, 'type'=>$objectType])
+            ->one();
+
+        if ($favorite) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+
+    }
 }

@@ -750,7 +750,7 @@ var Topic = {
 
         var template = _.template($("#favorite_btn_template").html());
         var append_html = '';
-        append_html = template({city: json.city, city_id: json.city_id});
+        append_html = template({city: json.city, city_id: json.city_id, is_favorite: json.is_favorite});
 
         parent.html(append_html);
     }

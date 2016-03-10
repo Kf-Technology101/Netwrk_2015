@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\controllers;
 
 use frontend\components\UtilitiesFunc;
 use frontend\components\BaseController;
+use frontend\modules\netwrk\models\Favorite;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
@@ -137,6 +138,11 @@ class TopicController extends BaseController
         $pageSize = $_GET['size'];
         $page = $_GET['page'];
         $cty = City::findOne($city);
+
+        //Check : does loggedInUser has favorite this city
+        if($cty) {
+            $is_favorite = Favorite::isFavoritedByUser('city', $cty->id);
+        }
         if(!$cty){
             $zipcode = $_GET['zipcode'];
         }
@@ -190,7 +196,7 @@ class TopicController extends BaseController
                 );
             array_push($data,$topic);
         }
-        $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode, 'city_id' => $cty ? $cty->id : '');
+        $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode, 'city_id' => $cty ? $cty->id : '', 'is_favorite' => $is_favorite);
         $hash = json_encode($temp);
         return $hash;
     }
