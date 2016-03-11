@@ -66,6 +66,10 @@ var LandingPage = {
 		LandingPage.OnClickVote();
 		LandingPage.OnClickChat();
 		LandingPage.onClickHelpLandingDesktop();
+
+		// Initialize click on topic name
+		Topic.OnClickTopicFeed();
+		
 		if(isMobile){
 			LandingPage.FixWidthPostLanding();
 		}

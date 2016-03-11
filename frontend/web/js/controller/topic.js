@@ -471,7 +471,7 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $('#modal_topic,#show-topic, #profileRecentTopic').find('.topic-row, .feed-row.feed-topic, .topic-trigger');
+        var target = $('#modal_topic,#show-topic, #profileRecentTopic, #collapseFavoriteCommunities').find('.topic-row, .feed-row.feed-topic, .topic-trigger, .feed-row.feed-topic');
 
         target.unbind();
         target.on('click',function(e){
@@ -484,6 +484,8 @@ var Topic = {
             }else{
                 if(target[0].className == 'title topic-trigger'){
                     $('#modal_profile').modal('hide');
+                }if(target[0].className == 'feed-row feed-topic fav-community-topic'){
+                    $('#modal_landing_page').modal('hide');
                 }else{
                     $(Topic.modal).modal('hide');
                 }
