@@ -236,10 +236,21 @@ function CustomScrollBar(){
 
 function homePage(){
     var target = $('.option_logo_netwrk a');
-    target.on('click', function(){
-        sessionStorage.map_zoom = 7;
-        window.location.href = baseUrl + '/netwrk/default/home';
-    });
+    var isLanding = $('.wrap-mobile').data('action');
+    if (isLanding == 'landing-page') {
+      target.on('click', function(e){
+          e.preventDefault();
+          sessionStorage.show_landing = 1;
+          sessionStorage.map_zoom = 7;
+          window.location.href = baseUrl + '/netwrk/default/home';
+      });
+    } else {
+      target.on('click', function(e){
+          e.preventDefault();
+          sessionStorage.show_landing = 0;
+          window.location.href = baseUrl + '/netwrk/default/home';
+      });
+    }
 }
 
 $(document).ready(function(){

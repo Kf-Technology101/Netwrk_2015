@@ -210,27 +210,32 @@ var LandingPage = {
         $(LandingPage.parent).on('shown.bs.modal',function(e) {
         	LandingPage.SetSession();
         	LandingPage.GetDataTopLanding();
-		  	$('.logo_netwrk > a').addClass('landing-shown');
+		  		$('.logo_netwrk > a').addClass('landing-shown');
         });
         // on Click logo when modal was shown
         $('.logo_netwrk > a').on('click', function(evt){
-        	evt.preventDefault();
-        	var _this = $(this);
-        	if (_this.hasClass('landing-shown')) {
-        		_this.removeClass('landing-shown');
-        		$(LandingPage.modal).modal('hide');
-        		return false;
-        	} else {
-        		var _href = _this.attr('href');
-        		window.location.href = _href;
-        		return true;
-        	}
+					if(isMobile) {
+	        	evt.preventDefault();
+						return false;
+					} else {
+	        	evt.preventDefault();
+	        	var _this = $(this);
+	        	if (_this.hasClass('landing-shown')) {
+	        		_this.removeClass('landing-shown');
+	        		$(LandingPage.modal).modal('hide');
+							$(LandingPage.modal).trigger('off');
+	        		return false;
+	        	} else {
+						$(LandingPage.modal).modal('show');
+	        		return false;
+	        	}
+					}
         })
 	},
 
 	OnHideModalLanding: function(){
         $(LandingPage.modal).on('hidden.bs.modal',function(e) {
-        	LandingPage.ResetData();
+        	// LandingPage.ResetData();
         	$('.logo_netwrk > a').removeClass('landing-shown');
         });
 	},
