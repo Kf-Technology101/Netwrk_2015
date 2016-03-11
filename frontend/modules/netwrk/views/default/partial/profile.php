@@ -25,10 +25,9 @@
                     </div>
                     <div class="clearfix form-group"></div>
                 </section>
+
                 <article class="fav-communities_content-wrapper">
-                    <p>
-                        <div class="alert alert-info">Currently there is no favorite communities</div>
-                    </p>
+
                 </article>
 
                 <section class="recent_activities_wrapper">
@@ -58,13 +57,10 @@
                             </div>
                         </div>
                     </article>
-                    <article class="">
-
-                        <div id="recent_activity_container" class="hidden" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                            <p class="no-data">There is no data available yet</p>
-                        </div>
-
+                    <article id="recent_activity_container" class="hidden">
+                        <p class="no-data">There is no data available yet</p>
                     </article>
+
                 </section>
             </div>
 
@@ -194,7 +190,7 @@
     <div class="topic-details activity-details">
         <% if(!_.isEmpty(topics)) {%>
             <% _.each(topics,function(items, key){ %>
-                <div class="group-item">
+                <div class="group-item" id="profileRecentTopic">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="strike">
@@ -208,7 +204,7 @@
                                 <div class="item">
                                     <div class="row">
                                         <div class="col-xs-8">
-                                            <a href="javascript:" class="title"><b><%= item.title %></b></a>
+                                            <a href="javascript:" class="title topic-trigger" data-value="<%= item.id %>" data-city="<%= item.city_id %>" data-city-name="<%= item.city_name %>"><b><%= item.title %></b></a>
                                         </div>
                                         <div class="col-xs-4">
                                             <div class="topic-actions text-right">
@@ -235,7 +231,7 @@
 </script>
 
 <script id="profile_post_info" type="text/x-underscore-template">
-    <div class="post-details activity-details">
+    <div class="post-details activity-details" id="recentActivityPosts">
         <% if(!_.isEmpty(posts)) {%>
             <% _.each(posts,function(items, key){ %>
                 <div class="group-item">
@@ -250,24 +246,16 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="item">
-                                    <div class="row">
-                                        <div class="col-xs-8">
-                                            <a href="javascript:" class="title"><b><%= item.title %></b></a>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <div class="text-right">
-                                                <div class="date-details">
-                                                    <% print(item.formatted_created_date) %>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-8">
+                                    <div class="row" data-value="<%= item.id %>" data-user="<%= item.user_id %>">
+                                        <div class="col-xs-8 post">
+                                            <p class="post-title"><%= item.title %></p>
                                             <div class="post-content"><%= item.content %></div>
                                         </div>
-                                        <div class="col-xs-4">
-                                            <div class="post-actions text-right">
+                                        <div class="col-xs-4 text-right">
+                                            <div class="date-details">
+                                                <% print(item.formatted_created_date) %>
+                                            </div>
+                                            <div class="post-actions">
                                                 <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
                                                 <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                             </div>
@@ -289,24 +277,20 @@
 
 <script id="profile_fav-communities_template" type="text/x-underscore-template">
     <div class="fav-communities_list clearfix">
-        <table class="table">
+        <div class="fav-communities-list" id="favoriteCommunities">
             <% if(!_.isEmpty(items)) {%>
-                <tr>
-                    <% _.each(items, function(item, key){ %>
-                        <td>
-                            <span class="fav-zipcode pull-left"><a href="javascript:"><%= item.city_zipcode %></a></span>
-                            <span class="fav-action pull-right"><i class="fa fa-trash-o"></i></span>
-                        </td>
-                    <% }); %>
-                </tr>
+                <% _.each(items, function(item, key){ %>
+                    <div class="fav-community">
+                        <span class="fav-zip-code pull-left"><a class="community-modal-trigger" href="javascript:" data-city-id="<%= item.city_id %>"><%= item.city_zipcode %></a></span>
+                        <span class="fav-action pull-right un-favorite-trigger"
+                              data-object-type="<%= 'city' %>"
+                              data-object-id="<%= item.city_id %>"><i class="fa fa-trash-o"></i></span>
+                    </div>
+                <% }); %>
             <% } else {%>
-                <tr>
-                    <td>
-                        <div class="alert alert-info">Currently there is no favorite communities</div>
-                    </td>
-                </tr>
+                <div class="alert alert-info">Currently there is no favorite communities</div>
             <% } %>
-        </table>
+        </div>
     </div>
 </script>
 

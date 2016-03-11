@@ -436,7 +436,7 @@ var Topic = {
     },
 
     OnClickPostFeed: function(){
-        var target = $('#modal_topic,#show-topic').find('.top-post .post, .feed-row.feed-post .feed-content');
+        var target = $('#modal_topic,#show-topic, #recentActivityPosts').find('.top-post .post, .feed-row.feed-post .feed-content, .post');
         target.unbind();
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
@@ -452,6 +452,7 @@ var Topic = {
                 PopupChat.params.chat_type = 1;
                 PopupChat.params.post_name = post_name;
                 PopupChat.params.post_description = post_content;
+                console.log(PopupChat.params);
                 PopupChat.initialize();
             }
         });
@@ -470,7 +471,7 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $('#modal_topic,#show-topic').find('.topic-row, .feed-row.feed-topic');
+        var target = $('#modal_topic,#show-topic, #profileRecentTopic').find('.topic-row, .feed-row.feed-topic, .topic-trigger');
 
         target.unbind();
         target.on('click',function(e){
@@ -481,7 +482,12 @@ var Topic = {
             if(isMobile){
                 Post.RedirectPostPage(topic_id);
             }else{
-                $(Topic.modal).modal('hide');
+                if(target[0].className == 'title topic-trigger'){
+                    $('#modal_profile').modal('hide');
+                }else{
+                    $(Topic.modal).modal('hide');
+                }
+
                 Post.params.topic = topic_id;
                 Post.params.topic_name = topic_name;
                 Post.params.city = city_id;
@@ -729,17 +735,25 @@ var Topic = {
         }
     },
     OnClickFavorite: function(){
-        var target = $('.btn-favorite', '#modal_topic'),
-            params = {
-                'object_type': target.attr('data-object-type'),
-                'object_id' : target.attr('data-object-id')
-            };
+        var target = $('#modal_topic, #favoriteCommunities').find('.btn-favorite, .un-favorite-trigger');
 
         target.unbind();
         target.on('click',function(){
+            var self = $(this),
+            params = {
+                'object_type': self.attr('data-object-type'),
+                'object_id' : self.attr('data-object-id')
+            };
+
             Ajax.favorite(params).then(function(data){
                 var json = $.parseJSON(data);
-                target.find('.favorite-status').html(json.status);
+
+                if(target[0].className == 'fav-action pull-right un-favorite-trigger'){
+                    self.closest('.fav-community').remove();
+                }else{
+                    target.find('.favorite-status').html(json.status);
+                }
+
                 console.log(json);
             });
 

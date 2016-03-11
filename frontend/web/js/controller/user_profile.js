@@ -56,18 +56,19 @@ var User_Profile = {
         User_Profile.resetProfile();
         User_Profile.getProfileInfo();
 
+        //Show favorite communites of currentUser on profile modal
+        User_Profile.ShowFavoriteCommunities();
+
         User_Profile.OnClickTabBtn();
 
         //Init the recent activities button group and get data according to tab.
         User_Profile.getDataOnTab();
 
         User_Profile.ShowModalProfile();
+
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
         User_Profile._eventClickProfileInfo();
-
-        //Show favorite communites of currentUser on profile modal
-        User_Profile.ShowFavoriteCommunities();
     },
 
     resetProfile: function(){
@@ -285,6 +286,20 @@ var User_Profile = {
         });
     },
 
+    _eventClickCommunityTrigger: function(){
+        var target = $('.community-modal-trigger','#favoriteCommunities');
+
+        target.unbind();
+        target.click(function(e){
+            var city_id = $(e.currentTarget).attr('data-city-id');
+            if(isMobile){
+            } else {
+                $('.modal').modal('hide');
+                Topic.initialize(city_id);
+            }
+        });
+    },
+
     getTemplateGroupInfo: function(parent,target,callback){
         var template = _.template(target.html());
         var append_html = template({groups: User_Profile.templateData.groups});
@@ -394,6 +409,9 @@ var User_Profile = {
             //hide no data section
             template.find('.no-data').hide();
             User_Profile.getTemplateTopicInfo(template, templateData);
+
+            // Initialize click on topic name
+            Topic.OnClickTopicFeed();
         });
     },
     //Show Topics information of users
@@ -426,6 +444,8 @@ var User_Profile = {
             template.find('.no-data').hide();
             User_Profile.getTemplatePostInfo(template, templateData);
 
+            // Initialize click on post name
+            Topic.OnClickPostFeed();
         });
     },
 
@@ -468,9 +488,7 @@ var User_Profile = {
         }
     },
     getTemplateFavoriteInfo: function(parent,target,callback){
-        console.log('in getTemplateFavoriteInfo');
         var template = _.template(target.html());
-        console.log(User_Profile.templateData.favoriteCommunities);
 
         var append_html = template({items: User_Profile.templateData.favoriteCommunities});
         parent.append(append_html);
@@ -480,23 +498,24 @@ var User_Profile = {
         }
     },
     ShowFavoriteCommunities: function(){
-        console.log('in ShowFavoriteCommunities');
         var parent = $('.fav-communities_content-wrapper', User_Profile.contexts.modalProfile);
         var content = $('#profile_fav-communities_template');
         var params = {'filter': 'recent'};
 
         parent.html('');
 
-        //Todo: fetch favorite communities of user
         Ajax.show_user_favorite_communities(params).then(function(data){
             var json = $.parseJSON(data);
-            console.log(json);
 
-            //assign ajax data to template data
+            //Assign ajax data to template data
             User_Profile.templateData.favoriteCommunities = json.data;
 
-            //set the template data
+            //Set the template data
             User_Profile.getTemplateFavoriteInfo(parent, content);
+
+            // Initialize the click on community name and delete icon
+            User_Profile._eventClickCommunityTrigger();
+            Topic.OnClickFavorite();
         });
     }
 };

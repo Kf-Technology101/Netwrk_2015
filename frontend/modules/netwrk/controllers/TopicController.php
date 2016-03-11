@@ -357,6 +357,7 @@ class TopicController extends BaseController
             $topic = array(
                 'id'=> $value->id,
                 'city_id'=>$value->city_id,
+                'city_name'=> $value->city->name,
                 'title'=>$value->title,
                 'img'=> Url::to('@web/img/icon/timehdpi.png'),
                 'created_at'=>$value->created_at,
