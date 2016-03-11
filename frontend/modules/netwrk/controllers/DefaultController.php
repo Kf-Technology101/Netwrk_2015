@@ -13,6 +13,8 @@ use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\Hashtag;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
+use frontend\modules\netwrk\models\Favorite;
+use frontend\modules\netwrk\models\HistoryFeed;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\Temp;
 use frontend\components\UtilitiesFunc;
@@ -591,11 +593,13 @@ class DefaultController extends BaseController
             $top_topic = Topic::GetTopTopicGlobal($limit, null);
             $top_city = City::GetTopCityUserJoinGlobal($limit);
             $top_communities =City::TopHashTag_City($top_city,$limit);
+            $feeds = json_decode($this->actionGetFeedByUser(), true);
 
             $item = [
                 'top_post'=> $top_post,
                 'top_topic'=> $top_topic,
-                'top_communities'=> $top_communities
+                'top_communities'=> $top_communities,
+                'feeds' => $feeds
             ];
 
             $hash = json_encode($item);
@@ -611,5 +615,84 @@ class DefaultController extends BaseController
     public function actionHome()
     {
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
+    }
+
+    /**
+     * [Function is used to get  List out users ALL created Topic/ Post within that netwrk, 3 posts within that netwrk and have most number of users joining the post discussion, 3 topics which have most posts within this zip code]
+     * @param  $zipcode
+     * @return array      [data of json]
+     */
+    public function actionGetFeedByUser() {
+        $userId = isset($_GET['userId']) ? $_GET['userId'] : Yii::$app->user->id;
+        $request = 1;//Yii::$app->request->isAjax;
+
+        if($request){
+
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+
+            //fetch users favorited cities
+            //todo: pagination on favorite city
+            $favorite = new Favorite();
+            $favoriteCities = $favorite->find()
+                ->where([
+                    'type' => 'city',
+                    'user_id' => $userId,
+                    'status' => 1
+                ])->all();
+
+            $cities = [];
+            foreach ($favoriteCities as $city) {
+                array_push($cities, $city->city_id);
+            }
+
+
+            //fetch history feed of users favorite cities
+            $htf = new HistoryFeed();
+            $history_feed = $htf->find()->select('history_feed.*, city.zip_code')
+                ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
+                ->where(['city_id' => $cities])
+                ->orderBy(['created_at'=> SORT_DESC]);
+
+            //todo: pagination on history feed
+            $data_feed = $history_feed->all();
+
+            $feeds =[];
+            foreach ($data_feed as $key => $value) {
+                if ($value->type_item == 'post') {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $url_avatar = User::GetUrlAvatar($value->item->user->id,$value->item->user->profile->photo);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'content'=> $value->item->content,
+                        'topic_id' => $value->item->topic_id,
+                        'photo' => $url_avatar,
+                        'city_id'=> $value->item->topic->city_id,
+                        'city_name'=> $value->item->topic->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
+                        'user_id' => $value->item->user_id,
+                        'is_post' => 1
+                    ];
+                } else {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'city_id'=> $value->item->city_id,
+                        'city_name'=> $value->item->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'created_by' => $value->item->user['profile']['first_name']." ".$value->item->user['profile']['last_name'],
+                        'is_post' => 0
+                    ];
+                }
+                $feeds[$value->city_id][] = $item;
+            }
+
+            $hash = json_encode($feeds);
+            return $hash;
+        }
     }
 }

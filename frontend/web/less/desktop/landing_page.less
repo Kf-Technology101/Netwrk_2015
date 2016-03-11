@@ -307,6 +307,151 @@
                 }
 	    	}
     	}
+
+        .favorite-communities{
+            .top-header{
+              a{
+                &:after{
+                  margin-top: -22px;
+                }
+              }
+              .lp-title{
+                font-family: "ProximaNovaBold";
+                font-size: 16px;
+                margin-bottom: 0;
+                line-height: 16px;
+                width: 100%;
+                display: inline-block;
+              }
+              .lp-description{
+                font-size: 14px;
+                color: #1d1b1b;
+                margin-bottom: 0;
+                width: 97%;
+                display: inline-block;
+              }
+            }
+            .favorite-communities-content{
+                .community-title{
+                    font-family: "ProximaNovaBold";
+                    font-size: 16px;
+                    line-height: 30px;
+                    background-color: #F3F3F3;
+                    padding-left: 15px;
+                }
+                .feed-row{
+                  border-bottom: 1px solid #e4e4e4;
+                  position: relative;
+                  &:hover{
+                    cursor: pointer;
+                  }
+                  &.feed-topic{
+                    padding: 5px 15px;
+                    .feed-content {
+                      .topic-title {
+                        font-size: 16px;
+                        color:#1d1b1b;
+                        width: 300px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: inline-block;
+                        vertical-align: middle;
+                        &:hover {
+                          color: #5da5d8;
+                        }
+                      }
+                      .topic-create-by {
+                        font-size: 13px;
+                        color: #797979;
+                        position: absolute;
+                        left: 350px;
+                        top: 8px;
+                      }
+                      .appear-day {
+                        font-size : 12px;
+                        color : #797979;
+                        position: absolute;
+                        right: 15px;
+                        top: 8px;
+                      }
+                    }
+                  }
+                  &.feed-post{
+                    padding: 3px 15px;
+                    height: 50px;
+                    .avatar-poster {
+                      width: 40px;
+                      height: 40px;
+                      max-width: 40px;
+                      max-height: 40px;
+                      float: left;
+                      display: table;
+                      position: relative;
+                      background: #fff;
+                      border-radius: 2px;
+                      border: 1px solid #898989;
+                      .image{
+                        height: 40px;
+                        width: 40px;
+                        text-align: center;
+                        vertical-align: middle;
+                        display: table-cell;
+                        cursor: pointer;
+                        img{
+                          margin: auto;
+                          max-width: 40px;
+                          width: auto;
+                          height: auto;
+                          max-height: 40px;
+                        }
+                      }
+                    }
+                    .feed-content {
+                      .post {
+                        margin-left: 60px;
+                        width: 650px;
+                        .post-title {
+                          &::before{
+                            content: '#';
+                          }
+                          font-size: 16px;
+                          color:#1d1b1b;
+                          font-family: "ProximaNovaSemibold";
+                          width: 500px;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                        }
+                        .post-content {
+                          font-size: 13px;
+                          color: #1d1b1b;
+                          line-height: 14px;
+                          width: 500px;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                        }
+                      }
+                      .post-create-by {
+                        font-size: 13px;
+                        color: #797979;
+                        position: absolute;
+                        right: 15px;
+                        top: 5px;
+                      }
+                      .appear-day {
+                        font-size : 12px;
+                        color : #797979;
+                        position: absolute;
+                        right: 15px;
+                        top: 25px;
+                      }
+                    }
+                  }
+                }
+            }
+        }
     }
     .modal-footer{
         border-top: none;
