@@ -85,6 +85,12 @@ var Login={
 				Default.SetAvatarUserDropdown();
 				PopupChat.ShowChatBox(PopupChat.params.post);
 			}, 500)
+		} else {
+			setTimeout(function(){
+				Login.ShowNotificationOnChat();
+				Default.SetAvatarUserDropdown();
+				PopupChat.ShowChatBox(PopupChat.params.post);
+			}, 500)
 		}
 	},
 
