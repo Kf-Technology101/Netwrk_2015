@@ -197,6 +197,9 @@ var Topic = {
         $('.create_topic').hide();
         $('#create_group').show();
         //parent.find('.dropdown').addClass('visible');
+        parent.find('.header .title_page').removeClass('on-feed');
+        parent.find('.header .create_topic').removeClass('on-feed');
+        Group.initialize();
     },
 
     OnClickSortBtn: function(){

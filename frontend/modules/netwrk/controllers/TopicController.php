@@ -160,9 +160,14 @@ class TopicController extends BaseController
         }
         if (!empty($cty) && !$cty) {
             $zipcode = $_GET['zipcode'];
-        } else {
-            $is_favorite = Favorite::isFavoritedByUser('city', $cty->id);
         }
+
+        if (!empty($cty)) {
+            $is_favorite = Favorite::isFavoritedByUser('city', $cty->id);
+        } else {
+            $is_favorite = false;
+        }
+
         if (!empty($_GET['group'])) {
             $where['group_id'] = $_GET['group'];
         }

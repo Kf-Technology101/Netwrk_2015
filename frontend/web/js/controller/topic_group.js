@@ -146,7 +146,6 @@ var Topic_Group = {
     },
 
     ShowGroupsPage: function() {
-        console.log("groups page");
         var parent = $('#modal_topic,#show-topic');
         parent.find('#tab_groups').show();
         parent.find('.dropdown').addClass('visible');

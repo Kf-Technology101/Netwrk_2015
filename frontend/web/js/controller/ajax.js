@@ -920,6 +920,24 @@ var Ajax ={
         return defer.promise();
     },
 
+    get_users: function(group_id) {
+        var url,defer = $.Deferred();
+
+        url = "/netwrk/group/get-users";
+
+        $.ajax({
+            url: url,
+            data: { "id" : group_id },
+            type: 'POST',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     count_unread_message: function(){
         var url,defer = $.Deferred();
         url = baseUrl +"/netwrk/notify/count-unread-message";

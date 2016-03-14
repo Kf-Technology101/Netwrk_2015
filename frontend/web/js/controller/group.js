@@ -64,7 +64,7 @@ var Group = {
         Group.OnShowModalGroup();
     },
 
-    initialize: function(city,params){
+    initialize: function(){
         if (!isMobile) {
             //Group._onclickBack();
             /*Group.OnShowModalPost();
@@ -396,6 +396,7 @@ var Group = {
     },
 
     CreateTopic: function() {
+        console.log("create topic!!! ", $('#btn-create-topic').eq(0));
         $('#btn-create-topic').eq(0).click(function() {
             $('#modal_topic').modal('hide');
             Create_Topic.initialize(Topic.data.city, Topic.data.city_name, true, Group.data.id);
