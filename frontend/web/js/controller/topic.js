@@ -436,7 +436,11 @@ var Topic = {
     },
 
     OnClickPostFeed: function(){
-        var target = $('#modal_topic,#show-topic, #recentActivityPosts').find('.top-post .post, .feed-row.feed-post .feed-content, .post');
+        var target = $('#modal_topic').find('.top-post .post')
+            .add($('#modal_topic').find('.feed-row.feed-post .feed-content'))
+            .add($('#collapseFavoriteCommunities').find('.feed-row.feed-post .feed-content'))
+            .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
+            .add($('#recentActivityPosts').find('.post'));
         target.unbind();
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
@@ -471,8 +475,10 @@ var Topic = {
     },
 
     OnClickTopicFeed: function(){
-        var target = $('#modal_topic,#show-topic, #profileRecentTopic, #collapseFavoriteCommunities').find('.topic-row, .feed-row.feed-topic, .topic-trigger, .feed-row.feed-topic');
-
+        var target = $('#modal_topic').find('.topic-row')
+            .add($('#show-topic').find('.feed-row.feed-topic'))
+            .add($('#profileRecentTopic').find('.topic-trigger'))
+            .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'));
         target.unbind();
         target.on('click',function(e){
             var city_id = $(e.currentTarget).attr('data-city'),

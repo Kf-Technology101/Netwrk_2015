@@ -402,10 +402,9 @@ var Post ={
     },
 
     OnClickPostFeed: function() {
-    	var target = $(Post.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
+		var target = $(Post.modal).find('.top-post .post, .feed-row.feed-post .feed-content');
         target.unbind();
         target.on('click',function(e){
-            ;
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
                     post_name = $(e.currentTarget).find('.post-title').text(),
                     post_content = $(e.currentTarget).find('.post-content').text();

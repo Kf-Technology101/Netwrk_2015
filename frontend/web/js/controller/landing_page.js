@@ -69,7 +69,10 @@ var LandingPage = {
 
 		// Initialize click on topic name
 		Topic.OnClickTopicFeed();
-		
+
+		// Initialize click on post name
+		Topic.OnClickPostFeed();
+
 		if(isMobile){
 			LandingPage.FixWidthPostLanding();
 		}
@@ -271,7 +274,8 @@ var LandingPage = {
     },
 
     OnClickAvatarLanding: function(){
-    	var avatar = $('.top-post').find('.top-post-content .post-row .avatar');
+    	var avatar = $('.top-post').find('.top-post-content .post-row .avatar')
+				.add($('#collapseFavoriteCommunities').find('.feed-post .avatar-poster'));
 		avatar.unbind();
 		avatar.on('click', function(e){
 			var user_login = $(e.currentTarget).parent().attr('data-user');
