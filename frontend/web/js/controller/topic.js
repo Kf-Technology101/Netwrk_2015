@@ -186,7 +186,7 @@ var Topic = {
         parent.find('.header .create_topic').addClass('on-feed');
 
         $('.create_topic').hide();
-        $('#create_topic').show();
+        //$('#create_topic').show();
     },
 
     ShowGroupsPage: function() {
