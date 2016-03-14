@@ -11,9 +11,12 @@
             </div>
             <div class="title_page">
             </div>
-            <div class="create_topic">
+            <div class="create_topic" id="create_topic">
               <span><i class="fa fa-plus-circle"></i> Create Topic</span>
             </div>
+              <div class="create_topic" id="create_group">
+                  <span><i class="fa fa-plus-circle"></i>Create Group</span>
+              </div>
           </div>
           <div class="sidebar">
             <div class="title"></div>
@@ -30,6 +33,7 @@
                 <tr>
                     <td class="feed active">Feed</td>
                     <td class="topic">Topics</td>
+                    <td class="groups">Groups</td>
                 </tr>
             </table>
           </div>
@@ -49,6 +53,65 @@
               <div id="item_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
+          </div>
+          <div id="tab_groups" class="tab">
+
+              <div class="topic_group_top">
+                  <div class="topic_group_name">
+                      <span>Football experts</span>
+                      <button>Total Users</button>
+                  </div>
+                  <div class="topic_group_create">
+                      <button id="btn-create-topic">Create Topic</button>
+                      <button id="btn-create-post">Create Post</button>
+                  </div>
+                  <div class="filter">
+                      <div class="dropdown input-group">
+                          <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                          <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                              <li data-value="recent">Most recent</li>
+                              <li data-value="post">Most posts</li>
+                              <li data-value="view">Most viewed</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+              <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+
+              <div id="item_topic_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_topic_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div id="item_topic_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+
+              <div class="filter_page" id="group_topic_post_filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div class="filter_page" id="group_topic_post_filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+              <div class="filter_page" id="group_topic_post_filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                  <p class="no-data">There is no data available yet</p>
+              </div>
+
+              <div class="filter_page" id="item_total_users">
+                  <p class="no-data">No users available yet</p>
+              </div>
+              
           </div>
       </div>
     </div>
@@ -76,24 +139,24 @@
                 <div class="name_topic">
                     <p><%= topic.title %></p>
                 </div>
-            </div>
+            </div> 
             <div class="num_count_duration">
                 <div class="most_post">
                     <p><i class="fa fa-clock-o"></i><%= topic.created_at%></p>
-                </div>
-            </div>
+                </div>   
+            </div> 
             <div class="num_count">
                 <div class="most_post">
                     <p><i class="fa fa-file-text"></i><%= topic.post_count%></p>
-                </div>
-            </div>
+                </div>   
+            </div> 
             <div class="num_count">
                 <div class="most_post">
                     <p><i class="fa fa-eye"></i><%= topic.view_count%></p>
-                </div>
+                </div>   
             </div>
         </div>
-    <% }); %>
+    <% }); %>  
     </script>
 
 <script id="feed_list" type="text/x-underscore-template" >

@@ -612,6 +612,51 @@ class DefaultController extends BaseController
         return $this->render($this->getIsMobile() ? 'mobile/landing_page' : '');
     }
 
+    public function actionGetGroupsLoc($groupId = null) {
+        $maxlength = Yii::$app->params['MaxlengthContent'];
+
+        $query = new Query();
+        //selecting all coordinates with related
+        $datas = $query->select('COUNT(DISTINCT ws_messages.user_id) AS count_user_comment, group.id, group.name, group.latitude, group.longitude, COUNT(post.id) AS post_count')
+            ->from('group')
+            //todo: make normally
+            ->where("group.latitude is not null and group.longitude is not null and group.city_id is null" . (!is_null($groupId) ? " and group.id = " . $groupId : ""))
+            ->leftJoin('topic', 'group.id=topic.group_id')
+            ->leftJoin('post', 'topic.id=post.topic_id')
+            ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
+            ->groupBy('group.id')
+            ->orderBy('count_user_comment DESC, post_count DESC')
+            ->limit(10)
+            ->all();
+        $zipcodes = array();
+        for ($i = 0; $i < count($datas); $i++) {
+            array_push($zipcodes, $datas[$i]['id']);
+        }
+        // $cities = City::find()->with('topics.posts')->orderBy(['user_count'=> SORT_DESC,'post_count'=> SORT_DESC])->limit(10)->all();
+        //$cities = City::find()->with('topics.posts')->where(['id' => $zipcodes])->all();
+
+        $data = [];
+
+        foreach ($datas as $key => $value) {
+            $netwrk = array(
+                "id" => $value['id'],
+                "name" => $value['name'],
+                "lat" => $value['latitude'],
+                "lng" => $value['longitude'],
+                'post' => array(
+                    'post_id' => -1,
+                    'name_post' => '',
+                    'content' => '',
+                    'topic_id' => '',
+                )
+            );
+            array_push($data, $netwrk);
+        }
+
+        $hash = json_encode($data);
+        return $hash;
+    }
+
     public function actionHome()
     {
         return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');

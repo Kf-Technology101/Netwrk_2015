@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal" id='create_topic'>
+<div class="modal" id='create_topic_modal'>
     <!-- <div id="btn_discover"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div> -->
     <div class="modal-dialog">
         <div class="modal-content">

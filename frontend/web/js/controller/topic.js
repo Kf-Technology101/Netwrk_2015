@@ -33,7 +33,7 @@ var Topic = {
         zipcode:'',
         name:'',
         lat: '',
-        lng:'',
+        lng:''
     },
     modal: '#modal_topic',
     modal_create: '#create_topic',
@@ -51,6 +51,7 @@ var Topic = {
         Topic.OnClickChangeTab();
         Topic.eventClickMeetMobile();
         Topic.LoadFeedModal();
+        Topic.OnClickCreateGroup();
         if(isMobile){
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
@@ -80,6 +81,7 @@ var Topic = {
             Topic.OnClickBackdrop();
             Topic.onNetwrkLogo();
             Topic.CheckTabCurrent();
+            Topic.OnClickCreateGroup();
             Default.onCLickModal();
             Topic.OnClickFavorite();
         }
@@ -141,7 +143,9 @@ var Topic = {
                 break;
             case 'topic':
                 Topic.ShowTopicPage();
-                Topic.tab_current = 'topic';
+                break;
+            case 'groups':
+                Topic.ShowGroupsPage();
                 break;
         }
     },
@@ -155,6 +159,9 @@ var Topic = {
         }else{
             parent.find('.dropdown').removeClass('visible');
         }
+
+        $('.create_topic').hide();
+        $('#create_topic').show();
 
         //enable btn create topic
         parent.find('.header .title_page').removeClass('on-feed');
@@ -177,6 +184,19 @@ var Topic = {
         //disable btn create topic
         parent.find('.header .title_page').addClass('on-feed');
         parent.find('.header .create_topic').addClass('on-feed');
+
+        $('.create_topic').hide();
+        $('#create_topic').show();
+    },
+
+    ShowGroupsPage: function() {
+        console.log("groups page");
+        var parent = $('#modal_topic,#show-topic');
+        parent.find('#tab_groups').show();
+        //parent.find('.dropdown').addClass('visible');
+        $('.create_topic').hide();
+        $('#create_group').show();
+        //parent.find('.dropdown').addClass('visible');
     },
 
     OnClickSortBtn: function(){
@@ -193,7 +213,7 @@ var Topic = {
             }
         });
     },
-    RedirectPostList: function(){
+    RedirectPostList: function() {
         var parent = $('#item_list_'+Topic.data.filter);
         parent.find('.item').unbind();
         parent.find('.item').on('click',function(e){
@@ -326,6 +346,7 @@ var Topic = {
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
             Topic.displayPositionModal();
+            Group.LoadGroupModal();
         });
     },
 
@@ -635,6 +656,15 @@ var Topic = {
                     self.getTemplate(parent,data);
                 });
             }
+            console.log("loading groups!!!");
+            Ajax.show_groups(params).then(function(data){
+                console.log(data);
+                var parent = $('#show-topic').find('#item_group_list_'+self.data.filter);
+                self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+                parent.show();
+                var json = $.parseJSON(data);
+                Group.getTemplate(parent,json);
+            });
         }
     },
 
@@ -775,5 +805,45 @@ var Topic = {
         append_html = template({city: json.city, city_id: json.city_id, is_favorite: json.is_favorite});
 
         parent.html(append_html);
+    },
+
+    OnClickCreateGroup: function() {
+        var btn = $('#create_group');
+        btn.unbind();
+        btn.on('click',function(){
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+            }else{
+                $('#modal_topic').modal('hide');
+                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name);
+            }
+        });
+
+    },
+
+    OnClickEditGroup: function() {
+        $('.edit-group').each(function() {
+            $(this).unbind("click").click(function() {
+                $('#modal_topic').modal('hide');
+                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,$(this).data("id"));
+            });
+        });
+    },
+
+    OnClickDeleteGroup: function() {
+        $('.delete-group').each(function() {
+            $(this).unbind("click").click(function() {
+                var row = $(this).parent().parent().parent().parent();
+                if (confirm("Are you sure you want to delete this group?")) {
+                    Ajax.delete_group({
+                        "id": $(this).data("id")
+                    }).then(function(data) {
+                        var json = $.parseJSON(data);
+                        if (json.error) alert(json.error.message);
+                        else row.remove();
+                    });
+                }
+            });
+        });
     }
 };
