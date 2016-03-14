@@ -525,7 +525,7 @@
 	  	},
 
 	  	OnEventTopPost: function(e){
-	  		var parent = $('.container-popup').find('.top-post .post .name');
+	  		var parent = $('.container-popup').find('.top-post-trending .item-post .name-post');
 	  		parent.unbind();
 	  		parent.on('click',function(d){
 	            PopupChat.params.post = e.post.post_id;
