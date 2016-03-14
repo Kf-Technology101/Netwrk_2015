@@ -212,7 +212,7 @@
 			// } else {
 			//     google.maps.event.clearListeners(map, 'idle');
 			// }
-			Map.show_marker_group_loc(map);
+
 	  	},
 
 	  	placeSearch: function(contentSearch, type, timeDeplay){
@@ -634,6 +634,7 @@
 				}
 				return;
 			}
+			Map.show_marker_group_loc(map);
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 
