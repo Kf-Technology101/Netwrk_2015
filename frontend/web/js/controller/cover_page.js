@@ -12,6 +12,7 @@ var CoverPage = {
 		if(isMobile){
 			$("body").css('background', '#fff');
 			CoverPage.hiddenMobileFooter();
+			CoverPage.hiddenMobileNavigation();
 		}
 	},
 
@@ -28,6 +29,11 @@ var CoverPage = {
 
 	hiddenMobileFooter: function(){
 		var target = $(".navbar-fixed-bottom");
+		target.addClass('hidden');
+	},
+
+	hiddenMobileNavigation: function(){
+		var target = $(".navigation-wrapper");
 		target.addClass('hidden');
 	},
 
