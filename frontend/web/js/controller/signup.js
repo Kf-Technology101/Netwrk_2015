@@ -124,6 +124,8 @@ var Signup={
 						isGuest = '';
 						UserLogin = Signup.data_validate.data;
 						Login.OnCallBackAfterLogin();
+						$('.menu_top').removeClass('deactive');
+						$('#btn_meet').removeClass('deactive');
 						$(Signup.modal).modal('hide');
 					}
 				});
@@ -263,7 +265,7 @@ var Signup={
 	},
 
 	OnShowModalSignUp: function(){
-        $(Signup.parent).on('shown.bs.modal',function(e) {
+        $(Signup.modal).on('shown.bs.modal',function(e) {
         	$(Signup.parent).find('input')[1].focus();
         	$(e.currentTarget).unbind();
         	$('.modal-backdrop.in').addClass('active');
@@ -293,6 +295,8 @@ var Signup={
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
             $(Signup.parent).modal('hide');
+			$('.menu_top').removeClass('deactive');
+			$('#btn_meet').removeClass('deactive');
         });
-    },
+    }
 };

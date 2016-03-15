@@ -54,6 +54,9 @@ class ProfileController extends BaseController
                 'work'=> $user->profile->work,
                 'image' => $image,
                 'zip'=> $user->profile->zip_code,
+                'country' => $user->profile->country,
+                'state' => $user->profile->state,
+                'city' => $user->profile->user_city,
                 'about'=> $user->profile->about,
                 'year_old' => $year_old
             );
@@ -208,7 +211,7 @@ class ProfileController extends BaseController
                 'education' => $user->profile->education,
                 'country' => $user->profile->country,
                 'state' => $user->profile->state,
-                'city' => $user->profile->city,
+                'city' => $user->profile->user_city,
                 'hobbies' => $user->profile->hobbies,
                 'about'=> $user->profile->about,
             );
@@ -257,7 +260,7 @@ class ProfileController extends BaseController
         $user->profile->education = $education;
         $user->profile->country = $country;
         $user->profile->state = $state;
-        $user->profile->city = $city;
+        $user->profile->user_city = $city;
         $user->profile->hobbies = $hobbies;
         $user->profile->about = $about;
         $user->profile->lat = $lat;
@@ -281,7 +284,7 @@ class ProfileController extends BaseController
             'education' => $user->profile->education,
             'country' => $user->profile->country,
             'state' => $user->profile->state,
-            'city' => $user->profile->city,
+            'city' => $user->profile->user_city,
             'hobbies' => $user->profile->hobbies,
             'about'=> $user->profile->about,
         );
