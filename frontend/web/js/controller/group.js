@@ -457,14 +457,14 @@ var Group = {
 
     filter_group: function(contain) {
         console.log('filter_topic');
-        var target = $('#modal_topic,#show-topic').find('.dropdown-menu li');
+        var target = $('#modal_topic,#show-topic').find('.groups-dropdown .dropdown-menu li');
         var self = this;
 
         target.unbind();
         target.on('click',function(e){
             var filter = $(e.currentTarget).attr('data-value');
             var name = $(e.currentTarget).text();
-            $("#modal_topic,#show-topic").find('.dropdown-toggle').text(name);
+            $("#modal_topic,#show-topic").find('.groups-dropdown .dropdown-toggle').text(name);
             $("#modal_topic,#show-topic").find("div[id^='item_group_list']").hide();
             contain.scrollTop(0);
             Group.data.filter = filter;

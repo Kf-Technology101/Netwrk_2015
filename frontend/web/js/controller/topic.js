@@ -157,7 +157,8 @@ var Topic = {
         if(isMobile){
             parent.find('span.filter').removeClass('visible');
         }else{
-            parent.find('.dropdown').removeClass('visible');
+            parent.find('.groups-dropdown').addClass('visible').css('display','none');
+            parent.find('.topics-dropdown').removeClass('visible').css('display','inherit');
         }
 
         $('.create_topic').hide();
@@ -175,7 +176,8 @@ var Topic = {
             parent.find('span.filter').removeClass('active');
             parent.find('.filter_sort').removeClass('active');
         }else{
-            parent.find('.dropdown').addClass('visible');
+            parent.find('.groups-dropdown').addClass('visible').css('display','inherit');
+            parent.find('.topics-dropdown').addClass('visible').css('display','none');
         }
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
@@ -190,15 +192,23 @@ var Topic = {
     },
 
     ShowGroupsPage: function() {
-        console.log("groups page");
         var parent = $('#modal_topic,#show-topic');
         parent.find('#tab_groups').show();
-        //parent.find('.dropdown').addClass('visible');
+
+        if(isMobile){
+            parent.find('span.filter').removeClass('visible');
+        }else{
+            parent.find('.topics-dropdown').addClass('visible').css('display','none');
+            parent.find('.groups-dropdown').removeClass('visible').css('display','inherit');
+        }
+
         $('.create_topic').hide();
         $('#create_group').show();
-        //parent.find('.dropdown').addClass('visible');
+
+        //enable btn create topic
         parent.find('.header .title_page').removeClass('on-feed');
         parent.find('.header .create_topic').removeClass('on-feed');
+
         Group.initialize();
     },
 
@@ -682,14 +692,14 @@ var Topic = {
     },
 
     filter_topic: function(contain){
-        var target = $('#modal_topic,#show-topic').find('.dropdown-menu li');
+        var target = $('#modal_topic,#show-topic').find('.topics-dropdown .dropdown-menu li');
         var self = this;
 
         target.unbind();
         target.on('click',function(e){
             var filter = $(e.currentTarget).attr('data-value');
             var name = $(e.currentTarget).text();
-            $("#modal_topic,#show-topic").find('.dropdown-toggle').text(name);
+            $("#modal_topic,#show-topic").find('.topics-dropdown .dropdown-toggle').text(name);
             $("#modal_topic,#show-topic").find("div[id^='item_list']").hide();
             contain.scrollTop(0);
             self.data.filter = filter;
