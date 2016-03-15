@@ -18,6 +18,37 @@
 	  	zoom7: [],
 	  	zoom12: [],
 	  	timeout: '',
+		remove_poi : [
+			{
+				stylers: [
+					{ hue: "#0078ff" },
+					{ saturation: -20 }
+				]
+			},{
+				featureType: "road",
+				elementType: "labels",
+				stylers: [
+					{ visibility: "off" }
+				]
+			},{
+				featureType: "road",
+				elementType: "geometry",
+				stylers: [
+					{ lightness: 100 }
+				]
+			},{
+				featureType: "poi",
+				stylers: [
+					{ visibility: "off" }
+				]
+			},{
+				featureType: "administrative",
+				elementType: "geometry.stroke",
+				stylers: [
+					{ color: "#5888ac" }
+				]
+			}
+		],
 	  	initialize: function() {
 	  		
 	  		if(isMobile){
@@ -42,31 +73,7 @@
 		      scrollwheel: true,
 		      mapTypeId:google.maps.MapTypeId.ROADMAP
 		    };
-		    var remove_poi = [
-		        {
-					stylers: [
-						{ hue: "#00ffe6" },
-						{ saturation: -20 }
-					]
-				},{
-					featureType: "road",
-					elementType: "labels",
-					stylers: [
-						{ visibility: "off" }
-					]
-				},{
-					featureType: "road",
-					elementType: "geometry",
-					stylers: [
-						{ lightness: 100 }
-					]
-				},{
-					featureType: "poi",
-					stylers: [
-						{ visibility: "off" }
-					]
-				}
-		    ];
+		    var remove_poi = Map.remove_poi;
 
 		    var styledMap = new google.maps.StyledMapType(remove_poi,{name: "Styled Map"});
 		    Map.map = new google.maps.Map(document.getElementById("googleMap"),map_andiana);
@@ -629,31 +636,7 @@
 				if(currentZoom == 18){
 	    			Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: null});
 	    		} else {
-	    			var remove_poi = [
-				        {
-							stylers: [
-								{ hue: "#00ffe6" },
-								{ saturation: -20 }
-							]
-						},{
-							featureType: "road",
-							elementType: "labels",
-							stylers: [
-								{ visibility: "off" }
-							]
-						},{
-							featureType: "road",
-							elementType: "geometry",
-							stylers: [
-								{ lightness: 100 }
-							]
-						},{
-							featureType: "poi",
-							stylers: [
-								{ visibility: "off" }
-							]
-						}
-					];
+	    			var remove_poi = Map.remove_poi;
 				    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    		}
 	    		if (currentZoom == 12 && Map.markers.length <= 10) {
