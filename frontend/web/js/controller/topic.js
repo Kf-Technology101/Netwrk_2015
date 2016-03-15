@@ -743,7 +743,7 @@ var Topic = {
         }
     },
     OnClickFavorite: function(){
-        var target = $('#modal_topic, #favoriteCommunities').find('.btn-favorite, .un-favorite-trigger');
+        var target = $('#modal_topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
 
         target.unbind();
         target.on('click',function(){
