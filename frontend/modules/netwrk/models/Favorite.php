@@ -58,7 +58,7 @@ class Favorite extends \yii\db\ActiveRecord
     {
         $userId = $userId ? $userId : Yii::$app->user->id;
 
-        $favorite = Favorite::find()->where('user_id = :userId and city_id = :cityId and type= :type')
+        $favorite = Favorite::find()->where('user_id = :userId and city_id = :cityId and type= :type and status = 1')
             ->addParams(['userId'=>$userId, 'cityId'=>$objectId, 'type'=>$objectType])
             ->one();
 
