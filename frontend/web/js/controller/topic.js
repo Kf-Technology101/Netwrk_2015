@@ -747,6 +747,11 @@ var Topic = {
 
         target.unbind();
         target.on('click',function(){
+            if(isGuest){
+                $('.modal').modal('hide');
+                Login.initialize();
+                return false;
+            }
             var self = $(this),
             params = {
                 'object_type': self.attr('data-object-type'),
