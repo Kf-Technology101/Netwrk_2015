@@ -20,6 +20,7 @@
             <tr>
                 <td class="feed active">Feed</td>
                 <td class="topic">Topics</td>
+                <td class="group">Groups</td>
             </tr>
         </table>
     </div>
@@ -49,6 +50,43 @@
                 <p class="no-data">There is no data available yet</p>
             </div>
         </div>
+        <div id="tab_group" class="tab">
+
+            <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div id="item_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div id="item_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+
+            <div id="item_topic_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div id="item_topic_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div id="item_topic_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+
+            <div class="filter_page" id="group_topic_post_filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div class="filter_page" id="group_topic_post_filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+            <div class="filter_page" id="group_topic_post_filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                <p class="no-data">There is no data available yet</p>
+            </div>
+
+            <div class="filter_page" id="item_total_users">
+                <p class="no-data">No users available yet</p>
+            </div>
+
+        </div>
         <script id="topic_list" type="text/x-underscore-template" >
             <% _.each(topices,function(topic){ %>
                 <div class="item" data-item="<%= topic.id %>">
@@ -74,6 +112,40 @@
                         </div>
                     </div>
                 </div>
+            <% }); %>
+        </script>
+        <script id="group_list" type="text/x-underscore-template">
+            <% _.each(groups,function(group){ %>
+            <div class="item" data-item="<%= group.id %>">
+                <div class="group_loc_post">
+                    <div class="name_group">
+                        <p><%= group.name %></p>
+                    </div>
+                </div>
+                <div class="num_count_duration">
+                    <div class="most_post">
+                        <p><i class="fa fa-clock-o"></i><%= group.created_at%></p>
+                    </div>
+                </div>
+                <div class="num_count">
+                    <div class="most_post">
+                        <p><% if (group.permission == 1) { %><img src="/img/icon/glob.png"><% } else if (group.permission == 2) { %><img src="/img/icon/lock.png"><% } %></p>
+                    </div>
+                </div>
+                <div class="num_count_duration">
+                    <div class="most_post">
+                        <p><img src="/img/icon/users.png"><%= group.users%></p>
+                    </div>
+                </div>
+                <% if (group.owner) { %>
+                <div class="num_count_duration">
+                    <div class="most_post">
+                        <p class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group" src="/img/icon/edit-group.png"></p>
+                        <p><img data-id="<%= group.id %>" class="delete-group" src="/img/icon/delete-group.png"></p>
+                    </div>
+                </div>
+                <% } %>
+            </div>
             <% }); %>
         </script>
         <script id="feed_list" type="text/x-underscore-template" >
