@@ -397,11 +397,7 @@ var Ajax ={
     show_group: function(id) {
         var url,defer = $.Deferred();
 
-        if (isMobile) {
-            url = baseUrl +"/netwrk/group/get-group";
-        }else{
-            url = "netwrk/group/get-group";
-        }
+        url = "/netwrk/group/get-group";
 
         $.ajax({
             url: url,

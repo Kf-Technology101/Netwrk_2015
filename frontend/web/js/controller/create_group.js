@@ -37,7 +37,11 @@ var Create_Group={
                 } else {
                     Create_Group.params.name = json.name;
                     Create_Group.params.permission = json.permission;
-                    Create_Group.added_users = json.users;
+                    Create_Group.added_users = [];
+                    for (var u in json.users) {
+                        Create_Group.added_users.push(json.users[u].user.email);
+                    }
+                    console.log("added users ", Create_Group.added_users);
                     Create_Group.RefreshUsersList();
                     $('#save_group').html("Save Changes")
                 }

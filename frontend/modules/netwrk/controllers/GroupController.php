@@ -199,7 +199,7 @@ class GroupController extends BaseController {
         $group = Group::find()->where(array("user_id" => $currentUserId, "id" => intval($_POST['id'])))->one();
         if (empty($group)) return json_encode(array('error' => true));
         $data = $group->toArray();
-        $data['users'] = array_values(UserGroup::find()->where(array("group_id" => $group->id))->asArray()->all());
+        $data['users'] = array_values(UserGroup::find()->joinWith("user")->where(array("group_id" => $group->id))->asArray()->all());
         $data['error'] = false;
         return json_encode($data);
     }
