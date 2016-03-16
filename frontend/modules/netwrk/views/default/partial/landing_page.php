@@ -6,7 +6,7 @@
 				<div class="header">
 					<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
 					<div class="title">
-						<p class="main-header">Welcome</p>
+						<p class="main-header">Welcome, click explore to follow communities</p>
 						<p class="sub-header">Here's what's happening in society today.</p>
 					</div>
 				</div>

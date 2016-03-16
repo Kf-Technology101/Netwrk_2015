@@ -120,7 +120,7 @@
     <div class="user-details-wrapper">
         <div class="user-details pull-left">
             <div class="user-name"><%= data.username %>, <%= data.year_old %></div>
-            <div class="user-location">Bloomington, Indiana, U.S.A.</div>
+            <div class="user-location"><%= data.city %>, <%= data.state %>, <%= data.country %></div>
         </div>
         <div class="btn-group profile-dropdown pull-left" role="group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

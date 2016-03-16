@@ -15,12 +15,12 @@
               <span><i class="fa fa-plus-circle"></i> Create Topic</span>
             </div>
               <div class="create_topic" id="create_group">
-                  <span><i class="fa fa-plus-circle"></i>Create Group</span>
+                  <span><i class="fa fa-plus-circle"></i> Create Group</span>
               </div>
           </div>
           <div class="sidebar">
             <div class="title"></div>
-            <div class="dropdown input-group">
+            <div class="topics-dropdown dropdown input-group">
                 <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
                 <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -28,6 +28,15 @@
                   <li data-value="post">Most posts</li>
                   <li data-value="view">Most viewed</li>
                 </ul>
+            </div>
+            <div class="groups-dropdown dropdown input-group">
+              <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+              <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <li data-value="recent">Most recent</li>
+                  <li data-value="post">Most posts</li>
+                  <li data-value="view">Most viewed</li>
+              </ul>
             </div>
             <table class="filter_sidebar">
                 <tr>

@@ -5,7 +5,7 @@
 			<div class="ld-modal-header">
 				<div class="header">
 					<div class="title">
-						<p class="main-header">Welcome</p>
+						<p class="main-header">Welcome, click explore to follow communities</p>
 						<p class="sub-header">Here's what's happening in society today.</p>
 					</div>
 				</div>
