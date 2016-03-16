@@ -412,7 +412,7 @@ var Group = {
 
     TotalUsers: function() {
         var parent = $('#item_total_users');
-        $('.topic_group_name button').eq(0).click(function() {
+        $('.topic_group_name button').eq(0).unbind("click").click(function() {
             Ajax.get_users(Group.data.id).then(function(data) {
                 var json = $.parseJSON(data);
                 $("div[id^='item_topic_group_list']").hide();
