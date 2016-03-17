@@ -54,7 +54,7 @@ class Favorite extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function isFavoritedByUser($objectType, $objectId, $userId)
+    public static function isFavoritedByUser($objectType, $objectId, $userId = null)
     {
         $userId = $userId ? $userId : Yii::$app->user->id;
 
