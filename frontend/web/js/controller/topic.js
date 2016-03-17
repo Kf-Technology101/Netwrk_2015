@@ -154,6 +154,7 @@ var Topic = {
             parent.find('span.filter').removeClass('visible');
         }else{
             parent.find('.dropdown').removeClass('visible');
+            parent.find('.tab-header').removeClass('hidden');
         }
 
         //enable btn create topic
@@ -169,6 +170,7 @@ var Topic = {
             parent.find('.filter_sort').removeClass('active');
         }else{
             parent.find('.dropdown').addClass('visible');
+            parent.find('.tab-header').addClass('hidden');
         }
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
