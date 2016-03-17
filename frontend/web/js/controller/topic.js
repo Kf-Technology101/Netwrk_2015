@@ -230,9 +230,9 @@ var Topic = {
         var parent = $('#item_list_'+Topic.data.filter);
         parent.find('.item').unbind();
         parent.find('.item').on('click',function(e){
-            var topic = $(e.currentTarget).attr('data-item');
+            var topic = $(e.currentTarget).data('item');
             if(isMobile){
-                Post.RedirectPostPage(topic);
+                Post.RedirectPostPage(topic, false);
             }else{
                 $('#modal_topic').modal('hide');
                 Post.params.topic = topic;

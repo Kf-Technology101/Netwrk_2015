@@ -20,7 +20,7 @@
             <tr>
                 <td class="feed active">Feed</td>
                 <td class="topic">Topics</td>
-                <td class="group">Groups</td>
+                <td class="groups">Groups</td>
             </tr>
         </table>
     </div>
@@ -50,7 +50,7 @@
                 <p class="no-data">There is no data available yet</p>
             </div>
         </div>
-        <div id="tab_group" class="tab">
+        <div id="tab_groups" class="tab">
 
             <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                 <p class="no-data">There is no data available yet</p>
@@ -145,6 +145,32 @@
                     </div>
                 </div>
                 <% } %>
+            </div>
+            <% }); %>
+        </script>
+        <script id="topic_group_list" type="text/x-underscore-template">
+            <% _.each(topices,function(topic){ %>
+            <div class="item" data-item="<%= topic.id %>">
+                <div class="topic_post">
+                    <div class="name_topic">
+                        <p><%= topic.title %></p>
+                    </div>
+                </div>
+                <div class="num_count_duration">
+                    <div class="most_post">
+                        <p><i class="fa fa-clock-o"></i><%= topic.created_at%></p>
+                    </div>
+                </div>
+                <div class="num_count">
+                    <div class="most_post">
+                        <p><i class="fa fa-file-text"></i><%= topic.post_count%></p>
+                    </div>
+                </div>
+                <div class="num_count">
+                    <div class="most_post">
+                        <p><i class="fa fa-eye"></i><%= topic.view_count%></p>
+                    </div>
+                </div>
             </div>
             <% }); %>
         </script>

@@ -264,7 +264,7 @@ var Group = {
             var topic = $(e.currentTarget).data('item');
             Ajax.update_view_topic({topic: topic}).then(function(){
                 if(isMobile){
-                    Post.RedirectPostPage(topic);
+                    Post.RedirectPostPage(topic, true);
                 }else{
                     //$('#modal_topic').modal('hide');
                     Group.post_params.topic = topic;
