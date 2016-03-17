@@ -22,7 +22,11 @@ class DefaultController extends BaseController
 
     public function actionIndex()
     {
-        return $this->render($this->getIsMobile() ? 'mobile/cover_page' : 'cover_page');
+        if(Yii::$app->getRequest()->getCookies()->has('isCoverPage')){
+            return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
+        }else{
+            return $this->render($this->getIsMobile() ? 'mobile/cover_page' : 'cover_page');
+        }
     }
 
     public function actionGetUserProfile()
@@ -222,6 +226,14 @@ class DefaultController extends BaseController
         //  DESC LIMIT 10;
 
         foreach ($cities as $key => $value) {
+            if($value->office_type == 'university'){
+                $img = '/img/icon/map_icon_university_v_2.png';
+            } else if($value->office_type == 'government'){
+                $img = '/img/icon/map_icon_government_v_2.png';
+            } else {
+                $img = '/img/icon/map_icon_community_v_2.png';
+            }
+
             if(isset($value->topics[0])) {
                 $post = $this->GetPostMostBrilliant($value->id);
                 $user_post = $post['user'];
@@ -229,14 +241,7 @@ class DefaultController extends BaseController
                 $topices = $this->Top4Topices($value->id,$limitHover);
                 // $trending = $this->Trending4Post($value,$limitHover);
                 $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
-                if($value->office_type == 'university'){
-                    $img = '/img/icon/map_icon_university_v_2.png';
-                } else if($value->office_type == 'government'){
-                    $img = '/img/icon/map_icon_government_v_2.png';
-                } else {
-                    $img = '/img/icon/map_icon_community_v_2.png';
-                }
-
+                
                 $netwrk = array(
                     'id'=> $value->id,
                     'name'=> ($value->office != '') ? $value->office : $value->name,
@@ -291,11 +296,18 @@ class DefaultController extends BaseController
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
         $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
-
         $data = [];
         $img = '/img/icon/map_icon_community_v_2.png';
 
         foreach ($cities as $key => $value) {
+            if($value->office_type == 'university'){
+                $img = '/img/icon/map_icon_university_v_2.png';
+            } else if($value->office_type == 'government'){
+                $img = '/img/icon/map_icon_government_v_2.png';
+            } else {
+                $img = '/img/icon/map_icon_community_v_2.png';
+            }
+
             if(isset($value->topics[0])) {
 				$post = $this->GetPostMostBrilliant($value->id);
                 $user_post = $post['user'];
@@ -308,14 +320,6 @@ class DefaultController extends BaseController
                 //     $content = substr($post->content,0,$maxlength ) ;
                 //     $content = $content."...";
                 // }
-
-                if($value->office_type == 'university'){
-                    $img = '/img/icon/map_icon_university_v_2.png';
-                } else if($value->office_type == 'government'){
-                    $img = '/img/icon/map_icon_government_v_2.png';
-                } else {
-                    $img = '/img/icon/map_icon_community_v_2.png';
-                }
 
                 $netwrk = array(
                     'id'=> $value->id,
@@ -388,9 +392,9 @@ class DefaultController extends BaseController
                 //     $content = $content."...";
                 // }
                 if($city->office_type == 'university'){
-                    $img = '/img/icon/map_icon_university_v_2.png';
+                    $img = './img/icon/map_icon_university_v_2.png';
                 } else if($city->office_type == 'government'){
-                    $img = '/img/icon/map_icon_government_v_2.png';
+                    $img = './img/icon/map_icon_government_v_2.png';
                 } else {
                     $img = '/img/icon/map_icon_community_v_2.png';
                 }
@@ -436,6 +440,44 @@ class DefaultController extends BaseController
                 );
             }
         }
+
+        $hash = json_encode($netwrk);
+        return $hash;
+    }
+
+    /**
+     * GET Help location, currently using static location, need to be updated on database later
+     *
+     *  
+     * 
+     * @return Array Maker
+     */
+    public function actionGetMarkerHelp()
+    {
+        $maxlength = Yii::$app->params['MaxlengthContent'];
+        // hard code for `Fishers` city
+        $city= City::find()->with('topics.posts')->where(['office'=> 'Ritchey Woods Nature Preserve'])->one();
+
+        $data = [];
+        $img = '/img/icon/map_icon_community_v_2.png';
+
+        $netwrk = array(
+                'id'=> $city->id,
+                'name'=> $city->name,
+                'lat'=> $city->lat,
+                'lng'=> $city->lng,
+                'zip_code'=> $city->zip_code,
+                'office'=>$city->office,
+                'office_type'=>$city->office_type,
+                'topic' => '',
+                'mapicon'=>$img,
+                'post'=> array(
+                    'post_id'=>-1,
+                    'name_post'=> '',
+                    'content' => '',
+                    'topic_id' => '',
+                )
+            );
 
         $hash = json_encode($netwrk);
         return $hash;
