@@ -1,4 +1,5 @@
 /**
+ * common.js
  * All Global functions required to whole site.
  */
 var Common = {
