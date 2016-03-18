@@ -47,7 +47,13 @@ var Create_Group={
                 }
             });
             if (error) return;
+        }else{
+            Create_Group.params.id = null;
+            Create_Group.params.name = '';
+            Create_Group.params.permission = '';
+            Create_Group.added_users = [];
         }
+
         if(isMobile){
             Create_Group.params.topic = $('#create_group').attr('data-topic');
             Create_Group.params.city = $('#create_group').attr('data-city');
@@ -146,6 +152,7 @@ var Create_Group={
     showModalCreateGroup: function(){
         var parent = $('#create_group_modal');
         $("#group_name").val(Create_Group.params.name);
+        $('#emails-input').val('');
         $("#dropdown-permission").html(Create_Group.params.permission == 2 ? "Private" : "Public");
         Create_Group.RefreshUsersList();
         parent.modal('show').removeAttr("style").css("display", "block");
