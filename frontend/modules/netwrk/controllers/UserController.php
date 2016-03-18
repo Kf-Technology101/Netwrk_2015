@@ -54,6 +54,7 @@ class UserController extends BaseController
     public function actionResetPassword($key){
         $session = Yii::$app->session;
         $userKey = new UserKey();
+        $model = new LoginForm(); 
         $userKey = UserKey::findActiveByKey($key, $userKey::TYPE_PASSWORD_RESET);
         if (!$userKey) {
             if($this->getIsMobile()){
@@ -82,7 +83,7 @@ class UserController extends BaseController
         // render
         if($this->getIsMobile()){
             if($success){
-                return $this->render($this->getIsMobile() ? 'mobile/login' : $this->goHome());
+                return $this->redirect(['user/login']);
             }else{
                 return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(),compact("user", "success"));
             }
