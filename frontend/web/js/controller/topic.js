@@ -869,5 +869,9 @@ var Topic = {
                 }
             });
         });
+    },
+    HideTabGroupHeader: function() {
+        var parent = $('#modal_topic,#show-topic');
+        parent.find('.tab-header-group').addClass('hidden');
     }
 };

@@ -103,6 +103,9 @@ var Group = {
             $('#modal_topic .back_page span').unbind("click").click(function() {
                 var parent = $('#item_topic_group_list_' + Group.data.filter);
                 Group.ShowTopics(parent, Group.post_params.group_back, Group.post_params.group_back_name);
+
+                //Hide the group tab header from topic modal.
+                Topic.HideTabGroupHeader();
             });
         }
     },
@@ -116,6 +119,9 @@ var Group = {
             $('#modal_topic .back_page span').unbind("click").click(function() {
                 var parent = $('#item_topic_group_list_' + Group.data.filter);
                 Group.ShowTopics(parent, Group.data.id, Group.data.name);
+
+                //Hide the group tab header from topic modal.
+                Topic.HideTabGroupHeader();
             });
         }
     },
@@ -276,6 +282,9 @@ var Group = {
                 Group.onclickBackFromPosts();
                 Group.OnClickChat();
             });
+
+            //Hide the group tab header from topic modal.
+            Topic.HideTabGroupHeader();
         });
 
         parent.find('.item .name_post a').unbind();
@@ -352,6 +361,9 @@ var Group = {
             Group.ShowTopics(parent, group, groupName);
             $('#modal_topic').find(".dropdown").removeClass('visible');
             $('#modal_topic .sidebar').find('.dropdown').addClass('visible');
+
+            //Hide the group tab header from topic modal.
+            Topic.HideTabGroupHeader();
         });
     },
 
@@ -422,6 +434,8 @@ var Group = {
                 Group.getTemplateTotalUsers(parent, json);
                 Group.onclickBackFromUsers();
             });
+            //Hide the group tab header from topic modal.
+            Topic.HideTabGroupHeader();
         });
     },
 
