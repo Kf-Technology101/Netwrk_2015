@@ -158,12 +158,13 @@ var Topic = {
             parent.find('span.filter').removeClass('visible');
         }else{
             parent.find('.groups-dropdown').addClass('visible').css('display','none');
-            parent.find('.topics-dropdown').removeClass('visible').css('display','inherit');
-            parent.find('.tab-header').removeClass('hidden');
+            parent.find('.topics-dropdown').removeClass('visible').css('display','table');
+            parent.find('.tab-header-topic').removeClass('hidden');
+            parent.find('.tab-header-group').addClass('hidden');
         }
 
-        $('.create_topic').hide();
-        $('#create_topic').show();
+        $('.create_topic').show();
+        $('#create_group').hide();
 
         //enable btn create topic
         parent.find('.header .title_page').removeClass('on-feed');
@@ -179,7 +180,8 @@ var Topic = {
         }else{
             parent.find('.groups-dropdown').addClass('visible').css('display','inherit');
             parent.find('.topics-dropdown').addClass('visible').css('display','none');
-            parent.find('.tab-header').addClass('hidden');
+            parent.find('.tab-header-topic').addClass('hidden');
+            parent.find('.tab-header-group').addClass('hidden');
         }
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
@@ -202,6 +204,8 @@ var Topic = {
         }else{
             parent.find('.topics-dropdown').addClass('visible').css('display','none');
             parent.find('.groups-dropdown').removeClass('visible').css('display','inherit');
+            parent.find('.tab-header-topic').addClass('hidden');
+            parent.find('.tab-header-group').removeClass('hidden');
         }
 
         $('.create_topic').hide();

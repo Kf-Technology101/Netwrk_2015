@@ -14,9 +14,9 @@
             <!--<div class="create_topic" id="create_topic">
               <span><i class="fa fa-plus-circle"></i> Create Topic</span>
             </div>-->
-              <div class="create_topic" id="create_group">
+             <!-- <div class="create_topic" id="create_group">
                   <span><i class="fa fa-plus-circle"></i> Create Group</span>
-              </div>
+              </div>-->
           </div>
           <div class="sidebar">
             <!--<div class="title"></div>-->
@@ -29,7 +29,7 @@
                   <li data-value="view">Most viewed</li>
                 </ul>
             </div>-->
-            <div class="groups-dropdown dropdown input-group">
+            <!--<div class="groups-dropdown dropdown input-group">
               <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
               <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -37,7 +37,7 @@
                   <li data-value="post">Most posts</li>
                   <li data-value="view">Most viewed</li>
               </ul>
-            </div>
+            </div>-->
             <table class="filter_sidebar">
                 <tr>
                     <td class="feed active">Feed</td>
@@ -46,7 +46,7 @@
                 </tr>
             </table>
           </div>
-          <div class="tab-header clearfix hidden">
+          <div class="tab-header tab-header-topic clearfix hidden">
               <div class="tab-title">
                   <p class="tab-title-text">Topics</p>
                   <div class="topics-dropdown dropdown input-group">
@@ -61,6 +61,23 @@
               </div>
               <div class="tab-btn">
                     <p class="btn-create-topic create_topic"><i class="fa fa-plus-circle"></i>Create Topic</p>
+              </div>
+          </div>
+          <div class="tab-header tab-header-group clearfix hidden">
+              <div class="tab-title">
+                  <p class="tab-title-text">Groups</p>
+                  <div class="groups-dropdown dropdown input-group">
+                      <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                      <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <li data-value="recent">Most recent</li>
+                          <li data-value="post">Most posts</li>
+                          <li data-value="view">Most viewed</li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="tab-btn">
+                  <p class="btn-create-topic" id="create_group"><i class="fa fa-plus-circle"></i>Create Group</p>
               </div>
           </div>
       </div>
