@@ -9,7 +9,7 @@ $params = [
     'MaxlenghtContentPostDesktop'	=> 70,
     'MaxlenghtContentPostMobile'	=> 70,
     'LimitResultSearch'				=> 2,
-    'LimitObjectHoverPopup'			=> 4,
+    'LimitObjectHoverPopup'			=> 5,
     'LimitObjectFeedGlobal'			=> 3
 ];
 

@@ -17,7 +17,15 @@ var Default ={
         if (isCoverPage){
             if (accepted) {
                 $("body").css('background', 'f2f2f2');
-                Default.ShowLandingPage();
+                if(!isMobile){
+                    if(isResetPassword){
+                        ResetPass.initialize();
+                    }else{
+                        Default.ShowLandingPage();
+                    }
+                } else {
+                    Default.ShowLandingPage();
+                }
             } else {
                 CoverPage.initialize();
             }
@@ -57,10 +65,14 @@ var Default ={
             if (isCoverPage) {
                 if (sessionStorage.redirected) {
                     sessionStorage.removeItem('redirected');
-                    LandingPage.initialize();
+                    if(isResetPassword){
+                        ResetPass.initialize();
+                    }else{
+                        LandingPage.initialize();
+                    }
                 } else {
                     sessionStorage.redirected = true;
-                    window.location.href = baseUrl + "/netwrk/default/home";
+                    window.location.href = baseUrl;// + "/netwrk/default/home";
                 }
             }
         }
