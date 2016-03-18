@@ -398,7 +398,11 @@ var Create_Group={
     },
 
     OnClickCreateGroup: function() {
-        $("#save_group").click(function() {
+        var btn = $('#create_group_modal').find('#save_group');
+
+        btn.unbind();
+
+        btn.on('click',function(){
             var params = {
                 emails: Create_Group.added_users,
                 permission: ($('#dropdown-permission').text() == "Private" ? 2 : 1),
