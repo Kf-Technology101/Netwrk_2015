@@ -78,9 +78,11 @@ var Login={
 	},
 
 	OnCallBackAfterLogin: function(){
-		if(Login.modal_callback){
+		if(Login.modal_callback || isResetPassword){
 			setTimeout(function(){
-				Login.modal_callback.initialize();
+				if(Login.modal_callback) {
+					Login.modal_callback.initialize();
+				}
 				Login.ShowNotificationOnChat();
 				Default.SetAvatarUserDropdown();
 				PopupChat.ShowChatBox(PopupChat.params.post);
