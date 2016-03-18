@@ -19,7 +19,7 @@
 
             <div class="profile-activity-wrapper">
                 <section class="fav-communities-wrapper">
-                    <div class="activity-header pull-left">Favorite Communities </div>
+                    <div class="activity-header pull-left">Following Communities </div>
                     <div class="seperator-line pull-right">
                         <hr>
                     </div>

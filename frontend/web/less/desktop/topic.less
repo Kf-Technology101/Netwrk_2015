@@ -136,7 +136,7 @@
                 }
             }
             .title_page{
-                width: 425px;
+                width: 435px;
                 height: 40px;
                 float: left;
                 img{
@@ -155,12 +155,11 @@
                     padding-left: 35%;
                 }
                 &.on-feed{
-                    width: 535px;
+                    width: 435px;
                 }
             }
             .create_topic{
                 float: left;
-                width: 139px;
                 height: 40px;
                 cursor: pointer;
                 font-size: 18px;
@@ -175,6 +174,7 @@
                     line-height: 40px;
                     i{
                         color: #fff;
+                        padding: 0 3px;
                     }
                 }
                 &:hover{
@@ -228,6 +228,92 @@
                     border-left: none;
                     border-top-right-radius: 4px;
                     border-bottom-right-radius: 4px;
+                }
+            }
+        }
+        .tab-header {
+            border-top: 1px solid #fff;
+            .tab-title {
+                width: 595px;
+                border-right: 1px solid #fff;
+                height: 100%;
+                float: left;
+                .tab-title-text {
+                    color: #fff;
+                    padding: 9px 15px;
+                    font-size: 18px;
+                    margin-bottom: 0;
+                    float: left;
+                }
+            }
+            .tab-btn {
+                display: inline-block;
+                width: 130px;
+                padding: 4px;
+
+                .btn-create-topic {
+                    border: 1px solid #fff;
+                    height: 35px;
+                    margin: 0;
+                    color: #fff;
+                    padding: 6px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    i {
+                        margin-right: 4px;
+                    }
+                    &:hover{
+                        background-color: #5da5d8;
+                    }
+                }
+            }
+            .dropdown{
+                float: right;
+                width: 20%;
+                padding: 5px;
+                cursor: pointer;
+                .dropdown-toggle{
+                    width: 130px;
+                    height: 34px;
+                    background: #fff;
+                    padding: 8px;
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                }
+                .input-group-addon{
+                    border: none;
+                    border-top-right-radius:  4px;
+                    border-bottom-right-radius: 4px;
+                    cursor: pointer;
+                }
+                .dropdown-menu{
+                    padding: 0;
+                    top: 42px;
+                    left: 0px;
+                    width: 168px;
+                    li{
+                        cursor: pointer;
+                        padding: 5px 10px;
+                        border-bottom: 1px solid #ddd;
+                        &:last-child{
+                            border-bottom: 0;
+                        }
+                    }
+                }
+                select{
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    text-indent: 0.01px;
+                }
+                .form-control{
+                    padding: 0;
+                    font-size: 14px;
+                    width: 100%;
+                    height: 30px;
+                }
+                &.visible{
+                    visibility: hidden;
                 }
             }
         }
@@ -553,8 +639,8 @@
                         background: #fcfcfc;
                     }
                     width: 100%;
-                    height: 50px;
-                    padding: 15px;
+                    height: 30px;
+                    padding: 4px 15px;
                     border-bottom: 1px solid #eee;
                     cursor: pointer;
                     p{
@@ -578,7 +664,7 @@
                         }
                     }
                     .num_count{
-                        width: 12%;
+                        width: 10%;
                         // height: 50px;
                         float: right;
                         margin-right: 2%;
@@ -587,7 +673,7 @@
                         }
                     }
                     .num_count_duration{
-                        width: 18%;
+                        width: 12%;
                         float: right;
                         i{
                             margin-right: 3px;

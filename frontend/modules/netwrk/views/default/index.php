@@ -4,6 +4,31 @@
 </ul>
 
 <div class="map_content">
+  <div class="box-navigation text-right">
+    <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
+      <button id="btn_nav_map" type="button" class="btn btn-default btn_nav_map">
+        <i class="navigation-icon fa fa-globe"></i>
+        <span class="navigation-text">Map</span>
+      </button>
+      <button id="chat_inbox_btn" type="button" class="btn btn-default">
+        <i class="navigation-icon fa fa-comment"></i>
+        <span class="navigation-text"><span class='notify hide'>15</span>Chat</span>
+      </button>
+      <button id="btn_nav_meet" type="button" class="btn btn-default">
+        <i class="navigation-icon ci-meet"></i>
+        <span class="navigation-text">Meet</span>
+      </button>
+      <?php if (Yii::$app->user->isGuest):?>
+        <button type="button" class="btn btn-default login-trigger">
+          <i class="navigation-icon fa fa-sign-in"></i>
+          <div class="navigation-text">Login</div>
+        </button>
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
+
   <div id="btn_my_location" data-toggle="tooltip" title="Show My Local Netwrk">
     <i class="fa fa-crosshairs"></i>
   </div>

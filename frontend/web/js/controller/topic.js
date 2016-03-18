@@ -159,6 +159,7 @@ var Topic = {
         }else{
             parent.find('.groups-dropdown').addClass('visible').css('display','none');
             parent.find('.topics-dropdown').removeClass('visible').css('display','inherit');
+            parent.find('.tab-header').removeClass('hidden');
         }
 
         $('.create_topic').hide();
@@ -178,6 +179,7 @@ var Topic = {
         }else{
             parent.find('.groups-dropdown').addClass('visible').css('display','inherit');
             parent.find('.topics-dropdown').addClass('visible').css('display','none');
+            parent.find('.tab-header').addClass('hidden');
         }
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
@@ -786,10 +788,15 @@ var Topic = {
         }
     },
     OnClickFavorite: function(){
-        var target = $('#modal_topic, #favoriteCommunities').find('.btn-favorite, .un-favorite-trigger');
+        var target = $('#modal_topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
 
         target.unbind();
         target.on('click',function(){
+            if(isGuest){
+                $('.modal').modal('hide');
+                Login.initialize();
+                return false;
+            }
             var self = $(this),
             params = {
                 'object_type': self.attr('data-object-type'),

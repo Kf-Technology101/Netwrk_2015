@@ -20,6 +20,14 @@ var LandingPage = {
 			LandingPage.OnClickMeetLandingDesktop();
 			set_heigth_modal_meet($('#modal_landing_page'), 0, 550, 430);
 		}
+		LandingPage.switchSearchText();
+	},
+
+	switchSearchText: function(){
+		var target = $('.box-search').find('.input-search');
+		setTimeout(function(){
+			target.attr('placeholder','What are you into?')
+		},6000);
 	},
 
 	FixWidthPostLanding: function(){

@@ -11,16 +11,16 @@
             </div>
             <div class="title_page">
             </div>
-            <div class="create_topic" id="create_topic">
+            <!--<div class="create_topic" id="create_topic">
               <span><i class="fa fa-plus-circle"></i> Create Topic</span>
-            </div>
+            </div>-->
               <div class="create_topic" id="create_group">
                   <span><i class="fa fa-plus-circle"></i> Create Group</span>
               </div>
           </div>
           <div class="sidebar">
-            <div class="title"></div>
-            <div class="topics-dropdown dropdown input-group">
+            <!--<div class="title"></div>-->
+            <!--<div class="topics-dropdown dropdown input-group">
                 <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
                 <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -28,7 +28,7 @@
                   <li data-value="post">Most posts</li>
                   <li data-value="view">Most viewed</li>
                 </ul>
-            </div>
+            </div>-->
             <div class="groups-dropdown dropdown input-group">
               <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
               <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
@@ -46,7 +46,23 @@
                 </tr>
             </table>
           </div>
-
+          <div class="tab-header clearfix hidden">
+              <div class="tab-title">
+                  <p class="tab-title-text">Topics</p>
+                  <div class="topics-dropdown dropdown input-group">
+                      <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                      <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <li data-value="recent">Most recent</li>
+                          <li data-value="post">Most posts</li>
+                          <li data-value="view">Most viewed</li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="tab-btn">
+                    <p class="btn-create-topic create_topic"><i class="fa fa-plus-circle"></i>Create Topic</p>
+              </div>
+          </div>
       </div>
       <div class="modal-body containt">
           <div id="tab_feed" class="tab">
@@ -134,9 +150,9 @@
        data-object-id="<%= city_id %>">
         <span class="favorite-status">
             <% if(is_favorite == true){%>
-                Favorited
+                Following
             <% }else{ %>
-                Favorite
+                Follow
             <% } %>
         </span>
     </a>
