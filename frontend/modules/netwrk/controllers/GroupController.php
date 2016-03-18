@@ -94,12 +94,16 @@ class GroupController extends BaseController {
                         $invitation->user_from = $currentUserId;
                         $invitation->invitation_code = Yii::$app->security->generateRandomString();
                         $invitation->save();
+
+                        $status = UserGroup::STATUS_INVITED;
                     } else {
                         $user = $existingEmails[$email];
+                        $status = UserGroup::STATUS_JOINED;
                     }
                     $userGroup = new UserGroup();
                     $userGroup->user_id = $user->id;
                     $userGroup->group_id = $group->id;
+                    $userGroup->status = $status;
                     $userGroup->save();
                 }
             }
