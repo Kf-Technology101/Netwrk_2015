@@ -88,7 +88,7 @@ class TopicController extends BaseController
 
         $Topic = new Topic;
 
-        if (empty($_POST['byGroup']) || !$_POST['byGroup']) {
+        if (empty($_POST['byGroup']) || $_POST['byGroup'] == "false") {
             $city = $_POST['city'];
             $cty = City::findOne($city);
             $city_id = 0;
