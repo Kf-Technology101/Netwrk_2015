@@ -79,16 +79,21 @@ class GroupController extends BaseController {
                 foreach ($emails as $email) {
                     if (!array_key_exists($email, $existingEmails)) {
                         //creating incomplete user
+                        $username = preg_replace('/[^A-Za-z0-9\-]/', '',preg_replace('/([^@]*).*/', '$1', $email));
+
                         $user = new User();
                         $user->email = $email;
+                        $user->username = $username;
                         $user->status = User::STATUS_INCOMPLETE;
                         $user->role_id = Role::ROLE_USER;
                         $user->save();
+
                         //sending invitation
                         $invitation = new UserInvitation();
                         $invitation->user_id = $user->id;
                         $invitation->user_from = $currentUserId;
                         $invitation->invitation_code = Yii::$app->security->generateRandomString();
+                        $invitation->save();
                     } else {
                         $user = $existingEmails[$email];
                     }

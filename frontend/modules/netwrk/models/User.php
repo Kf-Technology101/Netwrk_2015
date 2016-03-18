@@ -52,7 +52,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @var int status incomplete
      */
-    const STATUS_INCOMPLETE = null;
+    const STATUS_INCOMPLETE = 3;
 
     /**
      * @var string Current password - for account page updates
