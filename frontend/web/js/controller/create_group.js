@@ -157,6 +157,8 @@ var Create_Group={
         Create_Group.RefreshUsersList();
         parent.modal('show').removeAttr("style").css("display", "block");
 
+        Common.CustomScrollBar(parent.find('.modal-body'));
+
         $('.group-permission li').each(function() {
             $(this).unbind().click(function(e) {
                 var name = $(e.currentTarget).text();
@@ -366,6 +368,8 @@ var Create_Group={
     },
 
     RefreshUsersList: function() {
+        var parent = $('#create_group_modal');
+
         $('#emails-list').find("li").remove();
         for (var i in Create_Group.added_users) {
             if (!Create_Group.added_users.hasOwnProperty(i)) continue;
@@ -381,6 +385,8 @@ var Create_Group={
             });
             $('#emails-list').append(elem);
         }
+
+        Common.CustomScrollBar(parent.find('.modal-body'));
     },
 
     OnClickAddEmail: function() {
