@@ -370,6 +370,7 @@ class DefaultController extends BaseController
     public function actionGetMarkerUpdate()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
+        $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
         $city_id = $_POST['city'];
         $city= City::find()->with('topics.posts')->where(['id'=>$city_id])->one();
 
@@ -381,9 +382,9 @@ class DefaultController extends BaseController
                 $post = $this->GetPostMostBrilliant($city->id);
                 $user_post = $post['user'];
                 $content = $post['content'];
-                $topices = $this->Top4Topices($city->id, null);
+                $topices = $this->Top4Topices($city->id, $limitHover);
                 // $trending = $this->Trending4Post($city);
-                $trending_hashtag = $this->Trending4Hashtag($city,null);
+                $trending_hashtag = $this->Trending4Hashtag($city,$limitHover);
 
                 // if(strlen($content) > $maxlength ){
                 //     $content = substr($post->content,0,$maxlength ) ;
