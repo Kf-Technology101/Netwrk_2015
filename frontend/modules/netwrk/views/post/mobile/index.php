@@ -1,11 +1,11 @@
 <?php use yii\helpers\Url; ?>
-<div id="list_post" data-topic="<?= $topic->id ?>" data-city="<?= $city ?>">
+<div id="list_post" data-topic="<?= $topic->id ?>" <?php if (!empty($city)) { ?>data-city="<?= $city ?>"<?php } ?>>
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title"><?= $topic->city->zip_code ?> > <?= $topic->title ?></span>
+            <span class="title"><?php if (!empty($city)) { ?><?= $topic->city->zip_code ?> > <?php } ?><?= $topic->title ?></span>
         </div>
         <div class="create_post">
             <span><i class="fa fa-plus-circle"></i> Create Post</span>

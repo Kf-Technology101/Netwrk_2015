@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\controllers;
 use frontend\components\BaseController;
 use frontend\components\UtilitiesFunc;
 use frontend\modules\netwrk\models\Topic;
+use frontend\modules\netwrk\models\Group;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
@@ -34,9 +35,15 @@ class PostController extends BaseController
     }
     public function actionIndex()
     {
-        $topic_id = $_GET['topic'];
-        $topic= Topic::find()->where('id ='.$topic_id)->one();
-        return $this->render($this->getIsMobile() ? 'mobile/index':'',['topic' =>$topic,'city' =>$topic->city->id]);
+        if (isset($_GET['group'])) {
+            $topic_id = $_GET['group'];
+            $topic = Topic::find()->where('id =' . $topic_id)->one();
+            return $this->render($this->getIsMobile() ? 'mobile/index' : '', ['topic' => $topic]);
+        } else {
+            $topic_id = $_GET['topic'];
+            $topic = Topic::find()->where('id =' . $topic_id)->one();
+            return $this->render($this->getIsMobile() ? 'mobile/index' : '', ['topic' => $topic, 'city' => $topic->city->id]);
+        }
     }
 
     public function actionCreatePost($city,$topic)

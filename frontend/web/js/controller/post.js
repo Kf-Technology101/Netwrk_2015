@@ -619,7 +619,8 @@ var Post ={
         parent.append(append_html);
     },
 
-	RedirectPostPage: function(topic){
+	RedirectPostPage: function(topic, isGroup){
+		if (typeof isGroup == "undefined") isGroup = false;
 		if (PopupChat.GetSearchParam(window.location.href)["previous-flag"]) {
 			if (PopupChat.GetSearchParam(window.location.href)["previous-flag"] == 0) {
 				window.location.href = baseUrl + "/netwrk/post?topic="+topic;
@@ -627,7 +628,7 @@ var Post ={
 				window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=1';
 			}
 		} else {
-			window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?topic="+topic;
+			window.location.href = document.referrer == baseUrl+"/netwrk/chat-inbox" ? document.referrer : baseUrl + "/netwrk/post?" + (isGroup ? "group" : "topic") + "="+topic;
 		}
 	},
 
