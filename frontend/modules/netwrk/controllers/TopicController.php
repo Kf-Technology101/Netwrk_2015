@@ -228,6 +228,7 @@ class TopicController extends BaseController
         $temp = array('data' => $data, 'is_favorite' => $is_favorite);
         if (!empty($cty)) {
             $temp['city'] = ($cty ? $cty->zip_code : $zipcode);
+            $temp['city_id'] = ($cty ? $cty->id : '');
         }
         $hash = json_encode($temp);
         return $hash;
