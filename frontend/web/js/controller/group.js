@@ -173,7 +173,7 @@ var Group = {
         var list_template = _.template($("#total_users").html());
         var append_html = list_template({ joined: json.joined, invited: json.invited });
 
-        parent.append(append_html);
+        parent.html(append_html);
         self.onTemplateTotalUsers(json);
     },
 
