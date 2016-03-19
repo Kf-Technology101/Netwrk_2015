@@ -171,7 +171,7 @@ class GroupController extends BaseController {
             if (!$cty) {
                 $zipcode = $_GET['zipcode'];
             }
-            $params = $cty->id;
+            $params['group.city_id'] = $cty->id;
         }
         if (isset($_GET['group_id'])) {
             $params['id'] = $_GET['group_id'];
