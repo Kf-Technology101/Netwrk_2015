@@ -251,4 +251,78 @@ class GroupController extends BaseController {
             die(json_encode(array("error" => true, "message" => $e->getMessage())));
         }
     }
+
+    public function actionGetGroupsByUser()
+    {
+        $filter = $_GET['filter'];
+        $currentUserId = isset($_GET['user']) ? $_GET['user'] : Yii::$app->user->id;
+        switch ($filter) {
+            case 'post':
+                $order = ['post_count' => SORT_DESC];
+                break;
+            case 'view':
+                $order = ['view_count' => SORT_DESC];
+                break;
+            case 'recent':
+            default:
+                $order = ['created_at' => SORT_DESC];
+                break;
+        }
+        $params = array();
+        if (isset($_GET['city'])) {
+            $city = $_GET['city'];
+            $cty = City::findOne($city);
+            if (!$cty) {
+                $zipcode = $_GET['zipcode'];
+            }
+            $params['group.city_id'] = $cty->id;
+        }
+        if (isset($_GET['group_id'])) {
+            $params['id'] = $_GET['group_id'];
+        }
+
+        //get current users groups
+        $params['user_id'] = $currentUserId;
+
+        $groups = Group::find()
+            ->where($params)
+            ->orderBy($order);
+
+        $totalCount = $groups->count();
+
+        $groups = $groups->all();
+
+        /*$sql = $groups->createCommand()->getRawSql();
+        echo($sql);
+        die();*/
+
+        $data = array();
+        foreach ($groups as $group) {
+            $num_date = UtilitiesFunc::FormatDateTime($group->created_at);
+            $data[] = array(
+                'id' => $group->id,
+                'name' => $group->name,
+                'permission' => $group->permission,
+                'created_at' => date("M d, Y", strtotime($group->created_at)),
+                'formatted_created_at' => date("M d", strtotime($group->created_at)),
+                'formatted_created_date' => date('M d', strtotime($group->created_at)),
+                'formatted_created_date_month_year' => date('F Y', strtotime($group->created_at)),
+                'users' => UserGroup::find()->where(array("group_id" => $group->id))->count(),
+                'owner' => ($currentUserId == $group->user_id ? true : false),
+            );
+        }
+
+        //Grouped activity in month
+        $groupArray = array();
+        foreach ($data as $item) {
+            $groupArray[$item['formatted_created_date_month_year']][] = $item;
+        }
+        //var_dump($groupArray);
+
+        $temp = array('data' => $groupArray, 'total_count' => $totalCount);
+
+        $hash = json_encode($temp);
+        return $hash;
+    }
+
 }

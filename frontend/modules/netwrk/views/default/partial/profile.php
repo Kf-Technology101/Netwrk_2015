@@ -40,9 +40,9 @@
                     <article class="row">
                         <div class="col-sm-6">
                             <div role="group" class="btn-group btn-group-default navigation-btn-group">
-                                <!--<button class="btn btn-default group" type="button" id="">
+                                <button class="btn btn-default group" type="button" id="">
                                     <span>Groups</span>
-                                </button>-->
+                                </button>
                                 <button class="btn btn-default topic" type="button" id="">
                                     <span>Topics</span>
                                 </button>
@@ -142,45 +142,46 @@
 </script>
 
 <script id="profile_group_info" type="text/x-underscore-template">
-    <div class="table-responsive group-details activity-details">
+    <div class="group-details activity-details">
         <table class="table no-border">
-            <% if(groups.length < 0) {%>
-                <thead>
-                    <tr>
-                        <th class="col-xs-8"></th>
-                        <th class="col-xs-4"></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <% _.each(groups,function(group){ %>
-                        <tr>
-                            <td><a href="javascript:" class="title"><b><%= group.name %></b></a></td>
-                            <td class="group-actions text-right">
-                                <% if (group.owner) { %>
-                                <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
-                                <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
-                                <% } %>
-                                    <span class="date-details">
-                                        <%= group.created_at %>
-                                    </span>
-                            </td>
-                        </tr>
-                    <% }); %>
-                </tbody>
+            <% if(!_.isEmpty(groups)) {%>
+            <% _.each(groups,function(items, key){ %>
+            <div class="group-item" id="profileRecentTopic">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="strike">
+                            <span><%= key %></span>
+                        </div>
+                    </div>
+                </div>
+                <% _.each(items,function(item, index){ %>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <a href="javascript:" class="title"><b><%= item.name %></b></a>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="topic-actions text-right">
+                                        <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
+                                        <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                            <span class="date-details">
+                                               <%= item.formatted_created_date %>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            <% }); %>
             <% } else {%>
-                <thead>
-                    <tr>
-                        <th class="col-xs-12"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="alert alert-info">You haven't created any group yet. Please check out any community and create a group.</div>
-                        </td>
-                    </tr>
-                </tbody>
+            <div class="group-item">
+                <div class="alert alert-info">You haven't created any group yet. Please check out any community and create a group.</div>
+            </div>
             <% } %>
         </table>
     </div>
