@@ -35,7 +35,7 @@ var User_Profile = {
             loaded: 0
         }
     },
-    tab_current: 'topic',
+    tab_current: 'group',
     img:{
         image:''
     },
@@ -354,10 +354,10 @@ var User_Profile = {
     },
 
     //Show group information of users
-    /*ShowGroups: function(){
+    ShowGroups: function(){
         var template = $('#recent_activity_container');
         var templateData = $('#profile_group_info');
-        var params = {'filter': 'recent'};
+        var params = {'filter': 'recent', 'user_id': UserLogin};
 
         //show tamplate
         template.removeClass('hidden');
@@ -367,18 +367,24 @@ var User_Profile = {
         User_Profile.tab_current = 'group';
         User_Profile.setTabActive();
 
-        Ajax.show_groups(params).then(function(data){
+        Ajax.show_user_groups(params).then(function(data){
             var json = $.parseJSON(data);
 
             //assign ajax data to template data
             User_Profile.templateData.groups = json.data;
+
+            //set my topics count on recent activity section
+            if (json.total_count) {
+                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Groups: '+json.total_count);
+            }
+
 
             template.scrollTop(0);
             //hide no data section
             template.find('.no-data').hide();
             User_Profile.getTemplateGroupInfo(template, templateData);
         });
-    },*/
+    },
 
     //Show Topics information of users
     ShowTopics: function(){
@@ -452,7 +458,7 @@ var User_Profile = {
     OnClickTabBtn: function () {
         var Context = '.recent_activities_wrapper',
             Topic = '.topic',
-            /*Group = '.group',*/
+            Group = '.group',
             Post  = '.post';
 
         $(Topic, Context).unbind();
@@ -461,11 +467,11 @@ var User_Profile = {
             User_Profile.getDataOnTab();
         });
 
-        /*$(Group, Context).unbind();
+        $(Group, Context).unbind();
         $(Group, Context).on('click', function(){
             User_Profile.tab_current = 'group';
             User_Profile.getDataOnTab();
-        });*/
+        });
 
         $(Post, Context).unbind();
         $(Post, Context).on('click', function(){
@@ -482,9 +488,9 @@ var User_Profile = {
             case 'topic':
                 User_Profile.ShowTopics();
                 break;
-            /*case 'group':
+            case 'group':
                 User_Profile.ShowGroups();
-                break;*/
+                break;
         }
     },
     getTemplateFavoriteInfo: function(parent,target,callback){

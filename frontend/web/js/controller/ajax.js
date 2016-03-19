@@ -1186,6 +1186,23 @@ var Ajax ={
         });
 
         return defer.promise();
-    }
+    },
+    show_user_groups: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/group/get-groups-by-user";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 }
 
