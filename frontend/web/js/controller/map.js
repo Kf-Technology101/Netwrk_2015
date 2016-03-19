@@ -663,7 +663,7 @@
 						content: ''
 					});
 
-					infowindow.content = '<div id="iw-container" >' +
+					infowindow.content = '<div id="iw-container" class="cgm-container" >' +
 						'<div class="iw-content">' +
 						'<div class="iw-subTitle" id="cm-coords"></div>' +
 						'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +
@@ -673,6 +673,30 @@
 						'</div>';
 
 					Map.infowindow.push(infowindow);
+
+					google.maps.event.addListener(infowindow, 'domready', function() {
+						//   // Reference to the DIV that wraps the bottom of infowindow
+						var iwOuter = $('.gm-style-iw');
+
+						//    // Since this div is in a position prior to .gm-div style-iw.
+						//    // * We use jQuery and create a iwBackground variable,
+						//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+
+						var iwBackground = iwOuter.prev();
+						iwOuter.children(':nth-child(1)').css({'max-width' : '400px'});
+						// Removes background shadow DIV
+						iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+						//   // Removes white background DIV
+						iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+						//   // Reference to the div that groups the close button elements.
+						var iwCloseBtn = iwOuter.next();
+
+						//   // Apply the desired effect to the close button
+						iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+					});
+
 					google.maps.event.addListener(Map.center_marker, 'mouseover', function() {
 						// infowindow.setContent(e[0]);
 						Map.findCurrentZip(position.coords.latitude, position.coords.longitude);
