@@ -112,7 +112,7 @@
             <% if (group.owner) { %>
             <span class="group-item">
                 <span class="most_post">
-                    <span class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit" data-container="body"></i></span>
+                    <span class="edit-group-p"><i data-id="<%= group.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit" data-container="body"></i></span>
                     <span><i data-id="<%= group.id %>" class="delete-group fa fa-trash-o"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i></span>
                 </span>
             </span>
