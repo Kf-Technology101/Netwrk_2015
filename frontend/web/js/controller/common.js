@@ -84,5 +84,8 @@ var Common = {
     },
     InitToolTip: function() {
         $('[data-toggle="tooltip"]').tooltip();
+    },
+    HideTooTip: function() {
+        $('.tooltip').hide();
     }
 };

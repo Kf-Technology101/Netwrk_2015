@@ -351,7 +351,7 @@ var Topic = {
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
         parent.show();
-        set_heigth_modal($('#modal_topic'),0);
+        set_heigth_modal($('#modal_topic'),30);
         $('#modal_topic').modal({
             backdrop: true,
             keyboard: false
@@ -849,6 +849,7 @@ var Topic = {
         $('.edit-group').each(function() {
             $(this).unbind("click").click(function() {
                 $('#modal_topic').modal('hide');
+                Common.HideTooTip();
                 Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,$(this).data("id"));
             });
         });
