@@ -33,7 +33,7 @@ var Topic = {
         zipcode:'',
         name:'',
         lat: '',
-        lng:'',
+        lng:''
     },
     modal: '#modal_topic',
     modal_create: '#create_topic',
@@ -51,6 +51,7 @@ var Topic = {
         Topic.OnClickChangeTab();
         Topic.eventClickMeetMobile();
         Topic.LoadFeedModal();
+        Topic.OnClickCreateGroup();
         if(isMobile){
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
@@ -80,6 +81,7 @@ var Topic = {
             Topic.OnClickBackdrop();
             Topic.onNetwrkLogo();
             Topic.CheckTabCurrent();
+            Topic.OnClickCreateGroup();
             Default.onCLickModal();
             Topic.OnClickFavorite();
         }
@@ -141,7 +143,9 @@ var Topic = {
                 break;
             case 'topic':
                 Topic.ShowTopicPage();
-                Topic.tab_current = 'topic';
+                break;
+            case 'groups':
+                Topic.ShowGroupsPage();
                 break;
         }
     },
@@ -153,9 +157,14 @@ var Topic = {
         if(isMobile){
             parent.find('span.filter').removeClass('visible');
         }else{
-            parent.find('.dropdown').removeClass('visible');
-            parent.find('.tab-header').removeClass('hidden');
+            parent.find('.groups-dropdown').addClass('visible').css('display','none');
+            parent.find('.topics-dropdown').removeClass('visible').css('display','table');
+            parent.find('.tab-header-topic').removeClass('hidden');
+            parent.find('.tab-header-group').addClass('hidden');
         }
+
+        $('.create_topic').show();
+        $('#create_group').hide();
 
         //enable btn create topic
         parent.find('.header .title_page').removeClass('on-feed');
@@ -169,8 +178,10 @@ var Topic = {
             parent.find('span.filter').removeClass('active');
             parent.find('.filter_sort').removeClass('active');
         }else{
-            parent.find('.dropdown').addClass('visible');
-            parent.find('.tab-header').addClass('hidden');
+            parent.find('.groups-dropdown').addClass('visible').css('display','inherit');
+            parent.find('.topics-dropdown').addClass('visible').css('display','none');
+            parent.find('.tab-header-topic').addClass('hidden');
+            parent.find('.tab-header-group').addClass('hidden');
         }
         parent.find('#tab_feed').show();
         parent.find('.filter').addClass('visible');
@@ -179,6 +190,32 @@ var Topic = {
         //disable btn create topic
         parent.find('.header .title_page').addClass('on-feed');
         parent.find('.header .create_topic').addClass('on-feed');
+
+        $('.create_topic').hide();
+        //$('#create_topic').show();
+    },
+
+    ShowGroupsPage: function() {
+        var parent = $('#modal_topic,#show-topic');
+        parent.find('#tab_groups').show();
+
+        if(isMobile){
+            parent.find('span.filter').removeClass('visible');
+        }else{
+            parent.find('.topics-dropdown').addClass('visible').css('display','none');
+            parent.find('.groups-dropdown').removeClass('visible').css('display','inherit');
+            parent.find('.tab-header-topic').addClass('hidden');
+            parent.find('.tab-header-group').removeClass('hidden');
+        }
+
+        $('.create_topic').hide();
+        $('#create_group').show();
+
+        //enable btn create topic
+        parent.find('.header .title_page').removeClass('on-feed');
+        parent.find('.header .create_topic').removeClass('on-feed');
+
+        Group.initialize();
     },
 
     OnClickSortBtn: function(){
@@ -195,13 +232,13 @@ var Topic = {
             }
         });
     },
-    RedirectPostList: function(){
+    RedirectPostList: function() {
         var parent = $('#item_list_'+Topic.data.filter);
         parent.find('.item').unbind();
         parent.find('.item').on('click',function(e){
-            var topic = $(e.currentTarget).attr('data-item');
+            var topic = $(e.currentTarget).data('item');
             if(isMobile){
-                Post.RedirectPostPage(topic);
+                Post.RedirectPostPage(topic, false);
             }else{
                 $('#modal_topic').modal('hide');
                 Post.params.topic = topic;
@@ -314,7 +351,7 @@ var Topic = {
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':1};
 
         parent.show();
-        set_heigth_modal($('#modal_topic'),0);
+        set_heigth_modal($('#modal_topic'),30);
         $('#modal_topic').modal({
             backdrop: true,
             keyboard: false
@@ -328,6 +365,7 @@ var Topic = {
             Topic.load_topic_modal();
             Topic.OnClickChangeTab();
             Topic.displayPositionModal();
+            Group.LoadGroupModal();
         });
     },
 
@@ -637,6 +675,15 @@ var Topic = {
                     self.getTemplate(parent,data);
                 });
             }
+            console.log("loading groups!!!");
+            Ajax.show_groups(params).then(function(data){
+                console.log(data);
+                var parent = $('#show-topic').find('#item_group_list_'+self.data.filter);
+                self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+                parent.show();
+                var json = $.parseJSON(data);
+                Group.getTemplate(parent,json);
+            });
         }
     },
 
@@ -651,14 +698,14 @@ var Topic = {
     },
 
     filter_topic: function(contain){
-        var target = $('#modal_topic,#show-topic').find('.dropdown-menu li');
+        var target = $('#modal_topic,#show-topic').find('.topics-dropdown .dropdown-menu li');
         var self = this;
 
         target.unbind();
         target.on('click',function(e){
             var filter = $(e.currentTarget).attr('data-value');
             var name = $(e.currentTarget).text();
-            $("#modal_topic,#show-topic").find('.dropdown-toggle').text(name);
+            $("#modal_topic,#show-topic").find('.topics-dropdown .dropdown-toggle').text(name);
             $("#modal_topic,#show-topic").find("div[id^='item_list']").hide();
             contain.scrollTop(0);
             self.data.filter = filter;
@@ -782,5 +829,50 @@ var Topic = {
         append_html = template({city: json.city, city_id: json.city_id, is_favorite: json.is_favorite});
 
         parent.html(append_html);
+    },
+
+    OnClickCreateGroup: function() {
+        var btn = $('#create_group');
+        btn.unbind();
+        btn.on('click',function(){
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+            }else{
+                $('#modal_topic').modal('hide');
+                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name);
+            }
+        });
+
+    },
+
+    OnClickEditGroup: function() {
+        $('.edit-group').each(function() {
+            $(this).unbind("click").click(function() {
+                $('#modal_topic').modal('hide');
+                Common.HideTooTip();
+                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,$(this).data("id"));
+            });
+        });
+    },
+
+    OnClickDeleteGroup: function() {
+        $('.delete-group').each(function() {
+            $(this).unbind("click").click(function() {
+                var row = $(this).parent().parent().parent().parent();
+                if (confirm("Are you sure you want to delete this group?")) {
+                    Ajax.delete_group({
+                        "id": $(this).data("id")
+                    }).then(function(data) {
+                        var json = $.parseJSON(data);
+                        if (json.error) alert(json.error.message);
+                        else row.remove();
+                    });
+                }
+            });
+        });
+    },
+    HideTabGroupHeader: function() {
+        var parent = $('#modal_topic,#show-topic');
+        parent.find('.tab-header-group').addClass('hidden');
     }
 };

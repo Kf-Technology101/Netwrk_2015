@@ -82,4 +82,10 @@ var Common = {
 
         taget.mCustomScrollbar(options);
     },
+    InitToolTip: function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    },
+    HideTooTip: function() {
+        $('.tooltip').hide();
+    }
 };

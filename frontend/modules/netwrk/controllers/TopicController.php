@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\controllers;
 use frontend\components\UtilitiesFunc;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Favorite;
+use frontend\modules\netwrk\models\Group;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
@@ -14,6 +15,7 @@ use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
 use Yii;
+use yii\base\Exception;
 
 class TopicController extends BaseController
 {
@@ -84,29 +86,39 @@ class TopicController extends BaseController
 
         $current_date = date('Y-m-d H:i:s');
 
-        $cty = City::findOne($city);
-        $city_id = 0;
+        $Topic = new Topic;
 
-        if($cty){
-            $city_id = $cty->id;
-        }else{
-            $zipcode = $_POST['zip_code'];
-            $city_name = $_POST['netwrk_name'];
-            $lat = $_POST['lat'];
-            $lng = $_POST['lng'];
+        if (empty($_POST['byGroup']) || $_POST['byGroup'] == "false") {
+            $city = $_POST['city'];
+            $cty = City::findOne($city);
+            $city_id = 0;
+            if ($cty) {
+                $city_id = $cty->id;
+            } else {
+                $zipcode = $_POST['zip_code'];
+                $city_name = $_POST['netwrk_name'];
+                $lat = $_POST['lat'];
+                $lng = $_POST['lng'];
 
-            $netwrk = new City;
-            $netwrk->name = $city_name;
-            $netwrk->lat = $lat;
-            $netwrk->lng = $lng;
-            $netwrk->zip_code = $zipcode;
-            $netwrk->save();
-            $city_id = $netwrk->id;
+                $netwrk = new City;
+                $netwrk->name = $city_name;
+                $netwrk->lat = $lat;
+                $netwrk->lng = $lng;
+                $netwrk->zip_code = $zipcode;
+                $netwrk->save();
+                $city_id = $netwrk->id;
+            }
+            $Topic->city_id = $city_id;
+        } else {
+            $groupId = $_POST['group'];
+            if (empty($groupId)) throw new Exception("Group is empty");
+            $group = Group::find()->where(array("id" => $groupId))->one();
+            if (empty($group)) throw new Exception("Group not found");
+            $Topic->group_id = $groupId;
+            $city_id = $group->city_id;
         }
 
-        $Topic = new Topic();
         $Topic->user_id = $currentUser;
-        $Topic->city_id = $city_id;
         $Topic->title = $topic;
         $Topic->save();
 
@@ -133,31 +145,46 @@ class TopicController extends BaseController
 
     public function actionGetTopicMobile()
     {
-        $city = $_GET['city'];
         $filter = $_GET['filter'];
         $pageSize = $_GET['size'];
         $page = $_GET['page'];
-        $cty = City::findOne($city);
 
-        //Check : does loggedInUser has favorite this city
-        if($cty) {
-            $is_favorite = Favorite::isFavoritedByUser('city', $cty->id);
+        $where = array();
+        if (!empty($_GET['city'])) {
+            $city = $_GET['city'];
+            $cty = City::findOne($city);
+            $where['city_id'] = $_GET['city'];
+            if ($cty->office == 'Ritchey Woods Nature Preserve') {
+                $cty->zip_code = 'Netwrk hq';
+            }
         }
-        if(!$cty){
+        if (!empty($cty) && !$cty) {
             $zipcode = $_GET['zipcode'];
         }
-        if ($cty->office == 'Ritchey Woods Nature Preserve') {
-            $cty->zip_code = 'Netwrk hq';
+
+        if (!empty($cty)) {
+            $is_favorite = Favorite::isFavoritedByUser('city', $cty->id);
+        } else {
+            $is_favorite = false;
         }
+
+        if (!empty($_GET['group'])) {
+            $where['group_id'] = $_GET['group'];
+        }
+
+        if (empty($where)) {
+            throw new Exception("wrong parametres");
+        }
+
         switch ($filter) {
             case 'recent':
-            $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['created_at'=> SORT_DESC]);
+            $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
             break;
             case 'post':
-            $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['post_count'=> SORT_DESC]);
+            $topices = Topic::find()->where($where)->orderBy(['post_count'=> SORT_DESC]);
             break;
             case 'view':
-            $topices = Topic::find()->where(['city_id'=>$city])->orderBy(['view_count'=> SORT_DESC]);
+            $topices = Topic::find()->where($where)->orderBy(['view_count'=> SORT_DESC]);
             break;
         }
 
@@ -166,6 +193,7 @@ class TopicController extends BaseController
         $topices = $topices->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
+
         $data = [];
         foreach ($topices as $key => $value) {
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count);
@@ -196,7 +224,12 @@ class TopicController extends BaseController
                 );
             array_push($data,$topic);
         }
-        $temp = array ('data'=> $data ,'city' => $cty ? $cty->zip_code : $zipcode, 'city_id' => $cty ? $cty->id : '', 'is_favorite' => $is_favorite);
+
+        $temp = array('data' => $data, 'is_favorite' => $is_favorite);
+        if (!empty($cty)) {
+            $temp['city'] = ($cty ? $cty->zip_code : $zipcode);
+            $temp['city_id'] = ($cty ? $cty->id : '');
+        }
         $hash = json_encode($temp);
         return $hash;
     }

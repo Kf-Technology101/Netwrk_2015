@@ -50,6 +50,11 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_UNCONFIRMED_EMAIL = 2;
 
     /**
+     * @var int status incomplete
+     */
+    const STATUS_INCOMPLETE = 3;
+
+    /**
      * @var string Current password - for account page updates
      */
     public $currentPassword;

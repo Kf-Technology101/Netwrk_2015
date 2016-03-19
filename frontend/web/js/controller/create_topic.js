@@ -5,6 +5,10 @@ var Create_Topic={
         message:'',
         city:null,
         city_name:'',
+        group:null,
+        group_name:null,
+        byGroup:false,
+        byGroupLoc:false,
         netwrk_name:'',
         zip_code:'',
         lat:'',
@@ -17,13 +21,15 @@ var Create_Topic={
         total: false
     },
 
-    initialize: function(city,name){
+    initialize: function(city, name, byGroup, group, groupName, byGroupLoc){
+        if (typeof byGroup != "undefined") Create_Topic.params.byGroup = byGroup;
+        if (typeof byGroupLoc != "undefined") Create_Topic.params.byGroupLoc = byGroupLoc;
         if(isMobile){
-            Create_Topic.params.city = $('#create_topic').attr('data-city');
-            Create_Topic.params.netwrk_name = $('#create_topic').attr('data-name-city');
-            Create_Topic.params.zip_code = $('#create_topic').attr('data-zipcode');
-            Create_Topic.params.lat = $('#create_topic').attr('data-lat');
-            Create_Topic.params.lng = $('#create_topic').attr('data-lng');
+            Create_Topic.params.city = $('#create_topic_modal').attr('data-city');
+            Create_Topic.params.netwrk_name = $('#create_topic_modal').attr('data-name-city');
+            Create_Topic.params.zip_code = $('#create_topic_modal').attr('data-zipcode');
+            Create_Topic.params.lat = $('#create_topic_modal').attr('data-lat');
+            Create_Topic.params.lng = $('#create_topic_modal').attr('data-lng');
             this.changeData();
             Create_Topic.onclickBack();
             // Create_Topic.showNetWrkBtn();
@@ -43,6 +49,11 @@ var Create_Topic={
                 Create_Topic.params.city = city;
                 Create_Topic.params.city_name = name;
             }
+            if (byGroup) {
+                Create_Topic.params.group = group;
+                Create_Topic.params.group_name = groupName;
+            }
+            console.log("params: ", Create_Topic.params, byGroup);
 
             Create_Topic.showModalCreateTopic();
             // Create_Topic.showSideBar();
@@ -59,7 +70,7 @@ var Create_Topic={
         }
     },
     showZipcodeBreadcrumb: function(zipcode){
-        var target = $('#create_topic').find('.scrumb .zipcode');
+        var target = $('#create_topic_modal').find('.scrumb .zipcode');
         target.html(zipcode);
     },
     postTitleFocus: function(){
@@ -71,7 +82,7 @@ var Create_Topic={
         });
     },
     eventClickdiscover: function(){
-        var parent = $('#create_topic'),
+        var parent = $('#create_topic_modal'),
             target = parent.find('#btn_discover');
             target.unbind();
             target.on('click',function(){
@@ -91,9 +102,9 @@ var Create_Topic={
     },
 
     showNetWrkBtn: function(){
-        var parent = $('#create_topic');
+        var parent = $('#create_topic_modal');
         if(isMobile){
-            // if($('#create_topic').size()>0){
+            // if($('#create_topic_modal').size()>0){
             //     $('#btn_meet_mobile').hide();
             //     $('#btn_discover_mobile').show();
             // }
@@ -105,7 +116,7 @@ var Create_Topic={
     },
 
     hideNetWrkBtn: function(){
-        var parent = $('#create_topic');
+        var parent = $('#create_topic_modal');
         if(isMobile){
             // $('#btn_meet_mobile').show();
             // $('#btn_discover_mobile').hide();
@@ -132,15 +143,15 @@ var Create_Topic={
     },
 
     showModalCreateTopic: function(){
-        var parent = $('#create_topic');
+        var parent = $('#create_topic_modal');
         parent.modal({
             backdrop: true,
             keyboard: false
-        });
+        }).removeAttr("style").css("display", "block");
     },
 
     onCloseModalCreateTopic: function(){
-        $('#create_topic').on('hidden.bs.modal',function() {
+        $('#create_topic_modal').on('hidden.bs.modal',function() {
             Create_Topic.hideModalCreateTopic();
         });
         $('.modal-backdrop.in').click(function(e) {
@@ -149,7 +160,7 @@ var Create_Topic={
     },
 
     hideModalCreateTopic:function(){
-        var parent = $('#create_topic');
+        var parent = $('#create_topic_modal');
         Create_Topic.reset_data();
         Create_Topic.setDefaultBtn();
         // Create_Topic.hideSideBar();
@@ -159,7 +170,7 @@ var Create_Topic={
     },
 
     onclickBack: function(){
-        var parent = $('#create_topic').find('.back_page span').add($('.box-navigation .btn_nav_map'));
+        var parent = $('#create_topic_modal').find('.back_page span').add($('.box-navigation .btn_nav_map'));
         var city = Create_Topic.params.city;
         var params = {zipcode: Create_Topic.params.city_name};
         parent.unbind();
@@ -173,7 +184,7 @@ var Create_Topic={
         });
     },
     onClickBackZipcodeBreadcrumb: function(){
-        var parent = $('#create_topic').find('.scrumb .zipcode');
+        var parent = $('#create_topic_modal').find('.scrumb .zipcode');
         var city = Create_Topic.params.city;
         var params = {zipcode: Create_Topic.params.city_name};
         parent.unbind();
@@ -187,12 +198,12 @@ var Create_Topic={
         });
     },
     onClickBackNetwrkLogo: function(){
-        $('#create_topic .scrumb .logo').click(function(){
-            $('#create_topic').modal('hide');
+        $('#create_topic_modal .scrumb .logo').click(function(){
+            $('#create_topic_modal').modal('hide');
         });
     },
     changeData: function(){
-        var parent = $('#create_topic');
+        var parent = $('#create_topic_modal');
 
         this.onChangeData(parent.find('.name_topic'),'topic');
         this.onChangeData(parent.find('.name_post'),'post');
@@ -246,7 +257,7 @@ var Create_Topic={
 
     OnshowReset: function(){
         var status = Create_Topic.status_change,
-            parent = $('#create_topic'),
+            parent = $('#create_topic_modal'),
             btn = parent.find('.cancel');
         if(status.topic || status.post || status.message){
             btn.removeClass('disable');
@@ -257,7 +268,7 @@ var Create_Topic={
     },
 
     OnclickReset: function(){
-        var parent = $('#create_topic'),
+        var parent = $('#create_topic_modal'),
             btn = parent.find('.cancel');
 
         btn.unbind();
@@ -271,7 +282,7 @@ var Create_Topic={
     },
 
     reset_data: function(){
-        var parent = $('#create_topic');
+        var parent = $('#create_topic_modal');
 
         parent.find('.name_topic').val('');
         parent.find('.name_post').val('');
@@ -284,7 +295,7 @@ var Create_Topic={
     },
 
     setDefaultBtn: function(){
-        var parent = $('#create_topic'),
+        var parent = $('#create_topic_modal'),
             btn_save = parent.find('.save'),
             btn_cancel = parent.find('.cancel');
 
@@ -294,7 +305,7 @@ var Create_Topic={
 
     OnshowSave: function(){
         var status = Create_Topic.status_change,
-            parent = $('#create_topic'),
+            parent = $('#create_topic_modal'),
             btn = parent.find('.save');
         if(status.topic && status.post && status.message){
             btn.removeClass('disable');
@@ -305,7 +316,7 @@ var Create_Topic={
     },
 
     OnclickSave: function(){
-        var parent = $('#create_topic'),
+        var parent = $('#create_topic_modal'),
             btn = parent.find('.save'),
             city = Create_Topic.params.city;
 

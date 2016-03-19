@@ -551,7 +551,141 @@
                 }
             }
         }
-
+        #tab_groups{
+            width: 100%;
+            display: none;
+            margin: 80px auto 10px;
+            #item_group_list_post,#item_group_list_view,#item_group_list_recent{
+                width: 100%;
+                display: none;
+                .item{
+                    .group_loc_post { float: left; }
+                    .edit-group-p { float: left; }
+                    &:nth-of-type(odd) {
+                        background: #ffffff;
+                    }
+                    &:nth-of-type(even) {
+                        background: #fcfcfc;
+                    }
+                    width: 100%;
+                    height: 50px;
+                    padding: 15px;
+                    border-bottom: 1px solid #eee;
+                    p{
+                        color: #1d1b1b;
+                        margin: 0;
+                        font-size: 12px;
+                        text-align: right;
+                    }
+                    .name_topic{
+                        font-size: 18px;
+                        width: 40%;
+                        // height: 50px;
+                        float: left;
+                        overflow: hidden;
+                        p,span{
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            font-size: 14px;
+                            text-align: left;
+                        }
+                    }
+                    .num_count{
+                        width: 14%;
+                        // height: 50px;
+                        float: right;
+                        margin-right: 2%;
+                        i{
+                            margin-right: 5%;
+                        }
+                    }
+                    .num_count_duration{
+                        width: 20%;
+                        // height: 50px;
+                        float: right;
+                        i{
+                            margin-right: 5%;
+                        }
+                    }
+                    .arrow{
+                        width: 8%;
+                        // height: 50px;
+                        float: right;
+                        p{
+                            text-align: right;
+                        }
+                        i{
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+            #item_topic_group_list_post,#item_topic_group_list_view,#item_topic_group_list_recent{
+                width: 100%;
+                display: none;
+                .item{
+                    &:nth-of-type(odd) {
+                        background: #ffffff;
+                    }
+                    &:nth-of-type(even) {
+                        background: #fcfcfc;
+                    }
+                    width: 100%;
+                    height: 50px;
+                    padding: 15px;
+                    border-bottom: 1px solid #eee;
+                    p{
+                        color: #1d1b1b;
+                        margin: 0;
+                        font-size: 12px;
+                        text-align: right;
+                    }
+                    .name_topic{
+                        font-size: 18px;
+                        width: 40%;
+                        // height: 50px;
+                        float: left;
+                        overflow: hidden;
+                        p,span{
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            font-size: 14px;
+                            text-align: left;
+                        }
+                    }
+                    .num_count{
+                        width: 14%;
+                        // height: 50px;
+                        float: right;
+                        margin-right: 2%;
+                        i{
+                            margin-right: 5%;
+                        }
+                    }
+                    .num_count_duration{
+                        width: 20%;
+                        // height: 50px;
+                        float: right;
+                        i{
+                            margin-right: 5%;
+                        }
+                    }
+                    .arrow{
+                        width: 8%;
+                        // height: 50px;
+                        float: right;
+                        p{
+                            text-align: right;
+                        }
+                        i{
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 #create_topic{

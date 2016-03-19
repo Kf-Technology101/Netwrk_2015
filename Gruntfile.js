@@ -13,10 +13,12 @@ module.exports = function(grunt) {
           "frontend/web/css/bootstrap.css": "frontend/web/less/bootstrap/bootstrap.less", // destination file and source file
           "frontend/web/css/desktop/landing.css": "frontend/web/less/desktop/landing.less",
           "frontend/web/css/desktop/topic.css": "frontend/web/less/desktop/topic.less",
+          "frontend/web/css/desktop/groups_loc.css": "frontend/web/less/desktop/groups_loc.less",
           "frontend/web/css/desktop/meet.css": "frontend/web/less/desktop/meet.less",
           "frontend/web/css/desktop/login.css": "frontend/web/less/desktop/login.less",
           "frontend/web/css/desktop/chat_post.css": "frontend/web/less/desktop/chat_post.less",
           "frontend/web/css/desktop/post.css": "frontend/web/less/desktop/post.less",
+          "frontend/web/css/desktop/groups.css": "frontend/web/less/desktop/groups.less",
           "frontend/web/css/desktop/signup.css": "frontend/web/less/desktop/signup.less",
           "frontend/web/css/desktop/chat_inbox.css": "frontend/web/less/desktop/chat_inbox.less",
           "frontend/web/css/desktop/forgot_pass.css": "frontend/web/less/desktop/forgot_pass.less",

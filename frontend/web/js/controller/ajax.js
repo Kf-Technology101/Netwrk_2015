@@ -1,7 +1,7 @@
 var Ajax ={
     top_landing: function(){
         var url,defer = $.Deferred();
-            url = baseUrl + "/netwrk/default/feed-global";
+        url = baseUrl + "/netwrk/default/feed-global";
 
         $.ajax({
             url: url,
@@ -17,7 +17,7 @@ var Ajax ={
 
     global_search: function(params){
         var url,defer = $.Deferred();
-            url = baseUrl + "/netwrk/search/global-search";
+        url = baseUrl + "/netwrk/search/global-search";
 
         $.ajax({
             url: url,
@@ -34,7 +34,7 @@ var Ajax ={
 
     reset_password: function(params){
         var url,defer = $.Deferred();
-            url = baseUrl + "/netwrk/user/user-reset-password";
+        url = baseUrl + "/netwrk/user/user-reset-password";
 
         $.ajax({
             url: url,
@@ -50,7 +50,7 @@ var Ajax ={
     },
     forgot_password: function(form){
         var url,defer = $.Deferred();
-            url = baseUrl + "/netwrk/user/forgot-password";
+        url = baseUrl + "/netwrk/user/forgot-password";
 
         $.ajax({
             url: url,
@@ -66,7 +66,7 @@ var Ajax ={
     },
     user_signup: function(form){
         var url,defer = $.Deferred();
-            url = baseUrl + "/netwrk/user/signup-user";
+        url = baseUrl + "/netwrk/user/signup-user";
 
         $.ajax({
             url: url,
@@ -83,7 +83,7 @@ var Ajax ={
 
     user_login: function(form){
         var url,defer = $.Deferred();
-            url = baseUrl + "/netwrk/user/login-user";
+        url = baseUrl + "/netwrk/user/login-user";
 
         $.ajax({
             url: url,
@@ -101,7 +101,7 @@ var Ajax ={
     chat_post_name: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/chat/chat-name";
+        url = baseUrl + "/netwrk/chat/chat-name";
 
         $.ajax({
             url: url,
@@ -118,7 +118,7 @@ var Ajax ={
     vote_post: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/post/vote-post";
+        url = baseUrl + "/netwrk/post/vote-post";
 
         $.ajax({
             url: url,
@@ -135,7 +135,7 @@ var Ajax ={
     get_topic: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/topic/get-topic";
+        url = baseUrl + "/netwrk/topic/get-topic";
 
         $.ajax({
             url: url,
@@ -153,7 +153,7 @@ var Ajax ={
     update_view_topic: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/topic/update-view-topic";
+        url = baseUrl + "/netwrk/topic/update-view-topic";
 
         $.ajax({
             url: url,
@@ -170,7 +170,7 @@ var Ajax ={
     update_view_post: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/post/update-view-post";
+        url = baseUrl + "/netwrk/post/update-view-post";
 
         $.ajax({
             url: url,
@@ -188,7 +188,7 @@ var Ajax ={
     get_post_by_topic:function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/post/get-all-post";
+        url = baseUrl + "/netwrk/post/get-all-post";
 
         $.ajax({
             url: url,
@@ -206,7 +206,7 @@ var Ajax ={
     get_position_user: function(){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/default/get-user-position";
+        url = baseUrl + "/netwrk/default/get-user-position";
 
         $.ajax({
             url: url,
@@ -224,7 +224,7 @@ var Ajax ={
     get_top_post: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/default/get-top-post";
+        url = baseUrl + "/netwrk/default/get-top-post";
 
         $.ajax({
             url: url,
@@ -242,7 +242,7 @@ var Ajax ={
     check_zipcode_exist: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/default/check-exist-zipcode";
+        url = baseUrl + "/netwrk/default/check-exist-zipcode";
 
         $.ajax({
             url: url,
@@ -260,7 +260,7 @@ var Ajax ={
     place_check_zipcode_exist: function(params){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/default/check-exist-place-zipcode";
+        url = baseUrl + "/netwrk/default/check-exist-place-zipcode";
 
         $.ajax({
             url: url,
@@ -278,7 +278,7 @@ var Ajax ={
     get_marker_default: function(){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/default/get-maker-default-zoom";
+        url = baseUrl + "/netwrk/default/get-maker-default-zoom";
 
         $.ajax({
             url: url,
@@ -297,7 +297,7 @@ var Ajax ={
     get_marker_zoom: function(){
         var url,defer = $.Deferred();
 
-            url = baseUrl + "/netwrk/default/get-maker-max-zoom";
+        url = baseUrl + "/netwrk/default/get-maker-max-zoom";
 
         $.ajax({
             url: url,
@@ -350,6 +350,101 @@ var Ajax ={
             type: 'GET',
             async: false,
             cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    get_marker_groups_loc: function(groupId){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/default/get-groups-loc" + (groupId != null ? "?groupId = " + groupId : "");
+
+        $.ajax({
+            url: url,
+            // data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+
+    },
+
+    show_groups: function(params){
+        var url,defer = $.Deferred();
+
+        url = "/netwrk/group/get-groups";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    show_group: function(id) {
+        var url,defer = $.Deferred();
+
+        url = "/netwrk/group/get-group";
+
+        $.ajax({
+            url: url,
+            data: { "id" : id },
+            type: 'POST',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    create_edit_group: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/group/create-edit-group";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    delete_group: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/group/delete-group";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
             success: defer.resolve,
             error: defer.reject
         });
@@ -426,7 +521,7 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         // if (isMobile) {
-            url = baseUrl + "/netwrk/setting/load-profile";
+        url = baseUrl + "/netwrk/setting/load-profile";
         // }else{
         //     url = "netwrk/meet/get-user-meet";
         // }
@@ -448,9 +543,9 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         // if (isMobile) {
-            url = baseUrl +"/netwrk/setting/update-profile";
+        url = baseUrl +"/netwrk/setting/update-profile";
         // }else{
-            // url = "netwrk/meet/get-user-meet";
+        // url = "netwrk/meet/get-user-meet";
         // }
 
         $.ajax({
@@ -470,9 +565,9 @@ var Ajax ={
         var url,defer = $.Deferred();
 //
         // if (isMobile) {
-            url = baseUrl +"/netwrk/setting/upload-image";
+        url = baseUrl +"/netwrk/setting/upload-image";
         // }else{
-            // url = "netwrk/meet/get-user-meet";
+        // url = "netwrk/meet/get-user-meet";
         // }
 
         $.ajax({
@@ -494,9 +589,9 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         // if (isMobile) {
-            url = baseUrl +"/netwrk/setting/get-user-setting";
+        url = baseUrl +"/netwrk/setting/get-user-setting";
         // }else{
-            // url = "netwrk/meet/get-user-meet";
+        // url = "netwrk/meet/get-user-meet";
         // }
 
         $.ajax({
@@ -518,9 +613,9 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         // if (isMobile) {
-            url = baseUrl +"/netwrk/setting/update-user-setting";
+        url = baseUrl +"/netwrk/setting/update-user-setting";
         // }else{
-            // url = "netwrk/meet/get-user-meet";
+        // url = "netwrk/meet/get-user-meet";
         // }//
 
         $.ajax({
@@ -821,6 +916,24 @@ var Ajax ={
         return defer.promise();
     },
 
+    get_users: function(group_id) {
+        var url,defer = $.Deferred();
+
+        url = "/netwrk/group/get-users";
+
+        $.ajax({
+            url: url,
+            data: { "id" : group_id },
+            type: 'POST',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     count_unread_message: function(){
         var url,defer = $.Deferred();
         url = baseUrl +"/netwrk/notify/count-unread-message";
@@ -890,7 +1003,7 @@ var Ajax ={
      * @return             [data json]
      */
 
-     get_user_profile: function(){
+    get_user_profile: function(){
         var url,defer = $.Deferred();
         url = baseUrl +"/netwrk/default/get-user-profile";
 
@@ -972,7 +1085,7 @@ var Ajax ={
 
     redirect_cover_page: function(){
         var url,defer = $.Deferred();
-            url = baseUrl + "/netwrk/default/home";
+        url = baseUrl + "/netwrk/default/home";
 
         $.ajax({
             url: url,

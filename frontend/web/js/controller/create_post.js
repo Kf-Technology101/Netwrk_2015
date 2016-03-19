@@ -135,7 +135,7 @@ var Create_Post={
         parent.modal({
             backdrop: true,
             keyboard: false
-        });
+        }).removeAttr("style").css("display", "block");
     },
     onCloseModalCreatePost: function(){
         $('#create_post').on('hidden.bs.modal',function() {

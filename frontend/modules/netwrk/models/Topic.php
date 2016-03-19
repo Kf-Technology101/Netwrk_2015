@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $city_id
+ * @property integer $group_id
  * @property integer $user_id
  * @property string $title
  * @property integer $post_count
@@ -33,8 +34,8 @@ class Topic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['city_id', 'user_id', 'title'], 'required'],
-            [['city_id', 'user_id', 'post_count', 'view_count','brilliant_count'], 'integer'],
+            [['user_id', 'title'], 'required'],
+            [['city_id', 'group_id', 'user_id', 'post_count', 'view_count','brilliant_count'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255]
         ];
@@ -156,6 +157,7 @@ class Topic extends \yii\db\ActiveRecord
         $topics = [];
         foreach ($model as $key => $value) {
             # code...
+            if (empty($value->city)) continue;
             $item = [
                 'id' => $value->id,
                 'name'=> $value->title,
