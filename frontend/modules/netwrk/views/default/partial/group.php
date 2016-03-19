@@ -87,35 +87,42 @@
   </script>
 <script id="group_list" type="text/x-underscore-template">
     <% _.each(groups,function(group){ %>
-    <div class="item" data-item="<%= group.id %>">
+    <div class="item clearfix" data-item="<%= group.id %>">
         <div class="group_loc_post">
-            <div class="name_group">
+            <span class="name_group">
                 <p><%= group.name %></p>
-            </div>
+            </span>
         </div>
-        <div class="num_count_duration">
-            <div class="most_post">
-                <p><i class="fa fa-clock-o"></i><%= group.created_at%></p>
-            </div>
+
+
+        <div class="group-date-details group-item">
+            <span><%= group.created_at%></span>
         </div>
-        <div class="num_count">
-            <div class="most_post">
-                <p><% if (group.permission == 1) { %><img src="/img/icon/glob.png"><% } else if (group.permission == 2) { %><img src="/img/icon/lock.png"><% } %></p>
-            </div>
+        <div class="group-actions text-right">
+            <span class="group-item">
+                <span class="most_post">
+                    <span><% if (group.permission == 1) { %><img src="/img/icon/glob.png" data-toggle="tooltip" data-placement="top" title="Public" data-container="body"><% } else if (group.permission == 2) { %><img src="/img/icon/lock.png"><% } %></span>
+                </span>
+            </span>
+            <span class="group-item">
+                <span class="most_post">
+                    <span><img src="/img/icon/users.png" data-toggle="tooltip" data-placement="top" title="Users" data-container="body"><%= group.users%></span>
+                </span>
+            </span>
+            <% if (group.owner) { %>
+            <span class="group-item">
+                <span class="most_post">
+                    <span class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group" src="/img/icon/edit-group.png" data-toggle="tooltip" data-placement="top" title="Edit" data-container="body"></span>
+                    <span><img data-id="<%= group.id %>" class="delete-group" src="/img/icon/delete-group.png" data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></span>
+                </span>
+            </span>
+            <% } %>
+            <span class="group-item">
+                <span class="most_post">
+                    <span><i class="fa fa-angle-right"></i></span>
+                </span>
+            </span>
         </div>
-        <div class="num_count_duration">
-            <div class="most_post">
-                <p><img src="/img/icon/users.png"><%= group.users%></p>
-            </div>
-        </div>
-        <% if (group.owner) { %>
-        <div class="num_count_duration">
-            <div class="most_post">
-                <p class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group" src="/img/icon/edit-group.png"></p>
-                <p><img data-id="<%= group.id %>" class="delete-group" src="/img/icon/delete-group.png"></p>
-            </div>
-        </div>
-        <% } %>
     </div>
     <% }); %>
 </script>

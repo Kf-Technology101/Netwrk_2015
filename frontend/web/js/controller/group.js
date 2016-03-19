@@ -77,6 +77,7 @@ var Group = {
             Group.CreateTopic();
             Group.CreatePost();
             Group.TotalUsers();
+            Common.InitToolTip();
             //Group.filter_group();
         }
     },
