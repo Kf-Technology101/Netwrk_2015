@@ -101,19 +101,19 @@
         <div class="group-actions text-right">
             <span class="group-item">
                 <span class="most_post">
-                    <span><% if (group.permission == 1) { %><img src="/img/icon/glob.png" data-toggle="tooltip" data-placement="top" title="Public" data-container="body"><% } else if (group.permission == 2) { %><img src="/img/icon/lock.png"><% } %></span>
+                    <span><% if (group.permission == 1) { %><i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title="Public" data-container="body"></i><% } else if (group.permission == 2) { %><i class="fa fa-lock" data-toggle="tooltip" data-placement="top" title="Private" data-container="body"></i><% } %></span>
                 </span>
             </span>
             <span class="group-item">
                 <span class="most_post">
-                    <span><img src="/img/icon/users.png" data-toggle="tooltip" data-placement="top" title="Users" data-container="body"><%= group.users%></span>
+                    <span><i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="Users" data-container="body"></i><%= group.users%></span>
                 </span>
             </span>
             <% if (group.owner) { %>
             <span class="group-item">
                 <span class="most_post">
-                    <span class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group" src="/img/icon/edit-group.png" data-toggle="tooltip" data-placement="top" title="Edit" data-container="body"></span>
-                    <span><img data-id="<%= group.id %>" class="delete-group" src="/img/icon/delete-group.png" data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></span>
+                    <span class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit" data-container="body"></i></span>
+                    <span><i data-id="<%= group.id %>" class="delete-group fa fa-trash-o"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i></span>
                 </span>
             </span>
             <% } %>
