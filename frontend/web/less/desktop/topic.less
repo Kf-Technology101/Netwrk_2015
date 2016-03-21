@@ -698,6 +698,7 @@
         #tab_groups{
             width: 100%;
             display: none;
+            min-height: 200px;
             /*#item_group_list_recent { display: none !important; }*/
             #item_group_list_post,#item_group_list_view,#item_group_list_recent{
                 display: none;
@@ -706,6 +707,11 @@
                     font-size: 16px;
                     padding-top: 20px;
                     display: none;
+                }
+                .no-data-alert {
+                    padding-top: 20px;
+                    font-size: 16px;
+                    text-align: center;
                 }
                 .item{
                     &:nth-of-type(odd) {

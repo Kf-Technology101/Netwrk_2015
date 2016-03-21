@@ -86,6 +86,7 @@
     <span class="title"><a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a><%= city %></span>
   </script>
 <script id="group_list" type="text/x-underscore-template">
+    <% if(groups.length > 0) {%>
     <% _.each(groups,function(group){ %>
     <div class="item clearfix" data-item="<%= group.id %>">
         <div class="group_loc_post">
@@ -112,7 +113,7 @@
             <% if (group.owner) { %>
             <span class="group-item">
                 <span class="most_post">
-                    <span class="edit-group-p"><i data-id="<%= group.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit" data-container="body"></i></span>
+                    <span class="edit-group-p"><i data-id="<%= group.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= group.name %>" data-container="body"></i></span>
                     <span><i data-id="<%= group.id %>" class="delete-group fa fa-trash-o"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i></span>
                 </span>
             </span>
@@ -125,6 +126,10 @@
         </div>
     </div>
     <% }); %>
+    <% } else {%>
+        <div class="no-data-alert"><p class="">There is no data available yet</p></div>
+    <% } %>
+
 </script>
 <script id="topic_group_list" type="text/x-underscore-template">
     <% _.each(topices,function(topic){ %>
