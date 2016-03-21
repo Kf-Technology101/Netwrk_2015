@@ -267,7 +267,7 @@ var Create_Group={
     },
 
     onclickBack: function(){
-        var parent = $('#create_group_modal').find('.back_page span');
+        var parent = $('#create_group_modal').find('.back_page span, #cancel_group');
 
         parent.unbind();
         parent.click(function(){
@@ -275,6 +275,7 @@ var Create_Group={
                 Create_Group.redirect();
             }else{
                 Create_Group.hideModalCreateGroup();
+                Topic.tab_current = 'groups';
                 Topic.initialize();
                 Group.initialize();
             }
@@ -451,5 +452,4 @@ var Create_Group={
             });
         });
     }
-
 };

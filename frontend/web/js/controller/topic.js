@@ -62,11 +62,14 @@ var Topic = {
     },
 
     CheckTabCurrent: function(){
-        if(sessionStorage.topic_tab_current == 'feed'){
-            var parent = $('#modal_topic,#show-topic');
+        var parent = $('#modal_topic,#show-topic');
+
+        if(Topic.tab_current == 'feed'){
             var btn = parent.find('.filter_sidebar td.feed');
             btn.trigger('click');
-            sessionStorage.topic_tab_current = 'topic';
+        } else if(Topic.tab_current == 'groups'){
+            var btn = parent.find('.filter_sidebar td.groups');
+            btn.trigger('click');
         }
     },
 
