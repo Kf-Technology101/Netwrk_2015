@@ -176,10 +176,19 @@ class GroupController extends BaseController {
         if (isset($_GET['group_id'])) {
             $params['id'] = $_GET['group_id'];
         }
-        $currentUserId = Yii::$app->user->id;
+
+        $andWhere = 'permission = ' . Group::PERMISSION_PUBLIC;
+
+        if(Yii::$app->user->id){
+            $currentUserId = Yii::$app->user->id;
+            $andWhere = $andWhere. ' or group.user_id = ' . $currentUserId . " or " . $currentUserId . " in (select user_id from user_group where user_group.group_id = group.id)";
+        }else{
+            $currentUserId = null;
+        }
+
         $groups = Group::find()
             ->where($params)
-            ->andWhere('permission = ' . Group::PERMISSION_PUBLIC . ' or group.user_id = ' . $currentUserId . " or " . $currentUserId . " in (select user_id from user_group where user_group.group_id = group.id)")
+            ->andWhere($andWhere)
             ->joinWith("topic")
             ->orderBy($order)
             ->all();
