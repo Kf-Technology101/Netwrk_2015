@@ -121,13 +121,13 @@
               </div>
 
               <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                  <p class="no-data">There is no data available yet</p>
+
               </div>
               <div id="item_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                  <p class="no-data">There is no data available yet</p>
+
               </div>
               <div id="item_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                  <p class="no-data">There is no data available yet</p>
+
               </div>
 
               <div id="item_topic_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
