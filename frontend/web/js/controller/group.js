@@ -341,9 +341,6 @@ var Group = {
             var json = $.parseJSON(data);
             console.log("deleting old");
             $("div[id^='item_group_list'] .item").remove();
-            $("div[id^='item_topic_group_list'] .item").remove();
-            $('#tab_groups').find('.topic_group_top').hide();
-
             parent.scrollTop(0);
             self.list[self.data.filter].loaded = self.list[self.data.filter].paging;
             self.getTemplate(parent, json);
