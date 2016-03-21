@@ -111,7 +111,8 @@ var PopupChat = {
             }
         });
 
-        min_popup_right = Math.min.apply(Math, popup_rights)
+        min_popup_right = Math.min.apply(Math, popup_rights);
+
         if (min_popup_right < right) {
             right = min_popup_right;
         }
