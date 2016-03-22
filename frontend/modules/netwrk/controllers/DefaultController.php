@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\controllers;
 
 use Yii;
 use yii\web\Session;
+use yii\web\Cookie;
 use yii\db\Query;
 use yii\helpers\Url;
 use frontend\components\BaseController;
@@ -24,11 +25,25 @@ class DefaultController extends BaseController
 
     public function actionIndex()
     {
-        if(Yii::$app->getRequest()->getCookies()->has('isCoverPage')){
+        if(Yii::$app->getRequest()->getCookies()->has('isCoverPageVisited')){
             return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
         }else{
             return $this->render($this->getIsMobile() ? 'mobile/cover_page' : 'cover_page');
         }
+    }
+
+    public function actionSetCoverCookie(){
+        $zip_code = $_GET['post_code'];
+
+        $c = Yii::$app->response->cookies;
+        $cookie = new Cookie(['name'=>'zipCode', 'value'=> $zip_code, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'isAccepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+
+        return true;
     }
 
     public function actionGetUserProfile()

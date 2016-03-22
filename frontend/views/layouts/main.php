@@ -14,19 +14,19 @@ use yii\web\Cookie;
 AppAsset::register($this);
 $controller = Yii::$app->controller;
 $cookies = Yii::$app->request->cookies;
-$isCoverPage = 0;
-$accepted = 0;
-if (isset($cookies["isCoverPage"])) {
-  $isCoverPage = $cookies->getValue('isCoverPage');//$cookies['isCoverPage']->value;
-  $accepted = $cookies->getValue('accepted');
-} else {
+$isCoverPageVisited = 0;
+$isAccepted = 0;
+if (isset($cookies["isCoverPageVisited"])) {
+  $isCoverPageVisited = $cookies->getValue('isCoverPageVisited');//$cookies['isCoverPage']->value;
+  $isAccepted = $cookies->getValue('isAccepted');
+} /*else {
   $c = Yii::$app->response->cookies;
-  $cookie = new Cookie(['name'=>'isCoverPage', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+  $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
   $c->add($cookie);
-  $cookie = new Cookie(['name'=>'accepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+  $cookie = new Cookie(['name'=>'isAccepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
   $c->add($cookie);
-  $isCoverPage = 1;
-}
+  $isCoverPageVisited = 1;
+}*/
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -41,8 +41,8 @@ if (isset($cookies["isCoverPage"])) {
     <script type="text/javascript">
     var baseUrl = '<?php echo Url::base(true); ?>';
     var isMobile = true;
-    var isCoverPage = <?php echo $isCoverPage; ?>;
-    var accepted = <?php echo $accepted; ?>;
+    var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
+    var isAccepted = <?php echo $isAccepted; ?>;
   </script>
 </head>
 <body>
