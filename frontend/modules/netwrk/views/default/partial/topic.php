@@ -190,7 +190,7 @@
                     <i class="fa fa fa-file-text-o" data-toggle="tooltip" data-placement="top" title="Post count" data-container="body"></i><%= topic.post_count%>
                 </span>
                 <span class="topic-item">
-                    <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="top" title="View count" data-container="body"></i><%= topic.created_at%>
+                    <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="top" title="Created" data-container="body"></i><%= topic.created_at%>
                 </span>
                 <!--<% if (topic.owner) { %>
                     <span class="">
