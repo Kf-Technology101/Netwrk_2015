@@ -170,7 +170,7 @@ var Default ={
     },
 
     SetAvatarUserDropdown: function() {
-        if (UserLogin) {
+        if (UserLogin && isCoverPageVisited) {
             Ajax.get_user_profile().then(function(data){
                 sessionStorage.UserInfo = data;
                 data = $.parseJSON(data);
