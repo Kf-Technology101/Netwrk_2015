@@ -71,9 +71,13 @@ var CoverPage = {
 
     checkzipcode: function(zipcode){
 		$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
-			sessionStorage.accepted = true;
+			var params = data;
+			Ajax.set_cover_cookie(params).then(function(data){
+				window.location.href = baseUrl; //+ "/netwrk/default/home";
+			});
+			//sessionStorage.accepted = true;
 			// if (isMobile){
-				window.location.href = baseUrl + "/netwrk/default/home";
+				// window.location.href = baseUrl + "/netwrk/default/home";
 			// } else {
 				// window.location.href = baseUrl + "/netwrk/default/home";
 			// }
@@ -83,5 +87,5 @@ var CoverPage = {
 			zcode.val(null);
 			error.removeClass("hidden");
 		});
-	},
+	}
 }

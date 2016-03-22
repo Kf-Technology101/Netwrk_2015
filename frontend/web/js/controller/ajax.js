@@ -1204,5 +1204,22 @@ var Ajax ={
 
         return defer.promise();
     },
+    set_cover_cookie: function(zip_code){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/set-cover-cookie";
+
+        $.ajax({
+            url: url,
+            data: zip_code,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    }
 }
 

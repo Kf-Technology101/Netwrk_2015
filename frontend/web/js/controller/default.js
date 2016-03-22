@@ -14,8 +14,9 @@ var Default ={
         }
         Default.SetAvatarUserDropdown();
         // Default.ShowLandingPage();
-        if (isCoverPage){
-            if (accepted) {
+
+        if(isCoverPageVisited){
+            if (isAccepted) {
                 $("body").css('background', 'f2f2f2');
                 if(!isMobile){
                     if(isResetPassword){
@@ -30,8 +31,8 @@ var Default ={
                 CoverPage.initialize();
             }
         } else {
-            if (!accepted) {
-                window.location.href = baseUrl;
+            if (!isAccepted) {
+                CoverPage.initialize();
             } else {
                 if (isMobile) {
                     Default.ShowLandingPage();
@@ -62,7 +63,7 @@ var Default ={
                 LandingPage.redirect();
             }
         }else{
-            if (isCoverPage) {
+            if (isCoverPageVisited) {
                 if (sessionStorage.redirected) {
                     sessionStorage.removeItem('redirected');
                     if(isResetPassword){
