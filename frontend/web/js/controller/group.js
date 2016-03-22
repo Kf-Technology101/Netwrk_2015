@@ -161,6 +161,7 @@ var Group = {
         var list_template = _.template($("#group_list").html());
         var append_html = list_template({groups: json.data});
 
+        parent.html('');
         parent.append(append_html);
         self.onTemplate(json);
 
@@ -340,15 +341,13 @@ var Group = {
             var json = $.parseJSON(data);
             console.log("deleting old");
             $("div[id^='item_group_list'] .item").remove();
-            if (json.data.length > 0) {
-                parent.scrollTop(0);
-                self.list[self.data.filter].loaded = self.list[self.data.filter].paging;
-                self.getTemplate(parent, json);
-                self.getTemplateModal(cityname, json);
-                Topic.CustomScrollBar();
-                Group.filter_group(parent);
-                Topic.GetDataOnTab();
-            }
+            parent.scrollTop(0);
+            self.list[self.data.filter].loaded = self.list[self.data.filter].paging;
+            self.getTemplate(parent, json);
+            self.getTemplateModal(cityname, json);
+            Topic.CustomScrollBar();
+            Group.filter_group(parent);
+            Topic.GetDataOnTab();
         });
     },
 
