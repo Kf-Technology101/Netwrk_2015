@@ -139,7 +139,11 @@
 
 	  	main: function(){
 	      	if (typeof google !== "undefined") {
-	        	Map.center = new google.maps.LatLng(39.7662195,-86.441277);
+				if(lat && lng){
+					Map.center = new google.maps.LatLng(lat, lng);
+ 				}else{
+					Map.center = new google.maps.LatLng(39.7662195,-86.441277);
+				}
 	        	google.maps.event.addDomListener(window, 'load', Map.initialize());
 	      	}
 	  	},

@@ -226,6 +226,15 @@ class DefaultController extends BaseController
 
     public function actionGetMakerDefaultZoom()
     {
+        $cookies = Yii::$app->request->cookies;
+
+        $state = $cookies->getValue('nw_state');
+
+        if(isset($state))
+            $where = "city.state = '".$state."'";
+        else
+            $where = "city.state = 'Indiana'";
+
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
         $query = new Query();
@@ -234,6 +243,7 @@ class DefaultController extends BaseController
             ->leftJoin('topic', 'city.id=topic.city_id')
             ->leftJoin('post', 'topic.id=post.topic_id')
             ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
+            ->where($where)
             ->groupBy('city.id')
             ->orderBy('count_user_comment DESC, post_count DESC')
             ->limit(10)
@@ -619,11 +629,16 @@ class DefaultController extends BaseController
 
     public function actionFeedGlobal(){
         $request = Yii::$app->request->isAjax;
+
+        $cookies = Yii::$app->request->cookies;
+
+        $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
+
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-            $top_post = Post::GetTopPostUserJoinGlobal($limit,null);
-            $top_topic = Topic::GetTopTopicGlobal($limit, null);
-            $top_city = City::GetTopCityUserJoinGlobal($limit);
+            $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$state);
+            $top_topic = Topic::GetTopTopicGlobal($limit, null,$state);
+            $top_city = City::GetTopCityUserJoinGlobal($limit,$state);
             $top_communities =City::TopHashTag_City($top_city,$limit);
             $feeds = json_decode($this->actionGetFeedByUser(), true);
 
