@@ -246,6 +246,8 @@ var Topic = {
             if(isMobile){
                 Post.RedirectPostPage(topic, false);
             }else{
+                //hide all opened tooltips
+                Common.HideTooTip();
                 $('#modal_topic').modal('hide');
                 Post.params.topic = topic;
                 Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();

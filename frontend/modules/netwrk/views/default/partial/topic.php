@@ -192,12 +192,12 @@
                 <span class="topic-item">
                     <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="top" title="View count" data-container="body"></i><%= topic.created_at%>
                 </span>
-                <% if (topic.owner) { %>
+                <!--<% if (topic.owner) { %>
                     <span class="">
-                        <span class="edit-topic"><i data-id="<%= topic.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>
-                        <span><i data-id="<%= topic.id %>" class="delete-group fa fa-trash-o"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i></span>
+                        <span class="edit-topic"><i data-id="<%= topic.id %>" class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>
+                        <span><i data-id="<%= topic.id %>" class="fa fa-trash-o"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i></span>
                     </span>
-                <% } %>
+                <% } %>-->
             </div>
         </div>
     <% }); %>  
