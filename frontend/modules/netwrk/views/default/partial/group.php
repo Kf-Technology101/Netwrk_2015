@@ -127,7 +127,7 @@
     </div>
     <% }); %>
     <% } else {%>
-        <div class="no-data-alert"><p class="">There is no data available yet</p></div>
+        <div class="no-data-alert"><p class="">This community has no groups. Be the first to create a group.</p></div>
     <% } %>
 
 </script>

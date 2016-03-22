@@ -87,6 +87,9 @@ var Topic = {
             Topic.OnClickCreateGroup();
             Default.onCLickModal();
             Topic.OnClickFavorite();
+
+            //init tooltip on topic list
+            Common.InitToolTip();
         }
     },
 

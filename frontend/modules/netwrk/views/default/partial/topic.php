@@ -87,13 +87,13 @@
           </div>
           <div id="tab_topic" class="tab">
               <div id="item_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                  <p class="no-data">There is no data available yet</p>
+                  <p class="no-data">This community has no topics. Be the first to create a topic.</p>
               </div>
               <div id="item_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                  <p class="no-data">There is no data available yet</p>
+                  <p class="no-data">This community has no topics. Be the first to create a topic.</p>
               </div>
               <div id="item_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                  <p class="no-data">There is no data available yet</p>
+                  <p class="no-data">This community has no topics. Be the first to create a topic.</p>
               </div>
           </div>
           <div id="tab_groups" class="tab">
@@ -176,26 +176,28 @@
   </script>
   <script id="topic_list" type="text/x-underscore-template" >
       <% _.each(topices,function(topic){ %>
-          <div class="item" data-item="<%= topic.id %>">
+          <div class="item clearfix" data-item="<%= topic.id %>">
             <div class="topic_post">
                 <div class="name_topic">
                     <p><%= topic.title %></p>
                 </div>
-            </div> 
-            <div class="num_count_duration">
-                <div class="most_post">
-                    <p><i class="fa fa-clock-o"></i><%= topic.created_at%></p>
-                </div>   
-            </div> 
-            <div class="num_count">
-                <div class="most_post">
-                    <p><i class="fa fa-file-text"></i><%= topic.post_count%></p>
-                </div>   
-            </div> 
-            <div class="num_count">
-                <div class="most_post">
-                    <p><i class="fa fa-eye"></i><%= topic.view_count%></p>
-                </div>   
+            </div>
+            <div class="topic-actions text-right">
+                <span class="topic-item">
+                    <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="View count" data-container="body"></i><%= topic.view_count%>
+                </span>
+                <span class="topic-item">
+                    <i class="fa fa fa-file-text-o" data-toggle="tooltip" data-placement="top" title="Post count" data-container="body"></i><%= topic.post_count%>
+                </span>
+                <span class="topic-item">
+                    <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="top" title="View count" data-container="body"></i><%= topic.created_at%>
+                </span>
+                <% if (topic.owner) { %>
+                    <span class="">
+                        <span class="edit-topic"><i data-id="<%= topic.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>
+                        <span><i data-id="<%= topic.id %>" class="delete-group fa fa-trash-o"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i></span>
+                    </span>
+                <% } %>
             </div>
         </div>
     <% }); %>  

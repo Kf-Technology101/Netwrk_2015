@@ -194,6 +194,7 @@ class TopicController extends BaseController
         ->limit($pages->limit)
         ->all();
 
+        $currentUserId = Yii::$app->user->id;
         $data = [];
         foreach ($topices as $key => $value) {
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count);
@@ -220,7 +221,9 @@ class TopicController extends BaseController
                 'view_count'=> $num_view > 0 ? $num_view : 0,
                 'img'=> Url::to('@web/img/icon/timehdpi.png'),
                 'created_at'=>$num_date,
-                'post'=> $post_data
+                'post'=> $post_data,
+                'user_id' => $value->user_id,
+                'owner' => ($currentUserId == $value->user_id ? true : false),
                 );
             array_push($data,$topic);
         }
