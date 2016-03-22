@@ -34,9 +34,21 @@ class DefaultController extends BaseController
 
     public function actionSetCoverCookie(){
         $zip_code = $_GET['post_code'];
+        $lat = $_GET['places'][0]['latitude'];
+        $lng = $_GET['places'][0]['longitude'];
+        $state = $_GET['places'][0]['state'];
+        $state_abbr = $_GET['places'][0]['state abbreviation'];
 
         $c = Yii::$app->response->cookies;
-        $cookie = new Cookie(['name'=>'zipCode', 'value'=> $zip_code, 'expire'=> (time()+(365*86400))]);
+        $cookie = new Cookie(['name'=>'nw_zipCode', 'value'=> $zip_code, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_lat', 'value'=> $lat, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_lng', 'value'=> $lng, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_state', 'value'=> $state, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_stateAbbr', 'value'=> $state_abbr, 'expire'=> (time()+(365*86400))]);
         $c->add($cookie);
         $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
         $c->add($cookie);
