@@ -332,9 +332,23 @@ class DefaultController extends BaseController
 
     public function actionGetMakerMaxZoom()
     {
+        $swLat = $_POST['swLat'];
+        $neLat = $_POST['neLat'];
+
+        $swLng = $_POST['swLng'];
+        $neLng = $_POST['neLng'];
+
+        $geo_where = '(lat >= '.$swLat.' AND lat <= '.$neLat.' AND lng >= '.$swLng.' AND lng <= '.$neLng.')';
+
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
-        $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
+
+        $cities = City::find()
+            ->where($geo_where)
+            ->with('topics.posts')
+            ->orderBy(['post_count'=> SORT_DESC])
+            ->all();
+
         $data = [];
         $img = '/img/icon/map_icon_community_v_2.png';
 

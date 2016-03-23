@@ -294,17 +294,17 @@ var Ajax ={
 
     },
 
-    get_marker_zoom: function(){
+    get_marker_zoom: function(params){
         var url,defer = $.Deferred();
 
         url = baseUrl + "/netwrk/default/get-maker-max-zoom";
 
         $.ajax({
             url: url,
-            // data: params,
+            data: params,
             async: false,
             cache: false,
-            type: 'GET',
+            type: 'POST',
             success: defer.resolve,
             error: defer.reject
         });
