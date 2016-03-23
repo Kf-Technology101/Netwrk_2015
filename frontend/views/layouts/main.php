@@ -43,17 +43,19 @@ if (isset($cookies["isCoverPageVisited"])) {
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <script type="text/javascript">
-    var baseUrl = '<?php echo Url::base(true); ?>';
-    var isMobile = true;
-    var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
-    var isAccepted = <?php echo $isAccepted; ?>;
-    var zipCode = <?php echo $zipCode; ?>;
-    var lat = <?php echo $lat; ?>;
-    var lng = <?php echo $lng; ?>;
-    var state = '<?php echo $state; ?>';
-    var stateAbbr = '<?php echo $stateAbbr; ?>';
-  </script>
+    <?php if (isset($cookies["isCoverPageVisited"])) : ?>
+        <script type="text/javascript">
+            var baseUrl = '<?php echo Url::base(true); ?>';
+            var isMobile = true;
+            var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
+            var isAccepted = <?php echo $isAccepted; ?>;
+            var zipCode = <?php echo $zipCode; ?>;
+            var lat = <?php echo $lat; ?>;
+            var lng = <?php echo $lng; ?>;
+            var state = '<?php echo $state; ?>';
+            var stateAbbr = '<?php echo $stateAbbr; ?>';
+        </script>
+    <?php endif; ?>
 </head>
 <body>
     <?php $this->beginBody() ?>

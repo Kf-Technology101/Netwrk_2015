@@ -15,7 +15,7 @@ var Default ={
         Default.SetAvatarUserDropdown();
         // Default.ShowLandingPage();
 
-        if(isCoverPageVisited){
+        if(typeof isCoverPageVisited !== 'undefined'){
             if (isAccepted) {
                 $("body").css('background', 'f2f2f2');
                 if(!isMobile){
@@ -31,7 +31,7 @@ var Default ={
                 CoverPage.initialize();
             }
         } else {
-            if (!isAccepted) {
+            if(typeof isAccepted === 'undefined'){
                 CoverPage.initialize();
             } else {
                 if (isMobile) {
