@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\controllers;
 
 use Yii;
 use yii\web\Session;
+use yii\web\Cookie;
 use yii\db\Query;
 use yii\helpers\Url;
 use frontend\components\BaseController;
@@ -24,11 +25,37 @@ class DefaultController extends BaseController
 
     public function actionIndex()
     {
-        if(Yii::$app->getRequest()->getCookies()->has('isCoverPage')){
+        if(Yii::$app->getRequest()->getCookies()->has('isCoverPageVisited')){
             return $this->render($this->getIsMobile() ? 'mobile/index' : 'index');
         }else{
             return $this->render($this->getIsMobile() ? 'mobile/cover_page' : 'cover_page');
         }
+    }
+
+    public function actionSetCoverCookie(){
+        $zip_code = $_GET['post_code'];
+        $lat = $_GET['places'][0]['latitude'];
+        $lng = $_GET['places'][0]['longitude'];
+        $state = $_GET['places'][0]['state'];
+        $state_abbr = $_GET['places'][0]['state abbreviation'];
+
+        $c = Yii::$app->response->cookies;
+        $cookie = new Cookie(['name'=>'nw_zipCode', 'value'=> $zip_code, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_lat', 'value'=> $lat, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_lng', 'value'=> $lng, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_state', 'value'=> $state, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_stateAbbr', 'value'=> $state_abbr, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'isAccepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+
+        return true;
     }
 
     public function actionGetUserProfile()
