@@ -4,6 +4,7 @@ namespace frontend\modules\netwrk\models;
 
 use Yii;
 use yii\base\Behavior;
+use yii\db\Query;
 use yii\db\ActiveRecord;
 /**
  * This is the model class for table "topic".
@@ -140,7 +141,7 @@ class Topic extends \yii\db\ActiveRecord
     }
 
     //Get top topic in all netwrk
-    public function GetTopTopicGlobal($limit, $city){
+    public function GetTopTopicGlobal($limit, $city, $state = null){
         if ($city != null) {
             $model = Topic::find()
                     ->where('city_id ='.$city)
@@ -148,10 +149,20 @@ class Topic extends \yii\db\ActiveRecord
                     ->limit($limit)
                     ->all();
         } else {
-            $model = Topic::find()
+            // If state is not null then get top topic within that state
+            if($state != null) {
+                $model = Topic::find()
+                    ->joinWith('city')
+                    ->where(['city.state' => $state])
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
+            } else {
+                $model = Topic::find()
+                    ->orderBy(['topic.post_count'=> SORT_DESC])
+                    ->limit($limit)
+                    ->all();
+            }
         }
 
         $topics = [];

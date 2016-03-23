@@ -19,6 +19,11 @@ $isAccepted = 0;
 if (isset($cookies["isCoverPageVisited"])) {
   $isCoverPageVisited = $cookies->getValue('isCoverPageVisited');//$cookies['isCoverPage']->value;
   $isAccepted = $cookies->getValue('isAccepted');
+  $zipCode = $cookies->getValue('nw_zipCode');
+  $lat = $cookies->getValue('nw_lat');
+  $lng = $cookies->getValue('nw_lng');
+  $state = $cookies->getValue('nw_state');
+  $stateAbbr = $cookies->getValue('nw_stateAbbr');
 }/* else {
   $c = Yii::$app->response->cookies;
   $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
@@ -47,6 +52,11 @@ if (isset($cookies["isCoverPageVisited"])) {
     var isMobile = true;
     var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
     var isAccepted = <?php echo $isAccepted; ?>;
+    var zipCode = <?php echo $zipCode; ?>;
+    var lat = <?php echo $lat; ?>;
+    var lng = <?php echo $lng; ?>;
+    var state = <?php echo $state; ?>;
+    var stateAbbr = <?php echo $stateAbbr; ?>;
   </script>
 </head>
 <body ontouchstart="">
