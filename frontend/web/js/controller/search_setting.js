@@ -15,13 +15,17 @@ var Search_Setting={
         distance: false,
         total: false
     },
-    modal:$('#modal_search_setting'),
+    modal:'',
     areaSlider:$('#search_slider_area'),
     ageSlider:$('#search_slider_age'),
     initialize: function(){
         if(isMobile) {
-
+            Default.SetAvatarUserDropdown();
+            Search_Setting.modal = $('.profile-search-settings');
+            Search_Setting.getSearchSetting();
         } else {
+            Search_Setting.modal = $('#modal_search_setting');
+
             Search_Setting.resetPage();
             Search_Setting.onClickBack();
             Search_Setting.getSearchSetting();
