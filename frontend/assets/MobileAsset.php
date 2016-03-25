@@ -40,7 +40,9 @@ class MobileAsset extends AssetBundle
       'css/mobile/search.css',
       'css/mobile/dropdown_avatar.css',
       'css/mobile/landing_page.css',
-      'css/mobile/cover_page.css'
+      'css/mobile/cover_page.css',
+      'css/mobile/profile.css',
+      'css/mobile/search_settings.css'
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -58,6 +60,8 @@ class MobileAsset extends AssetBundle
       'js/controller/create_topic.js',
       'js/controller/meet.js',
       'js/controller/profile.js',
+      'js/controller/user_profile.js',
+      'js/controller/search_setting.js',
       'js/controller/template.js',
       'js/controller/meet_setting.js',
       'js/controller/create_post.js',

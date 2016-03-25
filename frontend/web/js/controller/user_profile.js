@@ -53,18 +53,22 @@ var User_Profile = {
     profileInfo: $('.profile-info'),
     editProfileModal: $('#modal_change_profile_picture'),
     initialize: function(){
-        User_Profile.resetProfile();
-        User_Profile.getProfileInfo();
+        if(isMobile){
+            Default.SetAvatarUserDropdown();
+        } else {
+            User_Profile.resetProfile();
+            User_Profile.getProfileInfo();
 
-        //Show favorite communites of currentUser on profile modal
-        User_Profile.ShowFavoriteCommunities();
+            //Show favorite communites of currentUser on profile modal
+            User_Profile.ShowFavoriteCommunities();
 
-        User_Profile.OnClickTabBtn();
+            User_Profile.OnClickTabBtn();
 
-        //Init the recent activities button group and get data according to tab.
-        User_Profile.getDataOnTab();
+            //Init the recent activities button group and get data according to tab.
+            User_Profile.getDataOnTab();
 
-        User_Profile.ShowModalProfile();
+            User_Profile.ShowModalProfile();
+        }
 
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
