@@ -47,10 +47,11 @@ if (isset($cookies["isCoverPageVisited"])) {
   <?= Html::csrfMetaTags() ?>
   <title><?= Html::encode($this->title) ?></title>
   <?php $this->head() ?>
-  <?php if (isset($cookies["isCoverPageVisited"])) : ?>
-    <script type="text/javascript">
-      var baseUrl = '<?php echo Url::base(true); ?>';
-      var isMobile = true;
+
+  <script type="text/javascript">
+    var baseUrl = '<?php echo Url::base(true); ?>';
+    var isMobile = true;
+      <?php if (isset($cookies["isCoverPageVisited"])) : ?>
       var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
       var isAccepted = <?php echo $isAccepted; ?>;
       var zipCode = <?php echo $zipCode; ?>;
@@ -58,8 +59,8 @@ if (isset($cookies["isCoverPageVisited"])) {
       var lng = <?php echo $lng; ?>;
       var state = '<?php echo $state; ?>';
       var stateAbbr = '<?php echo $stateAbbr; ?>';
-    </script>
-  <?php endif; ?>
+    <?php endif; ?>
+  </script>
 </head>
 <body ontouchstart="">
 
