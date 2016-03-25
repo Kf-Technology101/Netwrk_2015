@@ -40,7 +40,8 @@ class MobileAsset extends AssetBundle
       'css/mobile/search.css',
       'css/mobile/dropdown_avatar.css',
       'css/mobile/landing_page.css',
-      'css/mobile/cover_page.css'
+      'css/mobile/cover_page.css',
+      'css/mobile/profile.css'
     ];
     public $js = [
       'js/lib/underscore.js',
