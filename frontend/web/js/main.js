@@ -174,6 +174,7 @@ function _main(){
 
 function _addListenEventPage(){
 	var page = this.show_page();
+    console.log(page);
 	var Page = page !== 'Chat-inbox' ? eval(page) : page;
 	switch(page){
 	case 'Topic':
@@ -197,6 +198,9 @@ function _addListenEventPage(){
     break;
   case 'Chat-inbox':
     ChatInbox.initialize();
+    break;
+  case 'Profile':
+    User_Profile.initialize();
     break;
 	default:
 		Default.initialize();
@@ -239,6 +243,7 @@ function homePage(){
     var target = $('.option_logo_netwrk a');
     var isLanding = $('.wrap-mobile').data('action');
     if (isLanding == 'landing-page') {
+        console.log('if');
       target.on('click', function(e){
           e.preventDefault();
           sessionStorage.show_landing = 1;
@@ -246,6 +251,7 @@ function homePage(){
           window.location.href = baseUrl + '/netwrk/default/home';
       });
     } else {
+        console.log('else');
       target.on('click', function(e){
           e.preventDefault();
           sessionStorage.show_landing = 0;

@@ -71,8 +71,13 @@ var Common = {
 
         target.unbind();
         target.on('click',function(){
-            $('.modal').modal('hide');
-            User_Profile.initialize();
+            if (isMobile) {
+                window.location.href = baseUrl + "/netwrk/profile";
+            } else {
+                $('.modal').modal('hide');
+                User_Profile.initialize();
+            }
+
         });
     },
     CustomScrollBar: function(taget,options){
