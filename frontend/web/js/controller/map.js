@@ -270,17 +270,16 @@
 		    label.bindTo('position', marker, 'position');
 
 	      	if(!isMobile){
-
-		        var infowindow = new google.maps.InfoWindow({
-					content: '',
-					city_id: e.id,
-					maxWidth: 310,
-		       		pixelOffset: new google.maps.Size(0,0),
-		        });
-
 	            var marker_template = _.template($( "#maker_popup" ).html());
 	    		var content = marker_template({marker: e});
-	          	infowindow.content = content;
+
+				var infowindow = new google.maps.InfoWindow({
+					content: content,
+					city_id: e.id,
+					maxWidth: 310,
+					pixelOffset: new google.maps.Size(0,0),
+				});
+
 	            Map.infowindow.push(infowindow);
 
 		        google.maps.event.addListener(marker, 'mouseover', function() {
@@ -440,12 +439,6 @@
 				place_name: name_of_place,
 	    	});
 
-	      	var infowindow = new google.maps.InfoWindow({
-		        content: '',
-		        city_id: cid,
-		        maxWidth: 350
-	      	});
-
 	      	google.maps.event.addListener(marker, 'click', (function(marker) {
 				return function(){
 					if(!isMobile){
@@ -463,7 +456,13 @@
 	                '</div>' +
 	                '<div class="iw-bottom-gradient"></div>' +
 	              '</div>';
-	      	infowindow.content = content;
+
+			var infowindow = new google.maps.InfoWindow({
+				content: content,
+				city_id: cid,
+				maxWidth: 350
+			});
+
 	        Map.infowindow.push(infowindow);
 
 		    google.maps.event.addListener(marker, 'mouseover', function() {
@@ -658,11 +657,9 @@
 							Map.center_marker.getPosition().lng());
 					});
 
-					var infowindow = new google.maps.InfoWindow({
-						content: ''
-					});
 
-					infowindow.content = '<div id="iw-container" class="cgm-container" >' +
+
+					var content = '<div id="iw-container" class="cgm-container" >' +
 						'<div class="iw-content">' +
 						'<div class="iw-subTitle" id="cm-coords"></div>' +
 						'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +
@@ -670,6 +667,10 @@
 						'</div>' +
 						'<div class="iw-bottom-gradient"></div>' +
 						'</div>';
+
+					var infowindow = new google.maps.InfoWindow({
+						content: content
+					});
 
 					Map.infowindow.push(infowindow);
 
@@ -793,11 +794,6 @@
 						icon: img,
 						group_id: parseInt(e.id)
 					});
-					var infowindow = new google.maps.InfoWindow({
-						content: '',
-						group_id: e.id,
-						maxWidth: 350
-					});
 
 					console.log("marker", marker);
 					google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -810,7 +806,7 @@
 					})(marker, i));
 
 					if (!isMobile && 1==0){
-						infowindow.content = '<div id="iw-container" >' +
+						var content = '<div id="iw-container" >' +
 							'<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ e.id +'" onclick="Map.eventOnClickZipcode('+e.id +')"><span class="zipcode">'+ e.zip_code + '</span></a></div>' +
 							'<div class="iw-content">' +
 							'<div class="iw-subTitle"><span class="post-title">#'+e.post.name_post+'</span></div>' +
@@ -818,6 +814,13 @@
 							'</div>' +
 							'<div class="iw-bottom-gradient"></div>' +
 							'</div>';
+
+						var infowindow = new google.maps.InfoWindow({
+							content: content,
+							group_id: e.id,
+							maxWidth: 350
+						});
+
 						Map.infowindow.push(infowindow);
 
 						google.maps.event.addListener(marker, 'mouseover', function() {
