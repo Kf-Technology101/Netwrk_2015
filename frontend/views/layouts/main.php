@@ -46,7 +46,7 @@ if (isset($cookies["isCoverPageVisited"])) {
     <?php if (isset($cookies["isCoverPageVisited"])) : ?>
         <script type="text/javascript">
             var baseUrl = '<?php echo Url::base(true); ?>';
-            var isMobile = true;
+            var isMobile = false;
             var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
             var isAccepted = <?php echo $isAccepted; ?>;
             var zipCode = <?php echo $zipCode; ?>;
