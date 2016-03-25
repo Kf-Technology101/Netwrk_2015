@@ -269,6 +269,7 @@ var User_Profile = {
         target.unbind();
         target.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/search-setting";
             } else {
                 $('.modal').modal('hide');
                 Search_Setting.initialize();
