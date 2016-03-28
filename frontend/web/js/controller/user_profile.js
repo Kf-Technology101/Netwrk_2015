@@ -53,6 +53,9 @@ var User_Profile = {
     profileInfo: $('.profile-info'),
     editProfileModal: $('#modal_change_profile_picture'),
     initialize: function(){
+        if(isMobile){
+            Default.SetAvatarUserDropdown();
+        }
         User_Profile.resetProfile();
         User_Profile.getProfileInfo();
 
@@ -293,6 +296,8 @@ var User_Profile = {
         target.click(function(e){
             var city_id = $(e.currentTarget).attr('data-city-id');
             if(isMobile){
+                var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
+                window.location.href= url;
             } else {
                 $('.modal').modal('hide');
                 Topic.initialize(city_id);
@@ -422,7 +427,7 @@ var User_Profile = {
     },
     //Show Topics information of users
     ShowPosts: function(){
-        var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
+        var template = $('#recent_activity_container');
         var templateData = $('#profile_post_info');
         var params = {'filter': 'recent'};
 
@@ -504,7 +509,7 @@ var User_Profile = {
         }
     },
     ShowFavoriteCommunities: function(){
-        var parent = $('.fav-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        var parent = $('.fav-communities_content-wrapper');
         var content = $('#profile_fav-communities_template');
         var params = {'filter': 'recent'};
 

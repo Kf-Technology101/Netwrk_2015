@@ -59,6 +59,7 @@ class MobileAsset extends AssetBundle
       'js/controller/create_topic.js',
       'js/controller/meet.js',
       'js/controller/profile.js',
+      'js/controller/user_profile.js',
       'js/controller/template.js',
       'js/controller/meet_setting.js',
       'js/controller/create_post.js',
