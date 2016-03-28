@@ -56,20 +56,20 @@ var User_Profile = {
         if(isMobile){
             Default.SetAvatarUserDropdown();
         } else {
-            User_Profile.resetProfile();
-            User_Profile.getProfileInfo();
-
-            //Show favorite communites of currentUser on profile modal
-            User_Profile.ShowFavoriteCommunities();
-
-            User_Profile.OnClickTabBtn();
-
-            //Init the recent activities button group and get data according to tab.
-            User_Profile.getDataOnTab();
-
             User_Profile.ShowModalProfile();
         }
+        User_Profile.resetProfile();
+        User_Profile.getProfileInfo();
 
+        //Show favorite communites of currentUser on profile modal
+        User_Profile.ShowFavoriteCommunities();
+
+        User_Profile.OnClickTabBtn();
+
+        //Init the recent activities button group and get data according to tab.
+        User_Profile.getDataOnTab();
+
+        //events
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
         User_Profile._eventClickProfileInfo();
@@ -299,6 +299,8 @@ var User_Profile = {
         target.click(function(e){
             var city_id = $(e.currentTarget).attr('data-city-id');
             if(isMobile){
+                var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
+                window.location.href= url;
             } else {
                 $('.modal').modal('hide');
                 Topic.initialize(city_id);
@@ -428,7 +430,11 @@ var User_Profile = {
     },
     //Show Topics information of users
     ShowPosts: function(){
-        var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
+        if (isMobile) {
+            var template = $('#recent_activity_container', '.Profile-view');
+        } else {
+            var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
+        }
         var templateData = $('#profile_post_info');
         var params = {'filter': 'recent'};
 
@@ -510,7 +516,12 @@ var User_Profile = {
         }
     },
     ShowFavoriteCommunities: function(){
-        var parent = $('.fav-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        if (isMobile) {
+            var parent = $('.fav-communities_content-wrapper', '.Profile-view');
+        } else {
+            var parent = $('.fav-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        }
+
         var content = $('#profile_fav-communities_template');
         var params = {'filter': 'recent'};
 
