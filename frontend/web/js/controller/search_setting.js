@@ -22,15 +22,14 @@ var Search_Setting={
         if(isMobile) {
             Default.SetAvatarUserDropdown();
             Search_Setting.modal = $('.profile-search-settings');
-            Search_Setting.getSearchSetting();
         } else {
             Search_Setting.modal = $('#modal_search_setting');
 
             Search_Setting.resetPage();
-            Search_Setting.onClickBack();
-            Search_Setting.getSearchSetting();
             Search_Setting.ShowModalSearchSetting();
         }
+        Search_Setting.onClickBack();
+        Search_Setting.getSearchSetting();
     },
 
     onClickBack: function(){
@@ -39,6 +38,7 @@ var Search_Setting={
         parent.unbind();
         parent.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile";
             } else {
                 $('.modal').modal('hide');
                 User_Profile.initialize();

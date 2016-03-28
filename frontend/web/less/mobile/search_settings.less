@@ -52,6 +52,55 @@
   .page-body {
     padding: 0;
     background-color: #fff;
+
+    .btn-control{
+      background: #f2f2f2;
+      padding: 15px;
+      font-family: "ProximaNovaRegular";
+      font-size: 16px;
+      .reset,
+      .cancel{
+        width: 110px;
+        float: left;
+        background: #5888ac;
+        border-radius: 4px;
+        border: 1px solid #fff;
+        color: #fff;
+        cursor: pointer;
+        height: 34px;
+        box-shadow: 0 0 1px 1px #e0e0e0;
+        p{
+          margin: 0;
+          text-align: center;
+          padding: 5px 5px;
+        }
+        &.disable{
+          opacity: 0.6;
+          cursor: default;
+        }
+      }
+      .update,
+      .save{
+        width: 110px;
+        float: right;
+        border: 1px solid #fff;
+        background: #5888ac;
+        color: #fff;
+        text-align: center;
+        border-radius: 4px;
+        padding: 5px 5px;
+        cursor: pointer;
+        height: 34px;
+        box-shadow: 0 0 1px 1px #e0e0e0;
+        .fa{
+          font-size: 18px;
+        }
+        &.disable{
+          opacity: 0.6;
+          cursor: default;
+        }
+      }
+    }
   }
 }
 
@@ -203,29 +252,29 @@
         margin: 0;
       }
     }
-    .search_age{
+    .search_age {
       width: 100%;
       background: #fff;
       margin: 0 auto;
       // padding-bottom: 20px;
       padding: 15px;
-      p{
+      p {
         margin: 0;
         // padding: 10px;
         font-weight: 500;
       }
-      .head{
+      .head {
         width: 100%;
         height: 40px;
         display: block;
-        margin: 0 auto  ;
-        .title{
+        margin: 0 auto;
+        .title {
           float: left;
           font-family: "ProximaNovaSemibold";
           font-size: 16px;
           color: #1d1b1b;
         }
-        .value{
+        .value {
           float: right;
         }
       }
@@ -237,7 +286,7 @@
         margin-bottom: 5px;
       }
       #search_slider_age {
-        .ui-state-hover,.ui-state-focus{
+        .ui-state-hover, .ui-state-focus {
           background: #fff;
         }
         .ui-slider-handle {
@@ -279,60 +328,14 @@
           font-weight: bold;
         }
       }
-      #search_slider_age .ui-slider-pip.ui-slider-pip-last,#search_slider_age.ui-slider-pip.ui-slider-pip-first {
+      #search_slider_age .ui-slider-pip.ui-slider-pip-last, #search_slider_age.ui-slider-pip.ui-slider-pip-first {
         top: -7px;
       }
-      #search_slider_age .ui-slider-pip.ui-slider-pip-last .ui-slider-line,#search_slider_age .ui-slider-pip.ui-slider-pip-first .ui-slider-line {
+      #search_slider_age .ui-slider-pip.ui-slider-pip-last .ui-slider-line, #search_slider_age .ui-slider-pip.ui-slider-pip-first .ui-slider-line {
         display: none;
       }
-      #search_slider_age .ui-slider-pip.ui-slider-pip-last .ui-slider-label,#search_slider_age .ui-slider-pip.ui-slider-pip-first .ui-slider-label {
+      #search_slider_age .ui-slider-pip.ui-slider-pip-last .ui-slider-label, #search_slider_age .ui-slider-pip.ui-slider-pip-first .ui-slider-label {
         margin: 0;
-      }
-    }
-    .btn-control{
-      background: #f2f2f2;
-      padding: 15px;
-      font-family: "ProximaNovaRegular";
-      font-size: 16px;
-      .cancel{
-        width: 110px;
-        float: left;
-        background: #5888ac;
-        border-radius: 4px;
-        border: 1px solid #fff;
-        color: #fff;
-        cursor: pointer;
-        height: 34px;
-        box-shadow: 0 0 1px 1px #e0e0e0;
-        p{
-          margin: 0;
-          text-align: center;
-          padding: 5px 5px;
-        }
-        &.disable{
-          opacity: 0.6;
-          cursor: default;
-        }
-      }
-      .save{
-        width: 110px;
-        float: right;
-        border: 1px solid #fff;
-        background: #5888ac;
-        color: #fff;
-        text-align: center;
-        border-radius: 4px;
-        padding: 5px 5px;
-        cursor: pointer;
-        height: 34px;
-        box-shadow: 0 0 1px 1px #e0e0e0;
-        .fa{
-          font-size: 18px;
-        }
-        &.disable{
-          opacity: 0.6;
-          cursor: default;
-        }
       }
     }
   }

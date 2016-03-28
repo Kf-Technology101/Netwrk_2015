@@ -255,6 +255,7 @@ var User_Profile = {
         target.unbind();
         target.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/password-setting";
             } else {
                 $('.modal').modal('hide');
                 Password_Setting.initialize();
