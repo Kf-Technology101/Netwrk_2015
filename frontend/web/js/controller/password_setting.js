@@ -1,19 +1,22 @@
 var Password_Setting = {
     data:'',
-    modal:$('#modal_password_setting'),
+    modal:'',
     form_id:'#password_setting_form',
     validate:true,
     data_validate:'',
     initialize: function(){
         if(isMobile) {
-
+            Default.SetAvatarUserDropdown();
+            Password_Setting.modal = $('.profile-password-settings');
         } else {
+            Password_Setting.modal = $('#modal_password_setting');
             Password_Setting.resetPage();
-            Password_Setting.onClickBack();
-            Password_Setting.OnClickUpdate();
-            Password_Setting.OnClickReset();
             Password_Setting.ShowModalPasswordSetting();
         }
+
+        Password_Setting.onClickBack();
+        Password_Setting.OnClickUpdate();
+        Password_Setting.OnClickReset();
     },
 
     onClickBack: function(){
@@ -22,6 +25,7 @@ var Password_Setting = {
         parent.unbind();
         parent.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile";
             } else {
                 $('.modal').modal('hide');
                 User_Profile.initialize();
