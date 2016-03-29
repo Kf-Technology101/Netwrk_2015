@@ -4,6 +4,7 @@ var CoverPage = {
 	err: '',
 	zcode: '',
 	initialize: function(){
+		Common.hideLoader();
 		CoverPage.getObject();
 		CoverPage.hiddenMenuTop();
 		CoverPage.onClickKey();
