@@ -544,6 +544,9 @@ class DefaultController extends BaseController
         $lng = $_POST['lng'];
         $office = $_POST['office'];
         $office_type = $_POST['office_type'];
+        $state = $_POST['state'];
+        $stateAbbr = $_POST['stateAbbr'];
+        $county = $_POST['county'];
 
         $netwrk = new City;
         $netwrk->name = $city_name;
@@ -552,6 +555,10 @@ class DefaultController extends BaseController
         $netwrk->zip_code = $zipcode;
         $netwrk->office = $office;
         $netwrk->office_type = $office_type;
+        $netwrk->state = $state;
+        $netwrk->state_abbreviation = $stateAbbr;
+        $netwrk->county = $county;
+
         $netwrk->save();
         return json_encode($netwrk->id);
     }

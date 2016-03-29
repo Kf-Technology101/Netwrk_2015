@@ -51,7 +51,7 @@
 			}
 		],
 	  	initialize: function() {
-	  		
+
 	  		if(isMobile){
 		  		if(sessionStorage.map_zoom){
 		  			Map.zoom = parseInt(sessionStorage.map_zoom);
@@ -97,8 +97,8 @@
 					$.each(data_marker,function(i,e){
 				      	Map.initializeMarker(e, null, 7);
 			    	});
+					Common.hideLoader();
 				});
-
 				Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
@@ -199,7 +199,7 @@
 	    	// Please don't delete code below
 			//
 			// if (map.getZoom() == 12) {
-			// 	 ap.addListener('idle', function(){
+			// 	 map.addListener('idle', function(){
 			//         // radarSearch --------------------------------------------
 			// 		var contentSearch = {
 			// 			bounds: map.getBounds(),
@@ -207,7 +207,7 @@
 			// 			types: ['school','university']
 			// 		};
 			// 		Map.placeSearch(contentSearch, 'uni', 50);
-
+            //
 			//         var contentSearch = {
 			//        		bounds: map.getBounds(),
 			//         	keyword: 'Town Hall', // City Government Hall/Center/Town hall
@@ -393,23 +393,37 @@
 	  	},
 	  	// Begin code for get university and government place
 	  	// Please don't delete it
-	  	checkPlaceZipcode: function(zipcode, place_name, place, service, map, type){
+	  	checkPlaceZipcode: function(zipcode, place_name, place, service, map, type, map_data){
 	    	var params = {'zipcode':zipcode, 'place_name':place_name, 'type': type};
 	    	Ajax.place_check_zipcode_exist(params).then(function(data){
 		        var json = $.parseJSON(data);
 		        if (json.status == 0){
-		        	Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service);
+					var len = map_data.length;
+
+					for(var i=0; i<len; i++) {
+						if(map_data[i].types[0] == 'administrative_area_level_1') {
+							var state = map_data[i].long_name;
+							var stateAbbr = map_data[i].short_name;
+						}
+
+						if(map_data[i].types[0] == 'administrative_area_level_2') {
+							var str = map_data[i].long_name;
+							var county = str.replace(' County', '');
+						}
+					}
+
+		        	Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service, state, stateAbbr, county);
 		        }else{
 		        }
 	      	});
 	  	},
 
-	  	placeSave: function(zipcode, netwrk_name, lat, lng, office, type, place, map, service){
+	  	placeSave: function(zipcode, netwrk_name, lat, lng, office, type, place, map, service, state, stateAbbr, county){
 		    var params;
 		    if(type == 'gov'){
-		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'government'};
+		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'government', 'state' : state, 'stateAbbr' : stateAbbr, 'county' : county};
 		    } else {
-		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'university'};
+		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'university', 'state' : state, 'stateAbbr' : stateAbbr, 'county' : county};
 		    }
 	    	Ajax.new_place(params).then(function(data){
 				var js = $.parseJSON(data);
@@ -512,12 +526,13 @@
 	  	getZipcodeAddress: function(service, place, map, type, lat, lng, name_of_place){
 	        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data){
 	          var len = data.results[0].address_components.length;
+			  var map_data = data.results[0].address_components;
 	          for(var i=0; i<len; i++) {
 	          	if(data.results[0].address_components[i].types[0] == 'postal_code') {
 	            	var zip = data.results[0].address_components[i].long_name;
 	            	service.getDetails(place, function(_place, status) {
 						if (status === google.maps.places.PlacesServiceStatus.OK) {
-							Map.checkPlaceZipcode(zip, _place.name, place, service, map, type);
+							Map.checkPlaceZipcode(zip, _place.name, place, service, map, type, map_data);
 						}
 					});
 	            }

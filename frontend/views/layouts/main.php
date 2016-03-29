@@ -60,6 +60,19 @@ if (isset($cookies["isCoverPageVisited"])) {
 </head>
 <body>
     <?php $this->beginBody() ?>
+    <!-- Loader -->
+    <div class="loader-wrap hide">
+        <div class="loader">
+            <div class="nodes">
+                <div class="circle circle-top circle_active"></div>
+                <div class="circle circle-right "></div>
+                <div class="circle circle-bottom "></div>
+                <div class="circle circle-left "></div>
+            </div>
+            <div class="square"></div>
+        </div>
+    </div>
+    <!-- /Loader -->
     <div class="wrap" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
         <?php
             NavBar::begin([
