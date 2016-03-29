@@ -66,6 +66,7 @@ var ProfileInfo = {
         parent.unbind();
         parent.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile-edit";
             } else {
                 $('.modal').modal('hide');
                 ProfileEdit.initialize();

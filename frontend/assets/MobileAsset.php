@@ -44,6 +44,7 @@ class MobileAsset extends AssetBundle
       'css/mobile/password_setting.css',
       'css/mobile/search_settings.css',
       'css/mobile/profile_info.css',
+      'css/mobile/profile_edit.css',
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -65,6 +66,7 @@ class MobileAsset extends AssetBundle
       'js/controller/password_setting.js',
       'js/controller/search_setting.js',
       'js/controller/profile_info.js',
+      'js/controller/profile_edit.js',
       'js/controller/template.js',
       'js/controller/meet_setting.js',
       'js/controller/create_post.js',

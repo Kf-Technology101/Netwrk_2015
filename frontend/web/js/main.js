@@ -174,7 +174,7 @@ function _main(){
 
 function _addListenEventPage(){
     var page = this.show_page();
-    var pageArray = ['Chat-inbox', 'Password-setting', 'Search-setting', 'Profile-info'];
+    var pageArray = ['Chat-inbox', 'Password-setting', 'Search-setting', 'Profile-info', 'Profile-edit'];
 
     if(jQuery.inArray(page, pageArray) !== -1)
         var Page = page;
@@ -209,6 +209,9 @@ function _addListenEventPage(){
             break;
         case 'Profile-info':
             ProfileInfo.initialize();
+            break;
+        case 'Profile-edit':
+            ProfileEdit.initialize();
             break;
         case 'Password-setting':
             Password_Setting.initialize();
