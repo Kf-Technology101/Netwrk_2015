@@ -1,0 +1,186 @@
+#Profile-edit {
+  #myFooter {
+    display: none;
+  }
+  .navigation-wrapper {
+    bottom: 0;
+  }
+}
+
+.profile-edit-page{
+  .profile-edit{
+    font-family: "ProximaNovaRegular";
+    font-size: 14px;
+    color: #1d1b1b;
+    background-color: #fff;
+    padding: 0;
+    .form-profile-edit {
+      margin-bottom: 15px;
+      .form-group-wrapper {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #f3f3f3;
+        .form-group {
+          width: 100%;
+          padding: 7px 10px 10px;
+          float: left;
+          margin-bottom: 0;
+          label {
+            font-family: "ProximaNovaSemibold";
+            font-size: 14px;
+            line-height: 15px;
+            color: #1d1b1b;
+          }
+          input {
+            font-size: 14px;
+            height: 30px;
+            border-radius: 2px;
+            border-color: #bcbcbc;
+            &:focus{
+              border-color: #5da5d8;
+            }
+          }
+
+          .radio_gender{
+            margin: auto;
+            label{
+              font-size: 14px;
+              font-weight: 500;
+              cursor: pointer;
+            }
+            label[for=profileEditMale]{
+              width: 70px;
+            }
+            label[for=profileEditFemale]{
+              width: 90px;
+            }
+            input[type=radio]{
+              display: none;
+            }
+            input[type=radio] + label{
+              // width: 50px;
+              height: 20px;
+              display: inline-block;
+              background: url('../../img/btn/check-mark-sm-blue.png') no-repeat;
+              // background-size: 13px 14px;
+              // background-attachment: absolute;
+              background-position: 1px;
+              text-align: center;
+            }
+            input[type=radio]:checked + label{
+              height: 20px;
+              display: inline-block;
+              background: url('../../img/btn/checked-mark-sm-blue.png') no-repeat;
+              // background-attachment: absolute;
+              background-position: 1px;
+              // background-size: 13px 14px;
+              text-align: center;
+              font-size: 14px;
+              color:  #1d1b1b;
+            }
+          }
+
+          .dropdown{
+            font-size: 14px;
+            width: 100%;
+            padding: 0;
+            cursor: pointer;
+            .marital-status-dropdown {
+              border-bottom-right-radius: 0;
+              border-top-right-radius: 0;
+              padding: 4px 10px !important;
+              color:  #1d1b1b;
+            }
+            .dropdown-toggle{
+              width: 297px;
+              height: 30px;
+              background: #fff;
+              padding: 4px 10px;
+              border: 1px solid #bcbcbc;
+              border-top-left-radius: 2px;
+              border-bottom-left-radius: 2px;
+              &.disabled{
+                background-color: #eee;
+                opacity: 0.6;
+                cursor: not-allowed;
+              }
+            }
+            .input-group-addon{
+              border: 1px solid #bcbcbc;
+              border-top-right-radius:  2px;
+              border-bottom-right-radius: 2px;
+              border-left: none;
+              color: #000000;
+              &.disabled{
+                background-color: #eee;
+                opacity: 0.6;
+                cursor: not-allowed;
+              }
+            }
+            .dropdown-menu{
+              padding: 0;
+              top: 28px;
+              left: 0px;
+              width: 297px;
+              li{
+                cursor: pointer;
+                padding: 5px 10px;
+                border-bottom: 1px solid #ddd;
+                &:last-child{
+                  border-bottom: 0;
+                }
+              }
+            }
+            select{
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              text-indent: 0.01px;
+            }
+            .form-control{
+              padding: 0;
+              font-size: 14px;
+              width: 100%;
+              height: 30px;
+            }
+            &.visible{
+              visibility: hidden;
+            }
+          }
+        }
+      }
+
+      .bio-wrapper {
+        .form-group {
+          width: 100%;
+          padding: 15px;
+          margin-bottom: 0;
+          label {
+            font-family: "ProximaNovaSemibold";
+            font-size: 16px;
+            color: #1d1b1b;
+          }
+          textarea {
+            font-size: 14px;
+            height:110px;
+            width: 100%;
+            border: 1px solid #bcbcbc;
+            outline: none;
+            background-color: #fff;
+            border-color: #bcbcbc;
+            border-radius: 2px;
+            padding:5px 5px 5px 10px;
+            resize: none;
+            &:focus {
+              border-color: #5da5d8;
+            }
+          }
+        }
+      }
+    }
+
+    .btn-control{
+      padding: 15px 15px 30px;
+    }
+  }
+}

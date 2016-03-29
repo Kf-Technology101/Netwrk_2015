@@ -1,14 +1,14 @@
 <?php use yii\helpers\Url; ?>
 
-<section class="Profile Profile-view">
-    <section class="header">
-        <div class="back_page">
+<section class="Profile profile-page Profile-view">
+    <article class="header">
+        <div class="back-page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
-        <div class="title_page">
-            <span class="title">Profile</span>
+        <div class="title-page">
+            <span class="title">My Info</span>
         </div>
-        <div class="setting">
+        <div class="setting user-details-wrapper pull-right">
             <span class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gears"></i></span>
             <ul class="dropdown-menu dropdown-menu-right">
                 <li class=''><a href="javascript:" id="password_setting"><i class="fa fa-key"></i> Password setting</a></li>
@@ -17,7 +17,8 @@
                 <li class=''><a href="<?= Url::base(true); ?>/netwrk/user/logout"><i class="fa fa-power-off"></i> Sign Out</a></li>
             </ul>
         </div>
-    </section>
+    </article>
+
     <section class="profile-container">
         <section class="profile-info clearfix">
             <div class="cover-photo">

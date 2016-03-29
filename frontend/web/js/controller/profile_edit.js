@@ -40,9 +40,17 @@ var ProfileEdit = {
         total:false
     },
     state: 'Indiana',
-    modal:$('#modal_profile_edit'),
+    modal: '',
     profileEdit: $('.form-profile-edit'),
     initialize: function(){
+        if(isMobile) {
+            Default.SetAvatarUserDropdown();
+            ProfileEdit.modal = $('.profile-edit-page');
+        } else {
+            ProfileEdit.modal = $('#modal_profile_edit');
+            ProfileEdit.ShowModalProfileEdit();
+        }
+
         ProfileEdit.resetProfileEdit();
         ProfileEdit.onClickBack();
         ProfileEdit.getProfileEdit();
@@ -52,7 +60,6 @@ var ProfileEdit = {
         ProfileEdit.onChangeInputs();
         ProfileEdit.onClickSave();
         ProfileEdit.setDefaultBtn();
-        ProfileEdit.ShowModalProfileEdit();
     },
 
     OnChangeMaritalStatus: function(){
@@ -85,6 +92,7 @@ var ProfileEdit = {
         parent.unbind();
         parent.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile-info";
             } else {
                 $('.modal').modal('hide');
                 ProfileInfo.initialize();

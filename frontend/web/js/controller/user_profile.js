@@ -58,10 +58,11 @@ var User_Profile = {
         } else {
             User_Profile.ShowModalProfile();
         }
+
         User_Profile.resetProfile();
         User_Profile.getProfileInfo();
 
-        //Show favorite communites of currentUser on profile modal
+        //Show favorite communities of currentUser on profile modal
         User_Profile.ShowFavoriteCommunities();
 
         User_Profile.OnClickTabBtn();
@@ -285,6 +286,7 @@ var User_Profile = {
         target.unbind();
         target.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile-info";
             } else {
                 $('.modal').modal('hide');
                 ProfileInfo.initialize();
