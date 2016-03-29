@@ -62,7 +62,7 @@ if (isset($cookies["isCoverPageVisited"])) {
     <?php $this->beginBody() ?>
     <!-- Loader -->
     <div class="loader-wrap hide">
-        <div class="loader">
+        <div class="netwrk-loader">
             <div class="nodes">
                 <div class="circle circle-top circle_active"></div>
                 <div class="circle circle-right "></div>
