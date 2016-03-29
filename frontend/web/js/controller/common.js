@@ -9,6 +9,9 @@ var Common = {
         'btnNavMeetMobile' : '#btn_nav_meet_mobile',
         'loginTrigger' : '.login-trigger'
     },
+    params: {
+        'loaderIntervalId': ''
+    },
     initialize: function() {
         Common.eventClickExplore();
         //init the nav chat inbox for mobile
@@ -87,5 +90,24 @@ var Common = {
     },
     HideTooTip: function() {
         $('.tooltip').hide();
+    },
+    initLoader: function() {
+        $('.loader-wrap').removeClass('hide');
+        $('.nodes').each(function(){
+            (function($set){
+                //set loader animation and get intevalId
+                Common.params.loaderIntervalId = setInterval(function(){
+                    var $cur = $set.find('.circle_active').removeClass('circle_active');
+                    var $next = $cur.next().length?$cur.next():$set.children().eq(0);
+                    $next.addClass('circle_active');
+                },300);
+            })($(this));
+
+        });
+    },
+    hideLoader: function() {
+        //clear the loader setIntervalId to stop loader animation.
+        $('.loader-wrap').addClass('hide');
+        clearInterval(Common.params.loaderIntervalId);
     }
 };

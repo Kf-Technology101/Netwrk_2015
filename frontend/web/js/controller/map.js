@@ -51,7 +51,7 @@
 			}
 		],
 	  	initialize: function() {
-	  		
+
 	  		if(isMobile){
 		  		if(sessionStorage.map_zoom){
 		  			Map.zoom = parseInt(sessionStorage.map_zoom);
@@ -103,6 +103,7 @@
 					$.each(data_marker,function(i,e){
 				      	Map.initializeMarker(e, null, 12);
 			    	});
+					Common.hideLoader();
 				});
 				Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);

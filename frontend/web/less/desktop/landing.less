@@ -302,6 +302,127 @@
     font-family: "ProximaNovaBold";
   }
 }
-.loader{
-  z-index: 999999;
+
+.loader-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,0.8);
+  height: 100%;
+}
+.loader {
+  z-index: 999991;
+  position: relative;
+  top: 50%;
+  left: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  text-align: center;
+  margin: -24px auto 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;/*outline: none !important; */
+}
+.loader .square {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #5888ac
+;
+  transform: rotate(45deg);
+}
+.loader .circle {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  background: #5888ac
+;
+  border-radius: 30px;
+  z-index: 999991;
+}
+.loader .circle.circle_active {
+  backface-visibility: hidden;
+  -webkit-animation-name: circle_active;
+  -webkit-animation-duration: .25s;
+  -webkit-animation-origin: 0 0;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-iteration-count: 1;
+  animation-name: circle_active;
+  animation-duration: .25s;
+  animation-origin: 0 0;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}
+.loader .circle-top {
+  top: -13px;
+  left: 8px;
+}
+.loader .circle-right {
+  right: 1px;
+  top: 8px;
+}
+.loader .circle-bottom {
+  bottom: 2px;
+  left: 8px;
+}
+.loader .circle-left {
+  left: -13px;
+  top: 8px;
+}
+@-webkit-keyframes circle_active {
+  0% {
+    background: #5888ac
+  ;
+    -webkit-transform:rotateX(0)
+  }
+  50% {
+    background: #5da4d7
+  ;
+    -webkit-transform:rotateX(45deg)
+  }
+  100% {
+    background: #5888ac
+  ;
+    -webkit-transform:rotateX(0)
+  }
+}
+@-moz-keyframes circle_active {
+  0% {
+    background: #5888ac
+  ;
+    -moz-transform:rotateX(0)
+  }
+  50% {
+    background: #5da4d7
+  ;
+    -moz-transform:rotateX(45deg)
+  }
+  100% {
+    background: #5888ac
+  ;
+    -moz-transform:rotateX(0)
+  }
+}
+@keyframes circle_active {
+  0% {
+    background: #5888ac
+  ;
+    transform:rotateX(0)
+  }
+  50% {
+    background: #5da4d7
+  ;
+    transform:rotateX(45deg)
+  }
+  100% {
+    background: #5888ac
+  ;
+    transform:rotateX(0)
+  }
 }
