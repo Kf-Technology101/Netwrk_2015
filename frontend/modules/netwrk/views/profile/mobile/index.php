@@ -8,7 +8,7 @@
         <div class="title_page">
             <span class="title">Profile</span>
         </div>
-        <div class="setting">
+        <div class="setting user-details-wrapper">
             <span class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gears"></i></span>
             <ul class="dropdown-menu dropdown-menu-right">
                 <li class=''><a href="javascript:" id="password_setting"><i class="fa fa-key"></i> Password setting</a></li>

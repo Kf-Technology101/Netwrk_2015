@@ -23,15 +23,22 @@ var ProfileInfo = {
         total:false
     },
     state: 'Indiana',
-    modal:$('#modal_profile_info'),
+    modal: '',
     profileBasicInfo: $('.profile-basic-info'),
     profileBio : $('.profile-bio'),
     initialize: function(){
+        if(isMobile) {
+            Default.SetAvatarUserDropdown();
+            ProfileInfo.modal = $('.profile-info-page');
+        } else {
+            ProfileInfo.modal = $('#modal_profile_info');
+            ProfileInfo.ShowModalProfileInfo();
+        }
+
         ProfileInfo.resetProfileInfo();
         ProfileInfo.onClickBack();
         ProfileInfo.onClickEditProfile();
         ProfileInfo.getProfileBasicInfo();
-        ProfileInfo.ShowModalProfileInfo();
     },
 
     resetProfileInfo: function(){
@@ -45,6 +52,7 @@ var ProfileInfo = {
         parent.unbind();
         parent.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile";
             } else {
                 $('.modal').modal('hide');
                 User_Profile.initialize();

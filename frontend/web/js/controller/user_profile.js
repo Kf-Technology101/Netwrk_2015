@@ -286,6 +286,7 @@ var User_Profile = {
         target.unbind();
         target.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile-info";
             } else {
                 $('.modal').modal('hide');
                 ProfileInfo.initialize();
