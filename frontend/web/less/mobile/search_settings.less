@@ -1,7 +1,17 @@
+#Search-setting{
+  .navigation-wrapper{
+    bottom: 0;
+  }
+  #myFooter{
+    display: none;
+  }
+}
 .profile-page {
   width: 100%;
-  position: fixed;
+  position: absolute;
   top: 60px;
+  overflow-x: hidden;
+  overflow-y: auto;
   .header {
     padding: 0;
     width: 100%;
@@ -11,7 +21,6 @@
     display: block;
 
     .back-page {
-      border-radius: 4px 0 0;
       border-right: 1px solid #fff;
       cursor: pointer;
       float: left;
