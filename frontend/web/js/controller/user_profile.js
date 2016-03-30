@@ -55,6 +55,7 @@ var User_Profile = {
     initialize: function(){
         if(isMobile){
             Default.SetAvatarUserDropdown();
+            User_Profile.OnClickBack();
         } else {
             User_Profile.ShowModalProfile();
         }
@@ -542,5 +543,13 @@ var User_Profile = {
             User_Profile._eventClickCommunityTrigger();
             Topic.OnClickFavorite();
         });
+    },
+    OnClickBack: function(){
+        if(isMobile){
+            $('.Profile-view .back_page span').unbind('click').click(function(){
+                sessionStorage.show_landing = 1;
+                window.location.href = baseUrl + "/netwrk/default/home";
+            })
+        }
     }
 };
