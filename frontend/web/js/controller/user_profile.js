@@ -546,7 +546,7 @@ var User_Profile = {
     },
     OnClickBack: function(){
         if(isMobile){
-            $('.Profile-view .back_page span').unbind('click').click(function(){
+            $('.Profile-view .back-page').off('click').on('click', function(){
                 sessionStorage.show_landing = 1;
                 window.location.href = baseUrl + "/netwrk/default/home";
             })
