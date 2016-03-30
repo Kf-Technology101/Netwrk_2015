@@ -811,6 +811,9 @@ var Topic = {
         target.unbind();
         target.on('click',function(){
             if(isGuest){
+                if(isMobile) {
+                    window.location.href = baseUrl + "/netwrk/user/login";
+                }
                 $('.modal').modal('hide');
                 Login.initialize();
                 return false;
