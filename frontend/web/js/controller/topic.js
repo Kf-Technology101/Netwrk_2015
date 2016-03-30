@@ -53,6 +53,8 @@ var Topic = {
         Topic.LoadFeedModal();
         Topic.OnClickCreateGroup();
         if(isMobile){
+            //Favorite button initialize
+            Topic.OnClickFavorite();
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
         } else {
@@ -800,7 +802,11 @@ var Topic = {
         }
     },
     OnClickFavorite: function(){
-        var target = $('#modal_topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
+        if(isMobile) {
+            var target = $('#show-topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
+        } else {
+            var target = $('#modal_topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
+        }
 
         target.unbind();
         target.on('click',function(){
