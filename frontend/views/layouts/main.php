@@ -63,13 +63,7 @@ if (isset($cookies["isCoverPageVisited"])) {
     <!-- Loader -->
     <div class="loader-wrap hide">
         <div class="netwrk-loader">
-            <div class="nodes">
-                <div class="circle circle-top circle_active"></div>
-                <div class="circle circle-right "></div>
-                <div class="circle circle-bottom "></div>
-                <div class="circle circle-left "></div>
-            </div>
-            <div class="square"></div>
+            <img src="<?= Url::to('@web/img/icon/loader.gif'); ?>" alt="loading..."/>
         </div>
     </div>
     <!-- /Loader -->
