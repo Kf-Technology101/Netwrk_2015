@@ -173,39 +173,56 @@ function _main(){
 }
 
 function _addListenEventPage(){
-	var page = this.show_page();
-    console.log(page);
-	var Page = page !== 'Chat-inbox' ? eval(page) : page;
-	switch(page){
-	case 'Topic':
-		Topic.init();
-		Create_Topic.initialize();
-		break;
-	case 'Meet':
-		Page.initialize();
-		break;
-	case 'Setting':
-		Profile.initialize();
-		break;
-	case 'Post':
-    Post.initialize();
-		break;
-  case 'User':
-    User.initialize();
-    break;
-  case 'Chat':
-    PopupChat.initialize();
-    break;
-  case 'Chat-inbox':
-    ChatInbox.initialize();
-    break;
-  case 'Profile':
-    User_Profile.initialize();
-    break;
-	default:
-		Default.initialize();
-		break;
-	}
+    var page = this.show_page();
+    var pageArray = ['Chat-inbox', 'Password-setting', 'Search-setting', 'Profile-info', 'Profile-edit'];
+
+    if(jQuery.inArray(page, pageArray) !== -1)
+        var Page = page;
+    else
+        var Page = eval(page);
+
+    switch(page){
+        case 'Topic':
+            Topic.init();
+            Create_Topic.initialize();
+            break;
+        case 'Meet':
+            Meet.initialize();
+            break;
+        case 'Setting':
+            Profile.initialize();
+            break;
+        case 'Post':
+            Post.initialize();
+            break;
+        case 'User':
+            User.initialize();
+            break;
+        case 'Chat':
+            PopupChat.initialize();
+            break;
+        case 'Chat-inbox':
+            ChatInbox.initialize();
+            break;
+        case 'Profile':
+            User_Profile.initialize();
+            break;
+        case 'Profile-info':
+            ProfileInfo.initialize();
+            break;
+        case 'Profile-edit':
+            ProfileEdit.initialize();
+            break;
+        case 'Password-setting':
+            Password_Setting.initialize();
+            break;
+        case 'Search-setting':
+            Search_Setting.initialize();
+            break;
+        default:
+            Default.initialize();
+            break;
+    }
 }
 
 function shuffle_array(array) {

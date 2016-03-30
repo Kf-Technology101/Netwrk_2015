@@ -48,7 +48,11 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/dropdown_avatar.css": "frontend/web/less/mobile/dropdown_avatar.less",
           "frontend/web/css/mobile/landing_page.css": "frontend/web/less/mobile/landing_page.less",
           "frontend/web/css/mobile/cover_page.css": "frontend/web/less/mobile/cover_page.less",
-          "frontend/web/css/mobile/profile.css": "frontend/web/less/mobile/profile.less"
+          "frontend/web/css/mobile/profile.css": "frontend/web/less/mobile/profile.less",
+          "frontend/web/css/mobile/password_setting.css": "frontend/web/less/mobile/password_setting.less",
+          "frontend/web/css/mobile/search_settings.css": "frontend/web/less/mobile/search_settings.less",
+          "frontend/web/css/mobile/profile_info.css": "frontend/web/less/mobile/profile_info.less",
+          "frontend/web/css/mobile/profile_edit.css": "frontend/web/less/mobile/profile_edit.less"
         }
       }
     },
