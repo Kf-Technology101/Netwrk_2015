@@ -64,6 +64,13 @@ var Default ={
             }
         }else{
             if (isCoverPageVisited) {
+                if(isResetPassword){
+                    ResetPass.initialize();
+                }else{
+                    LandingPage.initialize();
+                }
+                //Comment page reload twice code
+                /*sessionStorage.redirected = true;
                 if (sessionStorage.redirected) {
                     sessionStorage.removeItem('redirected');
                     if(isResetPassword){
@@ -74,7 +81,7 @@ var Default ={
                 } else {
                     sessionStorage.redirected = true;
                     window.location.href = baseUrl;// + "/netwrk/default/home";
-                }
+                }*/
             }
         }
     },
