@@ -6,7 +6,7 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title-page">
-            <span class="title">My Info</span>
+            <span class="title">Profile</span>
         </div>
         <div class="setting user-details-wrapper pull-right">
             <span class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gears"></i></span>
