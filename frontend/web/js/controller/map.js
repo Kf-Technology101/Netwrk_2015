@@ -103,13 +103,13 @@
 					$.each(data_marker,function(i,e){
 				      	Map.initializeMarker(e, null, 12);
 			    	});
-					Common.hideLoader();
 				});
 				Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
+				Common.hideLoader();
 			});
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
@@ -247,6 +247,7 @@
 	  	},
 
 	  	initializeMarker: function(e, map, currentZoom){
+			console.log('in initializeMarker');
 	  		var text_below, marker;
 
 	  		text_below = "<span>" + e.zip_code + " " + ((e.office != null) ? e.office : e.name) + "</span>";
