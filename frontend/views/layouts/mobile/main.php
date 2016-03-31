@@ -90,7 +90,7 @@ if (isset($cookies["isCoverPageVisited"])) {
           </button>
           <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon fa fa-comment"></i>
-            <div class="navigation-text"><span class='notify hide'>15</span>Chat</div>
+            <div class="navigation-text"><span class='notify disable'>0</span>Chat</div>
           </button>
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-meet"></i>
@@ -112,17 +112,21 @@ if (isset($cookies["isCoverPageVisited"])) {
 	    ]) ?>
 	    <?= $content ?>
     </div>
-  
-    <div id="myFooter" class="navbar-mobile navbar-fixed-bottom">
+
+    <section class="btn-meet-mobile-wrapper text-center">
+      <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
+    </section>
+
+    <!--<div id="myFooter" class="navbar-mobile navbar-fixed-bottom hide">
       <div class="menu_bottom">
-        <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
-        <!-- <div id="btn_discover_mobile"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"></div> -->
+
+        <!-- <div id="btn_discover_mobile"><img src="<?/*= Url::to('@web/img/icon/meet_btn.png'); */?>"></div> -->
         <!-- <a href="javascript:void(0)" class='left'>Menu</a> -->
-        <a class="right" id='chat_inbox_btn_mobile'><i class="fa fa-comment"></i><span class='notify disable'>0</span></a>
-<!--         <div class="chatting">
+        <!--<a class="right" id='chat_inbox_btn_mobile'><i class="fa fa-comment"></i><span class='notify disable'>0</span></a>-->
+        <!-- <div class="chatting">
             <span><i class="fa fa-comment"></i>Chat</span>
         </div> -->
-      </div>
+     <!-- </div>-->
     </div>
   </div>
   
