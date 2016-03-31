@@ -244,6 +244,13 @@ class TopicController extends BaseController
         $object = array();
 
         $cty = City::findOne($city);
+        //check does city is favorited by logged in user
+        if (!empty($cty)) {
+            $is_favorite = Favorite::isFavoritedByUser('city', $cty->id);
+        } else {
+            $is_favorite = false;
+        }
+
         if ($cty){
             if ($cty->office == 'Ritchey Woods Nature Preserve') {
                 $title = 'Netwrk hq';
@@ -271,7 +278,13 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/index', ['city_id' =>$city_id,'data'=> (object)$object]);
+
+        $temp = array('data' => (object)$object, 'is_favorite' => $is_favorite);
+        if (!empty($cty)) {
+            $temp['city'] = ($cty ? $cty->zip_code : $zip_code);
+            $temp['city_id'] = ($cty ? $cty->id : '');
+        }
+        return $this->render('mobile/index', $temp);
     }
 
     public function actionUpdateViewTopic(){
