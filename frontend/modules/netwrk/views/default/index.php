@@ -12,7 +12,7 @@
       </button>
       <button id="chat_inbox_btn" type="button" class="btn btn-default">
         <i class="navigation-icon fa fa-comment"></i>
-        <span class="navigation-text"><span class='notify hide'>15</span>Chat</span>
+        <span class="navigation-text"><span class='notify'>15</span>Chat</span>
       </button>
       <button id="btn_nav_meet" type="button" class="btn btn-default">
         <i class="navigation-icon ci-meet"></i>
