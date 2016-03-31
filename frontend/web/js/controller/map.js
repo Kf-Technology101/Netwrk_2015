@@ -51,8 +51,9 @@
 			}
 		],
 	  	initialize: function() {
-	  		
+
 	  		if(isMobile){
+				Common.initLoader();
 		  		if(sessionStorage.map_zoom){
 		  			Map.zoom = parseInt(sessionStorage.map_zoom);
 		  		} else {
@@ -109,6 +110,7 @@
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
+				Common.hideLoader();
 			});
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
@@ -246,6 +248,7 @@
 	  	},
 
 	  	initializeMarker: function(e, map, currentZoom){
+			console.log('in initializeMarker');
 	  		var text_below, marker;
 
 	  		text_below = "<span>" + e.zip_code + " " + ((e.office != null) ? e.office : e.name) + "</span>";

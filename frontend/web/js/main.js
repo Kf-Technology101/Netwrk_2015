@@ -169,6 +169,10 @@ function show_page(){
 function _main(){
 	window_resize();
 	_event_window_resize();
+    if(!isMobile) {
+        Common.initLoader();
+    }
+
 	Map.main();
 }
 
