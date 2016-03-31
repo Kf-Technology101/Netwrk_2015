@@ -53,6 +53,7 @@
 	  	initialize: function() {
 
 	  		if(isMobile){
+				Common.initLoader();
 		  		if(sessionStorage.map_zoom){
 		  			Map.zoom = parseInt(sessionStorage.map_zoom);
 		  		} else {
