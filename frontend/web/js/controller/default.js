@@ -43,6 +43,8 @@ var Default ={
         }
         if(!isGuest){
             Default.ShowNotificationOnChat();
+        } else {
+            Default.HideNotificationOnChat();
         }
     },
 
@@ -145,21 +147,35 @@ var Default ={
     },
 
     ShowNotificationOnChat: function(){
-        Ajax.count_unread_message().then(function(data){
-            var json = $.parseJSON(data), notify;
-            if(isMobile) {
-                notify = $("#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile").find('.notify');
-            } else {
-                notify = $("#chat_inbox_btn").find('.notify');
-            }
-            if (json > 0){
-                notify.html(json);
-                notify.removeClass('disable');
-            } else {
-                notify.html(0);
-                notify.addClass('disable');
-            }
-        });
+        if(!isGuest){
+            Ajax.count_unread_message().then(function(data){
+                var json = $.parseJSON(data), notify;
+                if(isMobile) {
+                    notify = $("#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile").find('.notify');
+                } else {
+                    notify = $("#chat_inbox_btn").find('.notify');
+                }
+                if (json > 0){
+                    notify.html(json);
+                    notify.removeClass('disable');
+                } else {
+                    notify.html(0);
+                    notify.addClass('disable');
+                }
+            });
+        } else {
+            Default.HideNotificationOnChat();
+        }
+    },
+    HideNotificationOnChat: function() {
+        var notify = '';
+        if(isMobile) {
+            notify = $("#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile").find('.notify');
+        } else {
+            notify = $("#chat_inbox_btn").find('.notify');
+        }
+        notify.html(0);
+        notify.addClass('disable');
     },
 
     onCLickModal: function(){
