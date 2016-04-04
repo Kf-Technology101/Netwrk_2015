@@ -30,6 +30,18 @@
 
                 </article>
 
+                <section class="recent-communities-wrapper">
+                    <div class="activity-header pull-left">Recent Communities </div>
+                    <div class="seperator-line pull-right">
+                        <hr>
+                    </div>
+                    <div class="clearfix form-group"></div>
+                </section>
+
+                <article class="recent-communities_content-wrapper">
+
+                </article>
+
                 <section class="recent_activities_wrapper">
                     <div class="activity-header pull-left">Recent Activities</div>
                     <div class="seperator-line pull-right">
@@ -290,6 +302,25 @@
                 <% }); %>
             <% } else {%>
                 <div class="alert alert-info">Currently there is no favorite communities</div>
+            <% } %>
+        </div>
+    </div>
+</script>
+
+<script id="profile_recent-communities_template" type="text/x-underscore-template">
+    <div class="fav-communities_list clearfix">
+        <div class="fav-communities-list" id="favoriteCommunities">
+            <% if(!_.isEmpty(items)) {%>
+            <% _.each(items, function(item, key){ %>
+            <div class="fav-community">
+                <span class="fav-zip-code pull-left"><a class="community-modal-trigger" href="javascript:" data-city-id="<%= item.city_id %>"><%= item.city_zipcode %></a></span>
+                        <span class="fav-action pull-right un-favorite-trigger"
+                              data-object-type="<%= 'city' %>"
+                              data-object-id="<%= item.city_id %>"><i class="fa fa-trash-o"></i></span>
+            </div>
+            <% }); %>
+            <% } else {%>
+            <div class="alert alert-info">Currently there is no favorite communities</div>
             <% } %>
         </div>
     </div>

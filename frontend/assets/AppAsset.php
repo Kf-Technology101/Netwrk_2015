@@ -95,7 +95,8 @@ class AppAsset extends AssetBundle
         'js/controller/popup_chat.js',
         'js/controller/main_ws.js',
         'js/controller/landing_page.js',
-        'js/controller/cover_page.js'
+        'js/controller/cover_page.js',
+        'js/controller/log.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
