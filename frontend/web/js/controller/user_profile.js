@@ -300,7 +300,7 @@ var User_Profile = {
     },
 
     _eventClickCommunityTrigger: function(){
-        var target = $('.community-modal-trigger','#favoriteCommunities');
+        var target = $('.community-modal-trigger','#favoriteCommunities').add('.community-modal-trigger','#recentCommunities');
 
         target.unbind();
         target.click(function(e){
@@ -581,7 +581,7 @@ var User_Profile = {
 
             // Initialize the click on community name and delete icon
             User_Profile._eventClickCommunityTrigger();
-            Topic.OnClickFavorite();
+            Log.OnClickDelete();
         });
     },
     OnClickBack: function(){
