@@ -78,6 +78,8 @@ class Favorite extends \yii\db\ActiveRecord
             ->from('favorite')
             ->join('INNER JOIN', 'city', 'city.id = favorite.city_id')
             ->where(['favorite.user_id' => $userId, 'favorite.status' => 1])
+            ->orderBy('favorite.created_at DESC')
+            ->limit(12)
             ->all();
 
         return $data;

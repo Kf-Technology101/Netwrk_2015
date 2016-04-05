@@ -58,7 +58,8 @@ class LogController extends BaseController
                 'city_zipcode'=>$value['zip_code'],
                 'city_name'=>$value['name'],
                 'user_id' => $value['user_id'],
-                'status' => $value['status']
+                'status' => $value['status'],
+                'log_id' => $value['log_id']
             );
             array_push($data,$item);
 
@@ -66,6 +67,25 @@ class LogController extends BaseController
         $returnData['data'] = $data;
         $hash = json_encode($returnData);
         return $hash;
+    }
+
+    public function actionDelete()
+    {
+        $returnData = array();
+        $logId = $_GET['log_id'];
+        $city_id = $_GET['city_id'];
+        $type = $_GET['type'];
+        $currentUser = Yii::$app->user->id;
+
+        //delete log by id and if user is created that log entry
+        $log = Log::find()->where(['id'=>$logId, 'city_id'=>$city_id, 'user_id'=>$currentUser])->one();
+        if ($log->status == 1) {
+            $log->status = 0;
+            $log->save();
+            $returnData['success'] = true;
+            $returnData['message'] = 'Log deleted successfully';
+        }
+        return json_encode($returnData);
     }
 
 }

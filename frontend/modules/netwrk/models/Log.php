@@ -64,6 +64,8 @@ class Log extends \yii\db\ActiveRecord
             ->from('log')
             ->join('INNER JOIN', 'city', 'city.id = log.city_id')
             ->where(['log.user_id' => $userId, 'log.status' => 1])
+            ->orderBy('log.created_at DESC')
+            ->limit(12)
             ->all();
 
         return $data;

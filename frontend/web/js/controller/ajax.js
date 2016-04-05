@@ -1254,6 +1254,23 @@ var Ajax ={
         });
 
         return defer.promise();
+    },
+    delete_log: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/log/delete";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
-}
+};
 
