@@ -264,7 +264,6 @@ function homePage(){
     var target = $('.option_logo_netwrk a');
     var isLanding = $('.wrap-mobile').data('action');
     if (isLanding == 'landing-page') {
-        console.log('if');
       target.on('click', function(e){
           e.preventDefault();
           sessionStorage.show_landing = 1;
@@ -272,7 +271,6 @@ function homePage(){
           window.location.href = baseUrl + '/netwrk/default/home';
       });
     } else {
-        console.log('else');
       target.on('click', function(e){
           e.preventDefault();
           sessionStorage.show_landing = 0;

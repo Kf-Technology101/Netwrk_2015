@@ -14,7 +14,7 @@ var Log = {
     },
     OnClickDelete: function() {
         if(isMobile) {
-            var target = $('#show-topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
+            var target = $('.Profile-view').find('.remove-recent-trigger');
         } else {
             var target = $('#modal_profile').find('.remove-recent-trigger');
         }
