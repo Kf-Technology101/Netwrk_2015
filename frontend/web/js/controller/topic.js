@@ -92,6 +92,7 @@ var Topic = {
 
             //init tooltip on topic list
             Common.InitToolTip();
+            Topic.getCityById(city);
         }
     },
 
@@ -891,5 +892,18 @@ var Topic = {
     HideTabGroupHeader: function() {
         var parent = $('#modal_topic,#show-topic');
         parent.find('.tab-header-group').addClass('hidden');
+    },
+    getCityById: function(cityId) {
+        var params = {'city_id': cityId};
+
+        Ajax.get_city_by_id(params).then(function(data){
+            var json = $.parseJSON(data);
+            var lat = json.lat;
+            var lng = json.lng;
+            console.log(json);
+
+            //set center the map using city lat and lng
+            Map.SetMapCenter(lat, lng);
+        });
     }
 };

@@ -315,7 +315,7 @@ var User_Profile = {
                 $('.modal').modal('hide');
                 Topic.initialize(city_id);
                 //set center the map using city lat and lng
-                Map.SetMapCenter(lat,lng);
+                //Map.SetMapCenter(lat,lng);
             }
         });
     },

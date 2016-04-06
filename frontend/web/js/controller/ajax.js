@@ -1271,6 +1271,23 @@ var Ajax ={
         });
 
         return defer.promise();
-    }
+    },
+    get_city_by_id: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/get-city-by-id";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 };
 

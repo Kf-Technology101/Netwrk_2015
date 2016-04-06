@@ -779,4 +779,25 @@ class DefaultController extends BaseController
             return $hash;
         }
     }
+
+    public function actionGetCityById() {
+        $data = [];
+        $cityId = $_GET['city_id'];
+        if ($cityId) {
+            $city = new City();
+            $item = $city->find()->select('city.*')
+                ->where(['id' => $cityId])
+                ->one();
+            $data = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'lat' => $item->lat,
+                'lng' => $item->lng,
+                'zip_code' => $item->zip_code
+            ];
+        }
+        $hash = json_encode($data);
+        return $hash;
+    }
+
 }
