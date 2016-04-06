@@ -12,7 +12,7 @@
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
-	  	zoom: 7,
+	  	zoom: 12,
 	  	// center: new google.maps.LatLng(39.7662195,-86.441277),
 	  	center:'',
 	  	zoom7: [],
@@ -247,7 +247,6 @@
 	  	},
 
 	  	initializeMarker: function(e, map, currentZoom){
-			console.log('in initializeMarker');
 	  		var text_below, marker;
 
 	  		text_below = "<span>" + e.zip_code + " " + ((e.office != null) ? e.office : e.name) + "</span>";
@@ -1151,5 +1150,14 @@
 	    insertLocalGovernment: function(){
 	    	Ajax.insert_local_government().then(function(data){
 	    	});
-	    }
+	    },
+
+		/* Set map position center using lat and lng do zoom */
+		SetMapCenter: function(lat,lng,zoom) {
+			zoom = zoom || 12;
+			if (zoom && zoom != 'undefined') {
+				Map.map.setZoom(zoom);
+			}
+			Map.map.setCenter(new google.maps.LatLng(lat, lng));
+		}
 	}

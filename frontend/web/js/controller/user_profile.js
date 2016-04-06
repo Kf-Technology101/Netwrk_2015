@@ -305,12 +305,17 @@ var User_Profile = {
         target.unbind();
         target.click(function(e){
             var city_id = $(e.currentTarget).attr('data-city-id');
+            var lat = $(e.currentTarget).attr('data-lat');
+            var lng = $(e.currentTarget).attr('data-lng');
+
             if(isMobile){
                 var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
                 window.location.href= url;
             } else {
                 $('.modal').modal('hide');
                 Topic.initialize(city_id);
+                //set center the map using city lat and lng
+                Map.SetMapCenter(lat,lng);
             }
         });
     },

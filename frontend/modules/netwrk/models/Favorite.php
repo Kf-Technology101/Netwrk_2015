@@ -74,7 +74,9 @@ class Favorite extends \yii\db\ActiveRecord
         $userId = $userId ? $userId : Yii::$app->user->id;
 
         $query = new Query();
-        $data = $query->select('favorite.id as favorite_id, favorite.user_id, favorite.status, city.id as city_id, city.zip_code, city.name')
+        $data = $query->select('favorite.id as favorite_id, favorite.user_id, favorite.status,
+            city.id as city_id, city.zip_code, city.name, city.lat, city.lng'
+            )
             ->from('favorite')
             ->join('INNER JOIN', 'city', 'city.id = favorite.city_id')
             ->where(['favorite.user_id' => $userId, 'favorite.status' => 1])
