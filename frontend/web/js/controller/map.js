@@ -1155,6 +1155,8 @@
 		/* Set map position center using lat and lng do zoom */
 		SetMapCenter: function(lat,lng,zoom) {
 			zoom = zoom || 12;
+			lat = lat || '39.7662195';
+			lng = lng || '-86.441277';
 			if (zoom && zoom != 'undefined') {
 				Map.map.setZoom(zoom);
 			}

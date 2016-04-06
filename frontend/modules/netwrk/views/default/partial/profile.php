@@ -321,11 +321,20 @@
             <% if(!_.isEmpty(items)) {%>
             <% _.each(items, function(item, key){ %>
             <div class="recent-community">
-                <span class="recent-zip-code pull-left"><a class="community-modal-trigger" href="javascript:" data-city-id="<%= item.city_id %>"><%= item.city_zipcode %></a></span>
-                        <span class="recent-action pull-right remove-recent-trigger"
-                              data-log_id="<%= item.log_id %>"
-                              data-type="<%= 'city' %>"
-                              data-city_id="<%= item.city_id %>"><i class="fa fa-trash-o"></i></span>
+                <span class="recent-zip-code pull-left">
+                    <a class="community-modal-trigger"
+                       href="javascript:"
+                       data-lat="<%= item.lat %>"
+                       data-lng="<%= item.lng %>"
+                       data-city-id="<%= item.city_id %>">
+                       <%= item.city_zipcode %>
+                    </a>
+                </span>
+                <span class="recent-action pull-right remove-recent-trigger"
+                      data-log_id="<%= item.log_id %>"
+                      data-type="<%= 'city' %>"
+                      data-city_id="<%= item.city_id %>"><i class="fa fa-trash-o"></i>
+                </span>
             </div>
             <% }); %>
             <% } else {%>
