@@ -84,7 +84,9 @@ class FavoriteController extends BaseController
                 'city_zipcode'=>$value['zip_code'],
                 'city_name'=>$value['name'],
                 'user_id' => $value['user_id'],
-                'status' => $value['status']
+                'status' => $value['status'],
+                'lat' => $value['lat'],
+                'lng' => $value['lng']
             );
             array_push($data,$item);
 

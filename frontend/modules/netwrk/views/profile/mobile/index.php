@@ -293,10 +293,19 @@
             <% if(!_.isEmpty(items)) {%>
             <% _.each(items, function(item, key){ %>
             <div class="fav-community">
-                <span class="fav-zip-code pull-left"><a class="community-modal-trigger" href="javascript:" data-city-id="<%= item.city_id %>"><%= item.city_zipcode %></a></span>
-                        <span class="fav-action pull-right un-favorite-trigger"
-                              data-object-type="<%= 'city' %>"
-                              data-object-id="<%= item.city_id %>"><i class="fa fa-trash-o"></i></span>
+                <span class="fav-zip-code pull-left">
+                    <a class="community-modal-trigger"
+                       href="javascript:"
+                       data-lat="<%= item.lat %>"
+                       data-lng="<%= item.lng %>"
+                       data-city-id="<%= item.city_id %>">
+                        <%= item.city_zipcode %>
+                    </a>
+                </span>
+                <span class="fav-action pull-right un-favorite-trigger"
+                      data-object-type="<%= 'city' %>"
+                      data-object-id="<%= item.city_id %>"><i class="fa fa-trash-o"></i>
+                </span>
             </div>
             <% }); %>
             <% } else {%>
