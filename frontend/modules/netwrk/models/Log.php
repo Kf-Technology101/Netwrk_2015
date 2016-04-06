@@ -60,7 +60,9 @@ class Log extends \yii\db\ActiveRecord
         $userId = $userId ? $userId : Yii::$app->user->id;
 
         $query = new Query();
-        $data = $query->select('log.id as log_id, log.user_id, log.status, city.id as city_id, city.zip_code, city.name')
+        $data = $query->select('log.id as log_id, log.user_id, log.status,
+            city.id as city_id, city.zip_code, city.name, city.lat, city.lng'
+            )
             ->from('log')
             ->join('INNER JOIN', 'city', 'city.id = log.city_id')
             ->where(['log.user_id' => $userId, 'log.status' => 1])

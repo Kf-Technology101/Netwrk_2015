@@ -59,7 +59,9 @@ class LogController extends BaseController
                 'city_name'=>$value['name'],
                 'user_id' => $value['user_id'],
                 'status' => $value['status'],
-                'log_id' => $value['log_id']
+                'log_id' => $value['log_id'],
+                'lat' => $value['lat'],
+                'lng' => $value['lng']
             );
             array_push($data,$item);
 
