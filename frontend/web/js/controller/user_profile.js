@@ -8,7 +8,8 @@ var User_Profile = {
         topics:{},
         posts:{},
         items:{},
-        favoriteCommunities: {}
+        favoriteCommunities: {},
+        recentCommunities: {}
     },
     params:{
         age: 0,
@@ -65,6 +66,9 @@ var User_Profile = {
 
         //Show favorite communities of currentUser on profile modal
         User_Profile.ShowFavoriteCommunities();
+
+        //Show Recent communities of currentUser on profile modal
+        User_Profile.ShowRecentCommunities();
 
         User_Profile.OnClickTabBtn();
 
@@ -296,7 +300,7 @@ var User_Profile = {
     },
 
     _eventClickCommunityTrigger: function(){
-        var target = $('.community-modal-trigger','#favoriteCommunities');
+        var target = $('.community-modal-trigger','#favoriteCommunities').add('.community-modal-trigger','#recentCommunities');
 
         target.unbind();
         target.click(function(e){
@@ -523,6 +527,16 @@ var User_Profile = {
             callback();
         }
     },
+    getTemplateRecentInfo: function(parent,target,callback){
+        var template = _.template(target.html());
+
+        var append_html = template({items: User_Profile.templateData.recentCommunities});
+        parent.append(append_html);
+
+        if(_.isFunction(callback)){
+            callback();
+        }
+    },
     ShowFavoriteCommunities: function(){
         if (isMobile) {
             var parent = $('.fav-communities_content-wrapper', '.Profile-view');
@@ -547,6 +561,32 @@ var User_Profile = {
             // Initialize the click on community name and delete icon
             User_Profile._eventClickCommunityTrigger();
             Topic.OnClickFavorite();
+        });
+    },
+    ShowRecentCommunities: function(){
+        if (isMobile) {
+            var parent = $('.recent-communities_content-wrapper', '.Profile-view');
+        } else {
+            var parent = $('.recent-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        }
+
+        var content = $('#profile_recent-communities_template');
+        var params = {'filter': 'recent'};
+
+        parent.html('');
+
+        Ajax.show_user_recent_communities(params).then(function(data){
+            var json = $.parseJSON(data);
+
+            //Assign ajax data to template data
+            User_Profile.templateData.recentCommunities = json.data;
+
+            //Set the template data
+            User_Profile.getTemplateRecentInfo(parent, content);
+
+            // Initialize the click on community name and delete icon
+            User_Profile._eventClickCommunityTrigger();
+            Log.OnClickDelete();
         });
     },
     OnClickBack: function(){

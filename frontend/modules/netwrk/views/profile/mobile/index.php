@@ -21,27 +21,7 @@
 
     <section class="profile-container">
         <section class="profile-info clearfix">
-            <div class="cover-photo">
-                <img class="img-responsive" src="/img/background/cover-bg.png">
-                <div class="change-cover"><i class="fa fa-camera"></i> Edit cover image</div>
-            </div>
-            <div class="profile-picture pull-left">
-                <div class="img-user text-center"><img src="/img/icon/no_avatar.jpg"></div>
-                <div class="change-profile">
-                    <i class="fa fa-camera"></i>
-                </div>
-            </div>
-            <div class="user-details-wrapper clearfix">
-                <div class="user-details pull-left">
-                    <div class="user-name">yogesh mahale, 28</div>
-                    <div class="user-location">, , </div>
-                </div>
-                <div class="brillant pull-right">
-                    <div class="count">
-                        <span>0</span>
-                    </div>
-                </div>
-            </div>
+
         </section>
         <div class="profile-activity-wrapper">
             <section class="fav-communities-wrapper">
@@ -56,6 +36,17 @@
 
             </article>
 
+            <section class="recent-communities-wrapper">
+                <div class="activity-header pull-left">Recent Communities </div>
+                <div class="seperator-line pull-right">
+                    <hr>
+                </div>
+                <div class="clearfix form-group"></div>
+            </section>
+
+            <article class="recent-communities_content-wrapper">
+
+            </article>
 
             <section class="recent_activities_wrapper">
                 <div class="activity-header pull-left">Recent Activities</div>
@@ -310,6 +301,26 @@
             <% }); %>
             <% } else {%>
             <div class="alert alert-info">Currently there is no favorite communities</div>
+            <% } %>
+        </div>
+    </div>
+</script>
+<script id="profile_recent-communities_template" type="text/x-underscore-template">
+    <div class="clearfix">
+        <div class="recent-communities-list" id="recentCommunities">
+            <% if(!_.isEmpty(items)) {%>
+                <% _.each(items, function(item, key){ %>
+                    <div class="recent-community">
+                        <span class="recent-zip-code pull-left"><a class="community-modal-trigger" href="javascript:" data-city-id="<%= item.city_id %>"><%= item.city_zipcode %></a></span>
+                        <span class="recent-action pull-right remove-recent-trigger"
+                              data-log_id="<%= item.log_id %>"
+                              data-type="<%= 'city' %>"
+                              data-city_id="<%= item.city_id %>"><i class="fa fa-trash-o"></i>
+                        </span>
+                    </div>
+                <% }); %>
+            <% } else {%>
+                <div class="alert alert-info">Currently there is no recent communities</div>
             <% } %>
         </div>
     </div>
