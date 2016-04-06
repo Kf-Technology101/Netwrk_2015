@@ -342,6 +342,12 @@
 		            	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
 		          	}
 		          	Topic.initialize(marker.city_id);
+
+					if(UserLogin) {
+						//create log: city view by user
+						var params = {'type': 'city','event': 'CITY_VIEW', 'user_id': UserLogin, 'city_id': marker.city_id};
+						Log.create(params);
+					}
 		        };
 		    })(marker));
 
