@@ -532,20 +532,22 @@
 	  	},
 
 	  	getZipcodeAddress: function(service, place, map, type, lat, lng, name_of_place){
-	        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data){
-	          var len = data.results[0].address_components.length;
-			  var map_data = data.results[0].address_components;
-	          for(var i=0; i<len; i++) {
-	          	if(data.results[0].address_components[i].types[0] == 'postal_code') {
-	            	var zip = data.results[0].address_components[i].long_name;
-	            	service.getDetails(place, function(_place, status) {
-						if (status === google.maps.places.PlacesServiceStatus.OK) {
-							Map.checkPlaceZipcode(zip, _place.name, place, service, map, type, map_data);
+			if(typeof data.results[0] != 'undefined') {
+				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + ',' + lng, function (data) {
+					var len = data.results[0].address_components.length;
+					var map_data = data.results[0].address_components;
+					for (var i = 0; i < len; i++) {
+						if (data.results[0].address_components[i].types[0] == 'postal_code') {
+							var zip = data.results[0].address_components[i].long_name;
+							service.getDetails(place, function (_place, status) {
+								if (status === google.maps.places.PlacesServiceStatus.OK) {
+									Map.checkPlaceZipcode(zip, _place.name, place, service, map, type, map_data);
+								}
+							});
 						}
-					});
-	            }
-	          }
-	        });
+					}
+				});
+			}
 	  	},
 	  	// End code for get university and government place
 	  	OnEventInfoWindow: function(e){

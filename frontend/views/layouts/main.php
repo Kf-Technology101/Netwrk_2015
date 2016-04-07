@@ -19,6 +19,7 @@ $isAccepted = 0;
 if (isset($cookies["isCoverPageVisited"])) {
   $isCoverPageVisited = $cookies->getValue('isCoverPageVisited');//$cookies['isCoverPage']->value;
   $isAccepted = $cookies->getValue('isAccepted');
+  $city = $cookies->getValue('nw_city');
   $zipCode = $cookies->getValue('nw_zipCode');
   $lat = $cookies->getValue('nw_lat');
   $lng = $cookies->getValue('nw_lng');
@@ -50,6 +51,7 @@ if (isset($cookies["isCoverPageVisited"])) {
         <?php if (isset($cookies["isCoverPageVisited"])) : ?>
             var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
             var isAccepted = <?php echo $isAccepted; ?>;
+            var city = <?php echo $city; ?>;
             var zipCode = <?php echo $zipCode; ?>;
             var lat = <?php echo $lat; ?>;
             var lng = <?php echo $lng; ?>;
