@@ -53,6 +53,8 @@ var Topic = {
         Topic.LoadFeedModal();
         Topic.OnClickCreateGroup();
         if(isMobile){
+            //Favorite button initialize
+            Topic.OnClickFavorite();
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
         } else {
@@ -87,6 +89,10 @@ var Topic = {
             Topic.OnClickCreateGroup();
             Default.onCLickModal();
             Topic.OnClickFavorite();
+
+            //init tooltip on topic list
+            Common.InitToolTip();
+            Topic.getCityById(city);
         }
     },
 
@@ -243,6 +249,8 @@ var Topic = {
             if(isMobile){
                 Post.RedirectPostPage(topic, false);
             }else{
+                //hide all opened tooltips
+                Common.HideTooTip();
                 $('#modal_topic').modal('hide');
                 Post.params.topic = topic;
                 Post.params.topic_name = $(e.currentTarget).find('.name_topic p').text();
@@ -795,11 +803,18 @@ var Topic = {
         }
     },
     OnClickFavorite: function(){
-        var target = $('#modal_topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
+        if(isMobile) {
+            var target = $('#show-topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
+        } else {
+            var target = $('#modal_topic').find('.btn-favorite').add($('#favoriteCommunities').find('.un-favorite-trigger'));
+        }
 
         target.unbind();
         target.on('click',function(){
             if(isGuest){
+                if(isMobile) {
+                    window.location.href = baseUrl + "/netwrk/user/login";
+                }
                 $('.modal').modal('hide');
                 Login.initialize();
                 return false;
@@ -877,5 +892,18 @@ var Topic = {
     HideTabGroupHeader: function() {
         var parent = $('#modal_topic,#show-topic');
         parent.find('.tab-header-group').addClass('hidden');
+    },
+    getCityById: function(cityId) {
+        var params = {'city_id': cityId};
+
+        Ajax.get_city_by_id(params).then(function(data){
+            var json = $.parseJSON(data);
+            var lat = json.lat;
+            var lng = json.lng;
+            console.log(json);
+
+            //set center the map using city lat and lng
+            Map.SetMapCenter(lat, lng);
+        });
     }
 };

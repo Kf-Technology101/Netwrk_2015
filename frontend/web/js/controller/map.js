@@ -12,7 +12,7 @@
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
-	  	zoom: 7,
+	  	zoom: 12,
 	  	// center: new google.maps.LatLng(39.7662195,-86.441277),
 	  	center:'',
 	  	zoom7: [],
@@ -51,8 +51,9 @@
 			}
 		],
 	  	initialize: function() {
-	  		
+
 	  		if(isMobile){
+				Common.initLoader();
 		  		if(sessionStorage.map_zoom){
 		  			Map.zoom = parseInt(sessionStorage.map_zoom);
 		  		} else {
@@ -104,6 +105,7 @@
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
+				Common.hideLoader();
 			});
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
@@ -199,7 +201,7 @@
 	    	// Please don't delete code below
 			//
 			// if (map.getZoom() == 12) {
-			// 	 ap.addListener('idle', function(){
+			// 	 map.addListener('idle', function(){
 			//         // radarSearch --------------------------------------------
 			// 		var contentSearch = {
 			// 			bounds: map.getBounds(),
@@ -207,7 +209,7 @@
 			// 			types: ['school','university']
 			// 		};
 			// 		Map.placeSearch(contentSearch, 'uni', 50);
-
+            //
 			//         var contentSearch = {
 			//        		bounds: map.getBounds(),
 			//         	keyword: 'Town Hall', // City Government Hall/Center/Town hall
@@ -270,17 +272,16 @@
 		    label.bindTo('position', marker, 'position');
 
 	      	if(!isMobile){
-
-		        var infowindow = new google.maps.InfoWindow({
-					content: '',
-					city_id: e.id,
-					maxWidth: 310,
-		       		pixelOffset: new google.maps.Size(0,0),
-		        });
-
 	            var marker_template = _.template($( "#maker_popup" ).html());
 	    		var content = marker_template({marker: e});
-	          	infowindow.content = content;
+
+				var infowindow = new google.maps.InfoWindow({
+					content: content,
+					city_id: e.id,
+					maxWidth: 310,
+					pixelOffset: new google.maps.Size(0,0),
+				});
+
 	            Map.infowindow.push(infowindow);
 
 		        google.maps.event.addListener(marker, 'mouseover', function() {
@@ -339,6 +340,12 @@
 		            	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
 		          	}
 		          	Topic.initialize(marker.city_id);
+
+					if(UserLogin) {
+						//create log: city view by user
+						var params = {'type': 'city','event': 'CITY_VIEW', 'user_id': UserLogin, 'city_id': marker.city_id};
+						Log.create(params);
+					}
 		        };
 		    })(marker));
 
@@ -394,23 +401,37 @@
 	  	},
 	  	// Begin code for get university and government place
 	  	// Please don't delete it
-	  	checkPlaceZipcode: function(zipcode, place_name, place, service, map, type){
+	  	checkPlaceZipcode: function(zipcode, place_name, place, service, map, type, map_data){
 	    	var params = {'zipcode':zipcode, 'place_name':place_name, 'type': type};
 	    	Ajax.place_check_zipcode_exist(params).then(function(data){
 		        var json = $.parseJSON(data);
 		        if (json.status == 0){
-		        	Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service);
+					var len = map_data.length;
+
+					for(var i=0; i<len; i++) {
+						if(map_data[i].types[0] == 'administrative_area_level_1') {
+							var state = map_data[i].long_name;
+							var stateAbbr = map_data[i].short_name;
+						}
+
+						if(map_data[i].types[0] == 'administrative_area_level_2') {
+							var str = map_data[i].long_name;
+							var county = str.replace(' County', '');
+						}
+					}
+
+		        	Map.placeSave(zipcode, json.city_name, place.geometry.location.lat(), place.geometry.location.lng(), place_name, type, place, map, service, state, stateAbbr, county);
 		        }else{
 		        }
 	      	});
 	  	},
 
-	  	placeSave: function(zipcode, netwrk_name, lat, lng, office, type, place, map, service){
+	  	placeSave: function(zipcode, netwrk_name, lat, lng, office, type, place, map, service, state, stateAbbr, county){
 		    var params;
 		    if(type == 'gov'){
-		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'government'};
+		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'government', 'state' : state, 'stateAbbr' : stateAbbr, 'county' : county};
 		    } else {
-		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'university'};
+		    	params = {'zip_code':zipcode, 'netwrk_name':netwrk_name, 'lat':lat, 'lng':lng, 'office':office, 'office_type':'university', 'state' : state, 'stateAbbr' : stateAbbr, 'county' : county};
 		    }
 	    	Ajax.new_place(params).then(function(data){
 				var js = $.parseJSON(data);
@@ -440,12 +461,6 @@
 				place_name: name_of_place,
 	    	});
 
-	      	var infowindow = new google.maps.InfoWindow({
-		        content: '',
-		        city_id: cid,
-		        maxWidth: 350
-	      	});
-
 	      	google.maps.event.addListener(marker, 'click', (function(marker) {
 				return function(){
 					if(!isMobile){
@@ -463,7 +478,13 @@
 	                '</div>' +
 	                '<div class="iw-bottom-gradient"></div>' +
 	              '</div>';
-	      	infowindow.content = content;
+
+			var infowindow = new google.maps.InfoWindow({
+				content: content,
+				city_id: cid,
+				maxWidth: 350
+			});
+
 	        Map.infowindow.push(infowindow);
 
 		    google.maps.event.addListener(marker, 'mouseover', function() {
@@ -511,19 +532,22 @@
 	  	},
 
 	  	getZipcodeAddress: function(service, place, map, type, lat, lng, name_of_place){
-	        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data){
-	          var len = data.results[0].address_components.length;
-	          for(var i=0; i<len; i++) {
-	          	if(data.results[0].address_components[i].types[0] == 'postal_code') {
-	            	var zip = data.results[0].address_components[i].long_name;
-	            	service.getDetails(place, function(_place, status) {
-						if (status === google.maps.places.PlacesServiceStatus.OK) {
-							Map.checkPlaceZipcode(zip, _place.name, place, service, map, type);
+			if(typeof data.results[0] != 'undefined') {
+				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + ',' + lng, function (data) {
+					var len = data.results[0].address_components.length;
+					var map_data = data.results[0].address_components;
+					for (var i = 0; i < len; i++) {
+						if (data.results[0].address_components[i].types[0] == 'postal_code') {
+							var zip = data.results[0].address_components[i].long_name;
+							service.getDetails(place, function (_place, status) {
+								if (status === google.maps.places.PlacesServiceStatus.OK) {
+									Map.checkPlaceZipcode(zip, _place.name, place, service, map, type, map_data);
+								}
+							});
 						}
-					});
-	            }
-	          }
-	        });
+					}
+				});
+			}
 	  	},
 	  	// End code for get university and government place
 	  	OnEventInfoWindow: function(e){
@@ -658,11 +682,9 @@
 							Map.center_marker.getPosition().lng());
 					});
 
-					var infowindow = new google.maps.InfoWindow({
-						content: ''
-					});
 
-					infowindow.content = '<div id="iw-container" class="cgm-container" >' +
+
+					var content = '<div id="iw-container" class="cgm-container" >' +
 						'<div class="iw-content">' +
 						'<div class="iw-subTitle" id="cm-coords"></div>' +
 						'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +
@@ -670,6 +692,10 @@
 						'</div>' +
 						'<div class="iw-bottom-gradient"></div>' +
 						'</div>';
+
+					var infowindow = new google.maps.InfoWindow({
+						content: content
+					});
 
 					Map.infowindow.push(infowindow);
 
@@ -793,11 +819,6 @@
 						icon: img,
 						group_id: parseInt(e.id)
 					});
-					var infowindow = new google.maps.InfoWindow({
-						content: '',
-						group_id: e.id,
-						maxWidth: 350
-					});
 
 					console.log("marker", marker);
 					google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -810,7 +831,7 @@
 					})(marker, i));
 
 					if (!isMobile && 1==0){
-						infowindow.content = '<div id="iw-container" >' +
+						var content = '<div id="iw-container" >' +
 							'<div class="iw-title"><span class="toppost">Top Post</span><a class="info_zipcode" data-city="'+ e.id +'" onclick="Map.eventOnClickZipcode('+e.id +')"><span class="zipcode">'+ e.zip_code + '</span></a></div>' +
 							'<div class="iw-content">' +
 							'<div class="iw-subTitle"><span class="post-title">#'+e.post.name_post+'</span></div>' +
@@ -818,6 +839,13 @@
 							'</div>' +
 							'<div class="iw-bottom-gradient"></div>' +
 							'</div>';
+
+						var infowindow = new google.maps.InfoWindow({
+							content: content,
+							group_id: e.id,
+							maxWidth: 350
+						});
+
 						Map.infowindow.push(infowindow);
 
 						google.maps.event.addListener(marker, 'mouseover', function() {
@@ -1124,5 +1152,16 @@
 	    insertLocalGovernment: function(){
 	    	Ajax.insert_local_government().then(function(data){
 	    	});
-	    }
+	    },
+
+		/* Set map position center using lat and lng do zoom */
+		SetMapCenter: function(lat,lng,zoom) {
+			zoom = zoom || 12;
+			lat = lat || '39.7662195';
+			lng = lng || '-86.441277';
+			if (zoom && zoom != 'undefined') {
+				Map.map.setZoom(zoom);
+			}
+			Map.map.setCenter(new google.maps.LatLng(lat, lng));
+		}
 	}

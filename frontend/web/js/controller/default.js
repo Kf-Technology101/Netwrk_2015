@@ -43,6 +43,8 @@ var Default ={
         }
         if(!isGuest){
             Default.ShowNotificationOnChat();
+        } else {
+            Default.HideNotificationOnChat();
         }
     },
 
@@ -64,6 +66,13 @@ var Default ={
             }
         }else{
             if (isCoverPageVisited) {
+                if(isResetPassword){
+                    ResetPass.initialize();
+                }else{
+                    LandingPage.initialize();
+                }
+                //Comment page reload twice code
+                /*sessionStorage.redirected = true;
                 if (sessionStorage.redirected) {
                     sessionStorage.removeItem('redirected');
                     if(isResetPassword){
@@ -74,7 +83,7 @@ var Default ={
                 } else {
                     sessionStorage.redirected = true;
                     window.location.href = baseUrl;// + "/netwrk/default/home";
-                }
+                }*/
             }
         }
     },
@@ -138,21 +147,35 @@ var Default ={
     },
 
     ShowNotificationOnChat: function(){
-        Ajax.count_unread_message().then(function(data){
-            var json = $.parseJSON(data), notify;
-            if(isMobile) {
-                notify = $("#chat_inbox_btn_mobile").find('.notify');
-            } else {
-                notify = $("#chat_inbox_btn").find('.notify');
-            }
-            if (json > 0){
-                notify.html(json);
-                notify.removeClass('disable');
-            } else {
-                notify.html(0);
-                notify.addClass('disable');
-            }
-        });
+        if(!isGuest){
+            Ajax.count_unread_message().then(function(data){
+                var json = $.parseJSON(data), notify;
+                if(isMobile) {
+                    notify = $("#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile").find('.notify');
+                } else {
+                    notify = $("#chat_inbox_btn").find('.notify');
+                }
+                if (json > 0){
+                    notify.html(json);
+                    notify.removeClass('disable');
+                } else {
+                    notify.html(0);
+                    notify.addClass('disable');
+                }
+            });
+        } else {
+            Default.HideNotificationOnChat();
+        }
+    },
+    HideNotificationOnChat: function() {
+        var notify = '';
+        if(isMobile) {
+            notify = $("#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile").find('.notify');
+        } else {
+            notify = $("#chat_inbox_btn").find('.notify');
+        }
+        notify.html(0);
+        notify.addClass('disable');
     },
 
     onCLickModal: function(){
@@ -170,7 +193,7 @@ var Default ={
     },
 
     SetAvatarUserDropdown: function() {
-        if (UserLogin && isCoverPageVisited) {
+        if (UserLogin && typeof isCoverPageVisited !== 'undefined') {
             Ajax.get_user_profile().then(function(data){
                 sessionStorage.UserInfo = data;
                 data = $.parseJSON(data);

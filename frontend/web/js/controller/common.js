@@ -9,6 +9,9 @@ var Common = {
         'btnNavMeetMobile' : '#btn_nav_meet_mobile',
         'loginTrigger' : '.login-trigger'
     },
+    params: {
+        'loaderIntervalId': ''
+    },
     initialize: function() {
         Common.eventClickExplore();
         //init the nav chat inbox for mobile
@@ -71,8 +74,13 @@ var Common = {
 
         target.unbind();
         target.on('click',function(){
-            $('.modal').modal('hide');
-            User_Profile.initialize();
+            if (isMobile) {
+                window.location.href = baseUrl + "/netwrk/profile";
+            } else {
+                $('.modal').modal('hide');
+                User_Profile.initialize();
+            }
+
         });
     },
     CustomScrollBar: function(taget,options){
@@ -87,5 +95,14 @@ var Common = {
     },
     HideTooTip: function() {
         $('.tooltip').hide();
+    },
+    initLoader: function() {
+        console.log('in initLoader');
+        $('.loader-wrap').removeClass('hide');
+    },
+    hideLoader: function() {
+        //clear the loader setIntervalId to stop loader animation.
+        $('.loader-wrap').addClass('hide');
+        console.log('in hideLoader');
     }
 };

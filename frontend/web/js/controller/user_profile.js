@@ -8,7 +8,8 @@ var User_Profile = {
         topics:{},
         posts:{},
         items:{},
-        favoriteCommunities: {}
+        favoriteCommunities: {},
+        recentCommunities: {}
     },
     params:{
         age: 0,
@@ -53,19 +54,28 @@ var User_Profile = {
     profileInfo: $('.profile-info'),
     editProfileModal: $('#modal_change_profile_picture'),
     initialize: function(){
+        if(isMobile){
+            Default.SetAvatarUserDropdown();
+            User_Profile.OnClickBack();
+        } else {
+            User_Profile.ShowModalProfile();
+        }
+
         User_Profile.resetProfile();
         User_Profile.getProfileInfo();
 
-        //Show favorite communites of currentUser on profile modal
+        //Show favorite communities of currentUser on profile modal
         User_Profile.ShowFavoriteCommunities();
+
+        //Show Recent communities of currentUser on profile modal
+        User_Profile.ShowRecentCommunities();
 
         User_Profile.OnClickTabBtn();
 
         //Init the recent activities button group and get data according to tab.
         User_Profile.getDataOnTab();
 
-        User_Profile.ShowModalProfile();
-
+        //events
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
         User_Profile._eventClickProfileInfo();
@@ -251,6 +261,7 @@ var User_Profile = {
         target.unbind();
         target.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/password-setting";
             } else {
                 $('.modal').modal('hide');
                 Password_Setting.initialize();
@@ -265,6 +276,7 @@ var User_Profile = {
         target.unbind();
         target.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/search-setting";
             } else {
                 $('.modal').modal('hide');
                 Search_Setting.initialize();
@@ -279,6 +291,7 @@ var User_Profile = {
         target.unbind();
         target.click(function(){
             if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile-info";
             } else {
                 $('.modal').modal('hide');
                 ProfileInfo.initialize();
@@ -287,15 +300,22 @@ var User_Profile = {
     },
 
     _eventClickCommunityTrigger: function(){
-        var target = $('.community-modal-trigger','#favoriteCommunities');
+        var target = $('.community-modal-trigger','#favoriteCommunities').add('.community-modal-trigger','#recentCommunities');
 
         target.unbind();
         target.click(function(e){
             var city_id = $(e.currentTarget).attr('data-city-id');
+            var lat = $(e.currentTarget).attr('data-lat');
+            var lng = $(e.currentTarget).attr('data-lng');
+
             if(isMobile){
+                var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
+                window.location.href= url;
             } else {
                 $('.modal').modal('hide');
                 Topic.initialize(city_id);
+                //set center the map using city lat and lng
+                //Map.SetMapCenter(lat,lng);
             }
         });
     },
@@ -422,7 +442,11 @@ var User_Profile = {
     },
     //Show Topics information of users
     ShowPosts: function(){
-        var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
+        if (isMobile) {
+            var template = $('#recent_activity_container', '.Profile-view');
+        } else {
+            var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
+        }
         var templateData = $('#profile_post_info');
         var params = {'filter': 'recent'};
 
@@ -503,8 +527,23 @@ var User_Profile = {
             callback();
         }
     },
+    getTemplateRecentInfo: function(parent,target,callback){
+        var template = _.template(target.html());
+
+        var append_html = template({items: User_Profile.templateData.recentCommunities});
+        parent.append(append_html);
+
+        if(_.isFunction(callback)){
+            callback();
+        }
+    },
     ShowFavoriteCommunities: function(){
-        var parent = $('.fav-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        if (isMobile) {
+            var parent = $('.fav-communities_content-wrapper', '.Profile-view');
+        } else {
+            var parent = $('.fav-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        }
+
         var content = $('#profile_fav-communities_template');
         var params = {'filter': 'recent'};
 
@@ -523,5 +562,39 @@ var User_Profile = {
             User_Profile._eventClickCommunityTrigger();
             Topic.OnClickFavorite();
         });
+    },
+    ShowRecentCommunities: function(){
+        if (isMobile) {
+            var parent = $('.recent-communities_content-wrapper', '.Profile-view');
+        } else {
+            var parent = $('.recent-communities_content-wrapper', User_Profile.contexts.modalProfile);
+        }
+
+        var content = $('#profile_recent-communities_template');
+        var params = {'filter': 'recent'};
+
+        parent.html('');
+
+        Ajax.show_user_recent_communities(params).then(function(data){
+            var json = $.parseJSON(data);
+
+            //Assign ajax data to template data
+            User_Profile.templateData.recentCommunities = json.data;
+
+            //Set the template data
+            User_Profile.getTemplateRecentInfo(parent, content);
+
+            // Initialize the click on community name and delete icon
+            User_Profile._eventClickCommunityTrigger();
+            Log.OnClickDelete();
+        });
+    },
+    OnClickBack: function(){
+        if(isMobile){
+            $('.Profile-view .back-page').off('click').on('click', function(){
+                sessionStorage.show_landing = 1;
+                window.location.href = baseUrl + "/netwrk/default/home";
+            })
+        }
     }
 };

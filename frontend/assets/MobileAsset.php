@@ -22,7 +22,6 @@ class MobileAsset extends AssetBundle
       'css/font/font.css',
       'css/mobile/landing.css',
       'css/mobile/topic.css',
-      'css/mobile/groups_loc.css',
       'css/mobile/meet.css',
       'css/mobile/setting.css',
       'css/mobile/post.css',
@@ -40,7 +39,12 @@ class MobileAsset extends AssetBundle
       'css/mobile/search.css',
       'css/mobile/dropdown_avatar.css',
       'css/mobile/landing_page.css',
-      'css/mobile/cover_page.css'
+      'css/mobile/cover_page.css',
+      'css/mobile/profile.css',
+      'css/mobile/password_setting.css',
+      'css/mobile/search_settings.css',
+      'css/mobile/profile_info.css',
+      'css/mobile/profile_edit.css',
     ];
     public $js = [
       'js/lib/underscore.js',
@@ -58,6 +62,11 @@ class MobileAsset extends AssetBundle
       'js/controller/create_topic.js',
       'js/controller/meet.js',
       'js/controller/profile.js',
+      'js/controller/user_profile.js',
+      'js/controller/password_setting.js',
+      'js/controller/search_setting.js',
+      'js/controller/profile_info.js',
+      'js/controller/profile_edit.js',
       'js/controller/template.js',
       'js/controller/meet_setting.js',
       'js/controller/create_post.js',
@@ -83,7 +92,8 @@ class MobileAsset extends AssetBundle
       'js/controller/popup_chat.js',
       // 'js/controller/chat_private.js',
       'js/controller/landing_page.js',
-      'js/controller/cover_page.js'
+      'js/controller/cover_page.js',
+      'js/controller/log.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -1187,6 +1187,23 @@ var Ajax ={
 
         return defer.promise();
     },
+    show_user_recent_communities: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/log/get-recent-communities-by-user";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     show_user_groups: function(params) {
         var url,defer = $.Deferred();
 
@@ -1220,6 +1237,57 @@ var Ajax ={
         });
 
         return defer.promise();
-    }
-}
+    },
+    create_log: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/log/create";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'POST',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    delete_log: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/log/delete";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+    get_city_by_id: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/get-city-by-id";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+};
 

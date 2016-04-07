@@ -6,6 +6,18 @@
         <div class="back_page <?php if($data->title) print 'back_help';?>">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
+        <div class="Favorite-btn-wrap">
+            <a href="javascript:" class="btn-favorite" data-object-type="<?php echo 'city'; ?>"
+               data-object-id="<?php echo $city_id; ?>">
+                <span class="favorite-status">
+                    <?php if($is_favorite == true): ?>
+                        Following
+                    <?php else: ?>
+                        Follow
+                    <?php endif; ?>
+                </span>
+            </a>
+        </div>
 
         <div class="title_page">
             <span class="title"><?php if($data->title) print $data->title; else print $data->zipcode?></span>
