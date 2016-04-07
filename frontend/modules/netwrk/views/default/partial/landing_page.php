@@ -129,11 +129,11 @@
 			<div class="panel panel-default favorite-communities" id="panelFavoriteCommunities">
 				<div class="panel-heading top-header">
 					<a data-toggle="collapse" data-target="#collapseFavoriteCommunities"
-					   href="javascript:" class="collapsed">
+					   href="javascript:">
 						<p class="lp-title">Your Following Communities</p>
 					</a>
 				</div>
-				<div id="collapseFavoriteCommunities" class="panel-collapse collapse">
+				<div id="collapseFavoriteCommunities" class="panel-collapse collapse in">
 					<div class="panel-body favorite-communities-content">
 
 						<% if(!_.isEmpty(landing.feeds)) {%>
