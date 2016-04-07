@@ -735,7 +735,8 @@ class DefaultController extends BaseController
             $history_feed = $htf->find()->select('history_feed.*, city.zip_code')
                 ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
                 ->where(['city_id' => $cities])
-                ->orderBy(['created_at'=> SORT_DESC]);
+                ->orderBy(['created_at'=> SORT_DESC])
+                ->limit(20);
 
             //todo: pagination on history feed
             $data_feed = $history_feed->all();
