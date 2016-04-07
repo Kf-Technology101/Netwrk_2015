@@ -87,6 +87,25 @@ class City extends \yii\db\ActiveRecord
         }
     }
 
+    public function SearchCover($input){
+        $limit = Yii::$app->params['LimitCoverResult'];
+
+        if(is_numeric($input)) {
+            return City::find()
+                ->where('zip_code LIKE "'.$input.'%"')
+                ->limit($limit)
+                ->all();
+        } else {
+            return City::find()
+                ->select('city.name, city.state, city.state_abbreviation')
+                ->distinct()
+                ->where('name LIKE "'.$input.'%"')
+                //->where(['like','name',$input])
+                ->limit($limit)
+                ->all();
+        }
+    }
+
     //Get top netwrk have most user
     public function GetTopCityUserJoinGlobal($limit,$state = null){
         $query = new Query();

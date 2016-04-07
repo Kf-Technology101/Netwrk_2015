@@ -1,4 +1,21 @@
 var Ajax ={
+    cover_search: function(params){
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/search/cover-search";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     top_landing: function(){
         var url,defer = $.Deferred();
         url = baseUrl + "/netwrk/default/feed-global";

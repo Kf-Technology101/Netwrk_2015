@@ -191,4 +191,42 @@ class SearchController extends BaseController
         $hash = json_encode($temp);
         return $hash;
     }
+
+    public function actionCoverSearch(){
+        $search = $_POST['text'];
+        $search_results = [];
+
+        $results = City::SearchCover($search);
+
+		foreach ($results as $key => $value) {
+            if(is_numeric($search)) {
+                $city = [
+                    'zipCode'=> $value->zip_code,
+                ];
+            } else {
+                $city = [
+                    'name'=> $value->name,
+                    'state'=> $value->state,
+                    'stateAbbr'=> $value->state_abbreviation
+                ];
+            }
+
+            array_push($search_results, $city);
+        }
+
+        if(is_numeric($search)) {
+            array_unique($search_results);
+            $type = 'zip_code';
+        } else {
+            $type = 'city';
+        }
+
+        $temp =[
+            'cover_result' => $search_results,
+            'result_type' => $type
+        ];
+
+        $hash = json_encode($temp);
+        return $hash;
+    }
 }
