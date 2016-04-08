@@ -533,8 +533,8 @@
 	  	},
 
 	  	getZipcodeAddress: function(service, place, map, type, lat, lng, name_of_place){
-			if(typeof data.results[0] != 'undefined') {
-				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + ',' + lng, function (data) {
+			$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + ',' + lng, function (data) {
+				if(typeof data.results[0] != 'undefined') {
 					var len = data.results[0].address_components.length;
 					var map_data = data.results[0].address_components;
 					for (var i = 0; i < len; i++) {
@@ -547,8 +547,8 @@
 							});
 						}
 					}
-				});
-			}
+				}
+			});
 	  	},
 	  	// End code for get university and government place
 	  	OnEventInfoWindow: function(e){
