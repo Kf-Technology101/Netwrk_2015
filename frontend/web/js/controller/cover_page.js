@@ -159,6 +159,8 @@ var CoverPage = {
 	checkCity: function(zipcode){
 		$.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address="+zipcode ,function(data){
 			var params = data,
+				state = '',
+				stateAbbr = '',
 				country = '';
 
 			if(typeof params.results[0] != 'undefined') {
@@ -167,6 +169,11 @@ var CoverPage = {
 				for (var i = 0; i < len; i++) {
 					if (params.results[0].address_components[i].types[0] == 'country') {
 						country = data.results[0].address_components[i].short_name;
+					}
+
+					if (params.results[0].address_components[i].types[0] == 'administrative_area_level_1') {
+						state = data.results[0].address_components[i].long_name;
+						stateAbbr = data.results[0].address_components[i].short_name;
 					}
 				}
 
@@ -177,8 +184,8 @@ var CoverPage = {
 						'country abbreviation': 'US',
 						'places': [{
 							'place name': params.results[0].address_components[0].long_name,
-							'state': params.results[0].address_components[2].long_name,
-							'state abbreviation': params.results[0].address_components[2].short_name,
+							'state': state,
+							'state abbreviation': stateAbbr,
 							'latitude': params.results[0].geometry.location.lat,
 							'longitude': params.results[0].geometry.location.lng
 						}]

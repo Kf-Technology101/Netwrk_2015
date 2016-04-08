@@ -141,7 +141,7 @@ class Topic extends \yii\db\ActiveRecord
     }
 
     //Get top topic in all netwrk
-    public function GetTopTopicGlobal($limit, $city, $state = null){
+    public function GetTopTopicGlobal($limit, $city, $city_ids = null){
         if ($city != null) {
             $model = Topic::find()
                     ->where('city_id ='.$city)
@@ -150,10 +150,10 @@ class Topic extends \yii\db\ActiveRecord
                     ->all();
         } else {
             // If state is not null then get top topic within that state
-            if($state != null) {
+            if($city_ids != null) {
                 $model = Topic::find()
                     ->joinWith('city')
-                    ->where(['city.state' => $state])
+                    ->where('city.id IN ('.$city_ids.')')
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
