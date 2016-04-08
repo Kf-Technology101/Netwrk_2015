@@ -657,14 +657,36 @@ class DefaultController extends BaseController
 
         $cookies = Yii::$app->request->cookies;
 
+        $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
+        $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
         $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
 
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-            $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$state);
-            $top_topic = Topic::GetTopTopicGlobal($limit, null,$state);
-            $top_city = City::GetTopCityUserJoinGlobal($limit,$state);
-            $top_communities =City::TopHashTag_City($top_city,$limit);
+            $city_ids = '';
+            $cities_array = [];
+
+            if($zip_code != 0) {
+                $cities = City::find()
+                    ->where('zip_code = '.$zip_code)
+                    ->all();
+            } else {
+                $cities = City::find()
+                    ->where('name = "'.$city.'"')
+                    ->andWhere('state = "'.$state.'"')
+                    ->all();
+            }
+
+            foreach ($cities as $key => $value) {
+                array_push($cities_array, $value->id);
+            }
+
+            $city_ids = implode(',',$cities_array);
+
+            $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$city_ids);
+            $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
+            $top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
+            $top_communities = City::TopHashTag_City($top_city,$limit);
             $feeds = json_decode($this->actionGetFeedByUser(), true);
 
             $item = [

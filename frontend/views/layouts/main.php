@@ -51,7 +51,7 @@ if (isset($cookies["isCoverPageVisited"])) {
         <?php if (isset($cookies["isCoverPageVisited"])) : ?>
             var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;
             var isAccepted = <?php echo $isAccepted; ?>;
-            var city = <?php echo $city; ?>;
+            var city = '<?php echo $city; ?>';
             var zipCode = <?php echo $zipCode; ?>;
             var lat = <?php echo $lat; ?>;
             var lng = <?php echo $lng; ?>;
