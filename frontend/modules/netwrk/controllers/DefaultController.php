@@ -687,7 +687,15 @@ class DefaultController extends BaseController
             $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
             $top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
             $top_communities = City::TopHashTag_City($top_city,$limit);
-            $feeds = json_decode($this->actionGetFeedByUser(), true);
+
+            // If user is logged in then get his followed communities feeds
+            if(Yii::$app->user->id) {
+                $feeds = json_decode($this->actionGetFeedByUser(), true);
+            }
+            // else get the feeds for the communities from zip or city entered on cover page
+            else {
+                $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+            }
 
             $item = [
                 'top_post'=> $top_post,
@@ -854,6 +862,63 @@ class DefaultController extends BaseController
         }
         $hash = json_encode($data);
         return $hash;
+    }
+
+    public function actionGetFeedByCities($cities = array()) {
+        $request = 1;//Yii::$app->request->isAjax;
+
+        if($request){
+
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+
+            //fetch history feed of users favorite cities
+            $htf = new HistoryFeed();
+            $history_feed = $htf->find()->select('history_feed.*, city.zip_code')
+                ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
+                ->where('city_id IN ('.$cities.')')
+                ->orderBy(['created_at'=> SORT_DESC]);
+
+            //todo: pagination on history feed
+            $data_feed = $history_feed->all();
+
+            $feeds =[];
+            foreach ($data_feed as $key => $value) {
+                if ($value->type_item == 'post') {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $url_avatar = User::GetUrlAvatar($value->item->user->id,$value->item->user->profile->photo);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'content'=> $value->item->content,
+                        'topic_id' => $value->item->topic_id,
+                        'photo' => $url_avatar,
+                        'city_id'=> $value->item->topic->city_id,
+                        'city_name'=> $value->item->topic->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
+                        'user_id' => $value->item->user_id,
+                        'is_post' => 1
+                    ];
+                } else {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'city_id'=> $value->item->city_id,
+                        'city_name'=> $value->item->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'created_by' => $value->item->user['profile']['first_name']." ".$value->item->user['profile']['last_name'],
+                        'is_post' => 0
+                    ];
+                }
+                $feeds[$value->city_id][] = $item;
+            }
+
+            $hash = json_encode($feeds);
+            return $hash;
+        }
     }
 
 }
