@@ -324,7 +324,7 @@ class DefaultController extends BaseController
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
-        $cities = City::find()->with('topics.posts')->where('id < 2076')->orderBy(['post_count'=> SORT_DESC])->all();
+        $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
         $data = [];
         $img = '/img/icon/map_icon_community_v_2.png';
 

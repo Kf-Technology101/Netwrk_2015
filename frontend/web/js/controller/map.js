@@ -99,12 +99,12 @@
 				      	Map.initializeMarker(e, null, 7);
 			    	});
 				});
-				/*Ajax.get_marker_zoom().then(function(data){
+				Ajax.get_marker_zoom().then(function(data){
 				 	var data_marker = $.parseJSON(data);
 					$.each(data_marker,function(i,e){
 				      	Map.initializeMarker(e, null, 12);
 			    	});
-				});*/
+				});
 				Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
