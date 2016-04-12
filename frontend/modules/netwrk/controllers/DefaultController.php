@@ -834,9 +834,13 @@ class DefaultController extends BaseController
         return $hash;
     }
 
-    public function actionGetZipBoundries()
+    public function actionGetZipBoundaries()
     {
         $result = array();
+        $cookies = Yii::$app->request->cookies;
+
+        $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
+        $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
 
         $zip_code = $this->actionGetCitiesFromCookie('zip_codes');
 
@@ -865,27 +869,24 @@ class DefaultController extends BaseController
         //$data = (json_encode($data[0]->geometry->coordinates));
 
         $return = [];
+        $returnData = new \stdClass();
+        //Adjusted object params according to purchased api
+        $returnData->type = "FeatureCollection";
         foreach ($data as $key => $value) {
-            $returnData = new \stdClass();
-            //Adjusted object params according to purchased api
-            $returnData->type = "FeatureCollection";
-            $returnData->features = array(
-                0 => (object)array(
-                    'type' => 'Feature',
-                    'properties' => (object)array(
-                        'zipCode' => $value,
-                        'city' => 'Washington',
-                        'state' => 'DC'
-                    ),
-                    'geometry' => (object)array(
-                        'type' => 'Polygon',
-                        'coordinates' => $data[$key]->geometry->coordinates
-                    )
+            $returnData->features[$key] = array(
+                'type' => 'Feature',
+                'properties' => (object)array(
+                    'zipCode' => $data[$key]->properties->ZCTA5CE10,
+                    'city' => $city,
+                    'state' => $state
                 ),
+                'geometry' => (object)array(
+                    'type' => $data[$key]->geometry->type,
+                    'coordinates' => $data[$key]->geometry->coordinates
+                )
             );
-            $return[$key] = $returnData;
         }
-        die(json_encode($return));
+        die(json_encode($returnData));
     }
 
     public function actionGetFeedByCities($cities = array()) {

@@ -1309,7 +1309,7 @@ var Ajax ={
     getZipBoundries: function(params) {
         var url,defer = $.Deferred();
 
-        url = baseUrl +"/netwrk/default/get-zip-boundries";
+        url = baseUrl +"/netwrk/default/get-zip-boundaries";
 
         $.ajax({
             url: url,

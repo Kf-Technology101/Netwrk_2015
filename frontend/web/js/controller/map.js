@@ -1186,15 +1186,10 @@
 		},
 
 		showZipBoundries: function() {
-
 			var params = {};
 			Ajax.getZipBoundries(params).then(function(jsonData){
-				//console.log(jsonData);
 				var out = $.parseJSON(jsonData);
-				console.log(out);
-
-				Map.map.data.addGeoJson(out[0]);
-
+				Map.map.data.addGeoJson(out);
 				//styled map
 				Map.map.data.setStyle({
 					fillColor: '#5888ac',
