@@ -230,14 +230,7 @@ class DefaultController extends BaseController
 
     public function actionGetMakerDefaultZoom()
     {
-        $cookies = Yii::$app->request->cookies;
-
-        $state = $cookies->getValue('nw_state');
-
-        if(isset($state))
-            $where = "city.state = '".$state."'";
-        else
-            $where = "city.state = 'Indiana'";
+        $city_ids = $this->actionGetCitiesFromCookie();
 
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
@@ -247,10 +240,9 @@ class DefaultController extends BaseController
             ->leftJoin('topic', 'city.id=topic.city_id')
             ->leftJoin('post', 'topic.id=post.topic_id')
             ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
-            ->where($where)
+            ->where('city.id IN ('.$city_ids.')')
             ->groupBy('city.id')
             ->orderBy('count_user_comment DESC, post_count DESC')
-            ->limit(10)
             ->all();
         $zipcodes = array();
         for ($i=0; $i < count($datas); $i++) {
@@ -657,31 +649,10 @@ class DefaultController extends BaseController
 
         $cookies = Yii::$app->request->cookies;
 
-        $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
-        $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
-        $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
-
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-            $city_ids = '';
-            $cities_array = [];
 
-            if($zip_code != 0) {
-                $cities = City::find()
-                    ->where('zip_code = '.$zip_code)
-                    ->all();
-            } else {
-                $cities = City::find()
-                    ->where('name = "'.$city.'"')
-                    ->andWhere('state = "'.$state.'"')
-                    ->all();
-            }
-
-            foreach ($cities as $key => $value) {
-                array_push($cities_array, $value->id);
-            }
-
-            $city_ids = implode(',',$cities_array);
+            $city_ids = $this->actionGetCitiesFromCookie();
 
             $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$city_ids);
             $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
@@ -951,5 +922,40 @@ class DefaultController extends BaseController
         $data = (json_encode($data[0]->geometry->coordinates));
 
         die($data);
+    }
+
+    public function actionGetCitiesFromCookie($output = 'id'){
+        $cookies = Yii::$app->request->cookies;
+
+        $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
+        $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
+        $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
+
+        $cities_array = [];
+
+        if($zip_code != 0) {
+            $cities = City::find()
+                ->where('zip_code = '.$zip_code)
+                ->all();
+        } else {
+            $cities = City::find()
+                ->where('name = "'.$city.'"')
+                ->andWhere('state = "'.$state.'"')
+                ->all();
+        }
+
+        if($output == 'id') {
+            foreach ($cities as $key => $value) {
+                array_push($cities_array, $value->id);
+            }
+
+            return implode(',',$cities_array);
+        } else {
+            foreach ($cities as $key => $value) {
+                array_push($cities_array, $value->zip_code);
+            }
+
+            return implode(',',$cities_array);
+        }
     }
 }
