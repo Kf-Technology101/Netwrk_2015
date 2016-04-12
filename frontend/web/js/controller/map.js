@@ -99,12 +99,12 @@
 				      	Map.initializeMarker(e, null, 7);
 			    	});
 				});
-				Ajax.get_marker_zoom().then(function(data){
+				/*Ajax.get_marker_zoom().then(function(data){
 				 	var data_marker = $.parseJSON(data);
 					$.each(data_marker,function(i,e){
 				      	Map.initializeMarker(e, null, 12);
 			    	});
-				});
+				});*/
 				Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
@@ -1141,18 +1141,16 @@
 		},
 
 		showZipBoundries: function() {
-			params = {
-				'zip_code': zipCode
-			};
+
+			var params = {};
 			Ajax.getZipBoundries(params).then(function(jsonData){
 				//console.log(jsonData);
 				var out = $.parseJSON(jsonData);
 				console.log(out);
-				data = { "type": "FeatureCollection", "features": [ { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": out}}]};
 
-				console.log(data);
-				Map.map.data.addGeoJson(data);
+				Map.map.data.addGeoJson(out[0]);
 
+				//styled map
 				Map.map.data.setStyle({
 					fillColor: '#5888ac',
 					strokeColor: '#5888ac',

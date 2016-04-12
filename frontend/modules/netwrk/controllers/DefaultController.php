@@ -324,7 +324,7 @@ class DefaultController extends BaseController
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
-        $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
+        $cities = City::find()->with('topics.posts')->where('id < 2076')->orderBy(['post_count'=> SORT_DESC])->all();
         $data = [];
         $img = '/img/icon/map_icon_community_v_2.png';
 
@@ -803,7 +803,7 @@ class DefaultController extends BaseController
     public function actionGetZipBoundries() {
         $result = array();
 
-        $zip_code = $_GET['zip_code'];
+        $zip_code = $_GET['zip_codes'];
 
         $url = "http://boundaries.io/geographies/postal-codes?search=".$zip_code;
 
@@ -827,8 +827,29 @@ class DefaultController extends BaseController
         curl_close($ch);
 
         $data = (array)(json_decode($result));
-        $data = (json_encode($data[0]->geometry->coordinates));
+        //$data = (json_encode($data[0]->geometry->coordinates));
 
-        die($data);
+        $return = [];
+        foreach($data as $key => $value) {
+            $returnData = new \stdClass();
+            //Adjusted object params according to purchased api
+            $returnData->type = "FeatureCollection";
+            $returnData->features = array(
+                0 => (object) array(
+                    'type' => 'Feature',
+                    'properties' => (object) array(
+                        'zipCode' => $value,
+                        'city' => 'Washington',
+                        'state' => 'DC'
+                    ),
+                    'geometry' => (object) array(
+                        'type' => 'Polygon',
+                        'coordinates' => $data[$key]->geometry->coordinates
+                    )
+                ),
+            );
+            $return[$key] = $returnData;
+        }
+        die(json_encode($return));
     }
 }
