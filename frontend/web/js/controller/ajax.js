@@ -1,4 +1,21 @@
 var Ajax ={
+    cover_search: function(params){
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/search/cover-search";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     top_landing: function(){
         var url,defer = $.Deferred();
         url = baseUrl + "/netwrk/default/feed-global";
@@ -294,17 +311,17 @@ var Ajax ={
 
     },
 
-    get_marker_zoom: function(){
+    get_marker_zoom: function(params){
         var url,defer = $.Deferred();
 
         url = baseUrl + "/netwrk/default/get-maker-max-zoom";
 
         $.ajax({
             url: url,
-            // data: params,
+            data: params,
             async: false,
             cache: false,
-            type: 'GET',
+            type: 'POST',
             success: defer.resolve,
             error: defer.reject
         });

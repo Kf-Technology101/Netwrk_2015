@@ -10,7 +10,8 @@ $params = [
     'MaxlenghtContentPostMobile'	=> 70,
     'LimitResultSearch'				=> 2,
     'LimitObjectHoverPopup'			=> 5,
-    'LimitObjectFeedGlobal'			=> 3
+    'LimitObjectFeedGlobal'			=> 3,
+    'LimitCoverResult'              => 10
 ];
 
 return $params;

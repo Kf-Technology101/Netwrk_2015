@@ -87,19 +87,54 @@ class City extends \yii\db\ActiveRecord
         }
     }
 
+    public function SearchCover($input){
+        $limit = Yii::$app->params['LimitCoverResult'];
+
+        if(is_numeric($input)) {
+            return City::find()
+                ->where('zip_code LIKE "'.$input.'%"')
+                ->limit($limit)
+                ->all();
+        } else {
+            return City::find()
+                ->select('city.name, city.state, city.state_abbreviation')
+                ->distinct()
+                ->where('name LIKE "'.$input.'%"')
+                //->where(['like','name',$input])
+                ->limit($limit)
+                ->all();
+        }
+    }
+
     //Get top netwrk have most user
-    public function GetTopCityUserJoinGlobal($limit){
+    public function GetTopCityUserJoinGlobal($limit,$city_ids = null){
         $query = new Query();
-        $data = $query ->select('c.id as city_id ,c.name as city_name, c.office as office_name,c.zip_code as zip_code,t.id as topic_id,t.title as topic_name ,p.id as post_id,ws.msg, count( DISTINCT ws.user_id) as user_join')
-                       ->from('ws_messages ws')
-                       ->leftJoin('post p', 'p.id=ws.post_id')
-                       ->leftJoin('topic t', 't.id=p.topic_id')
-                       ->leftJoin('city c','c.id = t.city_id')
-                       ->where(['not',['p.topic_id'=> null]])
-                       ->groupBy('c.id')
-                       ->orderBy('user_join DESC')
-                       ->limit($limit)
-                       ->all();
+
+        // If state is not null then get top city user join within that state
+        if($city_ids != null) {
+            $data = $query ->select('c.id as city_id ,c.name as city_name, c.office as office_name,c.zip_code as zip_code,t.id as topic_id,t.title as topic_name ,p.id as post_id,ws.msg, count( DISTINCT ws.user_id) as user_join')
+                ->from('ws_messages ws')
+                ->leftJoin('post p', 'p.id=ws.post_id')
+                ->leftJoin('topic t', 't.id=p.topic_id')
+                ->innerJoin('city c',"(c.id = t.city_id AND c.id IN ('.$city_ids.'))")
+                ->where(['not',['p.topic_id'=> null]])
+                ->groupBy('c.id')
+                ->orderBy('user_join DESC')
+                ->limit($limit)
+                ->all();
+        } else {
+            $data = $query ->select('c.id as city_id ,c.name as city_name, c.office as office_name,c.zip_code as zip_code,t.id as topic_id,t.title as topic_name ,p.id as post_id,ws.msg, count( DISTINCT ws.user_id) as user_join')
+                ->from('ws_messages ws')
+                ->leftJoin('post p', 'p.id=ws.post_id')
+                ->leftJoin('topic t', 't.id=p.topic_id')
+                ->leftJoin('city c','c.id = t.city_id')
+                ->where(['not',['p.topic_id'=> null]])
+                ->groupBy('c.id')
+                ->orderBy('user_join DESC')
+                ->limit($limit)
+                ->all();
+        }
+
         return $data;
     }
 

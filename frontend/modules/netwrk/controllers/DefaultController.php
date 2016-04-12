@@ -33,14 +33,18 @@ class DefaultController extends BaseController
     }
 
     public function actionSetCoverCookie(){
-        $zip_code = $_GET['post_code'];
+        $zip_code = ($_GET['post_code']) ? $_GET['post_code'] : 0;
         $lat = $_GET['places'][0]['latitude'];
         $lng = $_GET['places'][0]['longitude'];
+        $city = $_GET['places'][0]['place name'];
         $state = $_GET['places'][0]['state'];
         $state_abbr = $_GET['places'][0]['state abbreviation'];
 
         $c = Yii::$app->response->cookies;
+
         $cookie = new Cookie(['name'=>'nw_zipCode', 'value'=> $zip_code, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_city', 'value'=> $city, 'expire'=> (time()+(365*86400))]);
         $c->add($cookie);
         $cookie = new Cookie(['name'=>'nw_lat', 'value'=> $lat, 'expire'=> (time()+(365*86400))]);
         $c->add($cookie);
@@ -226,6 +230,8 @@ class DefaultController extends BaseController
 
     public function actionGetMakerDefaultZoom()
     {
+        $city_ids = $this->actionGetCitiesFromCookie();
+
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
         $query = new Query();
@@ -234,9 +240,9 @@ class DefaultController extends BaseController
             ->leftJoin('topic', 'city.id=topic.city_id')
             ->leftJoin('post', 'topic.id=post.topic_id')
             ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
+            ->where('city.id IN ('.$city_ids.')')
             ->groupBy('city.id')
             ->orderBy('count_user_comment DESC, post_count DESC')
-            ->limit(10)
             ->all();
         $zipcodes = array();
         for ($i=0; $i < count($datas); $i++) {
@@ -322,9 +328,23 @@ class DefaultController extends BaseController
 
     public function actionGetMakerMaxZoom()
     {
+        $swLat = $_POST['swLat'];
+        $neLat = $_POST['neLat'];
+
+        $swLng = $_POST['swLng'];
+        $neLng = $_POST['neLng'];
+
+        $geo_where = '(lat >= '.$swLat.' AND lat <= '.$neLat.' AND lng >= '.$swLng.' AND lng <= '.$neLng.')';
+
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
-        $cities = City::find()->with('topics.posts')->orderBy(['post_count'=> SORT_DESC])->all();
+
+        $cities = City::find()
+            ->where($geo_where)
+            ->with('topics.posts')
+            ->orderBy(['post_count'=> SORT_DESC])
+            ->all();
+
         $data = [];
         $img = '/img/icon/map_icon_community_v_2.png';
 
@@ -626,13 +646,27 @@ class DefaultController extends BaseController
 
     public function actionFeedGlobal(){
         $request = Yii::$app->request->isAjax;
+
+        $cookies = Yii::$app->request->cookies;
+
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-            $top_post = Post::GetTopPostUserJoinGlobal($limit,null);
-            $top_topic = Topic::GetTopTopicGlobal($limit, null);
-            $top_city = City::GetTopCityUserJoinGlobal($limit);
-            $top_communities =City::TopHashTag_City($top_city,$limit);
-            $feeds = json_decode($this->actionGetFeedByUser(), true);
+
+            $city_ids = $this->actionGetCitiesFromCookie();
+
+            $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$city_ids);
+            $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
+            $top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
+            $top_communities = City::TopHashTag_City($top_city,$limit);
+
+            // If user is logged in then get his followed communities feeds
+            if(Yii::$app->user->id) {
+                $feeds = json_decode($this->actionGetFeedByUser(), true);
+            }
+            // else get the feeds for the communities from zip or city entered on cover page
+            else {
+                $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+            }
 
             $item = [
                 'top_post'=> $top_post,
@@ -800,12 +834,13 @@ class DefaultController extends BaseController
         return $hash;
     }
 
-    public function actionGetZipBoundries() {
+    public function actionGetZipBoundries()
+    {
         $result = array();
 
-        $zip_code = $_GET['zip_codes'];
+        $zip_code = $this->actionGetCitiesFromCookie('zip_codes');
 
-        $url = "http://boundaries.io/geographies/postal-codes?search=".$zip_code;
+        $url = "http://boundaries.io/geographies/postal-codes?search=" . urlencode($zip_code);
 
         $headers[] = 'Accept: application/json';
         $headers[] = 'Connection: Keep-Alive';
@@ -819,7 +854,7 @@ class DefaultController extends BaseController
         // Will return the response, if false it print the response
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         // Set the url
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
 
         // Execute
         $result = curl_exec($ch);
@@ -830,19 +865,19 @@ class DefaultController extends BaseController
         //$data = (json_encode($data[0]->geometry->coordinates));
 
         $return = [];
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $returnData = new \stdClass();
             //Adjusted object params according to purchased api
             $returnData->type = "FeatureCollection";
             $returnData->features = array(
-                0 => (object) array(
+                0 => (object)array(
                     'type' => 'Feature',
-                    'properties' => (object) array(
+                    'properties' => (object)array(
                         'zipCode' => $value,
                         'city' => 'Washington',
                         'state' => 'DC'
                     ),
-                    'geometry' => (object) array(
+                    'geometry' => (object)array(
                         'type' => 'Polygon',
                         'coordinates' => $data[$key]->geometry->coordinates
                     )
@@ -851,5 +886,97 @@ class DefaultController extends BaseController
             $return[$key] = $returnData;
         }
         die(json_encode($return));
+    }
+
+    public function actionGetFeedByCities($cities = array()) {
+        $request = 1;//Yii::$app->request->isAjax;
+
+        if($request){
+
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+
+            //fetch history feed of users favorite cities
+            $htf = new HistoryFeed();
+            $history_feed = $htf->find()->select('history_feed.*, city.zip_code')
+                ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
+                ->where('city_id IN ('.$cities.')')
+                ->orderBy(['created_at'=> SORT_DESC]);
+
+            //todo: pagination on history feed
+            $data_feed = $history_feed->all();
+
+            $feeds =[];
+            foreach ($data_feed as $key => $value) {
+                if ($value->type_item == 'post') {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $url_avatar = User::GetUrlAvatar($value->item->user->id,$value->item->user->profile->photo);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'content'=> $value->item->content,
+                        'topic_id' => $value->item->topic_id,
+                        'photo' => $url_avatar,
+                        'city_id'=> $value->item->topic->city_id,
+                        'city_name'=> $value->item->topic->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
+                        'user_id' => $value->item->user_id,
+                        'is_post' => 1
+                    ];
+                } else {
+                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                    $item = [
+                        'id' => $value->item->id,
+                        'title'=> $value->item->title,
+                        'city_id'=> $value->item->city_id,
+                        'city_name'=> $value->item->city->name,
+                        'created_at' => $value->created_at,
+                        'appear_day' => $num_date,
+                        'created_by' => $value->item->user['profile']['first_name']." ".$value->item->user['profile']['last_name'],
+                        'is_post' => 0
+                    ];
+                }
+                $feeds[$value->city_id][] = $item;
+            }
+
+            $hash = json_encode($feeds);
+            return $hash;
+        }
+    }
+
+    public function actionGetCitiesFromCookie($output = 'id'){
+        $cookies = Yii::$app->request->cookies;
+
+        $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
+        $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
+        $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
+
+        $cities_array = [];
+
+        if($zip_code != 0) {
+            $cities = City::find()
+                ->where('zip_code = '.$zip_code)
+                ->all();
+        } else {
+            $cities = City::find()
+                ->where('name = "'.$city.'"')
+                ->andWhere('state = "'.$state.'"')
+                ->all();
+        }
+
+        if($output == 'id') {
+            foreach ($cities as $key => $value) {
+                array_push($cities_array, $value->id);
+            }
+
+            return implode(',',$cities_array);
+        } else {
+            foreach ($cities as $key => $value) {
+                array_push($cities_array, $value->zip_code);
+            }
+
+            return implode(',',$cities_array);
+        }
     }
 }

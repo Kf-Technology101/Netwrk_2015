@@ -12,7 +12,7 @@
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
-	  	zoom: 12,
+	  	zoom: 10,
 	  	// center: new google.maps.LatLng(39.7662195,-86.441277),
 	  	center:'',
 	  	zoom7: [],
@@ -21,32 +21,51 @@
 		zoomBlueDot: 18,
 		remove_poi : [
 			{
-				stylers: [
-					{ hue: "#0078ff" },
-					{ saturation: -20 }
+				"featureType":"landscape",
+				"stylers":[
+					{"hue":"#FFBB00"},
+					{"saturation":43.400000000000006},
+					{"lightness":37.599999999999994},
+					{"gamma":1}
 				]
 			},{
-				featureType: "road",
-				elementType: "labels",
-				stylers: [
-					{ visibility: "off" }
+				"featureType":"road.highway",
+				"stylers":[
+					{"hue":"#FFC200"},
+					{"saturation":-61.8},
+					{"lightness":45.599999999999994},
+					{"gamma":1}
 				]
 			},{
-				featureType: "road",
-				elementType: "geometry",
-				stylers: [
-					{ lightness: 100 }
+				"featureType":"road.arterial",
+				"stylers":[
+					{"hue":"#FF0300"},
+					{"saturation":-100},
+					{"lightness":51.19999999999999},
+					{"gamma":1}
 				]
 			},{
-				featureType: "poi",
-				stylers: [
-					{ visibility: "off" }
+				"featureType":"road.local",
+				"stylers":[
+					{"hue":"#FF0300"},
+					{"saturation":-100},
+					{"lightness":52},
+					{"gamma":1}
 				]
 			},{
-				featureType: "administrative",
-				elementType: "geometry.stroke",
-				stylers: [
-					{ color: "#5888ac" }
+				"featureType":"water",
+				"stylers":[
+					{"hue":"#0078FF"},
+					{"saturation":-13.200000000000003},
+					{"lightness":2.4000000000000057},
+					{"gamma":1}]
+			},{
+				"featureType":"poi",
+				"stylers":[
+					{"hue":"#00FF6A"},
+					{"saturation":-1.0989010989011234},
+					{"lightness":11.200000000000017},
+					{"gamma":1}
 				]
 			}
 		],
@@ -99,13 +118,8 @@
 				      	Map.initializeMarker(e, null, 7);
 			    	});
 				});
-				Ajax.get_marker_zoom().then(function(data){
-				 	var data_marker = $.parseJSON(data);
-					$.each(data_marker,function(i,e){
-				      	Map.initializeMarker(e, null, 12);
-			    	});
-				});
-				Map.mapBoundaries(Map.map);
+
+				//Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
@@ -142,7 +156,11 @@
 
 	  	main: function(){
 	      	if (typeof google !== "undefined") {
-	        	Map.center = new google.maps.LatLng(39.7662195,-86.441277);
+				if(lat && lng){
+					Map.center = new google.maps.LatLng(lat, lng);
+ 				}else{
+					Map.center = new google.maps.LatLng(39.7662195,-86.441277);
+				}
 	        	google.maps.event.addDomListener(window, 'load', Map.initialize());
 	      	}
 	  	},
@@ -769,6 +787,33 @@
 			google.maps.event.addListener(map, 'bounds_changed', function() {
 				console.log(map.getZoom());
 				Map.requestPositionFunction(map);
+			});
+
+			google.maps.event.addListener(map, 'idle', function(){
+				var currentZoom = map.getZoom();
+
+				if(currentZoom >= 12 ){
+					var bounds = Map.map.getBounds(),
+							ne = bounds.getNorthEast(),
+							sw = bounds.getSouthWest();
+
+					var params = {'swLat':sw.lat(), 'swLng':sw.lng(), 'neLat': ne.lat(), 'neLng':ne.lng()};
+
+					Ajax.get_marker_zoom(params).then(function(data){
+						var data_marker = $.parseJSON(data);
+						$.each(data_marker,function(i,e){
+							Map.initializeMarker(e, null, 12);
+						});
+					});
+
+					//Map.deleteNetwrk(map);
+					Map.loadMapLabel(0);
+					for (var i = 0; i < Map.zoom12.length; i++) {
+						var m = Map.zoom12[i];
+						m.marker.setMap(map);
+						Map.markers.push(m.marker);
+					}
+				}
 			});
 		},
 
