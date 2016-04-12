@@ -1187,18 +1187,11 @@
 		},
 
 		showZipBoundries: function() {
-			params = {
-				'zip_code': zipCode
-			};
+			var params = {};
 			Ajax.getZipBoundries(params).then(function(jsonData){
-				//console.log(jsonData);
 				var out = $.parseJSON(jsonData);
-				console.log(out);
-				data = { "type": "FeatureCollection", "features": [ { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": out}}]};
-
-				console.log(data);
-				Map.map.data.addGeoJson(data);
-
+				Map.map.data.addGeoJson(out);
+				//styled map
 				Map.map.data.setStyle({
 					fillColor: '#5888ac',
 					strokeColor: '#5888ac',
