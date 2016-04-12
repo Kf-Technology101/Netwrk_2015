@@ -100,7 +100,7 @@
 			    	});
 				});
 
-				Map.mapBoundaries(Map.map);
+				//Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
