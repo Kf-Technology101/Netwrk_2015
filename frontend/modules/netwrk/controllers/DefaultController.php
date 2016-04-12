@@ -913,13 +913,17 @@ class DefaultController extends BaseController
 
         if($output == 'id') {
             foreach ($cities as $key => $value) {
-                array_push($cities_array, $value->id);
+                if(!in_array($value->id, $cities_array)){
+                    array_push($cities_array, $value->id);
+                }
             }
 
             return implode(',',$cities_array);
         } else {
             foreach ($cities as $key => $value) {
-                array_push($cities_array, $value->zip_code);
+                if(!in_array($value->zip_code, $cities_array)){
+                    array_push($cities_array, $value->zip_code);
+                }
             }
 
             return implode(',',$cities_array);
