@@ -834,6 +834,87 @@ class DefaultController extends BaseController
         return $hash;
     }
 
+    public function actionGetZipBoundaries()
+    {
+        $return = [];
+
+        // all zip codes from cookie
+        $zip_codes_data = $this->actionGetCitiesFromCookie('zip');
+
+        // Array of zip codes
+        $zip_array = explode(',',$zip_codes_data);
+
+        // Split the array into 15 zip codes array
+        $zip_split_array = array_chunk($zip_array, 15);
+
+        // Get boundaries data for each set of 15 zip codes
+        foreach ($zip_split_array as $zip_split) {
+            $zip_codes = implode(',',$zip_split);
+
+            $data = $this->actionGetZipBoundariesFromCurl($zip_codes);
+            $returnData = $this->actionFormatBoundariesData($data);
+
+            // If features section is not null then only add to return array
+            if(sizeof($returnData->features) != 0)
+                array_push($return, $returnData);
+        }
+
+        die(json_encode($return));
+    }
+
+    public function actionFormatBoundariesData($data){
+        $cookies = Yii::$app->request->cookies;
+
+        $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
+        $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
+
+        $returnData = new \stdClass();
+
+        //Adjusted object params according to api output
+        $returnData->type = "FeatureCollection";
+        foreach ($data as $key => $value) {
+            $returnData->features[$key] = array(
+                'type' => 'Feature',
+                'properties' => (object)array(
+                    'zipCode' => $data[$key]->properties->ZCTA5CE10,
+                    'city' => $city,
+                    'state' => $state
+                ),
+                'geometry' => (object)array(
+                    'type' => $data[$key]->geometry->type,
+                    'coordinates' => $data[$key]->geometry->coordinates
+                )
+            );
+        }
+
+        return $returnData;
+    }
+
+    public function actionGetZipBoundariesFromCurl($zip_code){
+        $url = "http://boundaries.io/geographies/postal-codes?search=" . urlencode($zip_code);
+
+        $headers[] = 'Accept: application/json';
+        $headers[] = 'Connection: Keep-Alive';
+        $headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
+
+        //Initiate curl
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        // Disable SSL verification
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // Will return the response, if false it print the response
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // Set the url
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        // Execute
+        $result = curl_exec($ch);
+        // Closing
+        curl_close($ch);
+
+        return (array)(json_decode($result));
+    }
+
     public function actionGetFeedByCities($cities = array()) {
         $request = 1;//Yii::$app->request->isAjax;
 

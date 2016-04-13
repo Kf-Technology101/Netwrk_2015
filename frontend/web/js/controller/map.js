@@ -124,6 +124,7 @@
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
+				Map.showZipBoundries();
 				Common.hideLoader();
 			});
 		    // Map.insertLocalUniversity();
@@ -1182,5 +1183,26 @@
 				Map.map.setZoom(zoom);
 			}
 			Map.map.setCenter(new google.maps.LatLng(lat, lng));
+		},
+
+		showZipBoundries: function() {
+			var params = {};
+			Ajax.getZipBoundaries(params).then(function(jsonData){
+				var out = $.parseJSON(jsonData);
+
+				for (var key in out) {
+					if (out.hasOwnProperty(key)) {
+						//console.log(out[key]);
+						Map.map.data.addGeoJson(out[key]);
+					}
+				}
+				/*Map.map.data.addGeoJson(out);*/
+				//styled map
+				Map.map.data.setStyle({
+					fillColor: '#5888ac',
+					strokeColor: '#5888ac',
+					strokeWeight: 2
+				});
+			});
 		}
 	}
