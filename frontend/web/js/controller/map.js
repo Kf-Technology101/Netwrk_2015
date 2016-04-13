@@ -1187,9 +1187,16 @@
 
 		showZipBoundries: function() {
 			var params = {};
-			Ajax.getZipBoundries(params).then(function(jsonData){
+			Ajax.getZipBoundaries(params).then(function(jsonData){
 				var out = $.parseJSON(jsonData);
-				Map.map.data.addGeoJson(out);
+
+				for (var key in out) {
+					if (out.hasOwnProperty(key)) {
+						//console.log(out[key]);
+						Map.map.data.addGeoJson(out[key]);
+					}
+				}
+				/*Map.map.data.addGeoJson(out);*/
 				//styled map
 				Map.map.data.setStyle({
 					fillColor: '#5888ac',
