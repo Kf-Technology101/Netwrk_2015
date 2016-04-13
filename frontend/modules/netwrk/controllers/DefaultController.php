@@ -855,8 +855,10 @@ class DefaultController extends BaseController
             $returnData = $this->actionFormatBoundariesData($data);
 
             // If features section is not null then only add to return array
-            if(sizeof($returnData->features) != 0)
-                array_push($return, $returnData);
+            if(property_exists($returnData, 'features')) {
+                if(sizeof($returnData->features) != 0)
+                    array_push($return, $returnData);
+            }
         }
 
         die(json_encode($return));
