@@ -935,6 +935,8 @@ class DefaultController extends BaseController
                     'zipCode' => $data[$key]->properties->ZCTA5CE10,
                     'city' => $city,
                     'state' => $state,
+                    'lat' => $data[$key]->properties->INTPTLAT10,
+                    'lng' => $data[$key]->properties->INTPTLON10,
                     'type' => $type
                 ),
                 'geometry' => (object)array(

@@ -839,6 +839,25 @@
 										});
 									}
 								});
+
+								map.data.addListener('mouseover', function(event) {
+									var zipCode = event.feature.R.zipCode,
+										zipLat = event.feature.R.lat,
+										zipLng = event.feature.R.lng;
+
+									var marker = new google.maps.Marker({
+										position: new google.maps.LatLng(zipLat, zipLng),
+										icon: 'http://dummyimage.com/50x30/5888ac/ffffff&text='+zipCode,
+										zIndex: 9999,
+										map: map
+									});
+
+									map.data.addListener('mouseout', function(event) {
+										setTimeout(function() {
+											marker.setVisible(false);
+										},600);
+									});
+								});
 							}
 						}
 					});
