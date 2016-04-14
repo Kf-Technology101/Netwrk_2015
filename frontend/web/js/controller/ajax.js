@@ -1341,6 +1341,23 @@ var Ajax ={
         });
 
         return defer.promise();
+    },
+
+    getZipWeatherData: function(params) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/api/get-zip-weather-data";
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
+
 };
 
