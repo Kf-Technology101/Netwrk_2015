@@ -19,6 +19,7 @@ class ApiController extends BaseController
         $zip_code = $zipcode ? $zipcode : $_GET['zip_code'];
         $country = $_GET['country'];
 
+        return array();
 
         $url = 'api.openweathermap.org/data/2.5/weather?zip='.$zip_code.','.$country;
 

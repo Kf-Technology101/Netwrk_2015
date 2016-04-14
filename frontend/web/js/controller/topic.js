@@ -441,7 +441,7 @@ var Topic = {
     getTemplateFeed: function(parent,data){
         var json = $.parseJSON(data);
         console.log(json);
-        if(json.top_post.length > 0 || json.top_topic.length > 0 || json.feed.length > 0 || json.weather_feed.length > 0){
+        if(json.top_post.length > 0 || json.top_topic.length > 0 || json.feed.length > 0){
 
             parent.find('.no-data').hide();
             var list_template = _.template($( "#feed_list" ).html());
