@@ -11,6 +11,7 @@ use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\HistoryFeed;
+use frontend\modules\netwrk\controllers\ApiController;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -311,12 +312,16 @@ class TopicController extends BaseController
         $pageSize = isset($_GET['size']) && $_GET['size'] != null ? $_GET['size'] : null;
         $page = isset($_GET['page']) && $_GET['page'] != null ? $_GET['page'] : null;
         $request = Yii::$app->request->isAjax;
+
+        $cty = City::findOne($city);
+        $zipcode = $cty->zip_code;
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
 
             $top_post = Post::GetTopPostUserJoinGlobal($limit, $city);
             $top_topic = Topic::GetTopTopicGlobal($limit, $city);
             $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
+            $weather_feed[] = ApiController::actionGetZipWeatherData($zipcode);
 
             $htf = new HistoryFeed();
             $query_feed = $htf->find()->where('city_id = '. $city)->orderBy(['created_at'=> SORT_DESC]);
@@ -363,7 +368,8 @@ class TopicController extends BaseController
             $item = [
                 'top_post'=> $top_post,
                 'top_topic'=> $top_topic,
-                'feed' => $feeds
+                'feed' => $feeds,
+                'weather_feed' => $weather_feed
             ];
 
             $hash = json_encode($item);
