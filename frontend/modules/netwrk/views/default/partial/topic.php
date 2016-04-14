@@ -280,7 +280,8 @@
     <!--<div class="weather-feed-content"></div>-->
 
   </div>
-  <div class="weather-data clearfix">
+
+  <!--<div class="weather-data clearfix">
       <section class="left-section pull-left">
           <div class="group-title">Weather Data</div>
           <ul class="list-unstyled">
@@ -324,7 +325,7 @@
               </li>
           </ul>
       </section>
-  </div>
+  </div>-->
 </script>
 <script id="top_feed" type="text/x-underscore-template">
   <%
