@@ -1323,6 +1323,24 @@ var Ajax ={
         });
 
         return defer.promise();
+    },
+
+    getVisibleZipBoundaries: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/get-visible-zip-boundaries";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 };
 

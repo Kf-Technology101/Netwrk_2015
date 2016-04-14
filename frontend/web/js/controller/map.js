@@ -124,7 +124,7 @@
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
-				Map.showZipBoundries();
+				Map.showZipBoundaries();
 				Common.hideLoader();
 			});
 		    // Map.insertLocalUniversity();
@@ -792,13 +792,13 @@
 			google.maps.event.addListener(map, 'idle', function(){
 				var currentZoom = map.getZoom();
 
+				var bounds = Map.map.getBounds(),
+						ne = bounds.getNorthEast(),
+						sw = bounds.getSouthWest();
+
+				var params = {'swLat':sw.lat(), 'swLng':sw.lng(), 'neLat': ne.lat(), 'neLng':ne.lng()};
+
 				if(currentZoom >= 12 ){
-					var bounds = Map.map.getBounds(),
-							ne = bounds.getNorthEast(),
-							sw = bounds.getSouthWest();
-
-					var params = {'swLat':sw.lat(), 'swLng':sw.lng(), 'neLat': ne.lat(), 'neLng':ne.lng()};
-
 					Ajax.get_marker_zoom(params).then(function(data){
 						var data_marker = $.parseJSON(data);
 						$.each(data_marker,function(i,e){
@@ -813,6 +813,41 @@
 						m.marker.setMap(map);
 						Map.markers.push(m.marker);
 					}
+				}
+
+				if(currentZoom >= 12){
+					Ajax.getVisibleZipBoundaries(params).then(function(jsonData){
+						var out = $.parseJSON(jsonData);
+
+						for (var key in out) {
+							if (out.hasOwnProperty(key)) {
+								Map.map.data.addGeoJson(out[key]);
+
+								map.data.setStyle(function(feature) {
+									if(feature.R.type != 'selected') {
+										return /** @type {google.maps.Data.StyleOptions} */({
+											fillColor: '#ffffff',
+											fillOpacity: 0.0,
+											strokeColor: '#5888ac',
+											strokeWeight: 2
+										});
+									} else {
+										return /** @type {google.maps.Data.StyleOptions} */({
+											fillColor: '#5888ac',
+											strokeColor: '#5888ac',
+											strokeWeight: 2
+										});
+									}
+								});
+							}
+						}
+					});
+				} else {
+					map.data.forEach(function(feature) {
+						if(feature.R.type != 'selected'){
+							map.data.remove(feature);
+						}
+					});
 				}
 			});
 		},
@@ -1185,7 +1220,7 @@
 			Map.map.setCenter(new google.maps.LatLng(lat, lng));
 		},
 
-		showZipBoundries: function() {
+		showZipBoundaries: function() {
 			var params = {};
 			Ajax.getZipBoundaries(params).then(function(jsonData){
 				var out = $.parseJSON(jsonData);
@@ -1194,15 +1229,15 @@
 					if (out.hasOwnProperty(key)) {
 						//console.log(out[key]);
 						Map.map.data.addGeoJson(out[key]);
+
+						//styled map
+						Map.map.data.setStyle({
+							fillColor: '#5888ac',
+							strokeColor: '#5888ac',
+							strokeWeight: 2
+						});
 					}
 				}
-				/*Map.map.data.addGeoJson(out);*/
-				//styled map
-				Map.map.data.setStyle({
-					fillColor: '#5888ac',
-					strokeColor: '#5888ac',
-					strokeWeight: 2
-				});
 			});
 		}
-	}
+	};

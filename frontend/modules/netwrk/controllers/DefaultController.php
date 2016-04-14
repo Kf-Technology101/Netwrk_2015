@@ -852,7 +852,7 @@ class DefaultController extends BaseController
             $zip_codes = implode(',',$zip_split);
 
             $data = $this->actionGetZipBoundariesFromCurl($zip_codes);
-            $returnData = $this->actionFormatBoundariesData($data);
+            $returnData = $this->actionFormatBoundariesData($data,'selected');
 
             // If features section is not null then only add to return array
             if(property_exists($returnData, 'features')) {
@@ -864,7 +864,61 @@ class DefaultController extends BaseController
         die(json_encode($return));
     }
 
-    public function actionFormatBoundariesData($data){
+    public function actionGetVisibleZipBoundaries(){
+        $swLat = $_GET['swLat'];
+        $neLat = $_GET['neLat'];
+
+        $swLng = $_GET['swLng'];
+        $neLng = $_GET['neLng'];
+
+        $cities_array = array();
+        $return = [];
+
+        $geo_where = '(lat >= '.$swLat.' AND lat <= '.$neLat.' AND lng >= '.$swLng.' AND lng <= '.$neLng.')';
+
+        $cities = City::find()
+            ->where($geo_where)
+            ->all();
+
+        // all zip codes from cookie
+        $zip_codes_cookie = $this->actionGetCitiesFromCookie('zip');
+
+        // Array of zip codes from cookie
+        $zip_cookie_array = explode(',',$zip_codes_cookie);
+
+        foreach ($cities as $key => $value) {
+            if(!in_array($value->zip_code, $cities_array) && !in_array($value->zip_code, $zip_cookie_array)) {
+                array_push($cities_array, $value->zip_code);
+            }
+        }
+
+        // all zip codes from visible area
+        $zip_codes_data = implode(',',$cities_array);
+
+        // Array of zip codes
+        $zip_array = explode(',',$zip_codes_data);
+
+        // Split the array into 15 zip codes array
+        $zip_split_array = array_chunk($zip_array, 15);
+
+        // Get boundaries data for each set of 15 zip codes
+        foreach ($zip_split_array as $zip_split) {
+            $zip_codes = implode(',',$zip_split);
+
+            $data = $this->actionGetZipBoundariesFromCurl($zip_codes);
+            $returnData = $this->actionFormatBoundariesData($data,'visible');
+
+            // If features section is not null then only add to return array
+            if(property_exists($returnData, 'features')) {
+                if(sizeof($returnData->features) != 0)
+                    array_push($return, $returnData);
+            }
+        }
+
+        die(json_encode($return));
+    }
+
+    public function actionFormatBoundariesData($data, $type){
         $cookies = Yii::$app->request->cookies;
 
         $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
@@ -880,7 +934,8 @@ class DefaultController extends BaseController
                 'properties' => (object)array(
                     'zipCode' => $data[$key]->properties->ZCTA5CE10,
                     'city' => $city,
-                    'state' => $state
+                    'state' => $state,
+                    'type' => $type
                 ),
                 'geometry' => (object)array(
                     'type' => $data[$key]->geometry->type,
