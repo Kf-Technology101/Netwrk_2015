@@ -12,7 +12,7 @@
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
-	  	zoom: 10,
+	  	zoom: 13,
 	  	// center: new google.maps.LatLng(39.7662195,-86.441277),
 	  	center:'',
 	  	zoom7: [],
