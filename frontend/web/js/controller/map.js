@@ -830,7 +830,7 @@
 			Ajax.get_marker_groups_loc(typeof groupId != "undefined" ? groupId : null).then(function(data){
 				console.log('get marker group loc');
 				data_marker = $.parseJSON(data);
-				console.log(data_marker);
+				//console.log(data_marker);
 				$.each(data_marker,function(i,e){
 					var img = '/img/icon/map_icon_community_v_2.png';
 
@@ -841,13 +841,16 @@
 						group_id: parseInt(e.id)
 					});
 
-					console.log("marker", marker);
+					//console.log("marker", marker);
 					google.maps.event.addListener(marker, 'click', (function(marker, i) {
 						return function(){
-							if(!isMobile){
-								infowindow.close();
-							}
+							console.log(marker.group_id);
 							Group_Loc.initialize(marker.group_id);
+							if(!isMobile){
+								if (typeof infowindow != "undefined") {
+									infowindow.close();
+								}
+							}
 						};
 					})(marker, i));
 
