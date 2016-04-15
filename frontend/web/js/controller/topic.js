@@ -843,6 +843,45 @@ var Topic = {
                     target.find('.favorite-status').html(json.status);
                 }
 
+                var cityId = json.data.city_id;
+
+                if(json.status == 'Following'){
+                    Map.map.data.setStyle(function(feature) {
+                        if(feature.R.type == 'visible' && feature.R.id != cityId) {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#ffffff',
+                                fillOpacity: 0.0,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        } else {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#5888ac',
+                                fillOpacity: Map.fillOpacity,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        }
+                    });
+                } else {
+                    Map.map.data.setStyle(function(feature) {
+                        if(feature.R.type == 'visible' || feature.R.id == cityId) {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#ffffff',
+                                fillOpacity: 0.0,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        } else {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#5888ac',
+                                fillOpacity: Map.fillOpacity,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        }
+                    });
+                }
                 console.log(json);
             });
 

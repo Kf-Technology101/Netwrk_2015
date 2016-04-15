@@ -12,60 +12,44 @@
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
-	  	zoom: 10,
+	  	zoom: 13,
+		markerZoom:14,
 	  	// center: new google.maps.LatLng(39.7662195,-86.441277),
 	  	center:'',
 	  	zoom7: [],
 	  	zoom12: [],
+		zoom13: [],
+		fillOpacity: 0.3,
 	  	timeout: '',
 		zoomBlueDot: 18,
 		remove_poi : [
 			{
-				"featureType":"landscape",
-				"stylers":[
-					{"hue":"#FFBB00"},
-					{"saturation":43.400000000000006},
-					{"lightness":37.599999999999994},
-					{"gamma":1}
+				stylers: [
+					{ hue: "#0078ff" },
+					{ saturation: -20 }
 				]
 			},{
-				"featureType":"road.highway",
-				"stylers":[
-					{"hue":"#FFC200"},
-					{"saturation":-61.8},
-					{"lightness":45.599999999999994},
-					{"gamma":1}
+				featureType: "road",
+				elementType: "labels",
+				stylers: [
+					{ visibility: "off" }
 				]
 			},{
-				"featureType":"road.arterial",
-				"stylers":[
-					{"hue":"#FF0300"},
-					{"saturation":-100},
-					{"lightness":51.19999999999999},
-					{"gamma":1}
+				featureType: "road",
+				elementType: "geometry",
+				stylers: [
+					{ lightness: 100 }
 				]
 			},{
-				"featureType":"road.local",
-				"stylers":[
-					{"hue":"#FF0300"},
-					{"saturation":-100},
-					{"lightness":52},
-					{"gamma":1}
+				featureType: "poi",
+				stylers: [
+					{ visibility: "off" }
 				]
 			},{
-				"featureType":"water",
-				"stylers":[
-					{"hue":"#0078FF"},
-					{"saturation":-13.200000000000003},
-					{"lightness":2.4000000000000057},
-					{"gamma":1}]
-			},{
-				"featureType":"poi",
-				"stylers":[
-					{"hue":"#00FF6A"},
-					{"saturation":-1.0989010989011234},
-					{"lightness":11.200000000000017},
-					{"gamma":1}
+				featureType: "administrative",
+				elementType: "geometry.stroke",
+				stylers: [
+					{ color: "#5888ac" }
 				]
 			}
 		],
@@ -206,9 +190,12 @@
 		    var json,data_marker;
 		    var current_zoom = map.getZoom();
 
-		    if (current_zoom < 12) {
+		    if (current_zoom < Map.zoom) {
 			    data_marker = Map.zoom7;
-		    } else if (current_zoom >= 12) {
+		    } else if (current_zoom = Map.zoom) {
+				data_marker = Map.zoom13;
+				Map.loadMapLabel(0);
+			} else if (current_zoom >= Map.markerZoom) {
 			    data_marker = Map.zoom12;
 				Map.loadMapLabel(0);
 		    }
@@ -370,12 +357,12 @@
 		    })(marker));
 
 			if (map == null) {
-				if (currentZoom < 12 ) {
+				if (currentZoom < Map.zoom ) {
 					Map.zoom7.push({
 						marker: marker
 						// label: label
 					});
-				} else {
+				}else {
 					Map.zoom12.push({
 						marker: marker,
 						label: label
@@ -630,17 +617,17 @@
 			            lng: position.coords.longitude
 			        	};
 			            map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
-			            if(map.getZoom() < 12) {
-			            	map.setZoom(12);
+			            if(map.getZoom() < Map.markerZoom) {
+			            	map.setZoom(Map.markerZoom);
 			        	}else{
 			        		map.setZoom(18);
 			        	}
 			        });
 		      	} else {
 			        var zoom_current = map.getZoom();
-			        if (zoom_current < 12) {
-				        Map.smoothZoom(map, 12, zoom_current, true);
-				        map.zoom = 12;
+			        if (zoom_current < Map.markerZoom) {
+				        Map.smoothZoom(map, Map.markerZoom, zoom_current, true);
+				        map.zoom = Map.markerZoom;
 			        }else{
 			        	Map.smoothZoom(map, 18, zoom_current, true);
 				        map.zoom = 18;
@@ -779,6 +766,44 @@
 			}
 		},
 
+		createZipLabelMarker: function(cid,name_of_place,zipCode,zipLat,zipLng) {
+			var marker = new google.maps.Marker({
+				map: Map.map,
+				position: new google.maps.LatLng(zipLat, zipLng),
+				icon: 'http://dummyimage.com/50x30/5888ac/ffffff&text='+zipCode,
+				city_id: parseInt(cid),
+				place_name: name_of_place,
+				zIndex: 9999
+			});
+
+			google.maps.event.addListener(marker, 'click', (function(marker){
+				return function(){
+					sessionStorage.lat = marker.position.lat();
+					sessionStorage.lng = marker.position.lng();
+
+					Topic.initialize(marker.city_id);
+
+					if(UserLogin) {
+						//create log: city view by user
+						var params = {'type': 'city','event': 'CITY_VIEW', 'user_id': UserLogin, 'city_id': marker.city_id};
+						Log.create(params);
+					}
+				};
+			})(marker));
+
+			Map.zoom13.push({
+				marker: marker
+			});
+		},
+
+		clearZipLabelMarker: function(){
+			// Remove the zip code label markers
+			for (var i = 0; i < Map.zoom13.length; i++) {
+				var m = Map.zoom13[i];
+				m.marker.setMap(null);
+			}
+		},
+
 		requestPosition: function(map) {
 			Map.requestPosTimeout = setTimeout(function() {
 				Map.requestPositionFunction(map);
@@ -798,11 +823,11 @@
 
 				var params = {'swLat':sw.lat(), 'swLng':sw.lng(), 'neLat': ne.lat(), 'neLng':ne.lng()};
 
-				if(currentZoom >= 12 ){
+				if(currentZoom >= Map.markerZoom ){
 					Ajax.get_marker_zoom(params).then(function(data){
 						var data_marker = $.parseJSON(data);
 						$.each(data_marker,function(i,e){
-							Map.initializeMarker(e, null, 12);
+							Map.initializeMarker(e, null, Map.markerZoom);
 						});
 					});
 
@@ -815,7 +840,7 @@
 					}
 				}
 
-				if(currentZoom >= 12){
+				if(currentZoom >= Map.zoom){
 					Ajax.getVisibleZipBoundaries(params).then(function(jsonData){
 						var out = $.parseJSON(jsonData);
 
@@ -823,41 +848,37 @@
 							if (out.hasOwnProperty(key)) {
 								Map.map.data.addGeoJson(out[key]);
 
-								map.data.setStyle(function(feature) {
-									if(feature.R.type != 'selected') {
+								Map.map.data.setStyle(function(feature) {
+									if(feature.R.type == 'selected' || feature.R.type == 'Followed') {
 										return /** @type {google.maps.Data.StyleOptions} */({
-											fillColor: '#ffffff',
-											fillOpacity: 0.0,
+											fillColor: '#5888ac',
+											fillOpacity: Map.fillOpacity,
 											strokeColor: '#5888ac',
 											strokeWeight: 2
 										});
 									} else {
 										return /** @type {google.maps.Data.StyleOptions} */({
 											fillColor: '#5888ac',
+											fillOpacity: 0.0,
 											strokeColor: '#5888ac',
 											strokeWeight: 2
 										});
 									}
 								});
 
-								map.data.addListener('mouseover', function(event) {
-									var zipCode = event.feature.R.zipCode,
-										zipLat = event.feature.R.lat,
-										zipLng = event.feature.R.lng;
+								if(currentZoom == Map.zoom){
+									for(var featureKey in out[key].features) {
+										var cid = out[key].features[featureKey].properties.id,
+												name_of_place = out[key].features[featureKey].properties.city,
+												zipCode = out[key].features[featureKey].properties.zipCode,
+												zipLat = out[key].features[featureKey].properties.lat,
+												zipLng = out[key].features[featureKey].properties.lng;
 
-									var marker = new google.maps.Marker({
-										position: new google.maps.LatLng(zipLat, zipLng),
-										icon: 'http://dummyimage.com/50x30/5888ac/ffffff&text='+zipCode,
-										zIndex: 9999,
-										map: map
-									});
-
-									map.data.addListener('mouseout', function(event) {
-										setTimeout(function() {
-											marker.setVisible(false);
-										},600);
-									});
-								});
+										Map.createZipLabelMarker(cid,name_of_place,zipCode,zipLat,zipLng);
+									}
+								} else {
+									Map.clearZipLabelMarker();
+								}
 							}
 						}
 					});
@@ -999,13 +1020,13 @@
 	  	eventZoom: function(map){
 		    var mode = true;
 		    map.addListener('dblclick', function(event){
-				if(map.getZoom() == 7 || (map.getZoom() > 7 && map.getZoom() < 12)){
-					Map.smoothZoom(map, 12, map.getZoom() + 1, true);
-					map.zoom = 12;
+				if(map.getZoom() == 7 || (map.getZoom() > 7 && map.getZoom() < Map.markerZoom)){
+					Map.smoothZoom(map, Map.markerZoom, map.getZoom() + 1, true);
+					map.zoom = Map.markerZoom;
 					if(isMobile){
-						sessionStorage.map_zoom = 12;
+						sessionStorage.map_zoom = Map.markerZoom;
 					}
-				} else if(map.getZoom() == 12 || (map.getZoom() > 12 && map.getZoom() < 18)){
+				} else if(map.getZoom() == Map.markerZoom || (map.getZoom() > Map.markerZoom && map.getZoom() < 18)){
 					Map.smoothZoom(map, 18, map.getZoom() + 1, true);
 					map.zoom = 18;
 					if(isMobile){
@@ -1026,7 +1047,7 @@
 	    			var remove_poi = Map.remove_poi;
 				    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    		}
-	    		if (currentZoom == 12 && Map.markers.length <= 10) {
+	    		if (currentZoom == Map.markerZoom && Map.markers.length <= 10) {
 	    			Map.deleteNetwrk(map);
 				    Map.loadMapLabel(0);
 					for (var i = 0; i < Map.zoom12.length; i++) {
@@ -1034,7 +1055,25 @@
 						m.marker.setMap(map);
 					    Map.markers.push(m.marker);
 				    }
-	    		} else if (currentZoom == 11 && Map.markers.length > 10) {
+				} else if(currentZoom == Map.zoom ){
+					Map.deleteNetwrk(map);
+					Map.hideMapLabel();
+					for (var i = 0; i < Map.zoom13.length; i++) {
+						var m = Map.zoom13[i];
+						m.marker.setMap(map);
+						Map.markers.push(m.marker);
+					}
+				} else if(currentZoom < Map.zoom ){
+					Map.deleteNetwrk(map);
+					Map.hideMapLabel();
+					Map.clearZipLabelMarker();
+
+					for (var i = 0; i < Map.zoom7.length; i++) {
+						var m = Map.zoom7[i];
+						m.marker.setMap(map);
+						Map.markers.push(m.marker);
+					}
+				} else if (currentZoom == 11 && Map.markers.length > 10) {
 	    			Map.deleteNetwrk(map);
 					Map.hideMapLabel();		
 					for (var i = 0; i < Map.zoom7.length; i++) {
@@ -1139,7 +1178,7 @@
 			google.maps.event.addListener(map, 'click', function(e) {
 				Map.closeInfoWindow();
 				Map.reset_data();
-				if (map.getZoom() == 12 ){
+				if (map.getZoom() == Map.markerZoom ){
 					Map.geocoder(e.latLng);
 				}
 				Map.latLng = e.latLng;
@@ -1230,7 +1269,7 @@
 
 		/* Set map position center using lat and lng do zoom */
 		SetMapCenter: function(lat,lng,zoom) {
-			zoom = zoom || 12;
+			zoom = zoom || Map.zoom;
 			lat = lat || '39.7662195';
 			lng = lng || '-86.441277';
 			if (zoom && zoom != 'undefined') {
@@ -1252,9 +1291,25 @@
 						//styled map
 						Map.map.data.setStyle({
 							fillColor: '#5888ac',
+							fillOpacity: Map.fillOpacity,
 							strokeColor: '#5888ac',
 							strokeWeight: 2
 						});
+
+
+						if(Map.map.getZoom() == Map.zoom){
+							for(var featureKey in out[key].features) {
+								var cid = out[key].features[featureKey].properties.id,
+										name_of_place = out[key].features[featureKey].properties.city,
+										zipCode = out[key].features[featureKey].properties.zipCode,
+										zipLat = out[key].features[featureKey].properties.lat,
+										zipLng = out[key].features[featureKey].properties.lng;
+
+								Map.createZipLabelMarker(cid,name_of_place,zipCode,zipLat,zipLng);
+							}
+						} else {
+							Map.clearZipLabelMarker();
+						}
 					}
 				}
 			});
