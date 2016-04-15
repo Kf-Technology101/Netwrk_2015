@@ -929,14 +929,24 @@ class DefaultController extends BaseController
         //Adjusted object params according to api output
         $returnData->type = "FeatureCollection";
         foreach ($data as $key => $value) {
+            // Get city details
+            $query = new Query();
+
+            $city = $query ->select('c.*')
+                ->from('city c')
+                ->where(['c.zip_code' => $data[$key]->properties->ZCTA5CE10])
+                ->andwhere(['c.office_type' => null])
+                ->one();
+
             $returnData->features[$key] = array(
                 'type' => 'Feature',
                 'properties' => (object)array(
+                    'id' => $city['id'],
                     'zipCode' => $data[$key]->properties->ZCTA5CE10,
-                    'city' => $city,
-                    'state' => $state,
-                    'lat' => $data[$key]->properties->INTPTLAT10,
-                    'lng' => $data[$key]->properties->INTPTLON10,
+                    'city' => $city['name'],
+                    'state' => $city['state'],
+                    'lat' => $city['lat'],
+                    'lng' => $city['lng'],
                     'type' => $type
                 ),
                 'geometry' => (object)array(
