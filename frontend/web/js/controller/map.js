@@ -849,17 +849,17 @@
 								Map.map.data.addGeoJson(out[key]);
 
 								Map.map.data.setStyle(function(feature) {
-									if(feature.R.type != 'selected') {
+									if(feature.R.type == 'selected' || feature.R.type == 'Followed') {
 										return /** @type {google.maps.Data.StyleOptions} */({
-											fillColor: '#ffffff',
-											fillOpacity: 0.0,
+											fillColor: '#5888ac',
+											fillOpacity: Map.fillOpacity,
 											strokeColor: '#5888ac',
 											strokeWeight: 2
 										});
 									} else {
 										return /** @type {google.maps.Data.StyleOptions} */({
 											fillColor: '#5888ac',
-											fillOpacity: Map.fillOpacity,
+											fillOpacity: 0.0,
 											strokeColor: '#5888ac',
 											strokeWeight: 2
 										});

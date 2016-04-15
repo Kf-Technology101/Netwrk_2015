@@ -926,17 +926,22 @@ class DefaultController extends BaseController
 
         $returnData = new \stdClass();
 
+        $userId = (Yii::$app->user->id) ? Yii::$app->user->id : 0;
+
         //Adjusted object params according to api output
         $returnData->type = "FeatureCollection";
         foreach ($data as $key => $value) {
             // Get city details
             $query = new Query();
 
-            $city = $query ->select('c.*')
+            $city = $query ->select('c.*, f.status')
                 ->from('city c')
+                ->leftJoin('favorite f', '(f.user_id = '.$userId.' AND f.city_id = c.id AND f.type = "city")')
                 ->where(['c.zip_code' => $data[$key]->properties->ZCTA5CE10])
                 ->andwhere(['c.office_type' => null])
                 ->one();
+
+            $zip_type = ($city['status'] == '1') ? 'Followed' : $type;
 
             $returnData->features[$key] = array(
                 'type' => 'Feature',
@@ -947,7 +952,7 @@ class DefaultController extends BaseController
                     'state' => $city['state'],
                     'lat' => $city['lat'],
                     'lng' => $city['lng'],
-                    'type' => $type
+                    'type' => $zip_type
                 ),
                 'geometry' => (object)array(
                     'type' => $data[$key]->geometry->type,
