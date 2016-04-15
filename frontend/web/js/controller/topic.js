@@ -440,8 +440,7 @@ var Topic = {
 
     getTemplateFeed: function(parent,data){
         var json = $.parseJSON(data);
-        console.log(json);
-        if(json.top_post.length > 0 || json.top_topic.length > 0 || json.feed.length > 0 || json.weather_feed.length > 0){
+        if(json.top_post.length > 0 || json.top_topic.length > 0 || json.feed.length > 0 || (json.weather_feed != undefined || json.weather_feed.length > 0)){
 
             parent.find('.no-data').hide();
             var list_template = _.template($( "#feed_list" ).html());
@@ -636,7 +635,7 @@ var Topic = {
 
     ResetModalTabFeed: function(){
         var parent = $('#modal_topic').find('#tab_feed');
-        parent.find('.top-post,.top-topic,.top-feed, .weather-data').remove();
+        parent.find('.top-post,.top-topic,.top-feed, .weather-feed-content').remove();
         parent.find('.no-data').show();
         Topic.tab_current = 'feed';
         Topic.feed.paging = 1;

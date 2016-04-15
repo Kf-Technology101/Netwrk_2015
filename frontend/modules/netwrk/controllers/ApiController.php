@@ -15,13 +15,12 @@ class ApiController extends BaseController
 
     public function actionGetZipWeatherData($zipcode = null)
     {
-        $return = [];
         $zip_code = $zipcode ? $zipcode : $_GET['zip_code'];
-        $country = $_GET['country'];
+        $country = $_GET['country'] ? $_GET['country'] : 'US';
+        $apiKey = 'd77ea09760491f2fec46d1bbfd6bba3c';
 
-
-        $url = 'api.openweathermap.org/data/2.5/weather?zip='.$zip_code.','.$country;
-
+        $url = "api.openweathermap.org/data/2.5/weather?APPID=$apiKey&zip=$zip_code,$country";
+        //return array();
         //$url = "http://boundaries.io/geographies/postal-codes?search=" . urlencode($zip_code);
         $headers[] = 'Accept: application/json';
         $headers[] = 'Connection: Keep-Alive';
@@ -37,11 +36,14 @@ class ApiController extends BaseController
         curl_setopt($ch, CURLOPT_URL, $url);
         // Execute
         $result = curl_exec($ch);
-
-        //var_dump($result);
         // Closing
         curl_close($ch);
-        return (array)json_decode($result);
+
+        if($result) {
+            return (array)json_decode($result);
+        } else {
+            return array();
+        }
 
         //Todo: on ajax call
         //$result = $this->actionGetCurl($url);
