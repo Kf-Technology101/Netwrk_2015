@@ -7,6 +7,11 @@ var Topic = {
         zipcode:''
 
     },
+    city: {
+        id: '',
+        zipcode: '',
+        country: 'US'
+    },
     list:{
         post:{
             paging:1,
@@ -79,6 +84,7 @@ var Topic = {
         if (isMobile) {
             Topic.show_page_topic(city,params);
         }else {
+            Topic.getCityById(city);
             Topic.OnShowModalPost();
             Topic.close_modal();
             Topic.show_modal_topic(city,params);
@@ -92,7 +98,6 @@ var Topic = {
 
             //init tooltip on topic list
             Common.InitToolTip();
-            Topic.getCityById(city);
         }
     },
 
@@ -387,6 +392,7 @@ var Topic = {
         var params = {'city': self.data.city,'zipcode': self.data.zipcode, 'filter': self.data.filter,'size': self.data.size,'page':Topic.feed.paging};
         parent.show();
         Ajax.show_feed(params).then(function(data){
+            console.log('In show_feed');
             if(!isMobile){
                 self.getTemplateModal(cityname,data);
             }
@@ -400,6 +406,9 @@ var Topic = {
             Topic.OnClickAvatarTopPostFeed();
             Topic.OnClickAvatarTopFeed();
             Topic.OnClickChatTopPostFeed();
+
+            //todo: get weather data of that zipcode.
+            //Topic.getZipWeatherData();
         });
     },
 
@@ -431,7 +440,7 @@ var Topic = {
 
     getTemplateFeed: function(parent,data){
         var json = $.parseJSON(data);
-        if(json.feed.length > 0){
+        if(json.top_post.length > 0 || json.top_topic.length > 0 || json.feed.length > 0 || (json.weather_feed != undefined || json.weather_feed.length > 0)){
             parent.find('.no-data').hide();
             var list_template = _.template($( "#feed_list" ).html());
             var append_html = list_template({feed: json});
@@ -625,7 +634,7 @@ var Topic = {
 
     ResetModalTabFeed: function(){
         var parent = $('#modal_topic').find('#tab_feed');
-        parent.find('.top-post,.top-topic,.top-feed').remove();
+        parent.find('.top-post,.top-topic,.top-feed, .weather-feed-content').remove();
         parent.find('.no-data').show();
         Topic.tab_current = 'feed';
         Topic.feed.paging = 1;
@@ -834,6 +843,45 @@ var Topic = {
                     target.find('.favorite-status').html(json.status);
                 }
 
+                var cityId = json.data.city_id;
+
+                if(json.status == 'Following'){
+                    Map.map.data.setStyle(function(feature) {
+                        if(feature.R.type == 'visible' && feature.R.id != cityId) {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#ffffff',
+                                fillOpacity: 0.0,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        } else {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#5888ac',
+                                fillOpacity: Map.fillOpacity,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        }
+                    });
+                } else {
+                    Map.map.data.setStyle(function(feature) {
+                        if(feature.R.type == 'visible' || feature.R.id == cityId) {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#ffffff',
+                                fillOpacity: 0.0,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        } else {
+                            return /** @type {google.maps.Data.StyleOptions} */({
+                                fillColor: '#5888ac',
+                                fillOpacity: Map.fillOpacity,
+                                strokeColor: '#5888ac',
+                                strokeWeight: 2
+                            });
+                        }
+                    });
+                }
                 console.log(json);
             });
 
@@ -901,9 +949,34 @@ var Topic = {
             var lat = json.lat;
             var lng = json.lng;
             console.log(json);
+            Topic.city.id = json.id;
+            Topic.city.zipcode = json.zip_code;
 
             //set center the map using city lat and lng
             Map.SetMapCenter(lat, lng);
         });
+    },
+    getZipWeatherData: function(zipcode) {
+        var parent = $('#modal_topic,#show-topic').find('#tab_feed');
+
+        zipcode = Topic.city.zipcode || '94040';
+        var params = {'zip_code': zipcode, 'country': 'US'};
+        //todo: fetch weather api data
+        Ajax.getZipWeatherData(params).then(function(data){
+            var json = $.parseJSON(data);
+            console.log(json);
+            Topic.getTemplateZipWeatherFeed(parent,json);
+        });
+    },
+    getTemplateZipWeatherFeed: function(parent,data){
+        var json = data;
+        var target = parent.find('.top-feed .weather-feed-content');
+
+        var list_template = _.template($("#weather-feed").html());
+        var append_html = list_template({data: json});
+
+        target.append(append_html);
     }
+
+
 };

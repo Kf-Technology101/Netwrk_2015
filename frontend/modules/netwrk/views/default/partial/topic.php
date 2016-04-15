@@ -204,6 +204,7 @@
     </script>
 
 <script id="feed_list" type="text/x-underscore-template" >
+  <% if(feed.top_post.length > 0) { %>
   <div class="top-post">
     <div class="top-header">
       <p class="lp-title">Top Posts</p>
@@ -236,44 +237,117 @@
                 </span>
               </div>
             </div>
-      <%
-        });
-      %>
+      <% }); %>
     </div>
   </div>
-  <div class="top-topic">
-    <div class="top-header">
-      <p class="lp-title">Top Topics</p>
-      <p class="lp-description">Browse these topics of conversations</p>
-    </div>
-    <div class="top-topic-content ">
-      <%
-        var len_topic = feed.top_post.length;
-        _.each(feed.top_topic,function(e,i){
-          if(i == len_topic - 1){ %>
-              <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
-          <% }else{ %>
-              <div class="topic-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
-          <% } %>
-                <p class="topic-title"><%= e.name %></p>
-                <div class="post-counter">
-                  <%= e.post_count %>
-                  <span class="arrow"><i class="fa fa-angle-right"></i></span>
-                  <i class="fa fa-file-text"></i>
-                </div>
-              </div>
-      <%
-        });
-      %>
+  <% } %>
+  <% if(feed.top_topic.length > 0) { %>
+      <div class="top-topic">
+        <div class="top-header">
+          <p class="lp-title">Top Topics</p>
+          <p class="lp-description">Browse these topics of conversations</p>
+        </div>
+        <div class="top-topic-content ">
+          <%
+            var len_topic = feed.top_post.length;
+            _.each(feed.top_topic,function(e,i){
+              if(i == len_topic - 1){ %>
+                  <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
+              <% }else{ %>
+                  <div class="topic-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
+              <% } %>
+                    <p class="topic-title"><%= e.name %></p>
+                    <div class="post-counter">
+                      <%= e.post_count %>
+                      <span class="arrow"><i class="fa fa-angle-right"></i></span>
+                      <i class="fa fa-file-text"></i>
+                    </div>
+                  </div>
+          <%
+            });
+          %>
 
-    </div>
-  </div>
+        </div>
+      </div>
+ <% } %>
+ <% if(feed.feed.length > 0) { %>
   <div class="top-feed">
     <div class="top-header">
       <p class="lp-title">Feed</p>
     </div>
     <div class="top-feed-content"></div>
   </div>
+  <% } %>
+
+  <% if(feed.weather_feed != undefined || feed.weather_feed.length > 0) { %>
+  <div class="weather-feed-content">
+      <div class="top-header">
+          <p class="lp-title">Weather feed</p>
+          <p class="lp-description">Check weather details this location</p>
+      </div>
+      <% _.each(feed.weather_feed, function(weatherData,i){ %>
+          <% if(!(typeof weatherData == undefined || weatherData == null || $.isEmptyObject(weatherData))) { %>
+              <div class="weather-data clearfix">
+                  <section class="left-section pull-left">
+                      <div class="group-title">Weather Data</div>
+                      <% if(!$.isEmptyObject(weatherData.main)) {%>
+                          <ul class="list-unstyled">
+                              <li>
+                                  <span class="weather-key">Temp</span>:
+                                  <span class="weather-value">
+                                      <b>
+                                          <%= (parseFloat(weatherData.main.temp) - parseFloat(273)).toPrecision(2) %> &#8451;
+                                      </b>
+                                  </span>
+                              </li>
+                              <li>
+                                  <span class="weather-key">Humidity</span>: <span class="weather-value"><b><%= weatherData.main.humidity %> %</b></span>
+                              </li>
+                              <li>
+                                  <span class="weather-key">Pressure</span>: <span class="weather-value"><b><%= weatherData.main.pressure %> hpa</b></span>
+                              </li>
+                              <li>
+                                  <span class="weather-key">Temp Min</span>:
+                                  <span class="weather-value">
+                                      <b>
+                                          <%= (parseFloat(weatherData.main.temp_min) - parseFloat(273)).toPrecision(2)%> &#8451;
+                                      </b>
+                                  </span>
+                              </li>
+                              <li>
+                                  <span class="weather-key">Temp Max</span>:
+                                  <span class="weather-value">
+                                  <b>
+                                      <%= (parseFloat(weatherData.main.temp_max) - parseFloat(273)).toPrecision(2)%> &#8451;
+                                  </b>
+                                  </span>
+                              </li>
+                          </ul>
+                      <% } %>
+                  </section>
+                  <% if(!$.isEmptyObject(weatherData.coord) || weatherData.weather.length > 0 ) {%>
+                  <section class="right-section pull-right">
+                      <div class="group-title">Weather Description</div>
+                      <ul class="list-unstyled">
+                          <li>
+                              <span class="weather-key">Description</span>: <span class="weather-value"><b><%= weatherData.weather[0].description %></b></span>
+                          </li>
+                          <li>
+                              <span class="weather-key">Latitude</span>: <span class="weather-value"><b><%= weatherData.coord.lat %></b></span>
+                          </li>
+                          <li>
+                              <span class="weather-key">Longitude</span>: <span class="weather-value"><b><%= weatherData.coord.lon %></b></span>
+                          </li>
+                      </ul>
+                  </section>
+                  <% } %>
+              </div>
+          <% } else {%>
+            No weather data available.
+          <% } %>
+      <% }); %>
+  </div>
+  <% } %>
 </script>
 <script id="top_feed" type="text/x-underscore-template">
   <%
@@ -315,4 +389,50 @@
     });
   %>
 </script>
-
+<!--<script id="weather-feed" type="text/x-underscore-template">
+    <div class="weather-data clearfix">
+        <section class="left-section pull-left">
+            <div class="group-title">Weather Data</div>
+            <ul class="list-unstyled">
+                <li>
+                    <span class="title">Temp</span>:
+                    <b>
+                        <%= (parseFloat(data.main.temp) - parseFloat(273)).toPrecision(2) %> &#8451;
+                    </b>
+                </li>
+                <li>
+                    <span class="title">Humidity</span>: <b><%= data.main.humidity %> %</b>
+                </li>
+                <li>
+                    <span class="title">Pressure</span>: <b><%= data.main.pressure %> hpa</b>
+                </li>
+                <li>
+                    <span class="title">Temp Min</span>:
+                    <b>
+                        <%= (parseFloat(data.main.temp_min) - parseFloat(273)).toPrecision(2)%> &#8451;
+                    </b>
+                </li>
+                <li>
+                    <span class="title">Temp Max</span>:
+                    <b>
+                        <%= (parseFloat(data.main.temp_max) - parseFloat(273)).toPrecision(2)%> &#8451;
+                    </b>
+                </li>
+            </ul>
+        </section>
+        <section class="right-section pull-right">
+            <div class="group-title">Weather Description</div>
+            <ul class="list-unstyled">
+                <li>
+                    <span class="title">description</span>: <b><%= data.weather[0].description %></b>
+                </li>
+                <li>
+                    <span class="title">Latitude</span>: <b><%= data.coord.lat %></b>
+                </li>
+                <li>
+                    <span class="title">Longitude</span>: <b><%= data.coord.lon %></b>
+                </li>
+            </ul>
+        </section>
+    </div>
+</script>-->
