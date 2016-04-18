@@ -322,6 +322,7 @@ class TopicController extends BaseController
             $top_topic = Topic::GetTopTopicGlobal($limit, $city);
             $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
             $weather_feed[] = ApiController::actionGetZipWeatherData($zipcode);
+            $job_feed = (array)json_decode(ApiController::actionGetZipJobData($zipcode));
 
             $htf = new HistoryFeed();
             $query_feed = $htf->find()->where('city_id = '. $city)->orderBy(['created_at'=> SORT_DESC]);
@@ -369,7 +370,8 @@ class TopicController extends BaseController
                 'top_post'=> $top_post,
                 'top_topic'=> $top_topic,
                 'feed' => $feeds,
-                'weather_feed' => $weather_feed
+                'weather_feed' => $weather_feed,
+                'job_feed' => $job_feed
             ];
 
             $hash = json_encode($item);

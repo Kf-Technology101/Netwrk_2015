@@ -634,7 +634,7 @@ var Topic = {
 
     ResetModalTabFeed: function(){
         var parent = $('#modal_topic').find('#tab_feed');
-        parent.find('.top-post,.top-topic,.top-feed, .weather-feed-content').remove();
+        parent.find('.top-post,.top-topic,.top-feed, .weather-feed-content, .job-feed-content').remove();
         parent.find('.no-data').show();
         Topic.tab_current = 'feed';
         Topic.feed.paging = 1;

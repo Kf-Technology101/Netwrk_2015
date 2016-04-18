@@ -279,7 +279,7 @@
   </div>
   <% } %>
 
-  <% if(feed.weather_feed != undefined || feed.weather_feed.length > 0) { %>
+  <% if(feed.weather_feed.length > 0) { %>
   <div class="weather-feed-content">
       <div class="top-header">
           <p class="lp-title">Weather feed</p>
@@ -348,6 +348,26 @@
       <% }); %>
   </div>
   <% } %>
+  <% if(!$.isEmptyObject(feed.job_feed) && feed.job_feed.results.length > 0) { %>
+      <div class="job-feed-content">
+          <section class="top-header">
+              <p class="lp-title">Job feed</p>
+              <p class="lp-description">Check weather details this location</p>
+          </section>
+          <section class="job-details">
+              <% _.each(feed.job_feed.results,function(item, i){ %>
+              <div class="job-feed-row">
+                  <div>
+                      <span class="job-title"><%= item.jobtitle %></span>
+                      <span><a class="job-url" href="<%= item.url %>" target="_blank">View</a></span>
+                  </div>
+                  <div><span class="company"><%= item.company %></span> - <span class="location"><%= item.formattedLocation %></span></div>
+                  <div><span class="snippet"><%= item.snippet %></span></div>
+              </div>
+              <% }); %>
+          </section>
+      </div>
+  <% } %>
 </script>
 <script id="top_feed" type="text/x-underscore-template">
   <%
@@ -389,50 +409,4 @@
     });
   %>
 </script>
-<!--<script id="weather-feed" type="text/x-underscore-template">
-    <div class="weather-data clearfix">
-        <section class="left-section pull-left">
-            <div class="group-title">Weather Data</div>
-            <ul class="list-unstyled">
-                <li>
-                    <span class="title">Temp</span>:
-                    <b>
-                        <%= (parseFloat(data.main.temp) - parseFloat(273)).toPrecision(2) %> &#8451;
-                    </b>
-                </li>
-                <li>
-                    <span class="title">Humidity</span>: <b><%= data.main.humidity %> %</b>
-                </li>
-                <li>
-                    <span class="title">Pressure</span>: <b><%= data.main.pressure %> hpa</b>
-                </li>
-                <li>
-                    <span class="title">Temp Min</span>:
-                    <b>
-                        <%= (parseFloat(data.main.temp_min) - parseFloat(273)).toPrecision(2)%> &#8451;
-                    </b>
-                </li>
-                <li>
-                    <span class="title">Temp Max</span>:
-                    <b>
-                        <%= (parseFloat(data.main.temp_max) - parseFloat(273)).toPrecision(2)%> &#8451;
-                    </b>
-                </li>
-            </ul>
-        </section>
-        <section class="right-section pull-right">
-            <div class="group-title">Weather Description</div>
-            <ul class="list-unstyled">
-                <li>
-                    <span class="title">description</span>: <b><%= data.weather[0].description %></b>
-                </li>
-                <li>
-                    <span class="title">Latitude</span>: <b><%= data.coord.lat %></b>
-                </li>
-                <li>
-                    <span class="title">Longitude</span>: <b><%= data.coord.lon %></b>
-                </li>
-            </ul>
-        </section>
-    </div>
-</script>-->
+
