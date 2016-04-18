@@ -693,9 +693,11 @@
 
 					var content = '<div id="iw-container" class="cgm-container" >' +
 						'<div class="iw-content">' +
-						'<div class="iw-subTitle" id="cm-coords"></div>' +
-						'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +
-						'<div class="iw-subTitle"><span class="post-title"><a id="create-location-group" class="a-create-group" href="javascript:" onclick="Map.CreateLocationGroup();">Create group</a></span></div>' +
+						/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
+						/*'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
+						'<div class="iw-subTitle"><span class="post-title">' +
+							'<a id="create-location-group" class="a-create-group" href="javascript:" onclick="Map.CreateLocationGroup();"><h4>Have a local</h4></a>' +
+						'</span></div>' +
 						'</div>' +
 						'<div class="iw-bottom-gradient"></div>' +
 						'</div>';
