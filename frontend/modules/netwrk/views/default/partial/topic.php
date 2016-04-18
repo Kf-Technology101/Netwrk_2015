@@ -167,7 +167,7 @@
        data-object-id="<%= city_id %>">
         <span class="favorite-status">
             <% if(is_favorite == true){%>
-                Following
+                Followed
             <% }else{ %>
                 Follow
             <% } %>
