@@ -845,7 +845,7 @@ var Topic = {
 
                 var cityId = json.data.city_id;
 
-                if(json.status == 'Following'){
+                if(json.status == 'Followed'){
                     Map.map.data.setStyle(function(feature) {
                         if(feature.R.type == 'visible' && feature.R.id != cityId) {
                             return /** @type {google.maps.Data.StyleOptions} */({

@@ -37,7 +37,7 @@ class FavoriteController extends BaseController
             } else {
                 $favorite->status = 1;
                 $favorite->save();
-                $returnData['status'] = 'Following';
+                $returnData['status'] = 'Followed';
             }
         } else {
             $favorite = new Favorite;
@@ -49,7 +49,7 @@ class FavoriteController extends BaseController
             $favorite->status = 1;
             $favorite->created_at = date('Y-m-d H:i:s');
             $favorite->save();
-            $returnData['status'] = 'Following';
+            $returnData['status'] = 'Followed';
         }
 
         if ($favorite) {
