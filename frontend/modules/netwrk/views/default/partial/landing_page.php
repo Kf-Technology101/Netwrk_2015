@@ -130,7 +130,7 @@
 				<div class="panel-heading top-header">
 					<a data-toggle="collapse" data-target="#collapseFavoriteCommunities"
 					   href="javascript:">
-						<p class="lp-title">Your Following Communities</p>
+						<p class="lp-title">Your Followed Areas</p>
 					</a>
 				</div>
 				<div id="collapseFavoriteCommunities" class="panel-collapse collapse in">
