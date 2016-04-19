@@ -98,9 +98,11 @@ var ChatInbox = {
 		}
 	},
 
-	getTemplateChatPrivate: function(parent,data, user_id){
+	getTemplateChatPrivate: function(parent,data, user_id, chat_list_user){
 		if (user_id == UserLogin) {
-			if ($("#chat_private_list" ).length > 0) {
+			console.log('In template chat private');
+			console.log(data);
+			if ($("#chat_private_list").length > 0) {
 				var list_template = _.template($("#chat_private_list" ).html());
 				var append_html = list_template({chat_private_list: data});
 				parent.find('li').remove();
@@ -112,9 +114,14 @@ var ChatInbox = {
 				};
 				ChatInbox.CustomScrollBarPrivate();
 				ChatInbox.OnClickChatPrivateDetail();
-				ChatInbox.CountMessageUnread();
-			}
 
+				chat_list_user = (typeof chat_list_user != 'undefined') ? chat_list_user : false;
+
+				if(chat_list_user == false)
+					ChatInbox.CountMessageUnread();
+				else
+					ChatInbox.CountUserMessageUnread(chat_list_user);
+			}
 		}
 	},
 
@@ -400,20 +407,24 @@ var ChatInbox = {
 		}
 	},
 
+	CountUserMessageUnread: function(sender){
+		Ajax.count_unread_msg_from_user(sender).then(function(data){
+			var json = $.parseJSON(data),
+					row = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-user=' + sender + '] .notify-chat-inbox');
+			if (json > 0){
+				row.html(json);
+				row.removeClass('disable');
+			} else {
+				row.html(0);
+				row.addClass('disable');
+			}
+		});
+	},
+
 	CountMessageUnread: function(){
 		$(ChatInbox.modal).find('#chat_private li .chat-post-id').each(function(){
 			var sender = $(this).attr('data-user');
-			Ajax.count_unread_msg_from_user(sender).then(function(data){
-				var json = $.parseJSON(data),
-					row = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-user=' + sender + '] .notify-chat-inbox');
-				if (json > 0){
-					row.html(json);
-					row.removeClass('disable');
-				} else {
-					row.html(0);
-					row.addClass('disable');
-				}
-			});
+			ChatInbox.CountUserMessageUnread(sender);
 		});
 	},
 
