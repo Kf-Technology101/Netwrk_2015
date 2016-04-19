@@ -100,8 +100,6 @@ var ChatInbox = {
 
 	getTemplateChatPrivate: function(parent,data, user_id, chat_list_user){
 		if (user_id == UserLogin) {
-			console.log('In template chat private');
-			console.log(data);
 			if ($("#chat_private_list").length > 0) {
 				var list_template = _.template($("#chat_private_list" ).html());
 				var append_html = list_template({chat_private_list: data});
@@ -112,6 +110,7 @@ var ChatInbox = {
 						parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
 					}
 				};
+
 				ChatInbox.CustomScrollBarPrivate();
 				ChatInbox.OnClickChatPrivateDetail();
 
