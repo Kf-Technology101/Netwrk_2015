@@ -98,7 +98,7 @@ var ChatInbox = {
 		}
 	},
 
-	getTemplateChatPrivate: function(parent,data, user_id){
+	getTemplateChatPrivate: function(parent,data, user_id,list){
 		if (user_id == UserLogin) {
 			if ($("#chat_private_list" ).length > 0) {
 				var list_template = _.template($("#chat_private_list" ).html());
@@ -110,9 +110,14 @@ var ChatInbox = {
 						parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
 					}
 				};
-				ChatInbox.CustomScrollBarPrivate();
-				ChatInbox.OnClickChatPrivateDetail();
-				ChatInbox.CountMessageUnread();
+
+				list = (typeof list != 'undefined') ? list : false;
+
+				if(list == true) {
+					ChatInbox.CustomScrollBarPrivate();
+					ChatInbox.OnClickChatPrivateDetail();
+					ChatInbox.CountMessageUnread();
+				}
 			}
 
 		}
@@ -287,7 +292,7 @@ var ChatInbox = {
 			success: function(result) {
 				if(result){
 					result = $.parseJSON(result);
-					ChatInbox.getTemplateChatPrivate(parent,result, UserLogin);
+					ChatInbox.getTemplateChatPrivate(parent,result, UserLogin,true);
 				}
 			}
 		});
