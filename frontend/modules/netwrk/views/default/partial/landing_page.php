@@ -17,8 +17,8 @@
 			<div class="modal-footer">
 				<!--<div class="landing-btn btn-meet">Meet</div>-->
 				<div class="landing-btn btn-explore">Explore</div>
-				<div class="landing-btn btn-my-community">My Community</div>
-				<div class="landing-btn btn-help">Help</div>
+				<!--<div class="landing-btn btn-my-community">My Community</div>
+				<div class="landing-btn btn-help">Help</div>-->
 			</div>
 		</div>
 	</div>
@@ -130,7 +130,7 @@
 				<div class="panel-heading top-header">
 					<a data-toggle="collapse" data-target="#collapseFavoriteCommunities"
 					   href="javascript:">
-						<p class="lp-title">Your Following Communities</p>
+						<p class="lp-title">Your Followed Areas</p>
 					</a>
 				</div>
 				<div id="collapseFavoriteCommunities" class="panel-collapse collapse in">
