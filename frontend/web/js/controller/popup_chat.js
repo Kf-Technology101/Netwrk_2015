@@ -26,7 +26,7 @@ var PopupChat = {
     close_status: 0,
     initialize: function() {
         PopupChat.SetUrl();
-        PopupChat.SetDataChat();
+        PopupChat.SetDataChat(true);
         if(isMobile){
             PopupChat.SetHeightContainerChat();
             PopupChat.OnClickChatInboxBtnMobile();
@@ -294,7 +294,7 @@ var PopupChat = {
     },
 
     // Set info for each popup chat when user active or open the popup
-    SetDataChat: function(){
+    SetDataChat: function(fromChatList){
         if(isMobile){
             PopupChat.parent = '#post_chat';
             PopupChat.container = '.container_post_chat';
@@ -314,7 +314,8 @@ var PopupChat = {
             PopupChat.HandleEmoji();
 
             var userID = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-post='+ PopupChat.params.post +']').attr('data-user');
-            if(userID){
+            if(userID && fromChatList){
+                fromChatList = false;
                 ChatInbox.ChangeStatusUnreadMsg(userID);
                 Default.ShowNotificationOnChat();
             }
