@@ -449,10 +449,12 @@ var ChatInbox = {
 
 	SetSizeMap: function (w,h){
 		var menu_h = $('.menu_top').height();
-		$('#googleMap').css({'height': h - menu_h,'min-height': h -menu_h});
+		//$('#googleMap').css({'height': h - menu_h,'min-height': h -menu_h});
+		$('#googleMap').css({'height': h,'min-height': h});
 		if (ChatInbox.params.IsOpenChatBox == true) {
 			w = w - 320;
 		}
-		$('.map_content').css({'height': h - menu_h,'width': w});
+		//$('.map_content').css({'height': h - menu_h,'width': w});
+		$('.map_content').css({'height': h,'width': w});
 	},
 }
