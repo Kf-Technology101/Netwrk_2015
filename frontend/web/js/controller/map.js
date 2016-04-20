@@ -56,6 +56,9 @@
 	  	initialize: function() {
 
 	  		if(isMobile){
+				Map.zoom = 12;
+				Map.markerZoom = 13;
+
 				Common.initLoader();
 		  		if(sessionStorage.map_zoom){
 		  			Map.zoom = parseInt(sessionStorage.map_zoom);
