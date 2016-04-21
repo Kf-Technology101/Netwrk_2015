@@ -7,6 +7,8 @@ use yii\web\Session;
 use yii\web\Cookie;
 use yii\db\Query;
 use yii\helpers\Url;
+use gisconverter;
+use gisconverter\WKT;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\City;
@@ -851,13 +853,20 @@ class DefaultController extends BaseController
         foreach ($zip_split_array as $zip_split) {
             $zip_codes = implode(',',$zip_split);
 
-            $data = $this->actionGetZipBoundariesFromCurl($zip_codes);
-            $returnData = $this->actionFormatBoundariesData($data,'selected');
+            $returnData = $this->actionGetBoundariesFromData($zip_codes,'selected');
 
             // If features section is not null then only add to return array
             if(property_exists($returnData, 'features')) {
                 if(sizeof($returnData->features) != 0)
                     array_push($return, $returnData);
+            } else {
+                $data = $this->actionGetZipBoundariesFromCurl($zip_codes);
+                $returnData = $this->actionFormatBoundariesData($data,'selected');
+
+                if(property_exists($returnData, 'features')) {
+                    if(sizeof($returnData->features) != 0)
+                        array_push($return, $returnData);
+                }
             }
         }
 
@@ -1083,5 +1092,61 @@ class DefaultController extends BaseController
 
             return implode(',',$cities_array);
         }
+    }
+
+    public function wkt_to_geojson ($text) {
+        $decoder = new gisconverter\WKT();
+        return $decoder->geomFromText($text)->toGeoJSON();
+    }
+
+    public function actionGetBoundariesFromData($zip_codes, $type){
+        $query = new Query();
+        $cookies = Yii::$app->request->cookies;
+
+        $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
+        $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
+
+        // Get boundaries data from database
+        $datas = $query->select('ST_AsText(zip_boundaries.geometry) as geometry, zip_boundaries.zcta5ce10, zip_boundaries.intptlat10, zip_boundaries.intptlon10')
+            ->from('zip_boundaries')
+            ->where('zcta5ce10 IN ('.$zip_codes.')')
+            ->all();
+
+        $returnData = new \stdClass();
+
+        $userId = (Yii::$app->user->id) ? Yii::$app->user->id : 0;
+
+        //Adjusted object params according to api output
+        $returnData->type = "FeatureCollection";
+
+        for ($i=0; $i < count($datas); $i++) {
+            // Get city details
+            $query = new Query();
+
+            $city = $query ->select('c.*, f.status')
+                ->from('city c')
+                ->leftJoin('favorite f', '(f.user_id = '.$userId.' AND f.city_id = c.id AND f.type = "city")')
+                ->where(['c.zip_code' => $datas[$i]['zcta5ce10']])
+                ->andwhere(['c.office_type' => null])
+                ->one();
+
+            $zip_type = ($city['status'] == '1') ? 'Followed' : $type;
+
+            $returnData->features[$i] = array(
+                'type' => 'Feature',
+                'properties' => (object)array(
+                    'id' => $city['id'],
+                    'zipCode' => $datas[$i]['zcta5ce10'],
+                    'city' => $city['name'],
+                    'state' => $city['state'],
+                    'lat' => $city['lat'],
+                    'lng' => $city['lng'],
+                    'type' => $zip_type
+                ),
+                'geometry' => json_decode($this->wkt_to_geojson($datas[$i]['geometry']))
+            );
+        }
+
+        return $returnData;
     }
 }
