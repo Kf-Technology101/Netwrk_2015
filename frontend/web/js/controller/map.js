@@ -811,8 +811,24 @@
 							console.log('in click zoom 16');
 							//Go to zoom level 18. and shoe blue dot on map
 							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map)
-						} else {
+						} else if(Map.map.getZoom() == Map.blueDotLocation.zoomLast) {
 							console.log('In map idle: else zoom 16');
+						}
+						if(!isMobile){
+							blueDotInfoWindow.close();
+						}
+					};
+				})(Map.center_marker));
+
+				google.maps.event.clearListeners(Map.center_marker, 'dblclick');
+				google.maps.event.addListener(Map.center_marker, 'dblclick', (function() {
+					return function(){
+						if(Map.map.getZoom() != Map.blueDotLocation.zoomLast) {
+							console.log('in click zoom 18');
+							//Go to zoom level 18. and shoe blue dot on map
+							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map)
+						} else {
+							console.log('In map dblclick Map.center_marker');
 						}
 						if(!isMobile){
 							blueDotInfoWindow.close();
@@ -873,7 +889,7 @@
 				'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h4>Have a local</h4></a>' +
 				'</span></div>' +
 				'<div class="iw-subTitle"><span class="post-title">' +
-				'<a id="create-location-group" class="a-create-group hidden" href="javascript:" onclick="Map.CreateLocationGroup();"><h4>Place</h4></a>' +
+				'<a id="create-location-group" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup();"><h4>Place</h4></a>' +
 				'</span></div>' +
 				'</div>' +
 				'<div class="iw-bottom-gradient"></div>' +
@@ -1017,7 +1033,7 @@
 					});
 				}
 
-				if(currentZoom == Map.blueDotLocation.zoomMiddle || currentZoom == Map.blueDotLocation.zoomInitial || currentZoom == Map.blueDotLocation.zoomLast) {
+				if(currentZoom >= 9) {
 					//console.log(Map.blueDotMarker);
 					for (var i = 0; i < Map.blueDotMarker.length; i++) {
 						var m = Map.blueDotMarker[i];
@@ -1025,14 +1041,14 @@
 						Map.markers.push(m.marker);
 						//hide or show blue dot marker infowindows "place local" and "place" <a> links.
 						if(currentZoom == Map.blueDotLocation.zoomMiddle || currentZoom == Map.blueDotLocation.zoomLast) {
-							$('.cgm-container').find('#my-location').addClass('hidden');
-							$('.cgm-container').find('#create-location-group').removeClass('hidden');
+							$('.cgm-container').find('.my-location').addClass('hidden');
+							$('.cgm-container').find('.create-location-group').removeClass('hidden');
 						} else if(currentZoom == Map.blueDotLocation.zoomInitial) {
-							$('.cgm-container').find('#my-location').removeClass('hidden');
-							$('.cgm-container').find('#create-location-group').addClass('hidden');
+							$('.cgm-container').find('.my-location').removeClass('hidden');
+							$('.cgm-container').find('.create-location-group').addClass('hidden');
 						} else {
-							$('.cgm-container').find('#my-location').removeClass('hidden');
-							$('.cgm-container').find('#create-location-group').addClass('hidden');
+							$('.cgm-container').find('.my-location').removeClass('hidden');
+							$('.cgm-container').find('.create-location-group').addClass('hidden');
 						}
 						console.log('in idle');
 						Map.show_marker_group_loc(map);
@@ -1228,9 +1244,9 @@
 					}
 				} else if (currentZoom == 11 && Map.markers.length > 10) {
 	    			Map.deleteNetwrk(map);
-					Map.hideMapLabel();		
+					Map.hideMapLabel();
 					for (var i = 0; i < Map.zoom7.length; i++) {
-						var m = Map.zoom7[i];	
+						var m = Map.zoom7[i];
 						m.marker.setMap(map);
 					    Map.markers.push(m.marker);
 				    }
