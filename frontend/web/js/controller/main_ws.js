@@ -14,14 +14,18 @@ var MainWs ={
     },
 
     setUrl: function(){
-        MainWs.url = window.location.host;
+        if(ENV == 'prod'){
+            MainWs.url = 'www.netwrk.com:2311';
+        } else {
+            MainWs.url = 'dev.netwrk.com:2312';
+        }
     },
 
     wsConnect: function(user_id){
 
         var _self = this;
 
-        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+":2311?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000});
+        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000});
 
         window.ws.onmessage = function(e){
           console.group("WS SEND");
@@ -87,6 +91,8 @@ var MainWs ={
             var popup_active = e.data[0]['post_id'];
             var user_id = e.data[0]['id'];
             var chat_type = e.data[0]['chat_type'];
+            var chat_list_user = $('[data-post='+e.data[0]['post_id']+']',ChatInbox.modal).attr('data-user');
+
             $.each(e.data, function(i, elem){
                 PopupChat.message_type = elem.msg_type;
                 PopupChat.getMessageTemplate(elem);
@@ -96,7 +102,7 @@ var MainWs ={
                 fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
             } else {
                 if (chat_type == 0) {
-                    ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, user_id);
+                    ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, user_id, chat_list_user);
                 } else {
                     ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_discussion ul'), update_list_chat, user_id);
                 }
@@ -130,7 +136,7 @@ var MainWs ={
                                     // notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
                                     // update list chat
                                     update_list_chat = $.parseJSON(e.data.update_list_chat);
-                                    ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, e.data.receiver);
+                                    ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, e.data.receive, e.data.sender);
                                 }
                             }
                         } else {
@@ -155,7 +161,7 @@ var MainWs ={
                                     // notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
                                     // update list chat
                                     update_list_chat = $.parseJSON(e.data.update_list_chat);
-                                    ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, e.data.receiver);
+                                    ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, e.data.receiver, e.data.sender);
                                 }
                             }
                         }

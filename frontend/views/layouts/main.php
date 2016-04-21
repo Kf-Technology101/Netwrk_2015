@@ -127,6 +127,7 @@ if (isset($cookies["isCoverPageVisited"])) {
 </body>
 <script type="text/javascript">
     var baseUrl = '<?php echo Url::base(true); ?>',
+    ENV = '<?php echo YII_ENV; ?>',
     isMobile = false,
     isGuest = '<?php echo Yii::$app->user->isGuest ?>',
     isResetPassword ="<?= Yii::$app->session['key_reset_password'] ?>",

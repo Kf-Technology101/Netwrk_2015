@@ -26,7 +26,7 @@ var PopupChat = {
     close_status: 0,
     initialize: function() {
         PopupChat.SetUrl();
-        PopupChat.SetDataChat();
+        PopupChat.SetDataChat(true);
         if(isMobile){
             PopupChat.SetHeightContainerChat();
             PopupChat.OnClickChatInboxBtnMobile();
@@ -294,7 +294,7 @@ var PopupChat = {
     },
 
     // Set info for each popup chat when user active or open the popup
-    SetDataChat: function(){
+    SetDataChat: function(fromChatList){
         if(isMobile){
             PopupChat.parent = '#post_chat';
             PopupChat.container = '.container_post_chat';
@@ -314,7 +314,8 @@ var PopupChat = {
             PopupChat.HandleEmoji();
 
             var userID = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-post='+ PopupChat.params.post +']').attr('data-user');
-            if(userID){
+            if(userID && fromChatList){
+                fromChatList = false;
                 ChatInbox.ChangeStatusUnreadMsg(userID);
                 Default.ShowNotificationOnChat();
             }
@@ -354,7 +355,7 @@ var PopupChat = {
             var btn = $('#popup-chat-'+PopupChat.params.post).find('#msgForm .send');
             var formWsChat = $('#popup-chat-'+PopupChat.params.post).find('#msgForm');
         }
-        formWsChat.on("keydown", function(event){
+        formWsChat.off().on("keydown", function(event){
             if (event.keyCode == 13 && !event.shiftKey) {
                 event.preventDefault();
                 PopupChat.OnWsSendData(event.currentTarget);
@@ -473,6 +474,9 @@ var PopupChat = {
                             if(result != "" && result !== false){
                                 var result = $.parseJSON(result);
                                 window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
+                                if (PopupChat.params.chat_type == 0) {
+                                    window.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": PopupChat.params.post, "message": val});
+                                }
                                 parentChat.find(".loading_image").css('display', 'none');
                                 // fileForm.find("textarea").val('');
                             }
