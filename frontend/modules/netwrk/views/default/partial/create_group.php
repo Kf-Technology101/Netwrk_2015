@@ -43,6 +43,9 @@
                                 </ul>
                             </div>
                         </div>
+                        <div class="group-permission group-category-content">
+
+                        </div>
                         <div class="post-message">
                             <p class="title">Invite users by email</p>
                             <textarea class="message" id="emails-input" placeholder="Enter users or emails separated by commas ( , )" maxlength="1024"></textarea>
@@ -75,3 +78,19 @@
         </div>
     </div>
 </div>
+<script id="group-category-template" type="text/x-underscore-template">
+    <section class="group-category-wrapper">
+        <% if(data.length > 0) { %>
+            <p class="title">Community Category</p>
+            <div class="dropdown input-group">
+                <div class="dropdown-toggle" type="button" id="dropdown-category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Social</div>
+                <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                <ul class="dropdown-menu" aria-labelledby="dropdown-category">
+                    <% _.each(data, function(item,i) { %>
+                        <li data-value="item.office"><%= item.office %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+    </section>
+</script>
