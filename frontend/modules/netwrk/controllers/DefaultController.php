@@ -901,6 +901,10 @@ class DefaultController extends BaseController
             }
         }
 
+        if(sizeof($cities_array) == 0) {
+            die(json_encode($return));
+        }
+
         // all zip codes from visible area
         $zip_codes_data = implode(',',$cities_array);
 
