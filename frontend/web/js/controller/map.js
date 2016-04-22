@@ -22,6 +22,7 @@
 		fillOpacity: 0.3,
 	  	timeout: '',
 		zoomBlueDot: 18,
+		mouseIn : false,
 		remove_poi : [
 			{
 				stylers: [
@@ -296,6 +297,7 @@
 
 		        google.maps.event.addListener(marker, 'mouseover', function() {
 			        // infowindow.setContent(e[0]);
+					Map.mouseIn = false;
 			        clearTimeout(Map.timeout);
 			        infowindow.open(Map.map, this);
 			        Map.onhoverInfoWindow(e.id,marker);
@@ -303,7 +305,9 @@
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
-		        	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
+		        	Map.timeout = setTimeout(function(){
+						Map.closeAllInfoWindows();
+					}, 400);
 		        });
 
 	          	google.maps.event.addListener(infowindow, 'domready', function() {
@@ -376,7 +380,21 @@
 				Map.markers.push(marker);
 			}
 	  	},
-
+		mouseinsideInfowindow: function() {
+			clearTimeout(Map.timeout);
+			Map.mouseIn = true;
+		},
+		mouseOutsideInfowindow: function() {
+			if(Map.mouseIn) {
+				Map.closeAllInfoWindows();
+				Map.mouseIn = false;
+			}
+		},
+		closeAllInfoWindows: function() {
+			for (var i=0;i < Map.infowindow.length;i++) {
+				Map.infowindow[i].close();
+			}
+		},
 	  	CustomArrowPopup: function(){
 	  		var iwOuter = $('.gm-style-iw');
 	  		var iwBackground = iwOuter.prev();
