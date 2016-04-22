@@ -914,13 +914,20 @@ class DefaultController extends BaseController
         foreach ($zip_split_array as $zip_split) {
             $zip_codes = implode(',',$zip_split);
 
-            $data = $this->actionGetZipBoundariesFromCurl($zip_codes);
-            $returnData = $this->actionFormatBoundariesData($data,'visible');
+            $returnData = $this->actionGetBoundariesFromData($zip_codes,'visible');
 
             // If features section is not null then only add to return array
             if(property_exists($returnData, 'features')) {
                 if(sizeof($returnData->features) != 0)
                     array_push($return, $returnData);
+            } else {
+                $data = $this->actionGetZipBoundariesFromCurl($zip_codes);
+                $returnData = $this->actionFormatBoundariesData($data,'visible');
+
+                if(property_exists($returnData, 'features')) {
+                    if(sizeof($returnData->features) != 0)
+                        array_push($return, $returnData);
+                }
             }
         }
 
