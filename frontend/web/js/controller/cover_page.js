@@ -16,7 +16,7 @@ var CoverPage = {
 		CoverPage.onClickKey();
 		CoverPage.onEnterZipcode();
 		CoverPage.hiddenError();
-		CoverPage.OnKeyPress();
+		//CoverPage.OnKeyPress();
 		if(isMobile){
 			$("body").css('background', '#fff');
 			CoverPage.hiddenMobileFooter();
