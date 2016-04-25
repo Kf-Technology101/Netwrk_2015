@@ -19,7 +19,7 @@
 
             <div class="profile-activity-wrapper">
                 <section class="fav-communities-wrapper">
-                    <div class="activity-header pull-left">Following Communities </div>
+                    <div class="activity-header pull-left">Followed</div>
                     <div class="seperator-line pull-right">
                         <hr>
                     </div>
@@ -31,7 +31,7 @@
                 </article>
 
                 <section class="recent-communities-wrapper">
-                    <div class="activity-header pull-left">Recent Communities </div>
+                    <div class="activity-header pull-left">Recent</div>
                     <div class="seperator-line pull-right">
                         <hr>
                     </div>
