@@ -312,6 +312,11 @@
 			        // infowindow.setContent(e[0]);
 			        clearTimeout(Map.timeout);
 			        infowindow.open(Map.map, this);
+
+					var iw_container = $(".gm-style-iw").parent();
+					iw_container.stop().hide();
+					iw_container.fadeIn(800);
+
 			        Map.onhoverInfoWindow(e.id,marker);
 			        Map.OnEventInfoWindow(e);
 		        });
