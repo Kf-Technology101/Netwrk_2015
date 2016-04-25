@@ -782,7 +782,7 @@ var Topic = {
         var json = $.parseJSON(data);
         var list_template = _.template($( "#city_name" ).html());
         var append_html = '';
-        append_html = list_template({city: json.city});
+        append_html = list_template({city: json.city, city_name: json.city_name});
         Topic.data.city_name = json.city;
         parent.html(append_html);
     },

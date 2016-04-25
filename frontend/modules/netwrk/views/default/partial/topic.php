@@ -160,7 +160,7 @@
   </div>
 </div>
   <script id="city_name" type="text/x-underscore-template">
-    <span class="title"><%= city %></span>
+    <span class="title"><%= city %> <%= city_name %></span>
   </script>
   <script id="favorite_btn_template" type="text/x-underscore-template">
     <a href="javascript:" class="btn-favorite" data-object-type="<%= 'city' %>"

@@ -20,7 +20,7 @@
         </div>
 
         <div class="title_page">
-            <span class="title"><?php if($data->title) print $data->title; else print $data->zipcode?></span>
+            <span class="title"><?php echo $data->zipcode.' '.$data->title; ?></span>
         </div>
         <div class="create_topic">
             <span><i class="fa fa-plus-circle"></i> Create Topic</span>
