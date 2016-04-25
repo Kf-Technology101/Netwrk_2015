@@ -205,10 +205,10 @@
 
 <script id="feed_list" type="text/x-underscore-template" >
   <div class="top-post">
-    <div class="top-header">
+    <!--<div class="top-header">
       <p class="lp-title">Top Posts</p>
       <p class="lp-description">Check out some of the discussions on some of your favorite subjects</p>
-    </div>
+    </div>-->
     <div class="top-post-content">
       <%
         var len_post = feed.top_post.length;
@@ -242,10 +242,10 @@
     </div>
   </div>
   <div class="top-topic">
-    <div class="top-header">
+    <!--<div class="top-header">
       <p class="lp-title">Top Topics</p>
       <p class="lp-description">Browse these topics of conversations</p>
-    </div>
+    </div>-->
     <div class="top-topic-content ">
       <%
         var len_topic = feed.top_post.length;
@@ -269,9 +269,9 @@
     </div>
   </div>
   <div class="top-feed">
-    <div class="top-header">
+    <!--<div class="top-header">
       <p class="lp-title">Feed</p>
-    </div>
+    </div>-->
     <div class="top-feed-content"></div>
   </div>
 </script>
