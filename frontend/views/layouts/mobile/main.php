@@ -69,7 +69,8 @@ if (isset($cookies["isCoverPageVisited"])) {
 
 
   <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
-  
+
+  <?php if (isset($cookies["isCoverPageVisited"])) : ?>
     <div id="myHeader" class="navbar-mobile navbar-fixed-top">
     	<div class="menu_top">
   			<div class="logo_netwrk option_logo_netwrk">
@@ -108,6 +109,8 @@ if (isset($cookies["isCoverPageVisited"])) {
       </div>
     </section>
     <?php echo $this->render('@frontend/modules/netwrk/views/user/mobile/userinfo') ?>
+  <?php endif; ?>
+    
     <div class="container">
 	    <?= Breadcrumbs::widget([
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
