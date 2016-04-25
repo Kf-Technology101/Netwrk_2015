@@ -475,6 +475,9 @@ var PopupChat = {
                                 window.ws.send("send", {"type" : result.type, "msg" : val, "file_name" : result.file_name,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
                                 parentChat.find(".loading_image").css('display', 'none');
                                 // fileForm.find("textarea").val('');
+                                if (PopupChat.params.chat_type == 0) {
+                                    window.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": PopupChat.params.post, "message": val});
+                                }
                             }
                         }
                     });
