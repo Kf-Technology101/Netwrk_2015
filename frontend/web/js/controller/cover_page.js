@@ -10,7 +10,6 @@ var CoverPage = {
 	result:'.cover-result-search',
 	result_data:'',
 	initialize: function(){
-		Common.hideLoader();
 		CoverPage.getObject();
 		CoverPage.hiddenMenuTop();
 		CoverPage.onClickKey();
@@ -22,6 +21,12 @@ var CoverPage = {
 			CoverPage.hiddenMobileFooter();
 			CoverPage.hiddenMobileNavigation();
 		}
+
+		$('#cover-page').find('img').on('load',function(){
+			setTimeout(function(){
+				Common.hideLoader();
+			}, 300);
+		});
 	},
 
 	OnKeyPress: function(){
