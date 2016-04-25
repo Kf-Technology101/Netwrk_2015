@@ -354,7 +354,7 @@ var PopupChat = {
             var btn = $('#popup-chat-'+PopupChat.params.post).find('#msgForm .send');
             var formWsChat = $('#popup-chat-'+PopupChat.params.post).find('#msgForm');
         }
-        formWsChat.on("keydown", function(event){
+        formWsChat.off().on("keydown", function(event){
             if (event.keyCode == 13 && !event.shiftKey) {
                 event.preventDefault();
                 PopupChat.OnWsSendData(event.currentTarget);
