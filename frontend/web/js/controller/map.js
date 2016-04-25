@@ -1084,7 +1084,7 @@
 			});
 		},
 
-		CreateLocationGroup: function() {
+		CreateLocationGroup: function(zipcode) {
 			var lat = Map.center_marker.getPosition().lat();
 			var lng = Map.center_marker.getPosition().lng();
 			Create_Group.initialize(null, null, zipcode, null, true, lat, lng);
