@@ -119,9 +119,9 @@ if (isset($cookies["isCoverPageVisited"])) {
 	    <?= $content ?>
     </div>
 
-    <section class="btn-meet-mobile-wrapper text-center">
-      <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
-    </section>
+    <!--<section class="btn-meet-mobile-wrapper text-center">
+      <div id="btn_meet_mobile"><img src="<?/*= Url::to('@web/img/icon/meet-icon-desktop.png'); */?>"></div>
+    </section>-->
 
     <!--<div id="myFooter" class="navbar-mobile navbar-fixed-bottom hide">
       <div class="menu_bottom">

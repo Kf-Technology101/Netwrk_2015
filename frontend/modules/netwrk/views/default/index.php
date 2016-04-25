@@ -37,7 +37,7 @@
       <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
     </div>
   </div>
-  <div id="btn_meet" class="btn-meet-lg"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"/></div>
+  <!--<div id="btn_meet" class="btn-meet-lg"><img src="<?/*= Url::to('@web/img/icon/meet-icon-desktop.png'); */?>"/></div>-->
   <div id="googleMap" style=""></div>
 </div>
 <script id="netwrk_place" type="text/x-underscore-template">

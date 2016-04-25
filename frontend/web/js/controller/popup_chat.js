@@ -96,7 +96,7 @@ var PopupChat = {
     },
 
     DisplayPopups: function() {
-        var right = 430,
+        var right = 340,
             popup_rights = [];
 
 
@@ -152,7 +152,7 @@ var PopupChat = {
         $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
         PopupChat.popups.push(PopupChat.params.post);
         PopupChat.CalculatePopups();
-        PopupChat.MoveMeetButton();
+        //PopupChat.MoveMeetButton();
     },
 
     getTemplate: function(){
