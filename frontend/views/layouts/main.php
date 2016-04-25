@@ -47,6 +47,7 @@ if (isset($cookies["isCoverPageVisited"])) {
 
     <script type="text/javascript">
         var baseUrl = '<?php echo Url::base(true); ?>';
+        var ENV = '<?php echo YII_ENV; ?>';
         var isMobile = false;
         <?php if (isset($cookies["isCoverPageVisited"])) : ?>
             var isCoverPageVisited = <?php echo $isCoverPageVisited; ?>;

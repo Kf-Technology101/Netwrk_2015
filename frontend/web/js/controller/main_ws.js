@@ -14,14 +14,18 @@ var MainWs ={
     },
 
     setUrl: function(){
-        MainWs.url = window.location.host;
+        if(ENV == 'prod'){
+            MainWs.url = 'www.netwrk.com:2311';
+        } else {
+            MainWs.url = 'dev.netwrk.com:2312';
+        }
     },
 
     wsConnect: function(user_id){
 
         var _self = this;
 
-        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+":2311?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000});
+        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000});
 
         window.ws.onmessage = function(e){
           console.group("WS SEND");

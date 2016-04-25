@@ -122,12 +122,11 @@ var ChatPost = {
 	},
 
 	SetUrl: function(){
-		if(baseUrl === 'http://netwrk.rubyspace.net'){
-			ChatPost.url = 'box.rubyspace.net';
-		}else{
-			ChatPost.url = "127.0.0.1";
-		};
-
+		if(ENV == 'prod'){
+			ChatPost.url = 'www.netwrk.com:2311';
+		} else {
+			ChatPost.url = 'dev.netwrk.com:2312';
+		}
 	},
 
 	SetDataPostChat: function(){
@@ -263,7 +262,7 @@ var ChatPost = {
 
 	WsConnect: function(parent){
 
-		ChatPost.ws = $.websocket("ws://"+ChatPost.url+":2311/?post="+ChatPost.params.post+"&user_id="+UserLogin+"&chat_type="+ChatPost.params.chat_type, {
+		ChatPost.ws = $.websocket("ws://"+ChatPost.url+"/?post="+ChatPost.params.post+"&user_id="+UserLogin+"&chat_type="+ChatPost.params.chat_type, {
 			open: function(data) {
 				$(ChatPost.parent).find('textarea').focus();
 			},
