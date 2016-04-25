@@ -1306,7 +1306,7 @@ var Ajax ={
 
         return defer.promise();
     },
-    getZipBoundries: function(params) {
+    getZipBoundaries: function(params) {
         var url,defer = $.Deferred();
 
         url = baseUrl +"/netwrk/default/get-zip-boundaries";

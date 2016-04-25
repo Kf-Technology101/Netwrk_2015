@@ -125,7 +125,7 @@
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
-				Map.showZipBoundries();
+				//Map.showZipBoundaries();
 				Common.hideLoader();
 			});
 		    // Map.insertLocalUniversity();
@@ -1189,9 +1189,9 @@
 			Map.map.setCenter(new google.maps.LatLng(lat, lng));
 		},
 
-		showZipBoundries: function() {
+		showZipBoundaries: function() {
 			var params = {};
-			Ajax.getZipBoundries(params).then(function(jsonData){
+			Ajax.getZipBoundaries(params).then(function(jsonData){
 				var out = $.parseJSON(jsonData);
 				Map.map.data.addGeoJson(out);
 				//styled map
