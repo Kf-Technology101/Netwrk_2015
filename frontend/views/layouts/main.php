@@ -71,6 +71,7 @@ if (isset($cookies["isCoverPageVisited"])) {
     <!-- /Loader -->
     <div class="wrap" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
         <?php
+            if (isset($cookies["isCoverPageVisited"])) :
             NavBar::begin([
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top menu_top',
@@ -113,6 +114,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             //     'items' => $menuItems,
             // ]);
             NavBar::end();
+            endif;
         ?>
 
         <div class="container-fluid map-padding">
