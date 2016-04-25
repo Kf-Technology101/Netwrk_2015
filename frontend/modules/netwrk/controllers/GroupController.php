@@ -67,6 +67,9 @@ class GroupController extends BaseController {
             if (!empty($_POST['byGroup']) && $_POST['byGroup'] != "false") {
                 $group->latitude = doubleval($_POST['latitude']);
                 $group->longitude = doubleval($_POST['longitude']);
+                if (isset($_POST['city_id'])) {
+                    $group->city_id = intval($_POST['city_id']);
+                }
             } else {
                 $group->city_id = intval($_POST['city_id']);
             }
