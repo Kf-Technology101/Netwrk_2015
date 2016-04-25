@@ -83,9 +83,9 @@ var Create_Group={
 
             Create_Group.showModalCreateGroup();
             Create_Group.OnClickAddEmail();
-            Create_Group.OnClickCreateGroup();
             Create_Group.onclickBack();
             Create_Group.showGroupCategory(name_city);
+            Create_Group.OnClickCreateGroup();
 
             // Create_Group.showNetWrkBtn();
             /*Create_Group.onCloseModalCreatePost();
@@ -101,13 +101,19 @@ var Create_Group={
     },
     showGroupCategory: function(zipcode){
         var parent = $('#create_group_modal');
-
+        parent.find('.group-category-content').html('');
         var params = {'zip_code': zipcode};
         //todo: fetch weather api data
         Ajax.get_city_by_zipcode(params).then(function(data){
             var json = $.parseJSON(data);
             console.log(json);
             Create_Group.getTemplateGroupCategory(parent,json);
+            /*$('.group-category-content .dropdown li').each(function() {
+                $(this).unbind().click(function(e) {
+                    var name = $(e.currentTarget).text();
+                    $("#dropdown-category").text(name);
+                });
+            });*/
         });
     },
     getTemplateGroupCategory: function(parent,data){
@@ -447,6 +453,9 @@ var Create_Group={
                 params.byGroup = true;
                 params.latitude = Create_Group.params.latitude;
                 params.longitude = Create_Group.params.longitude;
+                params.city_office = $('.dropdown-office').val();
+                params.city_id = $('.dropdown-office').val();
+
             } else {
                 params.byGroup = false;
                 params.city_id = Create_Group.params.city;

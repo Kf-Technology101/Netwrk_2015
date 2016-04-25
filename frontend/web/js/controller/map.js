@@ -28,7 +28,8 @@
 			lon: '',
 			zoomInitial: 13,
 			zoomMiddle: 16,
-			zoomLast: 18
+			zoomLast: 18,
+			zipcode: ''
 		},
 		remove_poi : [
 			{
@@ -662,6 +663,8 @@
 						var zip = data.results[0].address_components[i].long_name;
 						console.log("cmzip: ", $("#cm-zip").html());
 						$("#cm-zip span").eq(0).html(zip);
+						Map.blueDotLocation.zipcode = zip;
+						$('#create-location-group').attr('data-zipcode', zip);
 					}
 				}
 			});
@@ -792,7 +795,7 @@
 				google.maps.event.clearListeners(Map.center_marker, 'mouseover');
 				google.maps.event.addListener(Map.center_marker, 'mouseover', function() {
 					// infowindow.setContent(e[0]);
-					//Map.findCurrentZip(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng());
+					Map.findCurrentZip(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng());
 					blueDotInfoWindow.open(map, this);
 					var lat = parseFloat(Map.center_marker.getPosition().lat());
 					var lng = parseFloat(Map.center_marker.getPosition().lng());
@@ -843,6 +846,8 @@
 					if (Map.requestPosTimeout != null) clearTimeout(Map.requestPosTimeout);
 				});
 
+				//find current zip from lat and lng set to Map.blueDotLocation.zipcode
+				Map.findCurrentZip(lat, lng);
 			}
 
 		},
@@ -883,13 +888,17 @@
 
 			var content = '<div id="iw-container" class="cgm-container" >' +
 				'<div class="iw-content">' +
-				/*'<div class="iw-subTitle" id="cm-coords"></div>' +
-				'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
+				/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
+				'<div class="iw-subTitle" id="actionBuildCommunity"><a href="javascript:"><span class="post-title">Build a community</span></a></div>' +
+				'<div class="iw-subTitle" id="actionHaveParty"><a href="javascript:"><span class="post-title">Have a party</span></a></div>' +
+				'<div class="iw-subTitle" id="actionPostPicture"><a href="javascript:"><span class="post-title">Post a picture</span></a></div>' +
+				'<div class="iw-subTitle" id="actionPostVideo"><a href="javascript:"><span class="post-title">Post a video</span></a></div>' +
+				/*'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
 				'<div class="iw-subTitle"><span class="post-title">' +
 				'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h4>Have a local</h4></a>' +
 				'</span></div>' +
 				'<div class="iw-subTitle"><span class="post-title">' +
-				'<a id="create-location-group" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup();"><h4>Place</h4></a>' +
+				'<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place</h4></a>' +
 				'</span></div>' +
 				'</div>' +
 				'<div class="iw-bottom-gradient"></div>' +
@@ -1060,7 +1069,7 @@
 		CreateLocationGroup: function() {
 			var lat = Map.center_marker.getPosition().lat();
 			var lng = Map.center_marker.getPosition().lng();
-			Create_Group.initialize(null, null, null, null, true, lat, lng);
+			Create_Group.initialize(null, null, zipcode, null, true, lat, lng);
 		},
 
 		show_marker_group_loc: function(map, groupId) {
