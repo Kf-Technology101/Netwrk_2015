@@ -1,6 +1,6 @@
 <?php use yii\helpers\Url; ?>
 <script id="maker_popup" type="text/x-underscore-template" >
-	<div class="container-popup" >
+	<div class="container-popup" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
 		<% if(marker.user) { %>
 			<div class="top-post">
 				<div class="user">

@@ -19,6 +19,7 @@
 	  	zoom12: [],
 	  	timeout: '',
 		zoomBlueDot: 18,
+		mouseIn : false,
 		remove_poi : [
 			{
 				"featureType":"landscape",
@@ -307,6 +308,7 @@
 	            Map.infowindow.push(infowindow);
 
 		        google.maps.event.addListener(marker, 'mouseover', function() {
+					Map.mouseIn = false;
 			        // infowindow.setContent(e[0]);
 			        clearTimeout(Map.timeout);
 			        infowindow.open(Map.map, this);
@@ -315,7 +317,9 @@
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
-		        	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
+					Map.timeout = setTimeout(function(){
+						Map.closeAllInfoWindows();
+					}, 400);
 		        });
 
 	          	google.maps.event.addListener(infowindow, 'domready', function() {
@@ -388,6 +392,24 @@
 				Map.markers.push(marker);
 			}
 	  	},
+
+		mouseInsideInfoWindow: function() {
+			clearTimeout(Map.timeout);
+			Map.mouseIn = true;
+		},
+
+		mouseOutsideInfoWindow: function() {
+			if (Map.mouseIn) {
+				Map.closeAllInfoWindows();
+				Map.mouseIn = false;
+			}
+		},
+
+		closeAllInfoWindows: function() {
+			for (var i = 0; i < Map.infowindow.length; i++) {
+				Map.infowindow[i].close();
+			}
+		},
 
 	  	CustomArrowPopup: function(){
 	  		var iwOuter = $('.gm-style-iw');
