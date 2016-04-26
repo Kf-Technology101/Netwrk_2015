@@ -233,6 +233,15 @@ class DefaultController extends BaseController
     public function actionGetMakerDefaultZoom()
     {
         $city_ids = $this->actionGetCitiesFromCookie();
+        $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : null;
+
+        $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
+        $favoriteCommunities = json_decode($favoriteCommunities);
+        $favoriteData = [];
+        foreach ($favoriteCommunities->data as  $value) {
+            array_push($favoriteData, $value->city_id);
+        }
+        $followed_city_ids = implode(',', $favoriteData);
 
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
@@ -242,7 +251,7 @@ class DefaultController extends BaseController
             ->leftJoin('topic', 'city.id=topic.city_id')
             ->leftJoin('post', 'topic.id=post.topic_id')
             ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
-            ->where('city.id IN ('.$city_ids.')')
+            ->where('city.id IN ('.$city_ids.','.$followed_city_ids.')')
             ->groupBy('city.id')
             ->orderBy('count_user_comment DESC, post_count DESC')
             ->all();
@@ -866,9 +875,20 @@ class DefaultController extends BaseController
 
         // all zip codes from cookie
         $zip_codes_data = $this->actionGetCitiesFromCookie('zip');
+        $zip_codes_data = explode(',',$zip_codes_data);
 
+        $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
+        $favoriteCommunities = json_decode($favoriteCommunities);
+
+        $favoriteZipData = [];
+        foreach ($favoriteCommunities->data as  $value) {
+            array_push($favoriteZipData, $value->city_zipcode);
+        }
+
+        $allZipcodes = array_unique(array_merge($zip_codes_data, $favoriteZipData));
+        $allZipcodes = implode(',', $allZipcodes);
         // Array of zip codes
-        $zip_array = explode(',',$zip_codes_data);
+        $zip_array = explode(',',$allZipcodes);
 
         // Split the array into 15 zip codes array
         $zip_split_array = array_chunk($zip_array, 15);
@@ -918,9 +938,18 @@ class DefaultController extends BaseController
 
         // Array of zip codes from cookie
         $zip_cookie_array = explode(',',$zip_codes_cookie);
+        $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
+        $favoriteCommunities = json_decode($favoriteCommunities);
+        $favoriteData = [];
+
+        foreach ($favoriteCommunities->data as  $value) {
+            array_push($favoriteData, $value->city_zipcode);
+        }
+
+        $allZipcodes = array_unique(array_merge($zip_cookie_array, $favoriteData));
 
         foreach ($cities as $key => $value) {
-            if(!in_array($value->zip_code, $cities_array) && !in_array($value->zip_code, $zip_cookie_array)) {
+            if(!in_array($value->zip_code, $cities_array) && !in_array($value->zip_code, $allZipcodes)) {
                 array_push($cities_array, $value->zip_code);
             }
         }
