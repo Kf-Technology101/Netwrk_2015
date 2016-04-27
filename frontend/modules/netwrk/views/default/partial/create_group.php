@@ -87,16 +87,7 @@
                     <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.office %></option>
                 <% }); %>
             </select>
-            <!--<div class="dropdown input-group">
-                <input type="hidden" name="office" value=""/>
-                <div class="dropdown-toggle" type="button" id="dropdown-category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Social</div>
-                <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
-                <ul class="dropdown-menu" aria-labelledby="dropdown-category">
-                    <% _.each(data, function(item,i) { %>
-                        <li data-value="<%= item.id%>"><%= item.office %></li>
-                    <% }); %>
-                </ul>
-            </div>-->
+
         <% } %>
     </section>
 </script>
