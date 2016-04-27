@@ -98,23 +98,50 @@ var ChatInbox = {
 		}
 	},
 
-	getTemplateChatPrivate: function(parent,data, user_id){
-		if (user_id == UserLogin) {
-			if ($("#chat_private_list" ).length > 0) {
-				var list_template = _.template($("#chat_private_list" ).html());
-				var append_html = list_template({chat_private_list: data});
-				parent.find('li').remove();
-				parent.append(append_html);
-				for (var i =0;i< data.length; i++) {
-					if(data[i].class_first_met==0) {
-						parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
-					}
-				};
-				ChatInbox.CustomScrollBarPrivate();
-				ChatInbox.OnClickChatPrivateDetail();
-				ChatInbox.CountMessageUnread();
-			}
+	prepareChatPrivate: function(parent, data, chat_list_user, ele_type) {
+		var list_template = _.template($("#chat_private_list" ).html());
+		var append_html = list_template({chat_private_list: data});
 
+		if(ele_type == 'item') {
+			parent.prepend(append_html);
+		} else {
+			parent.append(append_html);
+		}
+
+		for (var i =0;i< data.length; i++) {
+			if(data[i].class_first_met==0) {
+				parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
+			}
+		};
+
+		ChatInbox.CustomScrollBarPrivate();
+		ChatInbox.OnClickChatPrivateDetail();
+
+		chat_list_user = (typeof chat_list_user != 'undefined') ? chat_list_user : false;
+
+		if(chat_list_user == false)
+			ChatInbox.CountMessageUnread();
+		else
+			ChatInbox.CountUserMessageUnread(chat_list_user);
+	},
+
+	getTemplateChatPrivate: function(parent,data, user_id, chat_list_user){
+		if (user_id == UserLogin) {
+			if ($("#chat_private_list").length > 0) {
+				parent.find('li').remove();
+
+				ChatInbox.prepareChatPrivate(parent,data,chat_list_user,'list');
+			}
+		}
+	},
+
+	getTemplateChatPrivateItem: function(parent, data, user_id, chat_list_user, post_id){
+		if (user_id == UserLogin) {
+			if ($("#chat_private_list").length > 0) {
+				parent.find("[data-post='" + post_id + "']").closest('li').remove();
+
+				ChatInbox.prepareChatPrivate(parent,data,chat_list_user,'item');
+			}
 		}
 	},
 

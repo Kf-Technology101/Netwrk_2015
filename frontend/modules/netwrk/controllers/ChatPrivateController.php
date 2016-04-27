@@ -56,7 +56,7 @@ class ChatPrivateController extends BaseController
 		if ($chat_list) {
 			$data = [];
 			foreach ($chat_list as $key => $chat) {
-				$num_date = UtilitiesFunc::FormatDateTime($chat->updated_at ? $chat->updated_at : $chat->created_at);
+				$num_date = UtilitiesFunc::FormatTimeChat($chat->updated_at ? $chat->updated_at : $chat->created_at);
 				$user_photo = User::findOne($chat->user_id_guest)->profile->photo;
 				$content = WsMessages::find()->where('post_id = '.$chat->post_id)->orderBy(['id'=> SORT_DESC])->one();
 				if ($user_photo == null){

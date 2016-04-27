@@ -96,7 +96,7 @@ var MainWs ={
                 fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
             } else {
                 if (chat_type == 0) {
-                    ChatInbox.getTemplateChatPrivate($("#chat_inbox").find('#chat_private ul'), update_list_chat, user_id);
+                    ChatInbox.getTemplateChatPrivateItem($("#chat_inbox").find('#chat_private ul'), update_list_chat, user_id, popup_active);
                 } else {
                     ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_discussion ul'), update_list_chat, user_id);
                 }
