@@ -101,7 +101,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					if ($chat_private) {
 						$chat_private->save(false);
 					}
-					$list_chat_inbox = $this->updateChatPrivateList($user);
+					$list_chat_inbox = $this->updateChatPrivateListItem($user,$this->ws_messages->post_id);
 				}
 				$userProfile = json_decode($this->userProfile($user));
 				// for list chat box
@@ -328,7 +328,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatDateTime($message->post->chat_updated_time);
+                $num_date = UtilitiesFunc::FormatTimeChat($message->post->chat_updated_time);
 
                 $item = [
                     'id'=> $message->post->id,
@@ -364,7 +364,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 		if ($chat_list) {
 			$data = [];
 			foreach ($chat_list as $key => $chat) {
-				$num_date = UtilitiesFunc::FormatDateTime($chat->updated_at ? $chat->updated_at : $chat->created_at);
+				$num_date = UtilitiesFunc::FormatTimeChat($chat->updated_at ? $chat->updated_at : $chat->created_at);
 				$user_photo = User::findOne($chat->user_id_guest)->profile->photo;
 				$content = WsMessages::find()->where('post_id = '.$chat->post_id. ' AND post_type = 0')->orderBy(['id'=> SORT_DESC])->one();
 				if ($user_photo == null){
@@ -393,6 +393,49 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			usort($data, function($a, $b) {
                 return strtotime($b['real_updated_at']) - strtotime($a['real_updated_at']);
             });
+			$data = json_encode($data);
+			// var_dump($data);die;
+			return $data;
+		} else {
+			return false;
+		}
+	}
+
+	public function updateChatPrivateListItem($user_id,$post_id)
+	{
+		$chat_list = ChatPrivate::find()->where('user_id = '.$user_id )->andWhere('post_id = '.$post_id )->all();
+		if ($chat_list) {
+			$data = [];
+			foreach ($chat_list as $key => $chat) {
+				$num_date = UtilitiesFunc::FormatTimeChat($chat->updated_at ? $chat->updated_at : $chat->created_at);
+				$user_photo = User::findOne($chat->user_id_guest)->profile->photo;
+				$content = WsMessages::find()->where('post_id = '.$chat->post_id. ' AND post_type = 0')->orderBy(['id'=> SORT_DESC])->one();
+				if ($user_photo == null){
+					$image = 'img/icon/no_avatar.jpg';
+				}else{
+					$image = 'uploads/'.$chat->user_id_guest.'/'.$user_photo;
+				}
+				$num_date_first_met = date('M d', strtotime($chat->created_at));
+				$first_msg = $content ? $content->first_msg : 1;
+				$content = $content ? ($content->msg_type == 1 ? $content->msg : 'Attached file') : 'Matched on <span class="matched-date">'.$num_date_first_met.'</span>';
+				$item = [
+						'user_id_guest' => $chat->user->id,
+						'user_id_guest_first_name' => $chat->user->profile->first_name,
+						'user_id_guest_last_name' => $chat->user->profile->last_name,
+						'updated_at'=> $num_date,
+						'avatar' => $image,
+						'content' => $content,
+						'post_id' => $chat->post_id,
+						'real_updated_at' => $chat->updated_at ? $chat->updated_at : $chat->created_at,
+						'class_first_met' => $first_msg
+				];
+
+				array_push($data, $item);
+			}
+
+			usort($data, function($a, $b) {
+				return strtotime($b['real_updated_at']) - strtotime($a['real_updated_at']);
+			});
 			$data = json_encode($data);
 			// var_dump($data);die;
 			return $data;
