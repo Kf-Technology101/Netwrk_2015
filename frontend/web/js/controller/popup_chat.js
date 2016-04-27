@@ -310,11 +310,11 @@ var PopupChat = {
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
 
-            var userID = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-post='+ PopupChat.params.post +']').attr('data-user');
+            /*var userID = $(ChatInbox.modal).find('#chat_private li .chat-post-id[data-post='+ PopupChat.params.post +']').attr('data-user');
             if(userID){
                 ChatInbox.ChangeStatusUnreadMsg(userID);
                 Default.ShowNotificationOnChat();
-            }
+            }*/
         });
     },
 
