@@ -882,6 +882,8 @@ var Topic = {
                         }
                     });
                 }
+                //reinitialize the map
+                Map.initialize();
                 console.log(json);
             });
 
