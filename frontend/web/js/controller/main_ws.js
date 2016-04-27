@@ -87,6 +87,9 @@ var MainWs ={
             var popup_active = e.data[0]['post_id'];
             var user_id = e.data[0]['id'];
             var chat_type = e.data[0]['chat_type'];
+
+            PopupChat.ScrollTopChat(popup_active);
+
             $.each(e.data, function(i, elem){
                 PopupChat.message_type = elem.msg_type;
                 PopupChat.getMessageTemplate(elem);
@@ -104,7 +107,6 @@ var MainWs ={
             if(PopupChat.message_type == 1){
                 PopupChat.FetchEmojiOne({type: 'single'}, popup_active);
             }
-            PopupChat.ScrollTopChat(popup_active);
         },
         notify: function(e){
             if (e != null) {                                          // check data returned
