@@ -17,6 +17,7 @@
 	  	center:'',
 	  	zoom7: [],
 	  	zoom12: [],
+		fillOpacity: 0.3,
 	  	timeout: '',
 		zoomBlueDot: 18,
 		mouseIn : false,
@@ -127,7 +128,7 @@
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
 				Map.mouseOutsideInfoWindow();
-				//Map.showZipBoundaries();
+				Map.showZipBoundaries();
 				Common.hideLoader();
 			});
 		    // Map.insertLocalUniversity();
@@ -1221,14 +1222,40 @@
 
 		showZipBoundaries: function() {
 			var params = {};
+			var mapData = Map.map.data;
 			Ajax.getZipBoundaries(params).then(function(jsonData){
 				var out = $.parseJSON(jsonData);
-				Map.map.data.addGeoJson(out);
+				mapData.addGeoJson(out);
 				//styled map
-				Map.map.data.setStyle({
+				mapData.setStyle({
 					fillColor: '#5888ac',
+					fillOpacity: 0,
 					strokeColor: '#5888ac',
 					strokeWeight: 2
+				});
+
+				mapData.addListener('mouseover', function(event) {
+					mapData.setStyle(function(feature) {
+						return /** @type {google.maps.Data.StyleOptions} */({
+							fillColor: '#5888ac',
+							fillOpacity: Map.fillOpacity,
+							strokeColor: '#5888ac',
+							strokeWeight: 2
+						});
+					});
+
+					mapData.addListener('mouseout', function(event) {
+						setTimeout(function() {
+							mapData.setStyle(function(feature) {
+								return /** @type {google.maps.Data.StyleOptions} */({
+									fillColor: '#5888ac',
+									fillOpacity: 0,
+									strokeColor: '#5888ac',
+									strokeWeight: 2
+								});
+							});
+						},600);
+					});
 				});
 			});
 		}
