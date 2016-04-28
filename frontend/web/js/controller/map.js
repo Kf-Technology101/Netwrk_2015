@@ -1017,7 +1017,7 @@
 								Map.map.data.addGeoJson(out[key]);
 
 								Map.map.data.setStyle(function(feature) {
-									if(feature.R.type == 'selected' || feature.R.type == 'Followed') {
+									if(feature.H.type == 'selected' || feature.H.type == 'Followed') {
 										return /** @type {google.maps.Data.StyleOptions} */({
 											fillColor: '#5888ac',
 											fillOpacity: Map.fillOpacity,
@@ -1052,7 +1052,7 @@
 					});
 				} else {
 					map.data.forEach(function(feature) {
-						if(feature.R.type != 'selected' && feature.R.type != 'Followed'){
+						if(feature.H.type != 'selected' && feature.H.type != 'Followed'){
 							map.data.remove(feature);
 						}
 					});
