@@ -112,6 +112,7 @@
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
+				Map.mouseOutsideInfoWindow();
 				Map.showZipBoundaries();
 				Common.hideLoader();
 			});
@@ -385,11 +386,11 @@
 				Map.markers.push(marker);
 			}
 	  	},
-		mouseinsideInfowindow: function() {
+		mouseInsideInfoWindow: function() {
 			clearTimeout(Map.timeout);
 			Map.mouseIn = true;
 		},
-		mouseOutsideInfowindow: function() {
+		mouseOutsideInfoWindow: function() {
 			if(Map.mouseIn) {
 				Map.closeAllInfoWindows();
 				Map.mouseIn = false;
@@ -859,6 +860,7 @@
 						});
 					});
 
+					Map.mouseOutsideInfoWindow();
 					//Map.deleteNetwrk(map);
 					Map.loadMapLabel(0);
 					for (var i = 0; i < Map.zoom12.length; i++) {
