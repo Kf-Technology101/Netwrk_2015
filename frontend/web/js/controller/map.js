@@ -31,6 +31,7 @@
 			zoomLast: 18,
 			zipcode: ''
 		},
+		mouseIn : false,
 		remove_poi : [
 			{
 				stylers: [
@@ -306,14 +307,22 @@
 
 		        google.maps.event.addListener(marker, 'mouseover', function() {
 			        // infowindow.setContent(e[0]);
+					Map.mouseIn = false;
 			        clearTimeout(Map.timeout);
 			        infowindow.open(Map.map, this);
+
+					var iw_container = $(".gm-style-iw").parent();
+					iw_container.stop().hide();
+					iw_container.fadeIn(800);
+
 			        Map.onhoverInfoWindow(e.id,marker);
 			        Map.OnEventInfoWindow(e);
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
-		        	Map.timeout = setTimeout(function(){infowindow.close();}, 3000);
+		        	Map.timeout = setTimeout(function(){
+						Map.closeAllInfoWindows();
+					}, 400);
 		        });
 
 	          	google.maps.event.addListener(infowindow, 'domready', function() {
@@ -386,7 +395,21 @@
 				Map.markers.push(marker);
 			}
 	  	},
-
+		mouseinsideInfowindow: function() {
+			clearTimeout(Map.timeout);
+			Map.mouseIn = true;
+		},
+		mouseOutsideInfowindow: function() {
+			if(Map.mouseIn) {
+				Map.closeAllInfoWindows();
+				Map.mouseIn = false;
+			}
+		},
+		closeAllInfoWindows: function() {
+			for (var i=0;i < Map.infowindow.length;i++) {
+				Map.infowindow[i].close();
+			}
+		},
 	  	CustomArrowPopup: function(){
 	  		var iwOuter = $('.gm-style-iw');
 	  		var iwBackground = iwOuter.prev();
@@ -999,7 +1022,7 @@
 								Map.map.data.addGeoJson(out[key]);
 
 								Map.map.data.setStyle(function(feature) {
-									if(feature.R.type == 'selected' || feature.R.type == 'Followed') {
+									if(feature.H.type == 'selected' || feature.H.type == 'Followed') {
 										return /** @type {google.maps.Data.StyleOptions} */({
 											fillColor: '#5888ac',
 											fillOpacity: Map.fillOpacity,
@@ -1034,7 +1057,7 @@
 					});
 				} else {
 					map.data.forEach(function(feature) {
-						if(feature.R.type != 'selected'){
+						if(feature.H.type != 'selected'){
 							map.data.remove(feature);
 						}
 					});

@@ -225,7 +225,7 @@ class PostController extends BaseController
                 $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$message->post->id)->one();
                 $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
                 $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatDateTime($message->post->created_at);
+                $num_date = UtilitiesFunc::FormatTimeChat($message->post->created_at);
                 $item = [
                     'id'=> $message->post->id,
                     'post_title'=> $message->post->title,
