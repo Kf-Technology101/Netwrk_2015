@@ -248,8 +248,8 @@ var Topic = {
     },
     RedirectPostList: function() {
         var parent = $('#item_list_'+Topic.data.filter);
-        parent.find('.item').unbind();
-        parent.find('.item').on('click',function(e){
+        parent.find('.item .name_topic').unbind();
+        parent.find('.item .name_topic').on('click',function(e){
             var topic = $(e.currentTarget).data('item');
             if(isMobile){
                 Post.RedirectPostPage(topic, false);
@@ -628,7 +628,7 @@ var Topic = {
             }
         });
         $(target[0]).addClass('active');
-
+        Common.HideTooTip();
         Topic.ResetModalTabFeed();
     },
 
@@ -783,6 +783,7 @@ var Topic = {
         }
         Topic.create_topic();
         Topic.RedirectPostList();
+        Topic.onClickTopicMapMarker();
         // this.create_post();
     },
 
@@ -976,7 +977,22 @@ var Topic = {
         var append_html = list_template({data: json});
 
         target.append(append_html);
-    }
+    },
+    /* on click of topic marker icon, display topic marker on map for that location */
+    onClickTopicMapMarker: function() {
+      var parent = $('#modal_topic');
+      var topicMarker = parent.find('#tab_topic').find('.topic-marker');
 
+      topicMarker.unbind();
+      topicMarker.on('click', function(){
+          var lat = $(this).attr('data-lat'),
+              lng = $(this).attr('data-lng'),
+              city_id = $(this).attr('data-city_id');
+
+        Map.showTopicMarker(lat, lng, city_id);
+        parent.modal('hide');
+      });
+
+    }
 
 };

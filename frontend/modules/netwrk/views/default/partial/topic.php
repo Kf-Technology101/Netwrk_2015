@@ -178,11 +178,16 @@
       <% _.each(topices,function(topic){ %>
           <div class="item clearfix" data-item="<%= topic.id %>">
             <div class="topic_post">
-                <div class="name_topic">
+                <div class="name_topic" data-item="<%= topic.id %>">
                     <p><%= topic.title %></p>
                 </div>
             </div>
             <div class="topic-actions text-right">
+                <% if( topic.lat != null && topic.lng != null) {%>
+                    <span class="topic-item">
+                        <i class="fa fa-map-marker topic-marker" data-toggle="tooltip" data-placement="top" title="View topic on map" data-container="body" data-lat="<%= topic.lat %>" data-lng="<%= topic.lng %>" data-city_id="<%= topic.city_id %>"></i>
+                    </span>
+                <% } %>
                 <span class="topic-item">
                     <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="View count" data-container="body"></i><%= topic.view_count%>
                 </span>
