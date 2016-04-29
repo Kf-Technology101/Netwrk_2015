@@ -835,6 +835,30 @@ class DefaultController extends BaseController
         return $hash;
     }
 
+    public function actionGetCityByZipcode() {
+        $data = [];
+        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : '';
+        $city = new City();
+        if($zipCode) {
+            $cities = $city->find()->select('city.*')
+                ->where(['zip_code' => $zipCode])
+                ->all();
+            foreach ($cities as $city) {
+                $item = [
+                    'id' => $city->id,
+                    'name' => $city->name,
+                    'lat' => $city->lat,
+                    'lng' => $city->lng,
+                    'zip_code' => $city->zip_code,
+                    'office' => isset($city->office)? $city->office : 'Social'
+                ];
+                array_push($data, $item);
+            }
+        }
+        $hash = json_encode($data);
+        return $hash;
+    }
+
     public function actionGetZipBoundaries()
     {
         $result = array();
