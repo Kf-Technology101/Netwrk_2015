@@ -446,7 +446,7 @@ var Group = {
         btn.on('click',function(e){
             var item_post = $(e.currentTarget).parent().parent().attr('data-item');
             if(isMobile){
-                ChatPost.RedirectChatPostPage(item_post, 1, 0);
+                PopupChat.RedirectChatPostPage(item_post, 1, 0);
             }else{
                 $("#modal_topic").modal('hide');
                 /*ChatPost.params.post = item_post;
