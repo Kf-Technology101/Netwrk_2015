@@ -9,6 +9,7 @@
 	  	markers:[],
 	  	data_map:'',
 	  	infowindow:[],
+		infoWindowBlueDot:[],
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
@@ -426,6 +427,10 @@
 			for (var i = 0; i < Map.infowindow.length; i++) {
 				Map.infowindow[i].close();
 			}
+
+			for (var i = 0; i < Map.infoWindowBlueDot.length; i++) {
+				Map.infoWindowBlueDot[i].close();
+			}
 		},
 
 	  	CustomArrowPopup: function(){
@@ -840,6 +845,8 @@
 				//display blue dot on map from lat and lon.
 				var blueDotInfoWindow = Map.showBlueDot(lat, lng, map);
 
+				Map.infoWindowBlueDot.push(blueDotInfoWindow);
+
 				google.maps.event.addListener(blueDotInfoWindow, 'domready', function() {
 					//   // Reference to the DIV that wraps the bottom of infowindow
 					var iwOuter = $('.gm-style-iw');
@@ -877,6 +884,13 @@
 					var lngGrad = Math.round(lng) + "&deg; " + Math.round(dec2) + "' " + Math.round((dec2 - Math.floor(dec2)) * 60) + "''";
 					$('#cm-coords').html(latGrad + "<br>" + lngGrad);
 				});
+
+				google.maps.event.addListener(Map.center_marker, 'mouseout', function() {
+					Map.timeout = setTimeout(function(){
+						Map.closeAllInfoWindows();
+					}, 400);
+				});
+
 
 				//find current zip from lat and lng set to Map.blueDotLocation.zipcode
 				Map.findCurrentZip(lat, lng);
@@ -959,7 +973,7 @@
 
 			console.log(Map.blueDotLocation.lat+', '+Map.blueDotLocation.lon);
 
-			var content = '<div id="iw-container" class="cgm-container" >' +
+			var content = '<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">' +
 					'<div class="iw-content">' +
 					/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
 					'<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>' +
@@ -978,6 +992,8 @@
 			var infowindow = new google.maps.InfoWindow({
 				content: content
 			});
+
+			infowindow.close();
 
 			return infowindow;
 		},
