@@ -197,6 +197,8 @@ var Create_Topic={
             backdrop: true,
             keyboard: false
         }).removeAttr("style").css("display", "block");
+
+        Common.CustomScrollBar(parent.find('.modal-body'));
     },
 
     onCloseModalCreateTopic: function(){
