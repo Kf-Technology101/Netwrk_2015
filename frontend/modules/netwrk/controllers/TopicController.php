@@ -228,6 +228,8 @@ class TopicController extends BaseController
                 'post'=> $post_data,
                 'user_id' => $value->user_id,
                 'owner' => ($currentUserId == $value->user_id ? true : false),
+                'lat' => $value->lat,
+                'lng' => $value->lng
                 );
             array_push($data,$topic);
         }
@@ -426,7 +428,7 @@ class TopicController extends BaseController
         //Grouped activity in month
         $topicArray = array();
         foreach ($data as $item) {
-            $topicArray[$item['formatted_created_date_month_year']][] = $item;
+            $topicArray[$item['']][] = $item;
         }
         $temp = array('data' => $topicArray, 'total_count' => $totalCount);
 

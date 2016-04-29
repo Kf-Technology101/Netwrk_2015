@@ -966,10 +966,10 @@
 					'<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Topic</span></a></div>' +
 					/*'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
 					'<div class="iw-subTitle"><span class="post-title">' +
-					'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h4>Zoom In</h4></a>' +
+					'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h5>Pick a specific location for your topic</h5></a>' +
 					'</span></div>' +
 					'<div class="iw-subTitle"><span class="post-title">' +
-					'<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place</h4></a>' +
+					'<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place your topic here</h4></a>' +
 					'</span></div>' +
 					'</div>' +
 					'<div class="iw-bottom-gradient"></div>' +
@@ -1131,7 +1131,7 @@
 							//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 
 							var iwBackground = iwOuter.prev();
-							iwOuter.children(':nth-child(1)').css({'max-width' : '400px'});
+							iwOuter.children(':nth-child(1)').css({'max-width' : '50px'});
 							// Removes background shadow DIV
 							iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
@@ -1466,5 +1466,23 @@
 					});
 				});
 			});
+		},
+		showTopicMarker: function(lat, lng, city_id) {
+			var img = '/img/icon/map_icon_topic_v_2.png';
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(lat, lng),
+				map: Map.map,
+				icon: img,
+				draggable: false,
+				city_id: city_id
+			});
+
+			//google.maps.event.clearListeners(marker, 'dragstart');
+			google.maps.event.addListener(marker, 'click', function(e) {
+				console.log('in click'+$(this).city_id);
+				Topic.initialize($(this).city_id);
+			});
+
+			Map.zoomMap(lat,lng,18,Map.map)
 		}
 	}
