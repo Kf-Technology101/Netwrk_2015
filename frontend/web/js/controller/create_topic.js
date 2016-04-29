@@ -55,6 +55,15 @@ var Create_Topic={
             }
             console.log("params: ", Create_Topic.params, byGroup);
 
+            if (name && city == null) {
+                Create_Topic.showGroupCategory(name);
+                Create_Topic.onChangeGroupCategory();
+                Create_Topic.params.city_name = name;
+                Create_Topic.params.lat = $('#create_topic_modal').attr('data-lat');
+                Create_Topic.params.lng = $('#create_topic_modal').attr('data-lng');
+                Create_Topic.params.isCreateFromBlueDot = true;
+            }
+
             Create_Topic.showModalCreateTopic();
             // Create_Topic.showSideBar();
             Create_Topic.onCloseModalCreateTopic();
@@ -68,6 +77,46 @@ var Create_Topic={
             Create_Topic.onClickBackNetwrkLogo();
             Topic.displayPositionModal();
         }
+    },
+    showCreateTopicModal: function(zipcode, lat, lng) {
+        var parent = $('#create_topic_modal');
+        parent.attr('data-lat', lat);
+        parent.attr('data-lng', lng);
+
+        Create_Topic.initialize(null, zipcode)
+    },
+    showGroupCategory: function(zipcode){
+        var parent = $('#create_topic_modal');
+        parent.find('.group-category-content').html('');
+        var params = {'zip_code': zipcode};
+        //todo: fetch weather api data
+        Ajax.get_city_by_zipcode(params).then(function(data){
+            var json = $.parseJSON(data);
+            console.log(json);
+            Create_Topic.getTemplateGroupCategory(parent,json);
+        });
+    },
+    getTemplateGroupCategory: function(parent,data){
+        var json = data;
+        var target = parent.find('.group-category-content');
+
+        var list_template = _.template($("#group-category-template").html());
+        var append_html = list_template({data: json});
+
+        target.append(append_html);
+    },
+    //update Create_Topic.params.city variable on change of group category dropdown in create topic form.
+    onChangeGroupCategory: function() {
+        var parent = $('#create_topic_modal').find('.dropdown-office');
+        var city_id = parent.val();
+
+        parent.unbind();
+        parent.on('change', function(){
+            city_id = $(this).val();
+            Create_Topic.params.city = city_id;
+        });
+
+        Create_Topic.params.city = city_id;
     },
     showZipcodeBreadcrumb: function(zipcode){
         var target = $('#create_topic_modal').find('.scrumb .zipcode');
@@ -287,6 +336,13 @@ var Create_Topic={
         parent.find('.name_topic').val('');
         parent.find('.name_post').val('');
         parent.find('.message').val('');
+        parent.find('.group-category-content').html('');
+
+        //reset the group category content params, so that params will not save to db
+        //lat,lng only save when topic table when it creates from blue Dot on map.
+        Create_Topic.params.lat = null;
+        Create_Topic.params.lng = null;
+        Create_Topic.params.isCreateFromBlueDot = false;
 
         Create_Topic.status_change.topic = false;
         Create_Topic.status_change.post = false;

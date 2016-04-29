@@ -962,13 +962,11 @@
 			var content = '<div id="iw-container" class="cgm-container" >' +
 					'<div class="iw-content">' +
 					/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
-					'<div class="iw-subTitle" id="actionBuildCommunity"><a href="javascript:"><span class="post-title">Build a community</span></a></div>' +
-					'<div class="iw-subTitle" id="actionHaveParty"><a href="javascript:"><span class="post-title">Have a party</span></a></div>' +
-					'<div class="iw-subTitle" id="actionPostPicture"><a href="javascript:"><span class="post-title">Post a picture</span></a></div>' +
-					'<div class="iw-subTitle" id="actionPostVideo"><a href="javascript:"><span class="post-title">Post a video</span></a></div>' +
+					'<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>' +
+					'<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Topic</span></a></div>' +
 					/*'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
 					'<div class="iw-subTitle"><span class="post-title">' +
-					'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h4>Have a local</h4></a>' +
+					'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h4>Zoom In</h4></a>' +
 					'</span></div>' +
 					'<div class="iw-subTitle"><span class="post-title">' +
 					'<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place</h4></a>' +
@@ -1057,6 +1055,12 @@
 			var lat = Map.center_marker.getPosition().lat();
 			var lng = Map.center_marker.getPosition().lng();
 			Create_Group.initialize(null, null, zipcode, null, true, lat, lng);
+		},
+		CreateLocationTopic: function(zipcode) {
+			var lat = Map.center_marker.getPosition().lat();
+			var lng = Map.center_marker.getPosition().lng();
+
+			Create_Topic.showCreateTopicModal(zipcode, lat, lng);
 		},
 
 		show_marker_group_loc: function(map, groupId) {

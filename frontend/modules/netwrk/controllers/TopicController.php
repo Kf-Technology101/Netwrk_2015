@@ -109,6 +109,10 @@ class TopicController extends BaseController
                 $city_id = $netwrk->id;
             }
             $Topic->city_id = $city_id;
+            if (isset($_POST['isCreateFromBlueDot']) && $_POST['isCreateFromBlueDot'] == true) {
+                $Topic->lat = $_POST['lat'];
+                $Topic->lng = $_POST['lng'];
+            }
         } else {
             $groupId = $_POST['group'];
             if (empty($groupId)) throw new Exception("Group is empty");

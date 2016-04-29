@@ -23,6 +23,9 @@
                         <p class="title"> Topic </p>
                         <input type="text" class="name_topic" maxlength="128" placeholder="Topic Title">
                     </div>
+                    <div class="group-category-content">
+
+                    </div>
                     <div class="post">
                         <div class="post-title">
                             <p class="title"> Post </p>
@@ -50,3 +53,15 @@
         </div>
     </div>
 </div>
+<script id="group-category-template" type="text/x-underscore-template">
+    <section class="group-category-wrapper">
+        <% if(data.length > 0) { %>
+            <p class="title">Community Category</p>
+            <select name="office" class="form-control dropdown-office">
+                <% _.each(data, function(item,i) { %>
+                    <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.office %></option>
+                <% }); %>
+            </select>
+        <% } %>
+    </section>
+</script>
