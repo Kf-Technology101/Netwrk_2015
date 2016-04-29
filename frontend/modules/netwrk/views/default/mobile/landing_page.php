@@ -128,7 +128,7 @@
 	<% if(!_.isEmpty(landing.feeds)) {%>
 		<div class="favorite-communities">
 			<div class="top-header">
-				<p class="lp-title">Your Following Communities</p>
+				<p class="lp-title">Your Followed Areas</p>
 			</div>
 			<div class="favorite-communities-content">
 				<% if(!_.isEmpty(landing.feeds)) {%>
