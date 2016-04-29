@@ -6,7 +6,7 @@
 				<div class="header">
 					<div class="title">
 						<p class="main-header">Welcome, click explore to follow communities</p>
-						<p class="sub-header">Here's what's happening in society today.</p>
+						<p class="sub-header">Tap the netwrk icon or map to explore</p>
 					</div>
 				</div>
 			</div>
@@ -23,17 +23,41 @@
 	</div>
 </div>
 <script id="landing_page" type="text/x-underscore-template">
+	<div class="top-communities">
+		<div class="top-header">
+			<p class="lp-title">Home communities</p>
+			<p class="lp-description">See whats happening in your area!</p>
+		</div>
+		<div class="top-communities-content">
+			<%
+			_.each(landing.top_communities,function(e,i){ %>
+			<div class="communities-row" data-city="<%= e.city_id %>">
+				<div class="com-content">
+					<p class="zipcode"><%= e.zip_code %> - <%= (e.office_name != null) ? e.office_name : e.city_name %></p>
+					<p class="subtext">
+						<% _.each(e.top_hashtag,function(d,s){ %>
+						<span><%=d.hashtag %></span>
+						<%})%>
+					</p>
+				</div>
+				<span class="arrow"><i class="fa fa-angle-right"></i></span>
+			</div>
+			<%
+			});
+			%>
+		</div>
+	</div>
 	<div class="top-post">
 		<div class="top-header">
-			<p class="lp-title">Top Posts</p>
-			<p class="lp-description">Check out some of the discussions on some of your favorite subjects</p>
+			<p class="lp-title">On the net today</p>
+			<!--<p class="lp-description">Check out some of the discussions on some of your favorite subjects</p>-->
 		</div>
 		<div class="top-post-content">
 			<%
 				var len_post = landing.top_post.length;
 				_.each(landing.top_post,function(e,i){
 					if(i == len_post - 1){%>
-							<div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+							<div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
 					<% }else{ %>
 							<div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
 					<% } %>
@@ -52,9 +76,28 @@
 			<%
 				});
 			%>
+
+			<%
+				var len_topic = landing.top_post.length;
+				_.each(landing.top_topic,function(e,i){
+					if(i == len_topic - 1){ %>
+						<div class="topic-row last-row" data-value="<%= e.id %>">
+					<% }else{ %>
+						<div class="topic-row" data-value="<%= e.id %>">
+					<% } %>
+							<p class="topic-title"><%= e.name %></p>
+							<div class="post-counter">
+								<%= e.post_count %>
+								<span class="arrow"><i class="fa fa-angle-right"></i></span>
+								<i class="fa fa-file-text"></i>
+							</div>
+						</div>
+			<%
+				});
+			%>
 		</div>
 	</div>
-	<div class="top-topic">
+	<!--<div class="top-topic">
 		<div class="top-header">
 			<p class="lp-title">Top Topics</p>
 			<p class="lp-description">Browse these topics of conversations</p>
@@ -80,29 +123,54 @@
 			%>
 
 		</div>
-	</div>
-	<div class="top-communities">
-		<div class="top-header">
-			<p class="lp-title">Top Communities</p>
-			<p class="lp-description">Browse these popular netwrks</p>
+	</div>-->
+
+	<% if(!_.isEmpty(landing.feeds)) {%>
+		<div class="favorite-communities">
+			<div class="top-header">
+				<p class="lp-title">Your Following Communities</p>
+			</div>
+			<div class="favorite-communities-content">
+				<% if(!_.isEmpty(landing.feeds)) {%>
+					<% _.each(landing.feeds, function(city_feed, key){ %>
+						<% _.each(city_feed, function(e, key){ %>
+							<% if ((e.is_post == 1)){ %>
+								<div class="feed-row feed-post" data-user="<%= e.user_id %>" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
+									<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
+									<div class="feed-content">
+										<div class='post'>
+											<div class='post-title'><%= e.title %></div>
+											<div class='post-content'><%= e.content %></div>
+										</div>
+										<span class='post-create-by'>Posted by: <%= e.posted_by %></span>
+										<span class='appear-day'>
+											<% if ((e.appear_day == 'Now')){ %>
+												Just Now
+											<% }else{ %>
+												<%= e.appear_day %> ago
+											<% } %>
+										</span>
+									</div>
+								</div>
+							<% }else{ %>
+								<div class="feed-row feed-topic" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name='<%= e.city_name %>'>
+									<div class="feed-content">
+										<span class='topic-title'><%= e.title %></span>
+										<span class='topic-create-by'>Topic created by: <%= e.created_by %></span>
+										<span class='appear-day'>
+											<% if ((e.appear_day == 'Now')){ %>
+												Just Now
+											<% }else{ %>
+												<%= e.appear_day %> ago
+											<% } %>
+										</span>
+									</div>
+								</div>
+							<% } %>
+						<% }); %>
+					<% }); %>
+				<% } %>
+			</div>
 		</div>
-		<div class="top-communities-content">
-			<%
-				_.each(landing.top_communities,function(e,i){ %>
-				<div class="communities-row" data-city="<%= e.city_id %>">
-					<div class="com-content">
-						<p class="zipcode"><%= e.zip_code %> - <%= (e.office_name != null) ? e.office_name : e.city_name %></p>
-						<p class="subtext">
-						<% _.each(e.top_hashtag,function(d,s){ %>
-							<span><%=d.hashtag %></span>
-						<%})%>
-						</p>
-					</div>
-					<span class="arrow"><i class="fa fa-angle-right"></i></span>
-				</div>
-			<%
-				});
-			%>
-		</div>
-	</div>
+	<% } %>
 </script>
