@@ -9,6 +9,7 @@
 	  	markers:[],
 	  	data_map:'',
 	  	infowindow:[],
+		infoWindowBlueDot:[],
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
@@ -29,7 +30,8 @@
 			zoomInitial: 13,
 			zoomMiddle: 16,
 			zoomLast: 18,
-			zipcode: ''
+			zipcode: '',
+			timeout: ''
 		},
 		mouseIn : false,
 		remove_poi : [
@@ -126,7 +128,7 @@
 			});
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
-			Map.requestBlutDotOnMap(lat,lng,Map.map);
+			Map.requestBlueDotOnMap(lat,lng,Map.map);
 			Map.requestPosition(Map.map);
 	  	},
 
@@ -395,11 +397,11 @@
 				Map.markers.push(marker);
 			}
 	  	},
-		mouseinsideInfowindow: function() {
+		mouseInsideInfoWindow: function() {
 			clearTimeout(Map.timeout);
 			Map.mouseIn = true;
 		},
-		mouseOutsideInfowindow: function() {
+		mouseOutsideInfoWindow: function() {
 			if(Map.mouseIn) {
 				Map.closeAllInfoWindows();
 				Map.mouseIn = false;
@@ -408,6 +410,10 @@
 		closeAllInfoWindows: function() {
 			for (var i=0;i < Map.infowindow.length;i++) {
 				Map.infowindow[i].close();
+			}
+			/* remove blue dot markers */
+			for (var i = 0; i < Map.infoWindowBlueDot.length; i++) {
+				Map.infoWindowBlueDot[i].close();
 			}
 		},
 	  	CustomArrowPopup: function(){
@@ -775,7 +781,7 @@
 			console.log('in req postion');
 		},
 
-		requestBlutDotOnMap: function(lat, lng, map) {
+		requestBlueDotOnMap: function(lat, lng, map) {
 			if (map.getZoom() != Map.blueDotLocation.zoomInitial) {
 				if (typeof Map.center_marker != "undefined" && Map.center_marker != null) {
 					Map.center_marker.setMap(null);
@@ -790,6 +796,8 @@
 
 				//display blue dot on map from lat and lon.
 				var blueDotInfoWindow = Map.showBlueDot(lat, lng, map);
+
+				Map.infoWindowBlueDot.push(blueDotInfoWindow);
 
 				google.maps.event.addListener(blueDotInfoWindow, 'domready', function() {
 					//   // Reference to the DIV that wraps the bottom of infowindow
@@ -827,6 +835,12 @@
 					var dec2 = (lng - Math.floor(lng)) * 60;
 					var lngGrad = Math.round(lng) + "&deg; " + Math.round(dec2) + "' " + Math.round((dec2 - Math.floor(dec2)) * 60) + "''";
 					$('#cm-coords').html(latGrad + "<br>" + lngGrad);
+				});
+
+				google.maps.event.addListener(Map.center_marker, 'mouseout', function() {
+					Map.timeout = setTimeout(function(){
+						Map.closeAllInfoWindows();
+					}, 400);
 				});
 
 				//remove old listener in map
@@ -909,7 +923,7 @@
 
 			console.log(Map.blueDotLocation.lat+', '+Map.blueDotLocation.lon);
 
-			var content = '<div id="iw-container" class="cgm-container" >' +
+			var content = '<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">' +
 				'<div class="iw-content">' +
 				/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
 				'<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>' +
@@ -928,6 +942,8 @@
 			var infowindow = new google.maps.InfoWindow({
 				content: content
 			});
+
+			infowindow.close();
 
 			return infowindow;
 		},
@@ -1082,6 +1098,7 @@
 						}
 						console.log('in idle');
 						Map.show_marker_group_loc(map);
+						Map.show_marker_topic_loc(map, params);
 					}
 				}
 			});
@@ -1218,6 +1235,43 @@
 					}
 					Map.markers.push(marker);
 				});
+			});
+		},
+		show_marker_topic_loc: function(map, params) {
+			var marker,json,data_marker;
+
+			Ajax.get_marker_topic_loc(params).then(function(data){
+				console.log('get marker topic loc');
+				data_marker = $.parseJSON(data);
+
+				//console.log(data_marker);
+				$.each(data_marker,function(i,e){
+					var img = '/img/icon/map_icon_topic_v_2.png';
+
+					marker = new google.maps.Marker({
+						position: new google.maps.LatLng(e.lat, e.lng),
+						map: map,
+						icon: img,
+						city_id: parseInt(e.city_id)
+					});
+
+					//console.log("marker", marker);
+					google.maps.event.addListener(marker, 'click', (function(marker, i) {
+						return function(){
+							console.log(marker.city_id);
+							Topic.initialize(marker.city_id);
+							if(!isMobile){
+								if (typeof infowindow != "undefined") {
+									infowindow.close();
+								}
+							}
+						};
+					})(marker, i));
+
+					Map.markers.push(marker);
+				});
+
+
 			});
 		},
 
@@ -1521,6 +1575,7 @@
 		},
 		showTopicMarker: function(lat, lng, city_id) {
 			var img = '/img/icon/map_icon_topic_v_2.png';
+			var zoom18 = 18;
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(lat, lng),
 				map: Map.map,
@@ -1535,6 +1590,6 @@
 				Topic.initialize($(this).city_id);
 			});
 
-			Map.zoomMap(lat,lng,18,Map.map)
+			Map.zoomMap(lat,lng,zoom18,Map.map)
 		}
 	};
