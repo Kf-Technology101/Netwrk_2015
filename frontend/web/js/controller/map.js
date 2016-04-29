@@ -24,7 +24,7 @@
 		blueDotLocation: {
 			lat: '',
 			lon: '',
-			zoomInitial: 13,
+			zoomInitial: 10,
 			zoomMiddle: 16,
 			zoomLast: 18,
 			zipcode: ''
@@ -1000,7 +1000,6 @@
 			});
 
 			google.maps.event.addListener(map, 'idle', function(){
-				Map.requestBlueDotOnMap(lat,lng,Map.map);
 				var currentZoom = map.getZoom();
 
 				if(currentZoom >= 12 ){
