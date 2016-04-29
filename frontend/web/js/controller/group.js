@@ -321,7 +321,7 @@ var Group = {
         var self = this;
         var list_template = _.template($("#post_topic_group_list" ).html());
         var append_html = list_template({posts: data});
-        parent.append(append_html);
+        parent.html(append_html);
         $("div[id^='item_topic_group_list']").hide();
         $("div[id^='item_group_list']").hide();
         $('.topic_group_top').show();
@@ -449,8 +449,14 @@ var Group = {
                 ChatPost.RedirectChatPostPage(item_post, 1, 0);
             }else{
                 $("#modal_topic").modal('hide');
-                ChatPost.params.post = item_post;
-                ChatPost.initialize();
+                /*ChatPost.params.post = item_post;
+                ChatPost.initialize();*/
+                PopupChat.params.post = item_post;
+                PopupChat.params.chat_type = $(e.currentTarget).parent().parent().attr('data-chat-type');
+                PopupChat.params.post_name = $(e.currentTarget).parent().parent().find('.information .post_name').html();
+                PopupChat.params.post_description = $(e.currentTarget).parent().parent().find('.information .post_massage').html();
+                ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
+                PopupChat.initialize();
             }
         });
 

@@ -9,6 +9,8 @@ use frontend\modules\netwrk\models\UserGroup;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\UserInvitation;
 use frontend\modules\netwrk\models\City;
+use frontend\modules\netwrk\models\Topic;
+use frontend\modules\netwrk\models\Post;
 use yii\base\Exception;
 use Yii;
 
@@ -112,6 +114,26 @@ class GroupController extends BaseController {
             }
 
             $transaction->commit();
+
+            // If new group created add general topic under this new group
+            if (empty($_POST['id'])) {
+                $Topic = new Topic;
+                $Topic->group_id = $group->id;
+                $Topic->user_id = $currentUserId;
+                $Topic->title = $name;
+                $Topic->save();
+
+                $Post = new Post();
+                $Post->title = 'groupchat';
+                $Post->content = 'Join the party!';
+                $Post->topic_id = $Topic->id;
+                $Post->user_id = $currentUserId;
+                $Post->post_type = 1;
+                $Post->save();
+
+                $Topic->post_count = 1;
+                $Topic->update();
+            }
 
             die(json_encode(array("error" => false, "group_id" => $group->id)));
 
