@@ -14,6 +14,7 @@ use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
 use Yii;
+use yii\web\Cookie;
 
 class PostController extends BaseController
 {
@@ -205,6 +206,63 @@ class PostController extends BaseController
     public function actionGetChatInbox()
     {
         $currentUser = Yii::$app->user->id;
+        $cookies = Yii::$app->request->cookies;
+        $zipCode = $cookies->getValue('nw_zipCode');
+
+        $cities = City::find()
+            ->where('zip_code = '.$zipCode)
+            ->all();
+
+        $city_array = [];
+        foreach($cities as $city) {
+            $city_array[] = $city->id;
+        }
+
+        //get genral topic and post from city ids (city ids of cover page zipcodes)
+        $query = new Query();
+        //$results = $query->select('topic.id as topic_id, topic.title, topic.city_id, post.id as post_id, post.title')
+        $results = $query->select('topic.id as topic_id, topic.title as topic_title, topic.city_id, post.*')
+            ->from('topic')
+            ->join('JOIN', 'post', 'post.topic_id = topic.id')
+            ->where(['in', 'topic.city_id', $city_array])
+            ->orderBy('topic.post_count DESC')
+            ->all();
+
+        if ($results) {
+            $local_topics = [];
+            foreach ($results as $key => $value) {
+                $user_photo = User::findOne($value->user_id)->profile->photo;
+                if ($user_photo == null){
+                    $image = 'img/icon/no_avatar.jpg';
+                }else{
+                    $image = 'uploads/'.$value->user_id.'/'.$user_photo;
+                }
+
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value->brilliant_count ? $value->brilliant_count : 0);
+                $num_date = UtilitiesFunc::FormatTimeChat($value->created_at);
+                $item = [
+                    'id'=> $value->id,
+                    'post_title'=> $value->title,
+                    'post_content'=> $value->content,
+                    'topic_id'=> $value->topic_id,
+                    'topic_name'=> $value->topic_title,
+                    'city_id' =>  $value->city_id,
+                    'city_name' =>  $value->city_id,
+                    'title'=> $value->title,
+                    'content'=> $value->content,
+                    'num_comment' => $num_comment ? $num_comment: 0,
+                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+                    'avatar'=> $image,
+                    'update_at'=> $num_date,
+                    'real_update_at' => $value->chat_updated_time ? $value->chat_updated_time : $value->created_at
+                ];
+                array_push($local_topics, $item);
+            }
+        }
+        
+
+
         $messages = new WsMessages();
         $messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser. ' AND post_type = 1')
         ->distinct()
