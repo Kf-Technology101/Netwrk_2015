@@ -435,4 +435,48 @@ class TopicController extends BaseController
         $hash = json_encode($temp);
         return $hash;
     }
+
+    /**
+     * Get the topic by location, Fetch those topic which created from blue dot.
+     * return topic data
+     */
+    public function actionGetTopicByLocation()
+    {
+        $swLat = $_GET['swLat'];
+        $neLat = $_GET['neLat'];
+
+        $swLng = $_GET['swLng'];
+        $neLng = $_GET['neLng'];
+
+        $geo_where = '(topic.lat >= '.$swLat.' AND topic.lat <= '.$neLat.' AND topic.lng >= '.$swLng.' AND topic.lng <= '.$neLng.')';
+
+        $query = new Query();
+        $data = $query->select('topic.*,
+                 city.id as city_id, city.zip_code, city.name, city.lat as city_lat, city.lng as city_lng')
+                    ->from('topic')
+                    ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
+                    ->where($geo_where)
+                    ->andWhere(['not', ['topic.lat' => null]])
+                    ->andWhere(['not', ['topic.lng' => null]])
+                    ->orderBy(['topic.created_at'=> SORT_DESC]);
+
+        $topics = $query->all();
+        
+        $data = [];
+
+        foreach ($topics as $key => $value) {
+            $topic = array(
+                "id" => $value['id'],
+                "city_id" => $value['city_id'],
+                "user_id" => $value['user_id'],
+                "title" => $value['title'],
+                "lat" => $value['lat'],
+                "lng" => $value['lng']
+            );
+            array_push($data, $topic);
+        }
+
+        $hash = json_encode($data);
+        return $hash;
+    }
 }

@@ -393,6 +393,24 @@ var Ajax ={
 
     },
 
+    get_marker_topic_loc: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/topic/get-topic-by-location";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     show_groups: function(params){
         var url,defer = $.Deferred();
 
