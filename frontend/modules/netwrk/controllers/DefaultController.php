@@ -1213,4 +1213,136 @@ class DefaultController extends BaseController
 
         return $returnData;
     }
+
+    /**
+     * Add general topic under Government community
+     * @throws \Exception
+     */
+    public function actionGovtCommunitiesSetGeneralTopic(){
+        set_time_limit(1800); // Set max execution time 30 minutes.
+
+        $cities = City::find()
+            ->where('office_type = "government"')
+            ->andWhere('gen_topic_added = 0')
+            ->all();
+
+        echo date('Y-m-d H:i:s').'<br/>';
+        foreach ($cities as $key => $value) {
+
+            // Create topic and post for communities
+            $Topic = new Topic;
+            $Topic->city_id = $value->id;
+            $Topic->user_id = 0;
+            $Topic->title = 'Problem Solving';
+            $Topic->save();
+
+            $Post = new Post();
+            $Post->title = 'solveproblemstogether';
+            $Post->content = 'Problems will be reported here. Remember, it takes a community to fix issues and make things better.';
+            $Post->topic_id = $Topic->id;
+            $Post->user_id = 0;
+            $Post->post_type = 1;
+            $Post->save();
+
+            $Topic->post_count = 1;
+            $Topic->update();
+
+            // Update cities general topic column
+            $City = City::findOne($value->id);
+            $City->gen_topic_added = 1;
+            $City->update();
+
+            echo '<br/> Added general topic for '.$value->id;
+        }
+        echo '<br/>'.date('Y-m-d H:i:s').'<br/>';
+        die();
+    }
+
+    /**
+     * Add general topic under University community
+     * @throws \Exception
+     */
+    public function actionUniversityCommunitiesSetGeneralTopic(){
+        set_time_limit(1800); // Set max execution time 30 minutes.
+
+        $cities = City::find()
+            ->where('office_type = "university"')
+            ->andWhere('gen_topic_added = 0')
+            ->all();
+
+        echo date('Y-m-d H:i:s').'<br/>';
+        foreach ($cities as $key => $value) {
+
+            // Create topic and post for communities
+            $Topic = new Topic;
+            $Topic->city_id = $value->id;
+            $Topic->user_id = 0;
+            $Topic->title = 'How should it all be?';
+            $Topic->save();
+
+            $Post = new Post();
+            $Post->title = 'ideas';
+            $Post->content = 'Ideas move the world forward, share yours here.';
+            $Post->topic_id = $Topic->id;
+            $Post->user_id = 0;
+            $Post->post_type = 1;
+            $Post->save();
+
+            $Topic->post_count = 1;
+            $Topic->update();
+
+            // Update cities general topic column
+            $City = City::findOne($value->id);
+            $City->gen_topic_added = 1;
+            $City->update();
+
+            echo '<br/> Added general topic for '.$value->id;
+        }
+        echo '<br/>'.date('Y-m-d H:i:s').'<br/>';
+        die();
+    }
+
+    /**
+     * Add general topic under Social community
+     * @throws \Exception
+     */
+    public function actionSocialCommunitiesSetGeneralTopic(){
+        set_time_limit(3600); // Set max execution time 60 minutes.
+
+        $cities = City::find()
+            ->where('gen_topic_added = 0')
+            ->limit(10000)
+            ->all();
+
+        echo date('Y-m-d H:i:s').'<br/>';
+        foreach ($cities as $key => $value) {
+
+            // Create topic and post for communities
+            $Topic = new Topic;
+            $Topic->city_id = $value->id;
+            $Topic->user_id = 0;
+            $Topic->title = 'Main Channel';
+            $Topic->save();
+
+            $Post = new Post();
+            $Post->title = 'Welcome';
+            $Post->content = 'Our home is yours. Kick your shoes off, relax, help yourself to the fridge and remember, life is good.';
+            $Post->topic_id = $Topic->id;
+            $Post->user_id = 0;
+            $Post->post_type = 1;
+            $Post->save();
+
+            $Topic->post_count = 1;
+            $Topic->update();
+
+            // Update cities general topic column
+            $City = City::findOne($value->id);
+            $City->gen_topic_added = 1;
+            $City->update();
+
+            echo '<br/> Added general topic for '.$value->id;
+        }
+        echo '<br/>'.date('Y-m-d H:i:s').'<br/>';
+        die();
+    }
 }
