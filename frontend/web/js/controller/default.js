@@ -11,6 +11,7 @@ var Default ={
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
+            Default.onClickNavigationIcon();
         }
         Default.SetAvatarUserDropdown();
         // Default.ShowLandingPage();
@@ -218,4 +219,24 @@ var Default ={
                 $(ChatInbox.modal).css('z-index','9999');
             });
     },
+
+    onClickNavigationIcon: function () {
+        var target = $('.landing-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            var landingModal = $('#modal_landing_page');
+
+            // Check if landing page modal open
+            if ((landingModal.data('bs.modal') || {isShown: false}).isShown ) {
+                // Hide landing page modal
+                landingModal.modal('hide');
+            } else {
+                // Close other open modal
+                $('.modal').modal('hide');
+                // Show landing page modal
+                landingModal.modal('show');
+            }
+        });
+    }
 };
