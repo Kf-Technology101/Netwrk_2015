@@ -267,10 +267,30 @@
 	      		text_below += "<br>" + e.topic[0].name + "<br>#" + e.trending_hashtag[0].hashtag_name;
 	      	}
 
-	      	marker = new google.maps.Marker({
+			/*marker = new google.maps.Marker({
+				position: new google.maps.LatLng(e.lat, e.lng),
+				map: map,
+				icon: baseUrl + e.mapicon,
+				city_id: parseInt(e.id)
+				// label: text_below
+			});*/
+
+			var markerContent = "<div class='marker'></div>";
+
+			if(e.office_type == 'university') {
+				markerContent += "<span class='marker-icon marker-university'><i class='fa fa-lg fa-graduation-cap'></i>";
+			} else if(e.office_type == 'government') {
+				markerContent += "<span class='marker-icon marker-government'><i class='fa fa-lg fa-institution'></i>";
+			} else {
+				markerContent += "<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>";
+			}
+
+			markerContent += "</span><div class='marker-shadow'></div>";
+
+	      	marker = new RichMarker({
 		        position: new google.maps.LatLng(e.lat, e.lng),
 		        map: map,
-		        icon: baseUrl + e.mapicon,
+				content: markerContent,
 		        city_id: parseInt(e.id)
 		        // label: text_below
 	      	});
@@ -796,14 +816,25 @@
 		},
 
 		createZipLabelMarker: function(cid,name_of_place,zipCode,zipLat,zipLng) {
-			var marker = new google.maps.Marker({
+			var markerContent = "<div class='marker-zip-code'>"+zipCode+"</div>";
+
+			var marker = new RichMarker({
+				map: Map.map,
+				position: new google.maps.LatLng(zipLat, zipLng),
+				content: markerContent,
+				city_id: parseInt(cid),
+				place_name: name_of_place,
+				zIndex: 9999
+			});
+
+			/*var marker = new google.maps.Marker({
 				map: Map.map,
 				position: new google.maps.LatLng(zipLat, zipLng),
 				icon: 'http://dummyimage.com/50x30/5888ac/ffffff&text='+zipCode,
 				city_id: parseInt(cid),
 				place_name: name_of_place,
 				zIndex: 9999
-			});
+			});*/
 
 			google.maps.event.addListener(marker, 'click', (function(marker){
 				return function(){
@@ -936,12 +967,23 @@
 				data_marker = $.parseJSON(data);
 				//console.log(data_marker);
 				$.each(data_marker,function(i,e){
-					var img = '/img/icon/map_icon_community_v_2.png';
+					/*var img = '/img/icon/map_icon_community_v_2.png';
 
 					marker = new google.maps.Marker({
 						position: new google.maps.LatLng(e.lat, e.lng),
 						map: map,
 						icon: img,
+						group_id: parseInt(e.id)
+					});*/
+
+					var markerContent = "<div class='marker marker-group'></div>"+
+										"<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>"+
+										"</span><div class='marker-shadow'></div>";
+
+					marker = new RichMarker({
+						position: new google.maps.LatLng(e.lat, e.lng),
+						map: map,
+						content: markerContent,
 						group_id: parseInt(e.id)
 					});
 
