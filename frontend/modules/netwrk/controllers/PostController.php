@@ -212,14 +212,29 @@ class PostController extends BaseController
         $data = [];
         $cookies = Yii::$app->request->cookies;
         $zipCode = $cookies->getValue('nw_zipCode');
+        $limit = 5;
 
-        $cities = City::find()
-            ->where('zip_code = '.$zipCode)
-            ->all();
+        //if city is entered on cover page then zipcode is 0,
+        //IF a person enters a city, the most active general chat will show (meaning the post with the most chats)
+        if($zipCode == 0) {
+            $cityName = $cookies->getValue('nw_city');
+            $cities = City::find()
+                ->where(['name' => $cityName])
+                ->all();
 
-        $city_array = [];
-        foreach($cities as $city) {
-            $city_array[] = $city->id;
+            $city_array = [];
+            foreach($cities as $city) {
+                $city_array[] = $city->id;
+            }
+        } else {
+            $cities = City::find()
+                ->where('zip_code = '.$zipCode)
+                ->all();
+
+            $city_array = [];
+            foreach($cities as $city) {
+                $city_array[] = $city->id;
+            }
         }
 
         //get genral topic and post from city ids (city ids of cover page zipcodes)
@@ -229,7 +244,9 @@ class PostController extends BaseController
             ->join('JOIN', 'post', 'post.topic_id = topic.id')
             ->join('JOIN', 'city', 'city.id = topic.city_id')
             ->where(['in', 'topic.city_id', $city_array])
+            ->where(['topic.user_id' => 0])
             ->orderBy('topic.post_count DESC')
+            ->limit($limit)
             ->all();
 
         $local_topics = [];
