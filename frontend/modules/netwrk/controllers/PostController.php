@@ -243,8 +243,11 @@ class PostController extends BaseController
             ->from('topic')
             ->join('JOIN', 'post', 'post.topic_id = topic.id')
             ->join('JOIN', 'city', 'city.id = topic.city_id')
-            ->where(['in', 'topic.city_id', $city_array])
-            ->where(['topic.user_id' => 0])
+            ->where([
+                'topic.user_id' => 0,
+                'topic.city_id' => $city_array,
+                ]
+            )
             ->orderBy('topic.post_count DESC')
             ->limit($limit)
             ->all();
