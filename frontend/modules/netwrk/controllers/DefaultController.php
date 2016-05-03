@@ -241,7 +241,11 @@ class DefaultController extends BaseController
         foreach ($favoriteCommunities->data as  $value) {
             array_push($favoriteData, $value->city_id);
         }
-        $followed_city_ids = implode(',', $favoriteData);
+
+        if(sizeof($favoriteData) > 0) {
+            $followed_city_ids = implode(',', $favoriteData);
+            $city_ids = $city_ids.','.$followed_city_ids;
+        }
 
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
@@ -251,7 +255,7 @@ class DefaultController extends BaseController
             ->leftJoin('topic', 'city.id=topic.city_id')
             ->leftJoin('post', 'topic.id=post.topic_id')
             ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
-            ->where('city.id IN ('.$city_ids.','.$followed_city_ids.')')
+            ->where('city.id IN ('.$city_ids.')')
             ->groupBy('city.id')
             ->orderBy('count_user_comment DESC, post_count DESC')
             ->all();
