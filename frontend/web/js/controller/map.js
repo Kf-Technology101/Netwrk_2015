@@ -123,6 +123,7 @@
 				Map.eventClickMyLocation(Map.map);
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
+				Map.mouseOutsideInfoWindow();
 				Map.showZipBoundaries();
 				Common.hideLoader();
 			});
@@ -1020,6 +1021,7 @@
 						});
 					});
 
+					Map.mouseOutsideInfoWindow();
 					//Map.deleteNetwrk(map);
 					Map.loadMapLabel(0);
 					for (var i = 0; i < Map.zoom12.length; i++) {

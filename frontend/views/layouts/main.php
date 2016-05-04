@@ -80,10 +80,10 @@ if (isset($cookies["isCoverPageVisited"])) {
         ?>
         <div class="logo_netwrk logo-glow">
             <span class="logo-active">
-                <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>" alt="logo"/></a>
+                <a href="javascript:" class="landing-trigger"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>" alt="logo"/></a>
             </span>
             <span class="logo-inactive">
-                <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-icon-inactive.png'); ?>" alt="logo"/></a>
+                <a href="javascript:" class="landing-trigger"><img src="<?= Url::to('@web/img/icon/netwrk-icon-inactive.png'); ?>" alt="logo"/></a>
             </span>
 
         </div>
