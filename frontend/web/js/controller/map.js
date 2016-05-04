@@ -292,13 +292,33 @@
 	      		text_below += "<br>" + e.topic[0].name + "<br>#" + e.trending_hashtag[0].hashtag_name;
 	      	}*/
 
-	      	marker = new google.maps.Marker({
+	      	/*marker = new google.maps.Marker({
 		        position: new google.maps.LatLng(e.lat, e.lng),
 		        map: map,
 		        icon: baseUrl + e.mapicon,
 		        city_id: parseInt(e.id)
 		        // label: text_below
-	      	});
+	      	});*/
+
+			var markerContent = "<div class='marker'></div>";
+
+			if(e.office_type == 'university') {
+				markerContent += "<span class='marker-icon marker-university'><i class='fa fa-lg fa-graduation-cap'></i>";
+			} else if(e.office_type == 'government') {
+				markerContent += "<span class='marker-icon marker-government'><i class='fa fa-lg fa-institution'></i>";
+			} else {
+				markerContent += "<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>";
+			}
+
+			markerContent += "</span><div class='marker-shadow'></div>";
+
+			marker = new RichMarker({
+				position: new google.maps.LatLng(e.lat, e.lng),
+				map: map,
+				content: markerContent,
+				city_id: parseInt(e.id)
+				// label: text_below
+			});
 
 	      	var label = new Label({
 		       map: map,
@@ -1088,12 +1108,23 @@
 				data_marker = $.parseJSON(data);
 				//console.log(data_marker);
 				$.each(data_marker,function(i,e){
-					var img = '/img/icon/map_icon_community_v_2.png';
+					/*var img = '/img/icon/map_icon_community_v_2.png';
 
 					marker = new google.maps.Marker({
 						position: new google.maps.LatLng(e.lat, e.lng),
 						map: map,
 						icon: img,
+						group_id: parseInt(e.id)
+					});*/
+
+					var markerContent = "<div class='marker marker-group'></div>"+
+										"<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>"+
+										"</span><div class='marker-shadow'></div>";
+
+					marker = new RichMarker({
+						position: new google.maps.LatLng(e.lat, e.lng),
+						map: map,
+						content: markerContent,
 						group_id: parseInt(e.id)
 					});
 
