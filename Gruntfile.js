@@ -53,6 +53,8 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/search_settings.css": "frontend/web/less/mobile/search_settings.less",
           "frontend/web/css/mobile/profile_info.css": "frontend/web/less/mobile/profile_info.less",
           "frontend/web/css/mobile/profile_edit.css": "frontend/web/less/mobile/profile_edit.less"
+          "frontend/web/css/mobile/profile_edit.css": "frontend/web/less/mobile/profile_edit.less",
+          "frontend/web/css/mobile/marker.css": "frontend/web/less/mobile/marker.less"
         }
       }
     },
