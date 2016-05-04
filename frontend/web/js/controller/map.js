@@ -1242,13 +1242,24 @@
 
 				//console.log(data_marker);
 				$.each(data_marker,function(i,e){
-					var img = '/img/icon/map_icon_topic_v_2.png';
+					/*var img = '/img/icon/map_icon_topic_v_2.png';
 
 					marker = new google.maps.Marker({
 						position: new google.maps.LatLng(e.lat, e.lng),
 						map: map,
 						icon: img,
 						city_id: parseInt(e.city_id)
+					});*/
+
+					var markerContent = "<div class='marker marker-topic'></div>"+
+										"<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>"+
+										"</span><div class='marker-shadow'></div>";
+
+					marker = new RichMarker({
+						position: new google.maps.LatLng(e.lat, e.lng),
+						map: map,
+						content: markerContent,
+						group_id: parseInt(e.id)
 					});
 
 					//console.log("marker", marker);
