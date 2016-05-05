@@ -304,14 +304,14 @@
 		    label.bindTo('position', marker, 'position');
 
 	      	if(!isMobile){
-	            var marker_template = _.template($( "#maker_popup" ).html());
-	    		var content = marker_template({marker: e});
+	            /*var marker_template = _.template($( "#maker_popup" ).html());
+	    		var content = marker_template({marker: e});*/
 
 				var infowindow = new google.maps.InfoWindow({
-					content: content,
+					//content: content,
 					city_id: e.id,
 					maxWidth: 310,
-					pixelOffset: new google.maps.Size(0,0),
+					pixelOffset: new google.maps.Size(0,0)
 				});
 
 	            Map.infowindow.push(infowindow);
@@ -319,15 +319,28 @@
 		        google.maps.event.addListener(marker, 'mouseover', function() {
 			        // infowindow.setContent(e[0]);
 					Map.mouseIn = false;
-			        clearTimeout(Map.timeout);
-			        infowindow.open(Map.map, this);
+					clearTimeout(Map.timeout);
 
+					var params = {'city_id':e.id};
+
+					Ajax.get_marker_info(params).then(function(data){
+						var data_marker_info = $.parseJSON(data);
+
+						$.each(data_marker_info,function(info_i,info_e){
+
+							var marker_template = _.template($( "#maker_popup" ).html());
+							var info_content = marker_template({marker: info_e});
+							infowindow.setContent(info_content);
+						});
+					});
+
+					infowindow.open(Map.map, marker);
 					var iw_container = $(".gm-style-iw").parent();
 					iw_container.stop().hide();
 					iw_container.fadeIn(800);
 
-			        Map.onhoverInfoWindow(e.id,marker);
-			        Map.OnEventInfoWindow(e);
+					Map.onhoverInfoWindow(e.id,marker);
+					Map.OnEventInfoWindow(e);
 		        });
 
 		        google.maps.event.addListener(marker, 'mouseout', function() {
