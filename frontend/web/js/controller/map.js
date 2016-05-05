@@ -914,7 +914,7 @@
 					});
 				} else {
 					map.data.forEach(function(feature) {
-						if(feature.H.type != 'selected'){
+						if(feature.H.type != 'selected' && feature.H.type != 'Followed'){
 							map.data.remove(feature);
 						}
 					});
