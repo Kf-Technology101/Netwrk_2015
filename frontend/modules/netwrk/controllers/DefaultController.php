@@ -255,7 +255,7 @@ class DefaultController extends BaseController
         // echo '<pre>';var_dump($cities);die;
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
         // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment FROM `ws_messages` AS a WHERE post_id = 247;
         // or
         // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment, c.post_id  FROM `ws_messages` as a, post as b, topic as
@@ -263,13 +263,13 @@ class DefaultController extends BaseController
         //  DESC LIMIT 10;
 
         foreach ($cities as $key => $value) {
-            if($value->office_type == 'university'){
+            /*if($value->office_type == 'university'){
                 $img = '/img/icon/map_icon_university_v_2.png';
             } else if($value->office_type == 'government'){
                 $img = '/img/icon/map_icon_government_v_2.png';
             } else {
                 $img = '/img/icon/map_icon_community_v_2.png';
-            }
+            }*/
 
             if(isset($value->topics[0])) {
                 $post = $this->GetPostMostBrilliant($value->id);
@@ -290,7 +290,7 @@ class DefaultController extends BaseController
                     'topic'=> $topices,
                     // 'trending_post'=> $trending,
                     'trending_hashtag'=> $trending_hashtag,
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
@@ -311,7 +311,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'topic' => '',
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -348,16 +348,16 @@ class DefaultController extends BaseController
             ->all();
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
 
         foreach ($cities as $key => $value) {
-            if($value->office_type == 'university'){
+            /*if($value->office_type == 'university'){
                 $img = '/img/icon/map_icon_university_v_2.png';
             } else if($value->office_type == 'government'){
                 $img = '/img/icon/map_icon_government_v_2.png';
             } else {
                 $img = '/img/icon/map_icon_community_v_2.png';
-            }
+            }*/
 
             if(isset($value->topics[0])) {
 				$post = $this->GetPostMostBrilliant($value->id);
@@ -382,7 +382,7 @@ class DefaultController extends BaseController
                     'office_type'=>$value->office_type,
                     'topic'=> $topices,
                     'trending_hashtag'=> $trending_hashtag,
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
@@ -403,7 +403,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'topic' => '',
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -428,7 +428,7 @@ class DefaultController extends BaseController
         $city= City::find()->with('topics.posts')->where(['id'=>$city_id])->one();
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
 
         if($city){
             if(isset($city->topics[0])) {
@@ -443,13 +443,13 @@ class DefaultController extends BaseController
                 //     $content = substr($post->content,0,$maxlength ) ;
                 //     $content = $content."...";
                 // }
-                if($city->office_type == 'university'){
+                /*if($city->office_type == 'university'){
                     $img = './img/icon/map_icon_university_v_2.png';
                 } else if($city->office_type == 'government'){
                     $img = './img/icon/map_icon_government_v_2.png';
                 } else {
                     $img = '/img/icon/map_icon_community_v_2.png';
-                }
+                }*/
 
                 $netwrk = array(
                     'id'=> $city->id,
@@ -462,7 +462,7 @@ class DefaultController extends BaseController
                     'topic'=> $topices,
                     // 'trending_post'=> $trending,
                     'trending_hashtag'=> $trending_hashtag,
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
@@ -482,7 +482,7 @@ class DefaultController extends BaseController
                     'office'=>$city->office,
                     'office_type'=>$city->office_type,
                     'topic' => '',
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -511,7 +511,7 @@ class DefaultController extends BaseController
         $city= City::find()->with('topics.posts')->where(['office'=> 'Ritchey Woods Nature Preserve'])->one();
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
 
         $netwrk = array(
                 'id'=> $city->id,
@@ -522,7 +522,7 @@ class DefaultController extends BaseController
                 'office'=>$city->office,
                 'office_type'=>$city->office_type,
                 'topic' => '',
-                'mapicon'=>$img,
+                //'mapicon'=>$img,
                 'post'=> array(
                     'post_id'=>-1,
                     'name_post'=> '',
