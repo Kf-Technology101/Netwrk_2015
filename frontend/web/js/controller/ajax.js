@@ -330,6 +330,24 @@ var Ajax ={
 
     },
 
+    get_marker_info: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/default/get-maker-info";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     show_topic: function(params){
         var url,defer = $.Deferred();
 
