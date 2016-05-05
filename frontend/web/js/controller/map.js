@@ -200,6 +200,12 @@
 		    } else if (current_zoom = Map.zoom) {
 				data_marker = Map.zoom13;
 				Map.loadMapLabel(0);
+
+				for (var i = 0; i < Map.zoom7.length; i++) {
+					var m = Map.zoom7[i];
+					m.marker.setMap(map);
+					Map.markers.push(m.marker);
+				}
 			} else if (current_zoom >= Map.markerZoom) {
 			    data_marker = Map.zoom12;
 				Map.loadMapLabel(0);
@@ -1091,6 +1097,12 @@
 				} else if(currentZoom == Map.zoom ){
 					Map.deleteNetwrk(map);
 					Map.hideMapLabel();
+					for (var i = 0; i < Map.zoom7.length; i++) {
+						var m = Map.zoom7[i];
+						m.marker.setMap(map);
+						Map.markers.push(m.marker);
+					}
+
 					for (var i = 0; i < Map.zoom13.length; i++) {
 						var m = Map.zoom13[i];
 						m.marker.setMap(map);
