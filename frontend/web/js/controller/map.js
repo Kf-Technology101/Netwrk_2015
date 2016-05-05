@@ -27,6 +27,7 @@
 		blueDotLocation: {
 			lat: '',
 			lon: '',
+			blueMarkerZoom: 14,
 			zoomInitial: 13,
 			zoomMiddle: 16,
 			zoomLast: 18,
@@ -129,7 +130,7 @@
 			});
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
-			Map.requestBlueDotOnMap(lat,lng,Map.map);
+			//Map.requestBlueDotOnMap(lat,lng,Map.map);
 			Map.requestPosition(Map.map);
 	  	},
 
@@ -674,7 +675,6 @@
 	            Post.initialize();
 	  		});
 	  	},
-
 	  	OnCreateFirstTopic: function(e){
 	  		var parent = $('.container-popup').find('.create-topic');
 
@@ -690,41 +690,61 @@
 	  			}
 	  		});
 	  	},
-
 	  	eventClickMyLocation: function(map){
 		    var btn = $('#btn_my_location');
 		    btn.unbind();
 		    btn.on('click',function(){
 		      	if (isGuest) {
-			        navigator.geolocation.getCurrentPosition(function(position) {
-			        var pos = {
-			            lat: position.coords.latitude,
-			            lng: position.coords.longitude
-			        	};
-			            map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
-			            if(map.getZoom() < Map.markerZoom) {
-			            	map.setZoom(Map.markerZoom);
-			        	}else{
-			        		map.setZoom(18);
-			        	}
-			        });
+					Map.getBrowserCurrentPosition(map);
 		      	} else {
-			        var zoom_current = map.getZoom();
-			        if (zoom_current < Map.markerZoom) {
-				        Map.smoothZoom(map, Map.markerZoom, zoom_current, true);
-				        map.zoom = Map.markerZoom;
-			        }else{
-			        	Map.smoothZoom(map, 18, zoom_current, true);
-				        map.zoom = 18;
-			        }
-
-			        Ajax.get_position_user().then(function(data){
-				        var json = $.parseJSON(data);
-				        map.setCenter(new google.maps.LatLng(json.lat, json.lng));
-			        });
+			        Map.getMylocation(map);
 		      	}
 		    });
 	  	},
+		getBrowserCurrentPosition: function(map) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+				};
+				map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
+				if(map.getZoom() < Map.blueDotLocation.blueMarkerZoom) {
+					map.setZoom(Map.blueDotLocation.blueMarkerZoom);
+				}else{
+					map.setZoom(18);
+				}
+				console.log('geolocation lat / lng'+pos.lat+' / '+pos.lng);
+				Map.requestBlueDotOnMap(pos.lat, pos.lng, map);
+			});
+		},
+		getMylocation: function(map){
+			Ajax.get_position_user().then(function(data){
+				var json = $.parseJSON(data),
+					lat = json.lat,
+					lng = json.lng;
+
+				if (lat != null || lng != null ) {
+					if(lat == 0 && lng == 0) {
+						Map.getBrowserCurrentPosition(map);
+					} else {
+						var zoom_current = map.getZoom();
+						if (zoom_current < Map.blueDotLocation.blueMarkerZoom) {
+							Map.smoothZoom(map, Map.blueDotLocation.blueMarkerZoom, zoom_current, true);
+							map.zoom = Map.blueDotLocation.blueMarkerZoom;
+						}else{
+							Map.smoothZoom(map, 18, zoom_current, true);
+							map.zoom = 18;
+						}
+						map.setCenter(new google.maps.LatLng(lat, lng));
+						//todo: discussed about users location. Does users saved db location is need to be considered or not
+						Map.requestBlueDotOnMap(lat, lng, map);
+						//Map.getBrowserCurrentPosition(map);
+					}
+				} else {
+					Map.getBrowserCurrentPosition(map);
+				}
+			});
+		},
 
 		findCurrentZip: function(lat, lng) {
 			$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
@@ -751,15 +771,17 @@
 			}
 			//Todo: currently the following functionality temporary commented. It asks to user for his location.
 			//Map.show_marker_group_loc(map);
-			/*if (navigator.geolocation) {
+			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 
 					map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 
 					if (Map.center_marker != null) Map.center_marker.setMap(null);
 
+					Map.requestBlueDotOnMap(position.coords.latitude, position.coords.longitude, map);
+
 					//display blue dot on map from lat and lon.
-					var infowindow = Map.showBlueDot(position.coords.latitude, position.coords.longitude, map);
+					/*var infowindow = Map.showBlueDot(position.coords.latitude, position.coords.longitude, map);
 
 					Map.infowindow.push(infowindow);
 
@@ -815,22 +837,22 @@
 					//Map.markers.push(marker);
 					console.log("Latitude: " + position.coords.latitude, "Longitude: " + position.coords.longitude);
 
-					console.log(map.getZoom());
+					console.log(map.getZoom());*/
 
 				});
 			} else {
 				console.log("Geolocation is not supported by this browser.");
-			}*/
+			}
 			console.log('in req postion');
 		},
 
 		requestBlueDotOnMap: function(lat, lng, map) {
-			if (map.getZoom() != Map.blueDotLocation.zoomInitial) {
+			/*if (map.getZoom() != Map.blueDotLocation.zoomInitial) {
 				if (typeof Map.center_marker != "undefined" && Map.center_marker != null) {
 					Map.center_marker.setMap(null);
 				}
 				return;
-			}
+			}*/
 			//Map.show_marker_group_loc(map);
 			if (lat != 'undefined' && lng != 'undefined') {
 				console.log('in if blue dot');
@@ -931,11 +953,32 @@
 			}
 
 		},
+		/* Common code for displaying blue dot on map using blueDotmarker array */
+		loadBlueDotMarker: function(map) {
+			var currentZoom = map.getZoom();
+
+			for (var i = 0; i < Map.blueDotMarker.length; i++) {
+				var m = Map.blueDotMarker[i];
+				m.marker.setMap(map);
+				//Map.markers.push(m.marker);
+				//hide or show blue dot marker infowindows "place local" and "place" <a> links.
+				if(currentZoom == Map.blueDotLocation.zoomMiddle || currentZoom == Map.blueDotLocation.zoomLast) {
+					$('.cgm-container').find('.my-location').addClass('hidden');
+					$('.cgm-container').find('.create-location-group').removeClass('hidden');
+				} else if(currentZoom == Map.blueDotLocation.zoomInitial) {
+					$('.cgm-container').find('.my-location').removeClass('hidden');
+					$('.cgm-container').find('.create-location-group').addClass('hidden');
+				} else {
+					$('.cgm-container').find('.my-location').removeClass('hidden');
+					$('.cgm-container').find('.create-location-group').addClass('hidden');
+				}
+				console.log('in loadBlueDotMarker');
+			}
+		},
 		showBlueDot: function(lat, lng, map) {
 			var img = '/img/icon/pale-blue-dot.png';
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(lat, lng),
-				map: map,
 				icon: img,
 				draggable: true
 				//city_id: parseInt(e.id)
@@ -957,9 +1000,13 @@
 					marker.getPosition().lng());
 			});
 
+			Map.blueDotMarker = [];
 			Map.blueDotMarker.push({
 				marker: marker
 			});
+
+			//Display blue dot markers from blueDotMarker array.
+			Map.loadBlueDotMarker(map);
 
 			Map.blueDotLocation.lat = marker.getPosition().lat();
 			Map.blueDotLocation.lon = marker.getPosition().lng();
@@ -1052,10 +1099,10 @@
 				Map.requestPositionFunction(map);
 			}, 30000);
 			Map.requestPositionFunction(map);
-			google.maps.event.addListener(map, 'bounds_changed', function() {
+			/*google.maps.event.addListener(map, 'bounds_changed', function() {
 				console.log(map.getZoom());
 				Map.requestPositionFunction(map);
-			});
+			});*/
 
 			google.maps.event.addListener(map, 'idle', function(){
 				var currentZoom = map.getZoom();
@@ -1136,25 +1183,8 @@
 
 				if(currentZoom >= 9) {
 					//console.log(Map.blueDotMarker);
-					for (var i = 0; i < Map.blueDotMarker.length; i++) {
-						var m = Map.blueDotMarker[i];
-						m.marker.setMap(map);
-						Map.markers.push(m.marker);
-						//hide or show blue dot marker infowindows "place local" and "place" <a> links.
-						if(currentZoom == Map.blueDotLocation.zoomMiddle || currentZoom == Map.blueDotLocation.zoomLast) {
-							$('.cgm-container').find('.my-location').addClass('hidden');
-							$('.cgm-container').find('.create-location-group').removeClass('hidden');
-						} else if(currentZoom == Map.blueDotLocation.zoomInitial) {
-							$('.cgm-container').find('.my-location').removeClass('hidden');
-							$('.cgm-container').find('.create-location-group').addClass('hidden');
-						} else {
-							$('.cgm-container').find('.my-location').removeClass('hidden');
-							$('.cgm-container').find('.create-location-group').addClass('hidden');
-						}
-						console.log('in idle');
-						Map.show_marker_group_loc(map);
-						Map.show_marker_topic_loc(map, params);
-					}
+					Map.show_marker_group_loc(map);
+					Map.show_marker_topic_loc(map, params);
 				}
 			});
 		},
