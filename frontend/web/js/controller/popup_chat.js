@@ -561,7 +561,7 @@ var PopupChat = {
     },
 
     // Underscore mission to append data
-    getMessageTemplate:function(data){
+    getMessageTemplate:function(data,from){
         var popup_id = data["post_id"];
         if ($("#message_chat").length > 0 ) {
             var template = _.template($("#message_chat").html());
@@ -571,6 +571,12 @@ var PopupChat = {
                 PopupChat.OnClickReceiverAvatarMobile();
             } else {
                 $('#popup-chat-'+popup_id).find(PopupChat.container).append(append_html);
+
+                if(from == 'single'){
+                    /*$('#popup-chat-'+popup_id).find(PopupChat.container+' div:last-child').find('.user_thumbnail').hide().fadeIn(1000);*/
+                    $('#popup-chat-'+popup_id).find(PopupChat.container+' div:last-child').find('.content_message').hide().fadeIn(2500);
+                }
+
                 PopupChat.OnClickReceiverAvatar();
             }
         }
