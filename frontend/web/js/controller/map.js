@@ -954,6 +954,22 @@
 					if (Map.requestPosTimeout != null) clearTimeout(Map.requestPosTimeout);
 				});
 
+				if(isMobile) {
+					google.maps.event.addListener(Map.center_marker, 'click', function () {
+						if (!blueDotInfoWindow.getMap()) {
+							blueDotInfoWindow.open(Map.map, Map.center_marker);
+						} else {
+							blueDotInfoWindow.close();
+						}
+					});
+
+					google.maps.event.addListener(Map.center_marker, 'dblclick', function () {
+						if (Map.map.getZoom() != Map.blueDotLocation.zoomLast) {
+							Map.zoomMap(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map);
+							blueDotInfoWindow.close();
+						}
+					});
+				}
 				//find current zip from lat and lng set to Map.blueDotLocation.zipcode
 				Map.findCurrentZip(lat, lng);
 			}
