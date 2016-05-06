@@ -229,10 +229,12 @@ var Signup={
         	var geometry = data.results[0].geometry.location;
         	$.each(address,function(i,e){
         		if(e.types[0] == 'administrative_area_level_1' && e.long_name == Signup.state){
-        			Signup.OnShowZipcodeValid();
+
         			Signup.zipcode = 1;
 	            	Signup.lat = geometry.lat;
 	            	Signup.lng = geometry.lng;
+					console.log('zipcode lat / lng = '+ Signup.lat+'/'+Signup.lng);
+					Signup.OnShowZipcodeValid();
 	            	return false;
         		}else{
         			message = "Zip Code is invalid";
