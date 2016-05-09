@@ -842,16 +842,16 @@ var Ajax ={
         url = baseUrl +"/netwrk/topic/new-topic";
 
         $.ajax({
-            url: url,
-            data: params,
-            async: false,
-            cache: false,
-            // contentType: false,
-            // processData: false,
-            type: 'POST',
-            success: defer.resolve,
-            error: defer.reject
-        });
+         url: url,
+         data: params,
+         async: false,
+         cache: false,
+         // contentType: false,
+         // processData: false,
+         type: 'POST',
+         success: defer.resolve,
+         error: defer.reject
+         });
 
         return defer.promise();
     },

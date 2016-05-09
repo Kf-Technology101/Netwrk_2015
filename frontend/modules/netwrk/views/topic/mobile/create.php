@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="create_topic" data-city="<?php echo $city_id ?>" data-group="<?php echo $group_id;?>" data-by-group="<?php echo $by_group; ?>"
+<div id="create_topic" data-city="<?php echo $city_id ?>" data-group="<?php echo $group_id;?>" data-by-group="<?php echo $by_group; ?>" data-isCreateFromBlueDot="<?php echo $isCreateFromBlueDot; ?>"
     <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'" data-name-city="'.$data->city_name.'"'; } ?>>
     <div class="header">
         <div class="back_page">
@@ -12,11 +12,22 @@
         </div>
     </div>
     <div class="container">
-
         <div class="topic">
             <p class="title"> Topic </p>
             <input type="text" class="name_topic" maxlength="128" placeholder="Topic Title">
         </div>
+        <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
+            <div class="group-category-content">
+                <section class="group-category-wrapper">
+                    <p class="title">Community Category</p>
+                    <select name="office" class="form-control dropdown-office">
+                        <?php foreach($zipcode_cities as $item): ?>
+                            <option value="<?php echo $item['id'] ?>" data-name-city="<?php echo $item['name'] ?>" data-value="<?php echo $item['id'] ?>"><?php echo $item['office'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </section>
+            </div>
+        <?php endif; ?>
         <div class="post">
             <div class="post-title">
                 <p class="title"> Post </p>

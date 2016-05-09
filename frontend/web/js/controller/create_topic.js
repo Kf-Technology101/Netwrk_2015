@@ -35,6 +35,11 @@ var Create_Topic={
             Create_Topic.params.group = Create_Topic.modal.attr('data-group');
             Create_Topic.params.group_name = Create_Topic.modal.attr('data-group-name');
             Create_Topic.params.byGroup = Create_Topic.modal.attr('data-by-group');
+            Create_Topic.params.isCreateFromBlueDot = Create_Topic.modal.attr('data-isCreateFromBlueDot');
+
+            if(Create_Topic.params.isCreateFromBlueDot == true) {
+                Create_Topic.onChangeMobileCommunityCategory();
+            }
 
             this.changeData();
             Create_Topic.onclickBack();
@@ -90,7 +95,13 @@ var Create_Topic={
         parent.attr('data-lat', lat);
         parent.attr('data-lng', lng);
 
-        Create_Topic.initialize(null, zipcode)
+        if(isMobile) {
+            if(zipcode){
+                window.location.href = baseUrl + "/netwrk/topic/create-topic?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
+            }
+        } else {
+            Create_Topic.initialize(null, zipcode);
+        }
     },
     showGroupCategory: function(zipcode){
         var parent = $('#create_topic_modal');
@@ -124,6 +135,32 @@ var Create_Topic={
         });
 
         Create_Topic.params.city = city_id;
+    },
+    //on change of topic category dropdown, update post params
+    onChangeMobileCommunityCategory: function() {
+        var parent = $('#create_topic').find('.dropdown-office');
+        var city_id = parent.val(),
+            city_name = parent.find(':selected').attr('data-name-city');
+
+        parent.unbind();
+        parent.on('change', function(){
+            city_id = $(this).val();
+            city_name = $(this).find(':selected').attr('data-name-city');
+
+            Create_Topic.params.city = city_id;
+            Create_Topic.params.netwrk_name = city_name;
+
+            $('#create_topic').attr('data-city', city_id);
+            $('#create_topic').attr('data-name-city', city_name);
+
+            console.log(Create_Topic.params.city );
+            console.log(Create_Topic.params.netwrk_name);
+        });
+
+        if(Create_Topic.params.isCreateFromBlueDot == true) {
+            Create_Topic.params.netwrk_name = city_name;
+            Create_Topic.params.city = city_id;
+        }
     },
     showZipcodeBreadcrumb: function(zipcode){
         var target = Create_Topic.modal.find('.scrumb .zipcode');
@@ -386,6 +423,7 @@ var Create_Topic={
 
         btn.unbind();
         btn.on('click',function(){
+
             if(!btn.hasClass('disable')){
                 Ajax.new_topic(Create_Topic.params).then(function(data){
                     Create_Topic.params.city = data;
