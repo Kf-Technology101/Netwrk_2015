@@ -902,7 +902,7 @@ var Topic = {
         btn.unbind();
         btn.on('click',function(){
             if(isMobile){
-                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+                window.location.href = baseUrl + "/netwrk/group/create-group?city="+ Topic.data.city;
             }else{
                 $('#modal_topic').modal('hide');
                 Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name);

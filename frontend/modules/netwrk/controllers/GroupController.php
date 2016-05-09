@@ -140,6 +140,41 @@ class GroupController extends BaseController {
         }
     }
 
+    public function actionCreateGroup() {
+
+        $city = $_GET['city'];
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
+        }
+        $cty = City::findOne($city);
+        if ($cty){
+            $city_id = $cty->id;
+            $name = $cty->name;
+            if ($cty->office == 'Ritchey Woods Nature Preserve') {
+                $cty->zip_code = 'Netwrk hq';
+            }
+            $object = array(
+                'city_name'=> $name,
+                'status'=> 1
+            );
+        }else{
+            $name = $_GET['name'];
+            $zip_code = $_GET['zipcode'];
+            $lat = $_GET['lat'];
+            $lng = $_GET['lng'];
+            $city_id = $city;
+            $object = array(
+                'status'=> 0,
+                'city_name'=> $name,
+                'zipcode'=> $zip_code,
+                'lat'=> $lat,
+                'lng'=> $lng,
+                'city_id' => $city_id
+            );
+        }
+        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
+    }
+
     public function actionDeleteGroup() {
 
         $transaction = Yii::$app->db->beginTransaction();

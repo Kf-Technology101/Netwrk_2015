@@ -25,6 +25,9 @@
         <div class="create_topic">
             <span><i class="fa fa-plus-circle"></i> Create Topic</span>
         </div>
+        <div class="create_group" id="create_group">
+            <span><i class="fa fa-plus-circle"></i> Create Group</span>
+        </div>
     </div>
     <div class="sidebar">
         <span class="filter"><i class="fa fa-filter"></i></span>
