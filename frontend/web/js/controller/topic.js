@@ -62,6 +62,7 @@ var Topic = {
             Topic.OnClickFavorite();
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
+            Default.SetAvatarUserDropdown();
         } else {
             Topic.displayPositionModal();
         }
