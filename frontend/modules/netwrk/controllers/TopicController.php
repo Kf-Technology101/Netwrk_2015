@@ -57,7 +57,30 @@ class TopicController extends BaseController
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
         }
-        $cty = City::findOne($city);
+
+        $isCreateFromBlueDot = (isset($_GET['isCreateFromBlueDot'])  && $_GET['isCreateFromBlueDot'] == true) ? $_GET['isCreateFromBlueDot'] : false ;
+        $data = [];
+        if ($isCreateFromBlueDot == true) {
+            $zip_code = $_GET['zipcode'];
+
+            $cities = City::find()->where(['zip_code' => $zip_code])->all();
+            foreach ($cities as $item) {
+                $cityData = [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'lat' => $item->lat,
+                    'lng' => $item->lng,
+                    'zip_code' => $item->zip_code,
+                    'office' => isset($item->office)? $item->office : 'Social'
+                ];
+                array_push($data, $cityData);
+            }
+        }
+
+        if(isset($city)) {
+            $cty = City::findOne($city);
+        }
+
         if ($cty){
             $city_id = $cty->id;
             $name = $cty->name;
@@ -68,7 +91,9 @@ class TopicController extends BaseController
                 'city_name'=> $name,
                 'status'=> 1
                 );
+
         }else{
+
             $name = $_GET['name'];
             $zip_code = $_GET['zipcode'];
             $lat = $_GET['lat'];
@@ -83,7 +108,17 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object, 'group_id'=> $group_id , 'by_group' => $by_group]);
+
+        return $this->render('mobile/create',[
+            'city'=> $cty ,
+            'city_id' =>$city_id,
+            'data'=> (object)$object,
+            'group_id'=> $group_id ,
+            'by_group' => $by_group,
+            'zipcode_cities' => $data,
+            'isCreateFromBlueDot' => $isCreateFromBlueDot
+            ]
+        );
     }
 
     public function actionNewTopic() {
