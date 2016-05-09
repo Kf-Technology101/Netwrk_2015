@@ -113,6 +113,7 @@ var Topic = {
                     if (Topic.list[Topic.data.filter].status_paging == 1 && Topic.tab_current == "topic"){
                         Topic.load_topic_more();
                     }else if(Topic.feed.status_paging == 1 &&Topic.tab_current == "feed"){
+                        console.log('Load more topic feeds');
                         Topic.feed.paging ++;
                         Topic.LoadMoreFeed();
                     }
@@ -204,9 +205,10 @@ var Topic = {
         //disable btn create topic
         parent.find('.header .title_page').addClass('on-feed');
         parent.find('.header .create_topic').addClass('on-feed');
+        parent.find('.header #create_group').addClass('on-feed');
 
         $('.create_topic').hide();
-        //$('#create_topic').show();
+        $('#create_group').hide();
     },
 
     ShowGroupsPage: function() {
@@ -386,6 +388,7 @@ var Topic = {
     },
 
     LoadFeedModal: function() {
+        console.log('load feed modal');
         var self = this;
         var parent = $('#modal_topic,#show-topic').find('#tab_feed');
         var cityname = $('#modal_topic').find('.title_page');
@@ -413,6 +416,7 @@ var Topic = {
     },
 
     LoadMoreFeed: function(){
+        console.log('Load more feed topic');
         var params = {'city': Topic.data.city,'zipcode': Topic.data.zipcode, 'filter': Topic.data.filter,'size': Topic.data.size,'page':Topic.feed.paging};
         var parent = $('#modal_topic,#show-topic').find('#tab_feed');
         Ajax.show_feed(params).then(function(data){
@@ -903,7 +907,7 @@ var Topic = {
         btn.unbind();
         btn.on('click',function(){
             if(isMobile){
-                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+                window.location.href = baseUrl + "/netwrk/group/create-group?city="+ Topic.data.city;
             }else{
                 $('#modal_topic').modal('hide');
                 Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name);
