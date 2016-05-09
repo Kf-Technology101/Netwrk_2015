@@ -166,6 +166,16 @@ function show_page(){
   return page;
 }
 
+function get_action(){
+    var action;
+    if (isMobile) {
+        action = $('.wrap-mobile').attr('data-action');
+    } else {
+        action = $('wrap').attr('data-action');
+    }
+    return action;
+}
+
 function _main(){
 	window_resize();
 	_event_window_resize();
@@ -178,6 +188,7 @@ function _main(){
 
 function _addListenEventPage(){
     var page = this.show_page();
+    var action = this.get_action();
     var pageArray = ['Chat-inbox', 'Password-setting', 'Search-setting', 'Profile-info', 'Profile-edit'];
 
     if(jQuery.inArray(page, pageArray) !== -1)
@@ -187,8 +198,11 @@ function _addListenEventPage(){
 
     switch(page){
         case 'Topic':
-            Topic.init();
-            Create_Topic.initialize();
+            if(action == 'topic-page'){
+                Topic.init();
+            } else if(action == 'create-topic') {
+                Create_Topic.initialize();
+            }
             break;
         case 'Meet':
             Meet.initialize();

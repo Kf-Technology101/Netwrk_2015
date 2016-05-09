@@ -74,12 +74,13 @@ var Group = {
             Group.OnClickCreateGroup();*/
             //Group.show_modal_group(city,params);
             Group.OnShowModalGroup();
-            Group.CreateTopic();
-            Group.CreatePost();
-            Group.TotalUsers();
             Common.InitToolTip();
             //Group.filter_group();
         }
+
+        Group.CreateTopic();
+        Group.CreatePost();
+        Group.TotalUsers();
     },
 
     onclickBackFromTopics: function(){
@@ -408,10 +409,17 @@ var Group = {
     },
 
     CreateTopic: function() {
-        console.log("create topic!!! ", $('#btn-create-topic').eq(0));
-        $('#btn-create-topic').eq(0).click(function() {
-            $('#modal_topic').modal('hide');
-            Create_Topic.initialize(Topic.data.city, Topic.data.city_name, true, Group.data.id);
+        var btn = $('#btn-create-topic');
+
+        console.log("create topic!!! ", btn);
+
+        btn.eq(0).off().on('click', function() {
+            if(isMobile) {
+                window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city+"&group="+Group.data.id;
+            } else {
+                $('#modal_topic').modal('hide');
+                Create_Topic.initialize(Topic.data.city, Topic.data.city_name, true, Group.data.id);
+            }
         });
     },
 

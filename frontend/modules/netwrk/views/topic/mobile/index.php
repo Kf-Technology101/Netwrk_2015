@@ -66,7 +66,16 @@
             </div>
         </div>
         <div id="tab_groups" class="tab">
-
+            <div class="topic_group_top">
+                <div class="topic_group_name">
+                    <span>Football experts</span>
+                    <button>Total Users</button>
+                </div>
+                <div class="topic_group_create">
+                    <button id="btn-create-topic">Create Topic</button>
+                    <button id="btn-create-post">Create Post</button>
+                </div>
+            </div>
             <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                 <p class="no-data">There is no data available yet</p>
             </div>
