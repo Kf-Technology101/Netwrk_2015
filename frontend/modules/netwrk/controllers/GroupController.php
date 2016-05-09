@@ -13,6 +13,7 @@ use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\Post;
 use yii\base\Exception;
 use Yii;
+use yii\helpers\Url;
 
 class GroupController extends BaseController {
     public function actionCreateEditGroup() {
@@ -141,11 +142,11 @@ class GroupController extends BaseController {
     }
 
     public function actionCreateGroup() {
-
         $city = $_GET['city'];
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
         }
+
         $cty = City::findOne($city);
         if ($cty){
             $city_id = $cty->id;
