@@ -55,14 +55,30 @@ var Create_Group={
         }
 
         if(isMobile){
-            Create_Group.params.topic = $('#create_group').attr('data-topic');
-            Create_Group.params.city = $('#create_group').attr('data-city');
-            Create_Group.changeData();
-            Create_Group.onclickBack();
+            Create_Group.modal = $('#create_group_page');
+            Create_Group.params.topic = Create_Group.modal.attr('data-topic');
+
+            Default.SetAvatarUserDropdown();
+
+            //Create_Group.changeData();
+            //Create_Group.onclickBack();
             // Create_Group.showNetWrkBtn();
-            Create_Group.eventClickdiscoverMobile();
-            Create_Group.postTitleFocus();
-            Create_Group.OnClickChatInboxBtnMobile();
+            //Create_Group.eventClickdiscoverMobile();
+            //Create_Group.postTitleFocus();
+            //Create_Group.OnClickChatInboxBtnMobile();
+
+            var parent = Create_Group.modal;
+            $("#group_name").val(Create_Group.params.name);
+            $('#emails-input').val('');
+            $("#dropdown-permission").html(Create_Group.params.permission == 2 ? "Private" : "Public");
+            Create_Group.RefreshUsersList();
+
+            $('.group-permission li').each(function() {
+                $(this).unbind().click(function(e) {
+                    var name = $(e.currentTarget).text();
+                    $("#dropdown-permission").text(name);
+                });
+            });
         }else{
             if(isGuest){
                 Login.modal_callback = Post;
@@ -70,22 +86,10 @@ var Create_Group={
                 return false;
             }
             Create_Group.params.topic = topic;
-
-            if (typeof byGroup == "undefined" || !byGroup) {
-                Create_Group.params.city = city;
-                Create_Group.params.city_name = name_city;
-                Create_Group.params.byGroup = false;
-            } else {
-                Create_Group.params.latitude = latitude;
-                Create_Group.params.longitude = longitude;
-                Create_Group.params.byGroup = true;
-            }
+            Create_Group.modal = $('#create_group_modal');
 
             Create_Group.showModalCreateGroup();
-            Create_Group.OnClickAddEmail();
-            Create_Group.onclickBack();
             Create_Group.showGroupCategory(name_city);
-            Create_Group.OnClickCreateGroup();
 
             // Create_Group.showNetWrkBtn();
             /*Create_Group.onCloseModalCreatePost();
@@ -98,6 +102,25 @@ var Create_Group={
             Create_Group.onClickBackNetwrkLogo();
             Create_Group.onClickBackZipcodeBreadcrumb();*/
         }
+
+        if (typeof byGroup == "undefined" || !byGroup) {
+            if(isMobile){
+                Create_Group.params.city = Create_Group.modal.attr('data-city');
+                Create_Group.params.city_name = Create_Group.modal.attr('data-name-city');
+            } else {
+                Create_Group.params.city = city;
+                Create_Group.params.city_name = name_city;
+            }
+            Create_Group.params.byGroup = false;
+        } else {
+            Create_Group.params.latitude = latitude;
+            Create_Group.params.longitude = longitude;
+            Create_Group.params.byGroup = true;
+        }
+
+        Create_Group.OnClickAddEmail();
+        Create_Group.OnClickCreateGroup();
+        Create_Group.onclickBack();
     },
     showGroupCategory: function(zipcode){
         var parent = $('#create_group_modal');
@@ -177,7 +200,7 @@ var Create_Group={
     },
 
     showModalCreateGroup: function(){
-        var parent = $('#create_group_modal');
+        var parent = Create_Group.modal;
         $("#group_name").val(Create_Group.params.name);
         $('#emails-input').val('');
         $("#dropdown-permission").html(Create_Group.params.permission == 2 ? "Private" : "Public");
@@ -203,7 +226,7 @@ var Create_Group={
     },
 
     hideModalCreateGroup:function(){
-        var parent = $('#create_group_modal');
+        var parent = Create_Group.modal;
         parent.modal('hide');
         // Create_Group.hideSideBar();
         //Create_Group.hideNetWrkBtn();
@@ -294,7 +317,7 @@ var Create_Group={
     },
 
     onclickBack: function(){
-        var parent = $('#create_group_modal').find('.back_page span, #cancel_group');
+        var parent = Create_Group.modal.find('.back_page span, #cancel_group');
 
         parent.unbind();
         parent.click(function(){
@@ -346,7 +369,7 @@ var Create_Group={
     },
 
     redirect: function(){
-        window.location.href = baseUrl + "/netwrk/post?city="+Create_Group.params.city+"&topic="+Create_Group.params.topic;
+        window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Group.params.city;
     },
 
     OnshowSave: function(){
@@ -396,7 +419,7 @@ var Create_Group={
     },
 
     RefreshUsersList: function() {
-        var parent = $('#create_group_modal');
+        var parent = Create_Group.modal;
 
         $('#emails-list').find("li").remove();
         for (var i in Create_Group.added_users) {
@@ -439,7 +462,7 @@ var Create_Group={
     },
 
     OnClickCreateGroup: function() {
-        var btn = $('#create_group_modal').find('#save_group');
+        var btn = Create_Group.modal.find('#save_group');
 
         btn.unbind();
 
@@ -461,6 +484,7 @@ var Create_Group={
                 params.city_id = Create_Group.params.city;
             }
             if (Create_Group.params.id != null) params.id = Create_Group.params.id;
+
             Ajax.create_edit_group(params).then(function(data) {
                 var json = $.parseJSON(data);
                 if (json.error) alert(json.message);

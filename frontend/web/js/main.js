@@ -223,6 +223,10 @@ function _addListenEventPage(){
         case 'Search-setting':
             Search_Setting.initialize();
             break;
+        case 'Group':
+            Group.initialize();
+            Create_Group.initialize();
+            break;
         default:
             Default.initialize();
             break;
