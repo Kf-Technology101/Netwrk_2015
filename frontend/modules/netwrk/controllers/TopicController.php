@@ -46,6 +46,14 @@ class TopicController extends BaseController
 
     public function actionCreateTopic() {
         $city = $_GET['city'];
+        if($_GET['group']){
+            $group_id = $_GET['group'];
+            $by_group = true;
+        } else {
+            $group_id = null;
+            $by_group = false;
+        }
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
         }
@@ -75,7 +83,7 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
+        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object, 'group_id'=> $group_id , 'by_group' => $by_group]);
     }
 
     public function actionNewTopic() {
