@@ -22,6 +22,7 @@ var ChatInbox = {
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
 			Default.SetAvatarUserDropdown();
+			ChatInbox.activateTab('chat_discussion');
 		} else {
 			// if(ChatInbox.onClickChat == 1){
 			// 	Ajax.change_chat_show_message().then(function(data){});
@@ -33,10 +34,23 @@ var ChatInbox = {
 		Default.ShowNotificationOnChat();
 	},
 
+	activateTab: function(tab) {
+		tab = tab || 'chat_discussion';
+		$('.nav-tabs a[href="#' + tab + '"]').tab('show');
+	},
 	OnShowListChatPost: function(){
 		if ($(ChatInbox.chat_inbox).css('right') == ChatInbox.list_chat_post_right_hidden) {
 			ChatInbox.GetDataListChatPost();
-			ChatInbox.GetDataListChatPrivate();
+
+			//when guest user, then display chat discussion tab.
+			if(isGuest) {
+				var tab = 'chat_discussion';
+				ChatInbox.activateTab(tab);
+			}
+
+			if(!isGuest) {
+				ChatInbox.GetDataListChatPrivate();
+			}
 			$(ChatInbox.chat_inbox).animate({
 				"right": "0"
 			}, 500);
@@ -150,9 +164,12 @@ var ChatInbox = {
 		notify = $("#chat_inbox_btn").find('.notify');
 		$("#chat_inbox_btn").on("click", function() {
 			if(isGuest){
+				console.log('in OnClickChatInbox isGuest');
 				$('.modal').modal('hide');
-				Login.modal_callback = ChatInbox;
-				Login.initialize();
+				//todo: remove login handler and open chat inbox sidebar
+				ChatInbox.initialize();
+				/*Login.modal_callback = ChatInbox;
+				Login.initialize();*/
 				return false;
 			}
 			ChatInbox.initialize();

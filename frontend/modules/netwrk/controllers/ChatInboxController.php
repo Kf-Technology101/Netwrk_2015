@@ -16,9 +16,9 @@ class ChatInboxController extends BaseController
 		if($this->getIsMobile()) {
 
 			if (Yii::$app->user->isGuest) {
-				return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/chat-inbox/']);
+				//return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/chat-inbox/']);
 			}
-			$data = json_decode(PostController::actionGetChatInbox());
+			$data = json_decode(Yii::$app->runAction('netwrk/post/get-chat-inbox'));
 			return $this->render('mobile/index', ['data' => $data]);
 		}
 	}
