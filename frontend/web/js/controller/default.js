@@ -46,6 +46,7 @@ var Default ={
             Default.ShowNotificationOnChat();
         } else {
             Default.HideNotificationOnChat();
+            Default.ShowDefaultNotificationOnChat();
         }
     },
 
@@ -166,6 +167,7 @@ var Default ={
             });
         } else {
             Default.HideNotificationOnChat();
+            Default.ShowDefaultNotificationOnChat();
         }
     },
     HideNotificationOnChat: function() {
@@ -178,7 +180,18 @@ var Default ={
         notify.html(0);
         notify.addClass('disable');
     },
-
+    /* When Guest user comes site, then display default notification on chat button in navigation */
+    ShowDefaultNotificationOnChat: function() {
+        var notify = '',
+            json = 1;
+        if(isMobile) {
+            notify = $("#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile").find('.notify');
+        } else {
+            notify = $("#chat_inbox_btn").find('.notify');
+        }
+        notify.html(json);
+        notify.removeClass('disable');
+    },
     onCLickModal: function(){
         var modal = $('.modal');
         modal.on('click', function(e) {
