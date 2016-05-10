@@ -126,16 +126,15 @@
 
         .filter_sidebar{
             color: #eee;
-            padding: 5px;
+            padding: 6px;
             border-collapse: separate;
-            margin: auto;
-            float: right;
+            margin: 0 auto;
             width: 55%;
             td{
                 width: 50px;
-                font-size: 16px;
+                font-size: 13px;
                 border: 1px solid #eee;
-                padding: 5px;
+                padding: 6px;
                 cursor: pointer;
                 text-align: center;
                 &.active{
@@ -157,7 +156,7 @@
             float: right;
             width: 12%;
             height: 44px;
-            margin: 0 0 0 15%;
+            margin: auto;
             font-size: 22px;
             color: #fff;
             line-height: 44px;
@@ -166,7 +165,7 @@
                 background: #5da5d8;
             }
             &.visible{
-                visibility: hidden;
+                display: none;
             }
         }
     }
@@ -359,7 +358,7 @@
                             }
                         }
                         .topic-title{
-                            font-size: 110%;
+                            font-size: 14px;
                             color: #1d1b1b;
                             width: 70%;
                             line-height: 30px;
@@ -471,7 +470,7 @@
                             margin-left: 50px;
                             width: 100%;
                             .post-title {
-                                font-size: 16px;
+                                font-size: 14px;
                                 color:#1d1b1b;
                                 font-family: "ProximaNovaSemibold";
                                 width: 75%;
@@ -522,8 +521,8 @@
                         background: #fcfcfc;
                     }
                     width: 100%;
-                    height: 50px;
-                    padding: 15px;
+                    height: 40px;
+                    padding: 10px;
                     border-bottom: 1px solid #eee;
                     p{
                         color: #1d1b1b;
@@ -534,7 +533,6 @@
                     .name_topic{
                         font-size: 18px;
                         width: 40%;
-                        // height: 50px;
                         float: left;
                         overflow: hidden;
                         p,span{
@@ -547,7 +545,6 @@
                     }
                     .num_count{
                         width: 14%;
-                        // height: 50px;
                         float: right;
                         margin-right: 2%;
                         i{
@@ -556,7 +553,6 @@
                     }
                     .num_count_duration{
                         width: 20%;
-                        // height: 50px;
                         float: right;
                         i{
                             margin-right: 5%;
@@ -564,7 +560,6 @@
                     }
                     .arrow{
                         width: 8%;
-                        // height: 50px;
                         float: right;
                         p{
                             text-align: right;
@@ -593,8 +588,8 @@
                         background: #fcfcfc;
                     }
                     width: 100%;
-                    height: 50px;
-                    padding: 15px;
+                    height: 40px;
+                    padding: 10px;
                     border-bottom: 1px solid #eee;
                     p{
                         color: #1d1b1b;
@@ -602,23 +597,21 @@
                         font-size: 12px;
                         text-align: right;
                     }
-                    .name_topic{
+                    .name_group{
                         font-size: 18px;
-                        width: 40%;
-                        // height: 50px;
+                        width: 95%;
                         float: left;
                         overflow: hidden;
                         p,span{
                             overflow: hidden;
                             text-overflow: ellipsis;
                             white-space: nowrap;
-                            font-size: 14px;
+                            font-size: 13px;
                             text-align: left;
                         }
                     }
                     .num_count{
                         width: 14%;
-                        // height: 50px;
                         float: right;
                         margin-right: 2%;
                         i{
@@ -627,7 +620,6 @@
                     }
                     .num_count_duration{
                         width: 20%;
-                        // height: 50px;
                         float: right;
                         i{
                             margin-right: 5%;
@@ -635,7 +627,6 @@
                     }
                     .arrow{
                         width: 8%;
-                        // height: 50px;
                         float: right;
                         p{
                             text-align: right;
@@ -644,6 +635,31 @@
                             font-size: 16px;
                         }
                     }
+                }
+
+                .group_loc_post {
+                    width: 35%;
+                    float: left;
+                    font-size: 16px;
+                }
+                .group-actions {
+                    width: 50%;
+                    float: left;
+                    .edit-group-p {
+                        float: none;
+                        margin-right: 10px;
+                    }
+                    .group-item {
+                        display: inline-block;
+                        padding-right: 10px;
+                        font-size: 14px;
+                    }
+                }
+                .group-date-details {
+                    float: left;
+                    width: 15%;
+                    color: #a9a9a9;
+                    font-size: 12px;
                 }
             }
             #item_topic_group_list_post,#item_topic_group_list_view,#item_topic_group_list_recent{
@@ -657,8 +673,8 @@
                         background: #fcfcfc;
                     }
                     width: 100%;
-                    height: 50px;
-                    padding: 15px;
+                    height: 40px;
+                    padding: 10px;
                     border-bottom: 1px solid #eee;
                     p{
                         color: #1d1b1b;
@@ -669,7 +685,6 @@
                     .name_topic{
                         font-size: 18px;
                         width: 40%;
-                        // height: 50px;
                         float: left;
                         overflow: hidden;
                         p,span{
@@ -682,7 +697,6 @@
                     }
                     .num_count{
                         width: 14%;
-                        // height: 50px;
                         float: right;
                         margin-right: 2%;
                         i{
@@ -691,7 +705,6 @@
                     }
                     .num_count_duration{
                         width: 20%;
-                        // height: 50px;
                         float: right;
                         i{
                             margin-right: 5%;
@@ -699,7 +712,6 @@
                     }
                     .arrow{
                         width: 8%;
-                        // height: 50px;
                         float: right;
                         p{
                             text-align: right;
