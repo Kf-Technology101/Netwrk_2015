@@ -1,5 +1,14 @@
 <?php use yii\helpers\Url; ?>
-<div id="create_group_page" data-city="<?php echo $city_id ?>" <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'"';} ?> data-name-city="<?php echo $data->city_name;?>">
+<div id="create_group_page" data-city="<?php echo $city_id ?>"
+    <?php
+        if ($data->status == 0){
+       echo 'data-zipcode="'.$data->zipcode.'"
+            data-lat="'.$data->lat.'"
+            data-lng="'.$data->lng.'"';
+        }
+    ?>
+     data-isCreateFromBlueDot="<?php echo $isCreateFromBlueDot; ?>"
+     data-name-city="<?php echo $data->city_name;?>">
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
@@ -28,6 +37,18 @@
                     </ul>
                 </div>
             </div>
+            <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
+                <div class="group-category-content">
+                    <section class="group-category-wrapper">
+                        <p class="title">Community Category</p>
+                        <select name="office" class="form-control dropdown-office">
+                            <?php foreach($zipcode_cities as $item): ?>
+                                <option value="<?php echo $item['id'] ?>" data-name-city="<?php echo $item['name'] ?>" data-value="<?php echo $item['id'] ?>"><?php echo $item['office'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </section>
+                </div>
+            <?php endif; ?>
             <div class="post-message">
                 <p class="title">Invite users by email</p>
                 <textarea class="message" id="emails-input" placeholder="Enter users or emails separated by commas ( , )" maxlength="1024"></textarea>

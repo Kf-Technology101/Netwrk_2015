@@ -57,6 +57,9 @@ var Create_Group={
         if(isMobile){
             Create_Group.modal = $('#create_group_page');
             Create_Group.params.topic = Create_Group.modal.attr('data-topic');
+            Create_Group.params.isCreateFromBlueDot = Create_Group.modal.attr('data-isCreateFromBlueDot');
+            Create_Group.params.latitude = Create_Group.modal.attr('data-lat');
+            Create_Group.params.longitude = Create_Group.modal.attr('data-lng');
 
             Default.SetAvatarUserDropdown();
 
@@ -104,9 +107,17 @@ var Create_Group={
         }
 
         if (typeof byGroup == "undefined" || !byGroup) {
+
             if(isMobile){
                 Create_Group.params.city = Create_Group.modal.attr('data-city');
                 Create_Group.params.city_name = Create_Group.modal.attr('data-name-city');
+
+                /* if group create from blue dot then initiazlie the community category dropdown
+                *  and on change for dropdown option update Create_Group.modal attribute (data-name-city, lat, lng etc)
+                * */
+                if(Create_Group.params.isCreateFromBlueDot == 'true') {
+                    Create_Group.onChangeMobileCommunityCategory();
+                }
             } else {
                 Create_Group.params.city = city;
                 Create_Group.params.city_name = name_city;
@@ -117,6 +128,7 @@ var Create_Group={
             Create_Group.params.longitude = longitude;
             Create_Group.params.byGroup = true;
         }
+
 
         Create_Group.OnClickAddEmail();
         Create_Group.OnClickCreateGroup();
@@ -131,12 +143,6 @@ var Create_Group={
             var json = $.parseJSON(data);
             console.log(json);
             Create_Group.getTemplateGroupCategory(parent,json);
-            /*$('.group-category-content .dropdown li').each(function() {
-                $(this).unbind().click(function(e) {
-                    var name = $(e.currentTarget).text();
-                    $("#dropdown-category").text(name);
-                });
-            });*/
         });
     },
     getTemplateGroupCategory: function(parent,data){
@@ -147,6 +153,33 @@ var Create_Group={
         var append_html = list_template({data: json});
 
         target.append(append_html);
+    },
+    //on change of topic category dropdown, update post params
+    onChangeMobileCommunityCategory: function() {
+        var parent = $('#create_group_page').find('.dropdown-office');
+        var city_id = parent.val(),
+            city_name = parent.find(':selected').attr('data-name-city');
+
+        parent.unbind();
+        parent.on('change', function(){
+            city_id = $(this).val();
+            city_name = $(this).find(':selected').attr('data-name-city');
+
+            Create_Group.params.city = city_id;
+            Create_Group.params.city_name = city_name;
+
+            $('#create_group_page').attr('data-city', city_id);
+            $('#create_group_page').attr('data-name-city', city_name);
+
+            console.log(Create_Group.params.city );
+            console.log(Create_Group.params.netwrk_name);
+        });
+
+        if(Create_Group.params.isCreateFromBlueDot == 'true') {
+            Create_Group.params.city_name = city_name;
+            Create_Group.params.city = city_id;
+            console.log(city_id);
+        }
     },
     showDataBreadcrumb: function(zipcode, topic){
         var target = $('#create_group').find('.scrumb .zipcode');
@@ -470,7 +503,10 @@ var Create_Group={
             var params = {
                 emails: Create_Group.added_users,
                 permission: ($('#dropdown-permission').text() == "Private" ? 2 : 1),
-                name: $('#group_name').val()
+                name: $('#group_name').val(),
+                latitude: Create_Group.params.latitude,
+                longitude: Create_Group.params.longitude,
+                isCreateFromBlueDot: Create_Group.params.isCreateFromBlueDot
             };
             if(Create_Group.params.byGroup) {
                 params.byGroup = true;
@@ -485,6 +521,7 @@ var Create_Group={
             }
             if (Create_Group.params.id != null) params.id = Create_Group.params.id;
 
+            console.log(params);
             Ajax.create_edit_group(params).then(function(data) {
                 var json = $.parseJSON(data);
                 if (json.error) alert(json.message);

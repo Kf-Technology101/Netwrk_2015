@@ -37,7 +37,7 @@ var Create_Topic={
             Create_Topic.params.byGroup = Create_Topic.modal.attr('data-by-group');
             Create_Topic.params.isCreateFromBlueDot = Create_Topic.modal.attr('data-isCreateFromBlueDot');
 
-            if(Create_Topic.params.isCreateFromBlueDot == true) {
+            if(Create_Topic.params.isCreateFromBlueDot == 'true') {
                 Create_Topic.onChangeMobileCommunityCategory();
             }
 
@@ -157,7 +157,7 @@ var Create_Topic={
             console.log(Create_Topic.params.netwrk_name);
         });
 
-        if(Create_Topic.params.isCreateFromBlueDot == true) {
+        if(Create_Topic.params.isCreateFromBlueDot == 'true') {
             Create_Topic.params.netwrk_name = city_name;
             Create_Topic.params.city = city_id;
         }
