@@ -14,6 +14,7 @@ use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
 use Yii;
+use yii\web\Cookie;
 
 class PostController extends BaseController
 {
@@ -202,9 +203,99 @@ class PostController extends BaseController
         return $hash;
     }
 
+    /**
+     * Get the general topics and discussion happens in users selected zipcode area.
+     * @return string
+     */
+    public function actionGetLocalChatInbox()
+    {
+        $data = [];
+        $cookies = Yii::$app->request->cookies;
+        $zipCode = $cookies->getValue('nw_zipCode');
+        $limit = 5;
+
+        //if city is entered on cover page then zipcode is 0,
+        //IF a person enters a city, the most active general chat will show (meaning the post with the most chats)
+        if($zipCode == 0) {
+            $cityName = $cookies->getValue('nw_city');
+            $cities = City::find()
+                ->where(['name' => $cityName])
+                ->all();
+
+            $city_array = [];
+            foreach($cities as $city) {
+                $city_array[] = $city->id;
+            }
+        } else {
+            $cities = City::find()
+                ->where('zip_code = '.$zipCode)
+                ->all();
+
+            $city_array = [];
+            foreach($cities as $city) {
+                $city_array[] = $city->id;
+            }
+        }
+
+        //get genral topic and post from city ids (city ids of cover page zipcodes)
+        $query = new Query();
+        $results = $query->select('topic.id as topic_id, topic.title as topic_title, topic.city_id, city.zip_code, post.*')
+            ->from('topic')
+            ->join('JOIN', 'post', 'post.topic_id = topic.id')
+            ->join('JOIN', 'city', 'city.id = topic.city_id')
+            ->where([
+                'topic.user_id' => 0,
+                'topic.city_id' => $city_array,
+                ]
+            )
+            ->orderBy('topic.post_count DESC')
+            ->limit($limit)
+            ->all();
+
+        $local_topics = [];
+        if ($results) {
+            foreach ($results as $key => $value) {
+                $user_photo = User::findOne($value->user_id)->profile->photo;
+                if ($user_photo == null){
+                    $image = 'img/icon/no_avatar.jpg';
+                }else{
+                    $image = 'uploads/'.$value->user_id.'/'.$user_photo;
+                }
+
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value->brilliant_count ? $value->brilliant_count : 0);
+                $num_date = UtilitiesFunc::FormatTimeChat($value->created_at);
+                $item = [
+                    'id'=> $value['id'],
+                    'post_title'=> $value['title'],
+                    'post_content'=> $value['content'],
+                    'topic_id'=> $value['topic_id'],
+                    'topic_name'=> $value['topic_title'],
+                    'city_id' =>  $value['city_id'],
+                    'city_name' =>  $value['zip_code'],
+                    'title'=> $value['title'],
+                    'content'=> $value['content'],
+                    'num_comment' => $num_comment ? $num_comment: 0,
+                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+                    'avatar'=> $image,
+                    'update_at'=> $num_date,
+                    'real_update_at' => $value['chat_updated_time'] ? $value['chat_updated_time'] : $value['created_at']
+                ];
+                array_push($local_topics, $item);
+            }
+        }
+
+        $data = $local_topics;
+        return json_encode($data);
+    }
     public function actionGetChatInbox()
     {
+        $return = '';
+        $data = [];
         $currentUser = Yii::$app->user->id;
+
+        $data = json_decode($this->actionGetLocalChatInbox(), true);
+
         $messages = new WsMessages();
         $messages = $messages->find()->select('post_id')->where('user_id = '.$currentUser. ' AND post_type = 1')
         ->distinct()
@@ -212,7 +303,6 @@ class PostController extends BaseController
         ->all();
 
         if($messages) {
-            $data = [];
 
             foreach ($messages as $key => $message) {
                 $user_photo = User::findOne($message->post->user_id)->profile->photo;
@@ -249,11 +339,10 @@ class PostController extends BaseController
             usort($data, function($a, $b) {
                 return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
             });
-            $data = json_encode($data);
-            return $data;
-        } else {
-            return false;
         }
+
+        $data = !empty($data) ? json_encode($data) : false;
+        return $data;
     }
 
     /**
