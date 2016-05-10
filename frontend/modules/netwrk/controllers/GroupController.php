@@ -77,6 +77,12 @@ class GroupController extends BaseController {
                 $group->city_id = intval($_POST['city_id']);
             }
 
+            //if group create from blue dot
+            if (isset($_POST['isCreateFromBlueDot']) && $_POST['isCreateFromBlueDot'] == true) {
+                $group->latitude = $_POST['latitude'];
+                $group->longitude = $_POST['longitude'];
+            }
+
             $group->save();
 
             UserGroup::deleteAll(array("group_id" => $group->id));
@@ -150,7 +156,30 @@ class GroupController extends BaseController {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
         }
 
-        $cty = City::findOne($city);
+        $data = [];
+        $isCreateFromBlueDot = (isset($_GET['isCreateFromBlueDot'])  && $_GET['isCreateFromBlueDot'] == true) ? $_GET['isCreateFromBlueDot'] : false ;
+        //if group is created using blue dot, then find create community category dropdown using zipcode.
+        if ($isCreateFromBlueDot == true) {
+
+            $zip_code = isset($_GET['zipcode']) ? $_GET['zipcode']: '';
+            $cities = City::find()->where(['zip_code' => $zip_code])->all();
+            foreach ($cities as $item) {
+                $cityData = [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'lat' => $item->lat,
+                    'lng' => $item->lng,
+                    'zip_code' => $item->zip_code,
+                    'office' => isset($item->office)? $item->office : 'Social'
+                ];
+                array_push($data, $cityData);
+            }
+        }
+
+        if(isset($city)) {
+            $cty = City::findOne($city);
+        }
+
         if ($cty){
             $city_id = $cty->id;
             $name = $cty->name;
@@ -176,7 +205,15 @@ class GroupController extends BaseController {
                 'city_id' => $city_id
             );
         }
-        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
+        //return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
+        return $this->render('mobile/create',[
+                'city'=> $cty ,
+                'city_id' =>$city_id,
+                'data'=> (object)$object,
+                'zipcode_cities' => $data,
+                'isCreateFromBlueDot' => $isCreateFromBlueDot
+            ]
+        );
     }
 
     public function actionDeleteGroup() {

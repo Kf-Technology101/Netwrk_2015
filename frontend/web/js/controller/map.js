@@ -1214,7 +1214,15 @@
 		CreateLocationGroup: function(zipcode) {
 			var lat = Map.center_marker.getPosition().lat();
 			var lng = Map.center_marker.getPosition().lng();
-			Create_Group.initialize(null, null, zipcode, null, true, lat, lng);
+
+			if(isMobile) {
+				if(zipcode){
+					//window.location.href = baseUrl + "/netwrk/topic/create-topic?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
+					window.location.href = baseUrl + "/netwrk/group/create-group?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
+				}
+			} else {
+				Create_Group.initialize(null, null, zipcode, null, true, lat, lng);
+			}
 		},
 		CreateLocationTopic: function(zipcode) {
 			var lat = Map.center_marker.getPosition().lat();
