@@ -441,6 +441,13 @@ var Group = {
                 $('#item_total_users').show().find('.no-data').hide();
                 Group.getTemplateTotalUsers(parent, json);
                 Group.onclickBackFromUsers();
+
+                if(isMobile){
+                    // Hide Create Group button and filter option when Total Users section open
+                    $('#create_group').hide();
+                    $('#show-topic').find('.header .title_page').addClass('on-feed');
+                    $('#show-topic').find('span.filter').addClass('visible');
+                }
             });
             //Hide the group tab header from topic modal.
             Topic.HideTabGroupHeader();
