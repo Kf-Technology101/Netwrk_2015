@@ -309,5 +309,35 @@
             });
           %>
         </script>
+        <script id="total_users" type="text/x-underscore-template" >
+            <div class="users-joined">
+                <div class="item-title">Joined people</div>
+                <p class="no-data">No users</p>
+                <% _.each(joined,function(user){ %>
+                <div class="item" data-item="<%= user.id %>">
+                    <div class="name">
+                        <p><%= user.name %></p>
+                    </div>
+                    <div class="email">
+                        <p><%= user.email%></p>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            <div class="users-invited">
+                <div class="item-title">Invitation pending</div>
+                <p class="no-data">No users</p>
+                <% _.each(invited,function(user){ %>
+                <div class="item" data-item="<%= user.id %>">
+                    <div class="name">
+                        <p><%= user.name %></p>
+                    </div>
+                    <div class="email">
+                        <p><%= user.email%></p>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </script>
     </div>
 </div>
