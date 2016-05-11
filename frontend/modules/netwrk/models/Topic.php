@@ -71,6 +71,14 @@ class Topic extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getGroup()
+    {
+        return $this->hasOne(Group::className(), ['id' => 'group_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getPosts()
     {
         return $this->hasMany(Post::className(), ['topic_id' => 'id']);
