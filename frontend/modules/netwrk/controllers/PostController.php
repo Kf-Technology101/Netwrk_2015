@@ -38,7 +38,7 @@ class PostController extends BaseController
         if (isset($_GET['group'])) {
             $topic_id = $_GET['group'];
             $topic = Topic::find()->where('id =' . $topic_id)->one();
-            return $this->render($this->getIsMobile() ? 'mobile/index' : '', ['topic' => $topic]);
+            return $this->render($this->getIsMobile() ? 'mobile/index' : '', ['topic' => $topic, 'city_id' => $topic->group->city_id]);
         } else {
             $topic_id = $_GET['topic'];
             $topic = Topic::find()->where('id =' . $topic_id)->one();
