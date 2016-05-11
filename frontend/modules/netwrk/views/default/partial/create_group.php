@@ -26,21 +26,23 @@
             <div class="modal-body">
                 <div class="page" id="create_topic_group">
                     <div class="post">
-                        <div class="post-title">
-                            <p class="title">Group name</p>
-                            <div class="input-group">
-                                <input type="text" class="name_post" id="group_name" maxlength="128" placeholder="Group name">
+                        <div class="clearfix">
+                            <div class="post-title">
+                                <p class="title">Group name</p>
+                                <div class="input-group">
+                                    <input type="text" class="name_post" id="group_name" maxlength="128" placeholder="Group name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="group-permission">
-                            <p class="title">Permission</p>
-                            <div class="dropdown input-group">
-                                <div class="dropdown-toggle" type="button" id="dropdown-permission" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Public</div>
-                                <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown-permission">
-                                    <li data-value="public">Public</li>
-                                    <li data-value="private">Private</li>
-                                </ul>
+                            <div class="group-permission">
+                                <p class="title">Permission</p>
+                                <div class="dropdown input-group">
+                                    <div class="dropdown-toggle" type="button" id="dropdown-permission" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Public</div>
+                                    <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown-permission">
+                                        <li data-value="public">Public</li>
+                                        <li data-value="private">Private</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="group-category-content">
