@@ -67,6 +67,7 @@ var Create_Topic={
             }
             console.log("params: ", Create_Topic.params, byGroup);
 
+            //if topic creats from blue dot. It means name = city name, and city id = null
             if (name && city == null) {
                 Create_Topic.showGroupCategory(name);
                 Create_Topic.onChangeGroupCategory();
@@ -103,6 +104,7 @@ var Create_Topic={
             Create_Topic.initialize(null, zipcode);
         }
     },
+    /* Display community category dropdown on Create Group modal. */
     showGroupCategory: function(zipcode){
         var parent = $('#create_topic_modal');
         parent.find('.group-category-content').html('');

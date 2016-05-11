@@ -92,7 +92,15 @@ var Create_Group={
             Create_Group.modal = $('#create_group_modal');
 
             Create_Group.showModalCreateGroup();
-            Create_Group.showGroupCategory(name_city);
+            //cityId is null and zipcode is set, It means it call from blue dot. (map.js -> CreateLocationGroup())
+            console.log('city ='+city);
+            console.log('name_city ='+name_city+' length ='+name_city.length);
+
+            Create_Group.onCloseModel();
+            if (city == null && name_city.length > 0) {
+                console.log('before Create_Group.showGroupCategory');
+                Create_Group.showGroupCategory(name_city);
+            }
 
             // Create_Group.showNetWrkBtn();
             /*Create_Group.onCloseModalCreatePost();
@@ -135,10 +143,11 @@ var Create_Group={
         Create_Group.onclickBack();
     },
     showGroupCategory: function(zipcode){
+        console.log('in showGroupCategory');
         var parent = $('#create_group_modal');
         parent.find('.group-category-content').html('');
         var params = {'zip_code': zipcode};
-        //todo: fetch weather api data
+
         Ajax.get_city_by_zipcode(params).then(function(data){
             var json = $.parseJSON(data);
             console.log(json);
@@ -153,6 +162,18 @@ var Create_Group={
         var append_html = list_template({data: json});
 
         target.append(append_html);
+    },
+    onCloseModel: function(){
+      //reset the data
+        var parent = $('#create_group_modal');
+
+        $('#create_group_modal').unbind('hidden.bs.modal');
+        $('#create_group_modal').on('hidden.bs.modal',function(e) {
+            $(e.currentTarget).unbind();
+            console.log('in onCloseModel');
+            parent.find('.group-category-content').html('');
+
+        });
     },
     //on change of topic category dropdown, update post params
     onChangeMobileCommunityCategory: function() {
