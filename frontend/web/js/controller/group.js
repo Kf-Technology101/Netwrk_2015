@@ -85,8 +85,8 @@ var Group = {
 
     onclickBackFromTopics: function(){
         if (isMobile) {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
-                window.location.href = baseUrl;
+            $('#show-topic .back_page span').unbind("click").click(function() {
+                Group.LoadGroupModal();
             });
         } else {
             $('#modal_topic .back_page span').unbind("click").click(function() {
@@ -114,8 +114,12 @@ var Group = {
 
     onclickBackFromUsers: function() {
         if (isMobile) {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
-                window.location.href = baseUrl;
+            $('#show-topic .back_page span').unbind("click").click(function() {
+                var parent = $('#item_topic_group_list_' + Group.data.filter);
+                Group.ShowTopics(parent, Group.data.id, Group.data.name);
+
+                //Hide the group tab header from topic modal.
+                Topic.HideTabGroupHeader();
             });
         } else {
             $('#modal_topic .back_page span').unbind("click").click(function() {
