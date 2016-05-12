@@ -182,6 +182,9 @@ var Topic = {
         //enable btn create topic
         parent.find('.header .title_page').removeClass('on-feed');
         parent.find('.header .create_topic').removeClass('on-feed');
+
+        var parentFilter = $('#item_list_'+Topic.data.filter);
+        Topic.filter_topic(parentFilter);
     },
 
     ShowFeedPage: function(){
@@ -223,7 +226,7 @@ var Topic = {
         parent.find('.header .title_page').removeClass('on-feed');
         parent.find('.header .create_topic').removeClass('on-feed');
 
-        Group.initialize();
+        Group.initialize('tab');
     },
 
     OnClickSortBtn: function(){
