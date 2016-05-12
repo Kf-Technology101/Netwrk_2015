@@ -8,7 +8,7 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title"><?= $city->zip_code ?> > Create a Topic</span>
+            <span class="title"><?php echo ($data->zipcode) ? $data->zipcode : $city->zip_code  ?> > Create a Topic</span>
         </div>
     </div>
     <div class="container">
