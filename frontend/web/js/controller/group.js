@@ -64,7 +64,13 @@ var Group = {
         Group.OnShowModalGroup();
     },
 
-    initialize: function(){
+    initialize: function(from){
+        if(from == 'tab'){
+            if(isMobile){
+                var parentFilter = $('#item_list_'+Group.data.filter);
+                Group.filter_group(parentFilter);
+            }
+        }
         if (!isMobile) {
             //Group._onclickBack();
             /*Group.OnShowModalPost();
@@ -373,7 +379,6 @@ var Group = {
     },
 
     ShowTopics: function(parent, group, groupName) {
-
         if (typeof group == "undefined") group = Group.data.id;
         else Group.data.id = group;
 
@@ -397,18 +402,19 @@ var Group = {
             console.log("deleting old");
             $("div[id^='item_topic_group_list'] .item").remove();
             $('#item_total_users').hide();
-            //if (json.data.length > 0) {
+            if (json.data.length > 0) {
+                parent.find('.no-data').hide();
                 parent.scrollTop(0);
                 Group.list[Group.data.filter].loaded = Group.list[Group.data.filter].paging;
                 Group.getTemplateTopicGroup(parent, json);
                 //self.getTemplateModal(cityname, data);
                 Topic.CustomScrollBar();
                 Group.filter_topic(parent);
-                Topic.GetDataOnTab();
+                /*Topic.GetDataOnTab();*/
                 Group.post_params.group_back = group;
                 Group.post_params.group_back_name = groupName;
                 $('.topic_group_name span').html(groupName);
-            //}
+            }
         });
     },
 
@@ -495,7 +501,7 @@ var Group = {
     },
 
     filter_group: function(contain) {
-        console.log('filter_topic');
+        console.log('filter_group');
         var target = $('#modal_topic,#show-topic').find('.groups-dropdown .dropdown-menu li');
         var self = this;
 
@@ -530,7 +536,7 @@ var Group = {
 
     filter_topic: function(contain) {
         console.log('filter_topic');
-        var target = $('#modal_topic,#show-topic').find('.dropdown-menu li');
+        var target = $('#modal_topic,#show-topic').find('.group-topics-dropdown .dropdown-menu li');
         var self = this;
 
         target.unbind();
@@ -539,7 +545,7 @@ var Group = {
             var parent = $('#item_topic_group_list_' + filter);
             self.data.filter_topic = filter;
             var name = $(e.currentTarget).text();
-            $("#modal_topic,#show-topic").find('.dropdown-toggle').text(name);
+            $("#modal_topic,#show-topic").find('.group-topics-dropdown .dropdown-toggle').text(name);
             contain.scrollTop(0);
             Group.ShowTopics(parent);
         });
