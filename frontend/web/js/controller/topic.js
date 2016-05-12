@@ -985,19 +985,28 @@ var Topic = {
     },
     /* on click of topic marker icon, display topic marker on map for that location */
     onClickTopicMapMarker: function() {
-      var parent = $('#modal_topic');
-      var topicMarker = parent.find('#tab_topic').find('.topic-marker');
+        var parent = $('#modal_topic, #show-topic');
+        var topicMarker = parent.find('#tab_topic').find('.topic-marker');
 
-      topicMarker.unbind();
-      topicMarker.on('click', function(){
-          var lat = $(this).attr('data-lat'),
-              lng = $(this).attr('data-lng'),
-              city_id = $(this).attr('data-city_id');
+        topicMarker.unbind();
+        topicMarker.on('click', function(){
+            var lat = $(this).attr('data-lat'),
+                lng = $(this).attr('data-lng'),
+                city_id = $(this).attr('data-city_id');
+            if(isMobile){
+                setTimeout(function() {
+                    sessionStorage.show_landing = 1;
+                    sessionStorage.topic_lat = lat;
+                    sessionStorage.topic_lng = lng;
+                    sessionStorage.topic_city_id = city_id;
+                    sessionStorage.is_topic_marker_in_map_center = 1;
 
-        Map.showTopicMarker(lat, lng, city_id);
-        parent.modal('hide');
-      });
-
+                    window.location.href = baseUrl + "/netwrk/default/home";
+                }, 500);
+            }
+            Map.showTopicMarker(lat, lng, city_id);
+            parent.modal('hide');
+        });
     }
 
 };

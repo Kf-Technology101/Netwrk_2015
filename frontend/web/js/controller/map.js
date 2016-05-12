@@ -1146,7 +1146,7 @@
 
 				if(currentZoom >= 9) {
 					//console.log(Map.blueDotMarker);
-					Map.show_marker_group_loc(map);
+					//Map.show_marker_group_loc(map);
 					Map.show_marker_topic_loc(map, params);
 				}
 			});
@@ -1646,6 +1646,12 @@
 				Topic.initialize($(this).city_id);
 			});
 
-			Map.zoomMap(lat,lng,zoom18,Map.map)
+			Map.zoomMap(lat,lng,zoom18,Map.map);
+			if(isMobile) {
+				sessionStorage.topic_lat = null;
+				sessionStorage.topic_lng = null;
+				sessionStorage.topic_city_id = null;
+				sessionStorage.is_topic_marker_in_map_center = 0;
+			}
 		}
 	};

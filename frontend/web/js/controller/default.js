@@ -5,6 +5,9 @@ var Default ={
             self._eventClickMeetBtnMobile();
             self._eventClickChatInboxBtnMobile();
 
+            if (sessionStorage.is_topic_marker_in_map_center == 1) {
+                Map.showTopicMarker(sessionStorage.topic_lat, sessionStorage.topic_lng, sessionStorage.topic_city_id);
+            }
         }else{
             $('#btn_meet').show();
             self._eventClickMeetBtn();
