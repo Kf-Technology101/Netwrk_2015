@@ -404,17 +404,17 @@ var Group = {
             $('#item_total_users').hide();
             if (json.data.length > 0) {
                 parent.find('.no-data').hide();
-                parent.scrollTop(0);
-                Group.list[Group.data.filter].loaded = Group.list[Group.data.filter].paging;
-                Group.getTemplateTopicGroup(parent, json);
-                //self.getTemplateModal(cityname, data);
-                Topic.CustomScrollBar();
-                Group.filter_topic(parent);
-                /*Topic.GetDataOnTab();*/
-                Group.post_params.group_back = group;
-                Group.post_params.group_back_name = groupName;
-                $('.topic_group_name span').html(groupName);
             }
+            parent.scrollTop(0);
+            Group.list[Group.data.filter].loaded = Group.list[Group.data.filter].paging;
+            Group.getTemplateTopicGroup(parent, json);
+            //self.getTemplateModal(cityname, data);
+            Topic.CustomScrollBar();
+            Group.filter_topic(parent);
+            /*Topic.GetDataOnTab();*/
+            Group.post_params.group_back = group;
+            Group.post_params.group_back_name = groupName;
+            $('.topic_group_name span').html(groupName);
         });
     },
 
