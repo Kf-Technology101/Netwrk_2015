@@ -16,7 +16,7 @@
 </div>
 <!-- /Loader -->
 <script src="http://maps.googleapis.com/maps/api/js"></script>
-<script src="js/lib/richmarker-compiled.js"></script>
+<script src="/js/lib/richmarker-compiled.js"></script>
 <script id="netwrk_place" type="text/x-underscore-template">
   <%
     if(cities){
