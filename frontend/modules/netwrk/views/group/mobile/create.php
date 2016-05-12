@@ -14,7 +14,7 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title"><?= $city->zip_code ?> > Create Group</span>
+            <span class="title"><?php echo ($data->zipcode) ? $data->zipcode : $city->zip_code  ?> > Create Group</span>
         </div>
     </div>
 
