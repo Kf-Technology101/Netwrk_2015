@@ -17,7 +17,7 @@ var MainWs ={
         if(ENV == 'prod'){
             MainWs.url = 'www.netwrk.com:2311';
         } else {
-            MainWs.url = '192.168.1.77:2311';
+            MainWs.url = 'dev.netwrk.com:2312';
         }
     },
 
