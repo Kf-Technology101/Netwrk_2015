@@ -13,6 +13,7 @@ var Common = {
         'loaderIntervalId': ''
     },
     initialize: function() {
+        Common.onWindowUnload();
         Common.eventClickExplore();
         //init the nav chat inbox for mobile
         Common.eventClickChatInboxBtnMobile();
@@ -104,5 +105,15 @@ var Common = {
         //clear the loader setIntervalId to stop loader animation.
         $('.loader-wrap').addClass('hide');
         console.log('in hideLoader');
+    },
+    onWindowUnload: function() {
+        $(window).on('beforeunload', function(){
+            $('.bootbox').css('opacity',' 0.1');
+            $('.bootbox').css('visibility','hidden');
+        });
+        $(window).on('unload', function(){
+            $('.bootbox').css('opacity',' 0.1');
+            $('.bootbox').css('visibility','hidden');
+        });
     }
 };

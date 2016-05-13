@@ -25,7 +25,7 @@ var MainWs ={
 
         var _self = this;
 
-        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000});
+        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000, timeoutInterval: 5000, reconnectDecay: 5});
 
         window.ws.onmessage = function(e){
           console.group("WS SEND");
