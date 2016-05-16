@@ -294,17 +294,21 @@
 				// label: text_below
 			});*/
 
-			var markerContent = "<div class='marker'></div>";
+			if(e.office_type == 'university' || e.office_type == 'government') {
+				var markerContent = "<div class='marker'></div>";
+			} else {
+				var markerContent = "<div class='marker-zip-code'>"+zipCode+"</div>";
+			}
 
 			if(e.office_type == 'university') {
 				markerContent += "<span class='marker-icon marker-university'><i class='fa fa-lg fa-graduation-cap'></i>";
 			} else if(e.office_type == 'government') {
 				markerContent += "<span class='marker-icon marker-government'><i class='fa fa-lg fa-institution'></i>";
-			} else {
-				markerContent += "<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>";
 			}
 
-			markerContent += "</span><div class='marker-shadow'></div>";
+			if(e.office_type == 'university' || e.office_type == 'government') {
+				markerContent += "</span><div class='marker-shadow'></div>";
+			}
 
 	      	marker = new RichMarker({
 		        position: new google.maps.LatLng(e.lat, e.lng),
@@ -1187,7 +1191,7 @@
 												zipLat = out[key].features[featureKey].properties.lat,
 												zipLng = out[key].features[featureKey].properties.lng;
 
-										Map.createZipLabelMarker(cid,name_of_place,zipCode,zipLat,zipLng);
+										//Map.createZipLabelMarker(cid,name_of_place,zipCode,zipLat,zipLng);
 									}
 								} else {
 									Map.clearZipLabelMarker();
@@ -1708,7 +1712,7 @@
 										zipLat = out[key].features[featureKey].properties.lat,
 										zipLng = out[key].features[featureKey].properties.lng;
 
-								Map.createZipLabelMarker(cid,name_of_place,zipCode,zipLat,zipLng);
+								//Map.createZipLabelMarker(cid,name_of_place,zipCode,zipLat,zipLng);
 							}
 						} else {
 							Map.clearZipLabelMarker();
