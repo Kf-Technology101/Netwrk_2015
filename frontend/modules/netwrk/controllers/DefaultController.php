@@ -285,12 +285,12 @@ class DefaultController extends BaseController
             }*/
 
             if(isset($value->topics[0])) {
-                $post = '';//$this->GetPostMostBrilliant($value->id);
+                $post = $this->GetPostMostBrilliant($value->id);
                 $user_post = '';//$post['user'];
                 $content = '';//$post['content'];
-                $topices = '';//$this->Top4Topices($value->id,$limitHover);
+                $topices = $this->Top4Topices($value->id,$limitHover);
                 // $trending = $this->Trending4Post($value,$limitHover);
-                $trending_hashtag = '';//$this->Trending4Hashtag($value,$limitHover);
+                $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
                 
                 $netwrk = array(
                     'id'=> $value->id,
@@ -373,12 +373,12 @@ class DefaultController extends BaseController
             }*/
 
             if(isset($value->topics[0])) {
-                $post = '';//$this->GetPostMostBrilliant($value->id);
+                $post = $this->GetPostMostBrilliant($value->id);
                 $user_post = '';//$post['user'];
                 $content = '';//$post['content'];
-                $topices = '';//$this->Top4Topices($value->id,$limitHover);
+                $topices = $this->Top4Topices($value->id,$limitHover);
                 // $trending = $this->Trending4Post($value);
-                $trending_hashtag = '';//$this->Trending4Hashtag($value,$limitHover);
+                $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
 
                 // if(strlen($content) > $maxlength ){
                 //     $content = substr($post->content,0,$maxlength ) ;
