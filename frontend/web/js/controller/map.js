@@ -1157,7 +1157,7 @@
 					}
 				}
 
-				if(currentZoom >= Map.zoom){
+				/*if(currentZoom >= Map.zoom){
 					Ajax.getVisibleZipBoundaries(params).then(function(jsonData){
 						var out = $.parseJSON(jsonData);
 
@@ -1167,14 +1167,14 @@
 
 								Map.map.data.setStyle(function(feature) {
 									if(feature.H.type == 'selected' || feature.H.type == 'Followed') {
-										return /** @type {google.maps.Data.StyleOptions} */({
+										return /!** @type {google.maps.Data.StyleOptions} *!/({
 											fillColor: '#5888ac',
 											fillOpacity: Map.fillOpacity,
 											strokeColor: '#5888ac',
 											strokeWeight: 2
 										});
 									} else {
-										return /** @type {google.maps.Data.StyleOptions} */({
+										return /!** @type {google.maps.Data.StyleOptions} *!/({
 											fillColor: '#5888ac',
 											fillOpacity: 0.0,
 											strokeColor: '#5888ac',
@@ -1205,7 +1205,7 @@
 							map.data.remove(feature);
 						}
 					});
-				}
+				}*/
 
 				if(currentZoom >= 9) {
 					//console.log(Map.blueDotMarker);
