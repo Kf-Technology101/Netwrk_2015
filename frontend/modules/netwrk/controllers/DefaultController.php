@@ -981,6 +981,20 @@ class DefaultController extends BaseController
                         array_push($return, $returnData);
                 }
             }
+
+            if(property_exists($returnData, 'remainZip')) {
+                $result = json_decode(json_encode($returnData), true);
+                //$result = json_decode($returnData, true);
+                $remaining_zip = implode(',',$result['remainZip']);
+
+                $data = $this->actionGetZipBoundariesFromCurl($remaining_zip);
+                $returnData = $this->actionFormatBoundariesData($data,'selected');
+
+                if(property_exists($returnData, 'features')) {
+                    if(sizeof($returnData->features) != 0)
+                        array_push($return, $returnData);
+                }
+            }
         }
 
         die(json_encode($return));
@@ -1052,6 +1066,20 @@ class DefaultController extends BaseController
 
                 if(property_exists($returnData, 'features')) {
                     if(sizeof($returnData->features) != 0)
+                        array_push($return, $returnData);
+                }
+            }
+
+            if(property_exists($returnData, 'remainZip')) {
+                $result = json_decode(json_encode($returnData), true);
+                //$result = json_decode($returnData, true);
+                $remaining_zip = implode(',', $result['remainZip']);
+
+                $data = $this->actionGetZipBoundariesFromCurl($remaining_zip);
+                $returnData = $this->actionFormatBoundariesData($data, 'selected');
+
+                if (property_exists($returnData, 'features')) {
+                    if (sizeof($returnData->features) != 0)
                         array_push($return, $returnData);
                 }
             }
@@ -1235,6 +1263,8 @@ class DefaultController extends BaseController
     public function actionGetBoundariesFromData($zip_codes, $type){
         $query = new Query();
         $cookies = Yii::$app->request->cookies;
+        $zip_boundaries_array = array();
+        $zip_array = explode(',',$zip_codes);
 
         $city = ($cookies->getValue('nw_city')) ? $cookies->getValue('nw_city') : '';
         $state = ($cookies->getValue('nw_state')) ? $cookies->getValue('nw_state') : 'Indiana';
@@ -1253,6 +1283,8 @@ class DefaultController extends BaseController
         $returnData->type = "FeatureCollection";
 
         for ($i=0; $i < count($datas); $i++) {
+            array_push($zip_boundaries_array,$datas[$i]['zcta5ce10']);
+
             // Get city details
             $query = new Query();
 
@@ -1280,6 +1312,8 @@ class DefaultController extends BaseController
             );
         }
 
+        $returnData->remainZip = array_diff($zip_array,$zip_boundaries_array);
+        
         return $returnData;
     }
 
