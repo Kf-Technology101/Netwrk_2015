@@ -46,10 +46,41 @@ class TopicController extends BaseController
 
     public function actionCreateTopic() {
         $city = $_GET['city'];
+        if($_GET['group']){
+            $group_id = $_GET['group'];
+            $by_group = true;
+        } else {
+            $group_id = null;
+            $by_group = false;
+        }
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
         }
-        $cty = City::findOne($city);
+
+        $isCreateFromBlueDot = (isset($_GET['isCreateFromBlueDot'])  && $_GET['isCreateFromBlueDot'] == true) ? $_GET['isCreateFromBlueDot'] : false ;
+        $data = [];
+        if ($isCreateFromBlueDot == true) {
+            $zip_code = $_GET['zipcode'];
+
+            $cities = City::find()->where(['zip_code' => $zip_code])->all();
+            foreach ($cities as $item) {
+                $cityData = [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'lat' => $item->lat,
+                    'lng' => $item->lng,
+                    'zip_code' => $item->zip_code,
+                    'office' => isset($item->office)? $item->office : 'Social'
+                ];
+                array_push($data, $cityData);
+            }
+        }
+
+        if(isset($city)) {
+            $cty = City::findOne($city);
+        }
+
         if ($cty){
             $city_id = $cty->id;
             $name = $cty->name;
@@ -60,7 +91,9 @@ class TopicController extends BaseController
                 'city_name'=> $name,
                 'status'=> 1
                 );
+
         }else{
+
             $name = $_GET['name'];
             $zip_code = $_GET['zipcode'];
             $lat = $_GET['lat'];
@@ -75,7 +108,17 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
+
+        return $this->render('mobile/create',[
+            'city'=> $cty ,
+            'city_id' =>$city_id,
+            'data'=> (object)$object,
+            'group_id'=> $group_id ,
+            'by_group' => $by_group,
+            'zipcode_cities' => $data,
+            'isCreateFromBlueDot' => $isCreateFromBlueDot
+            ]
+        );
     }
 
     public function actionNewTopic() {
@@ -110,6 +153,10 @@ class TopicController extends BaseController
                 $city_id = $netwrk->id;
             }
             $Topic->city_id = $city_id;
+            if (isset($_POST['isCreateFromBlueDot']) && $_POST['isCreateFromBlueDot'] == true) {
+                $Topic->lat = $_POST['lat'];
+                $Topic->lng = $_POST['lng'];
+            }
         } else {
             $groupId = $_POST['group'];
             if (empty($groupId)) throw new Exception("Group is empty");
@@ -225,6 +272,8 @@ class TopicController extends BaseController
                 'post'=> $post_data,
                 'user_id' => $value->user_id,
                 'owner' => ($currentUserId == $value->user_id ? true : false),
+                'lat' => $value->lat,
+                'lng' => $value->lng
                 );
             array_push($data,$topic);
         }
@@ -427,11 +476,53 @@ class TopicController extends BaseController
         //Grouped activity in month
         $topicArray = array();
         foreach ($data as $item) {
-            $topicArray[$item['formatted_created_date_month_year']][] = $item;
+            $topicArray[$item[' ']][] = $item;
         }
         $temp = array('data' => $topicArray, 'total_count' => $totalCount);
 
         $hash = json_encode($temp);
+        return $hash;
+    }
+
+    /**
+     * Get the topic by location, Fetch those topic which created from blue dot.
+     * return topic data
+     */
+    public function actionGetTopicByLocation()
+    {
+        $swLat = $_GET['swLat'];
+        $neLat = $_GET['neLat'];
+
+        $swLng = $_GET['swLng'];
+        $neLng = $_GET['neLng'];
+
+        $geo_where = '(topic.lat >= '.$swLat.' AND topic.lat <= '.$neLat.' AND topic.lng >= '.$swLng.' AND topic.lng <= '.$neLng.')';
+
+        $query = new Query();
+        $data = $query->select('topic.*,
+                city.id as city_id, city.zip_code, city.name, city.lat as city_lat, city.lng as city_lng'
+        )->from('topic')
+        ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
+        ->where($geo_where)
+        ->andWhere(['not', ['topic.lat' => null]])
+        ->andWhere(['not', ['topic.lng' => null]])
+        ->orderBy(['topic.created_at'=> SORT_DESC]);
+
+        $topics = $query->all();
+        $data = [];
+        foreach ($topics as $key => $value) {
+            $topic = array(
+                "id" => $value['id'],
+                "city_id" => $value['city_id'],
+                "user_id" => $value['user_id'],
+                "title" => $value['title'],
+                "lat" => $value['lat'],
+                "lng" => $value['lng']
+            );
+            array_push($data, $topic);
+        }
+
+        $hash = json_encode($data);
         return $hash;
     }
 }

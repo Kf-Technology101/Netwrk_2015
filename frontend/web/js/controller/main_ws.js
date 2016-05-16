@@ -97,7 +97,7 @@ var MainWs ={
 
             $.each(e.data, function(i, elem){
                 PopupChat.message_type = elem.msg_type;
-                PopupChat.getMessageTemplate(elem);
+                PopupChat.getMessageTemplate(elem,'single');
                 update_list_chat = $.parseJSON(elem.update_list_chat);
             });
             if(isMobile){

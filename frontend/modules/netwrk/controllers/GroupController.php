@@ -13,6 +13,7 @@ use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\Post;
 use yii\base\Exception;
 use Yii;
+use yii\helpers\Url;
 
 class GroupController extends BaseController {
     public function actionCreateEditGroup() {
@@ -69,8 +70,17 @@ class GroupController extends BaseController {
             if (!empty($_POST['byGroup']) && $_POST['byGroup'] != "false") {
                 $group->latitude = doubleval($_POST['latitude']);
                 $group->longitude = doubleval($_POST['longitude']);
+                if (isset($_POST['city_id'])) {
+                    $group->city_id = intval($_POST['city_id']);
+                }
             } else {
                 $group->city_id = intval($_POST['city_id']);
+            }
+
+            //if group create from blue dot
+            if (isset($_POST['isCreateFromBlueDot']) && $_POST['isCreateFromBlueDot'] == true) {
+                $group->latitude = $_POST['latitude'];
+                $group->longitude = $_POST['longitude'];
             }
 
             $group->save();
@@ -138,6 +148,72 @@ class GroupController extends BaseController {
             $transaction->rollBack();
             die(json_encode(array("error" => true, "message" => $e->getMessage())));
         }
+    }
+
+    public function actionCreateGroup() {
+        $city = $_GET['city'];
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
+        }
+
+        $data = [];
+        $isCreateFromBlueDot = (isset($_GET['isCreateFromBlueDot'])  && $_GET['isCreateFromBlueDot'] == true) ? $_GET['isCreateFromBlueDot'] : false ;
+        //if group is created using blue dot, then find create community category dropdown using zipcode.
+        if ($isCreateFromBlueDot == true) {
+
+            $zip_code = isset($_GET['zipcode']) ? $_GET['zipcode']: '';
+            $cities = City::find()->where(['zip_code' => $zip_code])->all();
+            foreach ($cities as $item) {
+                $cityData = [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'lat' => $item->lat,
+                    'lng' => $item->lng,
+                    'zip_code' => $item->zip_code,
+                    'office' => isset($item->office)? $item->office : 'Social'
+                ];
+                array_push($data, $cityData);
+            }
+        }
+
+        if(isset($city)) {
+            $cty = City::findOne($city);
+        }
+
+        if ($cty){
+            $city_id = $cty->id;
+            $name = $cty->name;
+            if ($cty->office == 'Ritchey Woods Nature Preserve') {
+                $cty->zip_code = 'Netwrk hq';
+            }
+            $object = array(
+                'city_name'=> $name,
+                'status'=> 1
+            );
+        }else{
+            $name = $_GET['name'];
+            $zip_code = $_GET['zipcode'];
+            $lat = $_GET['lat'];
+            $lng = $_GET['lng'];
+            $city_id = $city;
+            $object = array(
+                'status'=> 0,
+                'city_name'=> $name,
+                'zipcode'=> $zip_code,
+                'lat'=> $lat,
+                'lng'=> $lng,
+                'city_id' => $city_id
+            );
+        }
+        //return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
+        return $this->render('mobile/create',[
+                'city'=> $cty ,
+                'city_id' =>$city_id,
+                'data'=> (object)$object,
+                'zipcode_cities' => $data,
+                'isCreateFromBlueDot' => $isCreateFromBlueDot
+            ]
+        );
     }
 
     public function actionDeleteGroup() {

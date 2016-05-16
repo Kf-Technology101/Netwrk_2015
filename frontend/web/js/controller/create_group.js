@@ -55,14 +55,33 @@ var Create_Group={
         }
 
         if(isMobile){
-            Create_Group.params.topic = $('#create_group').attr('data-topic');
-            Create_Group.params.city = $('#create_group').attr('data-city');
-            Create_Group.changeData();
-            Create_Group.onclickBack();
+            Create_Group.modal = $('#create_group_page');
+            Create_Group.params.topic = Create_Group.modal.attr('data-topic');
+            Create_Group.params.isCreateFromBlueDot = Create_Group.modal.attr('data-isCreateFromBlueDot');
+            Create_Group.params.latitude = Create_Group.modal.attr('data-lat');
+            Create_Group.params.longitude = Create_Group.modal.attr('data-lng');
+
+            Default.SetAvatarUserDropdown();
+
+            //Create_Group.changeData();
+            //Create_Group.onclickBack();
             // Create_Group.showNetWrkBtn();
-            Create_Group.eventClickdiscoverMobile();
-            Create_Group.postTitleFocus();
-            Create_Group.OnClickChatInboxBtnMobile();
+            //Create_Group.eventClickdiscoverMobile();
+            //Create_Group.postTitleFocus();
+            //Create_Group.OnClickChatInboxBtnMobile();
+
+            var parent = Create_Group.modal;
+            $("#group_name").val(Create_Group.params.name);
+            $('#emails-input').val('');
+            $("#dropdown-permission").html(Create_Group.params.permission == 2 ? "Private" : "Public");
+            Create_Group.RefreshUsersList();
+
+            $('.group-permission li').each(function() {
+                $(this).unbind().click(function(e) {
+                    var name = $(e.currentTarget).text();
+                    $("#dropdown-permission").text(name);
+                });
+            });
         }else{
             if(isGuest){
                 Login.modal_callback = Post;
@@ -70,21 +89,18 @@ var Create_Group={
                 return false;
             }
             Create_Group.params.topic = topic;
-
-            if (typeof byGroup == "undefined" || !byGroup) {
-                Create_Group.params.city = city;
-                Create_Group.params.city_name = name_city;
-                Create_Group.params.byGroup = false;
-            } else {
-                Create_Group.params.latitude = latitude;
-                Create_Group.params.longitude = longitude;
-                Create_Group.params.byGroup = true;
-            }
+            Create_Group.modal = $('#create_group_modal');
 
             Create_Group.showModalCreateGroup();
-            Create_Group.OnClickAddEmail();
-            Create_Group.OnClickCreateGroup();
-            Create_Group.onclickBack();
+            //cityId is null and zipcode is set, It means it call from blue dot. (map.js -> CreateLocationGroup())
+            console.log('city ='+city);
+            console.log('name_city ='+name_city+' length ='+name_city.length);
+
+            Create_Group.onCloseModel();
+            if (city == null && name_city.length > 0) {
+                console.log('before Create_Group.showGroupCategory');
+                Create_Group.showGroupCategory(name_city);
+            }
 
             // Create_Group.showNetWrkBtn();
             /*Create_Group.onCloseModalCreatePost();
@@ -96,6 +112,94 @@ var Create_Group={
             Create_Group.onClickBackTopicBreakcrumb();
             Create_Group.onClickBackNetwrkLogo();
             Create_Group.onClickBackZipcodeBreadcrumb();*/
+        }
+
+        if (typeof byGroup == "undefined" || !byGroup) {
+
+            if(isMobile){
+                Create_Group.params.city = Create_Group.modal.attr('data-city');
+                Create_Group.params.city_name = Create_Group.modal.attr('data-name-city');
+
+                /* if group create from blue dot then initiazlie the community category dropdown
+                *  and on change for dropdown option update Create_Group.modal attribute (data-name-city, lat, lng etc)
+                * */
+                if(Create_Group.params.isCreateFromBlueDot == 'true') {
+                    Create_Group.onChangeMobileCommunityCategory();
+                }
+            } else {
+                Create_Group.params.city = city;
+                Create_Group.params.city_name = name_city;
+            }
+            Create_Group.params.byGroup = false;
+        } else {
+            Create_Group.params.latitude = latitude;
+            Create_Group.params.longitude = longitude;
+            Create_Group.params.byGroup = true;
+        }
+
+
+        Create_Group.OnClickAddEmail();
+        Create_Group.OnClickCreateGroup();
+        Create_Group.onclickBack();
+    },
+    showGroupCategory: function(zipcode){
+        console.log('in showGroupCategory');
+        var parent = $('#create_group_modal');
+        parent.find('.group-category-content').html('');
+        var params = {'zip_code': zipcode};
+
+        Ajax.get_city_by_zipcode(params).then(function(data){
+            var json = $.parseJSON(data);
+            console.log(json);
+            Create_Group.getTemplateGroupCategory(parent,json);
+        });
+    },
+    getTemplateGroupCategory: function(parent,data){
+        var json = data;
+        var target = parent.find('.group-category-content');
+
+        var list_template = _.template($("#group-category-template").html());
+        var append_html = list_template({data: json});
+
+        target.append(append_html);
+    },
+    onCloseModel: function(){
+      //reset the data
+        var parent = $('#create_group_modal');
+
+        $('#create_group_modal').unbind('hidden.bs.modal');
+        $('#create_group_modal').on('hidden.bs.modal',function(e) {
+            $(e.currentTarget).unbind();
+            console.log('in onCloseModel');
+            parent.find('.group-category-content').html('');
+
+        });
+    },
+    //on change of topic category dropdown, update post params
+    onChangeMobileCommunityCategory: function() {
+        var parent = $('#create_group_page').find('.dropdown-office');
+        var city_id = parent.val(),
+            city_name = parent.find(':selected').attr('data-name-city');
+
+        parent.unbind();
+        parent.on('change', function(){
+            city_id = $(this).val();
+            city_name = $(this).find(':selected').attr('data-name-city');
+
+            Create_Group.params.city = city_id;
+            Create_Group.params.city_name = city_name;
+
+            $('#create_group_page').attr('data-city', city_id);
+            $('#create_group_page').attr('data-name-city', city_name);
+
+            console.log(Create_Group.params.city );
+            console.log(Create_Group.params.netwrk_name);
+        });
+
+        if(Create_Group.params.isCreateFromBlueDot == 'true') {
+            Create_Group.params.city_name = city_name;
+            Create_Group.params.city = city_id;
+            console.log(city_id);
         }
     },
     showDataBreadcrumb: function(zipcode, topic){
@@ -150,7 +254,7 @@ var Create_Group={
     },
 
     showModalCreateGroup: function(){
-        var parent = $('#create_group_modal');
+        var parent = Create_Group.modal;
         $("#group_name").val(Create_Group.params.name);
         $('#emails-input').val('');
         $("#dropdown-permission").html(Create_Group.params.permission == 2 ? "Private" : "Public");
@@ -176,7 +280,7 @@ var Create_Group={
     },
 
     hideModalCreateGroup:function(){
-        var parent = $('#create_group_modal');
+        var parent = Create_Group.modal;
         parent.modal('hide');
         // Create_Group.hideSideBar();
         //Create_Group.hideNetWrkBtn();
@@ -267,7 +371,7 @@ var Create_Group={
     },
 
     onclickBack: function(){
-        var parent = $('#create_group_modal').find('.back_page span, #cancel_group');
+        var parent = Create_Group.modal.find('.back_page span, #cancel_group');
 
         parent.unbind();
         parent.click(function(){
@@ -319,7 +423,7 @@ var Create_Group={
     },
 
     redirect: function(){
-        window.location.href = baseUrl + "/netwrk/post?city="+Create_Group.params.city+"&topic="+Create_Group.params.topic;
+        window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Group.params.city;
     },
 
     OnshowSave: function(){
@@ -369,7 +473,7 @@ var Create_Group={
     },
 
     RefreshUsersList: function() {
-        var parent = $('#create_group_modal');
+        var parent = Create_Group.modal;
 
         $('#emails-list').find("li").remove();
         for (var i in Create_Group.added_users) {
@@ -412,7 +516,7 @@ var Create_Group={
     },
 
     OnClickCreateGroup: function() {
-        var btn = $('#create_group_modal').find('#save_group');
+        var btn = Create_Group.modal.find('#save_group');
 
         btn.unbind();
 
@@ -420,17 +524,25 @@ var Create_Group={
             var params = {
                 emails: Create_Group.added_users,
                 permission: ($('#dropdown-permission').text() == "Private" ? 2 : 1),
-                name: $('#group_name').val()
+                name: $('#group_name').val(),
+                latitude: Create_Group.params.latitude,
+                longitude: Create_Group.params.longitude,
+                isCreateFromBlueDot: Create_Group.params.isCreateFromBlueDot
             };
-            if (Create_Group.params.byGroup) {
+            if(Create_Group.params.byGroup) {
                 params.byGroup = true;
                 params.latitude = Create_Group.params.latitude;
                 params.longitude = Create_Group.params.longitude;
+                params.city_office = $('.dropdown-office').val();
+                params.city_id = $('.dropdown-office').val();
+
             } else {
                 params.byGroup = false;
                 params.city_id = Create_Group.params.city;
             }
             if (Create_Group.params.id != null) params.id = Create_Group.params.id;
+
+            console.log(params);
             Ajax.create_edit_group(params).then(function(data) {
                 var json = $.parseJSON(data);
                 if (json.error) alert(json.message);

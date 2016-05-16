@@ -330,6 +330,25 @@ var Ajax ={
 
     },
 
+    get_marker_info: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/default/get-maker-info";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+
+    },
+
     show_topic: function(params){
         var url,defer = $.Deferred();
 
@@ -391,6 +410,23 @@ var Ajax ={
 
         return defer.promise();
 
+    },
+    get_marker_topic_loc: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/topic/get-topic-by-location";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     },
 
     show_groups: function(params){
@@ -806,16 +842,16 @@ var Ajax ={
         url = baseUrl +"/netwrk/topic/new-topic";
 
         $.ajax({
-            url: url,
-            data: params,
-            async: false,
-            cache: false,
-            // contentType: false,
-            // processData: false,
-            type: 'POST',
-            success: defer.resolve,
-            error: defer.reject
-        });
+         url: url,
+         data: params,
+         async: false,
+         cache: false,
+         // contentType: false,
+         // processData: false,
+         type: 'POST',
+         success: defer.resolve,
+         error: defer.reject
+         });
 
         return defer.promise();
     },
@@ -1306,7 +1342,23 @@ var Ajax ={
 
         return defer.promise();
     },
+    get_city_by_zipcode: function(params) {
+        var url,defer = $.Deferred();
 
+        url = baseUrl +"/netwrk/default/get-city-by-zipcode";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     getZipBoundaries: function(params) {
         var url,defer = $.Deferred();
 

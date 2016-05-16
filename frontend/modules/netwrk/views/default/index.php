@@ -74,3 +74,4 @@
 <?= $this->render('partial/profile_edit');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
+<script src="/js/lib/richmarker-compiled.js"></script>

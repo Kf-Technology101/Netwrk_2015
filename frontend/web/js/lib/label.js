@@ -52,7 +52,7 @@ Label.prototype.draw = function() {
 
 		var div = this.div_;
 		div.style.left = (position.x - (32 / 2)) -  60 + 'px'; // position.x + 'px';
-		div.style.top = (position.y - 60 + 50) + 'px'; // position.y + 'px';
+		div.style.top = (position.y - 60 + 110) + 'px'; // position.y + 'px';
 		div.style.display = 'block';
 
 		this.span_.innerHTML = this.get('text').toString();

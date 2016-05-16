@@ -233,6 +233,19 @@ class DefaultController extends BaseController
     public function actionGetMakerDefaultZoom()
     {
         $city_ids = $this->actionGetCitiesFromCookie();
+        $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : null;
+
+        $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
+        $favoriteCommunities = json_decode($favoriteCommunities);
+        $favoriteData = [];
+        foreach ($favoriteCommunities->data as  $value) {
+            array_push($favoriteData, $value->city_id);
+        }
+
+        if(sizeof($favoriteData) > 0) {
+            $followed_city_ids = implode(',', $favoriteData);
+            $city_ids = $city_ids.','.$followed_city_ids;
+        }
 
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
@@ -255,7 +268,7 @@ class DefaultController extends BaseController
         // echo '<pre>';var_dump($cities);die;
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
         // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment FROM `ws_messages` AS a WHERE post_id = 247;
         // or
         // SELECT COUNT(DISTINCT a.user_id) AS count_user_comment, c.post_id  FROM `ws_messages` as a, post as b, topic as
@@ -263,21 +276,21 @@ class DefaultController extends BaseController
         //  DESC LIMIT 10;
 
         foreach ($cities as $key => $value) {
-            if($value->office_type == 'university'){
+            /*if($value->office_type == 'university'){
                 $img = '/img/icon/map_icon_university_v_2.png';
             } else if($value->office_type == 'government'){
                 $img = '/img/icon/map_icon_government_v_2.png';
             } else {
                 $img = '/img/icon/map_icon_community_v_2.png';
-            }
+            }*/
 
             if(isset($value->topics[0])) {
-                $post = $this->GetPostMostBrilliant($value->id);
-                $user_post = $post['user'];
-                $content = $post['content'];
-                $topices = $this->Top4Topices($value->id,$limitHover);
+                $post = '';//$this->GetPostMostBrilliant($value->id);
+                $user_post = '';//$post['user'];
+                $content = '';//$post['content'];
+                $topices = '';//$this->Top4Topices($value->id,$limitHover);
                 // $trending = $this->Trending4Post($value,$limitHover);
-                $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
+                $trending_hashtag = '';//$this->Trending4Hashtag($value,$limitHover);
                 
                 $netwrk = array(
                     'id'=> $value->id,
@@ -290,7 +303,7 @@ class DefaultController extends BaseController
                     'topic'=> $topices,
                     // 'trending_post'=> $trending,
                     'trending_hashtag'=> $trending_hashtag,
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
@@ -311,7 +324,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'topic' => '',
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -348,24 +361,24 @@ class DefaultController extends BaseController
             ->all();
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
 
         foreach ($cities as $key => $value) {
-            if($value->office_type == 'university'){
+            /*if($value->office_type == 'university'){
                 $img = '/img/icon/map_icon_university_v_2.png';
             } else if($value->office_type == 'government'){
                 $img = '/img/icon/map_icon_government_v_2.png';
             } else {
                 $img = '/img/icon/map_icon_community_v_2.png';
-            }
+            }*/
 
             if(isset($value->topics[0])) {
-				$post = $this->GetPostMostBrilliant($value->id);
-                $user_post = $post['user'];
-                $content = $post['content'];
-                $topices = $this->Top4Topices($value->id,$limitHover);
+                $post = '';//$this->GetPostMostBrilliant($value->id);
+                $user_post = '';//$post['user'];
+                $content = '';//$post['content'];
+                $topices = '';//$this->Top4Topices($value->id,$limitHover);
                 // $trending = $this->Trending4Post($value);
-                $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
+                $trending_hashtag = '';//$this->Trending4Hashtag($value,$limitHover);
 
                 // if(strlen($content) > $maxlength ){
                 //     $content = substr($post->content,0,$maxlength ) ;
@@ -382,7 +395,7 @@ class DefaultController extends BaseController
                     'office_type'=>$value->office_type,
                     'topic'=> $topices,
                     'trending_hashtag'=> $trending_hashtag,
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
@@ -403,7 +416,7 @@ class DefaultController extends BaseController
                     'office'=>$value->office,
                     'office_type'=>$value->office_type,
                     'topic' => '',
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -420,6 +433,71 @@ class DefaultController extends BaseController
         return $hash;
     }
 
+    public function actionGetMakerInfo()
+    {
+        $city_id = $_POST['city_id'];
+
+        $maxlength = Yii::$app->params['MaxlengthContent'];
+        $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
+
+        $cities = City::find()->with('topics.posts')->where(['id' => $city_id])->all();
+
+        $data = [];
+
+        foreach ($cities as $key => $value) {
+            if(isset($value->topics[0])) {
+                $post = $this->GetPostMostBrilliant($value->id);
+                $user_post = $post['user'];
+                $content = $post['content'];
+                $topices = $this->Top4Topices($value->id,$limitHover);
+                // $trending = $this->Trending4Post($value);
+                $trending_hashtag = $this->Trending4Hashtag($value,$limitHover);
+
+                $netwrk = array(
+                    'id'=> $value->id,
+                    'name'=> $value->name,
+                    'lat'=> $value->lat,
+                    'lng'=>$value->lng,
+                    'zip_code'=> $value->zip_code,
+                    'office'=>$value->office,
+                    'office_type'=>$value->office_type,
+                    'topic'=> $topices,
+                    'trending_hashtag'=> $trending_hashtag,
+                    'user'=>[
+                        'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
+                        'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
+                        'work'      => $user_post->profile->work,
+                        'zipcode'   => $user_post->profile->zip_code,
+                        'place'     => $user_post->profile->city ? $user_post->profile->city->name : ''
+                    ],
+                    'post'=>$post
+                );
+                array_push($data,$netwrk);
+            } else {
+                $netwrk = array(
+                    'id'=> $value->id,
+                    'name'=> $value->name,
+                    'lat'=> $value->lat,
+                    'lng'=>$value->lng,
+                    'zip_code'=> $value->zip_code,
+                    'office'=>$value->office,
+                    'office_type'=>$value->office_type,
+                    'topic' => '',
+                    'post'=> array(
+                        'post_id'=>-1,
+                        'name_post'=> '',
+                        'content' => '',
+                        'topic_id' => '',
+                    )
+                );
+                array_push($data,$netwrk);
+            }
+        }
+
+        $hash = json_encode($data);
+        return $hash;
+    }
+
     public function actionGetMarkerUpdate()
     {
         $maxlength = Yii::$app->params['MaxlengthContent'];
@@ -428,7 +506,7 @@ class DefaultController extends BaseController
         $city= City::find()->with('topics.posts')->where(['id'=>$city_id])->one();
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
 
         if($city){
             if(isset($city->topics[0])) {
@@ -443,13 +521,13 @@ class DefaultController extends BaseController
                 //     $content = substr($post->content,0,$maxlength ) ;
                 //     $content = $content."...";
                 // }
-                if($city->office_type == 'university'){
+                /*if($city->office_type == 'university'){
                     $img = './img/icon/map_icon_university_v_2.png';
                 } else if($city->office_type == 'government'){
                     $img = './img/icon/map_icon_government_v_2.png';
                 } else {
                     $img = '/img/icon/map_icon_community_v_2.png';
-                }
+                }*/
 
                 $netwrk = array(
                     'id'=> $city->id,
@@ -462,7 +540,7 @@ class DefaultController extends BaseController
                     'topic'=> $topices,
                     // 'trending_post'=> $trending,
                     'trending_hashtag'=> $trending_hashtag,
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'user'=>[
                         'username'  => $user_post->profile->first_name." ".$user_post->profile->last_name,
                         'avatar'    => $user_post->profile->photo ? Url::to('@web/uploads/'.$user_post->id.'/'.$user_post->profile->photo) : Url::to('@web/img/icon/no_avatar.jpg'),
@@ -482,7 +560,7 @@ class DefaultController extends BaseController
                     'office'=>$city->office,
                     'office_type'=>$city->office_type,
                     'topic' => '',
-                    'mapicon'=>$img,
+                    //'mapicon'=>$img,
                     'post'=> array(
                         'post_id'=>-1,
                         'name_post'=> '',
@@ -511,7 +589,7 @@ class DefaultController extends BaseController
         $city= City::find()->with('topics.posts')->where(['office'=> 'Ritchey Woods Nature Preserve'])->one();
 
         $data = [];
-        $img = '/img/icon/map_icon_community_v_2.png';
+        //$img = '/img/icon/map_icon_community_v_2.png';
 
         $netwrk = array(
                 'id'=> $city->id,
@@ -522,7 +600,7 @@ class DefaultController extends BaseController
                 'office'=>$city->office,
                 'office_type'=>$city->office_type,
                 'topic' => '',
-                'mapicon'=>$img,
+                //'mapicon'=>$img,
                 'post'=> array(
                     'post_id'=>-1,
                     'name_post'=> '',
@@ -836,15 +914,50 @@ class DefaultController extends BaseController
         return $hash;
     }
 
+    public function actionGetCityByZipcode() {
+        $data = [];
+        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : '';
+        $city = new City();
+        if($zipCode) {
+            $cities = $city->find()->select('city.*')
+                ->where(['zip_code' => $zipCode])
+                ->all();
+            foreach ($cities as $city) {
+                $item = [
+                    'id' => $city->id,
+                    'name' => $city->name,
+                    'lat' => $city->lat,
+                    'lng' => $city->lng,
+                    'zip_code' => $city->zip_code,
+                    'office' => isset($city->office)? $city->office : 'Social'
+                ];
+                array_push($data, $item);
+            }
+        }
+        $hash = json_encode($data);
+        return $hash;
+    }
+
     public function actionGetZipBoundaries()
     {
         $return = [];
 
         // all zip codes from cookie
         $zip_codes_data = $this->actionGetCitiesFromCookie('zip');
+        $zip_codes_data = explode(',',$zip_codes_data);
 
+        $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
+        $favoriteCommunities = json_decode($favoriteCommunities);
+
+        $favoriteZipData = [];
+        foreach ($favoriteCommunities->data as  $value) {
+            array_push($favoriteZipData, $value->city_zipcode);
+        }
+
+        $allZipcodes = array_unique(array_merge($zip_codes_data, $favoriteZipData));
+        $allZipcodes = implode(',', $allZipcodes);
         // Array of zip codes
-        $zip_array = explode(',',$zip_codes_data);
+        $zip_array = explode(',',$allZipcodes);
 
         // Split the array into 15 zip codes array
         $zip_split_array = array_chunk($zip_array, 15);
@@ -894,9 +1007,18 @@ class DefaultController extends BaseController
 
         // Array of zip codes from cookie
         $zip_cookie_array = explode(',',$zip_codes_cookie);
+        $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
+        $favoriteCommunities = json_decode($favoriteCommunities);
+        $favoriteData = [];
+
+        foreach ($favoriteCommunities->data as  $value) {
+            array_push($favoriteData, $value->city_zipcode);
+        }
+
+        $allZipcodes = array_unique(array_merge($zip_cookie_array, $favoriteData));
 
         foreach ($cities as $key => $value) {
-            if(!in_array($value->zip_code, $cities_array) && !in_array($value->zip_code, $zip_cookie_array)) {
+            if(!in_array($value->zip_code, $cities_array) && !in_array($value->zip_code, $allZipcodes)) {
                 array_push($cities_array, $value->zip_code);
             }
         }
