@@ -535,7 +535,7 @@ var Post ={
 
 	ResetTabFeed: function(){
         var parent = $('#list_post #tab_feed');
-        parent.find('.top-post,.top-topic,.top-feed').remove();
+        parent.find('.top-post,.top-topic,.top-feed, .weather-feed-content, .job-feed-content').remove();
         parent.find('.no-data').show();
         Post.tab_current = 'post';
         Post.feed.paging = 1;
