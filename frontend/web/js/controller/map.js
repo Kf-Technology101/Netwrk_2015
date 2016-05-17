@@ -1412,15 +1412,28 @@
 						position: new google.maps.LatLng(e.lat, e.lng),
 						map: map,
 						content: markerContent,
-						city_id: parseInt(e.city_id)
+						city_id: parseInt(e.city_id),
+						topic_id: parseInt(e.id),
+						topic_name: e.title
 						/*draggable: true*/
 					});
 
 					if(currentZoom >= 16) {
 						google.maps.event.addListener(marker, 'click', (function(marker, i) {
 							return function(){
-								console.log(marker.city_id);
-								Topic.initialize(marker.city_id);
+								//Open post modal
+								console.log('topic =>'+marker.topic_id);
+								var topic_id = marker.topic_id;
+								console.log(marker.topic_id);
+								if(isMobile){
+									Post.RedirectPostPage(topic_id, false);
+								}else{
+									Post.params.topic = topic_id;
+									Post.params.topic_name = marker.topic_name;
+									Post.params.city = marker.city_id;
+									Post.params.city_name = marker.city_name;
+									Post.initialize();
+								}
 								if(!isMobile){
 									if (typeof infowindow != "undefined") {
 										infowindow.close();
