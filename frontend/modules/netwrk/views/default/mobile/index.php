@@ -2,7 +2,7 @@
 <ul class="indiana_marker" style="display:none;" >
 </ul>
 
-<div class="map_content_mobile">
+<div class="map_content_mobile noselect">
   <div id="btn_my_location">
     <i class="fa fa-crosshairs"></i>
   </div>
