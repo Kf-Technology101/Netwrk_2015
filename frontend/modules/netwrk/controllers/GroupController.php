@@ -11,6 +11,7 @@ use frontend\modules\netwrk\models\UserInvitation;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\Post;
+use yii\data\Pagination;
 use yii\base\Exception;
 use Yii;
 use yii\helpers\Url;
@@ -361,8 +362,12 @@ class GroupController extends BaseController {
 
     public function actionGetGroupsByUser()
     {
-        $filter = $_GET['filter'];
+        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+        $pageSize = isset($_GET['size']) ? $_GET['size'] : '';
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
+
         $currentUserId = isset($_GET['user']) ? $_GET['user'] : Yii::$app->user->id;
+
         switch ($filter) {
             case 'post':
                 $order = ['post_count' => SORT_DESC];
@@ -395,9 +400,13 @@ class GroupController extends BaseController {
             ->where($params)
             ->orderBy($order);
 
-        $totalCount = $groups->count();
+        $countQuery = clone $groups;
+        $totalCount = $countQuery->count();
 
-        $groups = $groups->all();
+        $pages = new Pagination(['totalCount' => $totalCount,'pageSize'=>$pageSize,'page'=> $page - 1]);
+        $groups = $groups->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
         /*$sql = $groups->createCommand()->getRawSql();
         echo($sql);

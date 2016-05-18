@@ -246,6 +246,10 @@ var User_Profile = {
                 onTotalScroll: function(){
                     if (User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "topic"){
                         User_Profile.loadMoreTopic();
+                    } else if(User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "group") {
+                        User_Profile.loadMoreGroup();
+                    } else {
+
                     }
                 }
             }
@@ -286,6 +290,41 @@ var User_Profile = {
                 User_Profile.setPaginationStatus(json.data);
             }
 
+        });
+    },
+    loadMoreGroup: function(){
+        var template = $('#recent_activity_container');
+        var templateData = $('#profile_group_info');
+        var self = this;
+        self.list[User_Profile.tab_current].paging ++ ;
+
+        var params = {'filter': null, 'user_id': UserLogin, 'size': self.list[User_Profile.tab_current].size, 'page':self.list[User_Profile.tab_current].paging};
+
+        //set tab current as group
+        User_Profile.tab_current = 'group';
+        User_Profile.setTabActive();
+
+        Ajax.show_user_groups(params).then(function(data) {
+            var json = $.parseJSON(data);
+            var jsonLength = _.size(json.data);
+            console.log('loadMoreGroup data length '+ jsonLength);
+
+            if(jsonLength > 0) {
+                //assign ajax data to template data
+                User_Profile.templateData.groups = json.data;
+
+                //set my topics count on recent activity section
+                if (json.total_count) {
+                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Groups: ' + json.total_count);
+                }
+
+                template.scrollTop(0);
+                //hide no data section
+                template.find('.no-data').hide();
+                User_Profile.getTemplateGroupInfo(template, templateData);
+            } else {
+                User_Profile.setPaginationStatus(json.data);
+            }
         });
     },
     setPaginationStatus: function(json){
@@ -387,12 +426,14 @@ var User_Profile = {
 
     getTemplateGroupInfo: function(parent,target,callback){
         var template = _.template(target.html());
-        var append_html = template({groups: User_Profile.templateData.groups});
+        var json = User_Profile.templateData.groups;
+        var append_html = template({groups: json});
         parent.append(append_html);
 
         if(_.isFunction(callback)){
             callback();
         }
+        User_Profile.setPaginationStatus(json);
     },
     getTemplateTopicInfo: function(parent,target,callback){
         var template = _.template(target.html());
@@ -445,7 +486,10 @@ var User_Profile = {
     ShowGroups: function(){
         var template = $('#recent_activity_container');
         var templateData = $('#profile_group_info');
-        var params = {'filter': 'recent', 'user_id': UserLogin};
+
+        var self = this;
+        self.list[User_Profile.tab_current].paging = 1;
+        var params = {'filter': 'recent', 'user_id': UserLogin, 'size': self.list[User_Profile.tab_current].size, 'page':self.list[User_Profile.tab_current].paging};
 
         //show tamplate
         template.removeClass('hidden');
