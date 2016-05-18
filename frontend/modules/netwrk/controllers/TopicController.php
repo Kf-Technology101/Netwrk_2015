@@ -476,7 +476,7 @@ class TopicController extends BaseController
         //Grouped activity in month
         $topicArray = array();
         foreach ($data as $item) {
-            $topicArray[$item[' ']][] = $item;
+            $topicArray[$item['formatted_created_date_month_year']][] = $item;
         }
         $temp = array('data' => $topicArray, 'total_count' => $totalCount);
 
