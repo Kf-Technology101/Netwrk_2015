@@ -20,20 +20,23 @@ var User_Profile = {
         lng:''
     },
     list:{
+        group:{
+            paging:1,
+            status_paging: 1,
+            loaded: 0,
+            size: 20
+        },
+        topic:{
+            paging:1,
+            status_paging: 1,
+            loaded: 0,
+            size: 20
+        },
         post:{
             paging:1,
             status_paging: 1,
-            loaded: 0
-        },
-        view:{
-            paging:1,
-            status_paging: 1,
-            loaded: 0
-        },
-        recent:{
-            paging:1,
-            status_paging: 1,
-            loaded: 0
+            loaded: 0,
+            size: 20
         }
     },
     tab_current: 'group',
@@ -234,7 +237,69 @@ var User_Profile = {
             $('.preview_img').removeClass('active');
         });
     },
+    CustomScrollBar: function(){
+        var parent = $("#modal_profile").find('.modal-body');
 
+        parent.mCustomScrollbar({
+            theme:"dark",
+            callbacks:{
+                onTotalScroll: function(){
+                    if (User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "topic"){
+                        User_Profile.loadMoreTopic();
+                    }
+                }
+            }
+        });
+    },
+    loadMoreTopic: function(){
+        var template = $('#recent_activity_container');
+        var templateData = $('#profile_topic_info');
+        var self = this;
+        self.list[User_Profile.tab_current].paging ++ ;
+
+        var params = {'filter': null, 'size': self.list[User_Profile.tab_current].size, 'page':self.list[User_Profile.tab_current].paging};
+
+        Ajax.show_user_topics(params).then(function(data){
+            var json = $.parseJSON(data);
+            var jsonLength = _.size(json.data);
+            console.log('loadMoreTopic data length '+ jsonLength);
+
+            if(jsonLength > 0) {
+                //assign ajax data to template data
+                User_Profile.templateData.topics = json.data;
+
+                //set my topics count on recent activity section
+                if (json.total_count) {
+                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Topics: '+json.total_count);
+                }
+
+                template.scrollTop(0);
+                //hide no data section
+                template.find('.no-data').hide();
+                User_Profile.getTemplateTopicInfo(template, templateData);
+
+                // Initialize click on topic name
+                Topic.OnClickTopicFeed();
+
+                self.list[User_Profile.tab_current].loaded = self.list[User_Profile.tab_current].paging;
+            } else {
+                User_Profile.setPaginationStatus(json.data);
+            }
+
+        });
+    },
+    setPaginationStatus: function(json){
+        var self = this;
+        var jsonLength = _.size(json);
+        console.log('jsonLength '+ jsonLength);
+
+        if(jsonLength > 0){
+            self.list[User_Profile.tab_current].status_paging = 1;
+        } else{
+            self.list[User_Profile.tab_current].status_paging = 0;
+        }
+        console.log('self.list['+User_Profile.tab_current+'].status_paging '+self.list[User_Profile.tab_current].status_paging);
+    },
     ShowModalProfile: function(){
         var profileModal = $('#modal_profile'),
             self = this;
@@ -244,7 +309,7 @@ var User_Profile = {
             keyboard: false
         });
 
-        Common.CustomScrollBar(profileModal.find('.modal-body'));
+        User_Profile.CustomScrollBar();
 
         profileModal.on('hidden.bs.modal',function() {
             profileModal.modal('hide');
@@ -331,12 +396,15 @@ var User_Profile = {
     },
     getTemplateTopicInfo: function(parent,target,callback){
         var template = _.template(target.html());
-        var append_html = template({topics: User_Profile.templateData.topics});
+        var json = User_Profile.templateData.topics;
+
+        var append_html = template({topics: json });
         parent.append(append_html);
 
         if(_.isFunction(callback)){
             callback();
         }
+        User_Profile.setPaginationStatus(json);
     },
     getTemplatePostInfo: function(parent,target,callback){
         var template = _.template(target.html());
@@ -410,16 +478,18 @@ var User_Profile = {
     ShowTopics: function(){
         var template = $('#recent_activity_container');
         var templateData = $('#profile_topic_info');
-        var params = {'filter': 'recent'};
 
-        //show tamplate
-        template.removeClass('hidden');
-        template.html('');
+        var self = this;
+        self.list[User_Profile.tab_current].paging = 1;
+        var params = {'filter': null, 'size': self.list[User_Profile.tab_current].size, 'page':self.list[User_Profile.tab_current].paging};
 
         //set tab current as group
         User_Profile.tab_current = 'topic';
         User_Profile.setTabActive();
 
+        //show tamplate
+        template.removeClass('hidden');
+        template.html('');
         Ajax.show_user_topics(params).then(function(data){
             var json = $.parseJSON(data);
 
