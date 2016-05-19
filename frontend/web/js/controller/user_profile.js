@@ -248,6 +248,8 @@ var User_Profile = {
                         User_Profile.loadMoreTopic();
                     } else if(User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "group") {
                         User_Profile.loadMoreGroup();
+                    } else if(User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "post") {
+                        User_Profile.loadMorePost();
                     } else {
 
                     }
@@ -325,6 +327,49 @@ var User_Profile = {
             } else {
                 User_Profile.setPaginationStatus(json.data);
             }
+        });
+    },
+    loadMorePost: function(){
+        if (isMobile) {
+            var template = $('#recent_activity_container', '.Profile-view');
+        } else {
+            var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
+        }
+
+        var templateData = $('#profile_post_info');
+        var self = this;
+        self.list[User_Profile.tab_current].paging ++ ;
+
+        var params = {'filter': null, 'size': self.list[User_Profile.tab_current].size, 'page':self.list[User_Profile.tab_current].paging};
+
+        //set tab current as group
+        User_Profile.tab_current = 'post';
+        User_Profile.setTabActive();
+
+        Ajax.show_user_posts(params).then(function(data){
+            var json = $.parseJSON(data);
+            var jsonLength = _.size(json.data);
+            console.log('loadMorePost data length '+ jsonLength);
+            if(jsonLength > 0) {
+                //assign ajax data to template data
+                User_Profile.templateData.posts = json.data;
+
+                //set my topics count on recent activity section
+                if (json.total_count) {
+                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Posts: '+json.total_count);
+                }
+
+                template.scrollTop(0);
+                //hide no data section
+                template.find('.no-data').hide();
+                User_Profile.getTemplatePostInfo(template, templateData);
+
+                // Initialize click on post name
+                Topic.OnClickPostFeed();
+            } else {
+                User_Profile.setPaginationStatus(json.data);
+            }
+
         });
     },
     setPaginationStatus: function(json){
@@ -449,12 +494,14 @@ var User_Profile = {
     },
     getTemplatePostInfo: function(parent,target,callback){
         var template = _.template(target.html());
-        var append_html = template({posts: User_Profile.templateData.posts});
+        var json = User_Profile.templateData.posts;
+        var append_html = template({posts: json});
         parent.append(append_html);
 
         if(_.isFunction(callback)){
             callback();
         }
+        User_Profile.setPaginationStatus(json);
     },
 
     //set selected navigation like group, topic or post as active.
@@ -561,8 +608,11 @@ var User_Profile = {
         } else {
             var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
         }
+
         var templateData = $('#profile_post_info');
-        var params = {'filter': 'recent'};
+        var self = this;
+        self.list[User_Profile.tab_current].paging = 1;
+        var params = {'filter': null, 'size': self.list[User_Profile.tab_current].size, 'page':self.list[User_Profile.tab_current].paging};
 
         //show tamplate
         template.removeClass('hidden');
