@@ -500,7 +500,7 @@ var Topic = {
             .add($('#modal_topic').find('.feed-row.feed-post .feed-content'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-post .feed-content'))
             .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
-            .add($('#recentActivityPosts').find('.post'));
+            .add($('.recentActivityPosts').find('.post'));
         target.unbind();
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
