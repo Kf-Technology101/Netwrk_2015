@@ -24,19 +24,19 @@ var User_Profile = {
             paging:1,
             status_paging: 1,
             loaded: 0,
-            size: 5
+            size: 20
         },
         topic:{
             paging:1,
             status_paging: 1,
             loaded: 0,
-            size: 5
+            size: 20
         },
         post:{
             paging:1,
             status_paging: 1,
             loaded: 0,
-            size: 5
+            size: 20
         }
     },
     tab_current: 'group',
