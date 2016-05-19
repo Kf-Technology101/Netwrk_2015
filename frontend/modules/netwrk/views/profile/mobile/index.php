@@ -78,7 +78,13 @@
                 <article id="recent_activity_container" class="">
 
                 </article>
-
+                <article class="clearfix">
+                    <a href="javascript:" class="load-more">
+                        <p class="text-right" style="padding-bottom: 20px;">
+                            Load More...
+                        </p>
+                    </a>
+                </article>
             </section>
         </div>
     </section>

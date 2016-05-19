@@ -60,6 +60,7 @@ var User_Profile = {
         if(isMobile){
             Default.SetAvatarUserDropdown();
             User_Profile.OnClickBack();
+            User_Profile.onClickLoadMore();
         } else {
             User_Profile.ShowModalProfile();
         }
@@ -237,6 +238,20 @@ var User_Profile = {
             $('.preview_img').removeClass('active');
         });
     },
+    onClickLoadMore: function() {
+        var parent = $(".Profile-view").find('.load-more');
+        parent.unbind();
+        parent.on('click', function(){
+            if (User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "topic"){
+                User_Profile.loadMoreTopic();
+            } else if(User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "group") {
+                console.log('does i am here 2');
+                User_Profile.loadMoreGroup();
+            } else if(User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "post") {
+                User_Profile.loadMorePost();
+            }
+        });
+    },
     CustomScrollBar: function(){
         var parent = $("#modal_profile").find('.modal-body');
 
@@ -383,6 +398,14 @@ var User_Profile = {
             self.list[User_Profile.tab_current].status_paging = 0;
         }
         console.log('self.list['+User_Profile.tab_current+'].status_paging '+self.list[User_Profile.tab_current].status_paging);
+        if(isMobile) {
+            var parent = $(".Profile-view").find('.load-more');
+            if(self.list[User_Profile.tab_current].status_paging == 0) {
+                parent.removeClass('hidden').addClass('hidden');
+            } else {
+                parent.removeClass('hidden');
+            }
+        }
     },
     ShowModalProfile: function(){
         var profileModal = $('#modal_profile'),
