@@ -244,7 +244,7 @@
 </script>
 
 <script id="profile_post_info" type="text/x-underscore-template">
-    <div class="post-details activity-details" id="recentActivityPosts">
+    <div class="post-details activity-details recentActivityPosts" id="recentActivityPosts">
         <% if(!_.isEmpty(posts)) {%>
             <% _.each(posts,function(items, key){ %>
                 <div class="group-item">
