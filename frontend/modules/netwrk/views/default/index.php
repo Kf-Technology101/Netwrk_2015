@@ -31,6 +31,7 @@
 
   <div id="btn_my_location" data-toggle="tooltip" title="Show My Local Netwrk">
     <i class="fa fa-crosshairs"></i>
+    <span>Build</span>
   </div>
   <div class="sidebar">
     <div class="container">
