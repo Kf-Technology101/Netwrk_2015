@@ -655,7 +655,9 @@ class DefaultController extends BaseController
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
 
             $city_ids = $this->actionGetCitiesFromCookie();
+            $hq_city_id = $this->actionGetHQZipCityFromCookie();
 
+            $hq_post = Post::GetHQPostGlobal($hq_city_id);
             $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$city_ids);
             $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
             $top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
@@ -671,6 +673,7 @@ class DefaultController extends BaseController
             }
 
             $item = [
+                'hq_post' => $hq_post,
                 'top_post'=> $top_post,
                 'top_topic'=> $top_topic,
                 'top_communities'=> $top_communities,
@@ -1131,6 +1134,23 @@ class DefaultController extends BaseController
 
             return implode(',',$cities_array);
         }
+    }
+
+    public function actionGetHQZipCityFromCookie(){
+        $cookies = Yii::$app->request->cookies;
+
+        $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
+
+        $cities_array = [];
+
+        if($zip_code != 0) {
+            $cities = City::find()
+                ->where('zip_code = '.$zip_code)
+                ->andWhere('office_type IS NULL')
+                ->one();
+        }
+
+        return $cities['id'];
     }
 
     public function wkt_to_geojson ($text) {

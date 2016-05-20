@@ -271,4 +271,20 @@ class Post extends \yii\db\ActiveRecord
         }
         return $data;
     }
+
+    public function GetHQPostGlobal($city){
+        $query = new Query();
+        if ($city != null) {
+            $data = $query ->select('post.id as post_id, post.title, post.content as post_content, post.user_id as user_id, topic.id as topic_id, city.id as city_id')
+                ->from('post')
+                ->innerJoin('topic', 'post.topic_id=topic.id')
+                ->innerJoin('city', 'topic.city_id=city.id')
+                ->where(['not',['post.topic_id'=> null]])
+                ->andWhere('topic.city_id = '.$city)
+                ->andWhere('topic.title = "Main Channel"')
+                ->one();
+        }
+
+        return $data;
+    }
 }
