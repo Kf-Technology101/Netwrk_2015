@@ -902,8 +902,8 @@
 				google.maps.event.clearListeners(Map.center_marker, 'mouseover');
 				google.maps.event.addListener(Map.center_marker, 'mouseover', function() {
 					// infowindow.setContent(e[0]);
-					Map.findCurrentZip(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng());
 					blueDotInfoWindow.open(map, this);
+					//Map.findCurrentZip(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng());
 					var lat = parseFloat(Map.center_marker.getPosition().lat());
 					var lng = parseFloat(Map.center_marker.getPosition().lng());
 					var dec = (lat - Math.floor(lat)) * 60;
@@ -975,6 +975,8 @@
 						}
 					});
 				}
+
+				blueDotInfoWindow.open(Map.map, Map.center_marker);
 				//find current zip from lat and lng set to Map.blueDotLocation.zipcode
 				Map.findCurrentZip(lat, lng);
 			}
