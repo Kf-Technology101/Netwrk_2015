@@ -4,9 +4,10 @@
 		<div class="ld-modal-content">
 			<div class="ld-modal-header">
 				<div class="header">
-					<div class="title">
-						<p class="main-header">Welcome, click explore to follow communities</p>
-						<p class="sub-header">Tap the netwrk icon or map to explore</p>
+					<div class="title text-center">
+						<div class="btn-area-talk">Area Talk</div>
+						<p class="main-header hidden">Welcome, click explore to follow communities</p>
+						<p class="sub-header hidden">Tap the netwrk icon or map to explore</p>
 					</div>
 				</div>
 			</div>
@@ -15,7 +16,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="ld-modal-footer">
+	<div class="ld-modal-footer hidden">
 		<!--<div class="landing-btn btn-meet">Meet</div>-->
 		<div class="landing-btn btn-explore">Explore</div>
 		<div class="landing-btn btn-my-community">My Community</div>
