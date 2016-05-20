@@ -60,10 +60,17 @@ var LandingPage = {
         var append_html = list_template({landing: LandingPage.data});
 
         $(LandingPage.parent).find('.wrapper-container').append(append_html);
-        LandingPage.onTemplateLanding();
+
+		var header_template = _.template($( "#landing_header" ).html());
+		var header_html = header_template({landing: LandingPage.data.hq_post});
+
+		$(LandingPage.parent).find('#headerButtonWrapper').html(header_html);
+
+		LandingPage.onTemplateLanding();
 	},
 
 	onTemplateLanding: function(){
+		LandingPage.OnClickAreaTalk();
 		LandingPage.CustomScrollBar();
 		LandingPage.OnClickAvatarLanding();
 		LandingPage.OnClickNetwrk();
@@ -85,6 +92,26 @@ var LandingPage = {
 			LandingPage.FixWidthPostLanding();
 		}
 		LandingPage.onNetwrkLogo();
+	},
+
+	OnClickAreaTalk: function(){
+		var target = $(LandingPage.parent).find('.btn-area-talk');
+		target.unbind();
+		target.on('click',function(e){
+			var post_id = $(e.currentTarget).attr('data-value'),
+				post_name = $(e.currentTarget).attr('data-title'),
+				post_content = $(e.currentTarget).attr('data-content');
+			if(isMobile){
+				sessionStorage.landing_post = 1;
+				PopupChat.RedirectChatPostPage(post_id, 1, 1);
+			}else{
+				PopupChat.params.post = post_id;
+				PopupChat.params.chat_type = 1;
+				PopupChat.params.post_name = post_name;
+				PopupChat.params.post_description = post_content;
+				PopupChat.initialize();
+			}
+		});
 	},
 
 	OnClickChat: function(){
