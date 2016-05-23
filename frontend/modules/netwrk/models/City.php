@@ -138,6 +138,24 @@ class City extends \yii\db\ActiveRecord
         return $data;
     }
 
+    //Get netwrk cities
+    public function GetCities($limit,$city_ids = null){
+        $query = new Query();
+
+        // If state is not null then get top city user join within that state
+        if($city_ids != null) {
+            $data = $query ->select('c.id as city_id ,c.name as city_name, c.office as office_name,c.zip_code as zip_code')
+                ->from('city c')
+                ->where("c.id IN ($city_ids)")
+                ->limit($limit)
+                ->all();
+
+            return $data;
+        }
+
+        return false;
+    }
+
     //Get tophashtag each top city
     public function TopHashTag_City($city,$limit){
 
