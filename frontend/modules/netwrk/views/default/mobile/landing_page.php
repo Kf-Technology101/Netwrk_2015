@@ -25,7 +25,7 @@
 <script id="landing_page" type="text/x-underscore-template">
 	<div class="top-communities">
 		<div class="top-header">
-			<p class="lp-title">Home communities</p>
+			<p class="lp-title">Local Public Centers</p>
 			<p class="lp-description">See whats happening in your area!</p>
 		</div>
 		<div class="top-communities-content">

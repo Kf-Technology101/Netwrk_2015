@@ -30,7 +30,7 @@
 			<div class="panel-heading top-header">
 				<a data-toggle="collapse" data-target="#collapseTopCommunities"
 				   href="javascript:" class="collapsed">
-					<p class="lp-title">Home communities</p>
+					<p class="lp-title">Local Public Centers</p>
 					<p class="lp-description">See whats happening in your area!</p>
 				</a>
 			</div>

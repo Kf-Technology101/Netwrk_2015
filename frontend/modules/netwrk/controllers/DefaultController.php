@@ -668,8 +668,10 @@ class DefaultController extends BaseController
 
             $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$city_ids);
             $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
-            $top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
-            $top_communities = City::TopHashTag_City($top_city,$limit);
+            //$top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
+            //$top_communities = City::TopHashTag_City($top_city,$limit);
+            $front_cities = City::GetCities($limit,$city_ids);
+            $top_communities = City::TopHashTag_City($front_cities,$limit);
 
             // If user is logged in then get his followed communities feeds
             if(Yii::$app->user->id) {
