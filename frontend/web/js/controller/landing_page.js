@@ -12,6 +12,11 @@ var LandingPage = {
 			LandingPage.SetUrl();
 			LandingPage.OnClickMeetLandingMobile();
 			$('.navbar-fixed-bottom').hide();
+			if(welcomePage == 'true') {
+				LandingPage.OnHideModalWelcome();
+				LandingPage.OnClickBackdropWelcome();
+				LandingPage.showLandingWelcome();
+			}
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
@@ -278,7 +283,9 @@ var LandingPage = {
 	OnHideModalWelcome: function(){
 		$(LandingPage.modal_welcome).on('hidden.bs.modal',function(e) {
 			Ajax.set_welcome_cookie().then(function(data){
-				LandingPage.show_landing_page();
+				if(!isMobile) {
+					LandingPage.show_landing_page();
+				}
 			});
 
 		});

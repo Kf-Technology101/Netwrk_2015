@@ -174,3 +174,5 @@
 		</div>
 	<% } %>
 </script>
+
+<?= $this->render('../partial/landing_welcome');?>

@@ -25,6 +25,7 @@ if (isset($cookies["isCoverPageVisited"])) {
   $lng = $cookies->getValue('nw_lng');
   $state = $cookies->getValue('nw_state');
   $stateAbbr = $cookies->getValue('nw_stateAbbr');
+  $welcomePage = $cookies->getValue('nw_welcomePage');
 }/* else {
   $c = Yii::$app->response->cookies;
   $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
@@ -62,6 +63,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       var lng = <?php echo $lng; ?>;
       var state = '<?php echo $state; ?>';
       var stateAbbr = '<?php echo $stateAbbr; ?>';
+      var welcomePage = '<?php echo ($welcomePage) ? $welcomePage : "true"; ?>';
     <?php endif; ?>
   </script>
 </head>
