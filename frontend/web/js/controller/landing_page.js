@@ -1,6 +1,7 @@
 var LandingPage = {
 	modal:'#modal_landing_page',
 	mobile:'#ld_modal_landing_page',
+	modal_welcome : '#modal_landing_welcome',
 	parent:'',
 	data:'',
 	check_landing: 0,
@@ -11,11 +12,22 @@ var LandingPage = {
 			LandingPage.SetUrl();
 			LandingPage.OnClickMeetLandingMobile();
 			$('.navbar-fixed-bottom').hide();
+			if(welcomePage == 'true') {
+				LandingPage.OnHideModalWelcome();
+				LandingPage.OnClickBackdropWelcome();
+				LandingPage.showLandingWelcome();
+			}
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
 			LandingPage.OnHideModalLanding();
-			LandingPage.show_landing_page();
+			if(welcomePage == 'true') {
+				LandingPage.OnHideModalWelcome();
+				LandingPage.OnClickBackdropWelcome();
+				LandingPage.showLandingWelcome();
+			} else {
+				LandingPage.show_landing_page();
+			}
 			LandingPage.OnClickBackdrop();
 			LandingPage.OnClickMeetLandingDesktop();
 			set_heigth_modal_meet($('#modal_landing_page'), 0, 550, 430);
@@ -284,6 +296,33 @@ var LandingPage = {
 
 	ResetData: function(){
 		$(LandingPage.modal).find('.wrapper-container').remove();
+	},
+
+	showLandingWelcome: function(){
+		var parent = $(LandingPage.modal_welcome);
+		// parent.show();
+		parent.modal({
+			backdrop: true,
+			keyboard: false,
+		});
+	},
+
+	OnHideModalWelcome: function(){
+		$(LandingPage.modal_welcome).on('hidden.bs.modal',function(e) {
+			Ajax.set_welcome_cookie().then(function(data){
+				if(!isMobile) {
+					LandingPage.show_landing_page();
+				}
+			});
+
+		});
+	},
+
+	OnClickBackdropWelcome: function(){
+		$('.modal-backdrop.in').unbind();
+		$('.modal-backdrop.in').click(function(e) {
+			$(LandingPage.modal_welcome).modal('hide');
+		});
 	},
 
 	show_landing_page: function(){

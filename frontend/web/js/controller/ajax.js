@@ -1291,6 +1291,23 @@ var Ajax ={
 
         return defer.promise();
     },
+    set_welcome_cookie: function(){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/set-welcome-cookie";
+
+        $.ajax({
+            url: url,
+            data: '',
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     create_log: function(params) {
         var url,defer = $.Deferred();
 
