@@ -14,6 +14,14 @@
             </div>
             <div class="modal-body">
                 <?php
+                    $scenario = 'register';
+                    $session = Yii::$app->session;
+                    $key_user_invitation = $session->get('key_user_invitation');
+
+                    if($key_user_invitation) {
+                        $scenario = 'join';
+                    }
+
                     $form = ActiveForm::begin([
                         'id' => 'register-form',
                         'options' => ['class' => 'form-register form-horizontal'],
@@ -22,7 +30,7 @@
                             'labelOptions' => ['class' => 'col-lg-2 control-label'],
                         ],
                     ]);
-                    $user = new User(["scenario" => "register"]);
+                    $user = new User(["scenario" => $scenario]);
                     $profile = new Profile();
 
                     // $post = Yii::$app->request->post();
@@ -38,12 +46,20 @@
                     <div class="col-field-name field">
                         <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last Name')); ?>
                     </div>
-                    <div class="field-name field">
-                        <?= $form->field($user, 'username')->textInput(array('placeholder' => 'Username')) ?>
-                    </div>
-                    <div class="field-name field">
-                        <?= $form->field($user,'email')->textInput(array('placeholder' => 'Email','autocomplete'=> 'off')); ?>
-                    </div>
+
+                    <?php if($scenario == 'register') : ?>
+                        <div class="field-name field">
+                            <?= $form->field($user, 'username')->textInput(array('placeholder' => 'Username')) ?>
+                        </div>
+                        <div class="field-name field">
+                            <?= $form->field($user,'email')->textInput(array('placeholder' => 'Email','autocomplete'=> 'off')); ?>
+                        </div>
+                    <?php endif;?>
+
+                    <?php if($scenario == 'join') : ?>
+                        <input type="hidden" name="key" value="<?php echo $key_user_invitation;?>" />
+                    <?php endif; ?>
+
                     <div class="col-field-name field">
                         <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'Password')); ?>
                     </div>

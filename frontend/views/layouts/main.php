@@ -135,7 +135,8 @@ if (isset($cookies["isCoverPageVisited"])) {
     isMobile = false,
     isGuest = '<?php echo Yii::$app->user->isGuest ?>',
     isResetPassword ="<?= Yii::$app->session['key_reset_password'] ?>",
-    isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>";
+    isInvalidKey = "<?= Yii::$app->session['invalidKey'] ?>",
+    isUserInvitation ="<?= Yii::$app->session['key_user_invitation'] ?>";
     var UserLogin = '<?php echo Yii::$app->user->id; ?>';
     // if (!isCoverPage) {
     //   document.getElementById('w0').classList.add("hidden");
@@ -143,6 +144,7 @@ if (isset($cookies["isCoverPageVisited"])) {
 </script>
 <?php
     unset(Yii::$app->session['key_reset_password']);
+    unset(Yii::$app->session['key_user_invitation']);
     unset(Yii::$app->session['invalidKey']);
     Yii::$app->session->destroy();
 ?>

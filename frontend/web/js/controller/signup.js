@@ -115,20 +115,45 @@ var Signup={
 		btn.unbind();
 		btn.on('click',function(){
 			if(Signup.zipcode){
-				Ajax.user_signup($(Signup.form_id)).then(function(data){
-					Signup.data_validate = $.parseJSON(data);
-					if(Signup.data_validate.status == 0){
-						Signup.data_validate = data;
-						Signup.ShowErrorValidate();
-					}else{
-						isGuest = '';
-						UserLogin = Signup.data_validate.data;
-						Login.OnCallBackAfterLogin();
-						$('.menu_top').removeClass('deactive');
-						$('#btn_meet').removeClass('deactive');
-						$(Signup.modal).modal('hide');
-					}
-				});
+				// Check if user invitation form is submitted
+				if(isUserInvitation){
+					Ajax.user_join($(Signup.form_id), isUserInvitation).then(function(data){
+						Signup.data_validate = $.parseJSON(data);
+						console.log(Signup.data_validate);
+						if(Signup.data_validate.status == 0){
+							Signup.ShowErrorValidate();
+						}else{
+							isGuest = '';
+							UserLogin = Signup.data_validate.data;
+							Login.OnCallBackAfterLogin();
+							$('.menu_top').removeClass('deactive');
+							$('#btn_meet').removeClass('deactive');
+							$(Signup.modal).modal('hide');
+
+							// Initialize chat and display the invited groups chat popup
+							ChatInbox.initialize();
+							ChatInbox.activateTab('chat_discussion');
+							setTimeout(function(){
+								console.log('li clicked');
+								$(ChatInbox.modal).find("div[data-post='11108']").closest('li').trigger('click');
+							}, 300);
+						}
+					});
+				} else {
+					Ajax.user_signup($(Signup.form_id)).then(function(data){
+						Signup.data_validate = $.parseJSON(data);
+						if(Signup.data_validate.status == 0){
+							Signup.ShowErrorValidate();
+						}else{
+							isGuest = '';
+							UserLogin = Signup.data_validate.data;
+							Login.OnCallBackAfterLogin();
+							$('.menu_top').removeClass('deactive');
+							$('#btn_meet').removeClass('deactive');
+							$(Signup.modal).modal('hide');
+						}
+					});
+				}
 			}else{
 				$(Signup.form_id).submit();
 			}

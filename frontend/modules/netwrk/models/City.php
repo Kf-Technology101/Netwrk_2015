@@ -167,4 +167,23 @@ class City extends \yii\db\ActiveRecord
 
         return $city;
     }
+
+    public function GetCityByGroupId($group_id) {
+        $query = new Query();
+
+        if($group_id != null) {
+            $data = $query ->select('g.id as group_id , g.name as group_name, c.name as city_name, c.office as office_name, c.lat, c.lng,
+            c.zip_code, c.state, c.state_abbreviation, t.id as topic_id, p.id as post_id')
+                ->from('group g')
+                ->leftJoin('city c','c.id = g.city_id')
+                ->leftJoin('topic t', 't.group_id = g.id AND t.title = g.name AND t.user_id = g.user_id')
+                ->leftJoin('post p', 'p.topic_id = t.id AND p.user_id = g.user_id AND p.title = "groupchat"')
+                ->where("g.id = ".$group_id)
+                ->one();
+
+            return $data;
+        }
+
+        return false;
+    }
 }

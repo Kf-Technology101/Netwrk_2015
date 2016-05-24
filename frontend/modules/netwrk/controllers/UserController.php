@@ -7,9 +7,12 @@ use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\UserKey;
 use frontend\modules\netwrk\models\Role;
 use frontend\modules\netwrk\models\Profile;
+use frontend\modules\netwrk\models\Group;
+use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\UserSettings;
+use frontend\modules\netwrk\models\WsMessages;
 
 use frontend\modules\netwrk\models\forms\LoginForm;
 use frontend\modules\netwrk\models\forms\ForgotForm;
@@ -19,7 +22,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use yii\db\ActiveQuery;
-
+use yii\web\Cookie;
 use yii\helpers\Url;
 
 class UserController extends BaseController
@@ -326,6 +329,121 @@ class UserController extends BaseController
         $user = Yii::$app->user;
         if (!$user->isGuest) {
             $user->logout();
+            return $this->goHome();
+        }
+    }
+
+    /**
+     * Join invited user
+     */
+    public function actionJoin($key){
+        $session = Yii::$app->session;
+        $userKey = new UserKey();
+
+        $userKey = UserKey::findActiveByKey($key, $userKey::TYPE_USER_INVITATION);
+        if (!$userKey) {
+            if($this->getIsMobile()){
+                //return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(), ["invalidKey" => true]);
+            }else{
+                $session['key_user_invitation']= $key;
+                $session['invalidKey'] = true;
+                return $this->goHome();
+            }
+        }
+
+        // get user and set "join" scenario
+        $success = false;
+        $user = new User();
+        $user = $user::findOne($userKey->user_id);
+        $user->setScenario("join");
+
+        // Get city details for invited user
+        $group = Group::GetInvitedGroupIdByUser($user->id);
+        $city = City::GetCityByGroupId($group);
+
+        // load post data and reset user password
+        $profile = new Profile();
+
+        // load post data
+        $post = Yii::$app->request->post();
+        if ($user->load($post) && $profile->load($post)) {
+            // ensure profile data gets loaded
+            // validate for ajax request
+            $zipcode = $post['Profile']['zip_code'];
+            $lat = $post['Profile']['lat'];
+            $lng = $post['Profile']['lng'];
+            $first_name = $post['Profile']['first_name'];
+            $last_name = $post['Profile']['last_name'];
+
+            $form = ActiveForm::validate($user, $profile);
+            // validate for normal request
+            if ($user->validate() && $profile->validate() && $zipcode) {
+                // perform updation
+                $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
+                $profile->zip_code = $zipcode;
+                $profile->lat = $lat;
+                $profile->lng = $lng;
+                $profile->setUser($user->id)->save(false);
+                $this->afterSignUp($user);
+
+                // consume userKey
+                $userKey->consume();
+
+                // Add ws_message of user joined netwrk, so that group chat will be display in discussion
+                $ws_messages = new WsMessages();
+                $ws_messages->user_id = $user->id;
+                $ws_messages->msg = $first_name.' '.$last_name.' has joined Netwrk';
+                $ws_messages->post_id = $city['post_id'];
+                $ws_messages->msg_type = 1;
+                $ws_messages->post_type = 1;
+                $ws_messages->save(false);
+
+                if($this->getIsMobile()){
+                    $this->redirect('/netwrk/chat/chat-post?post='.$city['post_id'].'&chat_type=1&previous-flag=1');
+                } else {
+                    $data = array('status' => 1,'data'=>Yii::$app->user->id,'post_id'=>$city['post_id']);
+                }
+            }else{
+                $data = array('status' => 0,'data'=>$form);
+            }
+
+            $hash = json_encode($data);
+            return $hash;
+        }
+
+        // Set cookie so cover page checking will exclude
+        $c = Yii::$app->response->cookies;
+
+        $cookie = new Cookie(['name'=>'nw_zipCode', 'value'=> $city['zip_code'], 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_city', 'value'=> $city['city_name'], 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_lat', 'value'=> $city['lat'], 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_lng', 'value'=> $city['lng'], 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_state', 'value'=> $city['state'], 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_stateAbbr', 'value'=> $city['state_abbreviation'], 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+        $cookie = new Cookie(['name'=>'isAccepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+
+        // render
+        if($this->getIsMobile()){
+            if($success){
+                return $this->redirect(['user/login']);
+            }else{
+                return $this->render('mobile/signup', [
+                    'user'    => $user,
+                    'profile' => $profile,
+                    'scenario' => 'join'
+                ]);
+            }
+        }else{
+            $session['key_user_invitation']= $key;
             return $this->goHome();
         }
     }

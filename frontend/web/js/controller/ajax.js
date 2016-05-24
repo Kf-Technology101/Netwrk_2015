@@ -98,6 +98,23 @@ var Ajax ={
         return defer.promise();
     },
 
+    user_join: function(form, key){
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/user/join?key="+key;
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     user_login: function(form){
         var url,defer = $.Deferred();
         url = baseUrl + "/netwrk/user/login-user";
