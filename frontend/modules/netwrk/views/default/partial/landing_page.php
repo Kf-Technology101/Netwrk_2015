@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="header">
-					<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo.png'); ?>"></a>
+					<!--<a href="javascript:void(0)"><img src="<?/*= Url::to('@web/img/icon/netwrk-logo.png'); */?>"></a>-->
 					<div class="title text-center" id="headerButtonWrapper">
 						<div class="btn-area-talk">Area Talk</div>
 						<p class="main-header hidden">Welcome, click explore to follow communities</p>
