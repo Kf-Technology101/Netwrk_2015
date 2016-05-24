@@ -31,6 +31,11 @@ class UserKey extends \yii\db\ActiveRecord
      * @var int Key for password resets
      */
     const TYPE_PASSWORD_RESET = 3;
+
+    /**
+     * @var int Key for user invitation to join
+     */
+    const TYPE_USER_INVITATION = 4;
     /**
      * @inheritdoc
      */

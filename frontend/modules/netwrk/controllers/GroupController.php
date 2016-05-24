@@ -8,6 +8,7 @@ use frontend\modules\netwrk\models\Role;
 use frontend\modules\netwrk\models\UserGroup;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\UserInvitation;
+use frontend\modules\netwrk\models\UserKey;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\Post;
@@ -15,6 +16,39 @@ use yii\base\Exception;
 use Yii;
 
 class GroupController extends BaseController {
+    public function sendUserInviteEmail($user)
+    {
+        /** @var Mailer $mailer */
+        /** @var Message $message */
+        /** @var \amnah\yii2\user\models\UserKey $userKey */
+
+        // create userKey
+        $userKey    = new UserKey();
+        $userKey    = $userKey::generate($user->id, $userKey::TYPE_USER_INVITATION, '');
+
+        // modify view path to module views
+        $mailer           = Yii::$app->mailer;
+        $oldViewPath      = $mailer->viewPath;
+        $mailer->viewPath = Yii::$app->getModule("netwrk")->emailViewPath;
+
+        // send email
+        $subject = "Your buddy is looking to party";
+        $message  = $mailer->compose('userInvitation', compact("subject", "user", "userKey"))
+            ->setTo($user->email)
+            ->setSubject($subject);
+
+        // check for messageConfig before sending (for backwards-compatible purposes)
+        if (empty($mailer->messageConfig["from"])) {
+            $message->setFrom(Yii::$app->params["adminEmail"]);
+        }
+        $result = $message->send();
+
+        // restore view path and return result
+        $mailer->viewPath = $oldViewPath;
+
+        return $result;
+    }
+
     public function actionCreateEditGroup() {
 
         $transaction = Yii::$app->db->beginTransaction();
@@ -96,6 +130,8 @@ class GroupController extends BaseController {
                         $invitation->user_from = $currentUserId;
                         $invitation->invitation_code = Yii::$app->security->generateRandomString();
                         $invitation->save();
+
+                        $this->sendUserInviteEmail($user);
 
                         $status = UserGroup::STATUS_INVITED;
                     } else {

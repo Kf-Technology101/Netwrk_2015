@@ -70,6 +70,8 @@ var Default ={
             if (isCoverPageVisited) {
                 if(isResetPassword){
                     ResetPass.initialize();
+                }else if(isUserInvitation){
+                    Signup.initialize('join');
                 }else{
                     LandingPage.initialize();
                 }

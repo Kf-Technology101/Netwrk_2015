@@ -3,6 +3,7 @@
 namespace frontend\modules\netwrk\models;
 
 use Yii;
+use yii\db\Query;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 use frontend\modules\netwrk\models\WsMessages;
@@ -81,5 +82,20 @@ class Group extends \yii\db\ActiveRecord
                 ],
             ],
         ];
+    }
+
+    public function GetInvitedGroupIdByUser($user_id) {
+        $query = new Query();
+
+        if($user_id != null) {
+            $data = $query ->select('g.group_id as group_id')
+                ->from('user_group g')
+                ->where("g.user_id = ".$user_id)
+                ->one();
+
+            return $data['group_id'];
+        }
+
+        return false;
     }
 }
