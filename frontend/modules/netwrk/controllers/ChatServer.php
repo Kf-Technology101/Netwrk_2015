@@ -11,9 +11,11 @@ use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\ChatPrivate;
 use frontend\modules\netwrk\models\Notification;
 use frontend\modules\netwrk\models\UserMeet;
+use frontend\modules\netwrk\models\ChatDiscussion;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use Yii;
+use yii\db\Query;
 
 class ChatServer extends BaseController implements MessageComponentInterface {
 
@@ -94,6 +96,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					$this->ws_messages->post->comment_count ++;
 					$this->ws_messages->post->chat_updated_time = date('Y-m-d H:i:s');
 					$this->ws_messages->post->update();
+					//if user is first time put chat on post then insert this entry into chat_discussion
+					//So user will be considered as member of that chat post
+					$this->insertDiscussionParticipant($user, $this->ws_messages->post_id);
 					$list_chat_inbox = $this->updateListChatBox($user);
 				} else {
 					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id . ' AND user_id = ' .$user)->one();
@@ -117,7 +122,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'post_id'=> $room,
 														// "user_current" => $userProfile->current,
 														"update_list_chat" => $list_chat_inbox,
-														"chat_type" => $this->chat_type
+														"chat_type" => $this->chat_type,
+														"test" => 'This is for test'
 														)
 													]);
 				}
@@ -129,7 +135,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$fetch = $this->fetchMessages();
 				// var_dump($fetch);die;
 				$this->send($from, "fetch", $this->fetchMessages());
-			}elseif($type == "notify"){
+			}
+			elseif($type == "notify"){
 				$sender = $data['data']['sender'];
 				$receiver = $data['data']['receiver'];
 				$room = $data['data']['room'];
@@ -155,6 +162,29 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			}
 		}
 		$this->checkOnliners($from);
+	}
+
+	public function insertDiscussionParticipant($userId, $postId)
+	{
+		//if first time user put chat on post then insert record, if already he is participant then not need to insert record.
+		//Check does user is already participant
+		$query = new Query();
+		$data = $query->select('chat_discussion.*')
+			->from('chat_discussion')
+			->where(['chat_discussion.user_id' => $userId, 'chat_discussion.post_id' => $postId])
+			->orderBy('chat_discussion.created_at DESC')
+			->limit(1)
+			->all();
+
+		if(empty($data)) {
+			$chatDiscussion = new ChatDiscussion();
+			$chatDiscussion->post_id = $postId;
+			$chatDiscussion->user_id = $userId;
+			$chatDiscussion->notification_count = 1;
+			$chatDiscussion->created_at = date('Y-m-d H:i:s');
+			$chatDiscussion->save();
+		}
+		return true;
 	}
 
 	public function onClose(ConnectionInterface $conn)
