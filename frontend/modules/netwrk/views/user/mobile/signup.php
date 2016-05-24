@@ -11,7 +11,9 @@
         <p>Sign up</p>
     </div>
 
-    <?php $form = ActiveForm::begin([
+    <?php
+        $scenario = (isset($scenario)) ? $scenario : 'register';
+        $form = ActiveForm::begin([
         'id' => 'register-form',
         'options' => ['class' => 'form-register form-horizontal',
         'autocomplete'=> 'off'],
@@ -28,12 +30,16 @@
         <div class="col-field-name">
             <?= $form->field($profile, 'last_name')->textInput(array('placeholder' => 'Last name')); ?>
         </div>
-        <div class="col-field-name">
-            <?= $form->field($user, 'username')->textInput(array('placeholder' => 'Username')) ?>
-        </div>
-        <div class="col-field-name">
-            <?= $form->field($user,'email')->textInput(array('placeholder' => 'Email')); ?>
-        </div>
+
+        <?php if($scenario == 'register') : ?>
+            <div class="col-field-name">
+                <?= $form->field($user, 'username')->textInput(array('placeholder' => 'Username')) ?>
+            </div>
+            <div class="col-field-name">
+                <?= $form->field($user,'email')->textInput(array('placeholder' => 'Email')); ?>
+            </div>
+        <?php endif; ?>
+
         <div class="col-field-name">
             <!-- <input type="password" class="password form-control" maxlength="128" placeholder="Password"> -->
             <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'Password')); ?>

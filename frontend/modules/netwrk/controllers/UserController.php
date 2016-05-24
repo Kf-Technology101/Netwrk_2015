@@ -398,7 +398,11 @@ class UserController extends BaseController
                 $ws_messages->post_type = 1;
                 $ws_messages->save(false);
 
-                $data = array('status' => 1,'data'=>Yii::$app->user->id,'post_id'=>$city['post_id']);
+                if($this->getIsMobile()){
+                    $this->redirect('/netwrk/chat/chat-post?post='.$city['post_id'].'&chat_type=1&previous-flag=1');
+                } else {
+                    $data = array('status' => 1,'data'=>Yii::$app->user->id,'post_id'=>$city['post_id']);
+                }
             }else{
                 $data = array('status' => 0,'data'=>$form);
             }
@@ -432,7 +436,11 @@ class UserController extends BaseController
             if($success){
                 return $this->redirect(['user/login']);
             }else{
-                //return $this->render($this->getIsMobile() ? 'mobile/reset_password' : $this->goHome(),compact("user", "success"));
+                return $this->render('mobile/signup', [
+                    'user'    => $user,
+                    'profile' => $profile,
+                    'scenario' => 'join'
+                ]);
             }
         }else{
             $session['key_user_invitation']= $key;
