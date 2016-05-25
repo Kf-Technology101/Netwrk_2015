@@ -160,6 +160,20 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						$this->send($client, "notify", $concept);
 				}
 			}
+			elseif($type == "discussion"){
+					$sender = $data['data']['sender'];
+					$receiver = $data['data']['receiver'];
+					$room = $data['data']['room'];
+					$message = $data['data']['message'];
+					if($receiver != -1 && $room == -1){
+
+					}
+					foreach ($this->clients as $client) {
+						$data = $this->discussion($sender, $room, $message);
+						if($data != 0)
+							$this->send($client, "discussion", $data);
+					}
+				}
 		}
 		$this->checkOnliners($from);
 	}
@@ -184,6 +198,16 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 			$chatDiscussion->created_at = date('Y-m-d H:i:s');
 			$chatDiscussion->save();
 		}
+
+		//update notification count to 1 for those participant whose have currently notification count 0
+		//Notify particapant about new activity happen on discussion
+		$data = ChatDiscussion::find()->where(['post_id'=>$postId, 'notification_count' => 0])->all();
+		for ($i=0; $i < count($data); $i++) {
+			$notify = ChatDiscussion::findOne($data[$i]->id);
+			$notify->notification_count = 1;
+			$notify->update();
+		}
+
 		return true;
 	}
 
@@ -510,6 +534,36 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1);
 			}
 		}
+		if(count($notify) > 0)
+			return $notify;
+		else
+			return 0;
+	}
+
+	public function discussion($sender, $room, $message)
+	{
+		$_receivers = [];
+		$notification_count = 1;
+
+		//todo: convert where condition on array level
+		//fetch and notify those particapant who have not seen chat discussion notification yet. Means notification count > 0
+		$query = new Query();
+		$chatDiscussions = $query->select('chat_discussion.id, chat_discussion.post_id, chat_discussion.user_id, chat_discussion.notification_count')
+			->from('chat_discussion')
+			->where([
+				'chat_discussion.post_id' => $room
+			])
+			->andWhere(['>', 'chat_discussion.notification_count', 0])
+			->all();
+
+		if(isset($chatDiscussions) && !empty($chatDiscussions)) {
+			foreach($chatDiscussions as $key => $chatDiscussion) {
+				$_receivers[] = $chatDiscussion['user_id'];
+			}
+		}
+
+		$notify = array('sender'=>$sender, 'receivers' => $_receivers, 'message'=>$message, 'notification_count'=>$notification_count, 'room'=>$room);
+
 		if(count($notify) > 0)
 			return $notify;
 		else

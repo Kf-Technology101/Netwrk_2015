@@ -363,6 +363,7 @@ var PopupChat = {
         });
         btn.unbind();
         btn.on("click", function(e){
+            console.log('in OnWsChat');
             PopupChat.OnWsSendData(e.currentTarget);
         });
     },
@@ -376,6 +377,12 @@ var PopupChat = {
             window.ws.send("send", {"type": 1, "msg": val,"room": PopupChat.params.post,"user_id": UserLogin, 'chat_type': PopupChat.params.chat_type});
             if (PopupChat.params.chat_type == 0) {
                 window.ws.send("notify", {"sender": UserLogin, "receiver": -1,"room": PopupChat.params.post, "message": val});
+            }
+            if (PopupChat.params.chat_type == 1) {
+                console.log('in chat_type 1');
+                console.log(PopupChat.params.post);
+                window.ws.send("discussion", {"sender": UserLogin, "receiver": -1,"room": PopupChat.params.post, "message": val, "chat_type": PopupChat.params.chat_type});
+
             }
             parent.find("textarea").val("");
             parent.find("textarea").focus();

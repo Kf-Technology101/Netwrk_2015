@@ -1,6 +1,7 @@
 <?php
 namespace frontend\modules\netwrk\controllers;
 
+use frontend\modules\netwrk\models\ChatDiscussion;
 use Yii;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Notification;
@@ -55,6 +56,23 @@ class NotifyController extends BaseController
             $notify = Notification::findOne($data[$i]->id);
             $notify->status = 1;
             $notify->update();
+        }
+    }
+
+    /**
+     * Reset count unread chat message from user
+     */
+    public function actionChangeStatusUnreadDiscussionMsg(){
+        $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : '';
+        $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
+
+        if($user_id && $post_id) {
+            $data = ChatDiscussion::find()->where(['user_id'=>$user_id, 'post_id'=>$post_id, 'notification_count' => 1])->all();
+            for ($i=0; $i < count($data); $i++) {
+                $notify = ChatDiscussion::findOne($data[$i]->id);
+                $notify->notification_count = 0;
+                $notify->update();
+            }
         }
     }
 }
