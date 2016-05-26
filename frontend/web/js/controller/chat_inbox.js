@@ -201,6 +201,8 @@ var ChatInbox = {
 				PopupChat.initialize();
 				Default.displayPopupOnTop();
 				PopupChat.MoveMeetButton();
+				ChatInbox.ChangeStatusUnreadDiscussionMsg(item_post);
+				Default.ShowNotificationOnChat();
 			}
 		});
 	},
@@ -321,6 +323,7 @@ var ChatInbox = {
 	},
 
 	GetDataListChatPrivate: function() {
+		console.log('in GetDataListChatPrivate');
 		var parent = $(ChatInbox.chat_inbox).find('#chat_private ul');
 		$.ajax({
 			url: baseUrl + "/netwrk/chat-private/get-chat-private-list",
@@ -471,6 +474,15 @@ var ChatInbox = {
 			notify.html(0);
 			notify.addClass('disable');
 		});
+	},
+	ChangeStatusUnreadDiscussionMsg: function(post_id){
+		if(UserLogin) {
+			Ajax.update_discussion_notification_status(UserLogin, post_id).then(function(data){
+				var notify = $(ChatInbox.modal).find('#chat_discussion li .chat-post-id[data-post='+ post_id +'] .notify-chat-inbox');
+				notify.html(0);
+				notify.addClass('disable');
+			});
+		}
 	},
 
 	// Change width height map, position meet button when user open chat on post

@@ -11,9 +11,11 @@ use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\ChatPrivate;
 use frontend\modules\netwrk\models\Notification;
 use frontend\modules\netwrk\models\UserMeet;
+use frontend\modules\netwrk\models\ChatDiscussion;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use Yii;
+use yii\db\Query;
 
 class ChatServer extends BaseController implements MessageComponentInterface {
 
@@ -94,6 +96,9 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					$this->ws_messages->post->comment_count ++;
 					$this->ws_messages->post->chat_updated_time = date('Y-m-d H:i:s');
 					$this->ws_messages->post->update();
+					//if user is first time put chat on post then insert this entry into chat_discussion
+					//So user will be considered as member of that chat post
+					$this->insertDiscussionParticipant($user, $this->ws_messages->post_id);
 					$list_chat_inbox = $this->updateListChatBox($user);
 				} else {
 					$chat_private = ChatPrivate::find()->where('post_id = '.$this->ws_messages->post_id . ' AND user_id = ' .$user)->one();
@@ -117,7 +122,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'post_id'=> $room,
 														// "user_current" => $userProfile->current,
 														"update_list_chat" => $list_chat_inbox,
-														"chat_type" => $this->chat_type
+														"chat_type" => $this->chat_type,
+														"test" => 'This is for test'
 														)
 													]);
 				}
@@ -129,7 +135,8 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$fetch = $this->fetchMessages();
 				// var_dump($fetch);die;
 				$this->send($from, "fetch", $this->fetchMessages());
-			}elseif($type == "notify"){
+			}
+			elseif($type == "notify"){
 				$sender = $data['data']['sender'];
 				$receiver = $data['data']['receiver'];
 				$room = $data['data']['room'];
@@ -153,8 +160,54 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						$this->send($client, "notify", $concept);
 				}
 			}
+			//discussion event triggers when any new chat happen on Chat discussion
+			elseif($type == "discussion"){
+				$sender = $data['data']['sender'];
+				$receiver = $data['data']['receiver'];
+				$room = $data['data']['room'];
+				$message = $data['data']['message'];
+
+				foreach ($this->clients as $client) {
+					$data = $this->discussion($sender, $room, $message);
+					if($data != 0)
+						$this->send($client, "discussion", $data);
+				}
+			}
 		}
 		$this->checkOnliners($from);
+	}
+
+	public function insertDiscussionParticipant($userId, $postId)
+	{
+		//if first time user put chat on post then insert record, if already he is participant then not need to insert record.
+		//Check does user is already participant
+		$query = new Query();
+		$data = $query->select('chat_discussion.*')
+			->from('chat_discussion')
+			->where(['chat_discussion.user_id' => $userId, 'chat_discussion.post_id' => $postId])
+			->orderBy('chat_discussion.created_at DESC')
+			->limit(1)
+			->all();
+
+		if(empty($data)) {
+			$chatDiscussion = new ChatDiscussion();
+			$chatDiscussion->post_id = $postId;
+			$chatDiscussion->user_id = $userId;
+			$chatDiscussion->notification_count = 1;
+			$chatDiscussion->created_at = date('Y-m-d H:i:s');
+			$chatDiscussion->save();
+		}
+
+		//update notification count to 1 for those participant whose have currently notification count 0
+		//Notify particapant about new activity happen on discussion
+		$data = ChatDiscussion::find()->where(['post_id'=>$postId, 'notification_count' => 0])->all();
+		for ($i=0; $i < count($data); $i++) {
+			$notify = ChatDiscussion::findOne($data[$i]->id);
+			$notify->notification_count = 1;
+			$notify->update();
+		}
+
+		return true;
 	}
 
 	public function onClose(ConnectionInterface $conn)
@@ -480,6 +533,36 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$notify = array('sender'=>$sender, 'receiver'=>$_receiver, 'message'=>$msg, 'chat_count'=>$chat_count, 'msg_count'=>$msg_count, 'room'=>$_room->post_id, 'ismeet'=>1);
 			}
 		}
+		if(count($notify) > 0)
+			return $notify;
+		else
+			return 0;
+	}
+
+	public function discussion($sender, $room, $message)
+	{
+		$_receivers = [];
+		$notification_count = 1;
+
+		//todo: convert where condition on array level
+		//fetch and notify those particapant who have not seen chat discussion notification yet. Means notification count > 0
+		$query = new Query();
+		$chatDiscussions = $query->select('chat_discussion.id, chat_discussion.post_id, chat_discussion.user_id, chat_discussion.notification_count')
+			->from('chat_discussion')
+			->where([
+				'chat_discussion.post_id' => $room
+			])
+			->andWhere(['>', 'chat_discussion.notification_count', 0])
+			->all();
+
+		if(isset($chatDiscussions) && !empty($chatDiscussions)) {
+			foreach($chatDiscussions as $key => $chatDiscussion) {
+				$_receivers[] = $chatDiscussion['user_id'];
+			}
+		}
+
+		$notify = array('sender'=>$sender, 'receivers' => $_receivers, 'message'=>$message, 'notification_count'=>$notification_count, 'room'=>$room);
+
 		if(count($notify) > 0)
 			return $notify;
 		else

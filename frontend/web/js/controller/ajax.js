@@ -1051,6 +1051,21 @@ var Ajax ={
         });
         return defer.promise();
     },
+    update_discussion_notification_status: function(user_id, post_id){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/notify/change-status-unread-discussion-msg";
+
+        $.ajax({
+            url: url,
+            data: {'user_id': user_id, 'post_id': post_id},
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+        return defer.promise();
+    },
 
     change_chat_show_message: function(){
         var url,defer = $.Deferred();
