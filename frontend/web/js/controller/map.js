@@ -115,6 +115,18 @@
 				Map.mouseOutsideInfoWindow();
 				Map.showZipBoundaries();
 				Common.hideLoader();
+
+				if(isMobile) {
+					if (sessionStorage.show_blue_dot == 1) {
+						Map.smoothZoom(Map.map, 14, 10, true);
+						sessionStorage.show_blue_dot = 0;
+						if (isGuest) {
+							Map.getBrowserCurrentPosition(Map.map);
+						} else {
+							Map.getMyLocation(Map.map);
+						}
+					}
+				}
 			});
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
@@ -637,36 +649,58 @@
 		    var btn = $('#btn_my_location');
 		    btn.unbind();
 		    btn.on('click',function(){
-		      	if (isGuest) {
-			        navigator.geolocation.getCurrentPosition(function(position) {
-			        var pos = {
-			            lat: position.coords.latitude,
-			            lng: position.coords.longitude
-			        	};
-			            map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
-			            if(map.getZoom() < Map.markerZoom) {
-			            	map.setZoom(Map.markerZoom);
-			        	}else{
-			        		map.setZoom(18);
-			        	}
-			        });
-		      	} else {
-			        var zoom_current = map.getZoom();
-			        if (zoom_current < Map.markerZoom) {
-				        Map.smoothZoom(map, Map.markerZoom, zoom_current, true);
-				        map.zoom = Map.markerZoom;
-			        }else{
-			        	Map.smoothZoom(map, 18, zoom_current, true);
-				        map.zoom = 18;
-			        }
-
-			        Ajax.get_position_user().then(function(data){
-				        var json = $.parseJSON(data);
-				        map.setCenter(new google.maps.LatLng(json.lat, json.lng));
-			        });
-		      	}
+				if(isMobile){
+					if(window.location.href != baseUrl + "/netwrk/default/home"){
+						sessionStorage.show_blue_dot = 1;
+						sessionStorage.show_landing = 1;
+						window.location.href = baseUrl + "/netwrk/default/home";
+					} else {
+						if (isGuest) {
+							Map.getBrowserCurrentPosition(map);
+						} else {
+							Map.getMyLocation(map);
+						}
+					}
+				} else {
+					if (isGuest) {
+						Map.getBrowserCurrentPosition(map);
+					} else {
+						Map.getMyLocation(map);
+					}
+				}
 		    });
 	  	},
+
+		getBrowserCurrentPosition: function(map) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+				};
+				map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
+				if(map.getZoom() < Map.markerZoom) {
+					map.setZoom(Map.markerZoom);
+				}else{
+					map.setZoom(18);
+				}
+			});
+		},
+
+		getMyLocation: function(map){
+			var zoom_current = map.getZoom();
+			if (zoom_current < Map.markerZoom) {
+				Map.smoothZoom(map, Map.markerZoom, zoom_current, true);
+				map.zoom = Map.markerZoom;
+			}else{
+				Map.smoothZoom(map, 18, zoom_current, true);
+				map.zoom = 18;
+			}
+
+			Ajax.get_position_user().then(function(data){
+				var json = $.parseJSON(data);
+				map.setCenter(new google.maps.LatLng(json.lat, json.lng));
+			});
+		},
 
 		findCurrentZip: function(lat, lng) {
 			$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
