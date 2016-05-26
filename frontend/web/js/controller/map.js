@@ -768,6 +768,36 @@
 						$("#cm-zip span").eq(0).html(zip);
 						Map.blueDotLocation.zipcode = zip;
 						$('#create-location-group').attr('data-zipcode', zip);
+
+						if(zip != zipCode) {
+							// Get boundaries data from zip
+							var params = {'zip_code' : zip};
+							Ajax.getSingleZipBoundaries(params).then(function(jsonData){
+								// Remove shaded area of blue dots previous location
+								Map.map.data.forEach(function(feature) {
+									if(feature.H.type != 'selected' && feature.H.type != 'Followed'){
+										Map.map.data.remove(feature);
+									}
+								});
+
+								var out = $.parseJSON(jsonData);
+
+								for (var key in out) {
+									if (out.hasOwnProperty(key)) {
+										// Add map data
+										Map.map.data.addGeoJson(out[key]);
+
+										// Style map data
+										Map.map.data.setStyle({
+											fillColor: '#5888ac',
+											fillOpacity: Map.fillOpacity,
+											strokeColor: '#5888ac',
+											strokeWeight: 2
+										});
+									}
+								}
+							});
+						}
 					}
 				}
 			});

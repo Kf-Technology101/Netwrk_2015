@@ -1429,6 +1429,24 @@ var Ajax ={
         return defer.promise();
     },
 
+    getSingleZipBoundaries: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/get-single-zip-boundaries";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     getZipWeatherData: function(params) {
         var url,defer = $.Deferred();
         url = baseUrl +"/netwrk/api/get-zip-weather-data";

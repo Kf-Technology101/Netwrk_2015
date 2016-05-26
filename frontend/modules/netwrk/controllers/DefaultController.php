@@ -1103,6 +1103,29 @@ class DefaultController extends BaseController
         die(json_encode($return));
     }
 
+    public function actionGetSingleZipBoundaries($zip_code)
+    {
+        $return = [];
+
+        $returnData = $this->actionGetBoundariesFromData($zip_code,'blue-dot');
+
+        // If features section is not null then only add to return array
+        if(property_exists($returnData, 'features')) {
+            if(sizeof($returnData->features) != 0)
+                array_push($return, $returnData);
+        } else {
+            $data = $this->actionGetZipBoundariesFromCurl($zip_code);
+            $returnData = $this->actionFormatBoundariesData($data,'blue-dot');
+
+            if(property_exists($returnData, 'features')) {
+                if(sizeof($returnData->features) != 0)
+                    array_push($return, $returnData);
+            }
+        }
+
+        die(json_encode($return));
+    }
+
     public function actionFormatBoundariesData($data, $type){
         $cookies = Yii::$app->request->cookies;
 
