@@ -763,6 +763,36 @@
 						$("#cm-zip span").eq(0).html(zip);
 						Map.blueDotLocation.zipcode = zip;
 						$('#create-location-group').attr('data-zipcode', zip);
+
+						if(zip != zipCode) {
+							// Get boundaries data from zip
+							var params = {'zip_code' : zip};
+							Ajax.getSingleZipBoundaries(params).then(function(jsonData){
+								// Remove shaded area of blue dots previous location
+								Map.map.data.forEach(function(feature) {
+									if(feature.H.type != 'selected' && feature.H.type != 'Followed'){
+										Map.map.data.remove(feature);
+									}
+								});
+
+								var out = $.parseJSON(jsonData);
+
+								for (var key in out) {
+									if (out.hasOwnProperty(key)) {
+										// Add map data
+										Map.map.data.addGeoJson(out[key]);
+
+										// Style map data
+										Map.map.data.setStyle({
+											fillColor: '#5888ac',
+											fillOpacity: Map.fillOpacity,
+											strokeColor: '#5888ac',
+											strokeWeight: 2
+										});
+									}
+								}
+							});
+						}
 					}
 				}
 			});
@@ -897,7 +927,7 @@
 				google.maps.event.clearListeners(Map.center_marker, 'mouseover');
 				google.maps.event.addListener(Map.center_marker, 'mouseover', function() {
 					// infowindow.setContent(e[0]);
-					Map.findCurrentZip(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng());
+					// Map.findCurrentZip(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng());
 					blueDotInfoWindow.open(map, this);
 					var lat = parseFloat(Map.center_marker.getPosition().lat());
 					var lng = parseFloat(Map.center_marker.getPosition().lng());
