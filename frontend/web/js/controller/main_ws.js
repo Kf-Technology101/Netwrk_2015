@@ -45,6 +45,8 @@ var MainWs ={
                     break;
                     case 'notify':
                         _self.events.notify(msg);
+                    case 'discussion':
+                        _self.events.discussion(msg);
                     break;
                 }
             }
@@ -144,12 +146,14 @@ var MainWs ={
                             var pchat = $('#popup-chat-' + e.data.room);
                             // if popup chat is opened
                             if (pchat.length != 0 && pchat.css('display') == 'block' && PopupChat.params.post == e.data.room) {
+                                console.log('in user is online');
                                 Ajax.update_notification_status(e.data.sender);
                                 var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user');
                                 notify.find('.description-chat-inbox').html(e.data.message);
                                 notify.find('.description-chat-inbox').removeClass('match-description');
                                 notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
                             } else {
+                                console.log('in user is offline');
                                 // if popup chat is closed
                                 var notify = $('.chat-post-id[data-user='+e.data.sender+']').find('.title-description-user'),
                                     chat_notify = $('#chat_inbox_btn').find('.notify');
@@ -181,6 +185,41 @@ var MainWs ={
                             chat_notify.removeClass('disable');
                         }
                     }, 400);
+                }
+            }
+        },
+        discussion: function(e){
+            console.log(e.data);
+            if (e != null) {
+                //if logged in user is participant of discussion then show notification
+                console.log('UserLogin=>'+UserLogin);
+                if ((jQuery.inArray(UserLogin, e.data.receivers) !== -1)) { // if receiver is current user, display notification
+                    if (isMobile) {                               // if mobile
+
+                    } else {
+                        var pchat = $('#popup-chat-' + e.data.room);
+                        // if popup chat is opened
+                        if (pchat.length != 0 && pchat.css('display') == 'block' && PopupChat.params.post == e.data.room) {
+                            console.log('in discussion if user is online');
+                            Ajax.update_discussion_notification_status(UserLogin, e.data.room);
+                            var notify = $('.chat-post-id[data-post='+e.data.room+']').find('.title-description-user');
+                            notify.find('.description-chat-inbox').html(e.data.message);
+                            notify.find('.description-chat-inbox').removeClass('match-description');
+                            notify.parent().find('.time-chat-inbox').html(e.data.recent_time);
+                        } else {
+                            console.log('in discussion if user is offline');
+                            // if popup chat is closed
+                            var notify = $('.chat-post-id[data-post='+e.data.room+']').find('.title-description-user'),
+                                chat_notify = $('#chat_inbox_btn').find('.notify');
+                            if(e.data.notification_count > 0){
+                                notify.find('.description-chat-inbox').html(e.data.message);
+                                notify.find('.notify-chat-inbox').html(e.data.notification_count);
+                                notify.find('.notify-chat-inbox').removeClass('disable');
+                                chat_notify.html(e.data.notification_count);
+                                chat_notify.removeClass('disable');
+                            }
+                        }
+                    }
                 }
             }
         }
