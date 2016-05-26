@@ -128,6 +128,18 @@
 				Map.mouseOutsideInfoWindow();
 				Map.showZipBoundaries();
 				Common.hideLoader();
+
+				if(isMobile) {
+					if (sessionStorage.show_blue_dot == 1) {
+						Map.smoothZoom(Map.map, 14, 10, true);
+						sessionStorage.show_blue_dot = 0;
+						if (isGuest) {
+							Map.getBrowserCurrentPosition(Map.map);
+						} else {
+							Map.getMyLocation(Map.map);
+						}
+					}
+				}
 			});
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
@@ -705,13 +717,28 @@
 		    var btn = $('#btn_my_location');
 		    btn.unbind();
 		    btn.on('click',function(){
-		      	if (isGuest) {
-					Map.getBrowserCurrentPosition(map);
-		      	} else {
-			        Map.getMylocation(map);
-		      	}
+				if(isMobile){
+					if(window.location.href != baseUrl + "/netwrk/default/home"){
+						sessionStorage.show_blue_dot = 1;
+						sessionStorage.show_landing = 1;
+						window.location.href = baseUrl + "/netwrk/default/home";
+					} else {
+						if (isGuest) {
+							Map.getBrowserCurrentPosition(map);
+						} else {
+							Map.getMyLocation(map);
+						}
+					}
+				} else {
+					if (isGuest) {
+						Map.getBrowserCurrentPosition(map);
+					} else {
+						Map.getMyLocation(map);
+					}
+				}
 		    });
 	  	},
+
 		getBrowserCurrentPosition: function(map) {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				var pos = {
@@ -728,7 +755,8 @@
 				Map.requestBlueDotOnMap(pos.lat, pos.lng, map);
 			});
 		},
-		getMylocation: function(map){
+
+		getMyLocation: function(map){
 			Ajax.get_position_user().then(function(data){
 				var json = $.parseJSON(data),
 					lat = json.lat,

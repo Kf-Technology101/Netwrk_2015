@@ -11,6 +11,7 @@ var LandingPage = {
 			LandingPage.GetDataTopLanding();
 			LandingPage.SetUrl();
 			LandingPage.OnClickMeetLandingMobile();
+			Map.eventClickMyLocation(Map.map);
 			$('.navbar-fixed-bottom').hide();
 			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
