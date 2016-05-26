@@ -160,20 +160,19 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						$this->send($client, "notify", $concept);
 				}
 			}
+			//discussion event triggers when any new chat happen on Chat discussion
 			elseif($type == "discussion"){
-					$sender = $data['data']['sender'];
-					$receiver = $data['data']['receiver'];
-					$room = $data['data']['room'];
-					$message = $data['data']['message'];
-					if($receiver != -1 && $room == -1){
+				$sender = $data['data']['sender'];
+				$receiver = $data['data']['receiver'];
+				$room = $data['data']['room'];
+				$message = $data['data']['message'];
 
-					}
-					foreach ($this->clients as $client) {
-						$data = $this->discussion($sender, $room, $message);
-						if($data != 0)
-							$this->send($client, "discussion", $data);
-					}
+				foreach ($this->clients as $client) {
+					$data = $this->discussion($sender, $room, $message);
+					if($data != 0)
+						$this->send($client, "discussion", $data);
 				}
+			}
 		}
 		$this->checkOnliners($from);
 	}

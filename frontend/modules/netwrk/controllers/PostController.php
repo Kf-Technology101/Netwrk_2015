@@ -212,6 +212,7 @@ class PostController extends BaseController
         $data = [];
         $cookies = Yii::$app->request->cookies;
         $zipCode = $cookies->getValue('nw_zipCode');
+        $systemUserId = 1;
         $limit = 5;
 
         //if city is entered on cover page then zipcode is 0,
@@ -244,7 +245,7 @@ class PostController extends BaseController
             ->join('JOIN', 'post', 'post.topic_id = topic.id')
             ->join('JOIN', 'city', 'city.id = topic.city_id')
             ->where([
-                'topic.user_id' => 0,
+                'topic.user_id' => $systemUserId,
                 'topic.city_id' => $city_array,
                 ]
             )
@@ -297,41 +298,52 @@ class PostController extends BaseController
         $data = json_decode($this->actionGetLocalChatInbox(), true);
 
         if($currentUser) {
-            $messages = new WsMessages();
-            $messages = $messages->find()->select('post_id')->where('user_id = ' . $currentUser . ' AND post_type = 1')
-                ->distinct()
-                ->with('post')
-                ->all();
+            $query = new Query();
 
+            //fetch currents users joined post details(post with topic, city details) with chat discusstion count
+            //user join post means have a entry in ws_messages table for that post of current user.
+            $messages = $query->select('p.*, c.notification_count as notification_count, p.id as post_id, t.title as topic_title, t.city_id as city_id, city.name as city_name')
+                ->from('ws_messages w')
+                ->innerJoin('post p', '`p`.`id` = `w`.`post_id`')
+                ->innerJoin('topic t', '`t`.`id` = `p`.`topic_id`')
+                ->innerJoin('city', '`city`.`id` = `t`.`city_id`')
+                ->leftJoin('chat_discussion c', '(c.user_id = :currentUser AND c.post_id = w.post_id )')
+                ->addParams([':currentUser' => $currentUser])
+                ->where('w.user_id = ' . $currentUser . ' AND w.post_type = 1')
+                ->distinct()
+                ->all();
+            //print $messages->createCommand()->getRawSql();
+            //die();
             if ($messages) {
 
                 foreach ($messages as $key => $message) {
-                    $user_photo = User::findOne($message->post->user_id)->profile->photo;
+                    $user_photo = User::findOne($message['user_id'])->profile->photo;
                     if ($user_photo == null) {
                         $image = 'img/icon/no_avatar.jpg';
                     } else {
-                        $image = 'uploads/' . $message->post->user_id . '/' . $user_photo;
+                        $image = 'uploads/' . $message['user_id']. '/' . $user_photo;
                     }
 
-                    $currentVote = Vote::find()->where('user_id= ' . $currentUser . ' AND post_id= ' . $message->post->id)->one();
-                    $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
-                    $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                    $num_date = UtilitiesFunc::FormatTimeChat($message->post->created_at);
+                    $currentVote = Vote::find()->where('user_id= ' . $currentUser . ' AND post_id= ' . $message['post_id'])->one();
+                    $num_comment = UtilitiesFunc::ChangeFormatNumber($message['comment_count'] ? $message['comment_count'] + 1 : 1);
+                    $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message['brilliant_count'] ? $message['brilliant_count'] : 0);
+                    $num_date = UtilitiesFunc::FormatTimeChat($message['created_at']);
                     $item = [
-                        'id' => $message->post->id,
-                        'post_title' => $message->post->title,
-                        'post_content' => $message->post->content,
-                        'topic_id' => $message->post->topic_id,
-                        'topic_name' => $message->post->topic->title,
-                        'city_id' => $message->post->topic->city_id,
-                        'city_name' => $message->post->topic->city->name,
-                        'title' => $message->post->title,
-                        'content' => $message->post->content,
+                        'id' => $message['post_id'],
+                        'post_title' => $message['title'],
+                        'post_content' => $message['content'],
+                        'topic_id' => $message['topic_id'],
+                        'topic_name' => $message['topic_title'],
+                        'city_id' => $message['city_id'],
+                        'city_name' => $message['city_name'],
+                        'title' => $message['title'],
+                        'content' => $message['content'],
                         'num_comment' => $num_comment ? $num_comment : 0,
                         'num_brilliant' => $num_brilliant ? $num_brilliant : 0,
                         'avatar' => $image,
                         'update_at' => $num_date,
-                        'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
+                        'real_update_at' => $message['chat_updated_time'] ? $message['chat_updated_time'] : $message['created_at'],
+                        'discussion_notification_count' => $message['notification_count']
                     ];
                     array_push($data, $item);
                 }

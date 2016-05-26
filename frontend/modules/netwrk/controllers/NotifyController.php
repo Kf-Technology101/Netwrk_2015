@@ -16,6 +16,13 @@ class NotifyController extends BaseController
     public function actionCountUnreadMessage(){
         $currentUser = Yii::$app->user->id;
         $data = Notification::find()->select('sender')->where(['receiver'=>$currentUser, 'status'=>0])->distinct()->count();
+
+        //add discussion notification count in private notification count
+        $discussion_count = ChatDiscussion::find()->select('user_id')->where(['>', 'notification_count', 0])
+            ->andWhere(['user_id' => $currentUser])->count();
+
+        $data = intval($data) + intval($discussion_count);
+
         $hash = json_encode($data);
         return $hash;
     }
