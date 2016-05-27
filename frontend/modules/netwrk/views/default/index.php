@@ -6,7 +6,7 @@
 <div class="map_content noselect">
   <div class="box-navigation text-right">
     <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
-      <button id="btn_nav_map" type="button" class="btn btn-default btn_nav_map">
+      <button id="" type="button" class="btn btn-default btn_nav_map_location">
         <i class="navigation-icon fa fa-globe"></i>
         <span class="navigation-text">Map</span>
       </button>

@@ -4,6 +4,7 @@ var Default ={
         if(isMobile){
             self._eventClickMeetBtnMobile();
             self._eventClickChatInboxBtnMobile();
+            Default.show_blue_dot();
 
             if (sessionStorage.is_topic_marker_in_map_center == 1) {
                 Map.showTopicMarker(sessionStorage.topic_lat, sessionStorage.topic_lng, sessionStorage.topic_city_id);
@@ -254,5 +255,53 @@ var Default ={
                 landingModal.modal('show');
             }
         });
-    }
+    },
+    show_blue_dot: function() {
+        if (isMobile) {
+            var action = $('.wrap-mobile').attr('data-action');
+            if(action == 'home') {
+                sessionStorage.show_blue_dot = 0;
+                console.log(Map.map.getZoom()+'in show blue dot and its home page'+sessionStorage.show_blue_dot);
+
+                if (isGuest) {
+                    Map.getBrowserCurrentPosition(Map.map);
+                } else {
+                    Default.getMylocation(Map.map);
+                }
+
+            }
+        }
+    },
+    /**
+     * Show blue dot on zoom12 on mobile
+     * @param map
+     */
+    getMylocation: function(map){
+        console.log('in default getMylocation');
+        Ajax.get_position_user().then(function(data){
+            var json = $.parseJSON(data),
+                lat = json.lat,
+                lng = json.lng;
+
+            if (lat != null || lng != null ) {
+                if(lat == 0 && lng == 0) {
+                    Map.getBrowserCurrentPosition(map);
+                } else {
+                    var zoom_current = map.getZoom();
+                    if (zoom_current < Map.blueDotLocation.zoom12) {
+                        Map.smoothZoom(map, Map.blueDotLocation.zoom12, zoom_current, true);
+                        map.zoom = Map.blueDotLocation.zoom12;
+                    }else{
+                        Map.smoothZoom(map, 12, zoom_current, false);
+                        map.zoom = 12;
+                    }
+                    map.setCenter(new google.maps.LatLng(lat, lng));
+
+                    Map.requestBlueDotOnMap(lat, lng, map);
+                }
+            } else {
+                Map.getBrowserCurrentPosition(map);
+            }
+        });
+    },
 };
