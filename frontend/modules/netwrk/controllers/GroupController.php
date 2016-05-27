@@ -30,7 +30,7 @@ class GroupController extends BaseController {
             }
 
             if (!empty($_POST['emails'])) {
-                $emails = array_unique($_POST['emails']);
+                $emails = array_map('strtolower', array_unique($_POST['emails']));
                 foreach ($emails as $email) {
                     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         throw new Exception("Invalid email(s)");
