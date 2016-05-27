@@ -236,7 +236,8 @@
             ws.onopen = function(event) {
                 clearTimeout(timeout);
                 if (self.dialog) {
-                    self.dialog.modal('hide');
+                    Common.hideLoader();
+                    /*self.dialog.modal('hide');*/
                     self.dialog = false;
                 }
                 if (self.debug || ReconnectingWebSocket.debugAll) {
@@ -262,11 +263,13 @@
                     var e = generateEvent('connecting');
 
                     if (!self.dialog) {
-                        self.dialog = bootbox.dialog({
+                        /*self.dialog = bootbox.dialog({
                           message: '<i class="fa fa-refresh fa-spin"></i> You were disconnected from Chat Server. Waiting to reconnect...',
                           closeButton: false,
                           className: 'loader'
-                        });
+                        });*/
+                        Common.initLoader();
+                        self.dialog = true;
                     }
 
                     e.code = event.code;

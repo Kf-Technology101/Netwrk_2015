@@ -181,6 +181,7 @@ class UserController extends BaseController
 
         // load post data
         $post = Yii::$app->request->post();
+        $post['User']['email'] = strtolower($post['User']['email']);
         if ($user->load($post) && $profile->load($post)) {
             // ensure profile data gets loaded
             // validate for ajax request

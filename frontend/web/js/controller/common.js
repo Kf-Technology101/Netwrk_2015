@@ -5,6 +5,7 @@ var Common = {
     contexts : {
         'boxNavigation': '.box-navigation',
         'btnExplore': '.btn-explore',
+        'btnExploreLocation': '.btn-explore-location',
         'chatInboxNavBtnMobile': '#chat_inbox_nav_btn_mobile',
         'btnNavMeetMobile' : '#btn_nav_meet_mobile',
         'loginTrigger' : '.login-trigger'
@@ -14,15 +15,15 @@ var Common = {
     },
     initialize: function() {
         Common.onWindowUnload();
-        Common.eventClickExplore();
+        Common.eventClickExploreLocation();
         //init the nav chat inbox for mobile
         Common.eventClickChatInboxBtnMobile();
         //init nav meet btn on mobile
         Common.eventClickMeetBtnMobile();
         //init nav login btn. open login modal box on desktop
         Common.eventLoginTrigger();
-
         Common._eventClickProfileNavMenu();
+        Common.onClickMapButton();
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
@@ -32,6 +33,17 @@ var Common = {
         target.on('click',function(e){
             if(isMobile){
                 sessionStorage.show_landing = 1;
+                window.location.href = baseUrl + "/netwrk/default/home";
+            }
+        });
+    },
+    eventClickExploreLocation: function(){
+        var target = $(Common.contexts.btnExploreLocation, Common.contexts.boxNavigation);
+        target.unbind();
+        target.on('click',function(e){
+            if(isMobile){
+                sessionStorage.show_landing = 1;
+                sessionStorage.show_blue_dot = 1;
                 window.location.href = baseUrl + "/netwrk/default/home";
             }
         });
@@ -115,5 +127,21 @@ var Common = {
             $('.bootbox').css('opacity',' 0.1');
             $('.bootbox').css('visibility','hidden');
         });
+    },
+    onClickMapButton: function() {
+        console.log('in onClickMapButton');
+        var target = $('.btn_nav_map_location', Common.contexts.boxNavigation);
+        target.unbind();
+        target.on('click', function() {
+            //hide all opened modal
+            $('.modal').modal('hide');
+
+            if (isGuest) {
+                Map.getBrowserCurrentPosition(Map.map);
+            } else {
+                Map.getMylocation(Map.map);
+            }
+        });
+
     }
 };

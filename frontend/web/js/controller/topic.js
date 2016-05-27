@@ -847,7 +847,7 @@ var Topic = {
 
                 if(json.status == 'Followed'){
                     Map.map.data.setStyle(function(feature) {
-                        if(feature.R.type == 'visible' && feature.R.id != cityId) {
+                        if(feature.H.type == 'visible' && feature.H.id != cityId) {
                             return /** @type {google.maps.Data.StyleOptions} */({
                                 fillColor: '#ffffff',
                                 fillOpacity: 0.0,
@@ -865,7 +865,7 @@ var Topic = {
                     });
                 } else {
                     Map.map.data.setStyle(function(feature) {
-                        if(feature.R.type == 'visible' || feature.R.id == cityId) {
+                        if(feature.H.type == 'visible' || feature.H.id == cityId) {
                             return /** @type {google.maps.Data.StyleOptions} */({
                                 fillColor: '#ffffff',
                                 fillOpacity: 0.0,

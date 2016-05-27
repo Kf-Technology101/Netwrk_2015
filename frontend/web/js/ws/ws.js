@@ -39,14 +39,16 @@ $.extend({
 		}
 
 		ws.onopen = function(event) {
+			Common.hideLoader();
 			clearInterval(timeout);
 		}
 
 		ws.onclose = function(event) {
-			bootbox.dialog({
+			Common.initLoader();
+			/*bootbox.dialog({
 			  message: '<i class="fa fa-refresh fa-spin"></i> You were disconnected from Chat Server. Waiting to reconnect...',
 			  closeButton: false
-			});
+			});*/
 			var timeout = setInterval(function(){
 				ws = new WebSocket(url);
             }, 1500);

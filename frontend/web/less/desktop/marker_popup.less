@@ -51,7 +51,7 @@
 	padding: 5px 10px;
 	position: absolute;
 	right: -30px;
-	top: -35px;
+	top: 5px;
 }
 
 .marker-group {
@@ -59,7 +59,19 @@
 }
 
 .marker-topic {
-	background-color: #89c642;
+	background-color: #5486b0;;
+}
+
+.marker-topic-sm {
+	background-color: #5486b0;;
+	height: 20px;
+	width: 20px;
+}
+
+.marker-topic-sm::after {
+	height: 10px;
+	margin: 5px 0 0 5.5px;
+	width: 10px;
 }
 
 .gm-sm {
@@ -274,4 +286,14 @@
 		}
 	}
 
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
 }

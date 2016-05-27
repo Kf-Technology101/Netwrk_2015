@@ -107,12 +107,12 @@ var CoverPage = {
 			
 			var zcode = CoverPage.zcode;
 
-			if(!isNaN(zcode.val())) {
-				// var res = /^\d{5}(-\d{4})?$/.test(zcode.val());
+			/*if(!isNaN(zcode.val())) {
+				// var res = /^\d{5}(-\d{4})?$/.test(zcode.val());*/
 				CoverPage.checkZipCode(zcode.val());
-			} else {
+			/*} else {
 				CoverPage.checkCity(zcode.val());
-			}
+			}*/
 
 			e.preventDefault();
 		});

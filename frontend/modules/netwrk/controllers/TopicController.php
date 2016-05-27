@@ -500,7 +500,7 @@ class TopicController extends BaseController
 
         $query = new Query();
         $data = $query->select('topic.*,
-                city.id as city_id, city.zip_code, city.name, city.lat as city_lat, city.lng as city_lng'
+                city.id as city_id, city.zip_code, city.office, city.name, city.lat as city_lat, city.lng as city_lng'
         )->from('topic')
         ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
         ->where($geo_where)
@@ -514,6 +514,9 @@ class TopicController extends BaseController
             $topic = array(
                 "id" => $value['id'],
                 "city_id" => $value['city_id'],
+                "city_name" => $value['name'],
+                "office" => $value['office'],
+                "zip_code" => $value['zip_code'],
                 "user_id" => $value['user_id'],
                 "title" => $value['title'],
                 "lat" => $value['lat'],
