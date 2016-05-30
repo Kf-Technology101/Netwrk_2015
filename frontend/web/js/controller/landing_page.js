@@ -2,6 +2,7 @@ var LandingPage = {
 	modal:'#modal_landing_page',
 	mobile:'#ld_modal_landing_page',
 	modal_welcome : '#modal_landing_welcome',
+	modal_channel_welcome : '#modal_landing_channel_welcome',
 	parent:'',
 	data:'',
 	check_landing: 0,
@@ -118,6 +119,8 @@ var LandingPage = {
 				sessionStorage.landing_post = 1;
 				PopupChat.RedirectChatPostPage(post_id, 1, 1);
 			}else{
+				// Display channel welcome modal
+				LandingPage.showLandingChannelWelcome();
 				PopupChat.params.post = post_id;
 				PopupChat.params.chat_type = 1;
 				PopupChat.params.post_name = post_name;
@@ -316,6 +319,16 @@ var LandingPage = {
 				}
 			});
 
+		});
+	},
+
+	showLandingChannelWelcome: function(){
+		$(LandingPage.modal).modal('hide');
+		var parent = $(LandingPage.modal_channel_welcome);
+		// parent.show();
+		parent.modal({
+			backdrop: true,
+			keyboard: false,
 		});
 	},
 

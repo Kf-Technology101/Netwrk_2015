@@ -74,6 +74,7 @@
 <?= $this->render('partial/profile_info');?>
 <?= $this->render('partial/profile_edit');?>
 <?= $this->render('partial/landing_welcome');?>
+<?= $this->render('partial/landing_channel_welcome');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
 <script src="/js/lib/richmarker-compiled.js"></script>
