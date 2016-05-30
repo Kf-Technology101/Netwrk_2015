@@ -1102,6 +1102,8 @@
 
 			var content = '<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">' +
 				'<div class="iw-content">' +
+				'<div class="iw-subTitle col-xs-12 dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>' +
+				'<div class="iw-subTitle col-xs-12 dot-info-wrapper zoom-info hide">Click <img src="/img/icon/pale-blue-dot.png"/> to zoom in</div>' +
 				/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
 				'<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>' +
 				'<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Topic</span></a></div>' +
@@ -1124,9 +1126,17 @@
 
 			return infowindow;
 		},
+		showHideBlueDotZoomInfo: function(zoom){
+			if(zoom == Map.blueDotLocation.zoomMiddle) {
+				$('.cgm-container').find('.zoom-info').removeClass('hide');
+			} else {
+				$('.cgm-container').find('.zoom-info').addClass('hide');
+			}
+		},
 		zoomMap: function(lat, lng, zoom, map){
 			zoom = zoom || Map.blueDotLocation.zoomInitial;
 			if (zoom && zoom != 'undefined') {
+				Map.showHideBlueDotZoomInfo(zoom);
 				Map.map.setZoom(zoom);
 			}
 			map.setCenter(new google.maps.LatLng(lat, lng));
@@ -1553,6 +1563,7 @@
 				var data_marker;
 				var currentZoom = map.getZoom();
 				console.log(currentZoom);
+				Map.showHideBlueDotZoomInfo(currentZoom);
 				if(isMobile){
 				    sessionStorage.map_zoom = currentZoom;
 				}
