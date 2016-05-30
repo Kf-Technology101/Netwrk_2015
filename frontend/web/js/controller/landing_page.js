@@ -117,6 +117,7 @@ var LandingPage = {
 				post_content = $(e.currentTarget).attr('data-content');
 			if(isMobile){
 				sessionStorage.landing_post = 1;
+				sessionStorage.welcome_channel = 1;
 				PopupChat.RedirectChatPostPage(post_id, 1, 1);
 			}else{
 				// Display channel welcome modal

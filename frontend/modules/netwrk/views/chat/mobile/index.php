@@ -74,3 +74,5 @@
         </div>
     </div>
 </script>
+
+<?= $this->render('../../default/partial/landing_channel_welcome');?>

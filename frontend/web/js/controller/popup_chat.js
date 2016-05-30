@@ -34,6 +34,11 @@ var PopupChat = {
             PopupChat.OnClickBackBtn();
             Default.ShowNotificationOnChat();
             Default.SetAvatarUserDropdown();
+            if(sessionStorage.welcome_channel == 1) {
+                sessionStorage.welcome_channel = 0;
+                // Display channel welcome modal
+                LandingPage.showLandingChannelWelcome();
+            }
         }else{
             if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
                 PopupChat.OnclickLogin();
