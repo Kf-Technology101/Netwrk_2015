@@ -40,8 +40,8 @@
             </div>-->
             <table class="filter_sidebar">
                 <tr>
-                    <td class="feed active">Feed</td>
-                    <td class="topic">Topics</td>
+                    <td class="feed active">Area Vision</td>
+                    <td class="topic">Channels</td>
                     <td class="groups">Groups</td>
                 </tr>
             </table>
