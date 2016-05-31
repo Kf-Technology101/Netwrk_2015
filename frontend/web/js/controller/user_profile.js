@@ -502,6 +502,27 @@ var User_Profile = {
             callback();
         }
         User_Profile.setPaginationStatus(json);
+        User_Profile.onTemplate();
+    },
+    onTemplate: function() {
+        console.log('in onTemplate');
+        if(User_Profile.tab_current = 'group') {
+            console.log('in tab_current onClickEditGroup');
+            User_Profile.onClickEditGroup();
+        };
+    },
+    onClickEditGroup: function() {
+        console.log('in onClickEditGroup');
+        var target = $('.edit-group', User_Profile.contexts.modalProfile);
+
+        target.each(function() {
+            $(this).unbind("click").click(function() {
+                console.log('in click of edit');
+                $('#modal_profile').modal('hide');
+                Common.HideTooTip();
+                Create_Group.initialize($(this).data("city_id"),null,null,$(this).data("id"));
+            });
+        });
     },
     getTemplateTopicInfo: function(parent,target,callback){
         var template = _.template(target.html());

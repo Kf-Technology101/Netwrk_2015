@@ -91,6 +91,17 @@ var Create_Group={
             Create_Group.params.topic = topic;
             Create_Group.modal = $('#create_group_modal');
 
+            if (typeof byGroup == "undefined" || !byGroup) {
+                Create_Group.params.city = city;
+                console.log('Create_Group.params.city='+Create_Group.params.city);
+                Create_Group.params.city_name = name_city;
+                Create_Group.params.byGroup = false;
+            } else {
+                Create_Group.params.latitude = latitude;
+                Create_Group.params.longitude = longitude;
+                Create_Group.params.byGroup = true;
+            }
+
             Create_Group.showModalCreateGroup();
             //cityId is null and zipcode is set, It means it call from blue dot. (map.js -> CreateLocationGroup())
             console.log('city ='+city);
