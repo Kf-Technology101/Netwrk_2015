@@ -26,6 +26,8 @@ var Create_Group={
     added_users: [],
 
     initialize: function(city, topic, name_city, group_id, byGroup, latitude, longitude) {
+
+        Create_Group.modal = $('#create_group_modal');
         if (typeof group_id != "undefined" && group_id != null) {
             this.params.id = group_id;
             var error = false;
@@ -89,7 +91,7 @@ var Create_Group={
                 return false;
             }
             Create_Group.params.topic = topic;
-            Create_Group.modal = $('#create_group_modal');
+
 
             if (typeof byGroup == "undefined" || !byGroup) {
                 Create_Group.params.city = city;
@@ -105,7 +107,7 @@ var Create_Group={
             Create_Group.showModalCreateGroup();
             //cityId is null and zipcode is set, It means it call from blue dot. (map.js -> CreateLocationGroup())
             console.log('city ='+city);
-            console.log('name_city ='+name_city+' length ='+name_city.length);
+            //console.log('name_city ='+name_city+' length ='+name_city.length);
 
             Create_Group.onCloseModel();
             if (city == null && name_city.length > 0) {
