@@ -73,6 +73,7 @@ var Create_Group={
 
             if (typeof byGroup == "undefined" || !byGroup) {
                 Create_Group.params.city = city;
+                console.log('Create_Group.params.city='+Create_Group.params.city);
                 Create_Group.params.city_name = name_city;
                 Create_Group.params.byGroup = false;
             } else {

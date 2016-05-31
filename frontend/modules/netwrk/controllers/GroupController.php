@@ -334,6 +334,7 @@ class GroupController extends BaseController {
                 'id' => $group->id,
                 'name' => $group->name,
                 'permission' => $group->permission,
+                'city_id' => $group->city_id,
                 'created_at' => date("M d, Y", strtotime($group->created_at)),
                 'formatted_created_at' => date("M d", strtotime($group->created_at)),
                 'formatted_created_date' => date('M d', strtotime($group->created_at)),
