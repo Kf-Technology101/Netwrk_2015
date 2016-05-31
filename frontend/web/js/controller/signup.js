@@ -134,8 +134,9 @@ var Signup={
 							ChatInbox.initialize();
 							ChatInbox.activateTab('chat_discussion');
 							setTimeout(function(){
-								console.log('li clicked');
-								$(ChatInbox.modal).find("div[data-post='11108']").closest('li').trigger('click');
+								// Display channel welcome modal
+								LandingPage.showLandingChannelWelcome();
+								$(ChatInbox.modal).find("div[data-post='"+Signup.data_validate.data.post_id+"']").closest('li').trigger('click');
 							}, 300);
 						}
 					});

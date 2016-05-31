@@ -42,6 +42,7 @@ class ChatController extends BaseController
 		$postId = $_GET['post'];
 		$chatType = isset($_GET['chat_type']) ? $_GET['chat_type'] : 1;
 		$userCurrent = Yii::$app->user->id;
+		$welcome = isset($_GET['welcome']) ? $_GET['welcome'] : 'false';
 
 		$post = POST::find()->where('id ='.$postId)->with('topic')->one();
 		if ($chatType == 0) {
@@ -58,7 +59,7 @@ class ChatController extends BaseController
 			file_put_contents($statusFile, 1);
 		}
 		$url = Url::base(true).'/netwrk/chat/chat-post?post='.$postId.'&chat_type='.$chatType;
-		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['user_id' => $user_id, 'post' =>$post,'url'=> $url,'current_user'=>$userCurrent] );
+		return $this->render($this->getIsMobile() ? 'mobile/index' : '' , ['user_id' => $user_id, 'post' =>$post,'url'=> $url,'current_user'=>$userCurrent,'welcome'=>$welcome] );
 	}
 
 	public function actionUpload()

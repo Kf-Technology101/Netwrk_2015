@@ -401,7 +401,7 @@ class UserController extends BaseController
                 $ws_messages->save(false);
 
                 if($this->getIsMobile()){
-                    $this->redirect('/netwrk/chat/chat-post?post='.$city['post_id'].'&chat_type=1&previous-flag=1');
+                    $this->redirect('/netwrk/chat/chat-post?post='.$city['post_id'].'&chat_type=1&previous-flag=1&welcome=true');
                 } else {
                     $data = array('status' => 1,'data'=>Yii::$app->user->id,'post_id'=>$city['post_id']);
                 }

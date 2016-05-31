@@ -75,4 +75,9 @@
     </div>
 </script>
 
+<?php if($welcome == 'true') : ?>
+    <script type="application/javascript">
+        sessionStorage.welcome_channel = 1;
+    </script>
+<?php endif; ?>
 <?= $this->render('../../default/partial/landing_channel_welcome');?>
