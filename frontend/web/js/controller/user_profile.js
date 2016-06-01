@@ -332,10 +332,13 @@ var User_Profile = {
         User_Profile.onTemplate();
     },
     onTemplate: function() {
-        if(User_Profile.tab_current = 'group') {
+        if(User_Profile.tab_current == 'group') {
             User_Profile.onClickEditGroup();
             User_Profile.onClickDeleteGroup();
-        };
+        } else if(User_Profile.tab_current == 'post') {
+            User_Profile.onClickEditPost();
+        } else {
+        }
     },
     onClickEditGroup: function() {
         var target = $('.edit-group', User_Profile.contexts.modalProfile);
@@ -368,6 +371,17 @@ var User_Profile = {
             });
         });
     },
+    /* On click of edit button in post list then open post edit form */
+    onClickEditPost: function() {
+        var btn = $('.post-edit', User_Profile.contexts.modalProfile);
+        btn.each(function() {
+            $(this).unbind("click").click(function() {
+                var post_id = $(this).attr('data-id');
+                $('#modal_profile').modal('hide');
+                Create_Post.initialize(null,null,null,null, post_id);
+            });
+        });
+    },
     getTemplateTopicInfo: function(parent,target,callback){
         var template = _.template(target.html());
         var append_html = template({topics: User_Profile.templateData.topics});
@@ -385,6 +399,7 @@ var User_Profile = {
         if(_.isFunction(callback)){
             callback();
         }
+        User_Profile.onTemplate();
     },
 
     //set selected navigation like group, topic or post as active.

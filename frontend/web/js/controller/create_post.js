@@ -4,7 +4,9 @@ var Create_Post={
         post:'',
         message: '',
         city:'',
-        city_name: ''
+        city_name: '',
+        post_id: '',
+        post_title: ''
     },
     status_change:{
         post: false,
@@ -12,7 +14,39 @@ var Create_Post={
         total: false
     },
 
-    initialize: function(city,topic,name_city,name_topic){
+    initialize: function(city,topic,name_city,name_topic,post_id){
+
+        if(post_id != 'undefined' && post_id != null) {
+            //todo: fetch post details and show on create post form.
+            var error = false;
+            Create_Post.changeData();
+            Ajax.show_post(post_id).then(function(data) {
+                var json = $.parseJSON(data);
+                if (json.error) {
+                    alert("Unable to load post");
+                    error = true;
+                } else {
+                    topic = json.topic_id;
+                    city = json.city_id;
+                    name_city = json.city_name;
+
+                    Create_Post.params.city = json.city_id;
+                    Create_Post.params.city_name = json.city_name;
+                    Create_Post.params.topic = json.topic_id;
+
+                    Create_Post.params.message = json.content;
+                    Create_Post.params.post_id = json.id;
+                    Create_Post.params.post_title = json.title;
+
+                    //set change status as true as post msg and message required field is alread updated.
+                    Create_Post.status_change.total = true;
+                    Create_Post.status_change.post = true;
+                    Create_Post.status_change.message = true;
+                }
+
+            });
+            if (error) return;
+        }
         if(isMobile){
             Create_Post.params.topic = $('#create_post').attr('data-topic');
             Create_Post.params.city = $('#create_post').attr('data-city');
@@ -32,6 +66,8 @@ var Create_Post={
             Create_Post.params.city = city;
             Create_Post.params.topic = topic;
             Create_Post.params.city_name = name_city;
+
+            console.log(Create_Post.params.city);
 
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
@@ -132,6 +168,11 @@ var Create_Post={
     },
     showModalCreatePost: function(){
         var parent = $('#create_post');
+
+        parent.find('.name_post').val(Create_Post.params.post_title);
+        parent.find('.message').val(Create_Post.params.message);
+        Create_Post.onCheckStatus();
+
         parent.modal({
             backdrop: true,
             keyboard: false
@@ -312,6 +353,7 @@ var Create_Post={
         btn.unbind();
         btn.on('click',function(){
             if(!btn.hasClass('disable')){
+                console.log(Create_Post.params);
                 Ajax.new_post(Create_Post.params).then(function(){
                     Create_Post.reset_data();
                     Create_Post.setDefaultBtn();

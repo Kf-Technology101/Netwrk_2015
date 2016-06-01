@@ -221,7 +221,7 @@
                                         </div>
                                         <div class="col-xs-4">
                                             <div class="topic-actions text-right">
-                                                <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
+                                                <a href="javascript:" ><i class="fa fa-edit"></i><span>Edit</span></a>
                                                 <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                             <span class="date-details">
                                                <%= item.formatted_created_date %>
@@ -269,7 +269,7 @@
                                                 <% print(item.formatted_created_date) %>
                                             </div>
                                             <div class="post-actions">
-                                                <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
+                                                <a href="javascript:" class="post-edit" data-id="<%= item.id %>"><i class="fa fa-edit"></i><span>Edit</span></a>
                                                 <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                             </div>
                                         </div>

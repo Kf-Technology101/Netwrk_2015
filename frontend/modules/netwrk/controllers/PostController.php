@@ -403,6 +403,39 @@ class PostController extends BaseController
         }
     }
 
+    public function actionGetPostById()
+    {
+        $post_id = isset($_GET['post_id']) ? $_GET['post_id'] : false;
+
+        if ($post_id) {
+            $post = POST::find()->where(['id' => $post_id])->with('topic')->one();
+            if ($post) {
+                $data = [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'content' => $post->content,
+                    'topic_id' => $post->topic_id,
+                    'topic_name' => $post->topic->title,
+                    'city_id' => $post->topic->city_id,
+                    'city_name' => $post->topic->city->name,
+                    'user_id' => $post->user_id,
+                    'created_at' => $post->created_at,
+                    'updated_at' => $post->updated_at,
+                    'view_count' => $post->view_count,
+                    'brilliant_count' => $post->brilliant_count,
+                    'comment_count' => $post->comment_count,
+                    'post_type' => $post->post_type
+                ];
+                $data = json_encode($data);
+                return $data;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     /**
      * [Function is to get posts by user id]
      *
