@@ -329,26 +329,42 @@ var User_Profile = {
             callback();
         }
 
-        console.log('in  getTemplateGroupInfo');
         User_Profile.onTemplate();
     },
     onTemplate: function() {
-        console.log('in onTemplate');
         if(User_Profile.tab_current = 'group') {
-            console.log('in tab_current onClickEditGroup');
             User_Profile.onClickEditGroup();
+            User_Profile.onClickDeleteGroup();
         };
     },
     onClickEditGroup: function() {
-        console.log('in onClickEditGroup');
         var target = $('.edit-group', User_Profile.contexts.modalProfile);
 
         target.each(function() {
             $(this).unbind("click").click(function() {
-                console.log('in click of edit');
                 $('#modal_profile').modal('hide');
                 Common.HideTooTip();
                 Create_Group.initialize($(this).data("city_id"),null,null,$(this).data("id"));
+            });
+        });
+    },
+    onClickDeleteGroup: function() {
+        var target = $('.delete-group', User_Profile.contexts.modalProfile);
+
+        target.each(function() {
+            $(this).unbind("click").click(function() {
+                var row = $(this).parent().parent().parent().parent();
+                var row = $(this).closest('.item');
+                console.log(row.attr('class'));
+                if (confirm("Are you sure you want to delete this group?")) {
+                    Ajax.delete_group({
+                        "id": $(this).data("id")
+                    }).then(function(data) {
+                        var json = $.parseJSON(data);
+                        if (json.error) alert(json.error.message);
+                        else row.remove();
+                    });
+                }
             });
         });
     },
