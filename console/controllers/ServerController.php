@@ -23,7 +23,7 @@ class ServerController extends \yii\console\Controller
 					new ChatServer()
 					)
 				)
-				,2311);
+				,2312);
 		$server->run();
 	}
 }
