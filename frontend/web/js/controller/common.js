@@ -24,6 +24,8 @@ var Common = {
         Common.eventLoginTrigger();
         Common._eventClickProfileNavMenu();
         Common.onClickMapButton();
+
+        Common.deleteTrigger();
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
@@ -132,7 +134,7 @@ var Common = {
         console.log('in onClickMapButton');
         var target = $('.btn_nav_map_location', Common.contexts.boxNavigation);
         target.unbind();
-        target.on('click', function() {
+        target.on('click', function () {
             //hide all opened modal
             $('.modal').modal('hide');
 
@@ -142,6 +144,42 @@ var Common = {
                 Map.getMylocation(Map.map);
             }
         });
+    },
 
+    deleteTrigger: function() {
+        var target = $('.delete-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            var self = $(this),
+                object = self.attr('data-object'),
+                id = self.attr('data-id'),
+                section = self.attr('data-section'),
+                confirmModal = $('#confirmationBox');
+
+            confirmModal
+                .modal({keyboard: false, show: true })
+                .one('click', '#btnYes', function (e) {
+                    if(object == 'post') {
+                        Ajax.deletePost({
+                            'id': id
+                        }).then(function(data) {
+                            var json = $.parseJSON(data);
+                            if (json.error){
+                                confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
+                                setTimeout(function(){
+                                    confirmModal.find('.alert-danger').addClass('hidden');
+                                    confirmModal.modal('hide');
+                                }, 500);
+                            } else {
+                                confirmModal.modal('hide');
+                                if(section == 'profile'){
+                                    self.closest('.col-xs-12').parent().remove();
+                                }
+                            }
+                        });
+                    }
+                });
+        });
     }
 };

@@ -248,7 +248,7 @@ class TopicController extends BaseController
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count);
             $num_post = UtilitiesFunc::ChangeFormatNumber($value->post_count - 3);
             $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
-            $posts = Post::find()->where('topic_id ='.$value->id)->orderBy(['created_at'=> SORT_DESC])->all();
+            $posts = Post::find()->where('topic_id ='.$value->id)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC])->all();
             $data_post = [];
 
             foreach ($posts as $key => $post){
@@ -385,20 +385,22 @@ class TopicController extends BaseController
                 if ($value->type_item == 'post') {
                     $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
                     $url_avatar = User::GetUrlAvatar($value->item->user->id,$value->item->user->profile->photo);
-                    $item = [
-                        'id' => $value->item->id,
-                        'title'=> $value->item->title,
-                        'content'=> $value->item->content,
-                        'topic_id' => $value->item->topic_id,
-                        'photo' => $url_avatar,
-                        'city_id'=> $value->item->topic->city_id,
-                        'city_name'=> $value->item->topic->city->name,
-                        'created_at' => $value->created_at,
-                        'appear_day' => $num_date,
-                        'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
-                        'user_id' => $value->item->user_id,
-                        'is_post' => 1
+                    if($value->item->status != -1) {
+                        $item = [
+                            'id' => $value->item->id,
+                            'title' => $value->item->title,
+                            'content' => $value->item->content,
+                            'topic_id' => $value->item->topic_id,
+                            'photo' => $url_avatar,
+                            'city_id' => $value->item->topic->city_id,
+                            'city_name' => $value->item->topic->city->name,
+                            'created_at' => $value->created_at,
+                            'appear_day' => $num_date,
+                            'posted_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
+                            'user_id' => $value->item->user_id,
+                            'is_post' => 1
                         ];
+                    }
                 } else {
                     $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
                     $item = [

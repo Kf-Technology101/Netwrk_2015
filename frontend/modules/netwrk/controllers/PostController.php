@@ -111,7 +111,7 @@ class PostController extends BaseController
             break;
         }
 
-        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->with('topic')->orderBy([$condition=> SORT_DESC]);
+        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->andWhere('status != -1')->with('topic')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $posts->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
@@ -474,10 +474,10 @@ class PostController extends BaseController
 
         switch ($filter) {
             case 'recent':
-                $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                $posts = Post::find()->where($where)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC]);
                 break;
             default:
-                $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                $posts = Post::find()->where($where)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC]);
                 break;
         }
 
@@ -519,5 +519,39 @@ class PostController extends BaseController
 
         $hash = json_encode($temp);
         return $hash;
+    }
+
+    /**
+     * @throws \yii\db\Exception
+     */
+    public function actionDelete(){
+        $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+            $currentUserId = Yii::$app->user->id;
+            $currentUser = User::find()->where(array("id" => $currentUserId))->one();
+
+            if (empty($currentUser)) {
+                throw new Exception("Unknown error, please try to re-login");
+            }
+
+            if (empty($_POST['id'])) throw new Exception("Nothing to delete");
+
+            $post = Post::findOne($_POST['id']);
+
+            if (empty($post) || $post->user_id != $currentUserId) {
+                throw new Exception("Unknown post or user");
+            }
+
+            $post->status = -1;
+            $post->save();
+
+            $transaction->commit();
+
+            die(json_encode(array("error" => false)));
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            die(json_encode(array("error" => true, "message" => $e->getMessage())));
+        }
     }
 }

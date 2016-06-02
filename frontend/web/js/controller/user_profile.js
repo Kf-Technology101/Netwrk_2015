@@ -715,6 +715,7 @@ var User_Profile = {
 
             // Initialize click on post name
             Topic.OnClickPostFeed();
+            Common.deleteTrigger();
         });
     },
 
