@@ -102,7 +102,7 @@ class PostController extends BaseController
             break;
         }
 
-        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->with('topic')->orderBy([$condition=> SORT_DESC]);
+        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->andWhere('status != -1')->with('topic')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $posts->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
@@ -419,10 +419,10 @@ class PostController extends BaseController
 
         switch ($filter) {
             case 'recent':
-                $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                $posts = Post::find()->where($where)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC]);
                 break;
             default:
-                $posts = Post::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                $posts = Post::find()->where($where)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC]);
                 break;
         }
 
