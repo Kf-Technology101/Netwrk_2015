@@ -765,7 +765,6 @@ class DefaultController extends BaseController
                 array_push($cities, $city->city_id);
             }
 
-
             //fetch history feed of users favorite cities
             $htf = new HistoryFeed();
             $history_feed = $htf->find()->select('history_feed.*, city.zip_code')
@@ -781,20 +780,23 @@ class DefaultController extends BaseController
                 if ($value->type_item == 'post') {
                     $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
                     $url_avatar = User::GetUrlAvatar($value->item->user->id,$value->item->user->profile->photo);
-                    $item = [
-                        'id' => $value->item->id,
-                        'title'=> $value->item->title,
-                        'content'=> $value->item->content,
-                        'topic_id' => $value->item->topic_id,
-                        'photo' => $url_avatar,
-                        'city_id'=> $value->item->topic->city_id,
-                        'city_name'=> $value->item->topic->city->name,
-                        'created_at' => $value->created_at,
-                        'appear_day' => $num_date,
-                        'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
-                        'user_id' => $value->item->user_id,
-                        'is_post' => 1
-                    ];
+
+                    if($value->item->status != -1){
+                        $item = [
+                            'id' => $value->item->id,
+                            'title'=> $value->item->title,
+                            'content'=> $value->item->content,
+                            'topic_id' => $value->item->topic_id,
+                            'photo' => $url_avatar,
+                            'city_id'=> $value->item->topic->city_id,
+                            'city_name'=> $value->item->topic->city->name,
+                            'created_at' => $value->created_at,
+                            'appear_day' => $num_date,
+                            'posted_by' => $value->item->user['profile']['first_name']." ". $value->item->user['profile']['last_name'],
+                            'user_id' => $value->item->user_id,
+                            'is_post' => 1
+                        ];
+                    }
                 } else {
                     $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
                     $item = [
