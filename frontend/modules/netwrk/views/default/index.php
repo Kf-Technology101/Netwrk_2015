@@ -72,5 +72,6 @@
 <?= $this->render('partial/search_setting');?>
 <?= $this->render('partial/profile_info');?>
 <?= $this->render('partial/profile_edit');?>
+<?= $this->render('partial/confirm');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>

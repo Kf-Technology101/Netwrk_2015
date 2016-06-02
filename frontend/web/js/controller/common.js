@@ -23,6 +23,8 @@ var Common = {
         Common.eventLoginTrigger();
 
         Common._eventClickProfileNavMenu();
+
+        Common.deleteTrigger();
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
@@ -114,6 +116,25 @@ var Common = {
         $(window).on('unload', function(){
             $('.bootbox').css('opacity',' 0.1');
             $('.bootbox').css('visibility','hidden');
+        });
+    },
+
+    deleteTrigger: function() {
+        var target = $('.delete-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            var self = $(this),
+                object = self.attr('data-object'),
+                id = self.attr('data-id'),
+                section = self.attr('data-section'),
+                confirmModal = $('#confirmationBox');
+
+            confirmModal
+                .modal({keyboard: false, show: true })
+                .one('click', '#btnYes', function (e) {
+                    
+                });
         });
     }
 };

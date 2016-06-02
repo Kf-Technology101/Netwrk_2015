@@ -33,6 +33,7 @@ module.exports = function(grunt) {
           "frontend/web/css/desktop/search_setting.css": "frontend/web/less/desktop/search_setting.less",
           "frontend/web/css/desktop/profile_info.css": "frontend/web/less/desktop/profile_info.less",
           "frontend/web/css/desktop/profile_edit.css": "frontend/web/less/desktop/profile_edit.less",
+          "frontend/web/css/desktop/common.css": "frontend/web/less/desktop/common.less",
           // CSS on Mobile
           "frontend/web/css/mobile/landing.css": "frontend/web/less/mobile/landing.less",
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
