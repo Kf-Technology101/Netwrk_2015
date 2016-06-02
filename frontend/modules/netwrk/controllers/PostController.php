@@ -465,4 +465,38 @@ class PostController extends BaseController
         $hash = json_encode($temp);
         return $hash;
     }
+
+    /**
+     * @throws \yii\db\Exception
+     */
+    public function actionDelete(){
+        $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+            $currentUserId = Yii::$app->user->id;
+            $currentUser = User::find()->where(array("id" => $currentUserId))->one();
+
+            if (empty($currentUser)) {
+                throw new Exception("Unknown error, please try to re-login");
+            }
+
+            if (empty($_POST['id'])) throw new Exception("Nothing to delete");
+
+            $post = Post::findOne($_POST['id']);
+
+            if (empty($post) || $post->user_id != $currentUserId) {
+                throw new Exception("Unknown post or user");
+            }
+
+            $post->status = -1;
+            $post->save();
+
+            $transaction->commit();
+
+            die(json_encode(array("error" => false)));
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            die(json_encode(array("error" => true, "message" => $e->getMessage())));
+        }
+    }
 }
