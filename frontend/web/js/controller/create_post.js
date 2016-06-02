@@ -1,6 +1,7 @@
 var Create_Post={
     params:{
         topic: null,
+        topic_name: '',
         post:'',
         message: '',
         city:'',
@@ -15,7 +16,7 @@ var Create_Post={
     },
 
     initialize: function(city,topic,name_city,name_topic,post_id){
-
+        Create_Post.resetParams();
         if(post_id != 'undefined' && post_id != null) {
             //todo: fetch post details and show on create post form.
             var error = false;
@@ -26,19 +27,25 @@ var Create_Post={
                     alert("Unable to load post");
                     error = true;
                 } else {
-                    topic = json.topic_id;
+                    //If post is exists of perticular post_id then set the post params. So
+                    //these params are available for furthur processing.
                     city = json.city_id;
-                    name_city = json.city_name;
+                    topic = json.topic_id;
+
+                    name_city = json.city_zipcode;
+                    name_topic = json.topic_name;
 
                     Create_Post.params.city = json.city_id;
                     Create_Post.params.city_name = json.city_name;
                     Create_Post.params.topic = json.topic_id;
+                    Create_Post.params.topic_name = json.topic_name;
 
                     Create_Post.params.message = json.content;
                     Create_Post.params.post_id = json.id;
                     Create_Post.params.post_title = json.title;
 
-                    //set change status as true as post msg and message required field is alread updated.
+                    //set status_change status as true So save button will be active in create post form
+                    // as post msg and message required field is alread updated.
                     Create_Post.status_change.total = true;
                     Create_Post.status_change.post = true;
                     Create_Post.status_change.message = true;
@@ -67,8 +74,6 @@ var Create_Post={
             Create_Post.params.topic = topic;
             Create_Post.params.city_name = name_city;
 
-            console.log(Create_Post.params.city);
-
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
@@ -77,7 +82,7 @@ var Create_Post={
             Create_Post.onclickBack();
             Create_Post.eventClickdiscover();
             Create_Post.postTitleFocus();
-            Create_Post.showDataBreadcrumb(name_city, name_topic);
+            Create_Post.showDataBreadcrumb(name_city,name_topic);
             Create_Post.onClickBackTopicBreakcrumb();
             Create_Post.onClickBackNetwrkLogo();
             Create_Post.onClickBackZipcodeBreadcrumb();
@@ -171,6 +176,9 @@ var Create_Post={
 
         parent.find('.name_post').val(Create_Post.params.post_title);
         parent.find('.message').val(Create_Post.params.message);
+        if(Create_Post.params.post_id) {
+            parent.find('#post_id').val(Create_Post.params.post_id);
+        }
         Create_Post.onCheckStatus();
 
         parent.modal({
@@ -263,6 +271,7 @@ var Create_Post={
 
         parent.find('.name_post').val('');
         parent.find('.message').val('');
+        parent.find('#post_id').val('');
 
         Create_Post.status_change.post = false;
         Create_Post.status_change.message = false;
@@ -362,6 +371,10 @@ var Create_Post={
                             Create_Post.redirect();
                         }else{
                             Create_Post.hideModalCreatePost();
+                            Post.params.city = Create_Post.params.city;
+                            Post.params.city_name = Create_Post.params.city_name;
+                            Post.params.topic = Create_Post.params.topic;
+                            Post.params.topic_name = Create_Post.params.topic_name;
                             Post.initialize();
                         }
                     },700);
@@ -382,6 +395,20 @@ var Create_Post={
             //     ChatInbox.OnClickChatInboxMobile();
             // });
         });
+    },
+    resetParams: function() {
+        Create_Post.params.post_title = '';
+        Create_Post.params.message = '';
+        Create_Post.params.post_id = '';
+
+        Create_Post.params.city = '';
+        Create_Post.params.city_name = '';
+        Create_Post.params.topic = '';
+        Create_Post.params.topic_name = '';
+
+        Create_Post.params.message = '';
+        Create_Post.params.post_id = '';
+        Create_Post.params.post_title = '';
     }
 
 };

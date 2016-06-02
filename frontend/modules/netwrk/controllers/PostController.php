@@ -66,16 +66,25 @@ class PostController extends BaseController
         $currentUser = Yii::$app->user->id;
         $topic = $_POST['topic'];
         $post = $_POST['post'];
+        $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
         $message = $_POST['message'];
         $current_date = date('Y-m-d H:i:s');
 
-        $Post = new Post;
-        $Post->title = $post;
-        $Post->content = $message;
-        $Post->topic_id = $topic;
-        $Post->user_id = $currentUser;
-        $Post->post_type = 1;
-        $Post->save();
+        if($post_id) {
+            $Post = POST::find()->where(['id' => $post_id])->one();
+            $Post->title = $post;
+            $Post->content = $message;
+            $Post->topic_id = $topic;
+            $Post->update();
+        } else {
+            $Post = new Post;
+            $Post->title = $post;
+            $Post->content = $message;
+            $Post->topic_id = $topic;
+            $Post->user_id = $currentUser;
+            $Post->post_type = 1;
+            $Post->save();
+        }
 
     }
 
@@ -418,6 +427,7 @@ class PostController extends BaseController
                     'topic_name' => $post->topic->title,
                     'city_id' => $post->topic->city_id,
                     'city_name' => $post->topic->city->name,
+                    'city_zipcode' => $post->topic->city->zip_code,
                     'user_id' => $post->user_id,
                     'created_at' => $post->created_at,
                     'updated_at' => $post->updated_at,
