@@ -125,7 +125,7 @@ var ChatPost = {
 		if(ENV == 'prod'){
 			ChatPost.url = 'www.netwrk.com:2311';
 		} else {
-			ChatPost.url = 'dev.netwrk.com:2312';
+			ChatPost.url = 'beta.netwrk.com:2312';
 		}
 	},
 
