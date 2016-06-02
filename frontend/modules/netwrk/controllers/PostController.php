@@ -66,16 +66,25 @@ class PostController extends BaseController
         $currentUser = Yii::$app->user->id;
         $topic = $_POST['topic'];
         $post = $_POST['post'];
+        $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
         $message = $_POST['message'];
         $current_date = date('Y-m-d H:i:s');
 
-        $Post = new Post;
-        $Post->title = $post;
-        $Post->content = $message;
-        $Post->topic_id = $topic;
-        $Post->user_id = $currentUser;
-        $Post->post_type = 1;
-        $Post->save();
+        if($post_id) {
+            $Post = POST::find()->where(['id' => $post_id])->one();
+            $Post->title = $post;
+            $Post->content = $message;
+            $Post->topic_id = $topic;
+            $Post->update();
+        } else {
+            $Post = new Post;
+            $Post->title = $post;
+            $Post->content = $message;
+            $Post->topic_id = $topic;
+            $Post->user_id = $currentUser;
+            $Post->post_type = 1;
+            $Post->save();
+        }
 
     }
 
@@ -397,6 +406,40 @@ class PostController extends BaseController
                     'title' => $post->title,
                     'content' => $post->content,
                     'topic_id' => $post->topic_id,
+                    'user_id' => $post->user_id,
+                    'created_at' => $post->created_at,
+                    'updated_at' => $post->updated_at,
+                    'view_count' => $post->view_count,
+                    'brilliant_count' => $post->brilliant_count,
+                    'comment_count' => $post->comment_count,
+                    'post_type' => $post->post_type
+                ];
+                $data = json_encode($data);
+                return $data;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function actionGetPostById()
+    {
+        $post_id = isset($_GET['post_id']) ? $_GET['post_id'] : false;
+
+        if ($post_id) {
+            $post = POST::find()->where(['id' => $post_id])->with('topic')->one();
+            if ($post) {
+                $data = [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'content' => $post->content,
+                    'topic_id' => $post->topic_id,
+                    'topic_name' => $post->topic->title,
+                    'city_id' => $post->topic->city_id,
+                    'city_name' => $post->topic->city->name,
+                    'city_zipcode' => $post->topic->city->zip_code,
                     'user_id' => $post->user_id,
                     'created_at' => $post->created_at,
                     'updated_at' => $post->updated_at,

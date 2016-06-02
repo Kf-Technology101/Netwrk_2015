@@ -26,6 +26,7 @@
             <div class="modal-body">
                 <div class="page" id="create_topic">
                     <div class="post">
+                        <input type="hidden" name="post_id" id="post_id" value=""/>
                         <div class="post-title">
                             <p class="title"> Post </p>
                             <div class="input-group">

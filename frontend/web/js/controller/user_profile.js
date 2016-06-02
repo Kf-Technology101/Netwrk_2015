@@ -245,7 +245,6 @@ var User_Profile = {
             if (User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "topic"){
                 User_Profile.loadMoreTopic();
             } else if(User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "group") {
-                console.log('does i am here 2');
                 User_Profile.loadMoreGroup();
             } else if(User_Profile.list[User_Profile.tab_current].status_paging == 1 && User_Profile.tab_current == "post") {
                 User_Profile.loadMorePost();
@@ -505,10 +504,13 @@ var User_Profile = {
         User_Profile.onTemplate();
     },
     onTemplate: function() {
-        if(User_Profile.tab_current = 'group') {
+        if(User_Profile.tab_current == 'group') {
             User_Profile.onClickEditGroup();
             User_Profile.onClickDeleteGroup();
-        };
+        } else if(User_Profile.tab_current == 'post') {
+            User_Profile.onClickEditPost();
+        } else {
+        }
     },
     onClickEditGroup: function() {
         var target = $('.edit-group', User_Profile.contexts.modalProfile);
@@ -541,6 +543,17 @@ var User_Profile = {
             });
         });
     },
+    /* On click of edit button in post list then open post edit form */
+    onClickEditPost: function() {
+        var btn = $('.post-edit', User_Profile.contexts.modalProfile);
+        btn.each(function() {
+            $(this).unbind("click").click(function() {
+                var post_id = $(this).attr('data-id');
+                $('#modal_profile').modal('hide');
+                Create_Post.initialize(null,null,null,null, post_id);
+            });
+        });
+    },
     getTemplateTopicInfo: function(parent,target,callback){
         var template = _.template(target.html());
         var json = User_Profile.templateData.topics;
@@ -563,6 +576,7 @@ var User_Profile = {
             callback();
         }
         User_Profile.setPaginationStatus(json);
+        User_Profile.onTemplate();
     },
 
     //set selected navigation like group, topic or post as active.

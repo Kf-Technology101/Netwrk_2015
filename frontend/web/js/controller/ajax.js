@@ -481,6 +481,23 @@ var Ajax ={
 
         return defer.promise();
     },
+    show_post: function(post_id) {
+        var url,defer = $.Deferred();
+
+        url = "/netwrk/post/get-post-by-id";
+
+        $.ajax({
+            url: url,
+            data: { "post_id" : post_id },
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     create_edit_group: function(params){
         var url,defer = $.Deferred();
