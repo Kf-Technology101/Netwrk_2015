@@ -637,6 +637,7 @@ var User_Profile = {
             //hide no data section
             template.find('.no-data').hide();
             User_Profile.getTemplateGroupInfo(template, templateData);
+            Common.deleteTrigger();
         });
     },
 

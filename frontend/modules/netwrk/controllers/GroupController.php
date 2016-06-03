@@ -261,19 +261,39 @@ class GroupController extends BaseController {
 
             $currentUserId = Yii::$app->user->id;
             $currentUser = User::find()->where(array("id" => $currentUserId))->one();
+            $group_id = $_POST['id'];
 
             if (empty($currentUser)) {
                 throw new Exception("Unknown error, please try to re-login");
             }
 
-            if (empty($_POST['id'])) throw new Exception("Nothing to delete");
-            $group = Group::findOne($_POST['id']);
+            if (empty($group_id)) throw new Exception("Nothing to delete");
+            $group = Group::findOne($group_id);
 
             if (empty($group) || $group->user_id != $currentUserId) {
                 throw new Exception("Unknown group or user");
             }
 
-            $group->delete();
+            $group->status = -1;
+            $group->save();
+
+            // Find all topics from this group and update those status
+            $group_topics = Topic::find()->where('group_id = '. $group_id)->andWhere('status != -1')->all();
+
+            foreach ($group_topics as $key => $value) {
+                $topic = Topic::findOne($value->id);
+                $topic->status = -1;
+                $topic->save();
+
+                // Find all posts from this topic and update those status
+                $topic_posts = Post::find()->where('topic_id = '. $value->id)->andWhere('status != -1')->all();
+
+                foreach ($topic_posts as $key => $value) {
+                    $post = Post::findOne($value->id);
+                    $post->status = -1;
+                    $post->save();
+                }
+            }
 
             $transaction->commit();
 
@@ -324,6 +344,8 @@ class GroupController extends BaseController {
         $groups = Group::find()
             ->where($params)
             ->andWhere($andWhere)
+            ->andWhere(['not',['group.status' => '-1']])
+            ->andWhere(['not',['topic.status' => '-1']])
             ->joinWith("topic")
             ->orderBy($order)
             ->all();
@@ -349,7 +371,7 @@ class GroupController extends BaseController {
         $currentUserId = Yii::$app->user->id;
         if (empty($_POST['id'])) return json_encode(array('error' => true));
         /** @var Group $group */
-        $group = Group::find()->where(array("user_id" => $currentUserId, "id" => intval($_POST['id'])))->one();
+        $group = Group::find()->where(array("user_id" => $currentUserId, "id" => intval($_POST['id'])))->andWhere('status != -1')->one();
         if (empty($group)) return json_encode(array('error' => true));
         $data = $group->toArray();
         $data['users'] = array_values(UserGroup::find()->joinWith("user")->where(array("group_id" => $group->id))->asArray()->all());
@@ -367,7 +389,7 @@ class GroupController extends BaseController {
             }
 
             if (empty($_POST['id'])) throw new Exception("Nothing to delete");
-            $group = Group::findOne($_POST['id']);
+            $group = Group::findOne($_POST['id'])->Where('status != -1');
 
             if (empty($group) || $group->user_id != $currentUserId) {
                 throw new Exception("Unknown group or user");
@@ -434,6 +456,7 @@ class GroupController extends BaseController {
 
         $groups = Group::find()
             ->where($params)
+            ->andWhere(['not',['status' => '-1']])
             ->orderBy($order);
 
         $countQuery = clone $groups;

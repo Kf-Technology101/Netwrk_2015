@@ -177,10 +177,10 @@
                                 <div class="col-xs-4">
                                     <div class="topic-actions text-right">
                                         <a href="javascript:" class="edit-group" data-id="<%= item.id %>" data-city_id="<%= item.city_id %>"><i class="fa fa-edit"></i><span>Edit</span></a>
-                                        <a href="javascript:" class="delete-group" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
-                                            <span class="date-details">
-                                               <%= item.formatted_created_date %>
-                                            </span>
+                                        <a href="javascript:" class="delete-trigger" data-section="profile" data-object="group" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                        <span class="date-details">
+                                           <%= item.formatted_created_date %>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -223,9 +223,9 @@
                                             <div class="topic-actions text-right">
                                                 <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
                                                 <a href="javascript:" class="delete-trigger" data-section="profile" data-object="topic" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
-                                            <span class="date-details">
-                                               <%= item.formatted_created_date %>
-                                            </span>
+                                                <span class="date-details">
+                                                   <%= item.formatted_created_date %>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
