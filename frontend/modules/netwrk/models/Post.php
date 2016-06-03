@@ -193,6 +193,8 @@ class Post extends \yii\db\ActiveRecord
         $post = Post::find()
                 ->joinWith('topic')
                 ->where(['topic.city_id' => $city])
+                ->andWhere(['not',['topic.status'=> '-1']])
+                ->andWhere(['not',['post.status'=> '-1']])
                 ->orderBy(['post.brilliant_count'=> SORT_DESC])
                 ->one();
         return $post;

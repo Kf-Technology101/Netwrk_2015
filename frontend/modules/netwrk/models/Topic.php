@@ -135,6 +135,7 @@ class Topic extends \yii\db\ActiveRecord
         return Topic::find()
                     ->joinWith('city')
                     ->where(['city.id' => $city])
+                    ->andWhere(['not',['topic.status'=> '-1']])
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
