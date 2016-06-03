@@ -509,8 +509,14 @@ var User_Profile = {
             User_Profile.onClickDeleteGroup();
         } else if(User_Profile.tab_current == 'post') {
             User_Profile.onClickEditPost();
+        } else if(User_Profile.tab_current == 'topic') {
+            console.log('in tab_current');
+            User_Profile.onClickEditTopic();
         } else {
+            User_Profile.onClickEditGroup();
+            User_Profile.onClickDeleteGroup();
         }
+
     },
     onClickEditGroup: function() {
         var target = $('.edit-group', User_Profile.contexts.modalProfile);
@@ -551,6 +557,17 @@ var User_Profile = {
                 var post_id = $(this).attr('data-id');
                 $('#modal_profile').modal('hide');
                 Create_Post.initialize(null,null,null,null, post_id);
+            });
+        });
+    },
+    onClickEditTopic: function() {
+        var target = $('.edit-topic', User_Profile.contexts.modalProfile);
+
+        target.each(function() {
+            $(this).unbind("click").click(function() {
+                $('#modal_profile').modal('hide');
+                Common.HideTooTip();
+                Create_Topic.initialize($(this).data("city_id"), $(this).data("city_name"), null, null, null, null, $(this).data("id"));
             });
         });
     },
@@ -673,6 +690,7 @@ var User_Profile = {
             template.find('.no-data').hide();
             User_Profile.getTemplateTopicInfo(template, templateData);
 
+            User_Profile.onTemplate();
             // Initialize click on topic name
             Topic.OnClickTopicFeed();
             Common.deleteTrigger();
