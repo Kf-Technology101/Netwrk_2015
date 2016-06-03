@@ -436,4 +436,48 @@ class TopicController extends BaseController
         $hash = json_encode($temp);
         return $hash;
     }
+
+    /**
+     * @throws \yii\db\Exception
+     */
+    public function actionDelete(){
+        $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+            $currentUserId = Yii::$app->user->id;
+            $currentUser = User::find()->where(array("id" => $currentUserId))->one();
+            $id = $_POST['id'];
+
+            if (empty($currentUser)) {
+                throw new Exception("Unknown error, please try to re-login");
+            }
+
+            if (empty($_POST['id'])) throw new Exception("Nothing to delete");
+
+            $topic = Topic::findOne($id);
+
+            if (empty($topic) || $topic->user_id != $currentUserId) {
+                throw new Exception("Unknown post or user");
+            }
+
+            $topic->status = -1;
+            $topic->save();
+
+            // Find all posts from this topic and update those status
+            $topic_posts = Post::find()->where('topic_id = '. $id)->all();
+
+            foreach ($topic_posts as $key => $value) {
+                $post = Post::findOne($value->id);
+                $post->status = -1;
+                $post->save();
+            }
+
+            $transaction->commit();
+
+            die(json_encode(array("error" => false)));
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            die(json_encode(array("error" => true, "message" => $e->getMessage())));
+        }
+    }
 }

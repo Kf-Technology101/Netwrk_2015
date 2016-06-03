@@ -438,6 +438,7 @@ var User_Profile = {
 
             // Initialize click on topic name
             Topic.OnClickTopicFeed();
+            Common.deleteTrigger();
         });
     },
     //Show Topics information of users
