@@ -445,6 +445,23 @@ var Ajax ={
 
         return defer.promise();
     },
+    show_topic_by_id: function(topic_id) {
+        var url,defer = $.Deferred();
+
+        url = "/netwrk/topic/get-topic-by-id";
+
+        $.ajax({
+            url: url,
+            data: { "topic_id" : topic_id },
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     create_edit_group: function(params){
         var url,defer = $.Deferred();

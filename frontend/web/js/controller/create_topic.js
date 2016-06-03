@@ -1,5 +1,6 @@
 var Create_Topic={
     params:{
+        topic_id: '',
         topic:'',
         post: '',
         message:'',
@@ -12,7 +13,10 @@ var Create_Topic={
         netwrk_name:'',
         zip_code:'',
         lat:'',
-        lng:''
+        lng:'',
+        post_id:'',
+        post_title:'',
+        post_content:''
     },
     status_change:{
         topic:false,
@@ -21,9 +25,42 @@ var Create_Topic={
         total: false
     },
 
-    initialize: function(city, name, byGroup, group, groupName, byGroupLoc){
+    initialize: function(city, name, byGroup, group, groupName, byGroupLoc, topic_id){
         if (typeof byGroup != "undefined") Create_Topic.params.byGroup = byGroup;
         if (typeof byGroupLoc != "undefined") Create_Topic.params.byGroupLoc = byGroupLoc;
+        if (typeof topic_id != "undefined") Create_Topic.params.topic_id = topic_id;
+        if(topic_id != 'undefined' && topic_id != null) {
+            //fetch topic details with post and show data on create topic form.
+            var error = false;
+            Ajax.show_topic_by_id(topic_id).then(function(data) {
+                var json = $.parseJSON(data);
+                if (json.error) {
+                    alert("Unable to load post");
+                    error = true;
+                } else {
+                    //If post is exists of perticular post_id then set the post params. So
+                    //these params are available for furthur processing.
+                    city = json.city_id;
+                    name = json.city_name;
+
+                    Create_Topic.params.topic_id = json.topic_id;
+                    Create_Topic.params.topic_name = json.topic_title;
+                    Create_Topic.params.city = json.city_id;
+                    Create_Topic.params.zip_code = json.zip_code;
+                    Create_Topic.params.post_id = json.post_id;
+                    Create_Topic.params.post_title = json.post_title;
+                    Create_Topic.params.post_content = json.content;
+
+                    //set status_change status as true So save button will be active in create post form
+                    // as post msg and message required field is alread updated.
+                    Create_Topic.status_change.topic = true;
+                    Create_Topic.status_change.post = true;
+                    Create_Topic.status_change.message = true;
+                }
+
+            });
+            if (error) return;
+        }
         if(isMobile){
             Create_Topic.params.city = $('#create_topic_modal').attr('data-city');
             Create_Topic.params.netwrk_name = $('#create_topic_modal').attr('data-name-city');
@@ -144,6 +181,12 @@ var Create_Topic={
 
     showModalCreateTopic: function(){
         var parent = $('#create_topic_modal');
+
+        parent.find('.name_topic').val(Create_Topic.params.topic_name);
+        parent.find('.name_post').val(Create_Topic.params.post_title);
+        parent.find('.message').val(Create_Topic.params.post_content);
+
+        Create_Topic.onCheckStatus();
         parent.modal({
             backdrop: true,
             keyboard: false
@@ -284,6 +327,7 @@ var Create_Topic={
     reset_data: function(){
         var parent = $('#create_topic_modal');
 
+        Create_Topic.resetParams();
         parent.find('.name_topic').val('');
         parent.find('.name_post').val('');
         parent.find('.message').val('');
@@ -352,5 +396,14 @@ var Create_Topic={
             //     ChatInbox.OnClickChatInboxMobile();
             // });
         });
+    },
+    resetParams: function() {
+        //reset create topic form params so when new form open then input box will be blank. Erase old set value for these params.
+        Create_Topic.params.topic_id = '';
+        Create_Topic.params.topic_title = '';
+        Create_Topic.params.topic_name = '';
+        Create_Topic.params.post_id = '';
+        Create_Topic.params.post_title = '';
+        Create_Topic.params.post_content = '';
     }
 };

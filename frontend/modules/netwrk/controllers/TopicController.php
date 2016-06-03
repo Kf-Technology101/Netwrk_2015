@@ -84,10 +84,16 @@ class TopicController extends BaseController
         $topic = $_POST['topic'];
         $post = $_POST['post'];
         $message = $_POST['message'];
+        $topic_id = isset($_POST['topic_id']) ? $_POST['topic_id'] : null;
+        $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
 
         $current_date = date('Y-m-d H:i:s');
 
-        $Topic = new Topic;
+        if($topic_id) {
+            $Topic = Topic::find()->where(['id' => $topic_id])->one();
+        } else {
+            $Topic = new Topic;
+        }
 
         if (empty($_POST['byGroup']) || $_POST['byGroup'] == "false") {
             $city = $_POST['city'];
@@ -130,7 +136,12 @@ class TopicController extends BaseController
         $hft->created_at = $Topic->created_at;
         $hft->save();
 
-        $Post = new Post();
+        if($post_id) {
+            $Post = Post::findOne($post_id);
+        } else {
+            $Post = new Post();
+        }
+
         $Post->title = $post;
         $Post->content = $message;
         $Post->topic_id = $Topic->id;
@@ -300,6 +311,32 @@ class TopicController extends BaseController
         $id = $_POST['topic'];
         $topic = Topic::findOne($id);
         return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
+    }
+
+    public function actionGetTopicById(){
+        $topic_id = $_GET['topic_id'];
+
+        $query = new Query();
+        //get topic with post details  by id
+        $post = $query->select('post.*, topic.title as topic_title, city.id as city_id, city.zip_code, city.name as city_name')
+            ->from('post')
+            ->where(['topic.id' => $topic_id])
+            ->innerJoin('topic', 'post.topic_id = topic.id')
+            ->innerJoin('city', 'city.id = topic.city_id')
+            ->orderBy('post.created_at ASC')
+            ->limit(1)
+            ->one();
+
+        return json_encode([
+            'topic_id'=>$post['topic_id'],
+            'topic_title'=>$post['topic_title'],
+            'city_id'=>$post['city_id'],
+            'city_name'=>$post['city_name'],
+            'zip_code'=>$post['zip_code'],
+            'post_id'=>$post['id'],
+            'post_title'=>$post['title'],
+            'content'=>$post['content'],
+        ]);
     }
 
     /**
