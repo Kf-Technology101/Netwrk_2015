@@ -248,6 +248,8 @@ class PostController extends BaseController
                 'topic.city_id' => $city_array,
                 ]
             )
+            ->andWhere(['not',['topic.status'=> '-1']])
+            ->andWhere(['not',['post.status'=> '-1']])
             ->orderBy('topic.post_count DESC')
             ->limit($limit)
             ->all();
