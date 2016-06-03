@@ -148,19 +148,39 @@ class GroupController extends BaseController {
 
             $currentUserId = Yii::$app->user->id;
             $currentUser = User::find()->where(array("id" => $currentUserId))->one();
+            $group_id = $_POST['id'];
 
             if (empty($currentUser)) {
                 throw new Exception("Unknown error, please try to re-login");
             }
 
-            if (empty($_POST['id'])) throw new Exception("Nothing to delete");
-            $group = Group::findOne($_POST['id']);
+            if (empty($group_id)) throw new Exception("Nothing to delete");
+            $group = Group::findOne($group_id);
 
             if (empty($group) || $group->user_id != $currentUserId) {
                 throw new Exception("Unknown group or user");
             }
 
-            $group->delete();
+            $group->status = -1;
+            $group->save();
+
+            // Find all topics from this group and update those status
+            $group_topics = Topic::find()->where('group_id = '. $group_id)->all();
+
+            foreach ($group_topics as $key => $value) {
+                $topic = Topic::findOne($value->id);
+                $topic->status = -1;
+                $topic->save();
+
+                // Find all posts from this topic and update those status
+                $topic_posts = Post::find()->where('topic_id = '. $value->id)->all();
+
+                foreach ($topic_posts as $key => $value) {
+                    $post = Post::findOne($value->id);
+                    $post->status = -1;
+                    $post->save();
+                }
+            }
 
             $transaction->commit();
 

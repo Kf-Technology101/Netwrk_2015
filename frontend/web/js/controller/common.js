@@ -169,6 +169,24 @@ var Common = {
                                 }
                             }
                         });
+                    } else if(object == 'group') {
+                        Ajax.delete_group({
+                            'id': id
+                        }).then(function(data) {
+                            var json = $.parseJSON(data);
+                            if (json.error){
+                                confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
+                                setTimeout(function(){
+                                    confirmModal.find('.alert-danger').addClass('hidden');
+                                    confirmModal.modal('hide');
+                                }, 500);
+                            } else {
+                                confirmModal.modal('hide');
+                                if(section == 'profile'){
+                                    self.closest('.col-xs-12').parent().remove();
+                                }
+                            }
+                        });
                     }
                 });
         });
