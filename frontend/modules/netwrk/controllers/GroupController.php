@@ -337,6 +337,7 @@ class GroupController extends BaseController {
 
         $groups = Group::find()
             ->where($params)
+            ->andWhere(['not',['status' => '-1']])
             ->orderBy($order);
 
         $totalCount = $groups->count();

@@ -398,10 +398,10 @@ class TopicController extends BaseController
 
         switch ($filter) {
             case 'recent':
-                $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                $topices = Topic::find()->where($where)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC]);
                 break;
             default:
-                $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+                $topices = Topic::find()->where($where)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC]);
                 break;
         }
 
