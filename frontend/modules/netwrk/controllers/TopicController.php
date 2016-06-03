@@ -28,7 +28,7 @@ class TopicController extends BaseController
 // $models = $query->offset($pages->offset)
 //     ->limit($pages->pageSize)
 //     ->all();
-        $posts = Post::find()->where('topic_id = 1')->orderBy(['created_at'=> SORT_DESC])->all();
+        $posts = Post::find()->where('topic_id = 1')->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC])->all();
         $num_post = count($posts);
         $data = [];
 
@@ -113,7 +113,7 @@ class TopicController extends BaseController
         } else {
             $groupId = $_POST['group'];
             if (empty($groupId)) throw new Exception("Group is empty");
-            $group = Group::find()->where(array("id" => $groupId))->one();
+            $group = Group::find()->where(array("id" => $groupId))->andWhere('status != -1')->one();
             if (empty($group)) throw new Exception("Group not found");
             $Topic->group_id = $groupId;
             $city_id = $group->city_id;
@@ -298,7 +298,7 @@ class TopicController extends BaseController
 
     public function actionGetTopic(){
         $id = $_POST['topic'];
-        $topic = Topic::findOne($id);
+        $topic = Topic::findOne($id)->where('status != -1');
         return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
     }
 
@@ -465,7 +465,7 @@ class TopicController extends BaseController
             $topic->save();
 
             // Find all posts from this topic and update those status
-            $topic_posts = Post::find()->where('topic_id = '. $id)->all();
+            $topic_posts = Post::find()->where('topic_id = '. $id)->andWhere('status != -1')->all();
 
             foreach ($topic_posts as $key => $value) {
                 $post = Post::findOne($value->id);
