@@ -179,13 +179,13 @@ class TopicController extends BaseController
 
         switch ($filter) {
             case 'recent':
-            $topices = Topic::find()->where($where)->orderBy(['created_at'=> SORT_DESC]);
+            $topices = Topic::find()->where($where)->andWhere('status != -1')->orderBy(['created_at'=> SORT_DESC]);
             break;
             case 'post':
-            $topices = Topic::find()->where($where)->orderBy(['post_count'=> SORT_DESC]);
+            $topices = Topic::find()->where($where)->andWhere('status != -1')->orderBy(['post_count'=> SORT_DESC]);
             break;
             case 'view':
-            $topices = Topic::find()->where($where)->orderBy(['view_count'=> SORT_DESC]);
+            $topices = Topic::find()->where($where)->andWhere('status != -1')->orderBy(['view_count'=> SORT_DESC]);
             break;
         }
 
@@ -333,10 +333,11 @@ class TopicController extends BaseController
                                     ->all();
             $feeds =[];
             foreach ($data_feed as $key => $value) {
-                if ($value->type_item == 'post') {
-                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
-                    $url_avatar = User::GetUrlAvatar($value->item->user->id,$value->item->user->profile->photo);
-                    if($value->item->status != -1) {
+                if($value->item->status != -1) {
+                    if ($value->type_item == 'post') {
+                        $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                        $url_avatar = User::GetUrlAvatar($value->item->user->id, $value->item->user->profile->photo);
+
                         $item = [
                             'id' => $value->item->id,
                             'title' => $value->item->title,
@@ -351,21 +352,21 @@ class TopicController extends BaseController
                             'user_id' => $value->item->user_id,
                             'is_post' => 1
                         ];
-                    }
-                } else {
-                    $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
-                    $item = [
-                        'id' => $value->item->id,
-                        'title'=> $value->item->title,
-                        'city_id'=> $value->item->city_id,
-                        'city_name'=> $value->item->city->name,
-                        'created_at' => $value->created_at,
-                        'appear_day' => $num_date,
-                        'created_by' => $value->item->user['profile']['first_name']." ".$value->item->user['profile']['last_name'],
-                        'is_post' => 0
+                    } else {
+                        $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                        $item = [
+                            'id' => $value->item->id,
+                            'title' => $value->item->title,
+                            'city_id' => $value->item->city_id,
+                            'city_name' => $value->item->city->name,
+                            'created_at' => $value->created_at,
+                            'appear_day' => $num_date,
+                            'created_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
+                            'is_post' => 0
                         ];
+                    }
+                    array_push($feeds, $item);
                 }
-                array_push($feeds, $item);
             }
 
             $item = [
