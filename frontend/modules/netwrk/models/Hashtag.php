@@ -99,6 +99,7 @@ class Hashtag extends \yii\db\ActiveRecord
                     ->leftJoin('post', 'post_hashtag.post_id = post.id')
                     ->leftJoin('topic', 'topic.id = post.topic_id')
                     ->where(['topic.city_id' => $city])
+                    ->andWhere(['not',['topic.status'=> '-1']])
                     ->groupBy('hashtag.id')
                     ->orderBy('count_hash DESC')
                     ->limit($limit)

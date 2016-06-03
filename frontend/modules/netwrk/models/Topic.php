@@ -143,6 +143,7 @@ class Topic extends \yii\db\ActiveRecord
         return Topic::find()
                     ->joinWith('city')
                     ->where(['city.id' => $city])
+                    ->andWhere(['not',['topic.status'=> '-1']])
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
@@ -153,6 +154,7 @@ class Topic extends \yii\db\ActiveRecord
         if ($city != null) {
             $model = Topic::find()
                     ->where('city_id ='.$city)
+                    ->andWhere(['not',['topic.status'=> '-1']])
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
@@ -162,11 +164,13 @@ class Topic extends \yii\db\ActiveRecord
                 $model = Topic::find()
                     ->joinWith('city')
                     ->where('city.id IN ('.$city_ids.')')
+                    ->andWhere(['not',['topic.status'=> '-1']])
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
             } else {
                 $model = Topic::find()
+                    ->where(['not',['topic.status'=> '-1']])
                     ->orderBy(['topic.post_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
