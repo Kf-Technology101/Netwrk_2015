@@ -231,6 +231,8 @@ class GroupController extends BaseController {
         $groups = Group::find()
             ->where($params)
             ->andWhere($andWhere)
+            ->andWhere(['not',['group.status' => '-1']])
+            ->andWhere(['not',['topic.status' => '-1']])
             ->joinWith("topic")
             ->orderBy($order)
             ->all();
