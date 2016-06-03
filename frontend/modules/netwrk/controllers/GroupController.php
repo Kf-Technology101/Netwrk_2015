@@ -165,7 +165,7 @@ class GroupController extends BaseController {
             $group->save();
 
             // Find all topics from this group and update those status
-            $group_topics = Topic::find()->where('group_id = '. $group_id)->all();
+            $group_topics = Topic::find()->where('group_id = '. $group_id)->andWhere('status != -1')->all();
 
             foreach ($group_topics as $key => $value) {
                 $topic = Topic::findOne($value->id);
@@ -173,7 +173,7 @@ class GroupController extends BaseController {
                 $topic->save();
 
                 // Find all posts from this topic and update those status
-                $topic_posts = Post::find()->where('topic_id = '. $value->id)->all();
+                $topic_posts = Post::find()->where('topic_id = '. $value->id)->andWhere('status != -1')->all();
 
                 foreach ($topic_posts as $key => $value) {
                     $post = Post::findOne($value->id);
@@ -258,7 +258,7 @@ class GroupController extends BaseController {
         $currentUserId = Yii::$app->user->id;
         if (empty($_POST['id'])) return json_encode(array('error' => true));
         /** @var Group $group */
-        $group = Group::find()->where(array("user_id" => $currentUserId, "id" => intval($_POST['id'])))->one();
+        $group = Group::find()->where(array("user_id" => $currentUserId, "id" => intval($_POST['id'])))->andWhere('status != -1')->one();
         if (empty($group)) return json_encode(array('error' => true));
         $data = $group->toArray();
         $data['users'] = array_values(UserGroup::find()->joinWith("user")->where(array("group_id" => $group->id))->asArray()->all());
@@ -276,7 +276,7 @@ class GroupController extends BaseController {
             }
 
             if (empty($_POST['id'])) throw new Exception("Nothing to delete");
-            $group = Group::findOne($_POST['id']);
+            $group = Group::findOne($_POST['id'])->Where('status != -1');
 
             if (empty($group) || $group->user_id != $currentUserId) {
                 throw new Exception("Unknown group or user");
