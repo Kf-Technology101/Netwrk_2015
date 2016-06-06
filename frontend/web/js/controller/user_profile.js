@@ -551,14 +551,27 @@ var User_Profile = {
     },
     /* On click of edit button in post list then open post edit form */
     onClickEditPost: function() {
-        var btn = $('.post-edit', User_Profile.contexts.modalProfile);
-        btn.each(function() {
-            $(this).unbind("click").click(function() {
-                var post_id = $(this).attr('data-id');
-                $('#modal_profile').modal('hide');
-                Create_Post.initialize(null,null,null,null, post_id);
+        if(isMobile){
+            var btn = $('.post-edit', '.Profile-view');
+            btn.each(function () {
+                console.log('in btn click');
+                $(this).unbind("click").click(function () {
+                    var post_id = $(this).attr('data-id'),
+                        topic_id = $(this).attr('data-topic_id'),
+                        city_id = $(this).attr('data-city_id');
+                    window.location.href = baseUrl + "/netwrk/post/create-post?city="+ city_id +"&topic="+topic_id+"&post_id="+post_id;
+                });
             });
-        });
+        }else {
+            var btn = $('.post-edit', User_Profile.contexts.modalProfile);
+            btn.each(function () {
+                $(this).unbind("click").click(function () {
+                    var post_id = $(this).attr('data-id');
+                    $('#modal_profile').modal('hide');
+                    Create_Post.initialize(null, null, null, null, post_id);
+                });
+            });
+        }
     },
     onClickEditTopic: function() {
         var target = $('.edit-topic', User_Profile.contexts.modalProfile);

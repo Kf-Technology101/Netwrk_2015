@@ -266,7 +266,7 @@
                                     <% print(item.formatted_created_date) %>
                                 </div>
                                 <div class="post-actions">
-                                    <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
+                                    <a href="javascript:" class="post-edit" data-id="<%= item.id %>" data-topic_id="<%= item.topic_id %>" data-city_id="<%= item.city_id %>"><i class="fa fa-edit"></i><span>Edit</span></a>
                                     <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                 </div>
                             </div>

@@ -17,46 +17,19 @@ var Create_Post={
 
     initialize: function(city,topic,name_city,name_topic,post_id){
         Create_Post.resetParams();
-        if(post_id != 'undefined' && post_id != null) {
-            //todo: fetch post details and show on create post form.
-            var error = false;
-            Create_Post.changeData();
-            Ajax.show_post(post_id).then(function(data) {
-                var json = $.parseJSON(data);
-                if (json.error) {
-                    alert("Unable to load post");
-                    error = true;
-                } else {
-                    //If post is exists of perticular post_id then set the post params. So
-                    //these params are available for furthur processing.
-                    city = json.city_id;
-                    topic = json.topic_id;
-
-                    name_city = json.city_zipcode;
-                    name_topic = json.topic_name;
-
-                    Create_Post.params.city = json.city_id;
-                    Create_Post.params.city_name = json.city_name;
-                    Create_Post.params.topic = json.topic_id;
-                    Create_Post.params.topic_name = json.topic_name;
-
-                    Create_Post.params.message = json.content;
-                    Create_Post.params.post_id = json.id;
-                    Create_Post.params.post_title = json.title;
-
-                    //set status_change status as true So save button will be active in create post form
-                    // as post msg and message required field is alread updated.
-                    Create_Post.status_change.total = true;
-                    Create_Post.status_change.post = true;
-                    Create_Post.status_change.message = true;
-                }
-
-            });
-            if (error) return;
-        }
         if(isMobile){
             Create_Post.params.topic = $('#create_post').attr('data-topic');
             Create_Post.params.city = $('#create_post').attr('data-city');
+            Create_Post.params.post_id = $('#create_post').attr('data-post_id');
+
+            //set status_change status as true So save button will be active in create post form
+            // as post msg and message required field is alread updated.
+            if(Create_Post.params.post_id) {
+                Create_Post.status_change.total = true;
+                Create_Post.status_change.post = true;
+                Create_Post.status_change.message = true;
+                Create_Post.onCheckStatus();
+            }
             Create_Post.changeData();
             Create_Post.onclickBack();
             // Create_Post.showNetWrkBtn();
@@ -69,6 +42,43 @@ var Create_Post={
                 Login.modal_callback = Post;
                 Login.initialize();
                 return false;
+            }
+            //if edit form, then initialize the create_post edit form
+            if(post_id != 'undefined' && post_id != null) {
+                //todo: fetch post details and show on create post form.
+                var error = false;
+                Create_Post.changeData();
+                Ajax.show_post(post_id).then(function(data) {
+                    var json = $.parseJSON(data);
+                    if (json.error) {
+                        alert("Unable to load post");
+                        error = true;
+                    } else {
+                        //If post is exists of perticular post_id then set the post params. So
+                        //these params are available for furthur processing.
+                        city = json.city_id;
+                        topic = json.topic_id;
+
+                        name_city = json.city_zipcode;
+                        name_topic = json.topic_name;
+
+                        Create_Post.params.city = json.city_id;
+                        Create_Post.params.city_name = json.city_name;
+                        Create_Post.params.topic = json.topic_id;
+                        Create_Post.params.topic_name = json.topic_name;
+
+                        Create_Post.params.message = json.content;
+                        Create_Post.params.post_id = json.id;
+                        Create_Post.params.post_title = json.title;
+
+                        //set status_change status as true So save button will be active in create post form
+                        // as post msg and message required field is alread updated.
+                        Create_Post.status_change.total = true;
+                        Create_Post.status_change.post = true;
+                        Create_Post.status_change.message = true;
+                    }
+                });
+                if (error) return;
             }
             Create_Post.params.city = city;
             Create_Post.params.topic = topic;

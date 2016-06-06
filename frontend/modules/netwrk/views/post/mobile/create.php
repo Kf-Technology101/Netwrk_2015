@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="create_post" data-topic="<?= $topic->id?>" data-city="<?= $city->id ?>">
+<div id="create_post" data-topic="<?= $topic->id?>" data-city="<?= $city->id ?>" data-post_id="<?= $post->id?>">
     <div class="header">
         <div class="back_page">
             <!-- <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>"> -->
@@ -15,12 +15,12 @@
                 <p class="title"> Post </p>
                 <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2">#</span>
-                    <input type="text" class="name_post" maxlength="128" placeholder="Post Title">
+                    <input type="text" class="name_post" maxlength="128" placeholder="Post Title" value="<?= isset($post->title) ? $post->title :''?>">
                 </div>
             </div>
             <div class="post-message">
                 <p class="title"> Message </p>
-                <textarea class="message" placeholder="Type message here..." maxlength="1024"></textarea>
+                <textarea class="message" placeholder="Type message here..." maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
             </div>
         </div>
         <div class="btn-control">
