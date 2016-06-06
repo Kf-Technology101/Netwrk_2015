@@ -261,7 +261,7 @@
                                 </div>
                                 <div class="post-actions">
                                     <a href="javascript:" class="post-edit"><i class="fa fa-edit"></i><span>Edit</span></a>
-                                    <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                    <a href="javascript:" class="delete-trigger" data-section="profile" data-object="post" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                 </div>
                             </div>
                         </div>
