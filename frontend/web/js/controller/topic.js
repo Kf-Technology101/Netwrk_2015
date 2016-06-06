@@ -62,6 +62,7 @@ var Topic = {
             Topic.OnClickFavorite();
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
+            Default.SetAvatarUserDropdown();
         } else {
             Topic.displayPositionModal();
         }
@@ -113,6 +114,7 @@ var Topic = {
                     if (Topic.list[Topic.data.filter].status_paging == 1 && Topic.tab_current == "topic"){
                         Topic.load_topic_more();
                     }else if(Topic.feed.status_paging == 1 &&Topic.tab_current == "feed"){
+                        console.log('Load more topic feeds');
                         Topic.feed.paging ++;
                         Topic.LoadMoreFeed();
                     }
@@ -166,16 +168,13 @@ var Topic = {
 
     ShowTopicPage: function(){
         var parent = $('#modal_topic,#show-topic');
+
         parent.find('#tab_topic').show();
 
-        if(isMobile){
-            parent.find('span.filter').removeClass('visible');
-        }else{
-            parent.find('.groups-dropdown').addClass('visible').css('display','none');
-            parent.find('.topics-dropdown').removeClass('visible').css('display','table');
-            parent.find('.tab-header-topic').removeClass('hidden');
-            parent.find('.tab-header-group').addClass('hidden');
-        }
+        parent.find('.groups-dropdown').addClass('visible').css('display','none');
+        parent.find('.topics-dropdown').removeClass('visible').css('display','table');
+        parent.find('.tab-header-topic').removeClass('hidden');
+        parent.find('.tab-header-group').addClass('hidden');
 
         $('.create_topic').show();
         $('#create_group').hide();
@@ -183,44 +182,42 @@ var Topic = {
         //enable btn create topic
         parent.find('.header .title_page').removeClass('on-feed');
         parent.find('.header .create_topic').removeClass('on-feed');
+
+        var parentFilter = $('#item_list_'+Topic.data.filter);
+        Topic.filter_topic(parentFilter);
     },
 
     ShowFeedPage: function(){
         var parent = $('#modal_topic,#show-topic');
-        if(isMobile){
-            parent.find('span.filter').addClass('visible');
-            parent.find('span.filter').removeClass('active');
-            parent.find('.filter_sort').removeClass('active');
-        }else{
-            parent.find('.groups-dropdown').addClass('visible').css('display','inherit');
-            parent.find('.topics-dropdown').addClass('visible').css('display','none');
-            parent.find('.tab-header-topic').addClass('hidden');
-            parent.find('.tab-header-group').addClass('hidden');
-        }
+
         parent.find('#tab_feed').show();
+
+        parent.find('.groups-dropdown').addClass('visible').css('display','inherit');
+        parent.find('.topics-dropdown').addClass('visible').css('display','none');
+        parent.find('.tab-header-topic').addClass('hidden');
+        parent.find('.tab-header-group').addClass('hidden');
+
         parent.find('.filter').addClass('visible');
         parent.find('.container').removeClass('open');
 
         //disable btn create topic
         parent.find('.header .title_page').addClass('on-feed');
         parent.find('.header .create_topic').addClass('on-feed');
+        parent.find('.header #create_group').addClass('on-feed');
 
         $('.create_topic').hide();
-        //$('#create_topic').show();
+        $('#create_group').hide();
     },
 
     ShowGroupsPage: function() {
         var parent = $('#modal_topic,#show-topic');
+
         parent.find('#tab_groups').show();
 
-        if(isMobile){
-            parent.find('span.filter').removeClass('visible');
-        }else{
-            parent.find('.topics-dropdown').addClass('visible').css('display','none');
-            parent.find('.groups-dropdown').removeClass('visible').css('display','inherit');
-            parent.find('.tab-header-topic').addClass('hidden');
-            parent.find('.tab-header-group').removeClass('hidden');
-        }
+        parent.find('.topics-dropdown').addClass('visible').css('display','none');
+        parent.find('.groups-dropdown').removeClass('visible').css('display','inherit');
+        parent.find('.tab-header-topic').addClass('hidden');
+        parent.find('.tab-header-group').removeClass('hidden');
 
         $('.create_topic').hide();
         $('#create_group').show();
@@ -229,7 +226,7 @@ var Topic = {
         parent.find('.header .title_page').removeClass('on-feed');
         parent.find('.header .create_topic').removeClass('on-feed');
 
-        Group.initialize();
+        Group.initialize('tab');
     },
 
     OnClickSortBtn: function(){
@@ -386,6 +383,7 @@ var Topic = {
     },
 
     LoadFeedModal: function() {
+        console.log('load feed modal');
         var self = this;
         var parent = $('#modal_topic,#show-topic').find('#tab_feed');
         var cityname = $('#modal_topic').find('.title_page');
@@ -413,6 +411,7 @@ var Topic = {
     },
 
     LoadMoreFeed: function(){
+        console.log('Load more feed topic');
         var params = {'city': Topic.data.city,'zipcode': Topic.data.zipcode, 'filter': Topic.data.filter,'size': Topic.data.size,'page':Topic.feed.paging};
         var parent = $('#modal_topic,#show-topic').find('#tab_feed');
         Ajax.show_feed(params).then(function(data){
@@ -902,7 +901,7 @@ var Topic = {
         btn.unbind();
         btn.on('click',function(){
             if(isMobile){
-                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+                window.location.href = baseUrl + "/netwrk/group/create-group?city="+ Topic.data.city;
             }else{
                 $('#modal_topic').modal('hide');
                 Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name);

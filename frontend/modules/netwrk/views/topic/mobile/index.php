@@ -22,12 +22,15 @@
         <div class="title_page">
             <span class="title"><?php if($data->title) print $data->title; else print $data->zipcode?></span>
         </div>
-        <div class="create_topic">
+        <!--<div class="create_topic">
             <span><i class="fa fa-plus-circle"></i> Create Topic</span>
         </div>
+        <div class="create_group" id="create_group">
+            <span><i class="fa fa-plus-circle"></i> Create Group</span>
+        </div>-->
     </div>
     <div class="sidebar">
-        <span class="filter"><i class="fa fa-filter"></i></span>
+        <!--<span class="filter"><i class="fa fa-filter"></i></span>-->
         <table class="filter_sidebar">
             <tr>
                 <td class="feed active">Feed</td>
@@ -36,7 +39,41 @@
             </tr>
         </table>
     </div>
-    <div class="filter_sort">
+    <div class="tab-header tab-header-topic clearfix hidden">
+        <div class="tab-title">
+            <p class="tab-title-text">Topics</p>
+            <div class="topics-dropdown dropdown input-group">
+                <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li data-value="recent">Most recent</li>
+                    <li data-value="post">Most posts</li>
+                    <li data-value="view">Most viewed</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-btn">
+            <p class="btn-create-topic create_topic"><i class="fa fa-plus-circle"></i>Create Topic</p>
+        </div>
+    </div>
+    <div class="tab-header tab-header-group clearfix hidden">
+        <div class="tab-title">
+            <p class="tab-title-text">Groups</p>
+            <div class="groups-dropdown dropdown input-group">
+                <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li data-value="recent">Most recent</li>
+                    <li data-value="post">Most posts</li>
+                    <li data-value="view">Most viewed</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-btn">
+            <p class="btn-create-topic" id="create_group"><i class="fa fa-plus-circle"></i>Create Group</p>
+        </div>
+    </div>
+    <!--<div class="filter_sort">
         <div class="dropdown input-group">
             <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
             <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
@@ -46,7 +83,7 @@
                 <li data-value="view">Most viewed</li>
             </ul>
         </div>
-    </div>
+    </div>-->
     <div class="container">
         <div id="tab_feed" class="tab">
             <p class="no-data">There is no data available yet</p>
@@ -63,7 +100,27 @@
             </div>
         </div>
         <div id="tab_groups" class="tab">
-
+            <div class="topic_group_top">
+                <div class="topic_group_name">
+                    <span>Football experts</span>
+                    <button>Total Users</button>
+                </div>
+                <div class="topic_group_create">
+                    <button id="btn-create-topic">Create Topic</button>
+                    <button id="btn-create-post">Create Post</button>
+                </div>
+                <div class="filter">
+                    <div class="group-topics-dropdown dropdown input-group">
+                        <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
+                        <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <li data-value="recent">Most recent</li>
+                            <li data-value="post">Most posts</li>
+                            <li data-value="view">Most viewed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                 <p class="no-data">There is no data available yet</p>
             </div>
@@ -127,38 +184,50 @@
             <% }); %>
         </script>
         <script id="group_list" type="text/x-underscore-template">
+            <% if(groups.length > 0) {%>
             <% _.each(groups,function(group){ %>
-            <div class="item" data-item="<%= group.id %>">
+            <div class="item clearfix" data-item="<%= group.id %>">
                 <div class="group_loc_post">
-                    <div class="name_group">
-                        <p><%= group.name %></p>
-                    </div>
+            <span class="name_group">
+                <p><%= group.name %></p>
+            </span>
                 </div>
-                <div class="num_count_duration">
-                    <div class="most_post">
-                        <p><i class="fa fa-clock-o"></i><%= group.created_at%></p>
-                    </div>
+
+
+                <div class="group-date-details group-item">
+                    <span><%= group.created_at%></span>
                 </div>
-                <div class="num_count">
-                    <div class="most_post">
-                        <p><% if (group.permission == 1) { %><img src="/img/icon/glob.png"><% } else if (group.permission == 2) { %><img src="/img/icon/lock.png"><% } %></p>
-                    </div>
+                <div class="group-actions text-right">
+            <span class="group-item">
+                <span class="most_post">
+                    <span><% if (group.permission == 1) { %><i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title="Public" data-container="body"></i><% } else if (group.permission == 2) { %><i class="fa fa-lock" data-toggle="tooltip" data-placement="top" title="Private" data-container="body"></i><% } %></span>
+                </span>
+            </span>
+            <span class="group-item">
+                <span class="most_post">
+                    <span><i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="Users" data-container="body"></i><%= group.users%></span>
+                </span>
+            </span>
+                    <% if (group.owner) { %>
+            <span class="group-item">
+                <span class="most_post">
+                    <span class="edit-group-p"><i data-id="<%= group.id %>" class="edit-group fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= group.name %>" data-container="body"></i></span>
+                    <span><i data-id="<%= group.id %>" class="delete-group fa fa-trash-o"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i></span>
+                </span>
+            </span>
+                    <% } %>
+            <span class="group-item">
+                <span class="most_post">
+                    <span><i class="fa fa-angle-right"></i></span>
+                </span>
+            </span>
                 </div>
-                <div class="num_count_duration">
-                    <div class="most_post">
-                        <p><img src="/img/icon/users.png"><%= group.users%></p>
-                    </div>
-                </div>
-                <% if (group.owner) { %>
-                <div class="num_count_duration">
-                    <div class="most_post">
-                        <p class="edit-group-p"><img data-id="<%= group.id %>" class="edit-group" src="/img/icon/edit-group.png"></p>
-                        <p><img data-id="<%= group.id %>" class="delete-group" src="/img/icon/delete-group.png"></p>
-                    </div>
-                </div>
-                <% } %>
             </div>
             <% }); %>
+            <% } else {%>
+            <div class="no-data-alert"><p class="">This community has no groups. Be the first to create a group.</p></div>
+            <% } %>
+
         </script>
         <script id="topic_group_list" type="text/x-underscore-template">
             <% _.each(topices,function(topic){ %>
@@ -296,6 +365,36 @@
           <%
             });
           %>
+        </script>
+        <script id="total_users" type="text/x-underscore-template" >
+            <div class="users-joined">
+                <div class="item-title">Joined people</div>
+                <p class="no-data">No users</p>
+                <% _.each(joined,function(user){ %>
+                <div class="item" data-item="<%= user.id %>">
+                    <div class="name">
+                        <p><%= user.name %></p>
+                    </div>
+                    <div class="email">
+                        <p><%= user.email%></p>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            <div class="users-invited">
+                <div class="item-title">Invitation pending</div>
+                <p class="no-data">No users</p>
+                <% _.each(invited,function(user){ %>
+                <div class="item" data-item="<%= user.id %>">
+                    <div class="name">
+                        <p><%= user.name %></p>
+                    </div>
+                    <div class="email">
+                        <p><%= user.email%></p>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
         </script>
     </div>
 </div>

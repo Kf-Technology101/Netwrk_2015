@@ -64,7 +64,13 @@ var Group = {
         Group.OnShowModalGroup();
     },
 
-    initialize: function(){
+    initialize: function(from){
+        if(from == 'tab'){
+            if(isMobile){
+                var parentFilter = $('#item_list_'+Group.data.filter);
+                Group.filter_group(parentFilter);
+            }
+        }
         if (!isMobile) {
             //Group._onclickBack();
             /*Group.OnShowModalPost();
@@ -74,18 +80,19 @@ var Group = {
             Group.OnClickCreateGroup();*/
             //Group.show_modal_group(city,params);
             Group.OnShowModalGroup();
-            Group.CreateTopic();
-            Group.CreatePost();
-            Group.TotalUsers();
             Common.InitToolTip();
             //Group.filter_group();
         }
+
+        Group.CreateTopic();
+        Group.CreatePost();
+        Group.TotalUsers();
     },
 
     onclickBackFromTopics: function(){
         if (isMobile) {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
-                window.location.href = baseUrl;
+            $('#show-topic .back_page span').unbind("click").click(function() {
+                Group.LoadGroupModal();
             });
         } else {
             $('#modal_topic .back_page span').unbind("click").click(function() {
@@ -113,8 +120,12 @@ var Group = {
 
     onclickBackFromUsers: function() {
         if (isMobile) {
-            $('#modal_topic .back_page span').unbind("click").click(function() {
-                window.location.href = baseUrl;
+            $('#show-topic .back_page span').unbind("click").click(function() {
+                var parent = $('#item_topic_group_list_' + Group.data.filter);
+                Group.ShowTopics(parent, Group.data.id, Group.data.name);
+
+                //Hide the group tab header from topic modal.
+                Topic.HideTabGroupHeader();
             });
         } else {
             $('#modal_topic .back_page span').unbind("click").click(function() {
@@ -369,7 +380,6 @@ var Group = {
     },
 
     ShowTopics: function(parent, group, groupName) {
-
         if (typeof group == "undefined") group = Group.data.id;
         else Group.data.id = group;
 
@@ -393,26 +403,34 @@ var Group = {
             console.log("deleting old");
             $("div[id^='item_topic_group_list'] .item").remove();
             $('#item_total_users').hide();
-            //if (json.data.length > 0) {
-                parent.scrollTop(0);
-                Group.list[Group.data.filter].loaded = Group.list[Group.data.filter].paging;
-                Group.getTemplateTopicGroup(parent, json);
-                //self.getTemplateModal(cityname, data);
-                Topic.CustomScrollBar();
-                Group.filter_topic(parent);
-                Topic.GetDataOnTab();
-                Group.post_params.group_back = group;
-                Group.post_params.group_back_name = groupName;
-                $('.topic_group_name span').html(groupName);
-            //}
+            if (json.data.length > 0) {
+                parent.find('.no-data').hide();
+            }
+            parent.scrollTop(0);
+            Group.list[Group.data.filter].loaded = Group.list[Group.data.filter].paging;
+            Group.getTemplateTopicGroup(parent, json);
+            //self.getTemplateModal(cityname, data);
+            Topic.CustomScrollBar();
+            Group.filter_topic(parent);
+            /*Topic.GetDataOnTab();*/
+            Group.post_params.group_back = group;
+            Group.post_params.group_back_name = groupName;
+            $('.topic_group_name span').html(groupName);
         });
     },
 
     CreateTopic: function() {
-        console.log("create topic!!! ", $('#btn-create-topic').eq(0));
-        $('#btn-create-topic').eq(0).click(function() {
-            $('#modal_topic').modal('hide');
-            Create_Topic.initialize(Topic.data.city, Topic.data.city_name, true, Group.data.id);
+        var btn = $('#btn-create-topic');
+
+        console.log("create topic!!! ", btn);
+
+        btn.eq(0).off().on('click', function() {
+            if(isMobile) {
+                window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+Topic.data.city+"&group="+Group.data.id;
+            } else {
+                $('#modal_topic').modal('hide');
+                Create_Topic.initialize(Topic.data.city, Topic.data.city_name, true, Group.data.id);
+            }
         });
     },
 
@@ -434,6 +452,13 @@ var Group = {
                 $('#item_total_users').show().find('.no-data').hide();
                 Group.getTemplateTotalUsers(parent, json);
                 Group.onclickBackFromUsers();
+
+                if(isMobile){
+                    // Hide Create Group button and filter option when Total Users section open
+                    $('#create_group').hide();
+                    $('#show-topic').find('.header .title_page').addClass('on-feed');
+                    $('#show-topic').find('span.filter').addClass('visible');
+                }
             });
             //Hide the group tab header from topic modal.
             Topic.HideTabGroupHeader();
@@ -477,7 +502,7 @@ var Group = {
     },
 
     filter_group: function(contain) {
-        console.log('filter_topic');
+        console.log('filter_group');
         var target = $('#modal_topic,#show-topic').find('.groups-dropdown .dropdown-menu li');
         var self = this;
 
@@ -513,7 +538,7 @@ var Group = {
 
     filter_topic: function(contain) {
         console.log('filter_topic');
-        var target = $('#modal_topic,#show-topic').find('.dropdown-menu li');
+        var target = $('#modal_topic,#show-topic').find('.group-topics-dropdown .dropdown-menu li');
         var self = this;
 
         target.unbind();
@@ -522,7 +547,7 @@ var Group = {
             var parent = $('#item_topic_group_list_' + filter);
             self.data.filter_topic = filter;
             var name = $(e.currentTarget).text();
-            $("#modal_topic,#show-topic").find('.dropdown-toggle').text(name);
+            $("#modal_topic,#show-topic").find('.group-topics-dropdown .dropdown-toggle').text(name);
             contain.scrollTop(0);
             Group.ShowTopics(parent);
         });

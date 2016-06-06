@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div id="list_post" data-topic="<?= $topic->id ?>" <?php if (!empty($city)) { ?>data-city="<?= $city ?>"<?php } ?>>
+<div id="list_post" data-topic="<?= $topic->id ?>" <?php if (!empty($city)) { ?>data-city="<?= $city ?>"<?php } ?> <?php if (!empty($city_id)) { ?>data-city="<?= $city_id ?>"<?php } ?>>
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
