@@ -213,7 +213,7 @@
                             <div class="col-xs-6">
                                 <div class="topic-actions text-right">
                                     <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
-                                    <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                    <a href="javascript:" class="delete-trigger" data-section="profile" data-object="topic" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                             <span class="date-details">
                                                <%= item.formatted_created_date %>
                                             </span>
