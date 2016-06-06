@@ -46,10 +46,20 @@ class TopicController extends BaseController
 
     public function actionCreateTopic() {
         $city = $_GET['city'];
+        $topic_id = isset($_GET['topic_id']) ? $_GET['topic_id']: '';
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
         }
         $cty = City::findOne($city);
+        if($topic_id) {
+            $topic = Topic::findOne($topic_id);
+            $topic_object = [
+              'topic' => $topic,
+              'post' => json_decode($this->actionGetTopicById($topic->id))
+            ];
+        }
+
         if ($cty){
             $city_id = $cty->id;
             $name = $cty->name;
@@ -75,7 +85,9 @@ class TopicController extends BaseController
                 'city_id' => $city_id
                 );
         }
-        return $this->render('mobile/create',['city'=> $cty ,'city_id' =>$city_id,'data'=> (object)$object]);
+
+        return $this->render('mobile/create',['city'=> $cty ,
+            'city_id' =>$city_id, 'data'=> (object)$object, 'topic' => (object)$topic_object]);
     }
 
     public function actionNewTopic() {
@@ -313,7 +325,7 @@ class TopicController extends BaseController
         return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
     }
 
-    public function actionGetTopicById(){
+    public function actionGetTopicById($topic_id = null){
         $topic_id = $_GET['topic_id'];
 
         $query = new Query();

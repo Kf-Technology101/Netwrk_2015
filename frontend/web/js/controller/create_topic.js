@@ -62,12 +62,23 @@ var Create_Topic={
             if (error) return;
         }
         if(isMobile){
-            Create_Topic.params.city = $('#create_topic_modal').attr('data-city');
-            Create_Topic.params.netwrk_name = $('#create_topic_modal').attr('data-name-city');
-            Create_Topic.params.zip_code = $('#create_topic_modal').attr('data-zipcode');
-            Create_Topic.params.lat = $('#create_topic_modal').attr('data-lat');
-            Create_Topic.params.lng = $('#create_topic_modal').attr('data-lng');
-            this.changeData();
+            Create_Topic.params.city = $('#create_topic').attr('data-city');
+            Create_Topic.params.netwrk_name = $('#create_topic').attr('data-name-city');
+            Create_Topic.params.zip_code = $('#create_topic').attr('data-zipcode');
+            Create_Topic.params.lat = $('#create_topic').attr('data-lat');
+            Create_Topic.params.lng = $('#create_topic').attr('data-lng');
+
+            //if edit form
+            Create_Topic.params.topic_id = $('#create_topic').attr('data-topic_id');
+            if(Create_Topic.params.topic_id) {
+                Create_Topic.status_change.topic = true;
+                Create_Topic.status_change.post = true;
+                Create_Topic.status_change.message = true;
+                //make save button active as topic is edited and all required fields are populated.
+                Create_Topic.onCheckStatus();
+            }
+
+            Create_Topic.changeData();
             Create_Topic.onclickBack();
             // Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickMeetMobile();
@@ -246,7 +257,11 @@ var Create_Topic={
         });
     },
     changeData: function(){
-        var parent = $('#create_topic_modal');
+        if(isMobile) {
+            var parent = $('#create_topic');
+        } else {
+            var parent = $('#create_topic_modal');
+        }
 
         this.onChangeData(parent.find('.name_topic'),'topic');
         this.onChangeData(parent.find('.name_post'),'post');
@@ -299,8 +314,14 @@ var Create_Topic={
     },
 
     OnshowReset: function(){
-        var status = Create_Topic.status_change,
+        if(isMobile) {
+            var parent = $('#create_topic'),
+                btn = parent.find('.save');
+        } else {
             parent = $('#create_topic_modal'),
+            btn = parent.find('.save');
+        }
+        var status = Create_Topic.status_change,
             btn = parent.find('.cancel');
         if(status.topic || status.post || status.message){
             btn.removeClass('disable');
@@ -348,9 +369,15 @@ var Create_Topic={
     },
 
     OnshowSave: function(){
-        var status = Create_Topic.status_change,
-            parent = $('#create_topic_modal'),
-            btn = parent.find('.save');
+        var status = Create_Topic.status_change;
+            if(isMobile) {
+                var parent = $('#create_topic'),
+                    btn = parent.find('.save');
+            } else {
+                var parent = $('#create_topic_modal'),
+                    btn = parent.find('.save');
+            }
+
         if(status.topic && status.post && status.message){
             btn.removeClass('disable');
             Create_Topic.OnclickSave();
@@ -360,9 +387,13 @@ var Create_Topic={
     },
 
     OnclickSave: function(){
-        var parent = $('#create_topic_modal'),
-            btn = parent.find('.save'),
-            city = Create_Topic.params.city;
+        if(isMobile) {
+            var parent = $('#create_topic');
+        } else {
+            var parent = $('#create_topic_modal');
+        }
+       var btn = parent.find('.save'),
+           city = Create_Topic.params.city;
 
         btn.unbind();
         btn.on('click',function(){
