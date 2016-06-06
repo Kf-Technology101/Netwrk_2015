@@ -276,7 +276,7 @@ class GroupController extends BaseController {
             }
 
             if (empty($_POST['id'])) throw new Exception("Nothing to delete");
-            $group = Group::findOne($_POST['id'])->Where('status != -1');
+            $group = Group::find()->where('id ='.intval($_POST['id']))->andWhere('status != -1')->one();
 
             if (empty($group) || $group->user_id != $currentUserId) {
                 throw new Exception("Unknown group or user");
