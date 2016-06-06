@@ -245,9 +245,9 @@ var Topic = {
     },
     RedirectPostList: function() {
         var parent = $('#item_list_'+Topic.data.filter);
-        parent.find('.item').unbind();
-        parent.find('.item').on('click',function(e){
-            var topic = $(e.currentTarget).data('item');
+        parent.find('.item .topic_post').unbind();
+        parent.find('.item .topic_post').on('click',function(e){
+            var topic = $(e.currentTarget).parent().data('item');
             if(isMobile){
                 Post.RedirectPostPage(topic, false);
             }else{
