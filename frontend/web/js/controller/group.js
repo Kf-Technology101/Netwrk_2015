@@ -359,14 +359,15 @@ var Group = {
             Topic.CustomScrollBar();
             Group.filter_group(parent);
             Topic.GetDataOnTab();
+            Common.deleteTrigger();
         });
     },
 
     LoadGroupTopics: function() {
         var parent = $('#item_group_list_'+Group.data.filter);
-        parent.find('.item').unbind();
-        parent.find('.item').on('click',function(e) {
-            var group = $(e.currentTarget).data('item');
+        parent.find('.item .group_loc_post').unbind();
+        parent.find('.item .group_loc_post').on('click',function(e) {
+            var group = $(e.currentTarget).parent('.item').data('item');
             var groupName = $(e.currentTarget).find('.name_group').text();
             var parent = $('#item_topic_group_list_' + Group.data.filter);
             Group.ShowTopics(parent, group, groupName);
@@ -530,6 +531,7 @@ var Group = {
                 var json = $.parseJSON(data);
                 self.getTemplate(parent, json);
                 self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+                Common.deleteTrigger();
             });
         }
     },

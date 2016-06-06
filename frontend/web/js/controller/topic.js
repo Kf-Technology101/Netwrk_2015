@@ -245,9 +245,9 @@ var Topic = {
     },
     RedirectPostList: function() {
         var parent = $('#item_list_'+Topic.data.filter);
-        parent.find('.item .name_topic').unbind();
-        parent.find('.item .name_topic').on('click',function(e){
-            var topic = $(e.currentTarget).data('item');
+        parent.find('.item .topic_post').unbind();
+        parent.find('.item .topic_post').on('click',function(e){
+            var topic = $(e.currentTarget).parent().data('item');
             if(isMobile){
                 Post.RedirectPostPage(topic, false);
             }else{
@@ -583,6 +583,7 @@ var Topic = {
             Topic.CustomScrollBar();
             Topic.filter_topic(parent);
             Topic.GetDataOnTab();
+            Common.deleteTrigger();
         });
     },
 
@@ -713,6 +714,7 @@ var Topic = {
         Ajax.show_topic(params).then(function(data){
             var parent = $('#item_list_'+self.data.filter);
             self.getTemplate(parent,data);
+            Common.deleteTrigger();
         });
     },
 
@@ -753,6 +755,7 @@ var Topic = {
             Ajax.show_topic(params).then(function(data){
                 self.getTemplate(parent,data);
                 self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+                Common.deleteTrigger();
             });
         }
     },

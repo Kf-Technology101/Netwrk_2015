@@ -174,7 +174,7 @@
                                 <div class="col-xs-6">
                                     <div class="topic-actions text-right">
                                         <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
-                                        <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                        <a href="javascript:" class="delete-trigger" data-section="profile" data-object="group" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                             <span class="date-details">
                                                <%= item.formatted_created_date %>
                                             </span>
@@ -219,7 +219,7 @@
                             <div class="col-xs-6">
                                 <div class="topic-actions text-right">
                                     <a href="javascript:" class=""><i class="fa fa-edit"></i><span>Edit</span></a>
-                                    <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                    <a href="javascript:" class="delete-trigger" data-section="profile" data-object="topic" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                             <span class="date-details">
                                                <%= item.formatted_created_date %>
                                             </span>
@@ -267,7 +267,7 @@
                                 </div>
                                 <div class="post-actions">
                                     <a href="javascript:" class="post-edit" data-id="<%= item.id %>" data-topic_id="<%= item.topic_id %>" data-city_id="<%= item.city_id %>"><i class="fa fa-edit"></i><span>Edit</span></a>
-                                    <a href="javascript:" class=""><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                                    <a href="javascript:" class="delete-trigger" data-section="profile" data-object="post" data-id="<%= item.id %>"><i class="fa fa-trash-o"></i><span>Delete</span></a>
                                 </div>
                             </div>
                         </div>
@@ -331,4 +331,4 @@
         </div>
     </div>
 </script>
-
+<?= $this->render('../../default/partial/confirm');?>

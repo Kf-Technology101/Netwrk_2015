@@ -157,65 +157,72 @@ var Common = {
                 section = self.attr('data-section'),
                 confirmModal = $('#confirmationBox');
 
-            confirmModal
-                .modal({keyboard: false, show: true })
-                .one('click', '#btnYes', function (e) {
-                    if(object == 'post') {
-                        Ajax.deletePost({
-                            'id': id
-                        }).then(function(data) {
-                            var json = $.parseJSON(data);
-                            if (json.error){
-                                confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
-                                setTimeout(function(){
-                                    confirmModal.find('.alert-danger').addClass('hidden');
-                                    confirmModal.modal('hide');
-                                }, 500);
-                            } else {
+            confirmModal.modal({
+                keyboard: false,
+                show: true
+            });
+
+            confirmModal.find('#btnYes').off('click').on('click', function(){
+                if(object == 'post') {
+                    Ajax.deletePost({
+                        'id': id
+                    }).then(function(data) {
+                        var json = $.parseJSON(data);
+                        if (json.error){
+                            confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
+                            setTimeout(function(){
+                                confirmModal.find('.alert-danger').addClass('hidden');
                                 confirmModal.modal('hide');
-                                if(section == 'profile'){
-                                    self.closest('.col-xs-12').parent().remove();
-                                }
+                            }, 500);
+                        } else {
+                            confirmModal.modal('hide');
+                            if(section == 'profile'){
+                                self.closest('.col-xs-12').parent().remove();
                             }
-                        });
-                    } else if(object == 'topic') {
-                        Ajax.deleteTopic({
-                            'id': id
-                        }).then(function(data) {
-                            var json = $.parseJSON(data);
-                            if (json.error){
-                                confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
-                                setTimeout(function(){
-                                    confirmModal.find('.alert-danger').addClass('hidden');
-                                    confirmModal.modal('hide');
-                                }, 500);
-                            } else {
+                        }
+                    });
+                } else if(object == 'topic') {
+                    Ajax.deleteTopic({
+                        'id': id
+                    }).then(function(data) {
+                        var json = $.parseJSON(data);
+                        if (json.error){
+                            confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
+                            setTimeout(function(){
+                                confirmModal.find('.alert-danger').addClass('hidden');
                                 confirmModal.modal('hide');
-                                if(section == 'profile'){
-                                    self.closest('.col-xs-12').parent().remove();
-                                }
+                            }, 500);
+                        } else {
+                            confirmModal.modal('hide');
+                            if(section == 'profile'){
+                                self.closest('.col-xs-12').parent().remove();
+                            } else if(section == 'community'){
+                                self.closest('.topic-actions').parent().remove();
                             }
-                        });
-                    } else if(object == 'group') {
-                        Ajax.delete_group({
-                            'id': id
-                        }).then(function(data) {
-                            var json = $.parseJSON(data);
-                            if (json.error){
-                                confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
-                                setTimeout(function(){
-                                    confirmModal.find('.alert-danger').addClass('hidden');
-                                    confirmModal.modal('hide');
-                                }, 500);
-                            } else {
+                        }
+                    });
+                } else if(object == 'group') {
+                    Ajax.delete_group({
+                        'id': id
+                    }).then(function(data) {
+                        var json = $.parseJSON(data);
+                        if (json.error){
+                            confirmModal.find('.alert-danger').removeClass('hidden').html(json.message);
+                            setTimeout(function(){
+                                confirmModal.find('.alert-danger').addClass('hidden');
                                 confirmModal.modal('hide');
-                                if(section == 'profile'){
-                                    self.closest('.col-xs-12').parent().remove();
-                                }
+                            }, 500);
+                        } else {
+                            confirmModal.modal('hide');
+                            if(section == 'profile'){
+                                self.closest('.col-xs-12').parent().remove();
+                            } else if(section == 'community'){
+                                self.closest('.group-actions').parent().remove();
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                }
+            });
         });
     }
 };

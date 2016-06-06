@@ -358,7 +358,8 @@ class TopicController extends BaseController
 
     public function actionGetTopic(){
         $id = $_POST['topic'];
-        $topic = Topic::findOne($id)->where('status != -1');
+
+        $topic = Topic::find()->where('id ='.$id)->andWhere('status != -1')->one();
         return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
     }
 

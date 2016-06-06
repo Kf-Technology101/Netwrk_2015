@@ -48,6 +48,7 @@ class MobileAsset extends AssetBundle
       'css/mobile/marker.css',
       'css/mobile/marker_popup.css',
       'css/mobile/group.css',
+      'css/mobile/common.css'
     ];
     public $js = [
       'js/lib/underscore.js',
