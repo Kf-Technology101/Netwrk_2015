@@ -583,6 +583,7 @@ var Topic = {
             Topic.CustomScrollBar();
             Topic.filter_topic(parent);
             Topic.GetDataOnTab();
+            Common.deleteTrigger();
         });
     },
 
@@ -713,6 +714,7 @@ var Topic = {
         Ajax.show_topic(params).then(function(data){
             var parent = $('#item_list_'+self.data.filter);
             self.getTemplate(parent,data);
+            Common.deleteTrigger();
         });
     },
 
@@ -753,6 +755,7 @@ var Topic = {
             Ajax.show_topic(params).then(function(data){
                 self.getTemplate(parent,data);
                 self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+                Common.deleteTrigger();
             });
         }
     },

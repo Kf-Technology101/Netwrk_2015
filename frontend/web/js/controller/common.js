@@ -169,6 +169,8 @@ var Common = {
                             confirmModal.modal('hide');
                             if(section == 'profile'){
                                 self.closest('.col-xs-12').parent().remove();
+                            } else if(section == 'community'){
+                                self.closest('.topic-actions').parent().remove();
                             }
                         }
                     });
