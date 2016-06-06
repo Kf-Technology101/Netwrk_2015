@@ -348,6 +348,7 @@ var Group = {
             Topic.CustomScrollBar();
             Group.filter_group(parent);
             Topic.GetDataOnTab();
+            Common.deleteTrigger();
         });
     },
 
@@ -505,6 +506,7 @@ var Group = {
                 var json = $.parseJSON(data);
                 self.getTemplate(parent, json);
                 self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
+                Common.deleteTrigger();
             });
         }
     },
