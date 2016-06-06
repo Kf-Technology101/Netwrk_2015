@@ -49,15 +49,25 @@ class PostController extends BaseController
 
     public function actionCreatePost($city,$topic)
     {
+        $post_id = isset($_GET['post_id']) ? $_GET['post_id'] : '';
+        $data = [];
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post?topic='.$topic]);
         }
         $top = Topic::findOne($topic);
         $cty = City::findOne($city);
+        if($post_id) {
+            $post = Post::findOne($post_id);
+        }
         if ($cty->office == 'Ritchey Woods Nature Preserve') {
             $cty->zip_code = 'Netwrk hq';
         }
-        return $this->render('mobile/create',['topic' =>$top,'city' =>$cty]);
+        $data['topic'] = $top;
+        $data['city'] = $cty;
+        if(isset($post)) {
+            $data['post'] = $post;
+        }
+        return $this->render('mobile/create', $data);
     }
 
     public function actionNewPost()
@@ -484,6 +494,7 @@ class PostController extends BaseController
                 'title' => $post->title,
                 'content' => $post->content,
                 'topic_id' => $post->topic_id,
+                'city_id' => $post->topic->city_id,
                 'user_id' => $post->user_id,
                 'created_at' => $post->created_at,
                 'formatted_created_date' => date('M d', strtotime($post->created_at)),
