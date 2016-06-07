@@ -1047,8 +1047,8 @@
 				'<div class="iw-subTitle col-xs-12 dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>' +
 				'<div class="iw-subTitle col-xs-12 dot-info-wrapper zoom-info hide">Click <img src="/img/icon/pale-blue-dot.png"/> to zoom in</div>' +
 				/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
-				'<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>' +
-				'<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Topic</span></a></div>' +
+				'<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>' +
+				'<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>' +
 				/*'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
 				'<div class="iw-subTitle"><span class="post-title">' +
 				'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h5>Pick a specific location for your topic</h5></a>' +
