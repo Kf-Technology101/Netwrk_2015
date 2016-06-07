@@ -248,9 +248,9 @@ var Topic = {
     },
     RedirectPostList: function() {
         var parent = $('#item_list_'+Topic.data.filter);
-        parent.find('.item').unbind();
-        parent.find('.item').on('click',function(e){
-            var topic = $(e.currentTarget).data('item');
+        parent.find('.item .topic_post').unbind();
+        parent.find('.item .topic_post').on('click',function(e){
+            var topic = $(e.currentTarget).parent().data('item');
             if(isMobile){
                 Post.RedirectPostPage(topic, false);
             }else{
@@ -783,7 +783,32 @@ var Topic = {
         }
         Topic.create_topic();
         Topic.RedirectPostList();
+        Topic.onClickEditTopic();
+
         // this.create_post();
+    },
+    onClickEditTopic: function() {
+        console.log('in onClickEditTopic');
+        if(isMobile){
+            var target = $('.edit-topic', Topic.modal);
+            target.each(function () {
+                $(this).unbind("click").click(function () {
+                    var topic_id = $(this).attr('data-id'),
+                        city_id = $(this).attr('data-city');
+                    window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+city_id+'&topic_id='+topic_id;
+                });
+            });
+        }else {
+            var target = $('.edit-topic', Topic.modal);
+
+            target.each(function () {
+                $(this).unbind("click").click(function () {
+                    $('#modal_topic').modal('hide');
+                    Common.HideTooTip();
+                    Create_Topic.initialize($(this).data("city_id"), $(this).data("city_name"), null, null, null, null, $(this).data("id"));
+                });
+            });
+        }
     },
 
     getTemplateModal: function(parent,data){

@@ -239,6 +239,7 @@ class TopicController extends BaseController
             $topic = array(
                 'id'=> $value->id,
                 'city_id'=>$value->city_id,
+                'city_name'=> $value->city->name,
                 'title'=>$value->title,
                 'post_count' => $value->post_count > 0 ? $value->post_count: 0,
                 'post_count_format' => $num_post,
