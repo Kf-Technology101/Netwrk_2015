@@ -12,7 +12,7 @@
 				<h4>Click build to create your own, back to see the main channel, or join the area discussion here!</h4>
 				<h4>Whatever you do</h4>
 				<h1>Spread</h1>
-				<img src="<?= Url::to('@web/img/icon/netwrk-icon-inactive.png'); ?>">
+				<img src="<?= Url::to('@web/img/icon/meet-icon-blue.png'); ?>">
 			</div>
 		</div>
 	</div>
