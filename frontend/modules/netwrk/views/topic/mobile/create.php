@@ -21,7 +21,7 @@
                 <p class="title"> Post </p>
                 <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2">#</span>
-                    <input type="text" class="name_post" maxlength="128" placeholder="Post Title" value="<?php echo isset($topic->post->post_title) ? $topic->post->post_title : '' ?>">
+                    <input type="text" class="name_post" data-post_id="<?php echo isset($topic->post->post_id) ? $topic->post->post_id : '' ?>" maxlength="128" placeholder="Post Title" value="<?php echo isset($topic->post->post_title) ? $topic->post->post_title : '' ?>">
                 </div>
             </div>
             <div class="post-message">

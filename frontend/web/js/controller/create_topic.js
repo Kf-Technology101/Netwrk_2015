@@ -28,39 +28,7 @@ var Create_Topic={
     initialize: function(city, name, byGroup, group, groupName, byGroupLoc, topic_id){
         if (typeof byGroup != "undefined") Create_Topic.params.byGroup = byGroup;
         if (typeof byGroupLoc != "undefined") Create_Topic.params.byGroupLoc = byGroupLoc;
-        if (typeof topic_id != "undefined") Create_Topic.params.topic_id = topic_id;
-        if(topic_id != 'undefined' && topic_id != null) {
-            //fetch topic details with post and show data on create topic form.
-            var error = false;
-            Ajax.show_topic_by_id(topic_id).then(function(data) {
-                var json = $.parseJSON(data);
-                if (json.error) {
-                    alert("Unable to load post");
-                    error = true;
-                } else {
-                    //If post is exists of perticular post_id then set the post params. So
-                    //these params are available for furthur processing.
-                    city = json.city_id;
-                    name = json.city_name;
 
-                    Create_Topic.params.topic_id = json.topic_id;
-                    Create_Topic.params.topic_name = json.topic_title;
-                    Create_Topic.params.city = json.city_id;
-                    Create_Topic.params.zip_code = json.zip_code;
-                    Create_Topic.params.post_id = json.post_id;
-                    Create_Topic.params.post_title = json.post_title;
-                    Create_Topic.params.post_content = json.content;
-
-                    //set status_change status as true So save button will be active in create post form
-                    // as post msg and message required field is alread updated.
-                    Create_Topic.status_change.topic = true;
-                    Create_Topic.status_change.post = true;
-                    Create_Topic.status_change.message = true;
-                }
-
-            });
-            if (error) return;
-        }
         if(isMobile){
             Create_Topic.params.city = $('#create_topic').attr('data-city');
             Create_Topic.params.netwrk_name = $('#create_topic').attr('data-name-city');
@@ -68,9 +36,10 @@ var Create_Topic={
             Create_Topic.params.lat = $('#create_topic').attr('data-lat');
             Create_Topic.params.lng = $('#create_topic').attr('data-lng');
 
-            //if edit form
+            //if edit topic form, then fetch data from topic id and initialize the topic form
             Create_Topic.params.topic_id = $('#create_topic').attr('data-topic_id');
             if(Create_Topic.params.topic_id) {
+                Create_Topic.params.post_id = $('#create_topic').find('.name_post').attr('data-post_id');
                 Create_Topic.status_change.topic = true;
                 Create_Topic.status_change.post = true;
                 Create_Topic.status_change.message = true;
@@ -92,6 +61,40 @@ var Create_Topic={
                 }
                 Login.initialize();
                 return false;
+            }
+            //if edit form of create topic
+            if(topic_id != 'undefined' && topic_id != null) {
+                Create_Topic.params.topic_id = topic_id;
+                //fetch topic details with post and show data on create topic form.
+                var error = false;
+                Ajax.show_topic_by_id(topic_id).then(function(data) {
+                    var json = $.parseJSON(data);
+                    if (json.error) {
+                        alert("Unable to load post");
+                        error = true;
+                    } else {
+                        //If post is exists of perticular post_id then set the post params. So
+                        //these params are available for furthur processing.
+                        city = json.city_id;
+                        name = json.city_name;
+
+                        Create_Topic.params.topic_id = json.topic_id;
+                        Create_Topic.params.topic_name = json.topic_title;
+                        Create_Topic.params.city = json.city_id;
+                        Create_Topic.params.zip_code = json.zip_code;
+                        Create_Topic.params.post_id = json.post_id;
+                        Create_Topic.params.post_title = json.post_title;
+                        Create_Topic.params.post_content = json.content;
+
+                        //set status_change status as true So save button will be active in create post form
+                        // as post msg and message required field is alread updated.
+                        Create_Topic.status_change.topic = true;
+                        Create_Topic.status_change.post = true;
+                        Create_Topic.status_change.message = true;
+                    }
+
+                });
+                if (error) return;
             }
             if(city && name){
                 Create_Topic.params.city = city;
@@ -270,7 +273,7 @@ var Create_Topic={
 
     redirect: function(){
         if(Create_Topic.params.zip_code){
-            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;;
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;
         }else{
             window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city;
         }
@@ -332,8 +335,12 @@ var Create_Topic={
     },
 
     OnclickReset: function(){
-        var parent = $('#create_topic_modal'),
-            btn = parent.find('.cancel');
+        if(isMobile) {
+            var parent = $('#create_topic');
+        } else {
+            var parent = $('#create_topic_modal');
+        }
+        var btn = parent.find('.cancel');
 
         btn.unbind();
         btn.on('click',function(){
@@ -346,7 +353,11 @@ var Create_Topic={
     },
 
     reset_data: function(){
-        var parent = $('#create_topic_modal');
+        if(isMobile) {
+            var parent = $('#create_topic');
+        } else {
+            var parent = $('#create_topic_modal');
+        }
 
         Create_Topic.resetParams();
         parent.find('.name_topic').val('');
@@ -360,8 +371,12 @@ var Create_Topic={
     },
 
     setDefaultBtn: function(){
-        var parent = $('#create_topic_modal'),
-            btn_save = parent.find('.save'),
+        if(isMobile) {
+            var parent = $('#create_topic');
+        } else {
+            var parent = $('#create_topic_modal');
+        }
+        var btn_save = parent.find('.save'),
             btn_cancel = parent.find('.cancel');
 
             btn_save.addClass('disable');
@@ -369,14 +384,13 @@ var Create_Topic={
     },
 
     OnshowSave: function(){
+        if(isMobile) {
+            var parent = $('#create_topic');
+        } else {
+            var parent = $('#create_topic_modal');
+        }
         var status = Create_Topic.status_change;
-            if(isMobile) {
-                var parent = $('#create_topic'),
-                    btn = parent.find('.save');
-            } else {
-                var parent = $('#create_topic_modal'),
-                    btn = parent.find('.save');
-            }
+        var btn = parent.find('.save');
 
         if(status.topic && status.post && status.message){
             btn.removeClass('disable');
