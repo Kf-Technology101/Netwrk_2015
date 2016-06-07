@@ -338,33 +338,34 @@ class PostController extends BaseController
             if ($messages) {
 
                 foreach ($messages as $key => $message) {
-                    if($message->post->status != -1){
-                        $user_photo = User::findOne($message->post->user_id)->profile->photo;
+                    if ($message['status'] != -1) {
+                        $user_photo = User::findOne($message['user_id'])->profile->photo;
                         if ($user_photo == null) {
                             $image = 'img/icon/no_avatar.jpg';
                         } else {
-                            $image = 'uploads/' . $message->post->user_id . '/' . $user_photo;
+                            $image = 'uploads/' . $message['user_id'] . '/' . $user_photo;
                         }
 
-                        $currentVote = Vote::find()->where('user_id= ' . $currentUser . ' AND post_id= ' . $message->post->id)->one();
-                        $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
-                        $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                        $num_date = UtilitiesFunc::FormatTimeChat($message->post->created_at);
+                        $currentVote = Vote::find()->where('user_id= ' . $currentUser . ' AND post_id= ' . $message['post_id'])->one();
+                        $num_comment = UtilitiesFunc::ChangeFormatNumber($message['comment_count'] ? $message['comment_count'] + 1 : 1);
+                        $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message['brilliant_count'] ? $message['brilliant_count'] : 0);
+                        $num_date = UtilitiesFunc::FormatTimeChat($message['created_at']);
                         $item = [
-                            'id' => $message->post->id,
-                            'post_title' => $message->post->title,
-                            'post_content' => $message->post->content,
-                            'topic_id' => $message->post->topic_id,
-                            'topic_name' => $message->post->topic->title,
-                            'city_id' => $message->post->topic->city_id,
-                            'city_name' => $message->post->topic->city->name,
-                            'title' => $message->post->title,
-                            'content' => $message->post->content,
+                            'id' => $message['post_id'],
+                            'post_title' => $message['title'],
+                            'post_content' => $message['content'],
+                            'topic_id' => $message['topic_id'],
+                            'topic_name' => $message['topic_title'],
+                            'city_id' => $message['city_id'],
+                            'city_name' => $message['city_name'],
+                            'title' => $message['title'],
+                            'content' => $message['content'],
                             'num_comment' => $num_comment ? $num_comment : 0,
                             'num_brilliant' => $num_brilliant ? $num_brilliant : 0,
                             'avatar' => $image,
                             'update_at' => $num_date,
-                            'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
+                            'real_update_at' => $message['chat_updated_time'] ? $message['chat_updated_time'] : $message['created_at'],
+                            'discussion_notification_count' => $message['notification_count']
                         ];
                         array_push($data, $item);
                     }
