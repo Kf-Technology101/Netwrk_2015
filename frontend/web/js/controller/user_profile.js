@@ -574,15 +574,26 @@ var User_Profile = {
         }
     },
     onClickEditTopic: function() {
-        var target = $('.edit-topic', User_Profile.contexts.modalProfile);
-
-        target.each(function() {
-            $(this).unbind("click").click(function() {
-                $('#modal_profile').modal('hide');
-                Common.HideTooTip();
-                Create_Topic.initialize($(this).data("city_id"), $(this).data("city_name"), null, null, null, null, $(this).data("id"));
+        if(isMobile){
+            var target = $('.edit-topic', '.Profile-view');
+            target.each(function () {
+                $(this).unbind("click").click(function () {
+                    var topic_id = $(this).attr('data-id'),
+                        city_id = $(this).attr('data-city');
+                    window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+city_id+'&topic_id='+topic_id;
+                });
             });
-        });
+        }else {
+            var target = $('.edit-topic', User_Profile.contexts.modalProfile);
+
+            target.each(function () {
+                $(this).unbind("click").click(function () {
+                    $('#modal_profile').modal('hide');
+                    Common.HideTooTip();
+                    Create_Topic.initialize($(this).data("city_id"), $(this).data("city_name"), null, null, null, null, $(this).data("id"));
+                });
+            });
+        }
     },
     getTemplateTopicInfo: function(parent,target,callback){
         var template = _.template(target.html());

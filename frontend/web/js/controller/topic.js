@@ -786,7 +786,31 @@ var Topic = {
         Topic.create_topic();
         Topic.RedirectPostList();
         Topic.onClickTopicMapMarker();
+        Topic.onClickEditTopic();
         // this.create_post();
+    },
+    onClickEditTopic: function() {
+        console.log('in onClickEditTopic');
+        if(isMobile){
+            var target = $('.edit-topic', Topic.modal);
+            target.each(function () {
+                $(this).unbind("click").click(function () {
+                    var topic_id = $(this).attr('data-id'),
+                        city_id = $(this).attr('data-city');
+                    window.location.href = baseUrl + "/netwrk/topic/create-topic?city="+city_id+'&topic_id='+topic_id;
+                });
+            });
+        }else {
+            var target = $('.edit-topic', Topic.modal);
+
+            target.each(function () {
+                $(this).unbind("click").click(function () {
+                    $('#modal_topic').modal('hide');
+                    Common.HideTooTip();
+                    Create_Topic.initialize($(this).data("city_id"), $(this).data("city_name"), null, null, null, null, $(this).data("id"));
+                });
+            });
+        }
     },
 
     getTemplateModal: function(parent,data){

@@ -28,39 +28,7 @@ var Create_Topic={
     initialize: function(city, name, byGroup, group, groupName, byGroupLoc, topic_id){
         if (typeof byGroup != "undefined") Create_Topic.params.byGroup = byGroup;
         if (typeof byGroupLoc != "undefined") Create_Topic.params.byGroupLoc = byGroupLoc;
-        if (typeof topic_id != "undefined") Create_Topic.params.topic_id = topic_id;
-        if(topic_id != 'undefined' && topic_id != null) {
-            //fetch topic details with post and show data on create topic form.
-            var error = false;
-            Ajax.show_topic_by_id(topic_id).then(function(data) {
-                var json = $.parseJSON(data);
-                if (json.error) {
-                    alert("Unable to load post");
-                    error = true;
-                } else {
-                    //If post is exists of perticular post_id then set the post params. So
-                    //these params are available for furthur processing.
-                    city = json.city_id;
-                    name = json.city_name;
 
-                    Create_Topic.params.topic_id = json.topic_id;
-                    Create_Topic.params.topic_name = json.topic_title;
-                    Create_Topic.params.city = json.city_id;
-                    Create_Topic.params.zip_code = json.zip_code;
-                    Create_Topic.params.post_id = json.post_id;
-                    Create_Topic.params.post_title = json.post_title;
-                    Create_Topic.params.post_content = json.content;
-
-                    //set status_change status as true So save button will be active in create post form
-                    // as post msg and message required field is alread updated.
-                    Create_Topic.status_change.topic = true;
-                    Create_Topic.status_change.post = true;
-                    Create_Topic.status_change.message = true;
-                }
-
-            });
-            if (error) return;
-        }
         if(isMobile){
             Create_Topic.modal = $('#create_topic');
 
@@ -78,7 +46,18 @@ var Create_Topic={
                 Create_Topic.onChangeMobileCommunityCategory();
             }
 
-            this.changeData();
+            //if edit topic form, then fetch data from topic id and initialize the topic form
+            Create_Topic.params.topic_id = $('#create_topic').attr('data-topic_id');
+            if(Create_Topic.params.topic_id) {
+                Create_Topic.params.post_id = $('#create_topic').find('.name_post').attr('data-post_id');
+                Create_Topic.status_change.topic = true;
+                Create_Topic.status_change.post = true;
+                Create_Topic.status_change.message = true;
+                //make save button active as topic is edited and all required fields are populated.
+                Create_Topic.onCheckStatus();
+            }
+
+            Create_Topic.changeData();
             Create_Topic.onclickBack();
             // Create_Topic.showNetWrkBtn();
             Create_Topic.eventClickMeetMobile();
@@ -93,6 +72,40 @@ var Create_Topic={
                 }
                 Login.initialize();
                 return false;
+            }
+            //if edit form of create topic
+            if(topic_id != 'undefined' && topic_id != null) {
+                Create_Topic.params.topic_id = topic_id;
+                //fetch topic details with post and show data on create topic form.
+                var error = false;
+                Ajax.show_topic_by_id(topic_id).then(function(data) {
+                    var json = $.parseJSON(data);
+                    if (json.error) {
+                        alert("Unable to load post");
+                        error = true;
+                    } else {
+                        //If post is exists of perticular post_id then set the post params. So
+                        //these params are available for furthur processing.
+                        city = json.city_id;
+                        name = json.city_name;
+
+                        Create_Topic.params.topic_id = json.topic_id;
+                        Create_Topic.params.topic_name = json.topic_title;
+                        Create_Topic.params.city = json.city_id;
+                        Create_Topic.params.zip_code = json.zip_code;
+                        Create_Topic.params.post_id = json.post_id;
+                        Create_Topic.params.post_title = json.post_title;
+                        Create_Topic.params.post_content = json.content;
+
+                        //set status_change status as true So save button will be active in create post form
+                        // as post msg and message required field is alread updated.
+                        Create_Topic.status_change.topic = true;
+                        Create_Topic.status_change.post = true;
+                        Create_Topic.status_change.message = true;
+                    }
+
+                });
+                if (error) return;
             }
             if(city && name){
                 Create_Topic.params.city = city;
@@ -350,7 +363,7 @@ var Create_Topic={
 
     redirect: function(){
         if(Create_Topic.params.zip_code){
-            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;;
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city+"&zipcode="+Create_Topic.params.zip_code+"&name="+Create_Topic.params.city_name+"&lat="+Create_Topic.params.lat+"&lng="+Create_Topic.params.lng;
         }else{
             window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Create_Topic.params.city;
         }

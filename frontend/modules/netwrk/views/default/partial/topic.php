@@ -87,7 +87,7 @@
           </div>
           <div id="tab_topic" class="tab">
               <div id="item_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                  <p class="no-data">This community has no topics. Be the first to create a topic.</p>
+                  <p class="no-data"> This community has no topics. Be the first to create a topic.</p>
               </div>
               <div id="item_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
                   <p class="no-data">This community has no topics. Be the first to create a topic.</p>
@@ -199,7 +199,7 @@
                 </span>
                 <% if (topic.owner) { %>
                     <span class="">
-                        <!--<span class="edit-topic"><i data-id="<%= topic.id %>" class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>-->
+                        <span class="edit-topic" data-id="<%= topic.id %>" data-city="<%= topic.city_id %>" data-city_name="<%= topic.city_name %>"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>
                         <span>
                             <i class="fa fa-trash-o delete-trigger" data-section="community" data-object="topic" data-id="<%= topic.id %>"  data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i>
                         </span>

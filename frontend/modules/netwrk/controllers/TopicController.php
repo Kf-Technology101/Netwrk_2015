@@ -53,6 +53,7 @@ class TopicController extends BaseController
             $group_id = null;
             $by_group = false;
         }
+        $topic_id = isset($_GET['topic_id']) ? $_GET['topic_id']: '';
 
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
@@ -79,6 +80,14 @@ class TopicController extends BaseController
 
         if(isset($city)) {
             $cty = City::findOne($city);
+        }
+
+        if($topic_id) {
+            $topic = Topic::findOne($topic_id);
+            $topic_object = [
+              'topic' => $topic,
+              'post' => json_decode($this->actionGetTopicById($topic->id))
+            ];
         }
 
         if ($cty){
@@ -116,7 +125,8 @@ class TopicController extends BaseController
             'group_id'=> $group_id ,
             'by_group' => $by_group,
             'zipcode_cities' => $data,
-            'isCreateFromBlueDot' => $isCreateFromBlueDot
+            'isCreateFromBlueDot' => $isCreateFromBlueDot,
+            'topic' => (object)$topic_object
             ]
         );
     }
@@ -274,6 +284,7 @@ class TopicController extends BaseController
             $topic = array(
                 'id'=> $value->id,
                 'city_id'=>$value->city_id,
+                'city_name'=> $value->city->name,
                 'title'=>$value->title,
                 'post_count' => $value->post_count > 0 ? $value->post_count: 0,
                 'post_count_format' => $num_post,
@@ -363,7 +374,7 @@ class TopicController extends BaseController
         return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
     }
 
-    public function actionGetTopicById(){
+    public function actionGetTopicById($topic_id = null){
         $topic_id = $_GET['topic_id'];
 
         $query = new Query();
