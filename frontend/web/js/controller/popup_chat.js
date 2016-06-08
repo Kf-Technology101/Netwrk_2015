@@ -6,6 +6,9 @@ var PopupChat = {
         post_description: '',
         post_avatar: '',
         previous_flag: '',
+        topic_id: '',
+        city_name: '',
+        city: '',
     },
     total_popups: 0,
     max_total_popups: 4,
@@ -165,10 +168,11 @@ var PopupChat = {
         if (PopupChat.params.chat_type == 0) {
             var append_html = list_template({post_id: PopupChat.params.post, chat_type: PopupChat.params.chat_type, post_name: PopupChat.params.post_name, post_avatar: PopupChat.params.post_avatar});
         } else {
-            var append_html = list_template({post_id: PopupChat.params.post, chat_type: PopupChat.params.chat_type, post_name: PopupChat.params.post_name, post_description: PopupChat.params.post_description});
+            var append_html = list_template({post_id: PopupChat.params.post, chat_type: PopupChat.params.chat_type, post_name: PopupChat.params.post_name, post_description: PopupChat.params.post_description, topic_id: PopupChat.params.topic_id, city_name: PopupChat.params.city_name, city: PopupChat.params.city});
         }
 
         $('.map_content').append(append_html);
+        Topic.OnClickTopicFeed();
     },
 
     CalculatePopups: function() {
@@ -747,7 +751,7 @@ var PopupChat = {
     },
 
     OnClickMinimizeBtn: function() {
-        var btn = $('#popup-chat-'+PopupChat.params.post).find('.minimize-btn, .popup-head-left');
+        var btn = $('#popup-chat-'+PopupChat.params.post).find('.minimize-btn');
         btn.unbind();
         btn.on('click', function(){
             var target = $(this).parents('.popup-box.chat-popup'),

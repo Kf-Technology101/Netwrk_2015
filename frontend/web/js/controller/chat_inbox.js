@@ -197,6 +197,10 @@ var ChatInbox = {
 				PopupChat.params.post_name = $(e.currentTarget).find('.chat-post-id .title-chat-inbox').html();
 				PopupChat.params.post_description = $(e.currentTarget).find('.chat-post-id .description-chat-inbox').html();
 
+				PopupChat.params.topic_id = Post.params.topic;
+				PopupChat.params.city_name = Post.params.city_name;
+				PopupChat.params.city = Post.params.city;
+
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
 				PopupChat.initialize();
 				Default.displayPopupOnTop();

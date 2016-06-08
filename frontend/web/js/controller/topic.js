@@ -537,7 +537,8 @@ var Topic = {
         var target = $('#modal_topic').find('.topic-row')
             .add($('#show-topic').find('.feed-row.feed-topic'))
             .add($('#profileRecentTopic').find('.topic-trigger'))
-            .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'));
+            .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'))
+            .add($('.popup-box').find('.popup-topic-trigger'));
         target.unbind();
         target.on('click',function(e){
             var city_id = $(e.currentTarget).attr('data-city'),
