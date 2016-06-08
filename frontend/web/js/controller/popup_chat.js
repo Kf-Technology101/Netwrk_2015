@@ -42,6 +42,7 @@ var PopupChat = {
                 // Display channel welcome modal
                 LandingPage.showLandingChannelWelcome();
             }
+            PopupChat.onClickBreadcrumbTopic();
         }else{
             if (ChatInbox.params.target_popup.length == 0 || ChatInbox.params.target_popup.css('display') == 'none') {
                 PopupChat.OnclickLogin();
@@ -73,6 +74,17 @@ var PopupChat = {
         }
         PopupChat.FetchDataChat();
         PopupChat.UpdateViewPost();
+    },
+
+    onClickBreadcrumbTopic: function(){
+        var target = $('.chat-box').find('.chat-topic-trigger');
+        target.unbind();
+        target.on('click',function(e){
+            var topic_id = $(e.currentTarget).attr('data-value');
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/post?topic="+topic_id;
+            }
+        });
     },
 
     UpdateViewPost: function(){
