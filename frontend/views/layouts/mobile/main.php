@@ -92,7 +92,7 @@ if (isset($cookies["isCoverPageVisited"])) {
         <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
           <button type="button" class="btn btn-default btn-explore-location">
             <i class="navigation-icon fa fa-globe"></i>
-            <div class="navigation-text">Map</div>
+            <div class="navigation-text">Near me</div>
           </button>
           <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon fa fa-comment"></i>

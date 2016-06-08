@@ -15,7 +15,11 @@
                 <% }else{ %>
                     <div class="popup-head-left">
                         <span class='popup-title-name'><%= post_name %></span>
-                        <span class='popup-title-description'><%= post_description %></span>
+                        <span class='popup-title-description popup-topic-trigger' data-city-name='<%= city_name %>' data-city='<%= city %>' data-value='<%= topic_id %>'>
+                            <span class="topic-title">
+                                <%= post_description %>
+                            </span>
+                        </span>
                     </div>
                 <% } %>
                 <div class="popup-head-right">

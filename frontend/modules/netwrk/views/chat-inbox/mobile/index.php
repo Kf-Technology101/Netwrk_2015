@@ -34,7 +34,7 @@
 				</span>
 				<div class='title-description-user'>
 					<div class='title-chat-inbox'><%= chat_inbox.title %></div>
-					<div class='description-chat-inbox'><%= chat_inbox.content %></div>
+					<div class='description-chat-inbox'><%= chat_inbox.topic_name %></div>
 				</div>
 				<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> <%= chat_inbox.update_at %></span>
 				<i class='fa fa-2x fa-angle-right'></i>

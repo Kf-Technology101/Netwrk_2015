@@ -1,6 +1,6 @@
 <?php use yii\helpers\Url; ?>
 <?php if ($post->post_type == 1 ) { ?>
-<div id="post_chat" class='post-id-<?= $post->id ?>' data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
+<div id="post_chat" class='post-id-<?= $post->id ?> chat-box' data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
 <?php } else { ?>
 <div id="post_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
 <?php } ?>
@@ -12,7 +12,10 @@
             <span class="title">
             <?php if ($post->post_type == 1 ) { ?>
                 <span><?= $post->topic->city->zip_code?></span>
-                <span><i class="fa fa-angle-right"></i><?= $post->topic->title ?></span>
+                <span class="chat-topic-trigger" title="<?= $post->topic->title ?>"
+                      data-city-name="<?= $post->topic->city->name?>" data-city="<?= $post->topic->city_id?>" data-value="<?= $post->topic->id?>">
+                    <i class="fa fa-angle-right"></i><?= $post->topic->title ?>
+                </span>
                 <span><i class="fa fa-angle-right"></i><?= $post->title ?></span>
             <?php } else { ?>
             <span class='title-user-private'><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
