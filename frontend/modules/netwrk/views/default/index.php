@@ -8,7 +8,7 @@
     <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
       <button id="" type="button" class="btn btn-default btn_nav_map_location">
         <i class="navigation-icon fa fa-globe"></i>
-        <span class="navigation-text">Map</span>
+        <span class="navigation-text">Near me</span>
       </button>
       <button id="chat_inbox_btn" type="button" class="btn btn-default">
         <i class="navigation-icon fa fa-comment"></i>
