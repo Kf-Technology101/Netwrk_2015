@@ -181,7 +181,7 @@
                         </span>
                         <% if (topic.owner) { %>
                             <span class="topic-item">
-                              <!--<span class="edit-topic"><i data-id="<%= topic.id %>" class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>-->
+                              <span class="edit-topic" data-id="<%= topic.id %>" data-city="<%= topic.city_id %>" data-city_name="<%= topic.city_name %>"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>
                               <span>
                                   <i class="fa fa-trash-o delete-trigger" data-section="community" data-object="topic" data-id="<%= topic.id %>" data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i>
                               </span>
@@ -189,6 +189,7 @@
                         <% } %>
                     </div>
                 </div>
+            </div>
             <% }); %>
         </script>
         <script id="group_list" type="text/x-underscore-template">

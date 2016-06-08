@@ -63,6 +63,7 @@ var Topic = {
             Default.ShowNotificationOnChat();
             LandingPage.FixWidthPostLanding();
             Default.SetAvatarUserDropdown();
+            Topic.onClickEditTopic();
         } else {
             Topic.displayPositionModal();
         }
@@ -792,7 +793,7 @@ var Topic = {
     onClickEditTopic: function() {
         console.log('in onClickEditTopic');
         if(isMobile){
-            var target = $('.edit-topic', Topic.modal);
+            var target = $('.edit-topic', '#show-topic');
             target.each(function () {
                 $(this).unbind("click").click(function () {
                     var topic_id = $(this).attr('data-id'),
