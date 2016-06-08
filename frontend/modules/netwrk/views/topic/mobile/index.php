@@ -101,31 +101,40 @@
         </div>
         <script id="topic_list" type="text/x-underscore-template" >
             <% _.each(topices,function(topic){ %>
-                <div class="item" data-item="<%= topic.id %>">
-                    <div class="name_topic">
+            <div class="item clearfix" data-item="<%= topic.id %>">
+                <div class="topic_post">
+                    <div class="name_topic" data-item="<%= topic.id %>">
                         <p><%= topic.title %></p>
                     </div>
-                    <div class="arrow">
-                        <p><i class="fa fa-angle-right"></i></p>
-                    </div>
-                    <div class="num_count_duration">
-                        <div class="most_post">
-                            <p><i class="fa fa-clock-o"></i><%= topic.created_at%></p>
-                        </div>
-                    </div>
-                    <div class="num_count">
-                        <div class="most_post">
-                            <p><i class="fa fa-file-text"></i><%= topic.post_count%></p>
-                        </div>
-                    </div>
-                    <div class="num_count">
-                        <div class="most_post">
-                            <p><i class="fa fa-eye"></i><%= topic.view_count%></p>
-                        </div>
-                    </div>
                 </div>
+                <div class="topic-actions text-right">
+                    <% if( topic.lat != null && topic.lng != null) {%>
+                            <span class="topic-item">
+                                <i class="fa fa-map-marker topic-marker" data-toggle="tooltip" data-placement="top" title="View topic on map" data-container="body" data-lat="<%= topic.lat %>" data-lng="<%= topic.lng %>" data-city_id="<%= topic.city_id %>"></i>
+                            </span>
+                    <% } %>
+                        <span class="topic-item">
+                            <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="View count" data-container="body"></i><%= topic.view_count%>
+                        </span>
+                        <span class="topic-item">
+                            <i class="fa fa fa-file-text-o" data-toggle="tooltip" data-placement="top" title="Post count" data-container="body"></i><%= topic.post_count%>
+                        </span>
+                        <span class="topic-item">
+                            <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="top" title="Created" data-container="body"></i><%= topic.created_at%>
+                        </span>
+                    <% if (topic.owner) { %>
+                            <span class="topic-item">
+                              <span class="edit-topic" data-id="<%= topic.id %>" data-city="<%= topic.city_id %>" data-city_name="<%= topic.city_name %>"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Edit&nbsp;<%= topic.title %>" data-container="body"></i></span>
+                              <span>
+                                  <i class="fa fa-trash-o delete-trigger" data-section="community" data-object="topic" data-id="<%= topic.id %>" data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"></i>
+                              </span>
+                            </span>
+                    <% } %>
+                </div>
+            </div>
             <% }); %>
         </script>
+
         <script id="group_list" type="text/x-underscore-template">
             <% _.each(groups,function(group){ %>
             <div class="item" data-item="<%= group.id %>">
