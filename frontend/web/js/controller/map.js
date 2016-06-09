@@ -764,10 +764,16 @@
 					if (data.results[0].address_components[i].types[0] == 'postal_code') {
 						// console.log(data);
 						var zip = data.results[0].address_components[i].long_name;
-						console.log("cmzip: ", $("#cm-zip").html());
-						$("#cm-zip span").eq(0).html(zip);
+						/*console.log("cmzip: ", $("#cm-zip").html());
+						$("#cm-zip span").eq(0).html(zip);*/
 						Map.blueDotLocation.zipcode = zip;
 						$('#create-location-group').attr('data-zipcode', zip);
+					} else if (data.results[0].address_components[i].types[0] == 'locality') {
+						var city = data.results[0].address_components[i].long_name;
+						console.log(city);
+						setTimeout(function(){
+							$("#blueDotLocation span").eq(0).html(city);
+						},300);
 					}
 				}
 			});
@@ -1019,6 +1025,8 @@
 			google.maps.event.addListener(marker, 'dragstart', function(e) {
 				console.log('in dragstart');
 				marker.setIcon('/img/icon/pale-blue-dot-bg.png');
+				$("#blueDotLocation span").eq(0).html('Requesting...');
+				google.maps.event.clearListeners(Map.center_marker, 'mouseout');
 			});
 
 			//google.maps.event.clearListeners(marker, 'dragend');
@@ -1027,6 +1035,12 @@
 				marker.setIcon('/img/icon/pale-blue-dot.png');
 				Map.findCurrentZip(marker.getPosition().lat(),
 					marker.getPosition().lng());
+
+				google.maps.event.addListener(Map.center_marker, 'mouseout', function() {
+					Map.timeout = setTimeout(function(){
+						Map.closeAllInfoWindows();
+					}, 400);
+				});
 			});
 
 			Map.blueDotMarker = [];
@@ -1044,6 +1058,7 @@
 
 			var content = '<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">' +
 				'<div class="iw-content">' +
+				'<div class="iw-subTitle"><h4 class="location-details">You are in: <span id="blueDotLocation"><span>requesting...</span></span></h4></div>' +
 				'<div class="iw-subTitle col-xs-12 dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>' +
 				'<div class="iw-subTitle col-xs-12 dot-info-wrapper zoom-info hide">Click <img src="/img/icon/pale-blue-dot.png"/> to zoom in</div>' +
 				/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
