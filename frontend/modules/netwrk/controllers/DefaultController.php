@@ -1448,4 +1448,48 @@ class DefaultController extends BaseController
         echo '<br/>'.date('Y-m-d H:i:s').'<br/>';
         die();
     }
+
+    public function actionGetBrilliantPostsFromZip()
+    {
+        $data = array();
+        $cities_array = array();
+
+        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : 46208;
+
+        $cities = City::find()
+            ->where('zip_code = '.$zipCode)
+            ->all();
+
+        foreach ($cities as $key => $value) {
+            if(!in_array($value->id, $cities_array)){
+                array_push($cities_array, $value->id);
+            }
+        }
+
+        $city_ids = implode(',',$cities_array);
+
+        $limit = Yii::$app->params['LimitObjectHoverPopup'];
+
+        $posts = Post::GetBrilliantPostsByCities($limit, $city_ids);
+
+        foreach($posts as $post){
+            $item = [
+                'post_id'=>$post->id,
+                'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
+                'name_post'=> $post->title,
+                'content' => $post->content,
+                'post_type'=> $post->post_type,
+                'topic_id' => $post->topic_id,
+                'user'=> $post->user
+            ];
+            array_push($data, $item);
+        }
+
+        $return = array(
+            'posts'=>$data
+        );
+
+        $hash = json_encode($return);
+        return $hash;
+    }
 }

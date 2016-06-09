@@ -271,4 +271,15 @@ class Post extends \yii\db\ActiveRecord
         }
         return $data;
     }
+
+    public function GetBrilliantPostsByCities($limit,$city_ids){
+        $posts = Post::find()
+            ->joinWith('topic')
+            ->where("topic.city_id IN (".$city_ids.")")
+            ->orderBy(['post.brilliant_count'=> SORT_DESC])
+            ->limit($limit)
+            ->all();
+
+        return $posts;
+    }
 }

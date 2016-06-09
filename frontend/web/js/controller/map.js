@@ -757,6 +757,20 @@
 			});
 		},
 
+		getCurrentZipDiscussions: function(){
+			var params = {'zip_code':Map.blueDotLocation.zipcode};
+
+			Ajax.getBrilliantPostsFromZip(params).then(function(data){
+				var data_posts = $.parseJSON(data);
+
+				var marker_template = _.template($("#blue_dot_maker_posts").html());
+				var post_content = marker_template({marker: data_posts});
+
+				$("#discussionWrapper").html(post_content);
+				Map.onClickBlueDotTopPost();
+			});
+		},
+
 		findCurrentZip: function(lat, lng) {
 			$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
 				var len = data.results[0].address_components.length;
@@ -768,6 +782,7 @@
 						$("#cm-zip span").eq(0).html(zip);*/
 						Map.blueDotLocation.zipcode = zip;
 						$('#create-location-group').attr('data-zipcode', zip);
+						Map.getCurrentZipDiscussions();
 					} else if (data.results[0].address_components[i].types[0] == 'locality') {
 						var city = data.results[0].address_components[i].long_name;
 						console.log(city);
@@ -1010,6 +1025,20 @@
 				console.log('in loadBlueDotMarker');
 			}
 		},
+
+		onClickBlueDotTopPost: function(){
+			var parent = $('.discussion-wrapper').find('.top-post-brilliant .name-post');
+			parent.unbind();
+			parent.on('click',function(){
+				PopupChat.params.post = $(this).attr('data-value');
+				PopupChat.params.chat_type = $(this).attr('data-type');
+				PopupChat.params.post_name = $(this).attr('data-name');
+				PopupChat.params.post_description = $(this).attr('data-content');
+				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
+				PopupChat.initialize();
+			});
+		},
+
 		showBlueDot: function(lat, lng, map) {
 			var img = '/img/icon/pale-blue-dot.png';
 			var marker = new google.maps.Marker({
@@ -1058,7 +1087,11 @@
 
 			var content = '<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">' +
 				'<div class="iw-content">' +
-				'<div class="iw-subTitle"><h4 class="location-details">You are in: <span id="blueDotLocation"><span>requesting...</span></span></h4></div>' +
+				'<div class="iw-subTitle text-left">' +
+					'<h4 class="location-details">You are in: <span id="blueDotLocation"><span>requesting...</span></span></h4>' +
+					'<h5 class="discussion-title">Active discussion near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>' +
+					'<div id="discussionWrapper" class="discussion-wrapper"></div>' +
+				'</div>' +
 				'<div class="iw-subTitle col-xs-12 dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>' +
 				'<div class="iw-subTitle col-xs-12 dot-info-wrapper zoom-info hide">Click <img src="/img/icon/pale-blue-dot.png"/> to zoom in</div>' +
 				/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
