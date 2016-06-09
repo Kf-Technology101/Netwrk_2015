@@ -28,6 +28,7 @@ class MeetController extends BaseController
 
     protected function MixRandUser()
     {
+        $system_user_id = Yii::$app->params['systemUserId'];
         $userCurrent = Yii::$app->user->id;
         $user_meet_rand = [];
 
@@ -73,6 +74,7 @@ class MeetController extends BaseController
             $user_meet_rand = User::find()
                         ->addSelect(["*", "RAND() order_num"])
                         ->where('id in ('.$list_meet_owner. ')')
+                        ->andWhere(['not',['id'=>$system_user_id]])
                         ->with('profile')
                         ->orderBy(['order_num'=> SORT_DESC])
                         ->all();
@@ -91,6 +93,7 @@ class MeetController extends BaseController
         $users = User::find()
                     ->addSelect(["*", "RAND() order_num"])
                     ->where('id NOT IN ('.$l.')')
+                    ->andWhere(['not',['id'=>$system_user_id]])
                     ->with('profile')
                     ->orderBy(['order_num'=> SORT_DESC])
                     ->all();
@@ -116,6 +119,8 @@ class MeetController extends BaseController
 
     public function actionGetUserMeet()
     {
+        $system_user_id = Yii::$app->params['systemUserId'];
+
         $current_date = date('Y-m-d H:i:s');
         $filter = false;
         if(Yii::$app->user->isGuest){
@@ -123,6 +128,7 @@ class MeetController extends BaseController
             $userCurrent = 0;
             $users_rand = User::find()
                                 ->addSelect(["*", "RAND() order_num"])
+                                ->where(['not',['id'=>$system_user_id]])
                                 ->orderBy(['order_num'=> SORT_DESC])
                                 ->all();
 
