@@ -433,7 +433,7 @@ class DefaultController extends BaseController
         return $hash;
     }
 
-    public function actionGetMakerInfo()
+    public function actionGetMarkerInfo()
     {
         $city_id = $_POST['city_id'];
 

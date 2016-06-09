@@ -333,7 +333,7 @@ var Ajax ={
     get_marker_info: function(params){
         var url,defer = $.Deferred();
 
-        url = baseUrl + "/netwrk/default/get-maker-info";
+        url = baseUrl + "/netwrk/default/get-marker-info";
 
         $.ajax({
             url: url,
