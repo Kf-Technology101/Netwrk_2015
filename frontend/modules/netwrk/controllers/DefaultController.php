@@ -1480,7 +1480,6 @@ class DefaultController extends BaseController
                 'content' => $post->content,
                 'post_type'=> $post->post_type,
                 'topic_id' => $post->topic_id,
-                'user'=> $post->user
             ];
             array_push($data, $item);
         }

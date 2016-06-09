@@ -29,4 +29,5 @@
   %>
 </script>
 
+<?= $this->render('@frontend/modules/netwrk/views/marker/blue_dot_post_content') ?>
 

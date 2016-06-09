@@ -1030,12 +1030,17 @@
 			var parent = $('.discussion-wrapper').find('.top-post-brilliant .name-post');
 			parent.unbind();
 			parent.on('click',function(){
-				PopupChat.params.post = $(this).attr('data-value');
-				PopupChat.params.chat_type = $(this).attr('data-type');
-				PopupChat.params.post_name = $(this).attr('data-name');
-				PopupChat.params.post_description = $(this).attr('data-content');
-				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
-				PopupChat.initialize();
+				if(isMobile){
+					var item_post = $(this).attr('data-value');
+					PopupChat.RedirectChatPostPage(item_post, 1, 1);
+				} else {
+					PopupChat.params.post = $(this).attr('data-value');
+					PopupChat.params.chat_type = $(this).attr('data-type');
+					PopupChat.params.post_name = $(this).attr('data-name');
+					PopupChat.params.post_description = $(this).attr('data-content');
+					ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
+					PopupChat.initialize();
+				}
 			});
 		},
 
