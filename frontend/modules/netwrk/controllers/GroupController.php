@@ -111,8 +111,6 @@ class GroupController extends BaseController {
                 }
             }
 
-            $transaction->commit();
-
             // If new group created add general topic under this new group
             if (empty($_POST['id'])) {
                 $Topic = new Topic;
@@ -141,6 +139,8 @@ class GroupController extends BaseController {
                 $Topic->update();
             }
 
+            $transaction->commit();
+            
             die(json_encode(array("error" => false, "group_id" => $group->id)));
 
         } catch (Exception $e) {
