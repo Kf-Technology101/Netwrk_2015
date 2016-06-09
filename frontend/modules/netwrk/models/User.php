@@ -70,6 +70,16 @@ class User extends ActiveRecord implements IdentityInterface
     public $newPasswordConfirm;
 
     /**
+     * @var string New password - for changing password from profile
+     */
+    public $newPasswordProfile;
+
+    /**
+     * @var string New password confirmation - for changing password from profile
+     */
+    public $newPasswordConfirmProfile;
+
+    /**
      * @var array Permission cache array
      */
     protected $_access = [];
@@ -99,9 +109,16 @@ class User extends ActiveRecord implements IdentityInterface
             // password rules
             [['newPassword'], 'string', 'min'=> 8, 'max'=> 255,'message'=> 'Password should contain at least 8 characters.'],
             [['newPassword'], 'filter', 'filter' => 'trim'],
-            [['newPassword'], 'required', 'on' => ['register', 'reset', 'password_setting', 'join'],'message'=>'Password should contain at least 8 characters.'],
-            [['newPasswordConfirm'], 'required', 'on' => ['reset', 'password_setting']],
+            [['newPassword'], 'required', 'on' => ['register', 'reset', 'join'],'message'=>'Password should contain at least 8 characters.'],
+            [['newPasswordConfirm'], 'required', 'on' => ['reset']],
             [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'message' => 'Passwords do not match'],
+
+            [['newPasswordProfile'], 'string', 'min'=> 8, 'max'=> 255,'message'=> 'Password should contain at least 8 characters.'],
+            [['newPasswordProfile'], 'filter', 'filter' => 'trim'],
+            [['newPasswordProfile'], 'required', 'on' => ['password_setting'],'message'=>'Password should contain at least 8 characters.'],
+            [['newPasswordConfirmProfile'], 'required', 'on' => ['password_setting']],
+            [['newPasswordConfirmProfile'], 'compare', 'compareAttribute' => 'newPasswordProfile', 'message' => 'Passwords do not match'],
+
 
             // account page
             [['currentPassword'], 'required', 'on' => ['account', 'password_setting']],
@@ -153,6 +170,9 @@ class User extends ActiveRecord implements IdentityInterface
             'currentPassword' => 'Current Password',
             'newPassword'     => 'Password',
             'newPasswordConfirm' => 'Password Confirm',
+
+            'newPasswordProfile'     => 'Password',
+            'newPasswordConfirmProfile' => 'Password Confirm',
         ];
     }
     public function behaviors()
@@ -287,6 +307,15 @@ class User extends ActiveRecord implements IdentityInterface
         // hash new password if set
         if ($this->newPassword) {
             $this->password = Yii::$app->security->generatePasswordHash($this->newPassword);
+        }
+
+        if (isset($dirtyAttributes["password"])) {
+            $this->newPasswordProfile = $dirtyAttributes["password"];
+        }
+
+        // hash new password if set
+        if ($this->newPasswordProfile) {
+            $this->password = Yii::$app->security->generatePasswordHash($this->newPasswordProfile);
         }
 
         // convert ban_time checkbox to date
