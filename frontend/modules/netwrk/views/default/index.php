@@ -53,6 +53,7 @@
   %>
 </script>
 <?= $this->render('@frontend/modules/netwrk/views/marker/popup_marker_content') ?>
+<?= $this->render('@frontend/modules/netwrk/views/marker/blue_dot_post_content') ?>
 <?= $this->render('partial/topic');?>
 <?= $this->render('partial/create_topic');?>
 <?= $this->render('partial/meet');?>

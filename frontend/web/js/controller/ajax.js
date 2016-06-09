@@ -350,7 +350,7 @@ var Ajax ={
     get_marker_info: function(params){
         var url,defer = $.Deferred();
 
-        url = baseUrl + "/netwrk/default/get-maker-info";
+        url = baseUrl + "/netwrk/default/get-marker-info";
 
         $.ajax({
             url: url,
@@ -1545,6 +1545,22 @@ var Ajax ={
             // contentType: false,
             // processData: false,
             type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    getBrilliantPostsFromZip: function(params) {
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/default/get-brilliant-posts-from-zip";
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
             success: defer.resolve,
             error: defer.reject
         });
