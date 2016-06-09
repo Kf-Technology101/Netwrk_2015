@@ -34,11 +34,11 @@
         </div>
         <div class="field">
             <p class="title"> New password </p>
-            <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'New Password')) ?>
+            <?= $form->field($user, 'newPasswordProfile')->passwordInput(array('placeholder' => 'New Password')) ?>
         </div>
         <div class="field">
             <p class="title"> Confirm password </p>
-            <?= $form->field($user, 'newPasswordConfirm')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
+            <?= $form->field($user, 'newPasswordConfirmProfile')->passwordInput(array('placeholder' => 'Confirm Password')) ?>
         </div>
         <div class="btn-control">
             <div class="reset pull-left">
