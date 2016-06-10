@@ -310,7 +310,7 @@
 			if(e.office_type == 'university' || e.office_type == 'government') {
 				var markerContent = "<div class='marker'></div>";
 			} else {
-				var markerContent = "<div class='marker-zip-code'>"+ e.zip_code+"</div>";
+				var markerContent = "<div class='marker-zip-code'>"+ "AV" +"</div>";
 			}
 
 			if(e.office_type == 'university') {
@@ -1167,6 +1167,9 @@
 				'<div class="iw-subTitle"><span class="post-title">' +
 				'<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place your topic here</h4></a>' +
 				'</span></div>' +
+				'<div class="iw-subTitle"><span class="post-title">' +
+				'<a id="show-area-topic" data-zipcode="" class="show-area-topic" href="javascript:" onclick="Map.showTopicFromZipcode(Map.blueDotLocation.zipcode);"><span>Go to area page</span></a>' +
+				'</span></div>' +
 				'</div>' +
 				'<div class="iw-bottom-gradient"></div>' +
 				'</div>';
@@ -1178,6 +1181,29 @@
 			infowindow.close();
 
 			return infowindow;
+		},
+		showTopicFromZipcode: function(zipcode) {
+			//todo: get city (social) from zipcode and init the topic modal
+			var zipcode = zipcode || '';
+			if(zipcode) {
+				var params = {'zip_code':zipcode};
+				Ajax.get_city_by_zipcode(params).then(function(data){
+					var json = $.parseJSON(data);
+					var socialCityId = '';
+					$.each(json, function(i, city){
+						//get city which have office type as 'social'
+						if(city.office.toLowerCase() == 'social') {
+							socialCityId = city.id;
+						}
+					});
+					console.log(socialCityId);
+					setTimeout(function(){
+						if(socialCityId) {
+							Topic.initialize(socialCityId);
+						}
+					}, 100);
+				});
+			}
 		},
 		showHideBlueDotZoomInfo: function(zoom){
 			if(zoom == Map.blueDotLocation.zoomMiddle) {
