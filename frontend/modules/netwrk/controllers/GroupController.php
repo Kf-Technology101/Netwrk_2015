@@ -11,6 +11,7 @@ use frontend\modules\netwrk\models\UserInvitation;
 use frontend\modules\netwrk\models\City;
 use frontend\modules\netwrk\models\Topic;
 use frontend\modules\netwrk\models\Post;
+use frontend\modules\netwrk\models\WsMessages;
 use yii\base\Exception;
 use Yii;
 use yii\helpers\Url;
@@ -120,8 +121,6 @@ class GroupController extends BaseController {
                 }
             }
 
-            $transaction->commit();
-
             // If new group created add general topic under this new group
             if (empty($_POST['id'])) {
                 $Topic = new Topic;
@@ -138,10 +137,20 @@ class GroupController extends BaseController {
                 $Post->post_type = 1;
                 $Post->save();
 
+                $msg = new WsMessages();
+                $msg->user_id = $currentUserId;
+                $msg->post_id = $Post->id;
+                $msg->post_type = 1;
+                $msg->msg_type = 1;
+                $msg->msg = $Post->content;
+                $msg->save(false);
+
                 $Topic->post_count = 1;
                 $Topic->update();
             }
 
+            $transaction->commit();
+            
             die(json_encode(array("error" => false, "group_id" => $group->id)));
 
         } catch (Exception $e) {

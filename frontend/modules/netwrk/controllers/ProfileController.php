@@ -163,16 +163,16 @@ class ProfileController extends BaseController
         $data = [];
         $post = Yii::$app->request->post();
         $currentPassword = $post['User']['currentPassword'];
-        $newPassword = $post['User']['newPassword'];
-        $newPasswordConfirm = $post['User']['newPasswordConfirm'];
+        $newPasswordProfile = $post['User']['newPasswordProfile'];
+        $newPasswordConfirmProfile = $post['User']['newPasswordConfirmProfile'];
 
         $user = new User(["scenario" => "password_setting"]);
         $user = $user::findOne(Yii::$app->user->id);
         $user->setScenario("password_setting");
 
         $user->currentPassword = $currentPassword;
-        $user->newPassword = $newPassword;
-        $user->newPasswordConfirm = $newPasswordConfirm;
+        $user->newPasswordProfile = $newPasswordProfile;
+        $user->newPasswordConfirmProfile = $newPasswordConfirmProfile;
         // load post data and reset user password
 
         $form = ActiveForm::validate($user);
