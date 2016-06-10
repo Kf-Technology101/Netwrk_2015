@@ -1128,7 +1128,7 @@
 			//todo: get city (social) from zipcode and init the topic modal
 			var zipcode = zipcode || '';
 			if(zipcode) {
-				var params = {'zip_code':zipcode};
+				var params = {'zip_code':zipcode, 'office_type': 'social'};
 				Ajax.get_city_by_zipcode(params).then(function(data){
 					var json = $.parseJSON(data);
 					var socialCityId = '';
