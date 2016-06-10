@@ -419,7 +419,8 @@ class TopicController extends BaseController
             $top_post = Post::GetTopPostUserJoinGlobal($limit, $city);
             $top_topic = Topic::GetTopTopicGlobal($limit, $city);
             $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
-            $weather_feed[] = ApiController::actionGetZipWeatherData($zipcode);
+            //$weather_feed[] = ApiController::actionGetZipWeatherData($zipcode);
+            $weather_feed[] = (array)json_decode(ApiController::actionGetZipWeatherData($zipcode));
             $job_feed = (array)json_decode(ApiController::actionGetZipJobData($zipcode));
 
             $htf = new HistoryFeed();
