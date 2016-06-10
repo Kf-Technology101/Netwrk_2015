@@ -930,14 +930,35 @@ class DefaultController extends BaseController
         return $hash;
     }
 
+    /**
+     * Get city by zipcode, can be filter by office type
+     * @return string
+     */
     public function actionGetCityByZipcode() {
         $data = [];
         $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : '';
+        $office_type = isset($_GET['office_type']) ? strtolower($_GET['office_type']) : '';
         $city = new City();
         if($zipCode) {
             $cities = $city->find()->select('city.*')
-                ->where(['zip_code' => $zipCode])
-                ->all();
+                ->where(['zip_code' => $zipCode]);
+
+            //office_type is null means, office type is social
+            switch ($office_type) {
+                case 'social':
+                    $cities->andWhere('office_type is null');
+                    break;
+                case 'university':
+                    $cities->andWhere(['office_type' => 'university']);
+                    break;
+                case 'government':
+                    $cities->andWhere(['office_type' => 'government']);
+                    break;
+                default:
+                    break;
+            }
+
+            $cities =  $cities->all();
             foreach ($cities as $city) {
                 $item = [
                     'id' => $city->id,
