@@ -21,6 +21,7 @@ class ApiController extends BaseController
         $apiKey = 'd77ea09760491f2fec46d1bbfd6bba3c';
 
         $url = "api.openweathermap.org/data/2.5/weather?APPID=$apiKey&zip=$zip_code,$country";
+        //$url = "http://api.openweathermap.org/data/2.5/weather?APPID=d77ea09760491f2fec46d1bbfd6bba3c&zip=46214,US";
         //return array();
         //$url = "http://boundaries.io/geographies/postal-codes?search=" . urlencode($zip_code);
         $headers[] = 'Accept: application/json';
@@ -40,10 +41,12 @@ class ApiController extends BaseController
         // Closing
         curl_close($ch);
 
-        if($result) {
-            return (array)json_decode($result);
+        $result = (array)json_decode($result);
+        //check weather response got 200 response code
+        if(!empty($result) && $result['cod'] == 200) {
+            return json_encode($result);
         } else {
-            return array();
+            return json_encode(array());
         }
     }
 
