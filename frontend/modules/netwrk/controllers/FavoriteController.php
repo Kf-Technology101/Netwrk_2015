@@ -83,6 +83,8 @@ class FavoriteController extends BaseController
                 'city_id'=> $value['city_id'],
                 'city_zipcode'=>$value['zip_code'],
                 'city_name'=>$value['name'],
+                'city_office'=>$value['office'],
+                'city_office_type'=>$value['office_type'],
                 'user_id' => $value['user_id'],
                 'status' => $value['status'],
                 'lat' => $value['lat'],

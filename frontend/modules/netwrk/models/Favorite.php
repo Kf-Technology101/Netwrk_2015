@@ -75,7 +75,7 @@ class Favorite extends \yii\db\ActiveRecord
 
         $query = new Query();
         $data = $query->select('favorite.id as favorite_id, favorite.user_id, favorite.status,
-            city.id as city_id, city.zip_code, city.name, city.lat, city.lng'
+            city.id as city_id, city.zip_code, city.name, city.office, city.office_type, city.lat, city.lng'
             )
             ->from('favorite')
             ->join('INNER JOIN', 'city', 'city.id = favorite.city_id')
