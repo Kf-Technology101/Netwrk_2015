@@ -288,29 +288,29 @@
     <div class="communities_list clearfix">
         <div class="communities-list" id="favoriteCommunities">
             <% if(!_.isEmpty(items)) {%>
-            <% _.each(items, function(item, key){ %>
-            <div class="community">
-                <span class="zip-code pull-left">
-                    <a class="community-modal-trigger"
-                       href="javascript:"
-                       data-lat="<%= item.lat %>"
-                       data-lng="<%= item.lng %>"
-                       data-city-id="<%= item.city_id %>">
-                        <% if(item.city_office_type != null) { %>
-                            <%= item.city_office %>
-                        <% } else { %>
-                            <%= item.city_name %>
-                        <% } %>
-                    </a>
-                </span>
-                <span class="community-action pull-right un-favorite-trigger"
-                      data-object-type="<%= 'city' %>"
-                      data-object-id="<%= item.city_id %>"><i class="fa fa-trash-o"></i>
-                </span>
-            </div>
-            <% }); %>
+                <% _.each(items, function(item, key){ %>
+                    <div class="community">
+                        <span class="zip-code pull-left">
+                            <a class="community-modal-trigger"
+                               href="javascript:"
+                               data-lat="<%= item.lat %>"
+                               data-lng="<%= item.lng %>"
+                               data-city-id="<%= item.city_id %>">
+                                <% if(item.city_office_type != null) { %>
+                                    <%= item.city_office %>
+                                <% } else { %>
+                                    <%= item.city_name %>
+                                <% } %>
+                            </a>
+                        </span>
+                        <span class="community-action pull-right un-favorite-trigger"
+                              data-object-type="<%= 'city' %>"
+                              data-object-id="<%= item.city_id %>"><i class="fa fa-trash-o"></i>
+                        </span>
+                    </div>
+                <% }); %>
             <% } else {%>
-            <div class="alert alert-info">Currently there is no favorite communities</div>
+                <div class="alert alert-info">Currently there is no favorite communities</div>
             <% } %>
         </div>
     </div>
