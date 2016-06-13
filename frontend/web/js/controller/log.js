@@ -31,8 +31,8 @@ var Log = {
             Ajax.delete_log(params).then(function(data){
                 var json = $.parseJSON(data);
 
-                if(target[0].className == 'recent-action pull-right remove-recent-trigger'){
-                    self.closest('.recent-community').remove();
+                if(target[0].className == 'community-action pull-right remove-recent-trigger'){
+                    self.closest('.community').remove();
                 }
 
                 console.log(json);
