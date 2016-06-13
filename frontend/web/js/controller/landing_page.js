@@ -28,13 +28,13 @@ var LandingPage = {
 				LandingPage.OnClickBackdropWelcome();
 				LandingPage.showLandingWelcome();
 			} else {
-				LandingPage.show_landing_page();
+				//LandingPage.show_landing_page();
+				// Added timeout and updated landing modal show code, so map load quickly
+				setTimeout(function () {
+					LandingPage.GetDataTopLanding();
+				}, 500);
 			}
-			//LandingPage.show_landing_page();
-			// Added timeout and updated landing modal show code, so map load quickly
-			setTimeout(function () {
-				LandingPage.GetDataTopLanding();
-			}, 500);
+
 			LandingPage.OnClickBackdrop();
 			LandingPage.OnClickMeetLandingDesktop();
 			set_heigth_modal_meet($('#modal_landing_page'), 0, 550, 430);
@@ -322,7 +322,8 @@ var LandingPage = {
 		$(LandingPage.modal_welcome).on('hidden.bs.modal',function(e) {
 			Ajax.set_welcome_cookie().then(function(data){
 				if(!isMobile) {
-					LandingPage.show_landing_page();
+					//LandingPage.show_landing_page();
+					LandingPage.GetDataTopLanding();
 				}
 			});
 
