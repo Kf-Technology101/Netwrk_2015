@@ -28,7 +28,11 @@ var LandingPage = {
 				LandingPage.OnClickBackdropWelcome();
 				LandingPage.showLandingWelcome();
 			} else {
-				LandingPage.show_landing_page();
+				//LandingPage.show_landing_page();
+				// Added timeout and updated landing modal show code, so map load quickly
+				setTimeout(function () {
+					LandingPage.GetDataTopLanding();
+				}, 500);
 			}
 			LandingPage.OnClickBackdrop();
 			LandingPage.OnClickMeetLandingDesktop();
@@ -66,6 +70,7 @@ var LandingPage = {
 		Ajax.top_landing().then(function(res){
 			LandingPage.data = $.parseJSON(res);
 			LandingPage.GetTemplate();
+			LandingPage.show_landing_page();
 		});
 	},
 
@@ -268,27 +273,27 @@ var LandingPage = {
 	OnShowModalLanding:function(){
         $(LandingPage.parent).on('shown.bs.modal',function(e) {
         	LandingPage.SetSession();
-        	LandingPage.GetDataTopLanding();
-		  		$('.logo_netwrk > a').addClass('landing-shown');
+        	//LandingPage.GetDataTopLanding();
+			$('.logo_netwrk > a').addClass('landing-shown');
         });
         // on Click logo when modal was shown
         $('.logo_netwrk > a').on('click', function(evt){
-					if(isMobile) {
+			if(isMobile) {
 	        	evt.preventDefault();
-						return false;
-					} else {
+				return false;
+			} else {
 	        	evt.preventDefault();
 	        	var _this = $(this);
 	        	if (_this.hasClass('landing-shown')) {
 	        		_this.removeClass('landing-shown');
 	        		$(LandingPage.modal).modal('hide');
-							$(LandingPage.modal).trigger('off');
+					$(LandingPage.modal).trigger('off');
 	        		return false;
 	        	} else {
-						$(LandingPage.modal).modal('show');
+					$(LandingPage.modal).modal('show');
 	        		return false;
 	        	}
-					}
+			}
         })
 	},
 
@@ -316,7 +321,8 @@ var LandingPage = {
 		$(LandingPage.modal_welcome).on('hidden.bs.modal',function(e) {
 			Ajax.set_welcome_cookie().then(function(data){
 				if(!isMobile) {
-					LandingPage.show_landing_page();
+					//LandingPage.show_landing_page();
+					LandingPage.GetDataTopLanding();
 				}
 			});
 
