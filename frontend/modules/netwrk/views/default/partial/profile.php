@@ -290,20 +290,25 @@
 
 <script id="profile_fav-communities_template" type="text/x-underscore-template">
     <div class="clearfix">
-        <div class="fav-communities-list" id="favoriteCommunities">
+        <div class="communities-list" id="favoriteCommunities">
             <% if(!_.isEmpty(items)) {%>
                 <% _.each(items, function(item, key){ %>
-                    <div class="fav-community">
-                        <span class="fav-zip-code pull-left">
+                    <div class="community">
+                        <span class="zip-code pull-left">
                             <a class="community-modal-trigger"
                                href="javascript:"
                                data-lat="<%= item.lat %>"
                                data-lng="<%= item.lng %>"
-                               data-city-id="<%= item.city_id %>">
-                                <%= item.city_zipcode %>
+                               data-city-id="<%= item.city_id %>"
+                               title="">
+                                <% if(item.city_office_type != null) { %>
+                                    <%= item.city_office %>
+                                <% } else { %>
+                                    <%= item.city_name %>
+                                <% } %>
                             </a>
                         </span>
-                        <span class="fav-action pull-right un-favorite-trigger"
+                        <span class="community-action pull-right un-favorite-trigger"
                               data-object-type="<%= 'city' %>"
                               data-object-id="<%= item.city_id %>"><i class="fa fa-trash-o"></i></span>
                     </div>
@@ -317,20 +322,24 @@
 
 <script id="profile_recent-communities_template" type="text/x-underscore-template">
     <div class="clearfix">
-        <div class="recent-communities-list" id="recentCommunities">
+        <div class="communities-list" id="recentCommunities">
             <% if(!_.isEmpty(items)) {%>
             <% _.each(items, function(item, key){ %>
-            <div class="recent-community">
-                <span class="recent-zip-code pull-left">
+            <div class="community">
+                <span class="zip-code pull-left">
                     <a class="community-modal-trigger"
                        href="javascript:"
                        data-lat="<%= item.lat %>"
                        data-lng="<%= item.lng %>"
                        data-city-id="<%= item.city_id %>">
-                       <%= item.city_zipcode %>
+                        <% if(item.city_office_type != null) { %>
+                            <%= item.city_office %>
+                        <% } else { %>
+                            <%= item.city_name %>
+                        <% } %>
                     </a>
                 </span>
-                <span class="recent-action pull-right remove-recent-trigger"
+                <span class="community-action pull-right remove-recent-trigger"
                       data-log_id="<%= item.log_id %>"
                       data-type="<%= 'city' %>"
                       data-city_id="<%= item.city_id %>"><i class="fa fa-trash-o"></i>

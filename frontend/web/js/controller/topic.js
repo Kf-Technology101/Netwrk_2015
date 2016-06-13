@@ -866,8 +866,8 @@ var Topic = {
             Ajax.favorite(params).then(function(data){
                 var json = $.parseJSON(data);
 
-                if(target[0].className == 'fav-action pull-right un-favorite-trigger'){
-                    self.closest('.fav-community').remove();
+                if(target[0].className == 'community-action pull-right un-favorite-trigger'){
+                    self.closest('.community').remove();
                 }else{
                     target.find('.favorite-status').html(json.status);
                 }
