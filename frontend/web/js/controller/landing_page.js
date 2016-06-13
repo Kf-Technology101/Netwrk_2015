@@ -30,9 +30,17 @@ var LandingPage = {
 			} else {
 				//LandingPage.show_landing_page();
 				// Added timeout and updated landing modal show code, so map load quickly
-				setTimeout(function () {
-					LandingPage.GetDataTopLanding();
-				}, 500);
+				if (isGuest == '') {
+					setTimeout(function () {
+						console.log('Show feed called');
+						LandingPage.GetDataTopLanding();
+					}, 500);
+				} else {
+					setTimeout(function () {
+						console.log('Show feed called');
+						LandingPage.GetDataTopLanding();
+					}, 800);
+				}
 			}
 
 			LandingPage.OnClickBackdrop();
