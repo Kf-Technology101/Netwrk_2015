@@ -383,7 +383,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 				$num_date = UtilitiesFunc::FormatTimeChat($message->post->chat_updated_time);
 
 				if($message->post->topic->group_id != null && $message->post->topic->city_id == 0) {
-					if($message->post->topic->group->city_id != null) {
+					if(isset($message->post->topic->group) && $message->post->topic->group->city_id != null) {
 						$city_id = $message->post->topic->group->city_id;
 						$city_name = $message->post->topic->group->city_id;
 					}
