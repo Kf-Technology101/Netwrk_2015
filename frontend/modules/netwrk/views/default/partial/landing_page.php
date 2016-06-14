@@ -36,8 +36,8 @@
 			<div class="panel-heading top-header">
 				<a data-toggle="collapse" data-target="#collapseTopCommunities"
 				   href="javascript:" class="collapsed">
-					<p class="lp-title">Local Public Centers</p>
-					<p class="lp-description">See whats happening in your area!</p>
+					<p class="lp-title">Home Public Centers</p>
+					<!--<p class="lp-description">See whats happening in your area!</p>-->
 				</a>
 			</div>
 			<div id="collapseTopCommunities" class="panel-collapse collapse">
