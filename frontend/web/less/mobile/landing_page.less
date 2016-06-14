@@ -58,10 +58,57 @@
     	padding: 0;
         height: auto;
         margin-bottom: 34px;
+        .panel-group{
+            margin-bottom: 0;
+            .panel{
+                border: none;
+                border-radius: 0;
+                .panel-heading{
+                    border-bottom: none;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                    padding: 5px;
+                }
+                .panel-body{
+                    padding: 0;
+                }
+                & + .panel{
+                    margin-top: 1px;
+                }
+            }
+        }
+
     	.top-header{
     		height: auto;
     		background-color: #cacaca;
             padding: 5px;
+
+            a{
+                color: #333;
+                text-decoration: none;
+                outline: none;
+                width: 100%;
+                &:hover{
+                    color: #333;
+                    text-decoration: none;
+                    outline: none;
+                }
+                &:after{
+                    font-family:'FontAwesome';
+                    font-size: 16px;
+                    color: #333333;
+                    content:"\f056";
+                    float: right;
+                    margin-right: 5px;
+                    margin-top: -8px;
+                }
+                &.collapsed{
+                    &:after{
+                        content:"\f055";
+                    }
+                }
+            }
+
 	    	.lp-title{
 	    		font-family: "ProximaNovaBold";
 	    		font-size: 100%;
@@ -74,6 +121,13 @@
             }
 	    }
     	.top-post{
+            .top-header{
+                a{
+                    &:after{
+                        margin-top: -22px;
+                    }
+                }
+            }
             .top-post-content{
         		background-color: #fff;
     			.post-row{
@@ -265,6 +319,13 @@
     	}
     	.top-communities{
     		background-color: #fff;
+            .top-header{
+                a{
+                    &:after{
+                        margin-top: -22px;
+                    }
+                }
+            }
     		.communities-row{
 	    		border-bottom: 1px solid #e4e4e4;
                 height: 50px;
