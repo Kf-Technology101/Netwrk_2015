@@ -741,6 +741,7 @@ class DefaultController extends BaseController
 
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+            $party_lines = array();
 
             $city_ids = $this->actionGetCitiesFromCookie();
             $hq_city_id = $this->actionGetHQZipCityFromCookie();
@@ -762,11 +763,28 @@ class DefaultController extends BaseController
                 $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
             }
 
+            // Active party lines near cover zip code
+            $party_lines_posts = Post::GetBrilliantPostsByCities(5, $city_ids);
+            foreach($party_lines_posts as $post){
+                $item = [
+                    'id' => $post['id'],
+                    'brilliant_count' => $post['brilliant_count'] ? $post['brilliant_count'] : 0,
+                    'title' => $post['title'],
+                    'content' => $post['content'],
+                    'post_type' => $post['post_type'],
+                    'topic_id' => $post['topic_id'],
+                    'user_id' => $post['user_id'],
+                    'photo' => User::GetUrlAvatar($post['user_id'],$post['photo']),
+                ];
+                array_push($party_lines, $item);
+            }
+
             $item = [
                 'hq_post' => $hq_post,
-                'top_post'=> $top_post,
-                'top_topic'=> $top_topic,
-                'top_communities'=> $top_communities,
+                'party_lines' => $party_lines,
+                'top_post' => $top_post,
+                'top_topic' => $top_topic,
+                'top_communities' => $top_communities,
                 'feeds' => $feeds
             ];
 
@@ -1553,12 +1571,12 @@ class DefaultController extends BaseController
 
         foreach($posts as $post){
             $item = [
-                'post_id'=>$post->id,
-                'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
-                'name_post'=> $post->title,
-                'content' => $post->content,
-                'post_type'=> $post->post_type,
-                'topic_id' => $post->topic_id,
+                'post_id' => $post['id'],
+                'brilliant' => $post['brilliant_count'] ? $post['brilliant_count'] : 0,
+                'name_post' => $post['title'],
+                'content' => $post['content'],
+                'post_type' => $post['post_type'],
+                'topic_id' => $post['topic_id'],
             ];
             array_push($data, $item);
         }

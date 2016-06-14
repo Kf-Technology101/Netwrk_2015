@@ -116,7 +116,7 @@
                     content:"\f056";
                     float: right;
                     margin-right: 5px;
-                    margin-top: -8px;
+                    margin-top: -22px;
                 }
                 &.collapsed{
                     &:after{
@@ -141,13 +141,6 @@
             }
 	    }
     	.top-post{
-            .top-header{
-              a{
-                &:after{
-                  margin-top: -22px;
-                }
-              }
-            }
             .top-post-content{
         		background-color: #fff;
     			.post-row{
@@ -202,6 +195,9 @@
     						font-size: 13px;
                             line-height: 14px;
     						color: #1d1b1b;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
                             .show_more{
                                 color: #337ab7;
                                 cursor: pointer;
@@ -333,13 +329,6 @@
     		}
     	}
     	.top-communities{
-            .top-header{
-                a{
-                    &:after{
-                      margin-top: -22px;
-                    }
-                }
-            }
     		background-color: #fff;
     		.communities-row{
 	    		border-bottom: 1px solid #e4e4e4;
@@ -382,11 +371,6 @@
 
         .favorite-communities{
             .top-header{
-              a{
-                &:after{
-                  margin-top: -22px;
-                }
-              }
               .lp-title{
                 font-family: "ProximaNovaBold";
                 font-size: 16px;
@@ -523,6 +507,16 @@
                   }
                 }
             }
+        }
+
+        .party-lines{
+          .top-header{
+            a{
+              &:after{
+                margin-top: -8px;
+              }
+            }
+          }
         }
     }
     .modal-footer{
