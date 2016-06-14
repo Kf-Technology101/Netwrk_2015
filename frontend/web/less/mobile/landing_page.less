@@ -100,7 +100,7 @@
                     content:"\f056";
                     float: right;
                     margin-right: 5px;
-                    margin-top: -8px;
+                    margin-top: -22px;
                 }
                 &.collapsed{
                     &:after{
@@ -121,13 +121,6 @@
             }
 	    }
     	.top-post{
-            .top-header{
-                a{
-                    &:after{
-                        margin-top: -22px;
-                    }
-                }
-            }
             .top-post-content{
         		background-color: #fff;
     			.post-row{
@@ -173,6 +166,9 @@
                             overflow: hidden;
                             text-overflow: ellipsis;
                             white-space: nowrap;
+                            &::before{
+                                content: '#';
+                            }
     					}
     					.post-content{
     						font-family: "ProximaNovaRegular";
@@ -319,13 +315,6 @@
     	}
     	.top-communities{
     		background-color: #fff;
-            .top-header{
-                a{
-                    &:after{
-                        margin-top: -22px;
-                    }
-                }
-            }
     		.communities-row{
 	    		border-bottom: 1px solid #e4e4e4;
                 height: 50px;
@@ -367,9 +356,6 @@
                 a {
                     color: #1d1b1b;
                     text-decoration: none;
-                    &:after {
-                        margin-top: -22px;
-                    }
                 }
                 .lp-title {
                     font-family: "ProximaNovaBold";
@@ -469,6 +455,9 @@
                                 white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
+                                &::before{
+                                    content: '#';
+                                }
                             }
                             .post-content {
                                 font-size: 13px;
@@ -496,6 +485,20 @@
                         }
                     }
                 }
+            }
+        }
+        .party-lines{
+            .top-header{
+                a{
+                    &:after{
+                        margin-top: -30px;
+                    }
+                }
+            }
+            .post-content{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }

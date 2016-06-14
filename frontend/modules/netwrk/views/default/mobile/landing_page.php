@@ -34,6 +34,43 @@
 </script>
 <script id="landing_page" type="text/x-underscore-template">
 	<div class="panel-group" id="accordion">
+		<div class="panel panel-default top-post party-lines" id="panelPartyLines">
+			<div class="panel-heading top-header">
+				<a data-toggle="collapse" data-target="#collapsePartyLines"
+				   href="javascript:" class="collapsed">
+					<p class="lp-title">Active Party lines near you</p>
+					<p class="lp-description">Check out the most popular lines around your location!</p>
+				</a>
+			</div>
+			<div id="collapsePartyLines" class="panel-collapse collapse">
+				<div class="panel-body top-post-content party-lines-content">
+					<%
+						var len_party_lines = landing.party_lines.length;
+						_.each(landing.party_lines,function(e,i){
+						if(i == len_party_lines - 1){%>
+							<div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+						<% }else{ %>
+							<div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+						<% } %>
+								<div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
+
+								<div class="post">
+									<p class="post-title"><%= e.title %></p>
+									<div class="post-content"><%= e.content%></div>
+								</div>
+								<div class="action">
+									<div class="chat"><i class="fa fa-comments"></i>Chat</div>
+
+									<span class="brilliant"><%= e.brilliant_count%></span>
+								</div>
+							</div>
+						<%
+						});
+					%>
+				</div>
+			</div>
+		</div>
+
 		<div class="panel panel-default top-communities" id="panelTopCommunities">
 			<div class="panel-heading top-header">
 				<a data-toggle="collapse" data-target="#collapseTopCommunities"
