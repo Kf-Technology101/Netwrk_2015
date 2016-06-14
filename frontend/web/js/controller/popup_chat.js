@@ -306,12 +306,7 @@ var PopupChat = {
     },
 
     SetUrl: function(){
-        if(baseUrl === 'http://netwrk.rubyspace.net'){
-            PopupChat.url = 'box.rubyspace.net';
-        }else{
-            PopupChat.url = window.location.href;
-        };
-
+        PopupChat.url = MainWs.url;
     },
 
     // Set info for each popup chat when user active or open the popup

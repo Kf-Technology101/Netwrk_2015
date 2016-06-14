@@ -122,11 +122,7 @@ var ChatPost = {
 	},
 
 	SetUrl: function(){
-		if(ENV == 'prod'){
-			ChatPost.url = 'www.netwrk.com:2311';
-		} else {
-			ChatPost.url = 'dev.netwrk.com:2312';
-		}
+		ChatPost.url = MainWs.url;
 	},
 
 	SetDataPostChat: function(){
