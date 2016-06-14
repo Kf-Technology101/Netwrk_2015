@@ -112,12 +112,7 @@ var ChatPrivate = {
 	},
 
 	SetUrl: function(){
-		if(baseUrl === 'http://netwrk.rubyspace.net'){
-			ChatPrivate.url = 'box.rubyspace.net';
-		}else{
-			ChatPrivate.url = "127.0.0.1";
-		};
-
+		ChatPrivate.url = MainWs.url;
 	},
 
 	SetDataPrivateChat: function(){

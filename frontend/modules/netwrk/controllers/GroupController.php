@@ -127,6 +127,7 @@ class GroupController extends BaseController {
                 $Topic->group_id = $group->id;
                 $Topic->user_id = $currentUserId;
                 $Topic->title = $name;
+                $Topic->city_id = $group->city_id;
                 $Topic->save();
 
                 $Post = new Post();
