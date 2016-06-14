@@ -361,54 +361,63 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 
 	public function updateListChatBox($user_id)
 	{
-        $messages = new WsMessages();
+		$messages = new WsMessages();
 		$messages = $messages->find()->select('post_id')->where('user_id = '.$user_id. ' AND post_type = 1')
-		        ->distinct()
-		        ->with('post')
-		        ->all();
-        if($messages) {
-            $data = [];
-        	$user = new User();
-            foreach ($messages as $key => $message) {
+			->distinct()
+			->with('post')
+			->all();
+		if($messages) {
+			$data = [];
+			$user = new User();
+			foreach ($messages as $key => $message) {
+				$user_photo = $user->findOne($message->post->user_id)->profile->photo;
 
-                $user_photo = $user->findOne($message->post->user_id)->profile->photo;
+				if ($user_photo == null){
+					$image = 'img/icon/no_avatar.jpg';
+				}else{
+					$image = 'uploads/'.$message->post->user_id.'/'.$user_photo;
+				}
 
-                if ($user_photo == null){
-                    $image = 'img/icon/no_avatar.jpg';
-                }else{
-                    $image = 'uploads/'.$message->post->user_id.'/'.$user_photo;
-                }
+				$num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
+				$num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
+				$num_date = UtilitiesFunc::FormatTimeChat($message->post->chat_updated_time);
 
-                $num_comment = UtilitiesFunc::ChangeFormatNumber($message->post->comment_count ? $message->post->comment_count + 1 : 1);
-                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($message->post->brilliant_count ? $message->post->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatTimeChat($message->post->chat_updated_time);
+				if($message->post->topic->group_id != null && $message->post->topic->city_id == 0) {
+					if($message->post->topic->group->city_id != null) {
+						$city_id = $message->post->topic->group->city_id;
+						$city_name = $message->post->topic->group->city_id;
+					}
+				} else {
+					$city_id = $message->post->topic->city_id;
+					$city_name = $message->post->topic->city->name;
+				}
 
-                $item = [
-                    'id'=> $message->post->id,
-                    'post_title'=> $message->post->title,
-                    'post_content'=> $message->post->content,
-                    'topic_id'=> $message->post->topic_id,
-                    'topic_name'=> $message->post->topic->title,
-                    'city_id' => $message->post->topic->city_id,
-                    'city_name' => $message->post->topic->city->name,
-                    'title'=> $message->post->title,
-                    'content'=> $message->post->content,
-                    'num_comment' => $num_comment ? $num_comment: 0,
-                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
-                    'avatar'=> $image,
-                    'update_at'=> $num_date,
-                    'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
-                    ];
-                array_push($data, $item);
-            }
-            usort($data, function($a, $b) {
-                return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
-            });
-            $data = json_encode($data);
-            return $data;
-        } else {
-            return false;
-        }
+				$item = [
+					'id'=> $message->post->id,
+					'post_title'=> $message->post->title,
+					'post_content'=> $message->post->content,
+					'topic_id'=> $message->post->topic_id,
+					'topic_name'=> $message->post->topic->title,
+					'city_id' => $city_id ? $city_id : '',
+					'city_name' => $city_name ? $city_name : '',
+					'title'=> $message->post->title,
+					'content'=> $message->post->content,
+					'num_comment' => $num_comment ? $num_comment: 0,
+					'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+					'avatar'=> $image,
+					'update_at'=> $num_date,
+					'real_update_at' => $message->post->chat_updated_time ? $message->post->chat_updated_time : $message->post->created_at
+				];
+				array_push($data, $item);
+			}
+			usort($data, function($a, $b) {
+				return strtotime($b['real_update_at']) - strtotime($a['real_update_at']);
+			});
+			$data = json_encode($data);
+			return $data;
+		} else {
+			return false;
+		}
 	}
 
 	public function updateChatPrivateList($user_id)
