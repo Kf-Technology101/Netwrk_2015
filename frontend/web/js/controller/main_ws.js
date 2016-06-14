@@ -14,10 +14,18 @@ var MainWs ={
     },
 
     setUrl: function(){
-        if(ENV == 'prod'){
+        if(window.location.hostname == 'www.netwrk.com'){
             MainWs.url = 'www.netwrk.com:2311';
-        } else {
+        } else if(window.location.hostname == 'dev.netwrk.com'){
+            MainWs.url = 'dev.netwrk.com:2312';
+        } else if(window.location.hostname == 'beta.netwrk.com'){
             MainWs.url = 'beta.netwrk.com:2312';
+        } else if(window.location.hostname == 'test.netwrk.com'){
+            MainWs.url = 'test.netwrk.com:2314';
+        } else if(window.location.hostname == 'local.netwrk.com'){
+            MainWs.url = 'local.netwrk.com:2311';
+        } else {
+            MainWs.url = '127.0.0.1:2311';
         }
     },
 
