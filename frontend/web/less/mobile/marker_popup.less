@@ -209,10 +209,28 @@
 			color: #5da5d8;
 		}
 	}
-	.dot-info-wrapper{
-		font-size: 18px;
-		font-weight:600;
-		color: #5888ac;
+	.dot-info-main{
+		padding: 10px;
+
+		.dot-info-wrapper{
+			font-size: 15px;
+			font-weight:600;
+			color: #5888ac;
+			padding: 0;
+
+			img{
+				height: 20px;
+				width: 20px;
+			}
+		}
+
+		&.double-click{
+			padding: 0 0 10px;
+
+			.dot-info-wrapper{
+				font-size: 14px;
+			}
+		}
 	}
 	.location-details{
 		margin-top: 0;
