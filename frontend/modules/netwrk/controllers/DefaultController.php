@@ -1481,32 +1481,37 @@ class DefaultController extends BaseController
             ->where('zip_code = '.$zipCode)
             ->all();
 
-        foreach ($cities as $key => $value) {
-            if(!in_array($value->id, $cities_array)){
-                array_push($cities_array, $value->id);
+        $communities = sizeof($cities);
+
+        if($communities > 0) {
+            foreach ($cities as $key => $value) {
+                if(!in_array($value->id, $cities_array)){
+                    array_push($cities_array, $value->id);
+                }
+            }
+
+            $city_ids = implode(',',$cities_array);
+
+            $limit = Yii::$app->params['LimitObjectHoverPopup'];
+
+            $posts = Post::GetBrilliantPostsByCities($limit, $city_ids);
+
+            foreach($posts as $post){
+                $item = [
+                    'post_id' => $post['id'],
+                    'brilliant' => $post['brilliant_count'] ? $post['brilliant_count'] : 0,
+                    'name_post' => $post['title'],
+                    'content' => $post['content'],
+                    'post_type' => $post['post_type'],
+                    'topic_id' => $post['topic_id'],
+                ];
+                array_push($data, $item);
             }
         }
 
-        $city_ids = implode(',',$cities_array);
-
-        $limit = Yii::$app->params['LimitObjectHoverPopup'];
-
-        $posts = Post::GetBrilliantPostsByCities($limit, $city_ids);
-
-        foreach($posts as $post){
-            $item = [
-                'post_id' => $post['id'],
-                'brilliant' => $post['brilliant_count'] ? $post['brilliant_count'] : 0,
-                'name_post' => $post['title'],
-                'content' => $post['content'],
-                'post_type' => $post['post_type'],
-                'topic_id' => $post['topic_id'],
-            ];
-            array_push($data, $item);
-        }
-
         $return = array(
-            'posts' => $data
+            'posts' => $data,
+            'communities'=> $communities
         );
 
         $hash = json_encode($return);
