@@ -16,6 +16,9 @@
 	  	map:'',
 	  	zoom: 13,
 		markerZoom:14,
+		// Blue dot info window content is in following file
+		// @frontend/modules/netwrk/views/marker/blue_dot_post_content
+		blueDotInfoWindowContent: $('#blueDotInfoWindow').html(),
 	  	// center: new google.maps.LatLng(39.7662195,-86.441277),
 	  	center:'',
 	  	zoom7: [],
@@ -767,16 +770,19 @@
 						Map.getBrowserCurrentPosition(map);
 					} else {
 						var zoom_current = map.getZoom();
-						if (zoom_current < Map.blueDotLocation.blueMarkerZoom) {
-							Map.smoothZoom(map, Map.blueDotLocation.blueMarkerZoom, zoom_current, true);
-							map.zoom = Map.blueDotLocation.blueMarkerZoom;
+						if (zoom_current < Map.blueDotLocation.zoomMiddle) {
+							Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
+							map.zoom = Map.blueDotLocation.zoomMiddle;
 						}else{
 							Map.smoothZoom(map, 18, zoom_current, true);
 							map.zoom = 18;
 						}
-						map.setCenter(new google.maps.LatLng(lat, lng));
+
 						//todo: discussed about users location. Does users saved db location is need to be considered or not
 						Map.requestBlueDotOnMap(lat, lng, map);
+						setTimeout(function() {
+							Map.map.setCenter(new google.maps.LatLng(lat, lng));
+						}, 200);
 						//Map.getBrowserCurrentPosition(map);
 					}
 				} else {
@@ -1002,11 +1008,16 @@
 				google.maps.event.clearListeners(Map.center_marker, 'click');
 				google.maps.event.addListener(Map.center_marker, 'click', (function() {
 					return function(){
-						if(Map.map.getZoom() == Map.blueDotLocation.zoomMiddle) {
+						var current_zoom = Map.map.getZoom();
+						if(current_zoom == 12){
+							console.log('in click zoom 12');
+							// Close blue dot info window
+							Map.closeAllInfoWindows();
+						} else if(current_zoom == Map.blueDotLocation.zoomMiddle) {
 							console.log('in click zoom 16');
 							//Go to zoom level 18. and shoe blue dot on map
 							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map)
-						} else if(Map.map.getZoom() == Map.blueDotLocation.zoomLast) {
+						} else if(current_zoom == Map.blueDotLocation.zoomLast) {
 							console.log('In map idle: else zoom 16');
 						}
 						if(!isMobile){
@@ -1148,34 +1159,8 @@
 
 			console.log(Map.blueDotLocation.lat+', '+Map.blueDotLocation.lon);
 
-			var content = '<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">' +
-				'<div class="iw-content">' +
-				'<div class="iw-subTitle text-left">' +
-					'<h4 class="location-details">You are in: <span id="blueDotLocation"><span>requesting...</span></span></h4>' +
-					'<h5 class="discussion-title">Active discussion near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>' +
-					'<div id="discussionWrapper" class="discussion-wrapper"></div>' +
-				'</div>' +
-				'<div class="iw-subTitle col-xs-12 dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>' +
-				'<div class="iw-subTitle col-xs-12 dot-info-wrapper zoom-info hide">Click <img src="/img/icon/pale-blue-dot.png"/> to zoom in</div>' +
-				/*'<div class="iw-subTitle" id="cm-coords"></div>' +*/
-				'<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>' +
-				'<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>' +
-				/*'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
-				'<div class="iw-subTitle"><span class="post-title">' +
-				'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h5>Pick a specific location for your topic</h5></a>' +
-				'</span></div>' +
-				'<div class="iw-subTitle"><span class="post-title">' +
-				'<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place your topic here</h4></a>' +
-				'</span></div>' +
-				'<div class="iw-subTitle"><span class="post-title">' +
-				'<a id="show-area-topic" data-zipcode="" class="show-area-topic" href="javascript:" onclick="Map.showTopicFromZipcode(Map.blueDotLocation.zipcode);"><span>Go to area page</span></a>' +
-				'</span></div>' +
-				'</div>' +
-				'<div class="iw-bottom-gradient"></div>' +
-				'</div>';
-
 			var infowindow = new google.maps.InfoWindow({
-				content: content
+				content: Map.blueDotInfoWindowContent
 			});
 
 			infowindow.close();
@@ -1206,10 +1191,29 @@
 			}
 		},
 		showHideBlueDotZoomInfo: function(zoom){
+			// Show hide click to cancel line
+			if(zoom <= 12){
+				$('.cgm-container').find('.zoom-cancel').removeClass('hide');
+			} else {
+				$('.cgm-container').find('.zoom-cancel').addClass('hide');
+			}
+
+			// Show hide double click line and create buttons
+			if(zoom >= Map.blueDotLocation.zoomMiddle) {
+				$('.cgm-container').find('.create-section-wrapper').removeClass('hide');
+				$('.cgm-container').find('.double-click').addClass('hide');
+			} else {
+				$('.cgm-container').find('.create-section-wrapper').addClass('hide');
+				$('.cgm-container').find('.double-click').removeClass('hide');
+			}
+
+			// Show hide click to zoom and build line
 			if(zoom == Map.blueDotLocation.zoomMiddle) {
 				$('.cgm-container').find('.zoom-info').removeClass('hide');
+				$('.cgm-container').find('.my-location').addClass('hide');
 			} else {
 				$('.cgm-container').find('.zoom-info').addClass('hide');
+				$('.cgm-container').find('.my-location').removeClass('hide');
 			}
 		},
 		zoomMap: function(lat, lng, zoom, map){
