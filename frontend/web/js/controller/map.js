@@ -1104,7 +1104,7 @@
 				'<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>' +
 				/*'<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>' +*/
 				'<div class="iw-subTitle"><span class="post-title">' +
-				'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h5>Pick a specific location for your topic</h5></a>' +
+				'<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h5>Build</h5></a>' +
 				'</span></div>' +
 				'<div class="iw-subTitle"><span class="post-title">' +
 				'<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place your topic here</h4></a>' +
