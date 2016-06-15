@@ -721,14 +721,20 @@
 					lat: position.coords.latitude,
 					lng: position.coords.longitude
 				};
-				map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
-				if(map.getZoom() < Map.blueDotLocation.blueMarkerZoom) {
-					map.setZoom(Map.blueDotLocation.blueMarkerZoom);
+				var zoom_current = map.getZoom();
+				if (zoom_current < Map.blueDotLocation.zoomMiddle) {
+					Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
+					map.zoom = Map.blueDotLocation.zoomMiddle;
 				}else{
-					map.setZoom(18);
+					Map.smoothZoom(map, 18, zoom_current, true);
+					map.zoom = 18;
 				}
+
 				console.log('geolocation lat / lng'+pos.lat+' / '+pos.lng);
 				Map.requestBlueDotOnMap(pos.lat, pos.lng, map);
+				setTimeout(function() {
+					Map.map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
+				}, 200);
 			});
 		},
 		getMylocation: function(map){
