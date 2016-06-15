@@ -739,9 +739,9 @@
 						Map.getBrowserCurrentPosition(map);
 					} else {
 						var zoom_current = map.getZoom();
-						if (zoom_current < Map.blueDotLocation.blueMarkerZoom) {
-							Map.smoothZoom(map, Map.blueDotLocation.blueMarkerZoom, zoom_current, true);
-							map.zoom = Map.blueDotLocation.blueMarkerZoom;
+						if (zoom_current < Map.blueDotLocation.zoomMiddle) {
+							Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
+							map.zoom = Map.blueDotLocation.zoomMiddle;
 						}else{
 							Map.smoothZoom(map, 18, zoom_current, true);
 							map.zoom = 18;
@@ -1150,8 +1150,10 @@
 		showHideBlueDotZoomInfo: function(zoom){
 			if(zoom == Map.blueDotLocation.zoomMiddle) {
 				$('.cgm-container').find('.zoom-info').removeClass('hide');
+				$('.cgm-container').find('.my-location').addClass('hide');
 			} else {
 				$('.cgm-container').find('.zoom-info').addClass('hide');
+				$('.cgm-container').find('.my-location').removeClass('hide');
 			}
 		},
 		zoomMap: function(lat, lng, zoom, map){
