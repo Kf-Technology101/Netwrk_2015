@@ -273,8 +273,12 @@ class Post extends \yii\db\ActiveRecord
     }
 
     public function GetBrilliantPostsByCities($limit,$city_ids){
-        $posts = Post::find()
-            ->joinWith('topic')
+        $query = new Query();
+
+        $posts = $query->select('post.id, post.title, post.content, post.brilliant_count, post.post_type, post.user_id as user_id, topic.id as topic_id, profile.photo')
+            ->from('post')
+            ->leftJoin('profile','post.user_id = profile.user_id')
+            ->innerJoin('topic', 'post.topic_id=topic.id')
             ->where("topic.city_id IN (".$city_ids.")")
             ->orderBy(['post.brilliant_count'=> SORT_DESC])
             ->limit($limit)

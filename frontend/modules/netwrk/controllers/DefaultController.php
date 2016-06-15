@@ -1475,7 +1475,7 @@ class DefaultController extends BaseController
         $data = array();
         $cities_array = array();
 
-        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : 46208;
+        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : '';
 
         $cities = City::find()
             ->where('zip_code = '.$zipCode)
@@ -1495,18 +1495,18 @@ class DefaultController extends BaseController
 
         foreach($posts as $post){
             $item = [
-                'post_id'=>$post->id,
-                'brilliant'=>$post->brilliant_count ? $post->brilliant_count : 0,
-                'name_post'=> $post->title,
-                'content' => $post->content,
-                'post_type'=> $post->post_type,
-                'topic_id' => $post->topic_id,
+                'post_id' => $post['id'],
+                'brilliant' => $post['brilliant_count'] ? $post['brilliant_count'] : 0,
+                'name_post' => $post['title'],
+                'content' => $post['content'],
+                'post_type' => $post['post_type'],
+                'topic_id' => $post['topic_id'],
             ];
             array_push($data, $item);
         }
 
         $return = array(
-            'posts'=>$data
+            'posts' => $data
         );
 
         $hash = json_encode($return);
