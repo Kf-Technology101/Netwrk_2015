@@ -1094,7 +1094,7 @@
 				'<div class="iw-content">' +
 				'<div class="iw-subTitle text-left">' +
 					'<h4 class="location-details">You are in: <span id="blueDotLocation"><span>requesting...</span></span></h4>' +
-					'<h5 class="discussion-title">Active discussion near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>' +
+					'<h5 class="discussion-title">Active Party Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>' +
 					'<div id="discussionWrapper" class="discussion-wrapper"></div>' +
 				'</div>' +
 				'<div class="iw-subTitle col-xs-12 dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>' +
