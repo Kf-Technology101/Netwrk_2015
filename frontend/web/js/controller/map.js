@@ -803,6 +803,18 @@
 			Ajax.getBrilliantPostsFromZip(params).then(function(data){
 				var data_posts = $.parseJSON(data);
 
+				if(data_posts.communities == 0){
+					$('.cgm-container').find('#communityInfo').addClass('hide');
+					$('.cgm-container').find('.discussion-title').addClass('hide');
+					$('.cgm-container').find('#noCommunity').removeClass('hide');
+					$('.cgm-container').find('.location-details-wrapper').removeClass('text-left').addClass('text-center');
+				} else {
+					$('.cgm-container').find('#communityInfo').removeClass('hide');
+					$('.cgm-container').find('.discussion-title').removeClass('hide');
+					$('.cgm-container').find('#noCommunity').addClass('hide');
+					$('.cgm-container').find('.location-details-wrapper').removeClass('text-center').addClass('text-left');
+				}
+
 				var marker_template = _.template($("#blue_dot_maker_posts").html());
 				var post_content = marker_template({marker: data_posts});
 
