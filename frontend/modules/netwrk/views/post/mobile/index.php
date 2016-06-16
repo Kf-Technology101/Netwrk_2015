@@ -16,7 +16,7 @@
         <table class="filter_sidebar">
             <tr>
                 <td class="feed">Area Vision</td>
-                <td class="post active">Channel</td>
+                <td class="post active">Line</td>
             </tr>
         </table>
     </div>
