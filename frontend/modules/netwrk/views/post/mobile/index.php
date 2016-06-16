@@ -75,8 +75,16 @@
 <script id="feed_list" type="text/x-underscore-template" >
     <div class="top-post">
         <div class="top-header">
-          <p class="lp-title">Top Posts</p>
-          <p class="lp-description">Check out some of the discussions on some of your favorite subjects</p>
+            <% if(feed.office_type == 'university') { %>
+                <p class="lp-title">Welcome to your local Idea center</p>
+                <p class="lp-description">Here are the top idea lines in the area</p>
+            <% } else if(feed.office_type == 'government') { %>
+                <p class="lp-title">Welcome to your local solution center</p>
+                <p class="lp-description">Here are the top problem lines in the area</p>
+            <% } else { %>
+                <p class="lp-title">Welcome to your local Community Center</p>
+                <p class="lp-description">Check out the most active lines in the area</p>
+            <% } %>
         </div>
         <div class="top-post-content">
           <%
@@ -112,8 +120,16 @@
     </div>
     <div class="top-topic">
         <div class="top-header">
-            <p class="lp-title">Top Topics</p>
-            <p class="lp-description">Browse these topics of conversations</p>
+            <% if(feed.office_type == 'university') { %>
+                <p class="lp-title">Top Idea channels</p>
+                <p class="lp-description">Here are the most active in the area</p>
+            <% } else if(feed.office_type == 'government') { %>
+                <p class="lp-title">Problem channels are the home of discourse on netwrk</p>
+                <p class="lp-description">In problem channels, each line serves as a place to discuss an issue. Here are the most active in the area</p>
+            <% } else { %>
+                <p class="lp-title">Top Channels</p>
+                <p class="lp-description">Here are the most active channels in the area</p>
+            <% } %>
         </div>
         <div class="top-topic-content ">
           <%
@@ -139,7 +155,13 @@
     </div>
     <div class="top-feed">
         <div class="top-header">
-            <p class="lp-title">Feed</p>
+            <% if(feed.office_type == 'university') { %>
+                <p class="lp-title">Idea Center News</p>
+            <% } else if(feed.office_type == 'government') { %>
+                <p class="lp-title">Solution Center News</p>
+            <% } else { %>
+                <p class="lp-title">Local News</p>
+            <% } %>
         </div>
         <div class="top-feed-content"></div>
     </div>
