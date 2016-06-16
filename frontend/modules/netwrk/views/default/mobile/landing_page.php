@@ -1,9 +1,5 @@
 <?php use yii\helpers\Url; ?>
 <div id='ld_modal_landing_page'>
-	<div id="btn_my_location">
-		<i class="fa fa-crosshairs"></i>
-		<span>Build</span>
-	</div>
 	<div class="ld-modal-dialog">
 		<div class="ld-modal-content">
 			<div class="ld-modal-header">

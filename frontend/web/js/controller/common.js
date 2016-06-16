@@ -23,6 +23,10 @@ var Common = {
         Common.eventLoginTrigger();
 
         Common._eventClickProfileNavMenu();
+
+        if(isMobile){
+            Map.eventClickMyLocation(Map.map);
+        }
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */

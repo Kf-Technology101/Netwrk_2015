@@ -112,6 +112,11 @@ if (isset($cookies["isCoverPageVisited"])) {
     <?php echo $this->render('@frontend/modules/netwrk/views/user/mobile/userinfo') ?>
   <?php endif; ?>
 
+    <div id="btn_my_location">
+      <i class="fa fa-crosshairs"></i>
+      <span>Build</span>
+    </div>
+
     <div class="container">
 	    <?= Breadcrumbs::widget([
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
