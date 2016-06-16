@@ -41,6 +41,7 @@ var Meet_setting={
         $('#modal_meet .modal-body').css('height', Meet.height+46);
 
         if(isMobile){
+            $('.navigation-wrapper').css('bottom','0px');
             $('#show_meet .page').hide();
             $('.name_user').find('img').hide();
             $('.log_out').hide();
