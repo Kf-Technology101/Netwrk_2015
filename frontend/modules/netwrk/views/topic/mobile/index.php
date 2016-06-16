@@ -36,7 +36,7 @@
             </span>
         </div>
         <!--<div class="create_topic">
-            <span><i class="fa fa-plus-circle"></i> Create Topic</span>
+            <span><i class="fa fa-plus-circle"></i> Channel</span>
         </div>
         <div class="create_group" id="create_group">
             <span><i class="fa fa-plus-circle"></i> Create Group</span>

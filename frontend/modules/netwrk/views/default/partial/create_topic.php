@@ -9,7 +9,7 @@
                         <span><i class="fa fa-arrow-circle-left"></i> Back </span>
                     </div>
                     <div class="name_user">
-                        <p> Create a Topic</p>
+                        <p> Build a channel and add lines to it</p>
                     </div>
                 </div>
                 <div class="scrumb">
@@ -20,23 +20,23 @@
             <div class="modal-body">
                 <div class="page" id="create_topic">
                     <div class="topic">
-                        <p class="title"> Topic </p>
-                        <input type="text" class="name_topic" maxlength="128" placeholder="Topic Title">
+                        <p class="title"> Channel </p>
+                        <input type="text" class="name_topic" maxlength="128" placeholder="Channel Title">
                     </div>
                     <div class="group-category-content">
 
                     </div>
                     <div class="post">
                         <div class="post-title">
-                            <p class="title"> Post </p>
+                            <p class="title"> Line </p>
                             <div class="input-group">
                                 <span class="input-group-addon" id="sizing-addon2">#</span>
-                                <input type="text" class="name_post" maxlength="128" placeholder="Post Title">
+                                <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
                             </div>
                         </div>
                         <div class="post-message">
                             <p class="title"> Message </p>
-                            <textarea class="message" placeholder="Type message here..." maxlength="1024"></textarea>
+                            <textarea class="message" placeholder="Don't be shy! Say something!" maxlength="1024"></textarea>
                         </div>
                     </div>
                     <div class="btn-control">

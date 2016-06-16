@@ -10,7 +10,7 @@
                     </div>
                     <div class="title_page"></div>
                     <div class="create_post">
-                        <span><i class="fa fa-plus-circle"></i> Create Post</span>
+                        <span><i class="fa fa-plus-circle"></i> Line</span>
                     </div>
 
                 </div>
@@ -28,7 +28,7 @@
                     <table class="filter_sidebar">
                         <tr>
                             <td class="feed">Area Vision</td>
-                            <td class="post active">Channel</td>
+                            <td class="post active">Lines</td>
                         </tr>
                     </table>
                 </div>

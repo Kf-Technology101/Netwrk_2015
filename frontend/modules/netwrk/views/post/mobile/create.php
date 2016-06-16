@@ -6,21 +6,21 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title"><?= $city->zip_code ?> > Create a Post</span>
+            <span class="title"><?= $city->zip_code ?> > Add a line</span>
         </div>
     </div>
     <div class="container">
         <div class="post">
             <div class="post-title">
-                <p class="title"> Post </p>
+                <p class="title"> Line </p>
                 <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2">#</span>
-                    <input type="text" class="name_post" maxlength="128" placeholder="Post Title" value="<?= isset($post->title) ? $post->title :''?>">
+                    <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?= isset($post->title) ? $post->title :''?>">
                 </div>
             </div>
             <div class="post-message">
                 <p class="title"> Message </p>
-                <textarea class="message" placeholder="Type message here..." maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
+                <textarea class="message" placeholder="Don't be shy! Say something!" maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
             </div>
         </div>
         <div class="btn-control">

@@ -60,7 +60,7 @@
                   </div>
               </div>
               <div class="tab-btn">
-                    <p class="btn-create-topic create_topic"><i class="fa fa-plus-circle"></i>Create Topic</p>
+                    <p class="btn-create-topic create_topic text-center"><i class="fa fa-plus-circle"></i> Channel</p>
               </div>
           </div>
           <div class="tab-header tab-header-group clearfix hidden">
@@ -104,8 +104,8 @@
                       <button>Total Users</button>
                   </div>
                   <div class="topic_group_create">
-                      <button id="btn-create-topic">Create Topic</button>
-                      <button id="btn-create-post">Create Post</button>
+                      <button id="btn-create-topic" class="text-center"><i class="fa fa-plus-circle"></i> Channel</button>
+                      <button id="btn-create-post" class="text-center"><i class="fa fa-plus-circle"></i> Line</button>
                   </div>
                   <div class="filter">
                       <div class="group-topics-dropdown dropdown input-group">
