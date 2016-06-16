@@ -122,11 +122,7 @@ var ChatPost = {
 	},
 
 	SetUrl: function(){
-		if(ENV == 'prod'){
-			ChatPost.url = 'www.netwrk.com:2311';
-		} else {
-			ChatPost.url = 'dev.netwrk.com:2312';
-		}
+		ChatPost.url = MainWs.url;
 	},
 
 	SetDataPostChat: function(){
@@ -325,10 +321,10 @@ var ChatPost = {
 		var size = get_size_window();
 		var h_navSearch = $('.navbar-mobile').height();
 		var h_header = $(ChatPost.page).find('.header').height();
-		var btn_meet = $('#btn_meet_mobile').height()-40;
+		var btn_meet = $('#btn_meet_mobile').height()-10;
 		var nav_message = $(ChatPost.page).find('.nav_input_message').height();
-		var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message;
-
+		var nav_bottom = $('.navigation-wrapper').height();
+		var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message - nav_bottom;
 
 		$(ChatPost.page).find('.container_post_chat').css('height',wh);
 	},

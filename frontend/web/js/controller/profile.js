@@ -32,6 +32,22 @@ var Profile = {
         // $('.footer-btn').hide();
         $('#modal_meet .modal-footer').hide();
         $('#modal_meet .modal-body').css('height', Meet.height+46);
+
+        if(isMobile){
+            $('.navigation-wrapper').css('bottom','0px');
+            Profile.setHeightContainer();
+        }
+    },
+
+    // set height of mobile screen
+    setHeightContainer: function() {
+        var size = get_size_window();
+        var h_navSearch = $('.navbar-mobile').height();
+        var h_header = $('#show_meet').find('.sidebar').height();
+        var btn_meet = $('#btn_meet_mobile').height()-5;
+        var nav_bottom = $('.navigation-wrapper').height();
+        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_bottom;
+        $('#show_meet').find('.container_meet').css('height',wh);
     },
 
     eventClickSave: function(){

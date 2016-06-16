@@ -11,7 +11,8 @@ $params = [
     'LimitResultSearch'				=> 2,
     'LimitObjectHoverPopup'			=> 5,
     'LimitObjectFeedGlobal'			=> 3,
-    'LimitCoverResult'              => 10
+    'LimitCoverResult'              => 10,
+    'systemUserId'                  => 1
 ];
 
 return $params;
