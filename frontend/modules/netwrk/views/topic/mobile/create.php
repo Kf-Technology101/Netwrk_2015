@@ -8,7 +8,7 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title"><?php echo ($data->zipcode) ? $data->zipcode : $city->zip_code  ?> > Build a channel and add lines to it</span>
+            <span class="title"><?php echo ($data->zipcode) ? $data->zipcode : $city->zip_code  ?> > Build a channel & add lines to it</span>
         </div>
     </div>
     <div class="container">
