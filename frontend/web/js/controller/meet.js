@@ -34,11 +34,26 @@ var Meet ={
         }
     },
 
+    // set height of mobile screen
+    setHeightContainer: function() {
+        var size = get_size_window();
+        var h_navSearch = $('.navbar-mobile').height();
+        var h_header = $('#show_meet').find('.sidebar').height();
+        var btn_meet = $('#btn_meet_mobile').height()-10;
+        var nav_message = $('#show_meet').find('.footer-btn').height();
+        var nav_bottom = $('.navigation-wrapper').height();
+        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message - nav_bottom;
+        $('#show_meet').find('.container_meet').css('height',wh);
+    },
+
     _init: function(){
         var post_id = Meet.getParameterByName('post_id'),
             user_view = Meet.getParameterByName('user_id'),
             from = Meet.getParameterByName('from');
         if(isMobile){
+            $('.navigation-wrapper').css('bottom','47px');
+            Meet.setHeightContainer();
+
             var currentTarget = $('#meeting_page'),
                 container = $('.container_meet');
 
