@@ -233,6 +233,7 @@ class TopicController extends BaseController
         if (!empty($cty)) {
             $temp['city'] = ($cty ? $cty->zip_code : $zipcode);
             $temp['city_id'] = ($cty ? $cty->id : '');
+            $temp['office_type'] = ($cty ? $cty->office_type : '');
         }
         $hash = json_encode($temp);
         return $hash;
@@ -318,6 +319,8 @@ class TopicController extends BaseController
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
 
+            $office_type = $cty->office_type;
+
             $top_post = Post::GetTopPostUserJoinGlobal($limit, $city);
             $top_topic = Topic::GetTopTopicGlobal($limit, $city);
             $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
@@ -368,6 +371,7 @@ class TopicController extends BaseController
             }
 
             $item = [
+                'office_type' => $office_type,
                 'top_post'=> $top_post,
                 'top_topic'=> $top_topic,
                 'feed' => $feeds,
