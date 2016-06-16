@@ -40,7 +40,7 @@
 					<p class="lp-description">Check out the most popular lines around your location!</p>
 				</a>
 			</div>
-			<div id="collapsePartyLines" class="panel-collapse collapse">
+			<div id="collapsePartyLines" class="panel-collapse collapse in">
 				<div class="panel-body top-post-content party-lines-content">
 					<%
 						var len_party_lines = landing.party_lines.length;

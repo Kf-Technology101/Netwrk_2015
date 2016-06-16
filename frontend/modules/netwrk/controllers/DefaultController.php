@@ -764,7 +764,7 @@ class DefaultController extends BaseController
             }
 
             // Active party lines near cover zip code
-            $party_lines_posts = Post::GetBrilliantPostsByCities(5, $city_ids);
+            $party_lines_posts = Post::GetBrilliantPostsByCities($limit, $city_ids);
             foreach($party_lines_posts as $post){
                 $item = [
                     'id' => $post['id'],
