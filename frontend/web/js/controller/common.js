@@ -26,6 +26,10 @@ var Common = {
         Common.onClickMapButton();
 
         Common.deleteTrigger();
+
+        if(isMobile){
+            Map.eventClickMyLocation(Map.map);
+        }
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
