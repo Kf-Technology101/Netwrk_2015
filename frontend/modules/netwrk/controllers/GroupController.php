@@ -373,7 +373,10 @@ class GroupController extends BaseController {
             );
         }
         $res = array('data'=> $data);
-        if (!empty($_GET['city'])) $res['city'] = ($cty ? $cty->zip_code : $zipcode);
+        if (!empty($_GET['city'])){
+            $res['city'] = ($cty ? $cty->zip_code : $zipcode);
+            $res['office_type'] = ($cty ? $cty->office_type : '');
+        }
         return json_encode($res);
     }
 
