@@ -1131,6 +1131,18 @@
 			});
 		},
 
+		setBlueDotInfoWindow: function() {
+			// Blue dot info window content is in following file
+			// @frontend/modules/netwrk/views/marker/blue_dot_post_content
+			var blueDotInfoWindowContent = $('#blueDotInfoWindow').html();
+
+			var infowindow = new google.maps.InfoWindow({
+				content: blueDotInfoWindowContent
+			});
+
+			return infowindow;
+		},
+
 		showBlueDot: function(lat, lng, map) {
 			var img = '/img/icon/pale-blue-dot.png';
 			var marker = new google.maps.Marker({
@@ -1177,9 +1189,7 @@
 
 			console.log(Map.blueDotLocation.lat+', '+Map.blueDotLocation.lon);
 
-			var infowindow = new google.maps.InfoWindow({
-				content: Map.blueDotInfoWindowContent
-			});
+			var infowindow = Map.setBlueDotInfoWindow();
 
 			infowindow.close();
 
@@ -1665,6 +1675,12 @@
 				var currentZoom = map.getZoom();
 				console.log(currentZoom);
 				Map.showHideBlueDotZoomInfo(currentZoom);
+
+				// Recreate info window, so it will always display updated content
+				var blueDotInfoWindow = Map.setBlueDotInfoWindow();
+				Map.infoWindowBlueDot = [];
+				Map.infoWindowBlueDot.push(blueDotInfoWindow);
+
 				if(isMobile){
 				    sessionStorage.map_zoom = currentZoom;
 				}
