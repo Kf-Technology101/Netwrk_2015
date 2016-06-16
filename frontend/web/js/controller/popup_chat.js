@@ -607,9 +607,10 @@ var PopupChat = {
         var size = get_size_window();
         var h_navSearch = $('.navbar-mobile').height();
         var h_header = $(PopupChat.page).find('.header').height();
-        var btn_meet = $('#btn_meet_mobile').height()-40;
+        var btn_meet = $('#btn_meet_mobile').height()-10;
         var nav_message = $(PopupChat.page).find('.nav_input_message').height();
-        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message;
+        var nav_bottom = $('.navigation-wrapper').height();
+        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message - nav_bottom;
         $(PopupChat.page).find('.container_post_chat').css('height',wh);
     },
 
