@@ -285,6 +285,7 @@ class TopicController extends BaseController
         if (!empty($cty)) {
             $temp['city'] = ($cty ? $cty->zip_code : $zip_code);
             $temp['city_id'] = ($cty ? $cty->id : '');
+            $temp['office_type'] = ($cty ? $cty->office_type : '');
         }
         return $this->render('mobile/index', $temp);
     }
