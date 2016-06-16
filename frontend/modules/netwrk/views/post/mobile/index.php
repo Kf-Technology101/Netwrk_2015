@@ -8,7 +8,7 @@
             <span class="title"><?php if (!empty($city)) { ?><?= $topic->city->zip_code ?> > <?php } ?><?= $topic->title ?></span>
         </div>
         <div class="create_post">
-            <span><i class="fa fa-plus-circle"></i> Create Post</span>
+            <span><i class="fa fa-plus-circle"></i> Line</span>
         </div>
     </div>
     <div class="sidebar">

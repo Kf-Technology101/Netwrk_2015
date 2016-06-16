@@ -23,7 +23,7 @@
             <span class="title"><?php if($data->title) print $data->title; else print $data->zipcode?></span>
         </div>
         <div class="create_topic">
-            <span><i class="fa fa-plus-circle"></i> Create Topic</span>
+            <span><i class="fa fa-plus-circle"></i> Channel</span>
         </div>
     </div>
     <div class="sidebar">
