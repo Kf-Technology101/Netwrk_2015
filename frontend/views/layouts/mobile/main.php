@@ -90,22 +90,23 @@ if (isset($cookies["isCoverPageVisited"])) {
         <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
           <button type="button" class="btn btn-default btn-explore">
             <i class="navigation-icon fa fa-globe"></i>
-            <div class="navigation-text">Map</div>
+            <div class="navigation-text">Near</div>
           </button>
-          <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
-            <i class="navigation-icon fa fa-comment"></i>
-            <div class="navigation-text"><span class='notify disable'>0</span>Chat</div>
-          </button>
-          <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
-            <i class="navigation-icon ci-meet"></i>
-            <div class="navigation-text">Meet</div>
-          </button>
+          <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger"></button>
           <?php if (Yii::$app->user->isGuest):?>
             <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
               <i class="navigation-icon fa fa-sign-in"></i>
               <div class="navigation-text">Login</div>
             </a>
           <?php endif; ?>
+          <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
+            <i class="navigation-icon ci-meet"></i>
+            <!--<div class="navigation-text">Meet</div>-->
+          </button>
+          <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
+            <i class="navigation-icon ci-line"></i>
+            <div class="navigation-text"><span class='notify disable'>0</span>Lines</div>
+          </button>
         </div>
       </div>
     </section>
