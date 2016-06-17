@@ -3,10 +3,6 @@
 </ul>
 
 <div class="map_content_mobile noselect">
-  <div id="btn_my_location">
-    <i class="fa fa-crosshairs"></i>
-    <span>Build</span>
-  </div>
   <div id="googleMap" style=""></div>
 </div>
 <!-- Loader -->
