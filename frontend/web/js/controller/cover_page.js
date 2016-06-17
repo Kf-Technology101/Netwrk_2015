@@ -19,6 +19,7 @@ var CoverPage = {
 		//CoverPage.OnKeyPress();
 		if(isMobile){
 			$("body").css('background', '#fff');
+			$("body").find('#btn_my_location').addClass('hide');
 			CoverPage.hiddenMobileFooter();
 			CoverPage.hiddenMobileNavigation();
 		}
