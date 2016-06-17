@@ -17,7 +17,7 @@ var Default ={
             Default.onCLickModal();
             Default.onClickNavigationIcon();
         }
-        // Default.SetAvatarUserDropdown();
+        Default.SetAvatarUserDropdown();
         // Default.ShowLandingPage();
 
         if(typeof isCoverPageVisited !== 'undefined'){
@@ -219,7 +219,7 @@ var Default ={
                 data = $.parseJSON(data);
                 var list_template = _.template($("#account_nav_dropdown" ).html());
                 var append_html = list_template({user_info: data});
-                $('#nav_wrapper #account_nav_wrapper').remove();
+                $('#nav_wrapper #navProfileWrapper').remove();
                 $("#nav_wrapper .btn").eq(0).after(append_html);
                 //$('#nav_wrapper').find('#navProfileWrapper').html(append_html);
                 Common._eventClickProfileNavMenu();

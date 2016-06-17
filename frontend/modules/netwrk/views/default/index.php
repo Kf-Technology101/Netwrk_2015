@@ -15,13 +15,6 @@
           <i class="navigation-icon fa fa-sign-in"></i>
           <div class="navigation-text">Login</div>
         </button>
-      <?php else : ?>
-        <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger">
-          <i class="navigation-icon fa fa-user"></i>
-          <span class="navigation-text">
-             Me
-          </span>
-        </button>
       <?php endif; ?>
       <button id="btn_nav_meet" type="button" class="btn btn-default">
         <i class="navigation-icon ci-meet"></i>
