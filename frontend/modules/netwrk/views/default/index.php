@@ -10,11 +10,17 @@
         <i class="navigation-icon fa fa-globe"></i>
         <span class="navigation-text">Near</span>
       </button>
-      <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger"></button>
       <?php if (Yii::$app->user->isGuest):?>
         <button type="button" class="btn btn-default login-trigger">
           <i class="navigation-icon fa fa-sign-in"></i>
           <div class="navigation-text">Login</div>
+        </button>
+      <?php else : ?>
+        <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger">
+          <i class="navigation-icon fa fa-user"></i>
+          <span class="navigation-text">
+             Me
+          </span>
         </button>
       <?php endif; ?>
       <button id="btn_nav_meet" type="button" class="btn btn-default">
