@@ -2,8 +2,8 @@
 <div id='chat_inbox' class='chat-inbox' >
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
-		<li role="presentation" class="active col-xs-6 chat-private-btn"><a href="#chat_private" aria-controls="chat_private" role="tab" data-toggle="tab"><span>Chats</span></a></li>
-		<li role="presentation" class=" col-xs-6 chat-dicussions-btn"><a href="#chat_discussion" aria-controls="chat_discussion" role="tab" data-toggle="tab"><span>Discussions</span></a></li>
+		<li role="presentation" class="active col-xs-6 chat-private-btn"><a href="#chat_private" aria-controls="chat_private" role="tab" data-toggle="tab"><span>Messages</span></a></li>
+		<li role="presentation" class=" col-xs-6 chat-dicussions-btn"><a href="#chat_discussion" aria-controls="chat_discussion" role="tab" data-toggle="tab"><span>Lines</span></a></li>
 	</ul>
 	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 

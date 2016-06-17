@@ -8,22 +8,23 @@
     <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
       <button id="" type="button" class="btn btn-default btn_nav_map_location">
         <i class="navigation-icon fa fa-globe"></i>
-        <span class="navigation-text">Near me</span>
+        <span class="navigation-text">Near</span>
       </button>
-      <button id="chat_inbox_btn" type="button" class="btn btn-default">
-        <i class="navigation-icon fa fa-comment"></i>
-        <span class="navigation-text"><span class='notify'>0</span>Chat</span>
-      </button>
-      <button id="btn_nav_meet" type="button" class="btn btn-default">
-        <i class="navigation-icon ci-meet"></i>
-        <span class="navigation-text">Meet</span>
-      </button>
+      <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger"></button>
       <?php if (Yii::$app->user->isGuest):?>
         <button type="button" class="btn btn-default login-trigger">
           <i class="navigation-icon fa fa-sign-in"></i>
           <div class="navigation-text">Login</div>
         </button>
       <?php endif; ?>
+      <button id="btn_nav_meet" type="button" class="btn btn-default">
+        <i class="navigation-icon ci-meet"></i>
+        <!--<span class="navigation-text">Meet</span>-->
+      </button>
+      <button id="chat_inbox_btn" type="button" class="btn btn-default">
+        <i class="navigation-icon ci-line"></i>
+        <span class="navigation-text"><span class='notify'>0</span>Lines</span>
+      </button>
     </div>
   </div>
 
