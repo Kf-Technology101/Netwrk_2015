@@ -55,7 +55,7 @@ var User_Profile = {
     editProfileModal: $('#modal_change_profile_picture'),
     initialize: function(){
         if(isMobile){
-            //Default.SetAvatarUserDropdown();
+            Default.SetAvatarUserDropdown();
             User_Profile.OnClickBack();
         } else {
             User_Profile.ShowModalProfile();
