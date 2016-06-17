@@ -214,7 +214,7 @@ var Default ={
                 var list_template = _.template($("#account_nav_dropdown" ).html());
                 var append_html = list_template({user_info: data});
                 $('#nav_wrapper #account_nav_wrapper').remove();
-                $('#nav_wrapper').append(append_html);
+                $('#nav_wrapper').find('#navProfileWrapper').html(append_html);
                 Common._eventClickProfileNavMenu();
             });
             //Hide the sign in button from nav
