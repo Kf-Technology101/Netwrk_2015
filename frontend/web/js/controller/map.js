@@ -993,11 +993,9 @@
 							console.log('in click zoom 18');
 							//Go to zoom level 18. and shoe blue dot on map
 							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map)
+							blueDotInfoWindow.close();
 						} else {
 							console.log('In map dblclick Map.center_marker');
-						}
-						if(!isMobile){
-							blueDotInfoWindow.close();
 						}
 					};
 				})(Map.center_marker));
@@ -1014,13 +1012,6 @@
 						if (!blueDotInfoWindow.getMap()) {
 							blueDotInfoWindow.open(Map.map, Map.center_marker);
 						} else {
-							blueDotInfoWindow.close();
-						}
-					});
-
-					google.maps.event.addListener(Map.center_marker, 'dblclick', function () {
-						if (Map.map.getZoom() != Map.blueDotLocation.zoomLast) {
-							Map.zoomMap(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map);
 							blueDotInfoWindow.close();
 						}
 					});
