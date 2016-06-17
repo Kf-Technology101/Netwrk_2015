@@ -102,9 +102,9 @@ if (isset($cookies["isCoverPageVisited"])) {
           <?php else : ?>
             <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger">
               <i class="navigation-icon fa fa-user"></i>
-              <span class="navigation-text">
+              <div class="navigation-text">
                  Me
-              </span>
+              </div>
             </button>
           <?php endif; ?>
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
