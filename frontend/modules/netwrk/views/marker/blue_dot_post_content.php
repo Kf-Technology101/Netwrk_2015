@@ -32,7 +32,7 @@
 						<div class="iw-subTitle row dot-info-wrapper">Double click map to zoom & access channels</div>
 					</div>
 					<!--<div class="iw-subTitle" id="cm-coords"></div>-->
-					<div class="create-section-wrapper">
+					<div class="create-section-wrapper hide">
 						<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>
 						<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>
 					</div>
