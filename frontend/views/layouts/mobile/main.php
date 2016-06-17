@@ -92,12 +92,18 @@ if (isset($cookies["isCoverPageVisited"])) {
             <i class="navigation-icon fa fa-globe"></i>
             <div class="navigation-text">Near</div>
           </button>
-          <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger"></button>
           <?php if (Yii::$app->user->isGuest):?>
             <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
               <i class="navigation-icon fa fa-sign-in"></i>
               <div class="navigation-text">Login</div>
             </a>
+          <?php else : ?>
+            <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger">
+              <i class="navigation-icon fa fa-user"></i>
+              <span class="navigation-text">
+                 Me
+              </span>
+            </button>
           <?php endif; ?>
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-meet"></i>
