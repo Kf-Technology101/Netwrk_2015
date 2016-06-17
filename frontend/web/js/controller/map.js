@@ -994,14 +994,23 @@
 
 							Map.smoothZoom(map, Map.blueDotLocation.zoomLast, Map.map.getZoom(), true);
 							map.zoom = Map.blueDotLocation.zoomLast;
-							Map.loadBlueDotMarker(Map.map);
-							setTimeout(function() {
-								Map.map.setCenter(new google.maps.LatLng(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng()));
-							}, 200);
+
+							if(isMobile){
+								$('.cgm-container').find('.my-location').addClass('hidden');
+								$('.cgm-container').find('.create-location-group').removeClass('hidden');
+								setTimeout(function() {
+									Map.map.setCenter(new google.maps.LatLng(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng()));
+								}, 200);
+							} else {
+								Map.loadBlueDotMarker(Map.map);
+								setTimeout(function() {
+									Map.map.setCenter(new google.maps.LatLng(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng()));
+								}, 200);
+								blueDotInfoWindow.close();
+							}
 
 							//Go to zoom level 18. and shoe blue dot on map
 							//Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map)
-							blueDotInfoWindow.close();
 						} else {
 							console.log('In map dblclick Map.center_marker');
 						}
