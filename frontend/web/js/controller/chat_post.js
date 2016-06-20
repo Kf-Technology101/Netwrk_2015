@@ -324,7 +324,7 @@ var ChatPost = {
 		var btn_meet = $('#btn_meet_mobile').height()-10;
 		var nav_message = $(ChatPost.page).find('.nav_input_message').height();
 		var nav_bottom = $('.navigation-wrapper').height();
-		var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message - nav_bottom;
+		var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message;
 
 		$(ChatPost.page).find('.container_post_chat').css('height',wh);
 	},
