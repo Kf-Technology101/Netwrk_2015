@@ -190,7 +190,7 @@ var ChatInbox = {
 			Topic.params.city = btn.find("input[name='city_id']").val();
 			var item_post = $(e.currentTarget).find('.chat-post-id').attr('data-post');
 			if(isMobile){
-				PopupChat.RedirectChatPostPage(item_post, 1, 1);
+				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				PopupChat.params.post = item_post;
 				PopupChat.params.chat_type = $(e.currentTarget).find('.chat-post-id').attr('data-chat-type');
