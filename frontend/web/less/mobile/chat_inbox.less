@@ -231,3 +231,41 @@
 .responsive-chat-inbox {
 	right: 320px;
 }
+
+#Chat-inbox,
+#Chat {
+	.navigation-wrapper {
+		top: 40%;
+		right: 0;
+		width: auto;
+		.box-navigation {
+			.btn-group {
+				margin-left: 0;
+				.btn {
+					border-bottom: 1px solid #fff;
+					border-top: none;
+					border-left: none;
+					border-right: none;
+					margin-botton: 1px;
+					margin-left: 0;
+					margin-right: 0;
+					display: block;
+					float: none;
+					&:first-child:not(:last-child):not(.dropdown-toggle) {
+						border-bottom-left-radius: 0;
+					}
+					&:last-child:not(:first-child){
+						border-radius: 0 0 0 4px;
+					}
+				}
+				&:last-child:not(:first-child){
+					.btn{
+						&:first-child{
+							border-radius: 0 0 0 4px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
