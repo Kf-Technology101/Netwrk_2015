@@ -22,6 +22,16 @@ var CoverPage = {
 			CoverPage.hiddenMobileFooter();
 			CoverPage.hiddenMobileNavigation();
 		}
+
+		// Display cover page input
+		var coverImg = $(CoverPage.parent).find('#coverImg');
+		if (coverImg.prop('complete')) {
+			$('#inputGroup').removeClass('hide');
+		} else {
+			coverImg.load(function(){
+				$('#inputGroup').removeClass('hide');
+			});
+		}
 	},
 
 	OnKeyPress: function(){
