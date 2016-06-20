@@ -1311,7 +1311,7 @@
 		},
 
 		requestPosition: function(map) {
-			Map.requestPosTimeout = setTimeout(function() {
+			/*Map.requestPosTimeout = setTimeout(function() {
 				Map.requestPositionFunction(map);
 			}, 30000);
 			Map.requestPositionFunction(map);
