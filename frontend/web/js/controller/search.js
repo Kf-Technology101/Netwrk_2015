@@ -9,7 +9,7 @@ var Search = {
 	result_data:'',
 	select:0,
 	initialize: function(){
-		Search.CheckUserLocation();
+		//Search.CheckUserLocation();
 		if(isMobile){
 
 		}else{
