@@ -834,14 +834,14 @@
 		},
 
 		requestPosition: function(map) {
-			Map.requestPosTimeout = setTimeout(function() {
+			/*Map.requestPosTimeout = setTimeout(function() {
 				Map.requestPositionFunction(map);
 			}, 30000);
 			Map.requestPositionFunction(map);
 			google.maps.event.addListener(map, 'bounds_changed', function() {
 				console.log(map.getZoom());
 				Map.requestPositionFunction(map);
-			});
+			});*/
 
 			google.maps.event.addListener(map, 'idle', function(){
 				var currentZoom = map.getZoom();
