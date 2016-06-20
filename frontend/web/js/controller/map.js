@@ -1002,11 +1002,12 @@
 									Map.map.setCenter(new google.maps.LatLng(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng()));
 								}, 200);
 							} else {
+								blueDotInfoWindow.close();
+								Map.closeAllInfoWindows();
 								Map.loadBlueDotMarker(Map.map);
 								setTimeout(function() {
 									Map.map.setCenter(new google.maps.LatLng(Map.center_marker.getPosition().lat(), Map.center_marker.getPosition().lng()));
 								}, 200);
-								blueDotInfoWindow.close();
 							}
 
 							//Go to zoom level 18. and shoe blue dot on map
