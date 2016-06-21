@@ -62,7 +62,7 @@ var ChatInbox = {
                 }, 500);
             });
 
-			ChatInbox.ActiveReponsiveChatInbox();
+			ChatInbox.ActiveResponsiveChatInbox();
 			ChatInbox.onClickChat = 1;
 		} else {
 			$(ChatInbox.chat_inbox).animate({
@@ -76,7 +76,7 @@ var ChatInbox = {
                 }, 500);
             });
 
-			ChatInbox.DeactiveReponsiveChatInbox();
+			ChatInbox.DeactiveResponsiveChatInbox();
 			ChatInbox.onClickChat = 0;
 		}
 	},
@@ -238,7 +238,7 @@ var ChatInbox = {
 		});
 	},
 
-	ActiveReponsiveChatInbox: function() {
+	ActiveResponsiveChatInbox: function() {
 		var width = $( window ).width();
 		$(".modal").addClass("responsive-chat-inbox");
 		if (width <= 1250) {
@@ -246,19 +246,22 @@ var ChatInbox = {
 		}
 
 		//set zoom for re-init
-		Map.zoom = Map.map.getZoom();
+		/*Map.zoom = Map.map.getZoom();
 		Map.center = Map.map.getCenter();
 		var width_map = width -320;
 		$('.map_content').animate({
 			'width':width_map+'px',
 			'left': 0, 'margin': 0
 		}, 500, 'swing', function(){ Map.initialize(); });
-		$('#btn_meet').css({'left': '', 'right' : '15px'});
+		ChatInbox.WindowResize(width_map);*/
+
 		ChatInbox.params.IsOpenChatBox = true;
-		ChatInbox.WindowResize(width_map);
+		$('.box-navigation').css({'left': '', 'right' : '395px'});
+		$('#btn_my_location').css({'left': '', 'right' : '335px'});
+		$('#btn_meet').css({'left': '', 'right' : '335px'});
 	},
 
-	DeactiveReponsiveChatInbox: function() {
+	DeactiveResponsiveChatInbox: function() {
 		var width = $( window ).width();
 		// if (width <= 1366) {
 			$(".modal").removeClass("responsive-chat-inbox");
@@ -268,14 +271,17 @@ var ChatInbox = {
 		}
 
 		//set zoom for re-init
-		Map.zoom = Map.map.getZoom();
+		/*Map.zoom = Map.map.getZoom();
 		Map.center = Map.map.getCenter();
 
 		$('.map_content').animate({
 			'width':'100%',
 			'left': '', 'margin': 'auto'
-		}, 500, 'swing', function(){ Map.initialize(); });
+		}, 500, 'swing', function(){ Map.initialize(); });*/
+
 		ChatInbox.params.IsOpenChatBox = false;
+		$('.box-navigation').css({'left': '', 'right' : '75px'});
+		$('#btn_my_location').css({'left': '', 'right' : '15px'});
 		$('#btn_meet').css({'left': '', 'right' : '15px'});
 	},
 
@@ -304,7 +310,7 @@ var ChatInbox = {
                     }, 500);
                 });
 
-				ChatInbox.DeactiveReponsiveChatInbox();
+				ChatInbox.DeactiveResponsiveChatInbox();
 			});
 		}
 	},
