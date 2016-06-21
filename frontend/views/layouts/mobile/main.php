@@ -83,6 +83,10 @@ if (isset($cookies["isCoverPageVisited"])) {
                 <input type="text" class="form-control input-search" placeholder="Be timeless">
               </div>
             </div>
+            <div id="btn_my_location">
+              <i class="fa fa-crosshairs"></i>
+              <span>Build</span>
+            </div>
     	</div>
 	</div>
     <section class="navigation-wrapper text-center">
@@ -111,12 +115,6 @@ if (isset($cookies["isCoverPageVisited"])) {
     </section>
     <?php echo $this->render('@frontend/modules/netwrk/views/user/mobile/userinfo') ?>
   <?php endif; ?>
-
-    <div id="btn_my_location">
-      <i class="fa fa-crosshairs"></i>
-      <span>Build</span>
-    </div>
-
     <div class="container">
 	    <?= Breadcrumbs::widget([
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
