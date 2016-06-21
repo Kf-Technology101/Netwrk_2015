@@ -131,10 +131,15 @@ class ChatController extends BaseController
 					$images_size = getimagesize($target_upload);
 					$old_width = $images_size[0];
 					$old_height = $images_size[1];
-					$final_width  = round($old_width/10);
-					$final_height = round($old_height/10);
+					//$final_width  = round($old_width/10);
+					//$final_height = round($old_height/10);
 					// *** 1) Initialise / load image
 					$resizeObj = new Resize($target_upload);
+
+					// Get optimal width and height so image not blur
+					$final_size = $resizeObj->getSizeByAuto(100,100);
+					$final_width  = $final_size['optimalWidth'];
+					$final_height = $final_size['optimalHeight'];
 
 					// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
 					$resizeObj->resizeImage($final_width, $final_height, 'crop');

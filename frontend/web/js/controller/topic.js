@@ -74,6 +74,9 @@ var Topic = {
         if(Topic.tab_current == 'feed'){
             var btn = parent.find('.filter_sidebar td.feed');
             btn.trigger('click');
+        } else if(Topic.tab_current == 'topic'){
+            var btn = parent.find('.filter_sidebar td.topic');
+            btn.trigger('click');
         } else if(Topic.tab_current == 'groups'){
             var btn = parent.find('.filter_sidebar td.groups');
             btn.trigger('click');
@@ -697,7 +700,6 @@ var Topic = {
             }
             console.log("loading groups!!!");
             Ajax.show_groups(params).then(function(data){
-                console.log(data);
                 var parent = $('#show-topic').find('#item_group_list_'+self.data.filter);
                 self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
                 parent.show();
