@@ -70,7 +70,7 @@
             <% }else if(msg.msg_type == 2) { %>
                 <a class='img_chat_style' href='<?= Url::to("@web/img/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><img src='<?= Url::base(true)."/img/uploads/" ?><%= msg.post_id %>/<%= msg.msg %>' /></a>
             <% } else { %>
-                <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.msg %>' target='_blank'><%= msg.msg %></a>
+                <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
             <% } %>
                 <p class="time"><%= msg.created_at %></p>
             </div>
