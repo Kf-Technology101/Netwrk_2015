@@ -68,7 +68,7 @@
             <% if(msg.msg_type == 1) { %>
                 <p class="content"><%= msg.msg %></p>
             <% }else if(msg.msg_type == 2) { %>
-                <a class='img_chat_style' href='<?= Url::to("@web/img/uploads/") ?><%= msg.msg %>' target='_blank'><img src='<?= Url::to("@web/img/uploads/") ?><%= msg.msg %>' /></a>
+                <a class='img_chat_style' href='<?= Url::to("@web/img/uploads/") ?><%= msg.msg %>' target='_blank'><img src='<?= Url::base(true)."/img/uploads/" ?><%= msg.msg %>' /></a>
             <% } else { %>
                 <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.msg %>' target='_blank'><%= msg.msg %></a>
             <% } %>
@@ -83,4 +83,4 @@
         sessionStorage.welcome_channel = 1;
     </script>
 <?php endif; ?>
-<?= $this->render('../../default/partial/landing_channel_welcome');?>
+<?= $this->render('@frontend/modules/netwrk/views/default/partial/landing_channel_welcome');?>
