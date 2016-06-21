@@ -27,6 +27,9 @@ var Meet ={
         }else if(Meet.filter.active === 'profile'){
             Profile.initialize();
         }else if(Meet.filter.active === 'meeting'){
+            if(isMobile){
+                $('#show_meet').find('.meet-nav-control').removeClass('hide');
+            }
             Meet._init();
         }
         if (isMobile) {
@@ -42,7 +45,7 @@ var Meet ={
         var btn_meet = $('#btn_meet_mobile').height()-10;
         var nav_message = $('#show_meet').find('.footer-btn').height();
         var nav_bottom = $('.navigation-wrapper').height();
-        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message - nav_bottom;
+        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_bottom;
         $('#show_meet').find('.container_meet').css('height',wh);
     },
 
@@ -51,7 +54,6 @@ var Meet ={
             user_view = Meet.getParameterByName('user_id'),
             from = Meet.getParameterByName('from');
         if(isMobile){
-            $('.navigation-wrapper').css('bottom','47px');
             Meet.setHeightContainer();
 
             var currentTarget = $('#meeting_page'),
@@ -106,7 +108,8 @@ var Meet ={
     },
 
     CheckUserLogin:function(){
-        var target = $('#modal_meet,#show_meet').find('td.setting, td.profile');
+        var target = $('#modal_meet').find('td.setting, td.profile')
+            .add($('#show_meet').find('.setting-menu li.profile, .setting-menu li.setting'));
         if(isGuest){
             target.addClass('no-login');
         }else{
@@ -125,21 +128,37 @@ var Meet ={
     },
 
     changefilter: function(containt){
-        var target = $('#modal_meet,#show_meet').find('.filter_sidebar td');
+        var target = $('#modal_meet').find('.filter_sidebar td')
+            .add($('#show_meet').find('.setting-menu li'));
         var self = this;
         target.unbind();
         target.on('click',function(e){
             // target.bind();
             if(!$(e.currentTarget).hasClass('no-login')){
                 var filter = $(e.currentTarget).attr('class');
-                if(!$(e.currentTarget).hasClass('active')){
-                    $('#modal_meet,#show_meet').find("div[id^='item_list']").hide();
+                if(isMobile){
+                    if(e.currentTarget == 'meeting'){
+                        $('#show_meet').find('.meet-nav-control').removeClass('hide');
+                    } else {
+                        $('#show_meet').find('.meet-nav-control').addClass('hide');
+                    }
+
+                    $('#show_meet').find("div[id^='item_list']").hide();
                     containt.scrollTop(0);
                     self.filter.active = $.trim(filter);
 
                     self.change_button_active(target,$(e.currentTarget),containt);
                     Meet.initialize();
-                    // self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
+                } else {
+                    if(!$(e.currentTarget).hasClass('active')){
+                        $('#modal_meet').find("div[id^='item_list']").hide();
+                        containt.scrollTop(0);
+                        self.filter.active = $.trim(filter);
+
+                        self.change_button_active(target,$(e.currentTarget),containt);
+                        Meet.initialize();
+                        // self.load_topic_filter($(e.currentTarget),self.data.city,self.data.filter);
+                    }
                 }
             }
 

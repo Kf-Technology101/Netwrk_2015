@@ -2,40 +2,41 @@
 
 <div id="show_meet">
   <div class="sidebar">
-     <table class="filter_sidebar">
-          <tr>
-              <td class="meeting active">Meet</td>
-              <td class="setting">Settings</td>
-              <td class="profile">Profile</td>
-          </tr>
-     </table> 
+      <div class="meet-nav-control hide">
+          <table class="control-btn">
+              <tr>
+                  <td class="back disable">
+                      <i class="fa fa-angle-left"></i>
+                      <span>Back</span>
+                  </td>
+                  <td class="meet">
+                      <!-- <i class="fa fa-user"></i> -->
+                      <span>Meet</span>
+                  </td>
+                  <td class="met">
+                      <!-- <i class="fa fa-user"></i> -->
+                      <span>Met</span>
+                  </td>
+                  <td class="next">
+                      <span>Next</span>
+                      <i class="fa fa-angle-right"></i>
+                  </td>
+              </tr>
+          </table>
+      </div>
+      <div class="setting-menu pull-right">
+          <span class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gears"></i></span>
+          <ul class="dropdown-menu dropdown-menu-right">
+              <li class='meeting'><a href="javascript:">Meet</a></li>
+              <li class='setting'><a href="javascript:">Settings</a></li>
+              <li class='profile'><a href="javascript:">Profile</a></li>
+          </ul>
+      </div>
   </div>
   <div class="container_meet">
     <div class='page' id="meeting_page">
       <div class="user_list"></div>
       <p class="no_data">There is no relevant user. Try broadening your Meet Settings.</p>
-      <div class="footer-btn">
-            <table class="control-btn">
-              <tr>
-                <td class="back disable">
-                  <i class="fa fa-angle-left"></i>
-                  <span>Back</span>
-                </td>
-                <td class="meet">
-                  <!-- <i class="fa fa-user"></i> -->
-                  <span>Meet</span>
-                </td>
-                <td class="met">
-                  <!-- <i class="fa fa-user"></i> -->
-                  <span>Met</span>
-                </div>
-                <td class="next">
-                  <span>Next</span>
-                  <i class="fa fa-angle-right"></i>
-                </td>
-              </tr>
-            </table>
-          </div>
     </div>
     <div class='page' id="meet_setting">
         <div class="show_me">
