@@ -133,7 +133,7 @@ class Resize
 		return $newHeight;
 	}
 
-	private function getSizeByAuto($newWidth, $newHeight)
+	public function getSizeByAuto($newWidth, $newHeight)
 	{
 		if ($this->height < $this->width)
 		// *** Image to be resized is wider (landscape)
