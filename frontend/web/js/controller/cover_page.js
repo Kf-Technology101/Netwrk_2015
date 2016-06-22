@@ -157,14 +157,20 @@ var CoverPage = {
 	},
 
 	checkZipCode: function(zipcode){
-		$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
-			var params = data;
-			Ajax.set_cover_cookie(params).then(function(data){
-				window.location.href = baseUrl; //+ "/netwrk/default/home";
+		var arr = [ 46037, "46037" ];
+
+		if(jQuery.inArray( zipcode, arr ) == 1){
+			$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+				var params = data;
+				Ajax.set_cover_cookie(params).then(function(data){
+					window.location.href = baseUrl; //+ "/netwrk/default/home";
+				});
+			}).fail(function(jqXHR) {
+				CoverPage.showError();
 			});
-		}).fail(function(jqXHR) {
+		} else {
 			CoverPage.showError();
-		});
+		}
 	},
 
 	checkCity: function(zipcode){
