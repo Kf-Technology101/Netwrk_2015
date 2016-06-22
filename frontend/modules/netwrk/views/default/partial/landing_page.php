@@ -6,7 +6,7 @@
 				<div class="header">
 					<!--<a href="javascript:void(0)"><img src="<?/*= Url::to('@web/img/icon/netwrk-logo.png'); */?>"></a>-->
 					<div class="title text-center" id="headerButtonWrapper">
-						<div class="btn-area-talk">Area Party Line</div>
+						<div class="btn-area-talk"></div>
 						<p class="main-header hidden">Welcome, click explore to follow communities</p>
 						<p class="sub-header hidden">Tap the netwrk icon or map to explore</p>
 					</div>
@@ -28,7 +28,7 @@
 <script id="landing_header" type="text/x-underscore-template">
 	<div class="btn-area-talk" data-topic="<%= landing.topic_id %>" data-city="<%= landing.city_id %>"
 		 data-value="<%= landing.post_id %>" data-user="<%= landing.user_id %>"
-		 data-title="<%= landing.title %>" data-content="<%= landing.post_content %>">Area Party Line</div>
+		 data-title="<%= landing.title %>" data-content="<%= landing.post_content %>"></div>
 </script>
 <script id="landing_page" type="text/x-underscore-template">
 	<div class="panel-group" id="accordion">
