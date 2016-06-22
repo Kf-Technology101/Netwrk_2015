@@ -35,7 +35,7 @@
 		<div class="panel panel-default top-post party-lines" id="panelPartyLines">
 			<div class="panel-heading top-header">
 				<a data-toggle="collapse" data-target="#collapsePartyLines"
-				   href="javascript:" class="collapsed">
+				   href="javascript:">
 					<p class="lp-title">Active Party lines near you</p>
 					<p class="lp-description">Check out the most popular lines around your location!</p>
 				</a>
