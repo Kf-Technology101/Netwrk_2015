@@ -8,7 +8,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<h1>Apparently, your awesome.</h1>
+				<h1>Apparently, your awesome. <br/>Hop on the party line</h1>
 			</div>
 		</div>
 	</div>
