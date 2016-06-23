@@ -175,14 +175,6 @@ class GroupController extends BaseController {
                 $Post->post_type = 1;
                 $Post->save();
 
-                $msg = new WsMessages();
-                $msg->user_id = $currentUserId;
-                $msg->post_id = $Post->id;
-                $msg->post_type = 1;
-                $msg->msg_type = 1;
-                $msg->msg = $Post->content;
-                $msg->save(false);
-
                 $Topic->post_count = 1;
                 $Topic->update();
             }
