@@ -295,6 +295,9 @@ var Create_Topic={
         parent.find('.message').val(Create_Topic.params.post_content);
 
         Create_Topic.onCheckStatus();
+        
+        Common.CustomScrollBar(parent.find('.modal-body'));
+
         parent.modal({
             backdrop: true,
             keyboard: false
