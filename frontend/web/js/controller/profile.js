@@ -44,9 +44,10 @@ var Profile = {
         var size = get_size_window();
         var h_navSearch = $('.navbar-mobile').height();
         var h_header = $('#show_meet').find('.sidebar').height();
-        var btn_meet = $('#btn_meet_mobile').height()-5;
-        var nav_bottom = $('.navigation-wrapper').height();
-        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_bottom;
+        var btn_meet = $('#btn_meet_mobile').height()-10;
+        var nav_bottom = $('.navigation-wrapper').height() + 6;
+
+        var wh = size[1] - h_navSearch - h_header - nav_bottom;
         $('#show_meet').find('.container_meet').css('height',wh);
     },
 
