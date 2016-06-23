@@ -841,7 +841,7 @@
 							Ajax.getSingleZipBoundaries(params).then(function(jsonData){
 								// Remove shaded area of blue dots previous location
 								Map.map.data.forEach(function(feature) {
-									if(feature.H.type != 'selected' && feature.H.type != 'Followed'){
+									if(feature.f.type != 'selected' && feature.f.type != 'Followed'){
 										Map.map.data.remove(feature);
 									}
 								});
