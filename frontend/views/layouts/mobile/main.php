@@ -84,6 +84,7 @@ if (isset($cookies["isCoverPageVisited"])) {
                 <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
                 <input type="text" class="form-control input-search" placeholder="Be timeless">
               </div>
+              <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
             </div>
             <div id="btn_my_location">
               <i class="fa fa-crosshairs"></i>
