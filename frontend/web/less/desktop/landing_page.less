@@ -557,8 +557,9 @@
   display: none;
   margin: auto;
   z-index: 99999;
+  bottom: 0 !important;
   .modal-dialog {
-    top: 150px;
+    top: 25%;
     width: 725px;
     max-height: 525px;
     margin: auto;
@@ -573,12 +574,26 @@
         padding: 10px;
         height: 60px;
         border: none;
+        .close {
+          color: red;
+          font-size: 30px;
+          line-height: 20px;
+          opacity: 1;
+
+          &:hover,
+          &:focus{
+            color: red;
+          }
+        }
       }
       .modal-body {
         height: 200px;
-        padding: 30px 20px;
+        padding: 0 20px 30px;
         text-align: center;
         color: #5888ac;
+        h1{
+          line-height: 50px;
+        }
       }
     }
   }
