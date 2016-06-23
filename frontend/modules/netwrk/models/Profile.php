@@ -38,10 +38,8 @@ class Profile extends ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name'], 'required','message'=>'This is required field'],
+            [['first_name', 'last_name','dob','gender'], 'required','message'=>'This is required field'],
             [['user_id', 'age'], 'integer'],
-            [['dob'], 'safe'],
-            [['age'], 'safe'],
             [['gender'], 'safe'],
             [['about','dob'], 'string'],
             [['lat', 'lng'], 'number'],

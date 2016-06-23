@@ -63,41 +63,23 @@
                     <div class="col-field-name field">
                         <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'Password')); ?>
                     </div>
-                    <!--<div class="col-field-name sex field">
-                        <?/*= $form->field(
+                    <div class="col-field-name sex field">
+                        <?= $form->field(
                                 $profile,
                                 'gender',
                                 [
                                    'template'=>"<div class=\"col-md-12 input-group sex\">{input}\n
                                    <span class='input-group-addon' data-toggle='dropdown'><i class='fa fa-sort'></i></span>\n
                         <ul class='dropdown-menu' aria-labelledby='dropdownMenu2'><li>Male</li><li>Female</li></ul></div>\n<div class=\"col-md-12\">{error}</div>"
-                                ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); */?>
-                    </div>-->
-                    <div class="col-field-name field">
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <?php
-                                $ageArray = [];
-                                foreach (range(18, 100) as $number) {
-                                    $ageArray[] = $number;
-                                }
-                                ?>
-                                <select class="form-control" name="Profile[age]" id="age">
-                                    <option value="">-- Select Age --</option>
-                                    <?php foreach ($ageArray as $item): ?>
-                                        <option value="<?php echo $item ?>"><?php echo $item ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
+                                ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); ?>
                     </div>
 
                     <div class="col-field-name zipcode field">
                         <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zip Code','maxlength'=>5)); ?>
                     </div>
-                    <!--<div class="col-field-name age field">
-                        <?/*= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); */?>
-                    </div>-->
+                    <div class="col-field-name age field">
+                        <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
+                    </div>
 
                     <?=  $form->field($profile, 'lat')->hiddenInput()->label(false); ?>
                     <?=  $form->field($profile, 'lng')->hiddenInput()->label(false); ?>
