@@ -14,6 +14,7 @@ var Common = {
         'loaderIntervalId': ''
     },
     initialize: function() {
+        Common.console();
         Common.onWindowUnload();
         Common.eventClickExploreLocation();
         //init the nav chat inbox for mobile
@@ -32,6 +33,11 @@ var Common = {
         }
     },
 
+    console: function(){
+        if(ENV == 'prod'){
+            console.log = function(){}
+        }
+    },
     /* On clicking map btn in nav, it will redirect to default home on mobile */
     eventClickExplore: function(){
         var target = $(Common.contexts.btnExplore, Common.contexts.boxNavigation);
@@ -145,7 +151,7 @@ var Common = {
             if (isGuest) {
                 Map.getBrowserCurrentPosition(Map.map);
             } else {
-                Map.getMylocation(Map.map);
+                Map.getMyLocation(Map.map);
             }
         });
     },
