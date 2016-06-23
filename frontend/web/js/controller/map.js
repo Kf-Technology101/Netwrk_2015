@@ -961,6 +961,8 @@
 		},
 
 		requestBlueDotOnMap: function(lat, lng, map) {
+			// Close modal
+			$('.modal').modal('hide');
 			/*if (map.getZoom() != Map.blueDotLocation.zoomInitial) {
 				if (typeof Map.center_marker != "undefined" && Map.center_marker != null) {
 					Map.center_marker.setMap(null);
