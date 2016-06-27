@@ -644,7 +644,9 @@ var PopupChat = {
         var btn_meet = $('#btn_meet_mobile').height()-10;
         var nav_message = $(PopupChat.page).find('.nav_input_message').height();
         var nav_bottom = $('.navigation-wrapper').height();
-        var wh = size[1] - h_navSearch -h_header - btn_meet - nav_message;
+
+        var wh = size[1] - h_navSearch - h_header - nav_message;
+
         $(PopupChat.page).find('.container_post_chat').css('height',wh);
     },
 
