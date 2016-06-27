@@ -3,9 +3,9 @@
     <div class='popup_chat_modal'>
         <div class="popup-box chat-popup" id="popup-chat-<%= post_id %>" data-id ='<%= post_id %>' data-chat-type='<%= chat_type %>'>
             <% if ((chat_type == 0)){ %>
-            <div class="popup-head">
+                <div class="popup-head">
             <% } else { %>
-            <div class="popup-head chat-discussion">
+                <div class="popup-head chat-discussion">
             <% } %>
                 <% if ((chat_type == 0)){ %>
                     <div class="popup-head-left">
@@ -29,7 +29,11 @@
                 <div style="clear: both"></div>
             </div>
             <div class="popup-messages">
-                <div class='popup_chat_container'>
+                <% if ((chat_type == 0)){ %>
+                    <div class='popup_chat_container container_private_chat'>
+                <% } else { %>
+                    <div class='popup_chat_container'>
+                <% } %>
                 </div>
             </div>
 
@@ -61,21 +65,24 @@
     <% }else{ %>
         <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>" data-post-id="<%= msg.post_id %>" data-user-id="<%= msg.id %>">
     <% } %>
-        <div class="user_thumbnail">
-            <div class="avatar">
-                <img src="<%= baseurl %><%=  msg.avatar %>">
+        <div class="chat-details">
+            <div class="user_thumbnail">
+                <div class="avatar">
+                    <img src="<%= baseurl %><%=  msg.avatar %>">
+                </div>
             </div>
+            <div class="feedback feedback-trigger">F</div>
+            <p class="time"><%= msg.created_at %></p>
         </div>
         <div class="content_message">
-        <% if(msg.msg_type == 1) { %>
-            <p class="content"><%= msg.msg %></p>
-        <% }else if(msg.msg_type == 2) { %>
-            <a class='img_chat_style' href='<?= Url::to("@web/img/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><img src='<?= Url::to("@web/img/uploads/") ?><%= msg.post_id %>/thumbnails/thumbnail_<%= msg.msg %>'/></a>
-        <% } else { %>
-            <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
-        <% } %>
+            <% if(msg.msg_type == 1) { %>
+                <p class="content"><%= msg.msg %></p>
+            <% }else if(msg.msg_type == 2) { %>
+                <a class='img_chat_style' href='<?= Url::to("@web/img/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><img src='<?= Url::to("@web/img/uploads/") ?><%= msg.post_id %>/thumbnails/thumbnail_<%= msg.msg %>'/></a>
+            <% } else { %>
+                <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
+            <% } %>
         </div>
-        <p class="time"><%= msg.created_at %></p>
     </div>
 </script>
 
