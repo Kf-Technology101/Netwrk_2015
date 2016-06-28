@@ -257,6 +257,24 @@ class DefaultController extends BaseController
             $city_ids = $city_ids.','.$followed_city_ids;
         }
 
+        //get logged in users home location(Zip) city id.
+        if(yii::$app->user->id) {
+            $loggedInUser = User::find()->with('profile')->where(['id' => yii::$app->user->id])->one();
+            $homeZipCode = $loggedInUser->profile->zip_code;
+            if($homeZipCode) {
+                $city = new City();
+                $homeCityId = $city->find()->select('city.id')
+                    ->where(['zip_code' => $homeZipCode])
+                    ->andWhere('office_type is null')
+                    ->orderBy('city.id asc')
+                    ->limit(1)
+                    ->one();
+            }
+            if($homeCityId) {
+                $city_ids = $city_ids.','.$homeCityId->id;
+            }
+        }
+
         $maxlength = Yii::$app->params['MaxlengthContent'];
         $limitHover = Yii::$app->params['LimitObjectHoverPopup'];
         $query = new Query();
@@ -1004,12 +1022,21 @@ class DefaultController extends BaseController
         $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
         $favoriteCommunities = json_decode($favoriteCommunities);
 
+        //get logged in users home location zipcode
+        $loggedInUser = User::find()->with('profile')->where(['id' => yii::$app->user->id])->one();
+        $homeZipCode = $loggedInUser->profile->zip_code;
+
+        $homeZipData = [];
+        if ($homeZipCode) {
+            array_push($homeZipData, $homeZipCode);
+        }
+
         $favoriteZipData = [];
         foreach ($favoriteCommunities->data as  $value) {
             array_push($favoriteZipData, $value->city_zipcode);
         }
 
-        $allZipcodes = array_unique(array_merge($zip_codes_data, $favoriteZipData));
+        $allZipcodes = array_unique(array_merge($zip_codes_data, $favoriteZipData, $homeZipData));
         $allZipcodes = implode(',', $allZipcodes);
         // Array of zip codes
         $zip_array = explode(',',$allZipcodes);

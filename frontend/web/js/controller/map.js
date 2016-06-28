@@ -784,7 +784,6 @@
 							map.zoom = 18;
 						}
 
-						//todo: discussed about users location. Does users saved db location is need to be considered or not
 						Map.requestBlueDotOnMap(lat, lng, map);
 						setTimeout(function() {
 							Map.map.setCenter(new google.maps.LatLng(lat, lng));
