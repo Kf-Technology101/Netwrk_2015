@@ -19,7 +19,7 @@
 			<div class="iw-content">
 				<div class="iw-subTitle location-details-wrapper text-left">
 					<h4 class="location-details">You are in: <span id="blueDotLocation"><span>requesting...</span></span></h4>
-					<h5 class="discussion-title">Active Party Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
+					<h5 class="discussion-title">Active Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
 					<div id="discussionWrapper" class="discussion-wrapper"></div>
 				</div>
 				<div id="communityInfo">
