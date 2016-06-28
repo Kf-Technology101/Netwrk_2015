@@ -87,9 +87,9 @@ var MainWs ={
                     PopupChat.ScrollTopChat(elem.post_id);
                 });
                 $('#popup-chat-'+e.data[0]['post_id']).find('textarea').focus();
-                if(isMobile){
+                /*if(isMobile){
                     fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-                }
+                }*/
                 PopupChat.FetchEmojiOne({type: 'fetch'}, PopupChat.params.post);
             }
         },
@@ -110,9 +110,10 @@ var MainWs ={
                 PopupChat.getMessageTemplate(elem,'single');
                 update_list_chat = $.parseJSON(elem.update_list_chat);
             });
-            if(isMobile){
+            /*if(isMobile){
                 fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-            } else {
+            }*/
+            if(!isMobile){
                 if (chat_type == 0) {
                     ChatInbox.getTemplateChatPrivateItem($("#chat_inbox").find('#chat_private ul'), update_list_chat, user_id, chat_list_user,popup_active);
                 } else {

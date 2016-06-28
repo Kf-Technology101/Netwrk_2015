@@ -271,9 +271,9 @@ var ChatPost = {
 						ChatPost.getMessageTemplate(elem);
 						ChatPost.ScrollTopChat();
 					});
-					if(isMobile){
+					/*if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-					}
+					}*/
 					ChatPost.FetchEmojiOne({type: 'fetch'});
 				},
 				onliners: function(e){
@@ -287,9 +287,10 @@ var ChatPost = {
 							update_list_chat = $.parseJSON(elem.update_list_chat);
 						}
 					});
-					if(isMobile){
+					/*if(isMobile){
 						fix_width_chat_post($(ChatPost.parent).find('.content_message'),$($(ChatPost.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
-					} else {
+					}*/
+					if(!isMobile) {
 						ChatInbox.getTemplateChatInbox($("#chat_inbox").find('#chat_discussion ul'), update_list_chat);
 					}
 					if(ChatPost.message_type == 1){

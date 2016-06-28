@@ -25,7 +25,12 @@
         </div>
     </div>
 
-    <div class="container_post_chat"></div>
+    <?php if ($post->post_type == 0 ) { ?>
+        <div class="container_post_chat container_private_chat">
+    <?php } else { ?>
+        <div class="container_post_chat">
+    <?php } ?>
+    </div>
     <img src='<?= Url::to("@web/img/icon/ajax-loader.gif")?>' class='loading_image' />
     <div class="nav_input_message">
         <?php if(Yii::$app->user->isGuest){?>
@@ -56,14 +61,19 @@
 <script id="message_chat" type="text/x-underscore-template">
     <% if (msg.id == UserLogin){ %>
         <div class="message_send message" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-   <% }else{ %>
+    <% }else{ %>
         <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
     <% } %>
-        <div class="user_thumbnail" data-user-id='<%= msg.id %>'>
-            <div class="avatar">
-                <img src="<%= baseurl %><%=  msg.avatar %>">
+        <div class="chat-details">
+            <div class="user_thumbnail" data-user-id='<%= msg.id %>'>
+                <div class="avatar">
+                    <img src="<%= baseurl %><%=  msg.avatar %>">
+                </div>
             </div>
+            <div class="feedback feedback-trigger">F</div>
+            <p class="time"><%= msg.created_at %></p>
         </div>
+
         <div class="content_message">
             <% if(msg.msg_type == 1) { %>
                 <p class="content"><%= msg.msg %></p>
@@ -72,8 +82,6 @@
             <% } else { %>
                 <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
             <% } %>
-                <p class="time"><%= msg.created_at %></p>
-            </div>
         </div>
     </div>
 </script>
