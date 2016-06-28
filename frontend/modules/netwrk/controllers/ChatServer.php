@@ -116,6 +116,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'id'=> $user,
 														'name'=>$userProfile->name,
 														'avatar'=> $userProfile->image,
+														'msg_id'=> $this->ws_messages->id,
 														'msg'=> nl2br($msg),
 														'msg_type' => $msg_type,
 														"created_at" => date("h:i A"),
@@ -252,10 +253,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						'id'=>$pchat->user_id_guest,
 						'name'=>$profile->first_name ." ".$profile->last_name,
 						'avatar'=> $image,
+						'msg_id'=> $value->id,
 						'msg'=> $smg,
 						'msg_type' => 1,
 						'created_at'=> $time,
 						'post_id'=> $value->post_id,
+						'post_type'=> $value->post_type,
 					);
 				} else {
 					$profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
@@ -276,10 +279,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						'id'=>$value->user->id,
 						'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 						'avatar'=> $image,
+						'msg_id'=> $value->id,
 						'msg'=> $smg,
 						'msg_type' => 1,
 						'created_at'=> $time,
 						'post_id'=> $value->post_id,
+						'post_type'=> $value->post_type,
 					);
 				}
 			} else {
@@ -294,10 +299,12 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'id'=>$value->user->id,
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 					'avatar'=> $image,
+					'msg_id'=> $value->id,
 					'msg'=> $smg,
 					'msg_type' => $value->msg_type,
 					'created_at'=> $time,
 					'post_id'=> $value->post_id,
+					'post_type'=> $value->post_type,
 				);
 			}
 

@@ -28,6 +28,11 @@
                 </div>
                 <div style="clear: both"></div>
             </div>
+            <% if ((chat_type == 1)){ %>
+                <div class="chat-feedback">
+                    <?= $this->render('@frontend/modules/netwrk/views/feedback/view') ?>
+                </div>
+            <% } %>
             <div class="popup-messages">
                 <% if ((chat_type == 0)){ %>
                     <div class='popup_chat_container container_private_chat'>
@@ -71,7 +76,7 @@
                     <img src="<%= baseurl %><%=  msg.avatar %>">
                 </div>
             </div>
-            <div class="feedback feedback-trigger">F</div>
+            <div class="feedback feedback-trigger" data-parent="#popup-chat-<%= msg.post_id %>" data-object="ws-message" data-id="<%= msg.msg_id %>">F</div>
             <p class="time"><%= msg.created_at %></p>
         </div>
         <div class="content_message">

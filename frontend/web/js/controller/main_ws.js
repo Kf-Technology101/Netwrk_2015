@@ -77,6 +77,7 @@ var MainWs ={
     events: {
         fetch: function(e) {
             PopupChat.msg_lenght = e.data.length;
+            var chat_type = e.data[0]['post_type'];
             if (PopupChat.msg_lenght > 0) {
                 var message = $('#popup-chat-'+e.data[0]['post_id']).find(PopupChat.container).find('.message');
                 if (message.length > 0) {
@@ -91,6 +92,10 @@ var MainWs ={
                     fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
                 }*/
                 PopupChat.FetchEmojiOne({type: 'fetch'}, PopupChat.params.post);
+
+                if(chat_type == 1){
+                    Common.feedbackAllTriggers();
+                }
             }
         },
         onliners: function(e){
@@ -122,6 +127,9 @@ var MainWs ={
             }
             if(PopupChat.message_type == 1){
                 PopupChat.FetchEmojiOne({type: 'single'}, popup_active);
+            }
+            if(chat_type == 1){
+                Common.feedbackAllTriggers();
             }
         },
         notify: function(e){

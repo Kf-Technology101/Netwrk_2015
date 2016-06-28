@@ -28,6 +28,9 @@ var Common = {
 
         Common.deleteTrigger();
 
+        // Feedback related script calls
+        Common.feedbackAllTriggers();
+
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
         }
@@ -234,5 +237,60 @@ var Common = {
                 }
             });
         });
-    }
+    },
+
+    feedbackAllTriggers: function(){
+        Common.feedbackTrigger();
+        Common.feedbackCloseTrigger();
+        Common.feedbackOptionTrigger();
+    },
+
+    feedbackTrigger: function(){
+        var target = $('.feedback-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            var object = $(this).data('object'),
+                id = $(this).data('id'),
+                parent = $(this).data('parent'),
+                feedbackSection = $(parent).find('.feedback-section');
+
+            feedbackSection.removeClass('hide');
+            feedbackSection.find('.feedback-content')
+                .attr('data-parent',parent)
+                .attr('data-object',object)
+                .attr('data-id',id);
+        });
+    },
+    feedbackCloseTrigger: function () {
+        var target = $('.feedback-close-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+           $(this).closest('.feedback-section').addClass('hide');
+        });
+    },
+    feedbackOptionTrigger: function(){
+        var target = $('.feedback-option-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            var option = $(this).data('option'),
+                point = $(this).data('point'),
+                feedbackContent = $(this).closest('.feedback-content'),
+                parent = $(feedbackContent).data('parent'),
+                object = $(feedbackContent).data('object'),
+                id = $(feedbackContent).data('id'),
+                feedbackSection = $(parent).find('.feedback-section');
+
+            console.log('You have selected '+option+' with '+point+' points');
+
+            feedbackSection.addClass('hide');
+            feedbackSection.find('.feedback-content')
+                .attr('data-parent','')
+                .attr('data-object','')
+                .attr('data-id','');
+        });
+    },
+
 };
