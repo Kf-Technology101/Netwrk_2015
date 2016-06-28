@@ -94,6 +94,8 @@ var Login={
 				PopupChat.ShowChatBox(PopupChat.params.post);
 			}, 500)
 		}
+		//reload the map, highlight users home location, favorite zipcode
+		Map.initialize();
 	},
 
 	OnShowLoginErrors: function(){
