@@ -298,6 +298,20 @@
 				height: 20px;
 				width: 20px;
 			}
+			.build-icon {
+				background: #5888ac;
+				color: #fff;
+				font-size: 20px;
+				text-align: center;
+				margin: auto;
+				width: 25px;
+				padding: 3px;
+				border-radius: 15px;
+			}
+			.blue-dot-lable {
+				vertical-align: middle;
+				padding-bottom: 10px;
+			}
 		}
 
 		&.double-click{
@@ -323,8 +337,11 @@
 				font-size: 12px;
 			}
 			.item-post{
-				width: 100%;
+				width: 50%;
 				float: left;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 				.name-post{
 					&::before{
 						content: '#';

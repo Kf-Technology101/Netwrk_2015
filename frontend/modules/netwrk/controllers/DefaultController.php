@@ -1595,7 +1595,7 @@ class DefaultController extends BaseController
 
             $city_ids = implode(',',$cities_array);
 
-            $limit = Yii::$app->params['LimitObjectHoverPopup'];
+            $limit = 6;//Yii::$app->params['LimitObjectHoverPopup'];
 
             $posts = Post::GetBrilliantPostsByCities($limit, $city_ids);
 

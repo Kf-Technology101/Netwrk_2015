@@ -18,15 +18,25 @@
 		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
 			<div class="iw-content">
 				<div class="iw-subTitle location-details-wrapper text-left">
-					<h4 class="location-details">You are in: <span id="blueDotLocation"><span>requesting...</span></span></h4>
+					<h4 class="location-details">Welcome to <span id="blueDotLocation"><span>requesting...</span></span></h4>
 					<h5 class="discussion-title">Active Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
 					<div id="discussionWrapper" class="discussion-wrapper"></div>
 				</div>
-				<div id="communityInfo">
-					<div class="row dot-info-main">
-						<div class="iw-subTitle col-xs-6 dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>
-						<div class="iw-subTitle col-xs-6 dot-info-wrapper zoom-info hide">Click <img src="/img/icon/pale-blue-dot.png"/> to zoom in</div>
-						<div class="iw-subTitle col-xs-6 dot-info-wrapper zoom-cancel">Click <img src="/img/icon/pale-blue-dot.png"/> to Cancel</div>
+				<div id="communityInfo clearfix">
+					<div class="row">
+						<div class="col-xs-6 dot-info-main">
+							<div class="dot-info-wrapper">
+								<i class="fa fa-crosshairs build-icon"></i>
+								<span class="blue-dot-lable">Anywhere</span>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="row dot-info-main">
+								<div class="iw-subTitle  dot-info-wrapper">Hold <img src="/img/icon/pale-blue-dot.png"/> to move &nbsp;&nbsp;&nbsp;</div>
+								<div class="iw-subTitle  dot-info-wrapper zoom-info hide">Click <img src="/img/icon/pale-blue-dot.png"/> to zoom in</div>
+								<div class="iw-subTitle  dot-info-wrapper zoom-cancel">Click <img src="/img/icon/pale-blue-dot.png"/> to Cancel</div>
+							</div>
+						</div>
 					</div>
 					<div class="dot-info-main double-click">
 						<div class="iw-subTitle row dot-info-wrapper">Double click map to zoom & access channels</div>
