@@ -28,7 +28,7 @@
                 </div>
                 <div style="clear: both"></div>
             </div>
-            <% if ((chat_type == 1)){ %>
+            <% if (chat_type == 1){ %>
                 <div class="chat-feedback">
                     <?= $this->render('@frontend/modules/netwrk/views/feedback/view') ?>
                 </div>
