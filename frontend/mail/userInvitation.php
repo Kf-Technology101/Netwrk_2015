@@ -8,6 +8,12 @@ use yii\helpers\Url;
  * @var \amnah\yii2\user\models\UserKey $userKey
  */
 ?>
-<a href="<?= Url::toRoute(["/netwrk/user/join", "key" => $userKey->key_value], true); ?>" style="background:#5888ac; cursor:pointer; padding: 20px 0; border:none;  -moz-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px; border-radius: 10px; font-size:28px; font-weight:bold; text-decoration:none; color:#fff; display: block; max-width: 300px;text-align:center;">
-	<b>Come on in</b>
-</a>
+<table width="500px" align="center" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+	<tr>
+		<td style="height: 480px;text-align: center;">
+			<a href="<?= Url::toRoute(["/netwrk/user/join", "key" => $userKey->key_value], true); ?>">
+				<img src="<?= Url::toRoute(['/img/background/invitation_email_bg.png'], true); ?>" width="100%" max-height="480px" style="margin:0 auto;" alt="Come on in" />
+			</a>
+		</td>
+	</tr>
+</table>
