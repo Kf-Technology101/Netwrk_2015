@@ -48,6 +48,7 @@ class AppAsset extends AssetBundle
         'css/desktop/profile_info.css',
         'css/desktop/profile_edit.css',
         'css/desktop/common.css',
+        'css/desktop/feedback.css'
     ];
     public $js = [
         'js/lib/underscore.js',
