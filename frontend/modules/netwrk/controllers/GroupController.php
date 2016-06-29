@@ -35,7 +35,7 @@ class GroupController extends BaseController {
         $mailer->viewPath = Yii::$app->getModule("netwrk")->emailViewPath;
 
         // send email
-        $subject = "Your buddy is looking to party";
+        $subject = "Your friend has invited you to their group line";
         $message  = $mailer->compose('userInvitation', compact("subject", "user", "userKey"))
             ->setTo($user->email)
             ->setSubject($subject);
