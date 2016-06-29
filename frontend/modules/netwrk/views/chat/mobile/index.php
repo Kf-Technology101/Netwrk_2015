@@ -25,6 +25,12 @@
         </div>
     </div>
 
+    <?php if ($post->post_type == 1) { ?>
+        <div class="chat-feedback">
+            <?= $this->render('@frontend/modules/netwrk/views/feedback/view') ?>
+        </div>
+    <?php } ?>
+
     <?php if ($post->post_type == 0 ) { ?>
         <div class="container_post_chat container_private_chat">
     <?php } else { ?>
@@ -70,7 +76,7 @@
                     <img src="<%= baseurl %><%=  msg.avatar %>">
                 </div>
             </div>
-            <div class="feedback feedback-trigger">F</div>
+            <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws-message" data-id="<%= msg.msg_id %>">F</div>
             <p class="time"><%= msg.created_at %></p>
         </div>
 
