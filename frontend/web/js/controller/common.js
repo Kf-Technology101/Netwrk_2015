@@ -242,6 +242,7 @@ var Common = {
     feedbackAllTriggers: function(){
         Common.feedbackTrigger();
         Common.feedbackCloseTrigger();
+        Common.feedbackLoginTrigger();
         Common.feedbackOptionTrigger();
     },
 
@@ -268,6 +269,29 @@ var Common = {
         target.unbind();
         target.on('click',function(){
            $(this).closest('.feedback-section').addClass('hide');
+        });
+    },
+    feedbackAfterLogin: function () {
+        $('.feedback-list a').each(function(){
+            $(this).removeClass('login-trigger').addClass('feedback-option-trigger');
+        });
+        Common.feedbackOptionTrigger();
+    },
+    feedbackLoginTrigger: function() {
+        var target = $('.login-trigger', '.feedback-content');
+        target.unbind();
+        target.on("click", function() {
+            if(isGuest){
+                if(isMobile){
+                    var url = window.location.href;
+                    window.location.href = baseUrl + "/netwrk/user/login?url_callback="+url;
+                }else{
+                    $('.modal').modal('hide');
+                    Login.modal_callback = Common.feedbackAfterLogin();
+                    Login.initialize();
+                    return false;
+                }
+            }
         });
     },
     feedbackOptionTrigger: function(){
