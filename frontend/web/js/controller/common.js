@@ -258,9 +258,9 @@ var Common = {
 
             feedbackSection.removeClass('hide');
             feedbackSection.find('.feedback-content')
-                .attr('data-parent',parent)
-                .attr('data-object',object)
-                .attr('data-id',id);
+                .data('parent',parent)
+                .data('object',object)
+                .data('id',id);
         });
     },
     feedbackCloseTrigger: function () {
@@ -307,13 +307,19 @@ var Common = {
                 id = $(feedbackContent).data('id'),
                 feedbackSection = $(parent).find('.feedback-section');
 
-            console.log('You have selected '+option+' with '+point+' points');
+            var params = {'object': object,'id': id, 'option': option, 'point': point};
 
-            feedbackSection.addClass('hide');
-            feedbackSection.find('.feedback-content')
-                .attr('data-parent','')
-                .attr('data-object','')
-                .attr('data-id','');
+            Ajax.postFeedback(params).then(function(data){
+                var json = $.parseJSON(data);
+
+                if(json.success == 'true'){
+                    feedbackSection.addClass('hide');
+                    feedbackSection.find('.feedback-content')
+                        .data('parent','')
+                        .data('object','')
+                        .data('id','');
+                }
+            });
         });
     },
 
