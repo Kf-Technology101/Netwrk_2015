@@ -741,6 +741,28 @@
 				}
 		    });
 	  	},
+		getMyHomeLocation: function(map) {
+			console.log('in getMyHomeLocation');
+			if(isMobile){
+				if(window.location.href != baseUrl + "/netwrk/default/home"){
+					sessionStorage.show_blue_dot = 1;
+					sessionStorage.show_landing = 1;
+					window.location.href = baseUrl + "/netwrk/default/home";
+				} else {
+					if (isGuest) {
+						Map.getBrowserCurrentPosition(map);
+					} else {
+						Map.getMyLocation(map);
+					}
+				}
+			} else {
+				if (isGuest) {
+					Map.getBrowserCurrentPosition(map);
+				} else {
+					Map.getMyLocation(map);
+				}
+			}
+		},
 
 		getBrowserCurrentPosition: function(map) {
 			navigator.geolocation.getCurrentPosition(function(position) {
@@ -1029,18 +1051,25 @@
 					return function(){
 						var current_zoom = Map.map.getZoom();
 						if(current_zoom == 12){
-							console.log('in click zoom 12');
-							// Close blue dot info window
-							Map.closeAllInfoWindows();
+							if(!isMobile) {
+								// Close blue dot info window
+								Map.closeAllInfoWindows();
+							}
 						} else if(current_zoom == Map.blueDotLocation.zoomMiddle) {
-							console.log('in click zoom 16');
+
 							//Go to zoom level 18. and shoe blue dot on map
 							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map)
-						} else if(current_zoom == Map.blueDotLocation.zoomLast) {
-							console.log('In map idle: else zoom 16');
 						}
 						if(!isMobile){
 							blueDotInfoWindow.close();
+						} else {
+							if (!blueDotInfoWindow.getMap()) {
+
+								blueDotInfoWindow.open(Map.map, Map.center_marker);
+							} else {
+
+								blueDotInfoWindow.close();
+							}
 						}
 					};
 				})(Map.center_marker));
@@ -1084,15 +1113,6 @@
 					if (Map.requestPosTimeout != null) clearTimeout(Map.requestPosTimeout);
 				});
 
-				if(isMobile) {
-					google.maps.event.addListener(Map.center_marker, 'click', function () {
-						if (!blueDotInfoWindow.getMap()) {
-							blueDotInfoWindow.open(Map.map, Map.center_marker);
-						} else {
-							blueDotInfoWindow.close();
-						}
-					});
-				}
 
 				blueDotInfoWindow.open(Map.map, Map.center_marker);
 				//find current zip from lat and lng set to Map.blueDotLocation.zipcode
