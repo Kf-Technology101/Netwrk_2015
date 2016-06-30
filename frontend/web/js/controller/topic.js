@@ -552,13 +552,7 @@ var Topic = {
             if(isMobile){
                 Post.RedirectPostPage(topic_id);
             }else{
-                if(target[0].className == 'title topic-trigger'){
-                    $('#modal_profile').modal('hide');
-                }if(target[0].className == 'feed-row feed-topic fav-community-topic'){
-                    $('#modal_landing_page').modal('hide');
-                }else{
-                    $(Topic.modal).modal('hide');
-                }
+                $('.modal').modal('hide');
 
                 Post.params.topic = topic_id;
                 Post.params.topic_name = topic_name;
@@ -647,7 +641,9 @@ var Topic = {
     },
 
     show_page_topic: function(city,params){
-        if (params){
+        if (typeof params.group != "undefined"){
+            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&group="+params.group+"&name="+params.name+"&from="+params.from;
+        } else if(typeof params.zipcode != "undefined") {
             window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
         }else{
             window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city;

@@ -30,6 +30,10 @@ class Group extends \yii\db\ActiveRecord
         return $this->hasMany(Topic::className(), ['group_id' => 'id']);
     }
 
+    public function getCity() {
+        return $this->hasOne(City::className(), ['id' => 'city_id']);
+    }
+
     /**
      * @inheritdoc
      */

@@ -172,7 +172,12 @@
                         <div class="item">
                             <div class="row">
                                 <div class="col-xs-8">
-                                    <a href="javascript:" class="title"><b><%= item.name %></b></a>
+                                    <a href="javascript:" class="title group-trigger"
+                                       data-id="<%= item.id %>"
+                                       data-city-id="<%= item.city_id %>"
+                                       data-city-zip="<%= item.city_zip%>">
+                                        <b><%= item.name %></b>
+                                    </a>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="topic-actions text-right">
