@@ -26,8 +26,10 @@
 					<div class="row">
 						<div class="col-xs-6 dot-info-main">
 							<div class="dot-info-wrapper">
-								<i class="fa fa-crosshairs build-icon"></i>
-								<span class="blue-dot-lable">Anywhere</span>
+								<a id="btnMyLocation" class="btn_my_location" href="javascript:" onclick="Map.getMyHomeLocation(Map.map);">
+									<i class="fa fa-crosshairs build-icon"></i>
+									<span class="blue-dot-lable">Anywhere</span>
+								</a>
 							</div>
 						</div>
 						<div class="col-xs-6">
