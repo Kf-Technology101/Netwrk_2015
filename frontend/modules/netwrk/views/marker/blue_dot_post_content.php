@@ -25,7 +25,7 @@
 					<h5 class="discussion-title">Active Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
 					<div id="discussionWrapper" class="discussion-wrapper"></div>
 				</div>
-				<div id="communityInfo clearfix">
+				<div id="communityInfo" class="clearfix">
 					<div class="row">
 						<div class="col-xs-6 dot-info-main">
 							<div class="dot-info-wrapper">
