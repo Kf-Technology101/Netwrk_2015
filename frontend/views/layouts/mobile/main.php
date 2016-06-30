@@ -160,5 +160,38 @@ if (isset($cookies["isCoverPageVisited"])) {
   //     document.getElementById('myFooter').classList.add("hidden");
   // }
 </script>
+<!-- Code to open group topic page -->
+<?php
+  $url = $_SERVER['REQUEST_URI'];
+  $parts = parse_url($url);
+  $path = explode('/',$parts['path']);
+  if($path[2] == 'topic' && $path[3] == 'topic-page') {
+    parse_str($parts['query'], $query);
+    $from = ($query['from']) ? $query['from'] : '';
+    $group = ($query['group']) ? $query['group'] : 0;
+    $groupName = ($query['name']) ? $query['name'] : '';
+
+    if($from == 'profile' && $group > 0) {
+?>
+  <script type="application/javascript">
+    Topic.tab_current = 'groups';
+
+    window.onload = function() {
+      // Load group topics and display the same
+      Group.data.filter = 'recent';
+      var group = <?php echo $group;?>;
+      var groupName = '<?php echo $groupName;?>';
+      var parent = $('#item_topic_group_list_' + Group.data.filter);
+
+      Group.ShowTopics(parent, group, groupName);
+
+      $('#modal_topic').find(".dropdown").removeClass('visible');
+      $('#modal_topic .sidebar').find('.dropdown').addClass('visible');
+
+      //Hide the group tab header from topic modal.
+      Topic.HideTabGroupHeader();
+    };
+  </script>
+<?php } } ?>
 </html>
 <?php $this->endPage() ?>

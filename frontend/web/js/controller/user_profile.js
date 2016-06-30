@@ -645,6 +645,43 @@ var User_Profile = {
         }
     },
 
+    groupTrigger: function(){
+        var parent = $('#recent_activity_container').find('.group-item .group-trigger');
+
+        parent.unbind();
+        parent.on('click',function(){
+            var city = $(this).attr('data-city-id'),
+                cityZip = $(this).attr('data-city-zip'),
+                cityName = $(this).attr('data-city-name'),
+                group = $(this).attr('data-id'),
+                groupName = $.trim($(this).text());
+
+            if(isMobile){
+                var params = {group: group, name: groupName, from: 'profile'};
+                Topic.initialize(city,params);
+            } else {
+                var params = {zipcode: cityZip};
+                $('#modal_profile').modal('hide');
+
+                Topic.tab_current = 'groups';
+                Topic.initialize(city,params);
+
+                // Load group topics and display the same
+                Group.data.filter = 'recent';
+                var group = $(this).attr('data-id');
+                var groupName = $(this).text();
+                var parent = $('#item_topic_group_list_' + Group.data.filter);
+
+                Group.ShowTopics(parent, group, groupName);
+
+                $('#modal_topic').find(".dropdown").removeClass('visible');
+                $('#modal_topic .sidebar').find('.dropdown').addClass('visible');
+
+                //Hide the group tab header from topic modal.
+                Topic.HideTabGroupHeader();
+            }
+        });
+    },
     //Show group information of users
     ShowGroups: function(){
         var template = $('#recent_activity_container');
@@ -678,6 +715,8 @@ var User_Profile = {
             //hide no data section
             template.find('.no-data').hide();
             User_Profile.getTemplateGroupInfo(template, templateData);
+
+            User_Profile.groupTrigger();
             Common.deleteTrigger();
         });
     },

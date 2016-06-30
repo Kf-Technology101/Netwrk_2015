@@ -462,6 +462,7 @@ class GroupController extends BaseController {
         $groups = Group::find()
             ->where($params)
             ->andWhere(['not',['status' => '-1']])
+            ->joinWith("city")
             ->orderBy($order);
 
         $countQuery = clone $groups;
@@ -484,6 +485,7 @@ class GroupController extends BaseController {
                 'name' => $group->name,
                 'permission' => $group->permission,
                 'city_id' => $group->city_id,
+                'city_zip' => $group->city->zip_code,
                 'created_at' => date("M d, Y", strtotime($group->created_at)),
                 'formatted_created_at' => date("M d", strtotime($group->created_at)),
                 'formatted_created_date' => date('M d', strtotime($group->created_at)),
