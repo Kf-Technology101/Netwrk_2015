@@ -90,14 +90,14 @@
                     <div class="preview_img_ie"></div>
                 </div>
                 <div class="btn-control-modal">
-                    <div class="cancel">
+                    <div class="btn-img cancel">
                         <p>Cancel</p>
                     </div>
-                    <div class="save disable">
+                    <div class="btn-img save disable">
                         <i class="fa fa-check"></i>
                         <span>Save</span>
                     </div>
-                    <div class="browse">
+                    <div class="btn-img browse">
                         <?php
                         $form = \yii\widgets\ActiveForm::begin([
                           'action' => Url::to(['/netwrk/setting/upload-image']),
