@@ -17,7 +17,7 @@
 	<div id="blueDotInfoWindow">
 		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
 			<div class="iw-content">
-				<div class="iw-subTitle text-right" onclick="Map.mouseOutsideInfoWindow();">
+				<div class="iw-subTitle text-right" onclick="Map.closeAllInfoWindows();">
 					<span class="close"><span aria-hidden="true">&times;</span></span>
 				</div>
 				<div class="iw-subTitle location-details-wrapper text-left">
