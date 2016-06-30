@@ -17,6 +17,9 @@
 	<div id="blueDotInfoWindow">
 		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
 			<div class="iw-content">
+				<div class="iw-subTitle text-right" onclick="Map.mouseOutsideInfoWindow();">
+					<span class="close"><span aria-hidden="true">&times;</span></span>
+				</div>
 				<div class="iw-subTitle location-details-wrapper text-left">
 					<h4 class="location-details">Welcome to <span id="blueDotLocation"><span>requesting...</span></span></h4>
 					<h5 class="discussion-title">Active Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
