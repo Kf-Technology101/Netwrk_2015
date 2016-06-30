@@ -726,41 +726,44 @@
 						sessionStorage.show_landing = 1;
 						window.location.href = baseUrl + "/netwrk/default/home";
 					} else {
-						if (isGuest) {
+						Map.getBrowserCurrentPosition(map);
+						/*if (isGuest) {
 							Map.getBrowserCurrentPosition(map);
 						} else {
 							Map.getMyLocation(map);
-						}
+						}*/
 					}
 				} else {
-					if (isGuest) {
+					Map.getBrowserCurrentPosition(map);
+					/*if (isGuest) {
 						Map.getBrowserCurrentPosition(map);
 					} else {
 						Map.getMyLocation(map);
-					}
+					}*/
 				}
 		    });
 	  	},
 		getMyHomeLocation: function(map) {
-			console.log('in getMyHomeLocation');
 			if(isMobile){
 				if(window.location.href != baseUrl + "/netwrk/default/home"){
 					sessionStorage.show_blue_dot = 1;
 					sessionStorage.show_landing = 1;
 					window.location.href = baseUrl + "/netwrk/default/home";
 				} else {
-					if (isGuest) {
+					Map.getBrowserCurrentPosition(map);
+					/*if (isGuest) {
 						Map.getBrowserCurrentPosition(map);
 					} else {
 						Map.getMyLocation(map);
-					}
+					}*/
 				}
 			} else {
-				if (isGuest) {
+				Map.getBrowserCurrentPosition(map);
+				/*if (isGuest) {
 					Map.getBrowserCurrentPosition(map);
 				} else {
 					Map.getMyLocation(map);
-				}
+				}*/
 			}
 		},
 
