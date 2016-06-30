@@ -282,7 +282,8 @@ var Default ={
      */
     getMylocation: function(map){
         console.log('in default getMylocation');
-        Ajax.get_position_user().then(function(data){
+        Map.getBrowserCurrentPosition(map);
+        /*Ajax.get_position_user().then(function(data){
             var json = $.parseJSON(data),
                 lat = json.lat,
                 lng = json.lng;
@@ -306,6 +307,6 @@ var Default ={
             } else {
                 Map.getBrowserCurrentPosition(map);
             }
-        });
+        });*/
     },
 };

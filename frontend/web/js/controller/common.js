@@ -147,12 +147,12 @@ var Common = {
         target.on('click', function () {
             //hide all opened modal
             $('.modal').modal('hide');
-
-            if (isGuest) {
+            Map.getBrowserCurrentPosition(Map.map);
+            /*if (isGuest) {
                 Map.getBrowserCurrentPosition(Map.map);
             } else {
                 Map.getMyLocation(Map.map);
-            }
+            }*/
         });
     },
 
