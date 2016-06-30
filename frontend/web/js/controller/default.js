@@ -266,11 +266,12 @@ var Default ={
                 sessionStorage.show_blue_dot = 0;
                 console.log(Map.map.getZoom()+'in show blue dot and its home page'+sessionStorage.show_blue_dot);
 
-                if (isGuest) {
+                Map.getBrowserCurrentPosition(Map.map);
+                /*if (isGuest) {
                     Map.getBrowserCurrentPosition(Map.map);
                 } else {
                     Default.getMylocation(Map.map);
-                }
+                }*/
 
             }
         }
