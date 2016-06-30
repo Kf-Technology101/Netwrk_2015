@@ -136,11 +136,12 @@
 					if (sessionStorage.show_blue_dot == 1) {
 						Map.smoothZoom(Map.map, 14, 10, true);
 						sessionStorage.show_blue_dot = 0;
-						if (isGuest) {
+						Map.getBrowserCurrentPosition(Map.map);
+						/*if (isGuest) {
 							Map.getBrowserCurrentPosition(Map.map);
 						} else {
 							Map.getMyLocation(Map.map);
-						}
+						}*/
 					}
 				}
 			});
