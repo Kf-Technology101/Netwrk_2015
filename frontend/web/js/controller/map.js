@@ -31,6 +31,7 @@
 		blueDotLocation: {
 			lat: '',
 			lon: '',
+			nearByDefaultZoom: 12,
 			blueMarkerZoom: 14,
 			zoomInitial: 13,
 			zoomMiddle: 16,
@@ -723,8 +724,12 @@
 		    btn.on('click',function(){
 				if(isGuest) {
 					console.log('in click');
-					$('.modal').modal('hide');
-					Login.initialize();
+					if(isMobile) {
+						window.location.href = baseUrl + "/netwrk/user/login";
+					} else {
+						$('.modal').modal('hide');
+						Login.initialize();
+					}
 					return;
 				}
 				if(isMobile){
@@ -749,15 +754,10 @@
 				}
 			} else {
 				Map.getBrowserCurrentPosition(map);
-				/*if (isGuest) {
-					Map.getBrowserCurrentPosition(map);
-				} else {
-					Map.getMyLocation(map);
-				}*/
 			}
 		},
 
-		getBrowserCurrentPosition: function(map) {
+		getBrowserCurrentPosition: function(map, zoom) {
 			navigator.geolocation.getCurrentPosition(
 				function(position) {
 					var pos = {
@@ -765,25 +765,34 @@
 						lng: position.coords.longitude
 					};
 					var zoom_current = map.getZoom();
-					if (zoom_current < Map.blueDotLocation.zoomMiddle) {
-						//if current zoom less than 16 then go to zoom 16
-						Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
-						map.zoom = Map.blueDotLocation.zoomMiddle;
-					} else if(zoom_current == Map.blueDotLocation.zoomLast) {
-						console.log('in zoom middel');
-						//if current zoom is 18 then switch back to 16
-						//Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomMiddle, Map.map);
 
-						Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, false);
-						map.zoom = Map.blueDotLocation.zoomMiddle;
-					} else{
-						console.log('in zoom 18');
-						//if current zoom is 16 or 17 then go to zoom 18
-						Map.smoothZoom(map, 18, zoom_current, true);
-						map.zoom = 18;
+					if(zoom) {
+						//if zoom is set then show blue dot on that zoom level
+						if(zoom_current < Map.blueDotLocation.nearByDefaultZoom) {
+							Map.smoothZoom(map, Map.blueDotLocation.nearByDefaultZoom, zoom_current, true);
+							map.zoom = zoom;
+						} else {
+							Map.smoothZoom(map, Map.blueDotLocation.nearByDefaultZoom, zoom_current, false);
+							map.zoom = zoom;
+						}
+					} else {
+						if (zoom_current < Map.blueDotLocation.zoomMiddle) {
+							//if current zoom less than 16 then go to zoom 16
+							Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
+							map.zoom = Map.blueDotLocation.zoomMiddle;
+						} else if(zoom_current == Map.blueDotLocation.zoomLast) {
+							//if current zoom is 18 then switch back to 16
+							//Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomMiddle, Map.map);
+
+							Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, false);
+							map.zoom = Map.blueDotLocation.zoomMiddle;
+						} else{
+							//if current zoom is 16 or 17 then go to zoom 18
+							Map.smoothZoom(map, 18, zoom_current, true);
+							map.zoom = 18;
+						}
 					}
 
-					console.log('geolocation lat / lng'+pos.lat+' / '+pos.lng);
 					Map.requestBlueDotOnMap(pos.lat, pos.lng, map);
 					setTimeout(function() {
 						Map.map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
@@ -818,34 +827,33 @@
 		},
 
 		getMyLocation: function(map){
-			Ajax.get_position_user().then(function(data){
-				var json = $.parseJSON(data),
-					lat = json.lat,
-					lng = json.lng;
+			if(UserLogin){
+				Ajax.get_position_user().then(function(data){
+					var json = $.parseJSON(data),
+						lat = json.lat,
+						lng = json.lng;
 
-				if (lat != null || lng != null ) {
-					if(lat == 0 && lng == 0) {
-						Map.getBrowserCurrentPosition(map);
-					} else {
-						var zoom_current = map.getZoom();
-						if (zoom_current < Map.blueDotLocation.zoomMiddle) {
-							Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
-							map.zoom = Map.blueDotLocation.zoomMiddle;
-						}else{
-							Map.smoothZoom(map, 18, zoom_current, true);
-							map.zoom = 18;
+					if (lat != null || lng != null ) {
+						if(lat == 0 && lng == 0) {
+							/*Map.getBrowserCurrentPosition(map);*/
+						} else {
+							var zoom_current = map.getZoom();
+							if (zoom_current < Map.blueDotLocation.zoomMiddle) {
+								Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
+								map.zoom = Map.blueDotLocation.zoomMiddle;
+							}else{
+								Map.smoothZoom(map, 18, zoom_current, true);
+								map.zoom = 18;
+							}
+
+							Map.requestBlueDotOnMap(lat, lng, map);
+							setTimeout(function() {
+								Map.map.setCenter(new google.maps.LatLng(lat, lng));
+							}, 200);
 						}
-
-						Map.requestBlueDotOnMap(lat, lng, map);
-						setTimeout(function() {
-							Map.map.setCenter(new google.maps.LatLng(lat, lng));
-						}, 200);
-						//Map.getBrowserCurrentPosition(map);
 					}
-				} else {
-					Map.getBrowserCurrentPosition(map);
-				}
-			});
+				});
+			}
 		},
 
 		getCurrentZipDiscussions: function(){
