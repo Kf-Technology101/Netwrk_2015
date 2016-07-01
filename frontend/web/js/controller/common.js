@@ -105,7 +105,6 @@ var Common = {
                 $('.modal').modal('hide');
                 User_Profile.initialize();
             }
-
         });
     },
     CustomScrollBar: function(taget,options){
@@ -146,13 +145,9 @@ var Common = {
         target.unbind();
         target.on('click', function () {
             //hide all opened modal
+            var zoom = Map.blueDotLocation.nearByDefaultZoom;
             $('.modal').modal('hide');
-            Map.getBrowserCurrentPosition(Map.map);
-            /*if (isGuest) {
-                Map.getBrowserCurrentPosition(Map.map);
-            } else {
-                Map.getMyLocation(Map.map);
-            }*/
+            Map.getBrowserCurrentPosition(Map.map, zoom);
         });
     },
 
