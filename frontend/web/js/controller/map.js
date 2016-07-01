@@ -723,8 +723,12 @@
 		    btn.on('click',function(){
 				if(isGuest) {
 					console.log('in click');
-					$('.modal').modal('hide');
-					Login.initialize();
+					if(isMobile) {
+						window.location.href = baseUrl + "/netwrk/user/login";
+					} else {
+						$('.modal').modal('hide');
+						Login.initialize();
+					}
 					return;
 				}
 				if(isMobile){
