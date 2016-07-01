@@ -721,26 +721,22 @@
 		    var btn = $('#btn_my_location');
 		    btn.unbind();
 		    btn.on('click',function(){
+				if(isGuest) {
+					console.log('in click');
+					$('.modal').modal('hide');
+					Login.initialize();
+					return;
+				}
 				if(isMobile){
 					if(window.location.href != baseUrl + "/netwrk/default/home"){
 						sessionStorage.show_blue_dot = 1;
 						sessionStorage.show_landing = 1;
 						window.location.href = baseUrl + "/netwrk/default/home";
 					} else {
-						Map.getBrowserCurrentPosition(map);
-						/*if (isGuest) {
-							Map.getBrowserCurrentPosition(map);
-						} else {
-							Map.getMyLocation(map);
-						}*/
+						Map.getBrowserCurrentPosition(Map.map);
 					}
 				} else {
 					Map.getBrowserCurrentPosition(map);
-					/*if (isGuest) {
-						Map.getBrowserCurrentPosition(map);
-					} else {
-						Map.getMyLocation(map);
-					}*/
 				}
 		    });
 	  	},
@@ -750,13 +746,6 @@
 					sessionStorage.show_blue_dot = 1;
 					sessionStorage.show_landing = 1;
 					window.location.href = baseUrl + "/netwrk/default/home";
-				} else {
-					Map.getBrowserCurrentPosition(map);
-					/*if (isGuest) {
-						Map.getBrowserCurrentPosition(map);
-					} else {
-						Map.getMyLocation(map);
-					}*/
 				}
 			} else {
 				Map.getBrowserCurrentPosition(map);
@@ -769,26 +758,63 @@
 		},
 
 		getBrowserCurrentPosition: function(map) {
-			navigator.geolocation.getCurrentPosition(function(position) {
-				var pos = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude
-				};
-				var zoom_current = map.getZoom();
-				if (zoom_current < Map.blueDotLocation.zoomMiddle) {
-					Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
-					map.zoom = Map.blueDotLocation.zoomMiddle;
-				}else{
-					Map.smoothZoom(map, 18, zoom_current, true);
-					map.zoom = 18;
-				}
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					var zoom_current = map.getZoom();
+					if (zoom_current < Map.blueDotLocation.zoomMiddle) {
+						//if current zoom less than 16 then go to zoom 16
+						Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
+						map.zoom = Map.blueDotLocation.zoomMiddle;
+					} else if(zoom_current == Map.blueDotLocation.zoomLast) {
+						console.log('in zoom middel');
+						//if current zoom is 18 then switch back to 16
+						//Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomMiddle, Map.map);
 
-				console.log('geolocation lat / lng'+pos.lat+' / '+pos.lng);
-				Map.requestBlueDotOnMap(pos.lat, pos.lng, map);
-				setTimeout(function() {
-					Map.map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
-				}, 200);
-			});
+						Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, false);
+						map.zoom = Map.blueDotLocation.zoomMiddle;
+					} else{
+						console.log('in zoom 18');
+						//if current zoom is 16 or 17 then go to zoom 18
+						Map.smoothZoom(map, 18, zoom_current, true);
+						map.zoom = 18;
+					}
+
+					console.log('geolocation lat / lng'+pos.lat+' / '+pos.lng);
+					Map.requestBlueDotOnMap(pos.lat, pos.lng, map);
+					setTimeout(function() {
+						Map.map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
+					}, 200);
+				},
+				function(error){
+					switch(error.code)
+					{
+						case error.PERMISSION_DENIED:
+							Map.getMyLocation(map);
+							break;
+
+						case error.POSITION_UNAVAILABLE:
+							Map.getMyLocation(map);
+							break;
+
+						case error.TIMEOUT:
+							alert('Geo location timeout');
+							console.log('Geo location timeout');
+							break;
+
+						default:
+							alert('Geo location unknown error');
+							console.log('Geo location unknown error');
+							break;
+					}
+				}, {
+					enableHighAccuracy: false,
+					timeout : 50000
+				}
+			);
 		},
 
 		getMyLocation: function(map){
@@ -1063,17 +1089,22 @@
 
 							//Go to zoom level 18. and shoe blue dot on map
 							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomLast, Map.map)
-						}
-						if(!isMobile){
-							blueDotInfoWindow.close();
+						} else if(current_zoom == Map.blueDotLocation.zoomLast) {
+							//Go to zoom level 16. and shoe blue dot on map
+							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomMiddle, Map.map)
 						} else {
-							if (!blueDotInfoWindow.getMap()) {
+							//Go to zoom level 16. and shoe blue dot on map
+							Map.zoomMap(Map.center_marker.getPosition().lat(),Map.center_marker.getPosition().lng(), Map.blueDotLocation.zoomMiddle, Map.map)
+						}
 
+						if(isMobile){
+							if (!blueDotInfoWindow.getMap()) {
 								blueDotInfoWindow.open(Map.map, Map.center_marker);
 							} else {
-
 								blueDotInfoWindow.close();
 							}
+						} else {
+							blueDotInfoWindow.close();
 						}
 					};
 				})(Map.center_marker));
