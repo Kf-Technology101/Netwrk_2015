@@ -1,3 +1,4 @@
+var currentZoomRequest;
 var Ajax ={
     cover_search: function(params){
         var url,defer = $.Deferred();
@@ -332,13 +333,18 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         url = baseUrl + "/netwrk/default/get-maker-max-zoom";
-
-        $.ajax({
+        currentZoomRequest = $.ajax({
             url: url,
             data: params,
             async: false,
             cache: false,
             type: 'POST',
+            beforeSend : function()    {
+                if(currentZoomRequest != null) {
+                    console.log('in aborted');
+                    currentZoomRequest.abort();
+                }
+            },
             success: defer.resolve,
             error: defer.reject
         });
