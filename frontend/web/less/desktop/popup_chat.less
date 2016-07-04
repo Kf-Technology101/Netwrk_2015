@@ -151,14 +151,66 @@
             z-index: 5;
             overflow-y: hidden;
             background-color: #f6f6f6;
-            padding: 10px;
+            padding: 10px 7px;
             // margin-bottom: 45px;
             .message {
-                padding: 15px 0 0;
+                padding: 0;
                 width: 100%;
                 height: auto;
                 float: left;
                 position: relative;
+
+                .panel {
+                    background-color: transparent;
+                    border: none;
+                    box-shadow: none;
+                    margin-bottom: 0;
+
+                    .panel-heading {
+                        background-color: transparent;
+                        border: none;
+                        color: #1d1b1b;
+                        padding: 0;
+                        a {
+                            font-size: 13px;
+                            .message-minimized {
+                                margin-bottom: 5px;
+                                display: none;
+
+                                .feedback-img {
+                                    padding: 0 3px;
+                                }
+                                .time {
+                                    color: #757575;
+                                    padding-left: 3px;
+                                    border-left: 1px solid #1d1b1b;
+                                }
+                            }
+                            &:after{
+                                font-family:'FontAwesome';
+                                font-size: 14px;
+                                color: #5888ac;
+                                content:"\f056";
+                                float: right;
+                            }
+                            &.collapsed{
+                                .message-minimized {
+                                    display: inline-block;
+                                }
+                                &:after{
+                                    content:"\f055";
+                                }
+                            }
+                        }
+                    }
+                    .panel-collapse {
+                        .panel-body {
+                            padding: 0;
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+
                 .chat-details {
                     display: inline-block;
                     min-height: 50px;
@@ -203,11 +255,13 @@
                         color: #757575;
                         display: inline-block;
                         margin-top: 4px;
+                        width: 100%;
                     }
                 }
 
                 .content_message {
-                    width: 68%;
+                    width: 60%;
+                    margin-right: 5px;
                     min-height: 26px;
                     padding: 5px;
                     border-radius: 5px;
@@ -296,7 +350,7 @@
                     }
                 }
                 .content_message {
-                    width: 77%;
+                    width: 69%;
                 }
             }
 
@@ -346,7 +400,7 @@
                         }
                     }
                     .content_message {
-                        width: 77%;
+                        width: 69%;
                     }
                 }
             }
