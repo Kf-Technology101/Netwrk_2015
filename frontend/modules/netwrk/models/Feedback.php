@@ -54,4 +54,19 @@ class Feedback extends \yii\db\ActiveRecord
             'created_at' => 'Created at'
         ];
     }
+
+    public static function isFeedbackPostedByUser($object, $id, $userId = null)
+    {
+        $userId = $userId ? $userId : Yii::$app->user->id;
+
+        $feedback = Feedback::find()->where('user_id = :userId and '.$object.'_id = :id and type= :type')
+            ->addParams(['userId'=>$userId, 'id'=>$id, 'type'=>$object])
+            ->one();
+
+        if ($feedback) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }

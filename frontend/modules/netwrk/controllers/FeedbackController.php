@@ -20,17 +20,22 @@ class FeedbackController extends BaseController
         $point = isset($_POST['point']) ? $_POST['point'] : '';
         $currentUser = Yii::$app->user->id;
 
-        $feedback = new Feedback;
+        $feedback_posted = Feedback::isFeedbackPostedByUser($object,$id);
 
-        $feedback->feedback = $option;
-        $feedback->point = $point;
-        $feedback->user_id = $currentUser;
-        if ($object == 'ws_message') {
-            $feedback->ws_message_id = $id;
+        if(!$feedback_posted)
+        {
+            $feedback = new Feedback;
+
+            $feedback->feedback = $option;
+            $feedback->point = $point;
+            $feedback->user_id = $currentUser;
+            if ($object == 'ws_message') {
+                $feedback->ws_message_id = $id;
+            }
+            $feedback->type = $object;
+            $feedback->created_at = date('Y-m-d H:i:s');
+            $feedback->save();
         }
-        $feedback->type = $object;
-        $feedback->created_at = date('Y-m-d H:i:s');
-        $feedback->save();
 
         $returnData['success'] = 'true';
 
