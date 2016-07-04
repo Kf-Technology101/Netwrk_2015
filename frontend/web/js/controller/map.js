@@ -377,7 +377,7 @@
 						infowindow.open(Map.map, marker);
 						var iw_container = $(".gm-style-iw").parent();
 						iw_container.stop().hide();
-						iw_container.fadeIn(800);
+						iw_container.fadeIn(200);
 
 					}
 
@@ -474,7 +474,7 @@
 		},
 		closeAllInfoWindows: function() {
 			var iw_container = $(".gm-style-iw").parent();
-			iw_container.fadeOut(800);
+			iw_container.fadeOut(400);
 
 			setTimeout(function(){
 				for (var i=0;i < Map.infowindow.length;i++) {
