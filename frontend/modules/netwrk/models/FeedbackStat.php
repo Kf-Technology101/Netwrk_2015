@@ -45,4 +45,17 @@ class FeedbackStat extends \yii\db\ActiveRecord
             'type'  => 'Type'
         ];
     }
+
+    public function isFeedbackStat($object, $id)
+    {
+        $feedback_stat = FeedbackStat::find()->where($object.'_id = :id and type= :type')
+            ->addParams(['id'=>$id, 'type'=>$object])
+            ->one();
+
+        if ($feedback_stat) {
+            return $feedback_stat->id;
+        } else {
+            return FALSE;
+        }
+    }
 }

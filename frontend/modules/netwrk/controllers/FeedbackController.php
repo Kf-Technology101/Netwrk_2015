@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\controllers;
 use frontend\components\UtilitiesFunc;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\Feedback;
+use frontend\modules\netwrk\models\FeedbackStat;
 use yii\db\Query;
 use Yii;
 
@@ -35,6 +36,24 @@ class FeedbackController extends BaseController
             $feedback->type = $object;
             $feedback->created_at = date('Y-m-d H:i:s');
             $feedback->save();
+
+            $feedback_points = Feedback::countFeedbackPoints($object,$id);
+
+            $is_feedback_stat = FeedbackStat::isFeedbackStat($object,$id);
+
+            if($is_feedback_stat > 0) {
+                $feedback_stat = FeedbackStat::find()->where(array("id" => $is_feedback_stat))->one();
+            } else {
+                $feedback_stat = new FeedbackStat;
+            }
+
+            $feedback_stat->points = $feedback_points;
+            if ($object == 'ws_message')
+            {
+                $feedback_stat->ws_message_id = $id;
+            }
+            $feedback_stat->type = $object;
+            $feedback_stat->save();
         }
 
         $returnData['success'] = 'true';

@@ -69,4 +69,19 @@ class Feedback extends \yii\db\ActiveRecord
             return FALSE;
         }
     }
+
+    public function countFeedbackPoints($object, $id)
+    {
+        $feedbackCount = (new \yii\db\Query())
+            ->select(['point'])
+            ->from('feedback')
+            ->where($object.'_id = :id and type= :type')
+            ->addParams(['id'=>$id, 'type'=>$object]);
+
+        if($feedbackCount) {
+            return $feedbackCount->sum('point');
+        } else {
+            return 0;
+        }
+    }
 }
