@@ -5,6 +5,7 @@
 		    lat:'',
 		    lng:''
 	  	},
+		getMaxMarker: true,
 	  	latLng: '',
 	  	markers:[],
 		topicMarkers: [],
@@ -1398,6 +1399,15 @@
 				Map.requestPositionFunction(map);
 			});*/
 
+			google.maps.event.addListener(map, 'dragstart', function(){
+				Map.getMaxMarker = false;
+			});
+
+			google.maps.event.addListener(map, 'dragend', function(){
+				Map.getMaxMarker = true;
+			});
+
+
 			google.maps.event.addListener(map, 'idle', function(){
 				var currentZoom = map.getZoom();
 
@@ -1407,14 +1417,18 @@
 
 				var params = {'swLat':sw.lat(), 'swLng':sw.lng(), 'neLat': ne.lat(), 'neLng':ne.lng()};
 
-				if(currentZoom >= Map.markerZoom ){
-					Ajax.get_marker_zoom(params).then(function(data){
-						var data_marker = $.parseJSON(data);
-						$.each(data_marker,function(i,e){
-							Map.initializeMarker(e, null, Map.markerZoom);
-						});
-					});
-
+				if(currentZoom >= Map.markerZoom ) {
+					setTimeout(function () {
+						if (Map.getMaxMarker == true) {
+							Ajax.get_marker_zoom(params).then(function (data) {
+								var data_marker = $.parseJSON(data);
+								$.each(data_marker, function (i, e) {
+									Map.initializeMarker(e, null, Map.markerZoom);
+								});
+							});
+						}
+					}, 250);
+					
 					Map.mouseOutsideInfoWindow();
 					//Map.deleteNetwrk(map);
 					Map.loadMapLabel(0);
@@ -1757,6 +1771,7 @@
 			});
 
 			map.addListener('zoom_changed', function(){
+				Map.getMaxMarker = true;
 				var data_marker;
 				var currentZoom = map.getZoom();
 				console.log(currentZoom);

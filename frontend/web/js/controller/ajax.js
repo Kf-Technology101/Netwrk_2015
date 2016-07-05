@@ -1,5 +1,6 @@
-var currentZoomRequest;
-var Ajax ={
+var getMaxMarkerXHR,
+    getTopicMarkerXHR;
+var Ajax = {
     cover_search: function(params){
         var url,defer = $.Deferred();
         url = baseUrl + "/netwrk/search/cover-search";
@@ -333,16 +334,16 @@ var Ajax ={
         var url,defer = $.Deferred();
 
         url = baseUrl + "/netwrk/default/get-maker-max-zoom";
-        currentZoomRequest = $.ajax({
+
+        getMaxMarkerXHR = $.ajax({
             url: url,
             data: params,
-            async: false,
+            async: true,
             cache: false,
             type: 'POST',
-            beforeSend : function()    {
-                if(currentZoomRequest != null) {
-                    console.log('in aborted');
-                    currentZoomRequest.abort();
+            beforeSend : function() {
+                if(getMaxMarkerXHR && getMaxMarkerXHR.readyState != 4) {
+                    getMaxMarkerXHR.abort();
                 }
             },
             success: defer.resolve,
@@ -439,12 +440,17 @@ var Ajax ={
 
         url = baseUrl + "/netwrk/topic/get-topic-by-location";
 
-        $.ajax({
+        getTopicMarkerXHR = $.ajax({
             url: url,
             data: params,
-            async: false,
+            async: true,
             cache: false,
-            type: 'GET',
+            type: 'POST',
+            beforeSend : function() {
+                if(getTopicMarkerXHR && getTopicMarkerXHR != 4) {
+                    getTopicMarkerXHR.abort();
+                }
+            },
             success: defer.resolve,
             error: defer.reject
         });

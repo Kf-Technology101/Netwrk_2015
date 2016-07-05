@@ -548,11 +548,11 @@ class TopicController extends BaseController
      */
     public function actionGetTopicByLocation()
     {
-        $swLat = $_GET['swLat'];
-        $neLat = $_GET['neLat'];
+        $swLat = $_POST['swLat'];
+        $neLat = $_POST['neLat'];
 
-        $swLng = $_GET['swLng'];
-        $neLng = $_GET['neLng'];
+        $swLng = $_POST['swLng'];
+        $neLng = $_POST['neLng'];
 
         $geo_where = '(topic.lat >= '.$swLat.' AND topic.lat <= '.$neLat.' AND topic.lng >= '.$swLng.' AND topic.lng <= '.$neLng.')';
 
