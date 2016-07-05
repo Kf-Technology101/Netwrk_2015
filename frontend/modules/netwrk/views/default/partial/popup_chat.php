@@ -73,7 +73,9 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading<%= msg.msg_id %>">
                 <div class="panel-title">
-                    <a role="button" data-toggle="collapse" href="#collapse<%= msg.msg_id %>" aria-expanded="true" aria-controls="collapse<%= msg.msg_id %>">
+                    <a href="#collapse<%= msg.msg_id %>" role="button"
+                        data-toggle="collapse" aria-controls="collapse<%= msg.msg_id %>"
+                        class="<% if(msg.feedback_points < 0) { %>collapsed<%}%>">
                         <div class="message-minimized">
                             <span class="user-name"><%=  msg.name %></span>
                             <span class="feedback-img"><i class="fa fa-comments"></i></span>
@@ -82,7 +84,7 @@
                     </a>
                 </div>
             </div>
-            <div id="collapse<%= msg.msg_id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%= msg.msg_id %>">
+            <div id="collapse<%= msg.msg_id %>" class="panel-collapse collapse <% if(msg.feedback_points >= 0) { %>in<%}%>" role="tabpanel" aria-labelledby="heading<%= msg.msg_id %>">
                 <div class="panel-body">
                     <div class="chat-details">
                         <div class="user_thumbnail">
