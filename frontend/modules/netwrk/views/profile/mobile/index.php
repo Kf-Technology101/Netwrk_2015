@@ -62,10 +62,10 @@
                                 <span>Groups</span>
                             </button>
                             <button class="btn btn-default topic" type="button" id="">
-                                <span>Topics</span>
+                                <span>Channels</span>
                             </button>
                             <button class="btn btn-default post" type="button" id="">
-                                <span>Posts</span>
+                                <span>Lines</span>
                             </button>
                         </div>
                     </div>
@@ -234,7 +234,7 @@
         <% }); %>
         <% } else {%>
         <div class="group-item">
-            <div class="alert alert-info">You haven't created any topic yet. Please check out any community and create a topic.</div>
+            <div class="alert alert-info">You haven't created any channel yet. Please check out any community and create a channel.</div>
         </div>
         <% } %>
     </div>
@@ -279,7 +279,7 @@
         <% }); %>
         <% } else {%>
         <div class="group-item">
-            <div class="alert alert-info">You haven't created any post yet. Please check out any community and create a post.</div>
+            <div class="alert alert-info">You haven't created any line yet. Please check out any community and create a line.</div>
         </div>
         <% } %>
     </div>

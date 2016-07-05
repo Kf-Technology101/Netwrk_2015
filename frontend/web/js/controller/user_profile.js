@@ -290,7 +290,7 @@ var User_Profile = {
 
                 //set my topics count on recent activity section
                 if (json.total_count) {
-                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Topics: '+json.total_count);
+                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Channels: '+json.total_count);
                 }
 
                 template.scrollTop(0);
@@ -368,9 +368,9 @@ var User_Profile = {
                 //assign ajax data to template data
                 User_Profile.templateData.posts = json.data;
 
-                //set my topics count on recent activity section
+                //set my lines count on recent activity section
                 if (json.total_count) {
-                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Posts: '+json.total_count);
+                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Lines: '+json.total_count);
                 }
 
                 template.scrollTop(0);
@@ -668,7 +668,7 @@ var User_Profile = {
             //assign ajax data to template data
             User_Profile.templateData.groups = json.data;
 
-            //set my topics count on recent activity section
+            //set my Groups count on recent activity section
             if (json.total_count) {
                 $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Groups: '+json.total_count);
             }
@@ -704,9 +704,9 @@ var User_Profile = {
             //assign ajax data to template data
             User_Profile.templateData.topics = json.data;
 
-            //set my topics count on recent activity section
+            //set my Channels count on recent activity section
             if (json.total_count) {
-                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Topics: '+json.total_count);
+                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Channels: '+json.total_count);
             }
 
             template.scrollTop(0);
@@ -749,7 +749,7 @@ var User_Profile = {
 
             //set my topics count on recent activity section
             if (json.total_count) {
-                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Posts: '+json.total_count);
+                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Lines: '+json.total_count);
             }
 
             template.scrollTop(0);
