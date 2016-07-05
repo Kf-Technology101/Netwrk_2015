@@ -27,16 +27,48 @@
         ul {
             li {
                 border-bottom: 1px solid #f6f6f6;
-                min-height: 47px;
+                max-height: 40px;
                 a {
                     display: block;
                     font-size: 18px;
-                    line-height: 47px;
+                    line-height: 40px;
+                    max-height: 40px;
                     outline: none;
+                    .ci-feedback-option-1 {
+                        background: url("../../img/icon/feedback-option-1.png") no-repeat;
+                        background-size: contain;
+                        display: inline-block;
+                        height: 39px;
+                        width: 39px;
+                    }
+                    .ci-feedback-option-2 {
+                        background: url("../../img/icon/feedback-option-2.png") no-repeat;
+                        background-size: contain;
+                        display: inline-block;
+                        height: 27px;
+                        margin: 6px;
+                        width: 36px;
+                    }
+
                     &:hover {
                         background: #5888ac;
                         color: #fff;
                         text-decoration: none;
+                        .ci-feedback-option-1 {
+                            background: url("../../img/icon/feedback-option-1-hover.png") no-repeat;
+                            background-size: contain;
+                            display: inline-block;
+                            height: 39px;
+                            width: 39px;
+                        }
+                        .ci-feedback-option-2 {
+                            background: url("../../img/icon/feedback-option-2-hover.png") no-repeat;
+                            background-size: contain;
+                            display: inline-block;
+                            height: 27px;
+                            margin: 6px;
+                            width: 36px;
+                        }
                     }
                 }
             }

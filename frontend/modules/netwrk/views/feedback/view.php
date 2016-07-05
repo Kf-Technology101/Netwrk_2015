@@ -16,13 +16,18 @@
         ?>
         <ul class="list-unstyled text-center feedback-list">
             <li>
-                <a href="javascript:" class="<?php echo $option_class;?>" data-option="like" data-point="+15">
-                    <img src="<?= Url::to('@web/img/icon/brilliant_off.png'); ?>" />
+                <a href="javascript:" class="<?php echo $option_class;?> text-center" data-option="like" data-point="+15">
+                    <i class="ci-feedback-option-1"></i>
                 </a>
             </li>
             <li>
                 <a href="javascript:" class="<?php echo $option_class;?>" data-option="funny" data-point="+5">
-                    Funny
+                    <i class="ci-feedback-option-2"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:" class="<?php echo $option_class;?>" data-option="important" data-point="+5">
+                    Important angle
                 </a>
             </li>
             <li>
