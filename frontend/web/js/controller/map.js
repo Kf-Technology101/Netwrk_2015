@@ -377,9 +377,10 @@
 						});
 
 						infowindow.open(Map.map, marker);
+						//todo: open only current popup
 						var iw_container = $(".gm-style-iw").parent();
 						iw_container.stop().hide();
-						//todo: open only current popup
+						iw_container.fadeIn(400);
 
 					}
 
@@ -476,6 +477,7 @@
 		},
 		closeAllInfoWindows: function() {
 			var iw_container = $(".gm-style-iw").parent();
+			iw_container.fadeOut(400);
 
 			setTimeout(function(){
 				for (var i=0;i < Map.infowindow.length;i++) {
