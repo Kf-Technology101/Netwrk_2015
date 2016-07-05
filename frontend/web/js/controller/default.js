@@ -266,12 +266,8 @@ var Default ={
                 sessionStorage.show_blue_dot = 0;
                 console.log(Map.map.getZoom()+'in show blue dot and its home page'+sessionStorage.show_blue_dot);
 
-                Map.getBrowserCurrentPosition(Map.map);
-                /*if (isGuest) {
-                    Map.getBrowserCurrentPosition(Map.map);
-                } else {
-                    Default.getMylocation(Map.map);
-                }*/
+                var zoom = Map.blueDotLocation.nearByDefaultZoom;
+                Map.getBrowserCurrentPosition(Map.map, zoom);
 
             }
         }

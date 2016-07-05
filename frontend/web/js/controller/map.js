@@ -377,9 +377,10 @@
 						});
 
 						infowindow.open(Map.map, marker);
+						//todo: open only current popup
 						var iw_container = $(".gm-style-iw").parent();
 						iw_container.stop().hide();
-						iw_container.fadeIn(200);
+						iw_container.fadeIn(400);
 
 					}
 
@@ -802,20 +803,20 @@
 					switch(error.code)
 					{
 						case error.PERMISSION_DENIED:
-							Map.getMyLocation(map);
+							Map.getMyLocation(map, zoom);
 							break;
 
 						case error.POSITION_UNAVAILABLE:
-							Map.getMyLocation(map);
+							Map.getMyLocation(map, zoom);
 							break;
 
 						case error.TIMEOUT:
-							alert('Geo location timeout');
+							/*alert('Geo location timeout');*/
 							console.log('Geo location timeout');
 							break;
 
 						default:
-							alert('Geo location unknown error');
+							/*alert('Geo location unknown error');*/
 							console.log('Geo location unknown error');
 							break;
 					}
@@ -826,7 +827,7 @@
 			);
 		},
 
-		getMyLocation: function(map){
+		getMyLocation: function(map, zoom){
 			if(UserLogin){
 				Ajax.get_position_user().then(function(data){
 					var json = $.parseJSON(data),
@@ -838,12 +839,24 @@
 							/*Map.getBrowserCurrentPosition(map);*/
 						} else {
 							var zoom_current = map.getZoom();
-							if (zoom_current < Map.blueDotLocation.zoomMiddle) {
-								Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
-								map.zoom = Map.blueDotLocation.zoomMiddle;
-							}else{
-								Map.smoothZoom(map, 18, zoom_current, true);
-								map.zoom = 18;
+							if(zoom) {
+								//if zoom is set then show blue dot on that zoom level
+								if(zoom_current < Map.blueDotLocation.nearByDefaultZoom) {
+									Map.smoothZoom(map, Map.blueDotLocation.nearByDefaultZoom, zoom_current, true);
+									map.zoom = zoom;
+								} else {
+									Map.smoothZoom(map, Map.blueDotLocation.nearByDefaultZoom, zoom_current, false);
+									map.zoom = zoom;
+								}
+							} else {
+								//if zoom is not set then show blue dot first on zoom 16 and then on zoom18
+								if (zoom_current < Map.blueDotLocation.zoomMiddle) {
+									Map.smoothZoom(map, Map.blueDotLocation.zoomMiddle, zoom_current, true);
+									map.zoom = Map.blueDotLocation.zoomMiddle;
+								}else{
+									Map.smoothZoom(map, 18, zoom_current, true);
+									map.zoom = 18;
+								}
 							}
 
 							Map.requestBlueDotOnMap(lat, lng, map);
