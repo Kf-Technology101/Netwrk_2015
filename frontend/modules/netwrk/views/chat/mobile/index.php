@@ -70,24 +70,41 @@
     <% }else{ %>
         <div class="message_receiver message" data-img="<?#= Url::to('@web/img/icon/timehdpi.png'); ?>">
     <% } %>
-        <div class="chat-details">
-            <div class="user_thumbnail" data-user-id='<%= msg.id %>'>
-                <div class="avatar">
-                    <img src="<%= baseurl %><%=  msg.avatar %>">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading<%= msg.msg_id %>">
+                <div class="panel-title">
+                    <a role="button" data-toggle="collapse" href="#collapse<%= msg.msg_id %>" aria-expanded="true" aria-controls="collapse<%= msg.msg_id %>">
+                        <div class="message-minimized">
+                            <span class="user-name"><%=  msg.name %></span>
+                            <span class="feedback-img"><i class="fa fa-comments"></i></span>
+                            <span class="time"><%= msg.created_at %></span>
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
-            <p class="time"><%= msg.created_at %></p>
-        </div>
+            <div id="collapse<%= msg.msg_id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%= msg.msg_id %>">
+                <div class="panel-body">
+                    <div class="chat-details">
+                        <div class="user_thumbnail" data-user-id='<%= msg.id %>'>
+                            <div class="avatar">
+                                <img src="<%= baseurl %><%=  msg.avatar %>">
+                            </div>
+                        </div>
+                        <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
+                        <p class="time"><%= msg.created_at %></p>
+                    </div>
 
-        <div class="content_message">
-            <% if(msg.msg_type == 1) { %>
-                <p class="content"><%= msg.msg %></p>
-            <% }else if(msg.msg_type == 2) { %>
-                <a class='img_chat_style' href='<?= Url::to("@web/img/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><img src='<?= Url::base(true)."/img/uploads/" ?><%= msg.post_id %>/<%= msg.msg %>' /></a>
-            <% } else { %>
-                <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
-            <% } %>
+                    <div class="content_message">
+                        <% if(msg.msg_type == 1) { %>
+                            <p class="content"><%= msg.msg %></p>
+                        <% }else if(msg.msg_type == 2) { %>
+                            <a class='img_chat_style' href='<?= Url::to("@web/img/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><img src='<?= Url::base(true)."/img/uploads/" ?><%= msg.post_id %>/<%= msg.msg %>' /></a>
+                        <% } else { %>
+                            <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </script>
