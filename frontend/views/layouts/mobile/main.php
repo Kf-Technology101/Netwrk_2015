@@ -86,7 +86,7 @@ if (isset($cookies["isCoverPageVisited"])) {
               </div>
               <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
             </div>
-            <div id="btn_my_location">
+            <div id="btn_my_location" class="btn_my_location">
               <i class="fa fa-crosshairs"></i>
               <span>Build</span>
             </div>

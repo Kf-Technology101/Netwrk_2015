@@ -298,15 +298,30 @@
 				height: 20px;
 				width: 20px;
 			}
-			.build-icon {
-				background: #5888ac;
-				color: #fff;
-				font-size: 20px;
-				text-align: center;
-				margin: auto;
-				width: 25px;
-				padding: 3px;
-				border-radius: 15px;
+
+			.btn_my_location {
+				i{
+					background: #5888ac;
+					color: #fff;
+					font-size: 20px;
+					text-align: center;
+					margin: auto;
+					width: 25px;
+					padding: 3px;
+					border-radius: 15px;
+				}
+				span{
+					color: #5888ac;
+					font-weight: 600;
+				}
+				&.active {
+					i {
+						background: #5da5d8;
+					}
+					span {
+						color: #5da5d8;
+					}
+				}
 			}
 			.blue-dot-lable {
 				vertical-align: middle;
