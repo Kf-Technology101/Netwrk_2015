@@ -318,6 +318,14 @@ var Common = {
                         .data('parent','')
                         .data('object','')
                         .data('id','');
+
+                    if(json.feedbackPoints >= 0){
+                        $(parent).find('#heading'+id).find('a').removeClass('collapsed');
+                        $(parent).find('#collapse'+id).addClass('in');
+                    } else {
+                        $(parent).find('#heading'+id).find('a').addClass('collapsed');
+                        $(parent).find('#collapse'+id).removeClass('in');
+                    }
                 }
             });
         });

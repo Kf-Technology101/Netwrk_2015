@@ -54,6 +54,8 @@ class FeedbackController extends BaseController
             }
             $feedback_stat->type = $object;
             $feedback_stat->save();
+
+            $returnData['feedbackPoints'] = $feedback_points;
         }
 
         $returnData['success'] = 'true';
