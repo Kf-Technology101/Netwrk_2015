@@ -805,6 +805,8 @@
 							break
 					}
 
+					var currentZoom = Map.map.getZoom();
+					Map.showHideBlueDotZoomInfo(currentZoom);
 					Map.requestBlueDotOnMap(pos.lat, pos.lng, map);
 					setTimeout(function() {
 						Map.map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
@@ -878,6 +880,9 @@
 									map.zoom = Map.blueDotLocation.zoomMiddle;
 									break
 							}
+
+							var currentZoom = Map.map.getZoom();
+							Map.showHideBlueDotZoomInfo(currentZoom);
 							Map.requestBlueDotOnMap(lat, lng, map);
 							setTimeout(function() {
 								Map.map.setCenter(new google.maps.LatLng(lat, lng));
