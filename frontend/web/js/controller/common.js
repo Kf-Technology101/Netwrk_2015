@@ -27,6 +27,7 @@ var Common = {
         Common.onClickMapButton();
 
         Common.deleteTrigger();
+        Common.onShowAllModals();
 
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
@@ -56,6 +57,7 @@ var Common = {
             if(isMobile){
                 sessionStorage.show_landing = 1;
                 sessionStorage.show_blue_dot = 1;
+                sessionStorage.show_blue_dot_zoom12 = 1;
                 window.location.href = baseUrl + "/netwrk/default/home";
             }
         });
@@ -145,9 +147,8 @@ var Common = {
         target.unbind();
         target.on('click', function () {
             //hide all opened modal
-            var zoom = Map.blueDotLocation.nearByDefaultZoom;
             $('.modal').modal('hide');
-            Map.getBrowserCurrentPosition(Map.map, zoom);
+            Map.getBrowserCurrentPosition(Map.map, 'near');
         });
     },
 
@@ -229,5 +230,13 @@ var Common = {
                 }
             });
         });
+    },
+    onShowAllModals: function() {
+        $('.modal').on('shown.bs.modal',function(e) {
+            //$(e.currentTarget).unbind();
+            console.log('in shown.bs.modal');
+            Map.unsetBuildMode();
+        });
     }
+
 };
