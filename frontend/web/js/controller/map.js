@@ -736,7 +736,7 @@
 						sessionStorage.show_landing = 1;
 						window.location.href = baseUrl + "/netwrk/default/home";
 					} else {
-						Map.getBrowserCurrentPosition(Map.map);
+						Map.getBrowserCurrentPosition(Map.map, 'build');
 					}
 				} else {
 					Map.setBuildMode();
@@ -1139,11 +1139,21 @@
 						}
 
 						if(isMobile){
-							if (!blueDotInfoWindow.getMap()) {
-								blueDotInfoWindow.open(Map.map, Map.center_marker);
+							if(current_zoom <= 15){
+								if (!blueDotInfoWindow.getMap()) {
+									blueDotInfoWindow.open(Map.map, Map.center_marker);
+								} else {
+									blueDotInfoWindow.close();
+								}
 							} else {
 								blueDotInfoWindow.close();
+								blueDotInfoWindow.open(Map.map, Map.center_marker);
 							}
+							/*if (!blueDotInfoWindow.getMap()) {
+							 blueDotInfoWindow.open(Map.map, Map.center_marker);
+							 } else {
+							 blueDotInfoWindow.close();
+							 }*/
 						} else {
 							blueDotInfoWindow.close();
 						}
@@ -1283,7 +1293,9 @@
 
 			var infowindow = Map.setBlueDotInfoWindow();
 
-			infowindow.close();
+			if(!isMobile) {
+				infowindow.close();
+			}
 
 			return infowindow;
 		},
