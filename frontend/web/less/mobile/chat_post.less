@@ -116,7 +116,13 @@
                             display: none;
 
                             .feedback-img {
-                                padding: 0 3px;
+                                background: url("../../img/icon/feedback-lines.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 17px;
+                                margin: 0 0 0 5px;
+                                vertical-align: middle;
+                                width: 3px;
                             }
                             .time {
                                 color: #757575;
@@ -175,6 +181,15 @@
                             margin: auto;
                         }
                     }
+                }
+                .feedback-line {
+                    background: url("../../img/icon/feedback-lines.png") no-repeat;
+                    background-size: contain;
+                    display: inline-block;
+                    height: 30px;
+                    width: 6px;
+                    float: left;
+                    margin: 3px;
                 }
                 .feedback {
                     border: 1px solid #c7c7c7;
@@ -248,7 +263,6 @@
                     float: left;
                 }
                 .feedback {
-                    margin-left: 4px;
                     float: left;
                 }
                 p.time {
@@ -275,6 +289,7 @@
         .message_send {
             .chat-details {
                 width: 23%;
+                .feedback-line,
                 .feedback {
                     display: none;
                 }
@@ -321,6 +336,7 @@
             .message {
                 .chat-details {
                     width: 23%;
+                    .feedback-line,
                     .feedback {
                         display: none;
                     }
