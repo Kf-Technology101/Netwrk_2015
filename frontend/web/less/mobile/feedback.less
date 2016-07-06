@@ -26,34 +26,19 @@
     .feedback-content {
         ul {
             li {
-                border-bottom: 1px solid #f6f6f6;
                 max-height: 40px;
-                a {
-                    display: block;
-                    font-size: 18px;
-                    line-height: 40px;
-                    max-height: 40px;
-                    outline: none;
-                    .ci-feedback-option-1 {
-                        background: url("../../img/icon/feedback-option-1.png") no-repeat;
-                        background-size: contain;
-                        display: inline-block;
-                        height: 39px;
-                        width: 39px;
-                    }
-                    .ci-feedback-option-2 {
-                        background: url("../../img/icon/feedback-option-2.png") no-repeat;
-                        background-size: contain;
-                        display: inline-block;
-                        height: 27px;
-                        margin: 6px;
-                        width: 36px;
-                    }
 
-                    &:hover {
+                &.positive-option {
+                    max-height: 41px;
+                    a {
+                        display: block;
+                        font-size: 18px;
+                        line-height: 41px;
+                        max-height: 41px;
+                        outline: none;
                         background: #5888ac;
-                        color: #fff;
-                        text-decoration: none;
+                        color: #ffffff;
+                        border-bottom: 2px solid #ffffff;
                         .ci-feedback-option-1 {
                             background: url("../../img/icon/feedback-option-1-hover.png") no-repeat;
                             background-size: contain;
@@ -68,6 +53,72 @@
                             height: 27px;
                             margin: 6px;
                             width: 36px;
+                        }
+                        .ci-feedback-option-3 {
+                            background: url("../../img/icon/feedback-option-3-hover.png") no-repeat;
+                            background-size: contain;
+                            display: inline-block;
+                            height: 39px;
+                            width: 26px;
+                            padding-right: 10px;
+                        }
+                        .text-with-icon {
+                            vertical-align: top;
+                        }
+
+                        &:hover {
+                            background: #ffffff;
+                            color: #5888ac;
+                            text-decoration: none;
+                            border-bottom: 2px solid #5888ac;
+                            .ci-feedback-option-1 {
+                                background: url("../../img/icon/feedback-option-1.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 39px;
+                                width: 39px;
+                            }
+                            .ci-feedback-option-2 {
+                                background: url("../../img/icon/feedback-option-2.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 27px;
+                                margin: 6px;
+                                width: 36px;
+                            }
+                            .ci-feedback-option-3 {
+                                background: url("../../img/icon/feedback-option-3.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 39px;
+                                width: 26px;
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                }
+
+                &.negative-option {
+                    a {
+                        display: block;
+                        font-size: 18px;
+                        line-height: 40px;
+                        max-height: 40px;
+                        outline: none;
+                        border-bottom: 1px solid #5888ac;
+
+                        &:hover {
+                            background: #5888ac;
+                            color: #fff;
+                            text-decoration: none;
+                            border-bottom: 1px solid #ffffff;
+                        }
+
+                        &.text-danger {
+                            color: #a94442;
+                            &:hover {
+                                color: #fff;
+                            }
                         }
                     }
                 }

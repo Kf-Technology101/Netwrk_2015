@@ -15,33 +15,34 @@
             }
         ?>
         <ul class="list-unstyled text-center feedback-list">
-            <li>
+            <li class="positive-option">
                 <a href="javascript:" class="<?php echo $option_class;?> text-center" data-option="like" data-point="+15">
                     <i class="ci-feedback-option-1"></i>
                 </a>
             </li>
-            <li>
-                <a href="javascript:" class="<?php echo $option_class;?>" data-option="funny" data-point="+5">
+            <li class="positive-option">
+                <a href="javascript:" class="<?php echo $option_class;?>" data-option="fun" data-point="+5">
                     <i class="ci-feedback-option-2"></i>
                 </a>
             </li>
-            <li>
-                <a href="javascript:" class="<?php echo $option_class;?>" data-option="important" data-point="+5">
-                    Important angle
+            <li class="positive-option">
+                <a href="javascript:" class="<?php echo $option_class;?>" data-option="angle" data-point="+5">
+                    <i class="ci-feedback-option-3"></i>
+                    <span class="text-with-icon">Important angle</span>
                 </a>
             </li>
-            <li>
+            <li class="negative-option">
                 <a href="javascript:" class="<?php echo $option_class;?>" data-option="constructive" data-point="-2">
                     Be more constructive
                 </a>
             </li>
-            <li>
-                <a href="javascript:" class="<?php echo $option_class;?>" data-option="vulgar" data-point="-5">
+            <li class="negative-option">
+                <a href="javascript:" class="<?php echo $option_class;?> text-danger" data-option="vulgar" data-point="-5">
                     Vulgar
                 </a>
             </li>
-            <li>
-                <a href="javascript:" class="<?php echo $option_class;?>" data-option="block" data-point="-15">
+            <li class="negative-option">
+                <a href="javascript:" class="<?php echo $option_class;?> text-danger" data-option="block" data-point="-15">
                     Block
                 </a>
             </li>
