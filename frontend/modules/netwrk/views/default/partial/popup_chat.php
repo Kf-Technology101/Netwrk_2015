@@ -78,7 +78,7 @@
                         class="<% if(msg.feedback_points < 0) { %>collapsed<%}%>">
                         <div class="message-minimized">
                             <span class="user-name"><%=  msg.name %></span>
-                            <span class="feedback-img"><i class="fa fa-comments"></i></span>
+                            <span class="feedback-img"></span>
                             <span class="time"><%= msg.created_at %></span>
                         </div>
                     </a>
@@ -92,6 +92,7 @@
                                 <img src="<%= baseurl %><%=  msg.avatar %>">
                             </div>
                         </div>
+                        <div class="feedback-line"></div>
                         <div class="feedback feedback-trigger" data-parent="#popup-chat-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
                         <p class="time"><%= msg.created_at %></p>
                     </div>
