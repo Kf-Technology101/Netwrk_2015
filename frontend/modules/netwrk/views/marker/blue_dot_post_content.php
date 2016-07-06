@@ -17,6 +17,9 @@
 	<div id="blueDotInfoWindow">
 		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
 			<div class="iw-content">
+				<div class="iw-subTitle text-right" onclick="Map.closeAllInfoWindows();">
+					<span class="close"><span aria-hidden="true">&times;</span></span>
+				</div>
 				<div class="iw-subTitle location-details-wrapper text-left">
 					<h4 class="location-details">Welcome to <span id="blueDotLocation"><span>requesting...</span></span></h4>
 					<h5 class="discussion-title">Active Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
@@ -26,8 +29,10 @@
 					<div class="row">
 						<div class="col-xs-6 dot-info-main">
 							<div class="dot-info-wrapper">
-								<i class="fa fa-crosshairs build-icon"></i>
-								<span class="blue-dot-lable">Anywhere</span>
+								<a id="btnMyLocation" class="btn_my_location" href="javascript:" onclick="Map.getMyHomeLocation(Map.map, 'build');">
+									<i class="fa fa-crosshairs build-icon"></i>
+									<span class="blue-dot-lable">Anywhere</span>
+								</a>
 							</div>
 						</div>
 						<div class="col-xs-6">
@@ -47,14 +52,14 @@
 						<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>
 					</div>
 					<!--<div class="iw-subTitle" id="cm-zip">Zip: <span>requesting...</span></div>-->
-					<div class="iw-subTitle col-xs-12"><span class="post-title">
+					<!--<div class="iw-subTitle col-xs-12"><span class="post-title">
 					<a id="my-location" class="my-location" href="javascript:" onclick="Map.zoomMap(Map.blueDotLocation.lat, Map.blueDotLocation.lon, Map.blueDotLocation.zoomMiddle, Map.map);"><h5>Build</h5></a>
 					</span></div>
 					<!--<div class="iw-subTitle"><span class="post-title">
 					<a id="create-location-group" data-zipcode="" class="a-create-group create-location-group hidden" href="javascript:" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><h4>Place your topic here</h4></a>
 					</span></div>-->
 					<div class="iw-subTitle col-xs-12 show-area-topic-section">
-						<a id="show-area-topic" data-zipcode="" class="show-area-topic" href="javascript:" onclick="Map.showTopicFromZipcode(Map.blueDotLocation.zipcode);"><span>Go to area page</span></a>
+						<a id="show-area-topic" data-zipcode="" class="show-area-topic" href="javascript:" onclick="Map.showTopicFromZipcode(Map.blueDotLocation.zipcode);"><span>Go to the local community center</span></a>
 					</div>
 				</div>
 				<div id="noCommunity">

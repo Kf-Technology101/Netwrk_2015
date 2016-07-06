@@ -27,6 +27,7 @@ var Common = {
         Common.onClickMapButton();
 
         Common.deleteTrigger();
+        Common.onShowAllModals();
 
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
@@ -56,6 +57,7 @@ var Common = {
             if(isMobile){
                 sessionStorage.show_landing = 1;
                 sessionStorage.show_blue_dot = 1;
+                sessionStorage.show_blue_dot_zoom12 = 1;
                 window.location.href = baseUrl + "/netwrk/default/home";
             }
         });
@@ -105,7 +107,6 @@ var Common = {
                 $('.modal').modal('hide');
                 User_Profile.initialize();
             }
-
         });
     },
     CustomScrollBar: function(taget,options){
@@ -147,12 +148,7 @@ var Common = {
         target.on('click', function () {
             //hide all opened modal
             $('.modal').modal('hide');
-
-            if (isGuest) {
-                Map.getBrowserCurrentPosition(Map.map);
-            } else {
-                Map.getMyLocation(Map.map);
-            }
+            Map.getBrowserCurrentPosition(Map.map, 'near');
         });
     },
 
@@ -234,5 +230,13 @@ var Common = {
                 }
             });
         });
+    },
+    onShowAllModals: function() {
+        $('.modal').on('shown.bs.modal',function(e) {
+            //$(e.currentTarget).unbind();
+            console.log('in shown.bs.modal');
+            Map.unsetBuildMode();
+        });
     }
+
 };
