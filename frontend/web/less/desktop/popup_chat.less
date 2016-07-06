@@ -36,28 +36,23 @@
     }
     .popup-head.chat-discussion {
         height: 36px;
-        .popup-title-name {
-            display: block;
+        .popup-title-name,
+        .popup-title-description {
+            background-color: #5888ac;
+            border: 1px solid #fff;
+            display: inline-block;
             font-size: 14px;
-            text-decoration: underline;
-            height: 20px;
-            max-width: 200px; // 145px
+            height: 100%;
+            line-height: 33px;
+            max-width: 49%;
+            width: 49%;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            width: 200px;
+            text-align: center;
+            padding: 0 3px;
         }
 
-        .popup-title-description {
-            font-size: 10px;
-            color: #ffffff;
-            max-width: 200px; // 145px
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            display: block;
-            width: 200px;
-        }
         .popup-head-right {
             padding-top: 7px;
         }
@@ -93,6 +88,7 @@
         }
 
         .popup-head-left {
+            width: 85%;
             float: left;
             .popup-title-avatar {
                 width: 20px;
@@ -112,13 +108,13 @@
                 }
             }
             .popup-title-username {
-                max-width: 200px; // 145px
+                max-width: 88%;// 145px
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 display: inline-block;
                 vertical-align: middle;
-                width: 200px;
+                width: 88%;
             }
         }
 
@@ -127,7 +123,8 @@
         }
 
         .popup-head-right {
-            float: right;
+            width: 15%;
+            display: inline-block;
             padding-top: 2px;
             a {
                 text-decoration: none;
@@ -135,11 +132,13 @@
                 font-weight: bold;
                 font-size: 15px;
                 z-index: 9999;
+                float: right;
             }
         }
     }
     .popup-messages {
         height: 275px;
+        width: 100%;
         overflow: hidden;
         .mCSB_container {
             margin-right: 0;
