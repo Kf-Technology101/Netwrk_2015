@@ -107,7 +107,7 @@
             </span>
             <span class="group-item">
                 <span class="most_post">
-                    <span><i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="Users" data-container="body"></i><%= group.users%></span>
+                    <span><i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="People" data-container="body"></i><%= group.users%></span>
                 </span>
             </span>
             <% if (group.owner) { %>

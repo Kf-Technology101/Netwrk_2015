@@ -14,6 +14,9 @@ var ChatInbox = {
 	onClickChat: 0,
 	initialize: function(){
 		if(isMobile){
+			if(isGuest) {
+				ChatInbox.activateTab('chat_discussion');
+			}
 			ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
 			ChatInbox.getTemplateChatPrivateMobile(ChatInbox.modal);
 			ChatInbox.OnClickChatPostDetail();
@@ -22,9 +25,6 @@ var ChatInbox = {
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
 			Default.SetAvatarUserDropdown();
-			if(isGuest) {
-				ChatInbox.activateTab('chat_discussion');
-			}
 		} else {
 			// if(ChatInbox.onClickChat == 1){
 			// 	Ajax.change_chat_show_message().then(function(data){});
