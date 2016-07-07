@@ -648,6 +648,7 @@ var PopupChat = {
         var wh = size[1] - h_navSearch - h_header - nav_message;
 
         $(PopupChat.page).find('.container_post_chat').css('height',wh);
+        $(PopupChat.page).find('.feedback-section').css('height',wh);
     },
 
     // Click chat icon on mobile version

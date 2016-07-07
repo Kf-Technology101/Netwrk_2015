@@ -1578,6 +1578,24 @@ var Ajax = {
         });
 
         return defer.promise();
+    },
+
+    postFeedback: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/feedback/post";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 };
 

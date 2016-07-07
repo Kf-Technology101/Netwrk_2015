@@ -7,6 +7,7 @@ use frontend\components\BaseController;
 use Ratchet\ConnectionInterface;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
+use frontend\modules\netwrk\models\FeedbackStat;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\ChatPrivate;
 use frontend\modules\netwrk\models\Notification;
@@ -116,6 +117,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'id'=> $user,
 														'name'=>$userProfile->name,
 														'avatar'=> $userProfile->image,
+														'msg_id'=> $this->ws_messages->id,
 														'msg'=> nl2br($msg),
 														'msg_type' => $msg_type,
 														"created_at" => date("h:i A"),
@@ -123,6 +125,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														// "user_current" => $userProfile->current,
 														"update_list_chat" => $list_chat_inbox,
 														"chat_type" => $this->chat_type,
+														"feedback_points" => 0,
 														"test" => 'This is for test'
 														)
 													]);
@@ -228,7 +231,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	public function fetchMessages()
 	{
 		$data_result=[];
-		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
+		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile','feedbackStat')->all();
 		foreach ($message as $key => $value) {
 			# code...
 			if($value->first_msg == 0){
@@ -252,10 +255,13 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						'id'=>$pchat->user_id_guest,
 						'name'=>$profile->first_name ." ".$profile->last_name,
 						'avatar'=> $image,
+						'msg_id'=> $value->id,
 						'msg'=> $smg,
 						'msg_type' => 1,
 						'created_at'=> $time,
 						'post_id'=> $value->post_id,
+						'post_type'=> $value->post_type,
+						'feedback_points'=> ($value->feedbackStat) ? $value->feedbackStat->points : 0,
 					);
 				} else {
 					$profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
@@ -276,10 +282,13 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 						'id'=>$value->user->id,
 						'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 						'avatar'=> $image,
+						'msg_id'=> $value->id,
 						'msg'=> $smg,
 						'msg_type' => 1,
 						'created_at'=> $time,
 						'post_id'=> $value->post_id,
+						'post_type'=> $value->post_type,
+						'feedback_points'=> ($value->feedbackStat) ? $value->feedbackStat->points : 0,
 					);
 				}
 			} else {
@@ -294,10 +303,13 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 					'id'=>$value->user->id,
 					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
 					'avatar'=> $image,
+					'msg_id'=> $value->id,
 					'msg'=> $smg,
 					'msg_type' => $value->msg_type,
 					'created_at'=> $time,
 					'post_id'=> $value->post_id,
+					'post_type'=> $value->post_type,
+					'feedback_points'=> ($value->feedbackStat) ? $value->feedbackStat->points : 0,
 				);
 			}
 

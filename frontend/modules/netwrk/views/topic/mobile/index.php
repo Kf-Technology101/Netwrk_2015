@@ -309,15 +309,12 @@
                             <div class="post-content"><%= e.content%></div>
                           </div>
                           <div class="action">
-                            <div class="chat"><i class="fa fa-comments"></i>Chat</div>
+                            <div class="chat"><i class="fa fa-comments"></i>Jump in</div>
 
-                            <span class="brilliant">
-                              <% if (e.brilliant_count) { %>
-                                <%= e.brilliant_count%>
-                              <%}else{%>
-                                <%= 0 %>
-                              <%}%>
-                            </span>
+                            <span class="chat feedback-wrapper">
+                              <div class="feedback-line"></div>
+							  <div class="feedback">F</div>
+							</span>
                           </div>
                         </div>
                   <%

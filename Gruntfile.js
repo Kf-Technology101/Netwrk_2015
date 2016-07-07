@@ -34,6 +34,7 @@ module.exports = function(grunt) {
           "frontend/web/css/desktop/profile_info.css": "frontend/web/less/desktop/profile_info.less",
           "frontend/web/css/desktop/profile_edit.css": "frontend/web/less/desktop/profile_edit.less",
           "frontend/web/css/desktop/common.css": "frontend/web/less/desktop/common.less",
+          "frontend/web/css/desktop/feedback.css": "frontend/web/less/desktop/feedback.less",
           // CSS on Mobile
           "frontend/web/css/mobile/landing.css": "frontend/web/less/mobile/landing.less",
           "frontend/web/css/mobile/topic.css": "frontend/web/less/mobile/topic.less",
@@ -57,7 +58,8 @@ module.exports = function(grunt) {
           "frontend/web/css/mobile/marker.css": "frontend/web/less/mobile/marker.less",
           "frontend/web/css/mobile/marker_popup.css": "frontend/web/less/mobile/marker_popup.less",
           "frontend/web/css/mobile/group.css": "frontend/web/less/mobile/group.less",
-          "frontend/web/css/mobile/common.css": "frontend/web/less/mobile/common.less"
+          "frontend/web/css/mobile/common.css": "frontend/web/less/mobile/common.less",
+          "frontend/web/css/mobile/feedback.css": "frontend/web/less/mobile/feedback.less"
         }
       }
     },
