@@ -116,7 +116,7 @@
             <div class="topic_group_top">
                 <div class="topic_group_name">
                     <span>Football experts</span>
-                    <button>Total Users</button>
+                    <button>Total People</button>
                 </div>
                 <div class="topic_group_create">
                     <button id="btn-create-topic" class="text-center"><i class="fa fa-plus-circle"></i> Channel </button>
@@ -227,7 +227,7 @@
             </span>
             <span class="group-item">
                 <span class="most_post">
-                    <span><i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="Users" data-container="body"></i><%= group.users%></span>
+                    <span><i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="People" data-container="body"></i><%= group.users%></span>
                 </span>
             </span>
                     <% if (group.owner) { %>

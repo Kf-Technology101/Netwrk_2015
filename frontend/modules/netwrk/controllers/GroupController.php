@@ -209,7 +209,7 @@ class GroupController extends BaseController {
                     'lat' => $item->lat,
                     'lng' => $item->lng,
                     'zip_code' => $item->zip_code,
-                    'office' => isset($item->office)? $item->office : 'Social'
+                    'office' => isset($item->office)? $item->office : 'Community'
                 ];
                 array_push($data, $cityData);
             }
