@@ -640,12 +640,14 @@ var Topic = {
         Topic.feed.status_paging = 1;
     },
 
-    show_page_topic: function(city,params){
-        if (typeof params.group != "undefined"){
-            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&group="+params.group+"&name="+params.name+"&from="+params.from;
-        } else if(typeof params.zipcode != "undefined") {
-            window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
-        }else{
+    show_page_topic: function(city, params){
+        if(typeof params != "undefined") {
+            if(typeof params.group != "undefined") {
+                window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&group="+params.group+"&name="+params.name+"&from="+params.from;
+            } else if(typeof params.zipcode != "undefined") {
+                window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city+"&zipcode="+params.zipcode+"&name="+params.name+"&lat="+params.lat+"&lng="+params.lng;
+            }
+        } else {
             window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city;
         }
     },
