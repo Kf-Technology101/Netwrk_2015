@@ -40,7 +40,7 @@
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
                 <div class="group-category-content">
                     <section class="group-category-wrapper">
-                        <p class="title">Community Category</p>
+                        <p class="title">Type</p>
                         <select name="office" class="form-control dropdown-office">
                             <?php foreach($zipcode_cities as $item): ?>
                                 <option value="<?php echo $item['id'] ?>" data-name-city="<?php echo $item['name'] ?>" data-value="<?php echo $item['id'] ?>"><?php echo $item['office'] ?></option>

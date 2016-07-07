@@ -56,10 +56,10 @@
 <script id="group-category-template" type="text/x-underscore-template">
     <section class="group-category-wrapper">
         <% if(data.length > 0) { %>
-        <p class="title">Community Category</p>
+        <p class="title">Type</p>
             <select name="office" class="form-control dropdown-office">
                 <% _.each(data, function(item,i) { %>
-                <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.office %></option>
+                <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.community %></option>
                 <% }); %>
             </select>
         <% } %>

@@ -1002,7 +1002,8 @@ class DefaultController extends BaseController
                     'lat' => $city->lat,
                     'lng' => $city->lng,
                     'zip_code' => $city->zip_code,
-                    'office' => isset($city->office)? $city->office : 'Social'
+                    'office' => isset($city->office)? $city->office : 'Social',
+                    'community' => isset($city->office)? $city->office : 'Community'
                 ];
                 array_push($data, $item);
             }
