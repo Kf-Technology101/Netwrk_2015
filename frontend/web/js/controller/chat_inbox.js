@@ -22,7 +22,9 @@ var ChatInbox = {
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
 			Default.SetAvatarUserDropdown();
-			ChatInbox.activateTab('chat_discussion');
+			if(isGuest) {
+				ChatInbox.activateTab('chat_discussion');
+			}
 		} else {
 			// if(ChatInbox.onClickChat == 1){
 			// 	Ajax.change_chat_show_message().then(function(data){});
@@ -44,13 +46,11 @@ var ChatInbox = {
 
 			//when guest user, then display chat discussion tab.
 			if(isGuest) {
-				var tab = 'chat_discussion';
-				ChatInbox.activateTab(tab);
-			}
-
-			if(!isGuest) {
+				ChatInbox.activateTab('chat_discussion');
+			} else {
 				ChatInbox.GetDataListChatPrivate();
 			}
+
 			$(ChatInbox.chat_inbox).animate({
 				"right": "0"
 			}, 500);
@@ -369,24 +369,27 @@ var ChatInbox = {
 
 	getTemplateChatPrivateMobile: function(parent) {
 		if (isMobile) {
-			Ajax.get_chat_private_list().then(function(data){
-				if (data) {
-					data = $.parseJSON(data);
-				}
-				var list_template = _.template($("#chat_private_list" ).html());
-				var append_html = list_template({chat_private_list: data});
-				parent = $(parent).find('#chat_private ul');
-				parent.find('li').remove();
-				parent.append(append_html);
-				for(i=0; i < data.length; i++) {
-					if(data[i].class_first_met == 0) {
-						parent.find('li .chat-post-id[data-post='+data[i].post_id+'] .title-description-user .description-chat-inbox').addClass('match-description');
+			if (!isGuest) {
+				Ajax.get_chat_private_list().then(function (data) {
+					if (data) {
+						data = $.parseJSON(data);
 					}
-				}
-				ChatInbox.CustomScrollBarPrivate();
-				ChatInbox.CountMessageUnread();
-			});
-		};
+					var list_template = _.template($("#chat_private_list").html());
+					var append_html = list_template({chat_private_list: data});
+					parent = $(parent).find('#chat_private ul');
+					parent.find('li').remove();
+					parent.append(append_html);
+					for (i = 0; i < data.length; i++) {
+						if (data[i].class_first_met == 0) {
+							parent.find('li .chat-post-id[data-post=' + data[i].post_id + '] .title-description-user .description-chat-inbox').addClass('match-description');
+						}
+					}
+					ChatInbox.CustomScrollBarPrivate();
+					ChatInbox.CountMessageUnread();
+				});
+			}
+			;
+		}
 	},
 
 	OnClickMeetIconMobile: function() {
