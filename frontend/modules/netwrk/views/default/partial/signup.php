@@ -60,9 +60,10 @@
                         <input type="hidden" name="key" value="<?php echo $key_user_invitation;?>" />
                     <?php endif; ?>
 
-                    <div class="col-field-name field">
+                    <div class="field-name field">
                         <?= $form->field($user, 'newPassword')->passwordInput(array('placeholder' => 'Password')); ?>
                     </div>
+
                     <div class="col-field-name sex field">
                         <?= $form->field(
                                 $profile,
@@ -77,8 +78,26 @@
                     <div class="col-field-name zipcode field">
                         <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zip Code','maxlength'=>5)); ?>
                     </div>
-                    <div class="col-field-name age field">
-                        <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
+
+                    <!--<div class="col-field-name age field">
+                        <?/*= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); */?>
+                    </div>-->
+                    <?php
+                        $years_to = date('Y') - 17;
+                        $years_from = $years_to - 100;
+
+                        $day = array_combine(range(1,31),range(1,31));
+                        $months = array_combine(range(1,12),range(1,12));
+                        $years = array_combine(range($years_from,$years_to), range($years_from,$years_to));
+                    ?>
+                    <div class="dob-field-name dob field">
+                        <?= $form->field($profile, 'day')->dropDownList($day,['prompt' => 'Day']); ?>
+                    </div>
+                    <div class="dob-field-name dob field">
+                        <?= $form->field($profile, 'month')->dropDownList($months,['prompt' => 'Month']); ?>
+                    </div>
+                    <div class="dob-field-name dob year field">
+                        <?= $form->field($profile, 'year')->dropDownList($years,['prompt' => 'Year']); ?>
                     </div>
 
                     <?=  $form->field($profile, 'lat')->hiddenInput()->label(false); ?>

@@ -24,6 +24,10 @@ use yii\db\Query;
  */
 class Profile extends ActiveRecord
 {
+    public $year;
+    public $month;
+    public $day;
+
     /**
      * @inheritdoc
      */
@@ -38,10 +42,10 @@ class Profile extends ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name','dob','gender'], 'required','message'=>'This is required field'],
+            [['first_name', 'last_name','gender','day','month','year'], 'required','message'=>'This is required field'],
             [['user_id', 'age'], 'integer'],
             [['gender'], 'safe'],
-            [['about','dob'], 'string'],
+            [['about','day','month','year'], 'string'],
             [['lat', 'lng'], 'number'],
             [['first_name', 'last_name', 'work'], 'string', 'max' => 45],
             [['photo', 'gender'], 'string', 'max' => 255]
@@ -67,6 +71,27 @@ class Profile extends ActiveRecord
             'lat' => 'Lat',
             'lng' => 'Lng',
         ];
+    }
+
+    public function afterFind() {
+        parent::afterFind();
+
+        $dob = explode('-', $this->dob);
+        $this->year = $dob[0];
+        $this->month = $dob[1];
+        $this->day = $dob[2];
+
+        return $this;
+    }
+
+    public function beforeSave() {
+        if($this->isNewRecord){
+            parent::beforeSave();
+
+            $this->dob = $this->year .'-'. $this->month .'-'. $this->day;
+        }
+
+        return $this;
     }
 
     // public function behaviors()
