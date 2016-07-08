@@ -563,7 +563,8 @@ var Create_Group={
                     if (Create_Group.params.byGroup) {
                         Create_Group.hideModalCreateGroup();
                         //Group_Loc.initialize(json.group_id);
-                        Map.show_marker_group_loc(Map.map, json.group_id);
+                        var params = {'groupId':json.group_id};
+                        Map.show_marker_group_loc(Map.map,params);
                     } else {
                         if (isMobile) {
                             Create_Group.redirect();

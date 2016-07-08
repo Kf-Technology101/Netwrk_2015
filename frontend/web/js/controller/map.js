@@ -1510,7 +1510,7 @@
 				}*/
 
 				if(currentZoom >= 13) {
-					//Map.show_marker_group_loc(map);
+					Map.show_marker_group_loc(map, params);
 					Map.show_marker_topic_loc(map, params);
 				} else {
 					Map.clearTopicMarkers();
@@ -1538,10 +1538,13 @@
 			Create_Topic.showCreateTopicModal(zipcode, lat, lng);
 		},
 
-		show_marker_group_loc: function(map, groupId) {
-			var marker,json,data_marker;
+		show_marker_group_loc: function(map,params) {
+			var marker,
+				json,
+				data_marker;
+				//groupId = (typeof groupId != "undefined") ? groupId : null;
 
-			Ajax.get_marker_groups_loc(typeof groupId != "undefined" ? groupId : null).then(function(data){
+			Ajax.get_marker_groups_loc(params).then(function(data){
 				console.log('get marker group loc');
 				data_marker = $.parseJSON(data);
 				//console.log(data_marker);
@@ -1674,7 +1677,9 @@
 			for (var i = 0; i < Map.topicMarkers.length; i++) {
 				//Map.topicMarkers[i].setMap(null);
 				var m = Map.topicMarkers[i];
-				m.marker.setMap(null);
+				if(typeof m.marker != 'undefined' || m.marker != null) {
+					m.marker.setMap(null);
+				}
 			}
 
 			for (i=0; i<Map.topicMarkers.length; i++) {
@@ -1688,6 +1693,7 @@
 		show_marker_topic_loc: function(map, params) {
 			var marker,json,data_marker;
 
+			//clear the topic markers and its lable
 			Map.clearTopicMarkers();
 			Ajax.get_marker_topic_loc(params).then(function(data){
 				console.log('get marker topic loc');
@@ -1697,6 +1703,7 @@
 				//console.log(data_marker);
 				$.each(data_marker,function(i,e){
 
+					//topic marker should be small in zoom 13 to 16. And big in zoom 16 - 18.
 					if (currentZoom >= 13 && currentZoom < 16 ) {
 						var markerContent = "<div class='marker marker-topic-sm'></div>"+
 							"<span class='marker-icon marker-social'>"+
@@ -1709,6 +1716,7 @@
 						markerContent = '';
 					}
 
+					//display topic markers on map
 					marker = new RichMarker({
 						position: new google.maps.LatLng(e.lat, e.lng),
 						map: map,

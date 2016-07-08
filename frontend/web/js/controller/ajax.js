@@ -417,14 +417,14 @@ var Ajax = {
         return defer.promise();
     },
 
-    get_marker_groups_loc: function(groupId){
+    get_marker_groups_loc: function(params){
         var url,defer = $.Deferred();
 
-        url = baseUrl + "/netwrk/default/get-groups-loc" + (groupId != null ? "?groupId = " + groupId : "");
-
+        //url = baseUrl + "/netwrk/default/get-groups-loc" + (groupId != null ? "?groupId="+groupId : "")+""+(params != null ? "&params="+params : "") +"";
+        url = baseUrl + "/netwrk/default/get-groups-loc";
         $.ajax({
             url: url,
-            // data: params,
+            data: params,
             async: false,
             cache: false,
             type: 'GET',
