@@ -8,7 +8,9 @@
         }
     ?>
      data-isCreateFromBlueDot="<?php echo $isCreateFromBlueDot; ?>"
-     data-name-city="<?php echo $data->city_name;?>">
+     data-name-city="<?php echo $data->city_name;?>"
+     data-group_id="<?php echo $group->id ?>"
+>
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>

@@ -63,6 +63,32 @@ var Create_Group={
             Create_Group.params.latitude = Create_Group.modal.attr('data-lat');
             Create_Group.params.longitude = Create_Group.modal.attr('data-lng');
 
+            var groupId = Create_Group.modal.attr('data-group_id');
+
+            //if is this edit form and groupId set in create page then fetch group id content and assign to form
+            if(groupId) {
+                this.params.id = groupId;
+                var error = false;
+                Ajax.show_group(groupId).then(function(data) {
+                    var json = $.parseJSON(data);
+                    if (json.error) {
+                        alert("Unable to load group");
+                        error = true;
+                    } else {
+                        Create_Group.params.name = json.name;
+                        Create_Group.params.permission = json.permission;
+                        Create_Group.added_users = [];
+                        for (var u in json.users) {
+                            Create_Group.added_users.push(json.users[u].user.email);
+                        }
+                        console.log("added users ", Create_Group.added_users);
+                        Create_Group.RefreshUsersList();
+                        $('#save_group').html("Save Changes")
+                    }
+                });
+                if (error) return;
+            }
+
             Default.SetAvatarUserDropdown();
 
             //Create_Group.changeData();

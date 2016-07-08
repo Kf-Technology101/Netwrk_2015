@@ -191,8 +191,17 @@ class GroupController extends BaseController {
 
     public function actionCreateGroup() {
         $city = $_GET['city'];
+        $group_id = isset($_GET['group_id']) ? $_GET['group_id'] :'' ;
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/topic/topic-page?city='.$city]);
+        }
+
+        $currentUserId = Yii::$app->user->id;
+        $currentUser = User::find()->where(array("id" => $currentUserId))->one();
+
+        if ($group_id) {
+            $group = Group::find()->where(array("id" => $group_id))->one();
         }
 
         $data = [];
@@ -250,7 +259,8 @@ class GroupController extends BaseController {
                 'city_id' =>$city_id,
                 'data'=> (object)$object,
                 'zipcode_cities' => $data,
-                'isCreateFromBlueDot' => $isCreateFromBlueDot
+                'isCreateFromBlueDot' => $isCreateFromBlueDot,
+                'group' => $group
             ]
         );
     }

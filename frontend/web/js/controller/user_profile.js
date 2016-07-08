@@ -519,13 +519,21 @@ var User_Profile = {
 
     },
     onClickEditGroup: function() {
-        var target = $('.edit-group', User_Profile.contexts.modalProfile);
+        if(isMobile) {
+            var target = $('.edit-group', '.Profile-view');
+        } else {
+            var target = $('.edit-group', User_Profile.contexts.modalProfile);
+        }
 
         target.each(function() {
             $(this).unbind("click").click(function() {
-                $('#modal_profile').modal('hide');
-                Common.HideTooTip();
-                Create_Group.initialize($(this).data("city_id"),null,null,$(this).data("id"));
+                if(isMobile) {
+                    window.location.href = baseUrl + "/netwrk/group/create-group?city="+ $(this).data("city_id") +"&group_id="+$(this).data("id")+"";
+                } else {
+                    $('#modal_profile').modal('hide');
+                    Common.HideTooTip();
+                    Create_Group.initialize($(this).data("city_id"),null,null,$(this).data("id"));
+                }
             });
         });
     },

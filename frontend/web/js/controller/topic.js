@@ -945,9 +945,13 @@ var Topic = {
     OnClickEditGroup: function() {
         $('.edit-group').each(function() {
             $(this).unbind("click").click(function() {
-                $('#modal_topic').modal('hide');
-                Common.HideTooTip();
-                Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,$(this).data("id"));
+                if(isMobile) {
+                    window.location.href = baseUrl + "/netwrk/group/create-group?city="+ Topic.data.city +"&group_id="+$(this).data("id")+"";
+                } else {
+                    $('#modal_topic').modal('hide');
+                    Common.HideTooTip();
+                    Create_Group.initialize(Topic.data.city,Topic.params.name,Topic.data.city_name,$(this).data("id"));
+                }
             });
         });
     },
