@@ -816,15 +816,29 @@ class DefaultController extends BaseController
         return $this->render($this->getIsMobile() ? 'mobile/landing_page' : '');
     }
 
-    public function actionGetGroupsLoc($groupId = null) {
+    public function actionGetGroupsLoc() {
         $maxlength = Yii::$app->params['MaxlengthContent'];
 
+        $groupId = isset($_GET['groupId']) ? $_GET['groupId'] : '';
+
+        $swLat = $_GET['swLat'];
+        $neLat = $_GET['neLat'];
+
+        $swLng = $_GET['swLng'];
+        $neLng = $_GET['neLng'];
+
+        if($groupId) {
+            $where = "group.latitude is not null and group.longitude is not null " . (!is_null($groupId) ? " and group.id = " . $groupId : "");
+        } else {
+            $where = '(group.latitude >= '.$swLat.' AND group.latitude <= '.$neLat.' AND group.longitude >= '.$swLng.' AND group.longitude <= '.$neLng.')';
+        }
         $query = new Query();
         //selecting all coordinates with related
         $datas = $query->select('COUNT(DISTINCT ws_messages.user_id) AS count_user_comment, group.id, group.name, group.latitude, group.longitude, COUNT(post.id) AS post_count')
             ->from('group')
+            ->where($where)
             //todo: make normally
-            ->where("group.latitude is not null and group.longitude is not null and group.city_id is null" . (!is_null($groupId) ? " and group.id = " . $groupId : ""))
+            //->where("group.latitude is not null and group.longitude is not null " . (!is_null($groupId) ? " and group.id = " . $groupId : ""))
             ->leftJoin('topic', 'group.id=topic.group_id')
             ->leftJoin('post', 'topic.id=post.topic_id')
             ->leftJoin('ws_messages', 'post.id=ws_messages.post_id')
