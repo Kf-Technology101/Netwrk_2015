@@ -70,11 +70,12 @@ var Post ={
 	OnClickChat: function(){
 		var btn = $('#list_post .post_chat')
 				.add($('#list_post .post_name'))
-				.add($('#list_post .show_more'));
+				.add($('#list_post .show_more'))
+				.add($('#list_post .chat-trigger'));
 
 		btn.unbind();
 		btn.on('click',function(e){
-			var item_post = $(e.currentTarget).closest('.item_post').attr('data-item');
+			var item_post = $(e.currentTarget).closest('.item-post-panel-body').attr('data-item');
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
@@ -82,9 +83,9 @@ var Post ={
 				// ChatPost.params.post = item_post;
 				// ChatPost.initialize();
 				PopupChat.params.post = item_post;
-				PopupChat.params.chat_type = $(e.currentTarget).closest('.item_post').attr('data-chat-type');
-				PopupChat.params.post_name = $(e.currentTarget).closest('.item_post').find('.information .post_name').html();
-				PopupChat.params.post_description = $(e.currentTarget).closest('.item_post').find('.information .post_massage').html();
+				PopupChat.params.chat_type = $(e.currentTarget).closest('.item-post-panel-body').attr('data-chat-type');
+				PopupChat.params.post_name = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_name').html();
+				PopupChat.params.post_description = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_massage').html();
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
 				PopupChat.initialize();
 			}
@@ -182,7 +183,7 @@ var Post ={
 	},
 
 	OnclickVote: function(){
-		var parent = $('#list_post').find('.item_post');
+		var parent = $('#list_post').find('.item-post-panel-body');
 		var btn = parent.find('.icon_brillant');
 
 		btn.unbind();
@@ -543,8 +544,8 @@ var Post ={
 				Post.OnclickVote();
 				Post.OnClickChat();
 				if(isMobile){
-					var infomation = $('.container_post').find('.item_post .information');
-					var wi_avatar = $($('.container_post').find('.item_post')[0]).find('.users_avatar').width();
+					var infomation = $('.container_post').find('.item-post-panel-body .information');
+					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
 					fix_width_post(infomation,145);
 				}
 			}
@@ -622,7 +623,7 @@ var Post ={
 	},
 
 	OnClickAvatarPostListDesktop: function(){
-		var avatar = $(Post.modal).find('#tab_post .item_post .users_avatar');
+		var avatar = $(Post.modal).find('#tab_post .item-post-panel-body .users_avatar');
 		avatar.unbind();
 		avatar.on('click', function(e){
 			var user_login = $(e.currentTarget).parent().attr('data-user'),
