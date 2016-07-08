@@ -143,7 +143,10 @@ class PostController extends BaseController
                 $content = $content." ...<span class='show_more'>show more</span>";
             }
 
-            $user_photo = User::findOne($value->user_id)->profile->photo;
+            $user_profile = User::findOne($value->user_id)->profile;
+
+            $user_name = $user_profile->first_name.' '.$user_profile->last_name;
+            $user_photo = $user_profile->photo;
 
             if ($user_photo == null){
                 $image = Url::to('@web/img/icon/no_avatar.jpg');
@@ -162,20 +165,22 @@ class PostController extends BaseController
             }
 
             $post = array(
-                'id'=> $value->id,
-                'topic_name'=> $value->topic->title,
-                'topic_id'=>$value->topic_id,
-                'title'=>$value->title,
-                'content'=>$content,
+                'id' => $value->id,
+                'topic_name' => $value->topic->title,
+                'topic_id' =>$value->topic_id,
+                'title' =>$value->title,
+                'content' =>$content,
                 'num_view' => $num_view > 0 ? $num_view : 0,
                 'num_comment' => $num_comment ? $num_comment: 0,
                 'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
-                'avatar'=> $image,
-                'update_at'=>$num_date,
-                'is_vote'=> $isVote,
+                'user_name' => $user_name,
+                'avatar' => $image,
+                'created_at' => $value->created_at,
+                'update_at' =>$num_date,
+                'is_vote' => $isVote,
                 'post_user_id' => $value->user_id,
                 'user' => $currentUser,
-                );
+            );
 
             array_push($data,$post);
         }

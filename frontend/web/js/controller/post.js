@@ -68,37 +68,25 @@ var Post ={
 	},
 
 	OnClickChat: function(){
-		var btn = $("#list_post .post_chat,.post_name");
+		var btn = $('#list_post .post_chat')
+				.add($('#list_post .post_name'))
+				.add($('#list_post .show_more'));
 
 		btn.unbind();
 		btn.on('click',function(e){
-			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
+			var item_post = $(e.currentTarget).closest('.item_post').attr('data-item');
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				// $("#list_post").modal('hide');
 				// ChatPost.params.post = item_post;
 				// ChatPost.initialize();
-                PopupChat.params.post = item_post;
-                PopupChat.params.chat_type = $(e.currentTarget).parent().parent().attr('data-chat-type');
-				PopupChat.params.post_name = $(e.currentTarget).parent().parent().find('.information .post_name').html();
-				PopupChat.params.post_description = $(e.currentTarget).parent().parent().find('.information .post_massage').html();
+				PopupChat.params.post = item_post;
+				PopupChat.params.chat_type = $(e.currentTarget).closest('.item_post').attr('data-chat-type');
+				PopupChat.params.post_name = $(e.currentTarget).closest('.item_post').find('.information .post_name').html();
+				PopupChat.params.post_description = $(e.currentTarget).closest('.item_post').find('.information .post_massage').html();
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
-                PopupChat.initialize();
-			}
-		});
-
-		var btn_show_more = $("#list_post .show_more");
-		btn_show_more.unbind();
-
-		btn_show_more.on('click',function(e){
-			var item_post = $(e.currentTarget).parent().parent().parent().attr('data-item');
-			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post, 1, 0);
-			}else{
-				$("#list_post").modal('hide');
-                ChatPost.params.post = item_post;
-                ChatPost.initialize();
+				PopupChat.initialize();
 			}
 		});
 	},
@@ -527,7 +515,7 @@ var Post ={
 	ResetTabPost: function(){
 		var parent = $('#list_post #tab_post').find('#filter_'+Post.params.filter);
 		$('#tab_post').find('.filter_page').hide();
-		parent.find('.item_post').remove();
+		parent.find('.panel').remove();
 		parent.find('.no-data').show();
 		Post.params.page = 1;
 		Post.list[Post.params.filter].status_paging = 1;
@@ -548,6 +536,7 @@ var Post ={
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
 			if(json.status == 1 && json.data.length> 0){
+				$('#tab_post').find('.filter_page').find('.panel').remove();
 				parent.show();
 				parent.find('.no-data').hide();
 				Post.getTemplate(parent,json.data);

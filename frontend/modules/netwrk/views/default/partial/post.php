@@ -57,17 +57,43 @@
 </script>
 <script id="post_list" type="text/x-underscore-template" >
     <% _.each(posts,function(post){ %>
-        <div class="item_post" data-item="<%= post.id %>" data-user="<%= post.user %>" data-chat-type='1'>
-            <div class="users_avatar" data-user-post="<%= post.post_user_id %>">
-                <div class="image"><img src="<%= post.avatar %>"></div>
-                <div class="icon_brillant" data-item="<%= post.id %>">
-                    <div class="count <%= Post.getBrilliantCode(post.num_brilliant) %>"><%= post.num_brilliant %></div>
+        <div class="panel panel-default panel-post">
+            <div class="panel-heading" role="tab" id="heading<%= post.id %>">
+                <div class="panel-title">
+                    <a href="#collapse<%= post.id %>" role="button"
+                       data-toggle="collapse" aria-controls="collapse<%= post.id %>"
+                       class="">
+                        <div class="post-minimized">
+                            <span class="user-name">
+                                <span class="name"><%= post.user_name %></span>
+                                <span class="feedback-img pull-right"></span>
+                            </span>
+                            <span class="time"><%= post.created_at %></span>
+                            <span class="post-name"><%= post.title %></span>
+                            <i class="pull-right plus-icon"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div class="information">
-                <span class="post_name"><%= post.title %></span>
-                <p class="post_massage"><%= post.content %></p>
-                <span class="post_chat"><i class="fa fa-comments"></i>Chat</span>
+            <div id="collapse<%= post.id %>" class="panel-collapse collapse in" aria-labelledby="heading<%= post.id %>">
+                <div class="panel-body">
+                    <div class="item_post" data-item="<%= post.id %>" data-user="<%= post.user %>" data-chat-type='1'>
+                        <div class="users_avatar" data-user-post="<%= post.post_user_id %>">
+                            <div class="image">
+                                <img src="<%= post.avatar %>">
+                                <span class="feedback-img pull-right"></span>
+                            </div>
+                            <!--<div class="icon_brillant" data-item="<%= post.id %>">
+                                <div class="count <%= Post.getBrilliantCode(post.num_brilliant) %>"><%= post.num_brilliant %></div>
+                            </div>-->
+                        </div>
+                        <div class="information">
+                            <span class="post_name"><%= post.title %></span>
+                            <p class="post_massage"><%= post.content %></p>
+                            <!--<span class="post_chat"><i class="fa fa-comments"></i>Chat</span>-->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     <% }); %>
