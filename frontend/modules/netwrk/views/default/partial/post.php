@@ -106,19 +106,19 @@
                                 <div class="post-stream-heading">
                                     <div class="stream-filters pull-left">
                                         <span class="line-stream">
-                                            <span class="count">15</span>
+                                            <span class="count"><%= post.stream_count%></span>
                                             <span class="text-right">Line stream</span>
                                         </span>
                                         <span class="like-stream">
-                                            <span class="count">3</span>
+                                            <span class="count"><%= post.like_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-1-hover.png'); ?>" />
                                         </span>
                                         <span class="fun-stream">
-                                            <span class="count">3</span>
+                                            <span class="count"><%= post.fun_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-2-hover.png'); ?>" />
                                         </span>
                                         <span class="angle-stream">
-                                            <span class="count">3</span>
+                                            <span class="count"><%= post.angle_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-3-hover.png'); ?>" />
                                         </span>
                                     </div>

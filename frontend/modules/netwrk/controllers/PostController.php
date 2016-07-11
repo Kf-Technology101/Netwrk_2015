@@ -164,6 +164,32 @@ class PostController extends BaseController
                 $isVote = 0;
             }
 
+            $ws_message = new WsMessages();
+
+            $stream_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedbackStat' => function($query) {
+                    $query->andWhere('points > 0');
+                },
+            ])->count();
+
+            $like_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedback' => function($query) {
+                    $query->andWhere('feedback = "like"');
+                },
+            ])->count();
+
+            $fun_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedback' => function($query) {
+                    $query->andWhere('feedback = "fun"');
+                },
+            ])->count();
+
+            $angle_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedback' => function($query) {
+                    $query->andWhere('feedback = "angle"');
+                },
+            ])->count();
+
             $post = array(
                 'id' => $value->id,
                 'topic_name' => $value->topic->title,
@@ -180,6 +206,10 @@ class PostController extends BaseController
                 'is_vote' => $isVote,
                 'post_user_id' => $value->user_id,
                 'user' => $currentUser,
+                'stream_count' => $stream_count,
+                'like_feedback_count' => $like_feedback_count,
+                'fun_feedback_count' => $fun_feedback_count,
+                'angle_feedback_count' => $angle_feedback_count
             );
 
             array_push($data,$post);
