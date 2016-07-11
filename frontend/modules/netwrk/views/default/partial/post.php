@@ -296,7 +296,7 @@
                     <div class="bottom-actions">
                         <span class="jump-to chat-trigger" data-id="<%= stream.id %>">Jump to</span>
                         <span class="more chat-trigger">Show more</span>
-                        <span class="respond">Respond</span>
+                        <span class="respond-to chat-trigger" data-id="<%= stream.id %>">Respond</span>
                     </div>
                 </div>
             </div>

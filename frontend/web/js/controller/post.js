@@ -81,7 +81,6 @@ var Post ={
 
 		streamTrigger.unbind();
 		streamTrigger.on('click',function(e){
-			console.log('Clicked on stream trigger');
 			var ajaxCall = true,
 				panelCall = false,
 				streamCount = $(this).attr('data-count'),
@@ -136,17 +135,24 @@ var Post ={
 
 		btn.unbind();
 		btn.on('click',function(e){
+
 			var item_post = $(e.currentTarget).closest('.item-post-panel-body').attr('data-item');
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				PopupChat.scrollToMsg = 0;
-				// $("#list_post").modal('hide');
-				// ChatPost.params.post = item_post;
-				// ChatPost.initialize();
+				PopupChat.feedbackTrigger = 0;
+
+				// To scroll to particular message on popup chat
 				if($(e.currentTarget).hasClass('jump-to')){
 					PopupChat.scrollToMsg = $(e.currentTarget).attr('data-id');
 				}
+
+				// To trigger feedback on popup chat
+				if($(e.currentTarget).hasClass('respond-to')){
+					PopupChat.feedbackTrigger = $(e.currentTarget).attr('data-id');
+				}
+
 				PopupChat.params.post = item_post;
 				PopupChat.params.chat_type = $(e.currentTarget).closest('.item-post-panel-body').attr('data-chat-type');
 				PopupChat.params.post_name = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_name').html();
