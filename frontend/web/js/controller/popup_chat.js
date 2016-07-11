@@ -10,6 +10,7 @@ var PopupChat = {
         city_name: '',
         city: '',
     },
+    scrollToMsg: 0,
     total_popups: 0,
     max_total_popups: 4,
     popup_chat_class: '.popup-box.chat-popup',
@@ -611,11 +612,15 @@ var PopupChat = {
         var popup_current = $('#popup-chat-'+popup_active);
         if(isMobile){
             if ($('#post_chat').length > 0) {
-                $('#post_chat').find(PopupChat.container).scrollTop($(PopupChat.page).find('.container_post_chat')[0.].scrollHeight);
+                $('#post_chat').find(PopupChat.container).scrollTop($(PopupChat.page).find('.container_post_chat')[0].scrollHeight);
             }
         }else{
             if (popup_current.length > 0) {
-                popup_current.find('.popup-messages').mCustomScrollbar("scrollTo",$('#popup-chat-'+popup_active).find(PopupChat.container)[0].scrollHeight);
+                if(PopupChat.scrollToMsg == 0){
+                    popup_current.find('.popup-messages').mCustomScrollbar("scrollTo",$('#popup-chat-'+popup_active).find(PopupChat.container)[0].scrollHeight);
+                } else {
+                    popup_current.find('.popup-messages').mCustomScrollbar("scrollTo",$('#popup-chat-'+popup_active).find(PopupChat.container).find('#collapse'+PopupChat.scrollToMsg));
+                }
             }
         }
     },
