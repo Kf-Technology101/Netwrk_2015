@@ -59,12 +59,73 @@ var Post ={
 			Topic.displayPositionModal();
 			Default.onCLickModal();
 			Post.getBrilliantCode();
+			Post.getStreamData();
 		}
 		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
 		Post.OnclickCreate();
 		Post.OnChangeTab();
 		Post.OnNetwrkLogo();
+	},
+
+	getStreamTemplate: function(parent,data){
+		var self = this;
+		var list_template = _.template($("#stream_list" ).html());
+		var append_html = list_template({streams: data});
+
+		parent.html(append_html);
+	},
+
+	getStreamData: function(){
+		var streamTrigger = $('#list_post .stream-trigger');
+
+		streamTrigger.unbind();
+		streamTrigger.on('click',function(e){
+			console.log('Clicked on stream trigger');
+			var ajaxCall = true,
+				panelCall = false,
+				streamCount = $(this).attr('data-count'),
+				stream_type = $(this).attr('data-type'),
+				streamWrapper = $(this).closest('.panel-post-stream-title').find('.stream-filters'),
+				panelTrigger = $(this).closest('.panel-post-stream-title').find('.panel-trigger'),
+				collapseId = $(this).closest('.panel-post-stream-title').find('.panel-trigger').attr('aria-controls'),
+				parent = $('#'+collapseId).find('#streamWrapper');
+
+			streamWrapper.find('.stream-trigger').each(function(){
+				$(this).removeClass('active');
+			});
+
+			if($(this).hasClass('panel-trigger')){
+				if($(this).hasClass('collapsed')){
+					streamWrapper.find('.'+stream_type+'-stream').addClass('active');
+				} else {
+					ajaxCall = false;
+				}
+			} else {
+				if($(this).closest('.panel-post-stream-title').find('.panel-trigger').hasClass('collapsed')){
+					panelCall = true;
+				}
+				streamWrapper.find('.'+stream_type+'-stream').addClass('active');
+			}
+
+			if(streamCount > 0 && ajaxCall){
+				var post_id = $(this).attr('data-post-id'),
+					params = {'post_id': post_id, 'stream_type': stream_type};
+
+				Ajax.getStreamByTopic(params).then(function(data){
+					var json = $.parseJSON(data);
+					Post.getStreamTemplate(parent,json.data);
+					Post.OnClickChat();
+				});
+			} else {
+				parent.html('<p class="no-data">There is no data available yet</p>');
+			}
+
+			if(panelCall){
+				panelTrigger.removeClass('collapsed');
+				$('#'+collapseId).addClass('in').css('height','auto');
+			}
+		});
 	},
 
 	OnClickChat: function(){

@@ -649,17 +649,26 @@
                                     border-right: 2px solid;
                                     padding: 0 5px;
                                     width: 125px;
+                                    cursor: pointer;
+                                    &.active {
+                                        background: #5da5d8;
+                                    }
                                 }
                                 .like-stream,
                                 .fun-stream,
                                 .angle-stream {
                                     width: 55px;
                                     border-right: 2px solid;
+                                    padding: 0 0 0 3px;
+                                    cursor: pointer;
                                     img {
                                         float: right;
                                         height: 21px;
                                         margin: 2px 3px;
                                         text-align: right;
+                                    }
+                                    &.active {
+                                        background: #5da5d8;
                                     }
                                 }
                                 .angle-stream {
@@ -693,9 +702,10 @@
                     // Single stream panel related css
                     .panel-stream {
                         border-bottom: 1px solid #e3e3e3;
-                        width: 359px;
+                        width: 362.5px;
                         .panel-stream-title {
                             line-height: 14px;
+                            border-top: 1px solid #e3e3e3;
                             a {
                                 font-size: 13px;
                                 .stream-minimized {
@@ -795,6 +805,7 @@
                                         width: 6px;
                                         position: absolute;
                                         right: 12px;
+                                        top: 12px;
                                         cursor: pointer;
                                     }
                                 }
@@ -825,6 +836,7 @@
                                     line-height: 30px;
                                     text-align: center;
                                     width: 116px;
+                                    cursor: pointer;
                                     &:last-child {
                                         width: 118px;
                                         border-right: none;
@@ -832,11 +844,12 @@
                                 }
                             }
                         }
-                        &:nth-child(1) {
+                        &:nth-child(1n) {
                             border-right: 1px solid #e3e3e3;
                         }
-                        &:nth-child(2) {
+                        &:nth-child(2n) {
                             border-left: 1px solid #e3e3e3;
+                            border-right: none;
                         }
                     }
                 }

@@ -98,29 +98,34 @@
                         <div class="panel-heading" role="tab" id="heading-post-stream-<%= post.id %>">
                             <div class="panel-title panel-post-stream-title">
                                 <a href="#collapse-post-stream-<%= post.id %>" role="button"
+                                   class="collapsed pull-left panel-trigger stream-trigger"
                                    data-toggle="collapse" aria-controls="collapse-post-stream-<%= post.id %>"
-                                   class="collapsed pull-left">
+                                   data-post-id="<%= post.id%>" data-type="line" data-count="<%= post.stream_count%>">
                                     <i class="fa fa-chevron-up"></i>
                                     <i class="fa fa-chevron-down"></i>
                                 </a>
                                 <div class="post-stream-heading">
                                     <div class="stream-filters pull-left">
-                                        <span class="line-stream">
+                                        <div class="pull-left line-stream stream-trigger"
+                                              data-post-id="<%= post.id%>" data-type="line" data-count="<%= post.stream_count%>">
                                             <span class="count"><%= post.stream_count%></span>
                                             <span class="text-right">Line stream</span>
-                                        </span>
-                                        <span class="like-stream">
+                                        </div>
+                                        <div class="pull-left like-stream stream-trigger"
+                                              data-post-id="<%= post.id%>" data-type="like" data-count="<%= post.like_feedback_count%>">
                                             <span class="count"><%= post.like_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-1-hover.png'); ?>" />
-                                        </span>
-                                        <span class="fun-stream">
+                                        </div>
+                                        <div class="pull-left fun-stream stream-trigger"
+                                              data-post-id="<%= post.id%>" data-type="fun" data-count="<%= post.fun_feedback_count%>">
                                             <span class="count"><%= post.fun_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-2-hover.png'); ?>" />
-                                        </span>
-                                        <span class="angle-stream">
+                                        </div>
+                                        <div class="pull-left angle-stream stream-trigger"
+                                              data-post-id="<%= post.id%>" data-type="angle" data-count="<%= post.angle_feedback_count%>">
                                             <span class="count"><%= post.angle_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-3-hover.png'); ?>" />
-                                        </span>
+                                        </div>
                                     </div>
                                     <div class="stream-options text-right">
                                         <span class="line">
@@ -134,82 +139,9 @@
                         </div>
                         <div id="collapse-post-stream-<%= post.id %>" class="panel-collapse collapse" aria-labelledby="heading-post-stream-<%= post.id %>">
                             <div class="panel-body panel-post-stream-body">
-                                <div class="stream-wrapper">
-                                    <div class="panel panel-default pull-left panel-stream">
-                                        <div class="panel-heading" role="tab" id="heading-stream-1">
-                                            <div class="panel-title panel-stream-title">
-                                                <a href="#collapse-stream-1" role="button"
-                                                   data-toggle="collapse" aria-controls="collapse-stream-1"
-                                                   class="">
-                                                    <div class="stream-minimized">
-                                                        <span class="user-name">
-                                                            <span class="name"><%= post.user_name %></span>
-                                                            <span class="feedback-img pull-right"></span>
-                                                        </span>
-                                                        <span class="time"><%= post.created_at %></span>
-                                                        <i class="pull-right plus-icon"></i>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div id="collapse-stream-1" class="panel-collapse collapse in" aria-labelledby="heading-stream-1">
-                                            <div class="panel-body panel-stream-body">
-                                                <div class="user-avatar">
-                                                    <div class="image">
-                                                        <img src="<%= post.avatar %>">
-                                                        <span class="feedback-img pull-right"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="information">
-                                                    <p class="stream-massage"><%= post.content %></p>
-                                                </div>
-                                                <div class="bottom-actions">
-                                                    <span class="jump">Jump to</span>
-                                                    <span class="more">Show more</span>
-                                                    <span class="respond">Respond</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="panel panel-default pull-left panel-stream">
-                                        <div class="panel-heading" role="tab" id="heading-stream-2">
-                                            <div class="panel-title panel-stream-title">
-                                                <a href="#collapse-stream-2" role="button"
-                                                   data-toggle="collapse" aria-controls="collapse-stream-2"
-                                                   class="">
-                                                    <div class="stream-minimized">
-                                                        <span class="user-name">
-                                                            <span class="name"><%= post.user_name %></span>
-                                                            <span class="feedback-img pull-right"></span>
-                                                        </span>
-                                                        <span class="time"><%= post.created_at %></span>
-                                                        <i class="pull-right plus-icon"></i>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div id="collapse-stream-2" class="panel-collapse collapse in" aria-labelledby="heading-stream-2">
-                                            <div class="panel-body panel-stream-body">
-                                                <div class="user-avatar">
-                                                    <div class="image">
-                                                        <img src="<%= post.avatar %>">
-                                                        <span class="feedback-img pull-right"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="information">
-                                                    <p class="stream-massage"><%= post.content %></p>
-                                                </div>
-                                                <div class="bottom-actions">
-                                                    <span class="jump">Jump to</span>
-                                                    <span class="more">Show more</span>
-                                                    <span class="respond">Respond</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="stream-wrapper" id="streamWrapper">
+                                    <p class="no-data">There is no data available yet</p>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -331,3 +263,44 @@
         });
       %>
 </script>
+<script id="stream_list" type="text/x-underscore-template">
+    <% _.each(streams,function(stream){ %>
+        <div class="panel panel-default pull-left panel-stream">
+            <div class="panel-heading" role="tab" id="heading-stream-<%= stream.id %>">
+                <div class="panel-title panel-stream-title">
+                    <a href="#collapse-stream-<%= stream.id %>" role="button"
+                       data-toggle="collapse" aria-controls="collapse-stream-<%= stream.id %>"
+                       class="">
+                        <div class="stream-minimized">
+                            <span class="user-name">
+                                <span class="name"><%= stream.user_name %></span>
+                                <span class="feedback-img pull-right"></span>
+                            </span>
+                            <span class="time"><%= stream.created_at %></span>
+                            <i class="pull-right plus-icon"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div id="collapse-stream-<%= stream.id %>" class="panel-collapse collapse in" aria-labelledby="heading-stream-<%= stream.id %>">
+                <div class="panel-body panel-stream-body">
+                    <div class="user-avatar">
+                        <div class="image">
+                            <img src="<%= stream.avatar %>">
+                            <span class="feedback-img pull-right"></span>
+                        </div>
+                    </div>
+                    <div class="information">
+                        <p class="stream-massage"><%= stream.msg %></p>
+                    </div>
+                    <div class="bottom-actions">
+                        <span class="jump chat-trigger">Jump to</span>
+                        <span class="more chat-trigger">Show more</span>
+                        <span class="respond">Respond</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</script>
+
