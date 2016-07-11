@@ -59,6 +59,7 @@ var Post ={
 			Topic.displayPositionModal();
 			Default.onCLickModal();
 			Post.getBrilliantCode();
+			Post.getStreamData();
 		}
 		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
@@ -67,38 +68,87 @@ var Post ={
 		Post.OnNetwrkLogo();
 	},
 
+	getStreamTemplate: function(parent,data){
+		var self = this;
+		var list_template = _.template($("#stream_list" ).html());
+		var append_html = list_template({streams: data});
+
+		parent.html(append_html);
+	},
+
+	getStreamData: function(){
+		var streamTrigger = $('#list_post .stream-trigger');
+
+		streamTrigger.unbind();
+		streamTrigger.on('click',function(e){
+			console.log('Clicked on stream trigger');
+			var ajaxCall = true,
+				panelCall = false,
+				streamCount = $(this).attr('data-count'),
+				stream_type = $(this).attr('data-type'),
+				streamWrapper = $(this).closest('.panel-post-stream-title').find('.stream-filters'),
+				panelTrigger = $(this).closest('.panel-post-stream-title').find('.panel-trigger'),
+				collapseId = $(this).closest('.panel-post-stream-title').find('.panel-trigger').attr('aria-controls'),
+				parent = $('#'+collapseId).find('#streamWrapper');
+
+			streamWrapper.find('.stream-trigger').each(function(){
+				$(this).removeClass('active');
+			});
+
+			if($(this).hasClass('panel-trigger')){
+				if($(this).hasClass('collapsed')){
+					streamWrapper.find('.'+stream_type+'-stream').addClass('active');
+				} else {
+					ajaxCall = false;
+				}
+			} else {
+				if($(this).closest('.panel-post-stream-title').find('.panel-trigger').hasClass('collapsed')){
+					panelCall = true;
+				}
+				streamWrapper.find('.'+stream_type+'-stream').addClass('active');
+			}
+
+			if(streamCount > 0 && ajaxCall){
+				var post_id = $(this).attr('data-post-id'),
+					params = {'post_id': post_id, 'stream_type': stream_type};
+
+				Ajax.getStreamByTopic(params).then(function(data){
+					var json = $.parseJSON(data);
+					Post.getStreamTemplate(parent,json.data);
+					Post.OnClickChat();
+				});
+			} else {
+				parent.html('<p class="no-data">There is no data available yet</p>');
+			}
+
+			if(panelCall){
+				panelTrigger.removeClass('collapsed');
+				$('#'+collapseId).addClass('in').css('height','auto');
+			}
+		});
+	},
+
 	OnClickChat: function(){
-		var btn = $("#list_post .post_chat,.post_name");
+		var btn = $('#list_post .post_chat')
+				.add($('#list_post .post_name'))
+				.add($('#list_post .show_more'))
+				.add($('#list_post .chat-trigger'));
 
 		btn.unbind();
 		btn.on('click',function(e){
-			var item_post = $(e.currentTarget).parent().parent().attr('data-item');
+			var item_post = $(e.currentTarget).closest('.item-post-panel-body').attr('data-item');
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				// $("#list_post").modal('hide');
 				// ChatPost.params.post = item_post;
 				// ChatPost.initialize();
-                PopupChat.params.post = item_post;
-                PopupChat.params.chat_type = $(e.currentTarget).parent().parent().attr('data-chat-type');
-				PopupChat.params.post_name = $(e.currentTarget).parent().parent().find('.information .post_name').html();
-				PopupChat.params.post_description = $(e.currentTarget).parent().parent().find('.information .post_massage').html();
+				PopupChat.params.post = item_post;
+				PopupChat.params.chat_type = $(e.currentTarget).closest('.item-post-panel-body').attr('data-chat-type');
+				PopupChat.params.post_name = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_name').html();
+				PopupChat.params.post_description = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_massage').html();
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
-                PopupChat.initialize();
-			}
-		});
-
-		var btn_show_more = $("#list_post .show_more");
-		btn_show_more.unbind();
-
-		btn_show_more.on('click',function(e){
-			var item_post = $(e.currentTarget).parent().parent().parent().attr('data-item');
-			if(isMobile){
-				ChatPost.RedirectChatPostPage(item_post, 1, 0);
-			}else{
-				$("#list_post").modal('hide');
-                ChatPost.params.post = item_post;
-                ChatPost.initialize();
+				PopupChat.initialize();
 			}
 		});
 	},
@@ -194,7 +244,7 @@ var Post ={
 	},
 
 	OnclickVote: function(){
-		var parent = $('#list_post').find('.item_post');
+		var parent = $('#list_post').find('.item-post-panel-body');
 		var btn = parent.find('.icon_brillant');
 
 		btn.unbind();
@@ -527,7 +577,7 @@ var Post ={
 	ResetTabPost: function(){
 		var parent = $('#list_post #tab_post').find('#filter_'+Post.params.filter);
 		$('#tab_post').find('.filter_page').hide();
-		parent.find('.item_post').remove();
+		parent.find('.panel').remove();
 		parent.find('.no-data').show();
 		Post.params.page = 1;
 		Post.list[Post.params.filter].status_paging = 1;
@@ -548,14 +598,15 @@ var Post ={
 			var json = $.parseJSON(data);
 			Post.checkStatus(json.data);
 			if(json.status == 1 && json.data.length> 0){
+				$('#tab_post').find('.filter_page').find('.panel').remove();
 				parent.show();
 				parent.find('.no-data').hide();
 				Post.getTemplate(parent,json.data);
 				Post.OnclickVote();
 				Post.OnClickChat();
 				if(isMobile){
-					var infomation = $('.container_post').find('.item_post .information');
-					var wi_avatar = $($('.container_post').find('.item_post')[0]).find('.users_avatar').width();
+					var infomation = $('.container_post').find('.item-post-panel-body .information');
+					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
 					fix_width_post(infomation,145);
 				}
 			}
@@ -633,7 +684,7 @@ var Post ={
 	},
 
 	OnClickAvatarPostListDesktop: function(){
-		var avatar = $(Post.modal).find('#tab_post .item_post .users_avatar');
+		var avatar = $(Post.modal).find('#tab_post .item-post-panel-body .users_avatar');
 		avatar.unbind();
 		avatar.on('click', function(e){
 			var user_login = $(e.currentTarget).parent().attr('data-user'),

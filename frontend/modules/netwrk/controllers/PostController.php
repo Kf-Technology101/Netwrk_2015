@@ -143,7 +143,10 @@ class PostController extends BaseController
                 $content = $content." ...<span class='show_more'>show more</span>";
             }
 
-            $user_photo = User::findOne($value->user_id)->profile->photo;
+            $user_profile = User::findOne($value->user_id)->profile;
+
+            $user_name = $user_profile->first_name.' '.$user_profile->last_name;
+            $user_photo = $user_profile->photo;
 
             if ($user_photo == null){
                 $image = Url::to('@web/img/icon/no_avatar.jpg');
@@ -161,21 +164,53 @@ class PostController extends BaseController
                 $isVote = 0;
             }
 
+            $ws_message = new WsMessages();
+
+            $stream_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedbackStat' => function($query) {
+                    $query->andWhere('points > 0');
+                },
+            ])->count();
+
+            $like_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedback' => function($query) {
+                    $query->andWhere('feedback = "like"');
+                },
+            ])->count();
+
+            $fun_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedback' => function($query) {
+                    $query->andWhere('feedback = "fun"');
+                },
+            ])->count();
+
+            $angle_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                'feedback' => function($query) {
+                    $query->andWhere('feedback = "angle"');
+                },
+            ])->count();
+
             $post = array(
-                'id'=> $value->id,
-                'topic_name'=> $value->topic->title,
-                'topic_id'=>$value->topic_id,
-                'title'=>$value->title,
-                'content'=>$content,
+                'id' => $value->id,
+                'topic_name' => $value->topic->title,
+                'topic_id' =>$value->topic_id,
+                'title' =>$value->title,
+                'content' =>$content,
                 'num_view' => $num_view > 0 ? $num_view : 0,
                 'num_comment' => $num_comment ? $num_comment: 0,
                 'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
-                'avatar'=> $image,
-                'update_at'=>$num_date,
-                'is_vote'=> $isVote,
+                'user_name' => $user_name,
+                'avatar' => $image,
+                'created_at' => $value->created_at,
+                'update_at' =>$num_date,
+                'is_vote' => $isVote,
                 'post_user_id' => $value->user_id,
                 'user' => $currentUser,
-                );
+                'stream_count' => $stream_count,
+                'like_feedback_count' => $like_feedback_count,
+                'fun_feedback_count' => $fun_feedback_count,
+                'angle_feedback_count' => $angle_feedback_count
+            );
 
             array_push($data,$post);
         }
@@ -568,5 +603,113 @@ class PostController extends BaseController
             $transaction->rollBack();
             die(json_encode(array("error" => true, "message" => $e->getMessage())));
         }
+    }
+
+    public function actionGetStream(){
+        $stream_type = $_POST['stream_type'];
+        $post_id = $_POST['post_id'];
+
+        $pageSize = 20; //$_POST['size'];
+        $page = 1; //$_POST['page'];
+
+        $ws_message = new WsMessages();
+
+        switch ($stream_type) {
+            case 'line':
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with('feedbackStat')
+                ->joinWith([
+                    'feedbackStat' => function($query) {
+                        $query->andWhere('points > 0');
+                    },
+                ])->orderBy(['created_at' => SORT_DESC]);
+                break;
+            case 'fun':
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with('feedbackStat')
+                ->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "fun"');
+                    },
+                ])->orderBy(['created_at' => SORT_ASC]);
+                break;
+            case 'like':
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with([
+                    'feedbackStat' => function($query) {
+                        $query->orderBy(['points' => SORT_DESC]);
+                    },
+                ])->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "like"');
+                    },
+                ]);
+                break;
+            case 'angle':
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with([
+                    'feedbackStat' => function($query) {
+                        $query->orderBy(['points' => SORT_DESC]);
+                    },
+                ])->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "angle"');
+                    },
+                ]);
+                break;
+        }
+
+        $streams = $streams->offset(0)->limit($streams->limit)->all();
+
+        $data = [];
+        foreach ($streams as $key => $value) {
+            $feedback_stat = ($value->feedbackStat) ? $value->feedbackStat->points : 0;
+            if($value->first_msg == 0) {
+                if($value->user->id == $this->current_user) {
+                    $pchat = ChatPrivate::find()->where(['user_id'=>$value->user->id, 'post_id'=>$this->post_id])->one();
+                    $profile = Profile::find()->where(['user_id'=>$pchat->user_id_guest])->one();
+                    $id = $pchat->user_id_guest;
+                } else {
+                    $profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
+                    $id = $value->user->id;
+                }
+
+                $current_date = date('Y-m-d H:i:s');
+                $time1 = date_create($profile->dob);
+                $time2 = date_create($current_date);
+                $year_old = $time1->diff($time2)->y;
+
+                $name = $profile->first_name ." ".$profile->last_name;
+                $photo = $profile->photo;
+                $smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
+            } else {
+                $id = $value->user->id;
+                $name = $value->user->profile->first_name ." ".$value->user->profile->last_name;
+                $photo = $value->user->profile->photo;
+                $smg = nl2br($value->msg);
+            }
+
+            if ($photo == null) {
+                $image = '/img/icon/no_avatar.jpg';
+            } else {
+                $image = '/uploads/'.$id.'/'.$photo;
+            }
+
+            $time = UtilitiesFunc::FormatTimeChat($value->created_at);
+
+            $item = array(
+                'id' => $value->id,
+                'user_id' => $id,
+                'user_name' => $name,
+                'avatar' => $image,
+                'msg' => $smg,
+                'created_at' => $time,
+                'post_id' => $value->post_id,
+                'post_type' => $value->post_type,
+                'feedback_points' => $feedback_stat
+            );
+
+            array_push($data,$item);
+        }
+
+        $temp = array ('status'=> 1 ,'data'=> $data);
+        $hash = json_encode($temp);
+        return $hash;
     }
 }

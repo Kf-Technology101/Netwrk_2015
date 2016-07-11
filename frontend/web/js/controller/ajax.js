@@ -239,6 +239,24 @@ var Ajax = {
         return defer.promise();
     },
 
+    getStreamByTopic:function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/post/get-stream";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
     get_position_user: function(){
         var url,defer = $.Deferred();
 
