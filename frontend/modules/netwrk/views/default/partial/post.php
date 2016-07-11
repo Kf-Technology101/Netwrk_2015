@@ -294,7 +294,7 @@
                         <p class="stream-massage"><%= stream.msg %></p>
                     </div>
                     <div class="bottom-actions">
-                        <span class="jump chat-trigger">Jump to</span>
+                        <span class="jump-to chat-trigger" data-id="<%= stream.id %>">Jump to</span>
                         <span class="more chat-trigger">Show more</span>
                         <span class="respond">Respond</span>
                     </div>

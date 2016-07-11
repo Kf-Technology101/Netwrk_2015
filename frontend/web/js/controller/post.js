@@ -140,9 +140,13 @@ var Post ={
 			if(isMobile){
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
+				PopupChat.scrollToMsg = 0;
 				// $("#list_post").modal('hide');
 				// ChatPost.params.post = item_post;
 				// ChatPost.initialize();
+				if($(e.currentTarget).hasClass('jump-to')){
+					PopupChat.scrollToMsg = $(e.currentTarget).attr('data-id');
+				}
 				PopupChat.params.post = item_post;
 				PopupChat.params.chat_type = $(e.currentTarget).closest('.item-post-panel-body').attr('data-chat-type');
 				PopupChat.params.post_name = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_name').html();

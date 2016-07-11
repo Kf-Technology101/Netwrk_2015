@@ -85,9 +85,10 @@ var MainWs ={
                 }
                 $.each(e.data, function(i, elem){
                     PopupChat.getMessageTemplate(elem);
-                    PopupChat.ScrollTopChat(elem.post_id);
                 });
+
                 $('#popup-chat-'+e.data[0]['post_id']).find('textarea').focus();
+                PopupChat.ScrollTopChat(e.data[0]['post_id']);
                 /*if(isMobile){
                     fix_width_chat_post($(PopupChat.parent).find('.content_message'),$($(PopupChat.parent).find('.message')[0]).find('.user_thumbnail').width() + 50);
                 }*/
