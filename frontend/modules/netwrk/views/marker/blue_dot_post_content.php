@@ -30,7 +30,7 @@
 						<div class="col-xs-6 dot-info-main">
 							<div class="dot-info-wrapper">
 								<a id="btnMyLocation" class="btn_my_location" href="javascript:" onclick="Map.getMyHomeLocation(Map.map, 'build');">
-									<i class="fa fa-crosshairs build-icon"></i>
+									<i class="fa fa-plus build-icon"></i>
 									<span class="blue-dot-lable">Anywhere</span>
 								</a>
 							</div>
