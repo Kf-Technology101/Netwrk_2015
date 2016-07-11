@@ -137,6 +137,16 @@ var Signup={
 								// Display channel welcome modal
 								LandingPage.showLandingChannelWelcome();
 								$(ChatInbox.modal).find("div[data-post='"+Signup.data_validate.data.post_id+"']").closest('li').trigger('click');
+
+								//todo landing data modal should be open.
+								setTimeout(function(){
+									Ajax.top_landing().then(function(res){
+										LandingPage.parent = LandingPage.modal;
+										LandingPage.data = $.parseJSON(res);
+										LandingPage.GetTemplate();
+									});
+									//LandingPage.initialize();
+								}, 300);
 							}, 300);
 						}
 					});
