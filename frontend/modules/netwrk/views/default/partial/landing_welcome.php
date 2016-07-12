@@ -8,7 +8,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<h1>There is not a limit to what a crowd with a line can do</h1>
+				<h1>Welcome to your Public Messenger</h1>
 			</div>
 		</div>
 	</div>
