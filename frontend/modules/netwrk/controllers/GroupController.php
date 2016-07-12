@@ -16,6 +16,7 @@ use frontend\modules\netwrk\models\WsMessages;
 use yii\data\Pagination;
 use yii\base\Exception;
 use Yii;
+use yii\db\Query;
 use yii\helpers\Url;
 
 class GroupController extends BaseController {
@@ -64,6 +65,7 @@ class GroupController extends BaseController {
             if (empty($currentUser)) {
                 throw new Exception("Unknown error, please try to re-login");
             }
+
 
             if (!empty($_POST['emails'])) {
                 $emails = array_map('strtolower', array_unique($_POST['emails']));
@@ -128,10 +130,11 @@ class GroupController extends BaseController {
                     if (!array_key_exists($email, $existingEmails)) {
                         //creating incomplete user
                         $username = preg_replace('/[^A-Za-z0-9\-]/', '',preg_replace('/([^@]*).*/', '$1', $email));
+                        $new_username = $this->checkUserName($username);
 
                         $user = new User();
                         $user->email = $email;
-                        $user->username = $username;
+                        $user->username = $new_username;
                         $user->status = User::STATUS_INCOMPLETE;
                         $user->role_id = Role::ROLE_USER;
                         $user->save();
@@ -516,6 +519,39 @@ class GroupController extends BaseController {
 
         $hash = json_encode($temp);
         return $hash;
+    }
+
+    public function newUsername($existing_users, $username, $i) {
+        $updated_username = $username.$i;
+
+        if(in_array($updated_username, $existing_users)) {
+            $i++;
+            return $this->newUsername($existing_users, $username, $i);
+        } else {
+            return $updated_username;
+        }
+    }
+
+    private function checkUserName($userName = null)
+    {
+        if($userName) {
+            $updatedUserName = '';
+
+            $existing_users = array();
+            $query = new Query();
+            $users = $query->select('user.username')
+                ->from('user')
+                ->andFilterWhere(['like', 'username', $userName])
+                ->all();
+
+            foreach($users as $user){
+                array_push($existing_users, $user['username']);
+            }
+
+            $updatedUserName = $this->newUsername($existing_users, $userName, 1);
+
+            return $updatedUserName;
+        }
     }
 
 }
