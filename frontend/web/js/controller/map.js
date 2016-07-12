@@ -1816,6 +1816,11 @@
 	    		if (currentZoom == Map.markerZoom && Map.markers.length <= 10) {
 	    			Map.deleteNetwrk(map);
 				    Map.loadMapLabel(0);
+					for (var i = 0; i < Map.zoom7.length; i++) {
+						var m = Map.zoom7[i];
+						m.marker.setMap(map);
+						Map.markers.push(m.marker);
+					}
 					for (var i = 0; i < Map.zoom12.length; i++) {
 						var m = Map.zoom12[i];
 						m.marker.setMap(map);
