@@ -31,6 +31,7 @@ use ReflectionClass;
  * @property string $update_time
  * @property string $ban_time
  * @property string $ban_reason
+ * @property integer $timeless_count
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -165,6 +166,7 @@ class User extends ActiveRecord implements IdentityInterface
             'update_time' => 'Update Time',
             'ban_time' => 'Ban Time',
             'ban_reason' => 'Ban Reason',
+            'timeless_count' => 'Timeless Count',
 
             // virtual attributes set above
             'currentPassword' => 'Current Password',

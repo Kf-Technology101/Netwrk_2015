@@ -305,7 +305,8 @@ var Common = {
                 parent = $(feedbackContent).data('parent'),
                 object = $(feedbackContent).data('object'),
                 id = $(feedbackContent).data('id'),
-                feedbackSection = $(parent).find('.feedback-section');
+                feedbackSection = $(parent).find('.feedback-section'),
+                feedbackAlert = $(parent).find('.feedback-alert');
 
             var params = {'object': object,'id': id, 'option': option, 'point': point};
 
@@ -313,11 +314,18 @@ var Common = {
                 var json = $.parseJSON(data);
 
                 if(json.success == 'true'){
+                    var alertClass = json.msgClass,
+                        alertText = json.msg;
+
                     feedbackSection.addClass('hide');
                     feedbackSection.find('.feedback-content')
                         .data('parent','')
                         .data('object','')
                         .data('id','');
+
+                    var feedbackAlertChild = '<div id="feedbackAlert" class="alert '+alertClass+'">'+alertText+'</div>';
+
+                    feedbackAlert.html(feedbackAlertChild).removeClass('hide');
 
                     if(json.feedbackPoints >= 0){
                         $(parent).find('#heading'+id).find('a').removeClass('collapsed');
@@ -326,6 +334,10 @@ var Common = {
                         $(parent).find('#heading'+id).find('a').addClass('collapsed');
                         $(parent).find('#collapse'+id).removeClass('in');
                     }
+
+                    setTimeout(function(){
+                        feedbackAlert.html('').addClass('hide');
+                    }, 1200);
                 }
             });
         });
