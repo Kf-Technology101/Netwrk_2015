@@ -83,7 +83,7 @@ var ChatInbox = {
 
 	CustomScrollBar: function(){
 		var parent = $(ChatInbox.modal).find('#chat_discussion #container_ul_chat_list');
-		parent.css('height', $(window).height()-100);
+		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
@@ -93,7 +93,7 @@ var ChatInbox = {
 
 	CustomScrollBarPrivate: function(){
 		var parent = $(ChatInbox.modal).find('#chat_private #container_ul_chat_list');
-		parent.css('height', $(window).height()-100);
+		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
