@@ -449,4 +449,16 @@ class UserController extends BaseController
             return $this->goHome();
         }
     }
+
+    /**
+     * Reset timeless count on every 1st of month
+     */
+    public function actionResetTimeless(){
+        $users = User::find()->where('timeless_count > 0')->all();
+
+        foreach ($users as $user) {
+            $user->timeless_count = 0;
+            $user->save();
+        }
+    }
 }

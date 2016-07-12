@@ -12,7 +12,8 @@ $params = [
     'LimitObjectHoverPopup'			=> 5,
     'LimitObjectFeedGlobal'			=> 3,
     'LimitCoverResult'              => 10,
-    'systemUserId'                  => 1
+    'systemUserId'                  => 1,
+    'FeedbackHideObjectLimit'       => -150,
 ];
 
 return $params;

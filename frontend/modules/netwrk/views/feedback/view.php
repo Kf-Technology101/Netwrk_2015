@@ -1,4 +1,5 @@
 <?php use yii\helpers\Url; ?>
+<div class="feedback-alert hide"></div>
 <div class="feedback-section hide">
     <section class="feedback-head">
         <span class="title">Feedback</span>

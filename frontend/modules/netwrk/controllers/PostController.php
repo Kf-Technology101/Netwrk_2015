@@ -169,26 +169,32 @@ class PostController extends BaseController
             $stream_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedbackStat' => function($query) {
                     $query->andWhere('points > 0');
-                },
-            ])->count();
+                }
+            ])->all();
 
             $like_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedback' => function($query) {
                     $query->andWhere('feedback = "like"');
-                },
-            ])->count();
+                },'feedbackStat' => function($query) {
+                    $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                }
+            ])->all();
 
             $fun_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedback' => function($query) {
                     $query->andWhere('feedback = "fun"');
-                },
-            ])->count();
+                },'feedbackStat' => function($query) {
+                    $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                }
+            ])->all();
 
             $angle_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedback' => function($query) {
                     $query->andWhere('feedback = "angle"');
-                },
-            ])->count();
+                },'feedbackStat' => function($query) {
+                    $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                }
+            ])->all();
 
             $post = array(
                 'id' => $value->id,
@@ -206,10 +212,10 @@ class PostController extends BaseController
                 'is_vote' => $isVote,
                 'post_user_id' => $value->user_id,
                 'user' => $currentUser,
-                'stream_count' => $stream_count,
-                'like_feedback_count' => $like_feedback_count,
-                'fun_feedback_count' => $fun_feedback_count,
-                'angle_feedback_count' => $angle_feedback_count
+                'stream_count' => count($stream_count),
+                'like_feedback_count' => count($like_feedback_count),
+                'fun_feedback_count' => count($fun_feedback_count),
+                'angle_feedback_count' => count($angle_feedback_count)
             );
 
             array_push($data,$post);
@@ -620,42 +626,39 @@ class PostController extends BaseController
                 ->joinWith([
                     'feedbackStat' => function($query) {
                         $query->andWhere('points > 0');
-                    },
+                    }
                 ])->orderBy(['created_at' => SORT_DESC]);
                 break;
             case 'fun':
-                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with('feedbackStat')
-                ->joinWith([
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->joinWith([
                     'feedback' => function($query) {
                         $query->andWhere('feedback = "fun"');
-                    },
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                    }
                 ])->orderBy(['created_at' => SORT_ASC]);
                 break;
             case 'like':
-                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with([
-                    'feedbackStat' => function($query) {
-                        $query->orderBy(['points' => SORT_DESC]);
-                    },
-                ])->joinWith([
+                $streams = $ws_message->find()->where('post_id ='.$post_id.' AND post_type = 1')->joinWith([
                     'feedback' => function($query) {
                         $query->andWhere('feedback = "like"');
-                    },
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit'])->orderBy(['points' => SORT_DESC]);
+                    }
                 ]);
                 break;
             case 'angle':
-                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with([
-                    'feedbackStat' => function($query) {
-                        $query->orderBy(['points' => SORT_DESC]);
-                    },
-                ])->joinWith([
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->joinWith([
                     'feedback' => function($query) {
                         $query->andWhere('feedback = "angle"');
-                    },
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit'])->orderBy(['points' => SORT_DESC]);
+                    }
                 ]);
                 break;
         }
 
-        $streams = $streams->offset(0)->limit($streams->limit)->all();
+        $streams = $streams->offset(0)->limit($pageSize)->all();
 
         $data = [];
         foreach ($streams as $key => $value) {

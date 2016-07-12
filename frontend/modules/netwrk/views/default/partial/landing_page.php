@@ -28,7 +28,9 @@
 <script id="landing_header" type="text/x-underscore-template">
 	<div class="btn-area-talk" data-topic="<%= landing.topic_id %>" data-city="<%= landing.city_id %>"
 		 data-value="<%= landing.post_id %>" data-user="<%= landing.user_id %>"
-		 data-title="<%= landing.title %>" data-content="<%= landing.post_content %>"></div>
+		 data-title="<%= landing.title %>" data-content="<%= landing.post_content %>">
+		Community channel
+	</div>
 </script>
 <script id="landing_page" type="text/x-underscore-template">
 	<div class="panel-group" id="accordion">
@@ -36,7 +38,7 @@
 			<div class="panel-heading top-header">
 				<a data-toggle="collapse" data-target="#collapsePartyLines"
 				   href="javascript:">
-					<p class="lp-title">Active lines near you</p>
+					<p class="lp-title">Public chat lines near you</p>
 					<p class="lp-description">Check out the most popular lines around your location!</p>
 				</a>
 			</div>
@@ -198,7 +200,7 @@
 				<div class="panel-heading top-header">
 					<a data-toggle="collapse" data-target="#collapseFavoriteCommunities"
 					   href="javascript:">
-						<p class="lp-title">Your Followed Areas</p>
+						<p class="lp-title">Your Home and Followed area news</p>
 					</a>
 				</div>
 				<div id="collapseFavoriteCommunities" class="panel-collapse collapse in">
