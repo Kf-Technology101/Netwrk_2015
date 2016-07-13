@@ -143,6 +143,9 @@ var Login={
         	$('.modal-backdrop.in').addClass('active');
         	$('.menu_top').addClass('deactive');
         	$('#btn_meet').addClass('deactive');
+			setTimeout(function() {
+				$('#modal_landing_page').modal('hide');
+			}, 800);
         });
 	},
 
