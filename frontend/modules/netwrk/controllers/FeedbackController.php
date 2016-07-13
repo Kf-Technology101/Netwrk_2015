@@ -47,6 +47,8 @@ class FeedbackController extends BaseController
                 $feedback->user_id = $currentUserId;
                 if ($object == 'ws_message') {
                     $feedback->ws_message_id = $id;
+                } else if ($object == 'post') {
+                    $feedback->post_id = $id;
                 }
                 $feedback->type = $object;
                 $feedback->created_at = date('Y-m-d H:i:s');
@@ -66,6 +68,8 @@ class FeedbackController extends BaseController
                 if ($object == 'ws_message')
                 {
                     $feedback_stat->ws_message_id = $id;
+                } else if ($object == 'post') {
+                    $feedback_stat->post_id = $id;
                 }
                 $feedback_stat->type = $object;
                 $feedback_stat->save();

@@ -18,6 +18,7 @@ class m160704_114313_feedback extends Migration
             'point' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL',
             'user_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
             'ws_message_id' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL',
+            'post_id' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL',
             'type' => Schema::TYPE_STRING . '(56) NOT NULL',
             'created_at' => Schema::TYPE_TIMESTAMP. ' NOT NULL',
         ], $tableOptions);

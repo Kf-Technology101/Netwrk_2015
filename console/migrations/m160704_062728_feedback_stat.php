@@ -16,6 +16,7 @@ class m160704_062728_feedback_stat extends Migration
             'id' => Schema::TYPE_PK,
             'points' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL',
             'ws_message_id' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL',
+            'post_id' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL',
             'type' => Schema::TYPE_STRING . '(56) NOT NULL'
         ], $tableOptions);
     }
