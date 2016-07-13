@@ -242,7 +242,7 @@ class DefaultController extends BaseController
 
     public function actionGetMakerDefaultZoom()
     {
-        $city_ids = $this->actionGetCitiesFromCookie();
+        $city_ids = $this->actionGetCitiesFromCookie('id', 'social');
         $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : null;
 
         $favoriteCommunities = Yii::$app->runAction('netwrk/favorite/get-favorite-communities-by-user');
@@ -761,7 +761,7 @@ class DefaultController extends BaseController
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
             $party_lines = array();
 
-            $city_ids = $this->actionGetCitiesFromCookie();
+            $city_ids = $this->actionGetCitiesFromCookie('id');
             $hq_city_id = $this->actionGetHQZipCityFromCookie();
 
             $hq_post = Post::GetHQPostGlobal($hq_city_id);
@@ -1324,7 +1324,7 @@ class DefaultController extends BaseController
         }
     }
 
-    public function actionGetCitiesFromCookie($output = 'id'){
+    public function actionGetCitiesFromCookie($output = 'id', $type=null){
         $cookies = Yii::$app->request->cookies;
 
         $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
@@ -1335,8 +1335,11 @@ class DefaultController extends BaseController
 
         if($zip_code != 0) {
             $cities = City::find()
-                ->where('zip_code = '.$zip_code)
-                ->all();
+                ->where('zip_code = '.$zip_code);
+                if($type == 'social') {
+                    $cities->andWhere('office_type is null');
+                }
+            $cities =  $cities->all();
         } else {
             $cities = City::find()
                 ->where('name = "'.$city.'"')

@@ -311,7 +311,10 @@
 			if(e.office_type == 'university' || e.office_type == 'government') {
 				var markerContent = "<div class='marker'></div>";
 			} else {
-				var markerContent = "<div class='marker marker-home'></div>";
+				var markerContent = "<div class='glow-btn-wrapper'>";
+					markerContent += "<div class='marker-home'>";
+					markerContent += "<div class='btn-active'></div>";
+					markerContent += "<div class='btn-inactive'></div></div>";
 				markerContent += "<span class='marker-icon marker-home'><i class='fa fa-lg fa-home'></i>";
 			}
 
@@ -1816,6 +1819,11 @@
 	    		if (currentZoom == Map.markerZoom && Map.markers.length <= 10) {
 	    			Map.deleteNetwrk(map);
 				    Map.loadMapLabel(0);
+					for (var i = 0; i < Map.zoom7.length; i++) {
+						var m = Map.zoom7[i];
+						m.marker.setMap(map);
+						Map.markers.push(m.marker);
+					}
 					for (var i = 0; i < Map.zoom12.length; i++) {
 						var m = Map.zoom12[i];
 						m.marker.setMap(map);
