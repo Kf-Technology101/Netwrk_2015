@@ -649,6 +649,7 @@
                                 }
                             }
                             .post-stream-heading {
+                                height: 25px;
                                 span {
                                     display: inline-block;
                                     cursor: pointer;
@@ -688,15 +689,27 @@
                                     }
                                 }
                                 .stream-options {
+                                    width: 403px;
                                     .line {
-                                        width: 25px;
+                                        padding: 0 3px;
+                                        width: 30px;
                                         img {
                                             height: 23px;
                                             margin: -2px 1px 0;
                                         }
                                     }
-                                    .jump,
+
+                                    .jump {
+                                        border-left: 2px solid;
+                                        text-align: center;
+                                        .btn-active,
+                                        .btn-inactive {
+                                            width: 80px;
+                                        }
+                                    }
+
                                     .respond {
+                                        padding: 0 0 0 3px;
                                         width: 80px;
                                         border-left: 2px solid;
                                         text-align: center;

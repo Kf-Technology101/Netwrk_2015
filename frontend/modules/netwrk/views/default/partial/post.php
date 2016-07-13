@@ -110,7 +110,7 @@
                                     <i class="fa fa-chevron-down"></i>
                                 </a>
                                 <div class="post-stream-heading">
-                                    <div class="stream-filters pull-left">
+                                    <span class="stream-filters pull-left">
                                         <div class="pull-left line-stream stream-trigger"
                                               data-post-id="<%= post.id%>" data-type="line" data-count="<%= post.stream_count%>">
                                             <span class="count"><%= post.stream_count%></span>
@@ -131,17 +131,20 @@
                                             <span class="count"><%= post.angle_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-3-hover.png'); ?>" />
                                         </div>
-                                    </div>
-                                    <div class="stream-options text-right">
-                                        <span class="line">
-                                            <img src="<?= Url::to('@web/img/icon/line-icon-nav.png'); ?>" />
-                                        </span>
-                                        <span class="jump chat-trigger">Jump in</span>
-                                        <span class="respond feedback-trigger"
+                                    </span>
+                                    <span class="stream-options text-right">
+                                        <div class="pull-right  respond feedback-trigger"
                                               data-parent="#list_post"
                                               data-object="post"
-                                              data-id="<%= post.id%>">Feedback</span>
-                                    </div>
+                                              data-id="<%= post.id%>">Feedback</div>
+                                        <div class="pull-right glow-btn-wrapper jump chat-trigger">
+                                            <div class="btn-active">Jump in</div>
+                                            <div class="btn-inactive">Jump in</div>
+                                        </div>
+                                        <div class="pull-right line">
+                                            <img src="<?= Url::to('@web/img/icon/line-icon-nav.png'); ?>" />
+                                        </div>
+                                    </span>
                                 </div>
                             </div>
                         </div>
