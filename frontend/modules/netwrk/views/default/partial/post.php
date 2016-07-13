@@ -109,7 +109,7 @@
                                         <div class="pull-left line-stream stream-trigger"
                                               data-post-id="<%= post.id%>" data-type="line" data-count="<%= post.stream_count%>">
                                             <span class="count"><%= post.stream_count%></span>
-                                            <span class="text-right">Line stream</span>
+                                            <span class="text-right">Highlights</span>
                                         </div>
                                         <div class="pull-left like-stream stream-trigger"
                                               data-post-id="<%= post.id%>" data-type="like" data-count="<%= post.like_feedback_count%>">
@@ -132,7 +132,7 @@
                                             <img src="<?= Url::to('@web/img/icon/line-icon-nav.png'); ?>" />
                                         </span>
                                         <span class="jump chat-trigger">Jump in</span>
-                                        <span class="respond">Respond</span>
+                                        <span class="respond">Feedback</span>
                                     </div>
                                 </div>
                             </div>
