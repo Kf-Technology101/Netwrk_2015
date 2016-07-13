@@ -89,7 +89,7 @@ class Post extends \yii\db\ActiveRecord
 
     public function getFeedback()
     {
-        return $this->hasOne(Feedback::className(), ['post_id' => 'id']);
+        return $this->hasMany(Feedback::className(), ['post_id' => 'id']);
     }
 
     public function getFeedbackStat()
