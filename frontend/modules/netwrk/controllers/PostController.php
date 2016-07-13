@@ -373,8 +373,10 @@ class PostController extends BaseController
                 ->innerJoin('topic t', '`t`.`id` = `p`.`topic_id`')
                 ->innerJoin('city', '`city`.`id` = `t`.`city_id`')
                 ->leftJoin('chat_discussion c', '(c.user_id = :currentUser AND c.post_id = w.post_id )')
+                ->leftJoin('feedback_stat pfs','pfs.post_id = p.id')
                 ->addParams([':currentUser' => $currentUser])
                 ->where('w.user_id = ' . $currentUser . ' AND w.post_type = 1')
+                ->andWhere('(pfs.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR pfs.points IS NULL)')
                 ->distinct()
                 ->all();
             //print $messages->createCommand()->getRawSql();

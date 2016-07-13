@@ -445,23 +445,27 @@ class TopicController extends BaseController
             foreach ($data_feed as $key => $value) {
                 if($value->item->status != -1) {
                     if ($value->type_item == 'post') {
-                        $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
-                        $url_avatar = User::GetUrlAvatar($value->item->user->id, $value->item->user->profile->photo);
+                        $feedback_stat = $value->item->feedbackStat->points ? $value->item->feedbackStat->points : 0;
+                        if($feedback_stat > Yii::$app->params['FeedbackHideObjectLimit']) {
+                            $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                            $url_avatar = User::GetUrlAvatar($value->item->user->id, $value->item->user->profile->photo);
 
-                        $item = [
-                            'id' => $value->item->id,
-                            'title' => $value->item->title,
-                            'content' => $value->item->content,
-                            'topic_id' => $value->item->topic_id,
-                            'photo' => $url_avatar,
-                            'city_id' => $value->item->topic->city_id,
-                            'city_name' => $value->item->topic->city->name,
-                            'created_at' => $value->created_at,
-                            'appear_day' => $num_date,
-                            'posted_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
-                            'user_id' => $value->item->user_id,
-                            'is_post' => 1
-                        ];
+                            $item = [
+                                'id' => $value->item->id,
+                                'title' => $value->item->title,
+                                'content' => $value->item->content,
+                                'topic_id' => $value->item->topic_id,
+                                'photo' => $url_avatar,
+                                'city_id' => $value->item->topic->city_id,
+                                'city_name' => $value->item->topic->city->name,
+                                'created_at' => $value->created_at,
+                                'appear_day' => $num_date,
+                                'posted_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
+                                'user_id' => $value->item->user_id,
+                                'is_post' => 1
+                            ];
+                            array_push($feeds, $item);
+                        }
                     } else {
                         $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
                         $item = [
@@ -474,8 +478,8 @@ class TopicController extends BaseController
                             'created_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
                             'is_post' => 0
                         ];
+                        array_push($feeds, $item);
                     }
-                    array_push($feeds, $item);
                 }
             }
 

@@ -51,7 +51,7 @@ class HistoryFeed extends \yii\db\ActiveRecord
     public function getItem()
     {
         if($this->type_item == 'post'){
-            return $this->hasOne(Post::className(), ['id' => 'id_item']);
+            return $this->hasOne(Post::className(), ['id' => 'id_item'])->with('feedbackStat');
         }elseif($this->type_item == 'topic'){
             return $this->hasOne(Topic::className(), ['id' => 'id_item']);
         }

@@ -122,7 +122,6 @@ class Post extends \yii\db\ActiveRecord
 
     public function CreaetHistoryFeed($post){
         $hfp = new HistoryFeed();
-        $hfp = new HistoryFeed();
         $hfp->id_item = $post->id;
         $hfp->type_item = 'post';
         $hfp->city_id = $post->topic->city_id;
@@ -175,16 +174,22 @@ class Post extends \yii\db\ActiveRecord
         $limit = Yii::$app->params['LimitResultSearch'];
         if(isset($type) && $type == 'global'){
             return Post::find()->joinWith('topic')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                     ->where(['like','post.title',$_search])
                     ->andWhere(['not in','topic.city_id',$except])
                     ->andWhere(['not',['topic_id'=> NULL]])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                     ->orderBy(['brilliant_count'=> SORT_DESC])
                     ->limit($limit)
                     ->all();
         }else{
             return Post::find()
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                     ->where(['like','title',$_search])
                     ->andWhere(['not',['topic_id'=> NULL]])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                     ->orderBy(['brilliant_count'=> SORT_DESC])
                     ->all();
         }
@@ -193,8 +198,12 @@ class Post extends \yii\db\ActiveRecord
     public function SearchHashTagPost($hashtag,$city){
         $hashtag = Post::find()
                         ->joinWith('topic')
+                        ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                         ->where(['like','post.title',$hashtag])
                         ->andWhere(['topic.city_id' => $city])
+                        ->andWhere(['not',['topic.status'=> '-1']])
+                        ->andWhere(['not',['post.status'=> '-1']])
+                        ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                         ->all();
         return count($hashtag);
     }
@@ -202,9 +211,11 @@ class Post extends \yii\db\ActiveRecord
     public function GetPostMostBrilliant($city){
         $post = Post::find()
                 ->joinWith('topic')
+                ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                 ->where(['topic.city_id' => $city])
                 ->andWhere(['not',['topic.status'=> '-1']])
                 ->andWhere(['not',['post.status'=> '-1']])
+                ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                 ->orderBy(['post.brilliant_count'=> SORT_DESC])
                 ->one();
         return $post;
@@ -230,11 +241,14 @@ class Post extends \yii\db\ActiveRecord
                        ->from('ws_messages')
                        ->leftJoin('profile','ws_messages.user_id = profile.user_id')
                        ->innerJoin('post', 'post.id=ws_messages.post_id')
+                       ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                        ->innerJoin('topic', 'post.topic_id=topic.id')
                        ->innerJoin('city', 'topic.city_id=city.id')
                        ->where(['not',['post.topic_id'=> null]])
                        ->andWhere('topic.city_id = '.$city)
+                       ->andWhere(['not',['topic.status'=> '-1']])
                        ->andWhere(['not',['post.status'=> '-1']])
+                       ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                        ->groupBy('post.id')
                        ->orderBy('user_join DESC')
                        ->limit($limit)
@@ -246,10 +260,13 @@ class Post extends \yii\db\ActiveRecord
                     ->from('ws_messages')
                     ->leftJoin('profile','ws_messages.user_id = profile.user_id')
                     ->innerJoin('post', 'post.id=ws_messages.post_id')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                     ->innerJoin('topic', 'post.topic_id=topic.id')
                     ->innerJoin('city', "(topic.city_id = city.id AND city.id IN (".$city_ids."))")
                     ->where(['not',['post.topic_id'=> null]])
+                    ->andWhere(['not',['topic.status'=> '-1']])
                     ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                     ->groupBy('post.id')
                     ->orderBy('user_join DESC')
                     ->limit($limit)
@@ -259,8 +276,11 @@ class Post extends \yii\db\ActiveRecord
                     ->from('ws_messages')
                     ->leftJoin('profile','ws_messages.user_id = profile.user_id')
                     ->leftJoin('post', 'post.id=ws_messages.post_id')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                     ->where(['not',['post.topic_id'=> null]])
+                    ->andWhere(['not',['topic.status'=> '-1']])
                     ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                     ->groupBy('post.id')
                     ->orderBy('user_join DESC')
                     ->limit($limit)
@@ -292,11 +312,15 @@ class Post extends \yii\db\ActiveRecord
         if ($city != null) {
             $data = $query->select('post.id as post_id, post.title, post.content as post_content, post.user_id as user_id, topic.id as topic_id, city.id as city_id')
                 ->from('post')
+                ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
                 ->innerJoin('topic', 'post.topic_id=topic.id')
                 ->innerJoin('city', 'topic.city_id=city.id')
                 ->where(['not', ['post.topic_id' => null]])
                 ->andWhere('topic.city_id = ' . $city)
                 ->andWhere('topic.title = "Main Channel"')
+                ->andWhere(['not',['topic.status'=> '-1']])
+                ->andWhere(['not',['post.status'=> '-1']])
+                ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
                 ->one();
         }
 
@@ -308,9 +332,13 @@ class Post extends \yii\db\ActiveRecord
 
         $posts = $query->select('post.id, post.title, post.content, post.brilliant_count, post.post_type, post.user_id as user_id, topic.id as topic_id, profile.photo')
             ->from('post')
+            ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
             ->leftJoin('profile','post.user_id = profile.user_id')
             ->innerJoin('topic', 'post.topic_id=topic.id')
             ->where("topic.city_id IN (".$city_ids.")")
+            ->andWhere(['not',['topic.status'=> '-1']])
+            ->andWhere(['not',['post.status'=> '-1']])
+            ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
             ->orderBy(['post.brilliant_count'=> SORT_DESC])
             ->limit($limit)
             ->all();
