@@ -87,6 +87,16 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(PostHashtag::className(), ['post_id' => 'id']);
     }
 
+    public function getFeedback()
+    {
+        return $this->hasOne(Feedback::className(), ['post_id' => 'id']);
+    }
+
+    public function getFeedbackStat()
+    {
+        return $this->hasOne(FeedbackStat::className(), ['post_id' => 'id']);
+    }
+
     public function afterSave($insert, $changedAttributes){
         if ($insert) {
             if($this->post_type == 1) {

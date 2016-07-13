@@ -67,7 +67,7 @@
                 <div class="panel-title panel-post-title">
                     <a href="#collapse<%= post.id %>" role="button"
                        data-toggle="collapse" aria-controls="collapse<%= post.id %>"
-                       class="">
+                       class="<% if(post.feedback_points < 0) { %>collapsed<%}%>">
                         <div class="post-minimized">
                             <span class="user-name">
                                 <span class="name"><%= post.user_name %></span>
@@ -80,7 +80,7 @@
                     </a>
                 </div>
             </div>
-            <div id="collapse<%= post.id %>" class="panel-collapse collapse in" aria-labelledby="heading<%= post.id %>">
+            <div id="collapse<%= post.id %>" class="panel-collapse collapse <% if(post.feedback_points >= 0) { %>in<%}%>" aria-labelledby="heading<%= post.id %>">
                 <div class="panel-body item-post-panel-body" data-item="<%= post.id %>" data-user="<%= post.user %>" data-chat-type='1'>
                     <div class="item_post">
                         <div class="users_avatar" data-user-post="<%= post.post_user_id %>">

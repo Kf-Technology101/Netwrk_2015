@@ -95,7 +95,6 @@ class PostController extends BaseController
             $Post->post_type = 1;
             $Post->save();
         }
-
     }
 
     public function actionGetAllPost(){
@@ -121,12 +120,13 @@ class PostController extends BaseController
             break;
         }
 
-        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->andWhere('status != -1')->with('topic')->orderBy([$condition=> SORT_DESC]);
+        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->andWhere('status != -1')->with('topic','feedbackStat')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $posts->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
         $data = [];
         foreach ($posts as $key => $value) {
+            $feedback_stat = ($value->feedbackStat) ? $value->feedbackStat->points : 0;
 
             $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count ? $value->view_count : 0);
             $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
@@ -166,13 +166,13 @@ class PostController extends BaseController
 
             $ws_message = new WsMessages();
 
-            $stream_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+            $stream_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedbackStat' => function($query) {
                     $query->andWhere('points > 0');
                 }
             ])->all();
 
-            $like_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+            $like_feedback_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedback' => function($query) {
                     $query->andWhere('feedback = "like"');
                 },'feedbackStat' => function($query) {
@@ -180,7 +180,7 @@ class PostController extends BaseController
                 }
             ])->all();
 
-            $fun_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+            $fun_feedback_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedback' => function($query) {
                     $query->andWhere('feedback = "fun"');
                 },'feedbackStat' => function($query) {
@@ -188,7 +188,7 @@ class PostController extends BaseController
                 }
             ])->all();
 
-            $angle_feedback_count = $ws_message->find()->where('post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+            $angle_feedback_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
                 'feedback' => function($query) {
                     $query->andWhere('feedback = "angle"');
                 },'feedbackStat' => function($query) {
@@ -212,6 +212,7 @@ class PostController extends BaseController
                 'is_vote' => $isVote,
                 'post_user_id' => $value->user_id,
                 'user' => $currentUser,
+                'feedback_points' => $feedback_stat,
                 'stream_count' => count($stream_count),
                 'like_feedback_count' => count($like_feedback_count),
                 'fun_feedback_count' => count($fun_feedback_count),
