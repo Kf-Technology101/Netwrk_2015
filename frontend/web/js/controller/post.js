@@ -177,7 +177,7 @@ var Post ={
     },
 
     CustomScrollBar: function(){
-        $("#list_post").find('.modal-body').mCustomScrollbar({
+        $("#list_post").find('.container_post').mCustomScrollbar({
             theme:"dark",
             callbacks:{
                 onTotalScroll: function(){
@@ -614,6 +614,8 @@ var Post ={
 				Post.getTemplate(parent,json.data);
 				Post.OnclickVote();
 				Post.OnClickChat();
+				// Feedback related script calls
+				Common.feedbackAllTriggers();
 				if(isMobile){
 					var infomation = $('.container_post').find('.item-post-panel-body .information');
 					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
@@ -649,7 +651,7 @@ var Post ={
                 if(isMobile){
                 	$(window).scrollTop(0);
 		        }else{
-		            $('#list_post').find('.modal-body').mCustomScrollbar("scrollTo",0);
+		            $('#list_post').find('.container_post').mCustomScrollbar("scrollTo",0);
 		        }
             }
         });

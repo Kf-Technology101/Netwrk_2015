@@ -33,21 +33,26 @@
                     </table>
                 </div>
             </div>
-           <div class="modal-body container_post">
-                <div id="tab_feed" class="tab">
-                    <p class="no-data">There is no data available yet</p>
-                </div>
-                <div id="tab_post" class="tab">
-                    <div class="filter_page" id="filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                        <p class="no-data">There is no data available yet</p>
-                    </div>
-                    <div class="filter_page" id="filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                        <p class="no-data">There is no data available yet</p>
-                    </div>
-                    <div class="filter_page" id="filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                        <p class="no-data">There is no data available yet</p>
-                    </div>
-                </div>
+           <div class="modal-body">
+               <div class="post-feedback">
+                   <?= $this->render('@frontend/modules/netwrk/views/feedback/view') ?>
+               </div>
+               <div class="container_post">
+                   <div id="tab_feed" class="tab">
+                       <p class="no-data">There is no data available yet</p>
+                   </div>
+                   <div id="tab_post" class="tab">
+                       <div class="filter_page" id="filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                           <p class="no-data">There is no data available yet</p>
+                       </div>
+                       <div class="filter_page" id="filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                           <p class="no-data">There is no data available yet</p>
+                       </div>
+                       <div class="filter_page" id="filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                           <p class="no-data">There is no data available yet</p>
+                       </div>
+                   </div>
+               </div>
             </div>
         </div>
     </div>
@@ -62,7 +67,7 @@
                 <div class="panel-title panel-post-title">
                     <a href="#collapse<%= post.id %>" role="button"
                        data-toggle="collapse" aria-controls="collapse<%= post.id %>"
-                       class="">
+                       class="<% if(post.feedback_points < 0) { %>collapsed<%}%>">
                         <div class="post-minimized">
                             <span class="user-name">
                                 <span class="name"><%= post.user_name %></span>
@@ -75,7 +80,7 @@
                     </a>
                 </div>
             </div>
-            <div id="collapse<%= post.id %>" class="panel-collapse collapse in" aria-labelledby="heading<%= post.id %>">
+            <div id="collapse<%= post.id %>" class="panel-collapse collapse <% if(post.feedback_points >= 0) { %>in<%}%>" aria-labelledby="heading<%= post.id %>">
                 <div class="panel-body item-post-panel-body" data-item="<%= post.id %>" data-user="<%= post.user %>" data-chat-type='1'>
                     <div class="item_post">
                         <div class="users_avatar" data-user-post="<%= post.post_user_id %>">
@@ -105,11 +110,11 @@
                                     <i class="fa fa-chevron-down"></i>
                                 </a>
                                 <div class="post-stream-heading">
-                                    <div class="stream-filters pull-left">
+                                    <span class="stream-filters pull-left">
                                         <div class="pull-left line-stream stream-trigger"
                                               data-post-id="<%= post.id%>" data-type="line" data-count="<%= post.stream_count%>">
                                             <span class="count"><%= post.stream_count%></span>
-                                            <span class="text-right">Line stream</span>
+                                            <span class="text-right">Highlights</span>
                                         </div>
                                         <div class="pull-left like-stream stream-trigger"
                                               data-post-id="<%= post.id%>" data-type="like" data-count="<%= post.like_feedback_count%>">
@@ -126,14 +131,20 @@
                                             <span class="count"><%= post.angle_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-3-hover.png'); ?>" />
                                         </div>
-                                    </div>
-                                    <div class="stream-options text-right">
-                                        <span class="line">
+                                    </span>
+                                    <span class="stream-options text-right">
+                                        <div class="pull-right  respond feedback-trigger"
+                                              data-parent="#list_post"
+                                              data-object="post"
+                                              data-id="<%= post.id%>">Feedback</div>
+                                        <div class="pull-right glow-btn-wrapper jump chat-trigger">
+                                            <div class="btn-active">Jump in</div>
+                                            <div class="btn-inactive">Jump in</div>
+                                        </div>
+                                        <div class="pull-right line">
                                             <img src="<?= Url::to('@web/img/icon/line-icon-nav.png'); ?>" />
-                                        </span>
-                                        <span class="jump chat-trigger">Jump in</span>
-                                        <span class="respond">Respond</span>
-                                    </div>
+                                        </div>
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -99,7 +99,7 @@ class WsMessages extends \yii\db\ActiveRecord
 
     public function getFeedback()
     {
-        return $this->hasOne(Feedback::className(), ['ws_message_id' => 'id']);
+        return $this->hasMany(Feedback::className(), ['ws_message_id' => 'id']);
     }
 
     public function getFeedbackStat()
