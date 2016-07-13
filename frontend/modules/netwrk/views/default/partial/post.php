@@ -33,21 +33,26 @@
                     </table>
                 </div>
             </div>
-           <div class="modal-body container_post">
-                <div id="tab_feed" class="tab">
-                    <p class="no-data">There is no data available yet</p>
-                </div>
-                <div id="tab_post" class="tab">
-                    <div class="filter_page" id="filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                        <p class="no-data">There is no data available yet</p>
-                    </div>
-                    <div class="filter_page" id="filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                        <p class="no-data">There is no data available yet</p>
-                    </div>
-                    <div class="filter_page" id="filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
-                        <p class="no-data">There is no data available yet</p>
-                    </div>
-                </div>
+           <div class="modal-body">
+               <div class="post-feedback">
+                   <?= $this->render('@frontend/modules/netwrk/views/feedback/view') ?>
+               </div>
+               <div class="container_post">
+                   <div id="tab_feed" class="tab">
+                       <p class="no-data">There is no data available yet</p>
+                   </div>
+                   <div id="tab_post" class="tab">
+                       <div class="filter_page" id="filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                           <p class="no-data">There is no data available yet</p>
+                       </div>
+                       <div class="filter_page" id="filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                           <p class="no-data">There is no data available yet</p>
+                       </div>
+                       <div class="filter_page" id="filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+                           <p class="no-data">There is no data available yet</p>
+                       </div>
+                   </div>
+               </div>
             </div>
         </div>
     </div>
@@ -132,7 +137,10 @@
                                             <img src="<?= Url::to('@web/img/icon/line-icon-nav.png'); ?>" />
                                         </span>
                                         <span class="jump chat-trigger">Jump in</span>
-                                        <span class="respond">Feedback</span>
+                                        <span class="respond feedback-trigger"
+                                              data-parent="#list_post"
+                                              data-object="post"
+                                              data-id="<%= post.id%>">Feedback</span>
                                     </div>
                                 </div>
                             </div>
