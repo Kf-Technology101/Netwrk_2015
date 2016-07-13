@@ -311,7 +311,10 @@
 			if(e.office_type == 'university' || e.office_type == 'government') {
 				var markerContent = "<div class='marker'></div>";
 			} else {
-				var markerContent = "<div class='marker marker-home'></div>";
+				var markerContent = "<div class='glow-btn-wrapper'>";
+					markerContent += "<div class='marker-home'>";
+					markerContent += "<div class='btn-active'></div>";
+					markerContent += "<div class='btn-inactive'></div></div>";
 				markerContent += "<span class='marker-icon marker-home'><i class='fa fa-lg fa-home'></i>";
 			}
 
