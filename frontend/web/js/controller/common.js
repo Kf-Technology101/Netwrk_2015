@@ -29,6 +29,9 @@ var Common = {
         Common.deleteTrigger();
         Common.onShowAllModals();
 
+        // Feedback related script calls
+        Common.feedbackAllTriggers();
+
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
         }
@@ -231,12 +234,118 @@ var Common = {
             });
         });
     },
+
     onShowAllModals: function() {
         $('.modal').on('shown.bs.modal',function(e) {
             //$(e.currentTarget).unbind();
             console.log('in shown.bs.modal');
             Map.unsetBuildMode();
         });
-    }
+    },
+
+    feedbackAllTriggers: function(){
+        Common.feedbackTrigger();
+        Common.feedbackCloseTrigger();
+        Common.feedbackLoginTrigger();
+        Common.feedbackOptionTrigger();
+    },
+
+    feedbackTrigger: function(){
+        var target = $('.feedback-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            var object = $(this).data('object'),
+                id = $(this).data('id'),
+                parent = $(this).data('parent'),
+                feedbackSection = $(parent).find('.feedback-section');
+
+            feedbackSection.removeClass('hide');
+            feedbackSection.find('.feedback-content')
+                .data('parent',parent)
+                .data('object',object)
+                .data('id',id);
+        });
+    },
+    feedbackCloseTrigger: function () {
+        var target = $('.feedback-close-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+           $(this).closest('.feedback-section').addClass('hide');
+        });
+    },
+    feedbackAfterLogin: function () {
+        $('.feedback-list a').each(function(){
+            $(this).removeClass('login-trigger').addClass('feedback-option-trigger');
+        });
+        Common.feedbackOptionTrigger();
+    },
+    feedbackLoginTrigger: function() {
+        var target = $('.login-trigger', '.feedback-content');
+        target.unbind();
+        target.on("click", function() {
+            if(isGuest){
+                if(isMobile){
+                    var url = window.location.href;
+                    window.location.href = baseUrl + "/netwrk/user/login?url_callback="+url;
+                }else{
+                    $('.modal').modal('hide');
+                    Login.modal_callback = Common.feedbackAfterLogin();
+                    Login.initialize();
+                    return false;
+                }
+            }
+        });
+    },
+    feedbackOptionTrigger: function(){
+        var target = $('.feedback-option-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            var option = $(this).data('option'),
+                point = $(this).data('point'),
+                feedbackContent = $(this).closest('.feedback-content'),
+                parent = $(feedbackContent).data('parent'),
+                object = $(feedbackContent).data('object'),
+                id = $(feedbackContent).data('id'),
+                feedbackSection = $(parent).find('.feedback-section'),
+                feedbackAlert = $(parent).find('.feedback-alert');
+
+            var params = {'object': object,'id': id, 'option': option, 'point': point};
+
+            Ajax.postFeedback(params).then(function(data){
+                var json = $.parseJSON(data);
+
+                if(json.success == 'true'){
+                    var alertClass = json.msgClass,
+                        alertText = json.msg;
+
+                    feedbackSection.addClass('hide');
+                    feedbackSection.find('.feedback-content')
+                        .data('parent','')
+                        .data('object','')
+                        .data('id','');
+
+                    var feedbackAlertChild = '<div id="feedbackAlert" class="alert '+alertClass+'">'+alertText+'</div>';
+
+                    feedbackAlert.html(feedbackAlertChild).removeClass('hide');
+
+                    if(json.feedbackPoints >= 0){
+                        $(parent).find('#heading'+id).find('a').removeClass('collapsed');
+                        $(parent).find('#collapse'+id).addClass('in');
+                    } else {
+                        $(parent).find('#heading'+id).find('a').addClass('collapsed');
+                        $(parent).find('#collapse'+id).removeClass('in');
+                    }
+
+                    setTimeout(function(){
+                        feedbackAlert.html('').addClass('hide');
+                    }, 1200);
+                }
+            });
+        });
+    },
+>>>>>>> 9270071dd793301418005bd20b98d8f6c4bd5261
 
 };

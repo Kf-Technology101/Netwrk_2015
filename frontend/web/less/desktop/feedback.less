@@ -1,0 +1,170 @@
+.feedback-section {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    margin-bottom: 10px;
+    .feedback-head {
+        border-bottom: 1px solid #5888ac;
+        padding: 2px 10px;
+        .close {
+            color: #333;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 20px;
+            opacity: 1;
+            .circle-close {
+                background: #333;
+                color: #fff;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+                padding: 0 4px;
+                text-decoration: none;
+            }
+        }
+    }
+    .feedback-content {
+        ul {
+            li {
+                max-height: 40px;
+
+                &.positive-option {
+                    max-height: 41px;
+                    a {
+                        display: block;
+                        font-size: 18px;
+                        line-height: 41px;
+                        max-height: 41px;
+                        outline: none;
+                        background: #5888ac;
+                        color: #ffffff;
+                        border-bottom: 2px solid #ffffff;
+                        .ci-feedback-option-1 {
+                            background: url("../../img/icon/feedback-option-1-hover.png") no-repeat;
+                            background-size: contain;
+                            display: inline-block;
+                            height: 39px;
+                            width: 39px;
+                        }
+                        .ci-feedback-option-2 {
+                            background: url("../../img/icon/feedback-option-2-hover.png") no-repeat;
+                            background-size: contain;
+                            display: inline-block;
+                            height: 27px;
+                            margin: 6px;
+                            width: 36px;
+                        }
+                        .ci-feedback-option-3 {
+                            background: url("../../img/icon/feedback-option-3-hover.png") no-repeat;
+                            background-size: contain;
+                            display: inline-block;
+                            height: 39px;
+                            width: 26px;
+                            padding-right: 10px;
+                        }
+                        .text-with-icon {
+                            vertical-align: top;
+                        }
+
+                        &:hover {
+                            background: #ffffff;
+                            color: #5888ac;
+                            text-decoration: none;
+                            border-bottom: 2px solid #5888ac;
+                            .ci-feedback-option-1 {
+                                background: url("../../img/icon/feedback-option-1.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 39px;
+                                width: 39px;
+                            }
+                            .ci-feedback-option-2 {
+                                background: url("../../img/icon/feedback-option-2.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 27px;
+                                margin: 6px;
+                                width: 36px;
+                            }
+                            .ci-feedback-option-3 {
+                                background: url("../../img/icon/feedback-option-3.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 39px;
+                                width: 26px;
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                }
+
+                &.negative-option {
+                    a {
+                        display: block;
+                        font-size: 18px;
+                        line-height: 40px;
+                        max-height: 40px;
+                        outline: none;
+                        border-bottom: 1px solid #5888ac;
+
+                        &:hover {
+                            background: #5888ac;
+                            color: #fff;
+                            text-decoration: none;
+                            border-bottom: 1px solid #ffffff;
+                        }
+
+                        &.text-danger {
+                            color: #a94442;
+                            &:hover {
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.popup-box {
+    .feedback-section {
+        height: 266px;
+    }
+}
+
+.post-row {
+    .feedback-wrapper {
+        display: inline-block;
+        float: right;
+        width: 50px;
+        .feedback-line {
+            background: url("../../img/icon/feedback-lines.png") no-repeat;
+            background-size: contain;
+            display: inline-block;
+            height: 30px;
+            width: 6px;
+            float: left;
+            margin: 3px 5px;
+        }
+        .feedback {
+            border: 1px solid #c7c7c7;
+            display: inline;
+            float: left;
+            margin-top: 8px;
+            text-align: center;
+            width: 21px;
+            height: 21px;
+            cursor: pointer;
+        }
+    }
+}
+
+.post-feedback {
+    .feedback-section {
+        height: 427px;
+        max-height: 410px;
+        min-height: 250px;
+        overflow: hidden;
+    }
+}

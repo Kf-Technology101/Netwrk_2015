@@ -24,10 +24,11 @@
 	</div>
 </div>
 <script id="landing_header" type="text/x-underscore-template">
-	<div class="btn-area-talk" data-topic="<%= landing.topic_id %>" data-city="<%= landing.city_id %>"
+	<div class="btn-area-talk glow-btn-wrapper" data-topic="<%= landing.topic_id %>" data-city="<%= landing.city_id %>"
 		 data-value="<%= landing.post_id %>" data-user="<%= landing.user_id %>"
 		 data-title="<%= landing.title %>" data-content="<%= landing.post_content %>">
-		Community channel
+		<div class="btn-active">Community channel</div>
+		<div class="btn-inactive">Community channel</div>
 	</div>
 </script>
 <script id="landing_page" type="text/x-underscore-template">
@@ -57,9 +58,12 @@
 									<div class="post-content"><%= e.content%></div>
 								</div>
 								<div class="action">
-									<div class="chat"><i class="fa fa-comments"></i>Chat</div>
+									<div class="chat"><i class="fa fa-comments"></i>Jump in</div>
 
-									<span class="brilliant"><%= e.brilliant_count%></span>
+									<span class="chat feedback-wrapper">
+										<div class="feedback-line"></div>
+										<div class="feedback">F</div>
+									</span>
 								</div>
 							</div>
 						<%
@@ -124,9 +128,12 @@
 									<div class="post-content"><%= e.content%></div>
 								</div>
 								<div class="action">
-									<div class="chat"><i class="fa fa-comments"></i>Chat</div>
+									<div class="chat"><i class="fa fa-comments"></i>Jump in</div>
 
-									<span class="brilliant"><%= e.brilliant_count%></span>
+									<span class="chat feedback-wrapper">
+										<div class="feedback-line"></div>
+										<div class="feedback">F</div>
+									</span>
 								</div>
 							</div>
 						<%

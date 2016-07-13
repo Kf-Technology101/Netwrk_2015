@@ -95,7 +95,6 @@ class PostController extends BaseController
             $Post->post_type = 1;
             $Post->save();
         }
-
     }
 
     public function actionGetAllPost(){
@@ -121,63 +120,108 @@ class PostController extends BaseController
             break;
         }
 
-        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->andWhere('status != -1')->with('topic')->orderBy([$condition=> SORT_DESC]);
+        $posts = Post::find()->where('topic_id ='.$topic_id. ' AND post_type = 1')->andWhere('status != -1')->with('topic','feedbackStat')->orderBy([$condition=> SORT_DESC]);
         $pages = new Pagination(['totalCount' => $posts->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
         $posts = $posts->offset($pages->offset)->limit($pages->limit)->all();
 
         $data = [];
         foreach ($posts as $key => $value) {
+            $feedback_stat = ($value->feedbackStat) ? $value->feedbackStat->points : 0;
 
-            $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count ? $value->view_count : 0);
-            $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
-            $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value->brilliant_count ? $value->brilliant_count : 0);
-            $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+            if($feedback_stat > Yii::$app->params['FeedbackHideObjectLimit']) {
+                $num_view = UtilitiesFunc::ChangeFormatNumber($value->view_count ? $value->view_count : 0);
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value->brilliant_count ? $value->brilliant_count : 0);
+                $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
 
-            $content = $value->content;
+                $content = $value->content;
 
-            if($this->getIsMobile() && strlen($content) > $maxlengthMobile){
-                $content = substr($content,0,$maxlengthMobile) ;
-                $content = $content." ...<span class='show_more'>show more</span>";
-            }elseif(!$this->getIsMobile() && strlen($content) > $maxlength){
-                $content = substr($content,0,$maxlength) ;
-                $content = $content." ...<span class='show_more'>show more</span>";
-            }
+                if($this->getIsMobile() && strlen($content) > $maxlengthMobile){
+                    $content = substr($content,0,$maxlengthMobile) ;
+                    $content = $content." ...<span class='show_more'>show more</span>";
+                }elseif(!$this->getIsMobile() && strlen($content) > $maxlength){
+                    $content = substr($content,0,$maxlength) ;
+                    $content = $content." ...<span class='show_more'>show more</span>";
+                }
 
-            $user_photo = User::findOne($value->user_id)->profile->photo;
+                $user_profile = User::findOne($value->user_id)->profile;
 
-            if ($user_photo == null){
-                $image = Url::to('@web/img/icon/no_avatar.jpg');
-            }else{
-                $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
-            }
-            $currentVote = null;
-            if($currentUser){
-                $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$value->id)->one();
-            }
+                $user_name = $user_profile->first_name.' '.$user_profile->last_name;
+                $user_photo = $user_profile->photo;
 
-            if($currentVote && $currentVote->status == 1){
-                $isVote = 1;
-            }else{
-                $isVote = 0;
-            }
+                if ($user_photo == null){
+                    $image = Url::to('@web/img/icon/no_avatar.jpg');
+                }else{
+                    $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
+                }
+                $currentVote = null;
+                if($currentUser){
+                    $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$value->id)->one();
+                }
 
-            $post = array(
-                'id'=> $value->id,
-                'topic_name'=> $value->topic->title,
-                'topic_id'=>$value->topic_id,
-                'title'=>$value->title,
-                'content'=>$content,
-                'num_view' => $num_view > 0 ? $num_view : 0,
-                'num_comment' => $num_comment ? $num_comment: 0,
-                'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
-                'avatar'=> $image,
-                'update_at'=>$num_date,
-                'is_vote'=> $isVote,
-                'post_user_id' => $value->user_id,
-                'user' => $currentUser,
+                if($currentVote && $currentVote->status == 1){
+                    $isVote = 1;
+                }else{
+                    $isVote = 0;
+                }
+
+                $ws_message = new WsMessages();
+
+                $stream_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                    'feedbackStat' => function($query) {
+                        $query->andWhere('points > 0');
+                    }
+                ])->all();
+
+                $like_feedback_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "like"');
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                    }
+                ])->all();
+
+                $fun_feedback_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "fun"');
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                    }
+                ])->all();
+
+                $angle_feedback_count = $ws_message->find()->where('ws_messages.post_id ='.$value->id. ' AND post_type = 1')->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "angle"');
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                    }
+                ])->all();
+
+                $post = array(
+                    'id' => $value->id,
+                    'topic_name' => $value->topic->title,
+                    'topic_id' =>$value->topic_id,
+                    'title' =>$value->title,
+                    'content' =>$content,
+                    'num_view' => $num_view > 0 ? $num_view : 0,
+                    'num_comment' => $num_comment ? $num_comment: 0,
+                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+                    'user_name' => $user_name,
+                    'avatar' => $image,
+                    'created_at' => $value->created_at,
+                    'update_at' =>$num_date,
+                    'is_vote' => $isVote,
+                    'post_user_id' => $value->user_id,
+                    'user' => $currentUser,
+                    'feedback_points' => $feedback_stat,
+                    'stream_count' => count($stream_count),
+                    'like_feedback_count' => count($like_feedback_count),
+                    'fun_feedback_count' => count($fun_feedback_count),
+                    'angle_feedback_count' => count($angle_feedback_count)
                 );
 
-            array_push($data,$post);
+                array_push($data,$post);
+            }
         }
 
         $temp = array ('status'=> 1 ,'data'=> $data);
@@ -329,8 +373,10 @@ class PostController extends BaseController
                 ->innerJoin('topic t', '`t`.`id` = `p`.`topic_id`')
                 ->innerJoin('city', '`city`.`id` = `t`.`city_id`')
                 ->leftJoin('chat_discussion c', '(c.user_id = :currentUser AND c.post_id = w.post_id )')
+                ->leftJoin('feedback_stat pfs','pfs.post_id = p.id')
                 ->addParams([':currentUser' => $currentUser])
                 ->where('w.user_id = ' . $currentUser . ' AND w.post_type = 1')
+                ->andWhere('(pfs.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR pfs.points IS NULL)')
                 ->distinct()
                 ->all();
             //print $messages->createCommand()->getRawSql();
@@ -568,5 +614,110 @@ class PostController extends BaseController
             $transaction->rollBack();
             die(json_encode(array("error" => true, "message" => $e->getMessage())));
         }
+    }
+
+    public function actionGetStream(){
+        $stream_type = $_POST['stream_type'];
+        $post_id = $_POST['post_id'];
+
+        $pageSize = 20; //$_POST['size'];
+        $page = 1; //$_POST['page'];
+
+        $ws_message = new WsMessages();
+
+        switch ($stream_type) {
+            case 'line':
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with('feedbackStat')
+                ->joinWith([
+                    'feedbackStat' => function($query) {
+                        $query->andWhere('points > 0');
+                    }
+                ])->orderBy(['created_at' => SORT_DESC]);
+                break;
+            case 'fun':
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "fun"');
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit']);
+                    }
+                ])->orderBy(['created_at' => SORT_ASC]);
+                break;
+            case 'like':
+                $streams = $ws_message->find()->where('post_id ='.$post_id.' AND post_type = 1')->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "like"');
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit'])->orderBy(['points' => SORT_DESC]);
+                    }
+                ]);
+                break;
+            case 'angle':
+                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->joinWith([
+                    'feedback' => function($query) {
+                        $query->andWhere('feedback = "angle"');
+                    },'feedbackStat' => function($query) {
+                        $query->andWhere('points > '.Yii::$app->params['FeedbackHideObjectLimit'])->orderBy(['points' => SORT_DESC]);
+                    }
+                ]);
+                break;
+        }
+
+        $streams = $streams->offset(0)->limit($pageSize)->all();
+
+        $data = [];
+        foreach ($streams as $key => $value) {
+            $feedback_stat = ($value->feedbackStat) ? $value->feedbackStat->points : 0;
+            if($value->first_msg == 0) {
+                if($value->user->id == $this->current_user) {
+                    $pchat = ChatPrivate::find()->where(['user_id'=>$value->user->id, 'post_id'=>$this->post_id])->one();
+                    $profile = Profile::find()->where(['user_id'=>$pchat->user_id_guest])->one();
+                    $id = $pchat->user_id_guest;
+                } else {
+                    $profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
+                    $id = $value->user->id;
+                }
+
+                $current_date = date('Y-m-d H:i:s');
+                $time1 = date_create($profile->dob);
+                $time2 = date_create($current_date);
+                $year_old = $time1->diff($time2)->y;
+
+                $name = $profile->first_name ." ".$profile->last_name;
+                $photo = $profile->photo;
+                $smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
+            } else {
+                $id = $value->user->id;
+                $name = $value->user->profile->first_name ." ".$value->user->profile->last_name;
+                $photo = $value->user->profile->photo;
+                $smg = nl2br($value->msg);
+            }
+
+            if ($photo == null) {
+                $image = '/img/icon/no_avatar.jpg';
+            } else {
+                $image = '/uploads/'.$id.'/'.$photo;
+            }
+
+            $time = UtilitiesFunc::FormatTimeChat($value->created_at);
+
+            $item = array(
+                'id' => $value->id,
+                'user_id' => $id,
+                'user_name' => $name,
+                'avatar' => $image,
+                'msg' => $smg,
+                'created_at' => $time,
+                'post_id' => $value->post_id,
+                'post_type' => $value->post_type,
+                'feedback_points' => $feedback_stat
+            );
+
+            array_push($data,$item);
+        }
+
+        $temp = array ('status'=> 1 ,'data'=> $data);
+        $hash = json_encode($temp);
+        return $hash;
     }
 }

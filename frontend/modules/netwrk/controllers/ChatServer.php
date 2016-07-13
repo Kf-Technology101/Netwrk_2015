@@ -7,6 +7,7 @@ use frontend\components\BaseController;
 use Ratchet\ConnectionInterface;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Profile;
+use frontend\modules\netwrk\models\FeedbackStat;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\ChatPrivate;
 use frontend\modules\netwrk\models\Notification;
@@ -116,6 +117,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														'id'=> $user,
 														'name'=>$userProfile->name,
 														'avatar'=> $userProfile->image,
+														'msg_id'=> $this->ws_messages->id,
 														'msg'=> nl2br($msg),
 														'msg_type' => $msg_type,
 														"created_at" => date("h:i A"),
@@ -123,6 +125,7 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 														// "user_current" => $userProfile->current,
 														"update_list_chat" => $list_chat_inbox,
 														"chat_type" => $this->chat_type,
+														"feedback_points" => 0,
 														"test" => 'This is for test'
 														)
 													]);
@@ -228,80 +231,59 @@ class ChatServer extends BaseController implements MessageComponentInterface {
 	public function fetchMessages()
 	{
 		$data_result=[];
-		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile')->all();
+		$message = $this->ws_messages->find()->where('post_id ='.$this->post_id. ' AND post_type = '.$this->chat_type)->orderBy(['created_at'=> SORT_ASC])->with('user','user.profile','feedbackStat')->all();
 		foreach ($message as $key => $value) {
-			# code...
-			if($value->first_msg == 0){
-				if($value->user->id == $this->current_user){
-					$pchat = ChatPrivate::find()->where(['user_id'=>$value->user->id, 'post_id'=>$this->post_id])->one();
-					$profile = Profile::find()->where(['user_id'=>$pchat->user_id_guest])->one();
-            		$current_date = date('Y-m-d H:i:s');
-					$time1 = date_create($profile->dob);
-					$time2 = date_create($current_date);
-					$year_old = $time1->diff($time2)->y;
+			$feedback_stat = ($value->feedbackStat) ? $value->feedbackStat->points : 0;
 
-					$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
-					$time = UtilitiesFunc::FormatTimeChat($value->created_at);
-					if ($profile->photo == null){
-						$image = '/img/icon/no_avatar.jpg';
-					}else{
-						$image = '/uploads/'.$pchat->user_id_guest.'/'.$profile->photo;
+			if($feedback_stat > -90) {
+				if ($value->first_msg == 0) {
+					if ($value->user->id == $this->current_user) {
+						$pchat = ChatPrivate::find()->where(['user_id' => $value->user->id, 'post_id' => $this->post_id])->one();
+						$profile = Profile::find()->where(['user_id' => $pchat->user_id_guest])->one();
+						$id = $pchat->user_id_guest;
+					} else {
+						$profile = Profile::find()->where(['user_id' => $value->user->id])->one();
+						$id = $value->user->id;
 					}
 
-					$item = array(
-						'id'=>$pchat->user_id_guest,
-						'name'=>$profile->first_name ." ".$profile->last_name,
-						'avatar'=> $image,
-						'msg'=> $smg,
-						'msg_type' => 1,
-						'created_at'=> $time,
-						'post_id'=> $value->post_id,
-					);
-				} else {
-					$profile = Profile::find()->where(['user_id'=>$value->user->id])->one();
 					$current_date = date('Y-m-d H:i:s');
 					$time1 = date_create($profile->dob);
 					$time2 = date_create($current_date);
 					$year_old = $time1->diff($time2)->y;
 
+					$name = $profile->first_name . " " . $profile->last_name;
+					$photo = $profile->photo;
 					$smg = nl2br($profile->first_name . " " . $profile->last_name . ", " . $year_old . "\n" . $value->msg);
-					$time = UtilitiesFunc::FormatTimeChat($value->created_at);
-					if ($profile->photo == null){
-						$image = '/img/icon/no_avatar.jpg';
-					}else{
-						$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
-					}
-
-					$item = array(
-						'id'=>$value->user->id,
-						'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
-						'avatar'=> $image,
-						'msg'=> $smg,
-						'msg_type' => 1,
-						'created_at'=> $time,
-						'post_id'=> $value->post_id,
-					);
+				} else {
+					$id = $value->user->id;
+					$name = $value->user->profile->first_name . " " . $value->user->profile->last_name;
+					$photo = $value->user->profile->photo;
+					$smg = nl2br($value->msg);
 				}
-			} else {
-				$smg = nl2br($value->msg);
-				$time = UtilitiesFunc::FormatTimeChat($value->created_at);
-				if ($value->user->profile->photo == null){
+
+				if ($photo == null) {
 					$image = '/img/icon/no_avatar.jpg';
-				}else{
-					$image = '/uploads/'.$value->user->id.'/'.$value->user->profile->photo;
+				} else {
+					$image = '/uploads/' . $id . '/' . $photo;
 				}
-				$item = array(
-					'id'=>$value->user->id,
-					'name'=>$value->user->profile->first_name ." ".$value->user->profile->last_name,
-					'avatar'=> $image,
-					'msg'=> $smg,
-					'msg_type' => $value->msg_type,
-					'created_at'=> $time,
-					'post_id'=> $value->post_id,
-				);
-			}
 
-			array_push($data_result,$item);
+				$time = UtilitiesFunc::FormatTimeChat($value->created_at);
+
+				$item = array(
+					'id' => $id,
+					'name' => $name,
+					'avatar' => $image,
+					'msg_id' => $value->id,
+					'msg' => $smg,
+					'msg_type' => $value->msg_type,
+					'created_at' => $time,
+					'post_id' => $value->post_id,
+					'post_type' => $value->post_type,
+					'feedback_points' => $feedback_stat
+				);
+
+				array_push($data_result, $item);
+			}
 		}
 		return $data_result;
 	}
