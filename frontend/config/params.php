@@ -13,7 +13,7 @@ $params = [
     'LimitObjectFeedGlobal'			=> 3,
     'LimitCoverResult'              => 10,
     'systemUserId'                  => 1,
-    'FeedbackHideObjectLimit'       => -150,
+    'FeedbackHideObjectLimit'       => -90,
 ];
 
 return $params;
