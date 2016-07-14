@@ -85,6 +85,9 @@
                             <div class="image">
                                 <img src="<%= post.avatar %>">
                                 <span class="feedback-img pull-right"></span>
+                                <% if(post.meet == 0) { %>
+                                    <span class="meet-img meet-trigger meet-<%= post.post_user_id%>" data-user-id="<%= post.post_user_id%>"></span>
+                                <% } %>
                             </div>
                             <!--<div class="icon_brillant" data-item="<%= post.id %>">
                                 <div class="count <%= Post.getBrilliantCode(post.num_brilliant) %>"><%= post.num_brilliant %></div>
