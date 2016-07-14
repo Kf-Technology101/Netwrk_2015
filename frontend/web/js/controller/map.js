@@ -28,6 +28,7 @@
 		zoom13: [],
 		fillOpacity: 0.3,
 	  	timeout: '',
+		timeoutZoom7: '',
 		zoomBlueDot: 18,
 		blueDotMarker: [],
 		blueDotLocation: {
@@ -452,9 +453,10 @@
 			if (map == null) {
 				if (currentZoom < Map.zoom ) {
 					Map.zoom7.push({
-						marker: marker
-						// label: label
+						marker: marker,
+						label: label
 					});
+					Map.loadMapZoom7Label(0);
 				}else {
 					Map.zoom12.push({
 						marker: marker,
@@ -1864,9 +1866,10 @@
 				    Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 	    		}
 
-	    		if (currentZoom == Map.markerZoom && Map.markers.length <= 10) {
+	    		if (currentZoom == Map.markerZoom && Map.markers.length <= 10) { //currentZoom desktop == 14, mobile == 13
 	    			Map.deleteNetwrk(map);
 				    Map.loadMapLabel(0);
+					Map.loadMapZoom7Label(0);
 					for (var i = 0; i < Map.zoom7.length; i++) {
 						var m = Map.zoom7[i];
 						m.marker.setMap(map);
@@ -1877,23 +1880,26 @@
 						m.marker.setMap(map);
 					    Map.markers.push(m.marker);
 				    }
-				} else if(currentZoom == Map.zoom ){
+				} else if(currentZoom == Map.zoom ){ //currentZoom desktop == 13, mobile == 12
 					Map.deleteNetwrk(map);
 					Map.hideMapLabel();
+					Map.loadMapZoom7Label(0);
 					for (var i = 0; i < Map.zoom7.length; i++) {
 						var m = Map.zoom7[i];
 						m.marker.setMap(map);
 						Map.markers.push(m.marker);
 					}
 
+
 					for (var i = 0; i < Map.zoom13.length; i++) {
 						var m = Map.zoom13[i];
 						m.marker.setMap(map);
 						Map.markers.push(m.marker);
 					}
-				} else if(currentZoom < Map.zoom ){
+				} else if(currentZoom < Map.zoom ){ //currentZoom desktop < 13, mobile < 12
 					Map.deleteNetwrk(map);
 					Map.hideMapLabel();
+					Map.hideMapZoom7Label();
 					Map.clearZipLabelMarker();
 
 					for (var i = 0; i < Map.zoom7.length; i++) {
@@ -1901,9 +1907,10 @@
 						m.marker.setMap(map);
 						Map.markers.push(m.marker);
 					}
-				} else if (currentZoom == 11 && Map.markers.length > 10) {
+				} else if (currentZoom == 11 && Map.markers.length > 10) { //currentZoom == 11
 	    			Map.deleteNetwrk(map);
 					Map.hideMapLabel();
+					Map.hideMapZoom7Label();
 					for (var i = 0; i < Map.zoom7.length; i++) {
 						var m = Map.zoom7[i];
 						m.marker.setMap(map);
@@ -1927,7 +1934,20 @@
 	  			Map.timeout = setTimeout(Map.loadMapLabel, 200, endOffset);
 	  		}
 	  	},
-
+		loadMapZoom7Label: function(offset) {
+			var endOffset = offset + 200;
+			if (endOffset > Map.zoom7.length) {
+				endOffset = Map.zoom7.length;
+			}
+			var m = {};
+			for (i=offset; i<endOffset; i++) {
+				m = Map.zoom7[i];
+				m.label.setMap(Map.map);
+			}
+			if (endOffset<Map.zoom7.length) {
+				Map.timeoutZoom7 = setTimeout(Map.loadMapZoom7Label, 200, endOffset);
+			}
+		},
 	  	hideMapLabel: function() {
 	  		clearTimeout(Map.timeout);
 	  		for (i=0; i<Map.zoom12.length; i++) {
@@ -1935,7 +1955,13 @@
   				m.label.setMap(null);
 	  		}
 	  	},
-
+		hideMapZoom7Label: function() {
+			clearTimeout(Map.timeoutZoom7);
+			for (i=0; i<Map.zoom7.length; i++) {
+				m = Map.zoom7[i];
+				m.label.setMap(null);
+			}
+		},
 	  	smoothZoom: function(map, level, cnt, mode) {
 		    // If mode is zoom in
 		    if(mode == true) {
