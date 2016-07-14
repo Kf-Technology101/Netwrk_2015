@@ -32,6 +32,9 @@
         </div>
     </div>
     <div class="container_post">
+        <div class="post-feedback">
+            <?= $this->render('@frontend/modules/netwrk/views/feedback/view') ?>
+        </div>
         <div id="tab_feed" class="tab">
             <p class="no-data">There is no data available yet</p>
         </div>
