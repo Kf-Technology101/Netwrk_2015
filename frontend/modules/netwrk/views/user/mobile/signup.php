@@ -13,6 +13,7 @@
 
     <?php
         $scenario = (isset($scenario)) ? $scenario : 'register';
+    echo $scenario;
         $form = ActiveForm::begin([
         'id' => 'register-form',
         'options' => ['class' => 'form-register form-horizontal',
@@ -58,8 +59,26 @@
         <div class="col-field-name zipcode">
             <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode','maxlength'=>5)); ?>
         </div>
-        <div class="col-field-name age">
-            <?= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); ?>
+        <!--<div class="col-field-name age">
+            <?/*= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); */?>
+        </div>-->
+
+        <?php
+            $years_to = date('Y') - 17;
+            $years_from = $years_to - 100;
+
+            $day = array_combine(range(1,31),range(1,31));
+            $months = array_combine(range(1,12),range(1,12));
+            $years = array_combine(range($years_from,$years_to), range($years_from,$years_to));
+        ?>
+        <div class="dob-field-name dob field">
+            <?= $form->field($profile, 'day')->dropDownList($day,['prompt' => 'Day']); ?>
+        </div>
+        <div class="dob-field-name dob field">
+            <?= $form->field($profile, 'month')->dropDownList($months,['prompt' => 'Month']); ?>
+        </div>
+        <div class="dob-field-name dob year field">
+            <?= $form->field($profile, 'year')->dropDownList($years,['prompt' => 'Year']); ?>
         </div>
 
         <div class="col-field-name" style="display:none;">
