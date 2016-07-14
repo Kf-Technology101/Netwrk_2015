@@ -22,6 +22,28 @@
 	}
 }
 
+.marker-home {
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	position: absolute;
+	.btn-active,
+	.btn-inactive {
+		width: 38px;
+		height: 38px;
+		border-radius: 50%;
+		&:after {
+			content: "";
+			width: 24px;
+			height: 24px;
+			margin: 7px 0 0 7px;
+			background: #e6e6e6;
+			position: absolute;
+			border-radius: 50%;
+		}
+	}
+}
+
 .marker-icon {
 	position: absolute;
 	top: 6px;
@@ -34,8 +56,8 @@
 		right: -10px;
 	}
 	&.marker-home {
-		right: -7px;
-		top: 7px;
+		left: 11px;
+		top: 10px;
 	}
 }
 
