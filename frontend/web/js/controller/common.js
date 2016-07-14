@@ -242,25 +242,40 @@ var Common = {
     feedbackAllTriggers: function(){
         Common.feedbackTrigger();
         Common.feedbackCloseTrigger();
-        Common.feedbackLoginTrigger();
+        Common.feedbackOptionLoginTrigger();
         Common.feedbackOptionTrigger();
     },
-
     feedbackTrigger: function(){
         var target = $('.feedback-trigger');
 
         target.unbind();
         target.on('click',function(){
-            var object = $(this).attr('data-object'),
-                id = $(this).attr('data-id'),
-                parent = $(this).attr('data-parent'),
-                feedbackSection = $(parent).find('.feedback-section');
+            if($(this).hasClass('login-trigger')) {
+                var modal = $(this).attr('data-modal');
+                if(isGuest){
+                    if(isMobile){
+                        Login.RedirectLogin(window.location.href);
+                    }else{
+                        $('.modal').modal('hide');
+                        if(typeof modal !== 'undefined' && modal == 'Post'){
+                            Login.modal_callback = Post;
+                        }
+                        Login.initialize();
+                        return false;
+                    }
+                }
+            } else {
+                var object = $(this).attr('data-object'),
+                    id = $(this).attr('data-id'),
+                    parent = $(this).attr('data-parent'),
+                    feedbackSection = $(parent).find('.feedback-section');
 
-            feedbackSection.removeClass('hide');
-            feedbackSection.find('.feedback-content')
-                .attr('data-parent',parent)
-                .attr('data-object',object)
-                .attr('data-id',id);
+                feedbackSection.removeClass('hide');
+                feedbackSection.find('.feedback-content')
+                    .attr('data-parent',parent)
+                    .attr('data-object',object)
+                    .attr('data-id',id);
+            }
         });
     },
     feedbackCloseTrigger: function () {
@@ -277,7 +292,7 @@ var Common = {
         });
         Common.feedbackOptionTrigger();
     },
-    feedbackLoginTrigger: function() {
+    feedbackOptionLoginTrigger: function() {
         var target = $('.login-trigger', '.feedback-content');
         target.unbind();
         target.on("click", function() {

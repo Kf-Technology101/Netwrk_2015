@@ -106,10 +106,15 @@
                                 <div class="btn-active">Jump in</div>
                                 <div class="btn-inactive">Jump in</div>
                             </div>
-                            <div class="pull-left respond feedback-trigger"
-                                 data-parent="#list_post"
-                                 data-object="post"
-                                 data-id="<%= post.id%>">Feedback</div>
+                            <% if(isGuest){%>
+                                <div class="pull-left respond feedback-trigger login-trigger"
+                                     data-modal="Post">Feedback</div>
+                            <% } else { %>
+                                <div class="pull-left respond feedback-trigger"
+                                     data-parent="#list_post"
+                                     data-object="post"
+                                     data-id="<%= post.id%>">Feedback</div>
+                            <% } %>
                         </div>
                     </div>
 
