@@ -613,7 +613,26 @@ var PopupChat = {
         var popup_current = $('#popup-chat-'+popup_active);
         if(isMobile){
             if ($('#post_chat').length > 0) {
-                $('#post_chat').find(PopupChat.container).scrollTop($(PopupChat.page).find('.container_post_chat')[0].scrollHeight);
+                if(sessionStorage.scrollToMsg == 0){
+                    $('#post_chat').find(PopupChat.container).scrollTop($(PopupChat.page).find('.container_post_chat')[0].scrollHeight);
+                } else {
+                    // Scroll to particular message
+                    var divHeight = $(PopupChat.page).find('.container_post_chat').find('#collapse'+sessionStorage.scrollToMsg).height();
+                    var position = $(PopupChat.page).find('.container_post_chat').find('#collapse'+sessionStorage.scrollToMsg).offset().top - divHeight - divHeight;
+                    $('#post_chat').find(PopupChat.container).animate({ scrollTop: position });
+                    sessionStorage.scrollToMsg = 0;
+                }
+
+                // Trigger feedback section
+                if(sessionStorage.feedbackTrigger != 0){
+                    Common.feedbackAllTriggers();
+                    var divHeight = $(PopupChat.page).find('.container_post_chat').find('#collapse'+sessionStorage.feedbackTrigger).height();
+                    var position = $(PopupChat.page).find('.container_post_chat').find('#collapse'+sessionStorage.feedbackTrigger).offset().top - divHeight - divHeight;
+                    $('#post_chat').find(PopupChat.container).animate({ scrollTop: position });
+
+                    $(PopupChat.page).find('.container_post_chat').find('#collapse'+sessionStorage.feedbackTrigger).find('.feedback-trigger').trigger('click');
+                    sessionStorage.feedbackTrigger = 0;
+                }
             }
         }else{
             if (popup_current.length > 0) {

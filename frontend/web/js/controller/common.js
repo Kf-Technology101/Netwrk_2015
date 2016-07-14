@@ -255,16 +255,16 @@ var Common = {
 
         target.unbind();
         target.on('click',function(){
-            var object = $(this).data('object'),
-                id = $(this).data('id'),
-                parent = $(this).data('parent'),
+            var object = $(this).attr('data-object'),
+                id = $(this).attr('data-id'),
+                parent = $(this).attr('data-parent'),
                 feedbackSection = $(parent).find('.feedback-section');
 
             feedbackSection.removeClass('hide');
             feedbackSection.find('.feedback-content')
-                .data('parent',parent)
-                .data('object',object)
-                .data('id',id);
+                .attr('data-parent',parent)
+                .attr('data-object',object)
+                .attr('data-id',id);
         });
     },
     feedbackCloseTrigger: function () {
@@ -303,12 +303,12 @@ var Common = {
 
         target.unbind();
         target.on('click',function(){
-            var option = $(this).data('option'),
-                point = $(this).data('point'),
+            var option = $(this).attr('data-option'),
+                point = $(this).attr('data-point'),
                 feedbackContent = $(this).closest('.feedback-content'),
-                parent = $(feedbackContent).data('parent'),
-                object = $(feedbackContent).data('object'),
-                id = $(feedbackContent).data('id'),
+                parent = $(feedbackContent).attr('data-parent'),
+                object = $(feedbackContent).attr('data-object'),
+                id = $(feedbackContent).attr('data-id'),
                 feedbackSection = $(parent).find('.feedback-section'),
                 feedbackAlert = $(parent).find('.feedback-alert');
 
@@ -323,9 +323,9 @@ var Common = {
 
                     feedbackSection.addClass('hide');
                     feedbackSection.find('.feedback-content')
-                        .data('parent','')
-                        .data('object','')
-                        .data('id','');
+                        .attr('data-parent','')
+                        .attr('data-object','')
+                        .attr('data-id','');
 
                     var feedbackAlertChild = '<div id="feedbackAlert" class="alert '+alertClass+'">'+alertText+'</div>';
 

@@ -59,8 +59,8 @@ var Post ={
 			Topic.displayPositionModal();
 			Default.onCLickModal();
 			Post.getBrilliantCode();
-			Post.getStreamData();
 		}
+		Post.getStreamData();
 		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
 		Post.OnclickCreate();
@@ -115,6 +115,10 @@ var Post ={
 					var json = $.parseJSON(data);
 					Post.getStreamTemplate(parent,json.data);
 					Post.OnClickChat();
+					if(isMobile){
+						var infomation = $('.panel-stream').find('.panel-stream-body .information');
+						fix_width_post(infomation,122);
+					}
 				});
 			} else {
 				parent.html('<p class="no-data">There is no data available yet</p>');
@@ -138,6 +142,19 @@ var Post ={
 
 			var item_post = $(e.currentTarget).closest('.item-post-panel-body').attr('data-item');
 			if(isMobile){
+				sessionStorage.scrollToMsg = 0;
+				sessionStorage.feedbackTrigger = 0;
+
+				// To scroll to particular message on popup chat
+				if($(e.currentTarget).hasClass('jump-to')){
+					sessionStorage.scrollToMsg = $(e.currentTarget).attr('data-id');
+				}
+
+				// To trigger feedback on popup chat
+				if($(e.currentTarget).hasClass('respond-to')){
+					sessionStorage.feedbackTrigger = $(e.currentTarget).attr('data-id');
+				}
+
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				PopupChat.scrollToMsg = 0;
@@ -619,7 +636,7 @@ var Post ={
 				if(isMobile){
 					var infomation = $('.container_post').find('.item-post-panel-body .information');
 					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
-					fix_width_post(infomation,145);
+					fix_width_post(infomation,122);
 				}
 			}
 		});

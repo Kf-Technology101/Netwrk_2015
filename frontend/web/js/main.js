@@ -33,9 +33,8 @@ function fix_width_post(target,width){
   var size = get_size_window();
   var wp = size[0] - width;
 
-  target.css({'width': wp});
-  target.find('p').css({'width': wp});
-
+  target.css({'width': wp,'max-width': wp});
+  target.find('p').css({'width': wp,'max-width': wp});
 }
 
 function fix_width_chat_post(target,width){
