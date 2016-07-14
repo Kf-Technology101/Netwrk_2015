@@ -59,8 +59,8 @@ var Post ={
 			Topic.displayPositionModal();
 			Default.onCLickModal();
 			Post.getBrilliantCode();
-			Post.getStreamData();
 		}
+		Post.getStreamData();
 		Ajax.update_view_topic({topic: Post.params.topic});
 		Post.OnclickBack();
 		Post.OnclickCreate();
@@ -115,6 +115,10 @@ var Post ={
 					var json = $.parseJSON(data);
 					Post.getStreamTemplate(parent,json.data);
 					Post.OnClickChat();
+					if(isMobile){
+						var infomation = $('.panel-stream').find('.panel-stream-body .information');
+						fix_width_post(infomation,122);
+					}
 				});
 			} else {
 				parent.html('<p class="no-data">There is no data available yet</p>');
@@ -619,7 +623,7 @@ var Post ={
 				if(isMobile){
 					var infomation = $('.container_post').find('.item-post-panel-body .information');
 					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
-					fix_width_post(infomation,145);
+					fix_width_post(infomation,122);
 				}
 			}
 		});

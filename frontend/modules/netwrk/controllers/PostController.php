@@ -627,7 +627,7 @@ class PostController extends BaseController
 
         switch ($stream_type) {
             case 'line':
-                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->with('feedbackStat')
+                $streams = $ws_message->find()->where('ws_messages.post_id ='.$post_id. ' AND ws_messages.post_type = 1')->with('feedbackStat')
                 ->joinWith([
                     'feedbackStat' => function($query) {
                         $query->andWhere('points > 0');
@@ -635,7 +635,7 @@ class PostController extends BaseController
                 ])->orderBy(['created_at' => SORT_DESC]);
                 break;
             case 'fun':
-                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->joinWith([
+                $streams = $ws_message->find()->where('ws_messages.post_id ='.$post_id. ' AND ws_messages.post_type = 1')->joinWith([
                     'feedback' => function($query) {
                         $query->andWhere('feedback = "fun"');
                     },'feedbackStat' => function($query) {
@@ -644,7 +644,7 @@ class PostController extends BaseController
                 ])->orderBy(['created_at' => SORT_ASC]);
                 break;
             case 'like':
-                $streams = $ws_message->find()->where('post_id ='.$post_id.' AND post_type = 1')->joinWith([
+                $streams = $ws_message->find()->where('ws_messages.post_id ='.$post_id. ' AND ws_messages.post_type = 1')->joinWith([
                     'feedback' => function($query) {
                         $query->andWhere('feedback = "like"');
                     },'feedbackStat' => function($query) {
@@ -653,7 +653,7 @@ class PostController extends BaseController
                 ]);
                 break;
             case 'angle':
-                $streams = $ws_message->find()->where('post_id ='.$post_id. ' AND post_type = 1')->joinWith([
+                $streams = $ws_message->find()->where('ws_messages.post_id ='.$post_id. ' AND ws_messages.post_type = 1')->joinWith([
                     'feedback' => function($query) {
                         $query->andWhere('feedback = "angle"');
                     },'feedbackStat' => function($query) {
