@@ -180,6 +180,37 @@ var Post ={
 		});
 	},
 
+	onClickMeet: function(){
+		var btn = $('#list_post .meet-trigger');
+
+		btn.unbind();
+		btn.on('click',function(e){
+			var userId = $(this).attr('data-user-id');
+
+			if(isGuest){
+				if(isMobile){
+					Login.RedirectLogin(window.location.href);
+				}else{
+					$('.modal').modal('hide');
+					Login.modal_callback = Post;
+					Login.initialize();
+					return false
+				}
+			}
+
+			Ajax.usermeet({user_id: userId }).then(function(res){
+				$('.meet-'+userId).each(function() {
+					$(this).addClass('hide');
+				});
+
+				if(!isMobile){
+					ChatInbox.GetDataListChatPrivate();
+				}
+				window.ws.send("notify", {"sender": UserLogin, "receiver": userId, "room": -1, "message": ''});
+			});
+		});
+	},
+
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
@@ -631,6 +662,7 @@ var Post ={
 				Post.getTemplate(parent,json.data);
 				Post.OnclickVote();
 				Post.OnClickChat();
+				Post.onClickMeet();
 				// Feedback related script calls
 				Common.feedbackAllTriggers();
 				if(isMobile){

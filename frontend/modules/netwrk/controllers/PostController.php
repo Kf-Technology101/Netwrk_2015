@@ -10,6 +10,7 @@ use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Vote;
 use frontend\modules\netwrk\models\WsMessages;
+use frontend\modules\netwrk\models\UserMeet;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -102,11 +103,11 @@ class PostController extends BaseController
         $maxlength = Yii::$app->params['MaxlenghtMessageDesktop'];
         $maxlengthMobile = Yii::$app->params['MaxlenghtMessageMobile'];
 
-        $filter = $_POST['filter'];
-        $topic_id = $_POST['topic'];
+        $filter = $_POST['filter'] ? $_POST['filter'] : 'post';
+        $topic_id = $_POST['topic'] ? $_POST['topic'] : 0;
 
-        $pageSize = $_POST['size'];
-        $page = $_POST['page'];
+        $pageSize = $_POST['size'] ? $_POST['size'] : 30;
+        $page = $_POST['page'] ? $_POST['page'] : 1;
 
         switch ($filter) {
             case 'post':
@@ -155,14 +156,22 @@ class PostController extends BaseController
                     $image = Url::to('@web/uploads/'.$value->user_id.'/'.$user_photo);
                 }
                 $currentVote = null;
+
                 if($currentUser){
                     $currentVote = Vote::find()->where('user_id= '.$currentUser.' AND post_id= '.$value->id)->one();
+                    $userMeet = UserMeet::find()->where('user_id_1 ='.$currentUser.' AND user_id_2='.$value->user_id)->one();
                 }
 
                 if($currentVote && $currentVote->status == 1){
                     $isVote = 1;
                 }else{
                     $isVote = 0;
+                }
+
+                if($userMeet && $userMeet->status == 1){
+                    $meet = 1;
+                }else{
+                    $meet = 0;
                 }
 
                 $ws_message = new WsMessages();
@@ -217,7 +226,8 @@ class PostController extends BaseController
                     'stream_count' => count($stream_count),
                     'like_feedback_count' => count($like_feedback_count),
                     'fun_feedback_count' => count($fun_feedback_count),
-                    'angle_feedback_count' => count($angle_feedback_count)
+                    'angle_feedback_count' => count($angle_feedback_count),
+                    'meet' => $meet
                 );
 
                 array_push($data,$post);
