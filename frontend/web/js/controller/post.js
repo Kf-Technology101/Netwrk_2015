@@ -142,6 +142,19 @@ var Post ={
 
 			var item_post = $(e.currentTarget).closest('.item-post-panel-body').attr('data-item');
 			if(isMobile){
+				sessionStorage.scrollToMsg = 0;
+				sessionStorage.feedbackTrigger = 0;
+
+				// To scroll to particular message on popup chat
+				if($(e.currentTarget).hasClass('jump-to')){
+					sessionStorage.scrollToMsg = $(e.currentTarget).attr('data-id');
+				}
+
+				// To trigger feedback on popup chat
+				if($(e.currentTarget).hasClass('respond-to')){
+					sessionStorage.feedbackTrigger = $(e.currentTarget).attr('data-id');
+				}
+
 				PopupChat.RedirectChatPostPage(item_post, 1, 0);
 			}else{
 				PopupChat.scrollToMsg = 0;
