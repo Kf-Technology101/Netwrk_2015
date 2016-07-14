@@ -613,7 +613,7 @@ var PopupChat = {
         var popup_current = $('#popup-chat-'+popup_active);
         if(isMobile){
             if ($('#post_chat').length > 0) {
-                if(sessionStorage.scrollToMsg == 0){
+                if(typeof sessionStorage.scrollToMsg == 'undefined'){
                     $('#post_chat').find(PopupChat.container).scrollTop($(PopupChat.page).find('.container_post_chat')[0].scrollHeight);
                 } else {
                     // Scroll to particular message
@@ -624,7 +624,7 @@ var PopupChat = {
                 }
 
                 // Trigger feedback section
-                if(sessionStorage.feedbackTrigger != 0){
+                if(typeof sessionStorage.feedbackTrigger !== 'undefined' && sessionStorage.feedbackTrigger != 0){
                     Common.feedbackAllTriggers();
                     var divHeight = $(PopupChat.page).find('.container_post_chat').find('#collapse'+sessionStorage.feedbackTrigger).height();
                     var position = $(PopupChat.page).find('.container_post_chat').find('#collapse'+sessionStorage.feedbackTrigger).offset().top - divHeight - divHeight;
