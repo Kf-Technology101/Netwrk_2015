@@ -330,11 +330,12 @@ class Post extends \yii\db\ActiveRecord
     public function GetBrilliantPostsByCities($limit,$city_ids){
         $query = new Query();
 
-        $posts = $query->select('post.id, post.title, post.content, post.brilliant_count, post.post_type, post.user_id as user_id, topic.id as topic_id, profile.photo')
+        $posts = $query->select('topic.id as topic_id, topic.title as topic_title, topic.city_id, city.zip_code, post.*, post.user_id as user_id, profile.photo')
             ->from('post')
             ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
             ->leftJoin('profile','post.user_id = profile.user_id')
             ->innerJoin('topic', 'post.topic_id=topic.id')
+            ->join('JOIN', 'city', 'city.id = topic.city_id')
             ->where("topic.city_id IN (".$city_ids.")")
             ->andWhere(['not',['topic.status'=> '-1']])
             ->andWhere(['not',['post.status'=> '-1']])

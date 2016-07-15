@@ -317,6 +317,7 @@ class PostController extends BaseController
             ->from('topic')
             ->join('JOIN', 'post', 'post.topic_id = topic.id')
             ->join('JOIN', 'city', 'city.id = topic.city_id')
+            ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
             ->where([
                 'topic.user_id' => $systemUserId,
                 'topic.city_id' => $city_array,
@@ -324,6 +325,7 @@ class PostController extends BaseController
             )
             ->andWhere(['not',['topic.status'=> '-1']])
             ->andWhere(['not',['post.status'=> '-1']])
+            ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
             ->orderBy('topic.post_count DESC')
             ->limit($limit)
             ->all();
@@ -331,16 +333,16 @@ class PostController extends BaseController
         $local_topics = [];
         if ($results) {
             foreach ($results as $key => $value) {
-                $user_photo = User::findOne($value->user_id)->profile->photo;
+                $user_photo = User::findOne($value['user_id'])->profile->photo;
                 if ($user_photo == null){
                     $image = 'img/icon/no_avatar.jpg';
                 }else{
-                    $image = 'uploads/'.$value->user_id.'/'.$user_photo;
+                    $image = 'uploads/'.$value['user_id'].'/'.$user_photo;
                 }
 
-                $num_comment = UtilitiesFunc::ChangeFormatNumber($value->comment_count ? $value->comment_count + 1 : 1);
-                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value->brilliant_count ? $value->brilliant_count : 0);
-                $num_date = UtilitiesFunc::FormatTimeChat($value->created_at);
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($value['comment_count'] ? $value['comment_count'] + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value['brilliant_count'] ? $value['brilliant_count'] : 0);
+                $num_date = UtilitiesFunc::FormatTimeChat($value['created_at']);
                 $item = [
                     'id'=> $value['id'],
                     'post_title'=> $value['title'],
@@ -364,6 +366,81 @@ class PostController extends BaseController
         $data = $local_topics;
         return json_encode($data);
     }
+    /**
+     * Get the local party lines in users selected zip code area.
+     * @return string
+     */
+    public function actionGetLocalPartyLines()
+    {
+        $data = [];
+        $cookies = Yii::$app->request->cookies;
+        $zipCode = $cookies->getValue('nw_zipCode');
+
+        $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+
+        //if city is entered on cover page then zipcode is 0,
+        //IF a person enters a city, the most active general chat will show (meaning the post with the most chats)
+        if($zipCode == 0) {
+            $cityName = $cookies->getValue('nw_city');
+            $cities = City::find()
+                ->where(['name' => $cityName])
+                ->all();
+
+            $city_array = [];
+            foreach($cities as $city) {
+                $city_array[] = $city->id;
+            }
+        } else {
+            $cities = City::find()
+                ->where('zip_code = '.$zipCode)
+                ->all();
+
+            $city_array = [];
+            foreach($cities as $city) {
+                $city_array[] = $city->id;
+            }
+        }
+
+        $city_ids = implode(',',$city_array);
+
+        // Active party lines near cover zip code
+        $party_lines_posts = Post::GetBrilliantPostsByCities($limit, $city_ids);
+
+        $local_topics = [];
+        if ($party_lines_posts) {
+            foreach ($party_lines_posts as $key => $value) {
+                $user_photo = $value['photo'];
+                if ($user_photo == null){
+                    $image = 'img/icon/no_avatar.jpg';
+                }else{
+                    $image = 'uploads/'.$value['user_id'].'/'.$user_photo;
+                }
+
+                $num_comment = UtilitiesFunc::ChangeFormatNumber($value['comment_count'] ? $value['comment_count'] + 1 : 1);
+                $num_brilliant = UtilitiesFunc::ChangeFormatNumber($value['brilliant_count'] ? $value['brilliant_count'] : 0);
+                $num_date = UtilitiesFunc::FormatTimeChat($value['created_at']);
+                $item = [
+                    'id'=> $value['id'],
+                    'post_title'=> $value['title'],
+                    'post_content'=> $value['content'],
+                    'topic_id'=> $value['topic_id'],
+                    'topic_name'=> $value['topic_title'],
+                    'city_id' =>  $value['city_id'],
+                    'city_name' =>  $value['zip_code'],
+                    'title'=> $value['title'],
+                    'content'=> $value['content'],
+                    'num_comment' => $num_comment ? $num_comment: 0,
+                    'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
+                    'avatar'=> $image,
+                    'update_at'=> $num_date,
+                    'real_update_at' => $value['chat_updated_time'] ? $value['chat_updated_time'] : $value['created_at']
+                ];
+                array_push($local_topics, $item);
+            }
+        }
+
+        return json_encode($local_topics);
+    }
     public function actionGetChatInbox()
     {
         $return = '';
@@ -371,6 +448,8 @@ class PostController extends BaseController
         $currentUser = Yii::$app->user->id;
 
         $data = json_decode($this->actionGetLocalChatInbox(), true);
+
+        $local_party_lines = json_decode($this->actionGetLocalPartyLines(), true);
 
         if($currentUser) {
             $query = new Query();
@@ -434,8 +513,13 @@ class PostController extends BaseController
             }
         }
 
-        $data = !empty($data) ? json_encode($data) : false;
-        return $data;
+        $return = [
+            'linesData' => $data,
+            'localPartyLines' => $local_party_lines
+        ];
+
+        //$data = !empty($data) ? json_encode($data) : false;
+        return json_encode($return);
     }
 
     /**
