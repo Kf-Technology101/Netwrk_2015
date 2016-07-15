@@ -2,7 +2,7 @@
  * Main controller of socket JS
  * @type ws
  */
-var MainWs ={
+var MainWs = {
 
     url: '',
     ws: '',
@@ -53,19 +53,20 @@ var MainWs ={
                     break;
                     case 'notify':
                         _self.events.notify(msg);
+                    break;
                     case 'discussion':
                         _self.events.discussion(msg);
                     break;
                 }
             }
-        }
+        },
 
         window.ws.onopen = function() {
           console.group("WS OPEN");
           console.log("Open connection");
           console.log(window.ws);
           console.groupEnd();
-        }
+        },
 
         window.ws.onclose = function(e) {
           console.group("WS LOSING");
@@ -212,8 +213,28 @@ var MainWs ={
                 //if logged in user is participant of discussion then show notification
                 console.log('UserLogin=>'+UserLogin);
                 if ((jQuery.inArray(UserLogin, e.data.receivers) !== -1)) { // if receiver is current user, display notification
-                    if (isMobile) {                               // if mobile
-
+                    if (isMobile) {
+                        // if user is online
+                        var chat_box = $('#post_chat');
+                        // if chat page is opened
+                        if (chat_box.length != 0){
+                            var post_id = chat_box.attr('data-post');
+                            if (post_id == e.data.room) {
+                                //update chat notification
+                                Ajax.update_discussion_notification_status(UserLogin, e.data.room);
+                            }
+                        } else {
+                            // if chat page is closed, user offline
+                            var notify = $('.chat-post-id[data-post='+e.data.room+']').find('.title-description-user'),
+                                chat_notify = $('#chat_inbox_btn_mobile').find('.notify');
+                            if(e.data.notification_count > 0){
+                                notify.find('.description-chat-inbox').html(e.data.message);
+                                notify.find('.notify-chat-inbox').html(e.data.notification_count);
+                                notify.find('.notify-chat-inbox').removeClass('disable');
+                                chat_notify.html(e.data.notification_count);
+                                chat_notify.removeClass('disable');
+                            }
+                        }
                     } else {
                         var pchat = $('#popup-chat-' + e.data.room);
                         // if popup chat is opened
