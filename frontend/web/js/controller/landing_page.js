@@ -328,9 +328,14 @@ var LandingPage = {
 	OnHideModalWelcome: function(){
 		$(LandingPage.modal_welcome).on('hidden.bs.modal',function(e) {
 			Ajax.set_welcome_cookie().then(function(data){
-				if(!isMobile) {
+				if(isMobile) {
+					// Display chat inbox
+					ChatInbox.OnClickChatInboxMobile();
+				} else {
 					//LandingPage.show_landing_page();
 					LandingPage.GetDataTopLanding();
+					// Display chat inbox
+					ChatInbox.initialize();
 				}
 			});
 
