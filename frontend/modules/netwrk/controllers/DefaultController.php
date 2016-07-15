@@ -1638,4 +1638,18 @@ class DefaultController extends BaseController
         $hash = json_encode($return);
         return $hash;
     }
+
+    public function actionSetGlowCookie()
+    {
+        $object = $_POST['object'];
+
+        $c = Yii::$app->response->cookies;
+
+        $cookie = new Cookie(['name' => $object, 'value' => 'true', 'expire' => (time() + (365 * 86400))]);
+        $c->add($cookie);
+
+        $data = ['success'=> true];
+        $data = json_encode($data);
+        return $data;
+    }
 }

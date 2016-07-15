@@ -9,19 +9,19 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title">
             <?php if ($post->post_type == 1 ) { ?>
-                <span><?= $post->topic->city->zip_code?></span>
-                <span class="chat-topic-trigger" title="<?= $post->topic->title ?>"
-                      data-city-name="<?= $post->topic->city->name?>" data-city="<?= $post->topic->city_id?>" data-value="<?= $post->topic->id?>">
-                    <i class="fa fa-angle-right"></i><?= $post->topic->title ?>
+                <span class="title post-title">
+                    <span class="popup-title-name"><?= $post->title ?></span>
+                    <span class="popup-title-description chat-topic-trigger" title="<?= $post->topic->title ?>"
+                          data-city-name="<?= $post->topic->city->name?>" data-city="<?= $post->topic->city_id?>" data-value="<?= $post->topic->id?>">
+                        <?= $post->topic->title ?>
+                    </span>
                 </span>
-                <span><i class="fa fa-angle-right"></i><?= $post->title ?></span>
             <?php } else { ?>
-            <span class='title-user-private'><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
+                <span class="title">
+                    <span class='title-user-private'><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
+                </span>
             <?php } ?>
-
-            </span>
         </div>
     </div>
 

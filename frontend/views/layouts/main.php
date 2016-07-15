@@ -80,7 +80,13 @@ if (isset($cookies["isCoverPageVisited"])) {
                 ],
             ]);
         ?>
-        <div class="logo_netwrk logo-glow">
+        <?php
+            if (isset($cookies["nw_glow_logo"]))
+                $logo_class = 'logo_netwrk';
+            else
+                $logo_class = 'logo_netwrk logo-glow';
+        ?>
+        <div class="<?php echo $logo_class;?>">
             <span class="logo-active">
                 <a href="javascript:" class="landing-trigger"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>" alt="logo"/></a>
             </span>

@@ -74,10 +74,59 @@ body{
       float: left;
       z-index: 1000;
       position: relative;
+
+      .logo-inactive {
+        display: inline-block;
+      }
+      .logo-active {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity:0;
+      }
       img{
         width: 44px;
         height: 44px;
         margin: 8px 0;
+      }
+      &.logo-glow{
+        .logo-active{
+          backface-visibility: hidden;
+          animation-name: fadeInOut;
+          animation-duration: 6s;
+          animation-origin: 0 0;
+          animation-timing-function: ease-in-out;
+          animation-fill-mode: both;
+          animation-iteration-count: infinite;
+          -webkit-animation-name: fadeInOut;
+          -webkit-animation-duration: 6s;
+          -webkit-animation-origin: 0 0;
+          -webkit-animation-timing-function: ease-in-out;
+          -webkit-animation-fill-mode: both;
+          -webkit-animation-iteration-count: infinite;
+        }
+        @-webkit-keyframes fadeInOut {
+          0% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+        @keyframes fadeInOut {
+          0% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
       }
     }
     .chatting{
@@ -185,14 +234,39 @@ body{
         .navigation-text {
           font-size: 12px;
         }
+        &:hover {
+          cursor: pointer;
+          background: #5da5d8;
+        }
+        &:last-child {
+          border: none;
+          margin-right: 0;
+        }
       }
-      .btn:hover {
-        cursor: pointer;
-        background: #5da5d8;
-      }
-      .btn:last-child {
-        border: none;
-        margin-right: 0;
+      .btn-nav-map {
+        min-width: 40px;
+        float: left;
+        .btn-active,
+        .btn-inactive {
+          border-right: 1px solid #fff;
+          border-left: none;
+          border-top: none;
+          border-bottom: none;
+          margin-right: 1px;
+          color: #fff;
+          padding: 2px 4px;
+          line-height: 10px;
+          height: 34px;
+          min-width: 40px;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          .navigation-icon {
+            font-size: 16px;
+          }
+          .navigation-text {
+            font-size: 12px;
+          }
+        }
       }
       .profile-dropdown > .btn:first-child {
         border: none;
