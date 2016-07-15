@@ -74,10 +74,59 @@ body{
       float: left;
       z-index: 1000;
       position: relative;
+
+      .logo-inactive {
+        display: inline-block;
+      }
+      .logo-active {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity:0;
+      }
       img{
         width: 44px;
         height: 44px;
         margin: 8px 0;
+      }
+      &.logo-glow{
+        .logo-active{
+          backface-visibility: hidden;
+          animation-name: fadeInOut;
+          animation-duration: 6s;
+          animation-origin: 0 0;
+          animation-timing-function: ease-in-out;
+          animation-fill-mode: both;
+          animation-iteration-count: infinite;
+          -webkit-animation-name: fadeInOut;
+          -webkit-animation-duration: 6s;
+          -webkit-animation-origin: 0 0;
+          -webkit-animation-timing-function: ease-in-out;
+          -webkit-animation-fill-mode: both;
+          -webkit-animation-iteration-count: infinite;
+        }
+        @-webkit-keyframes fadeInOut {
+          0% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+        @keyframes fadeInOut {
+          0% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
       }
     }
     .chatting{

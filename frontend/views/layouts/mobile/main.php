@@ -76,9 +76,23 @@ if (isset($cookies["isCoverPageVisited"])) {
   <?php if (isset($cookies["isCoverPageVisited"])) : ?>
     <div id="myHeader" class="navbar-mobile navbar-fixed-top">
     	<div class="menu_top">
-  			<div class="logo_netwrk option_logo_netwrk">
-  				<a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
-  			</div>
+          <?php
+            if (isset($cookies["nw_glow_logo"]))
+              $logo_class = 'logo_netwrk option_logo_netwrk';
+            else
+              $logo_class = 'logo_netwrk option_logo_netwrk logo-glow';
+          ?>
+          <div class="<?php echo $logo_class;?>">
+            <span class="logo-active">
+              <a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>"></a>
+            </span>
+            <span class="logo-inactive">
+              <a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-icon-inactive.png'); ?>"></a>
+            </span>
+          </div>
+  			<!--<div class="logo_netwrk option_logo_netwrk">
+  				<a href="javascript:void(0)"><img src="<?/*= Url::to('@web/img/icon/netwrk-logo-blue.png'); */?>"></a>
+  			</div>-->
             <div class="box-search">
               <div class="search input-group">
                 <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
