@@ -82,7 +82,7 @@ var ChatInbox = {
 	},
 
 	CustomScrollBar: function(){
-		var parent = $(ChatInbox.modal).find('#chat_discussion #container_ul_chat_list');
+		var parent = $(ChatInbox.modal).find('#chat_discussion');
 		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
@@ -92,7 +92,7 @@ var ChatInbox = {
 	},
 
 	CustomScrollBarPrivate: function(){
-		var parent = $(ChatInbox.modal).find('#chat_private #container_ul_chat_list');
+		var parent = $(ChatInbox.modal).find('#chat_private');
 		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
@@ -177,7 +177,8 @@ var ChatInbox = {
 	},
 
 	OnClickChatPostDetail: function() {
-		var btn = $(ChatInbox.modal).find('#chat_discussion li');
+		var btn = $(ChatInbox.modal).find('#chat_discussion li')
+				.add($(ChatInbox.modal).find('#containerLocalPartyLines li'));
 		btn.unbind();
 		btn.on('click',function(e){
 			var btn = $(this);
@@ -317,6 +318,7 @@ var ChatInbox = {
 
 	GetDataListChatPost: function() {
 		var parent = $(ChatInbox.chat_inbox).find('#chat_discussion ul');
+		var localPartyParent = $(ChatInbox.chat_inbox).find('#containerLocalPartyLines ul');
 		$.ajax({
 			url: baseUrl + "/netwrk/post/get-chat-inbox",
 			type: 'POST',
@@ -326,7 +328,8 @@ var ChatInbox = {
 			success: function(result) {
 				if (result) {
 					result = $.parseJSON(result);
-					ChatInbox.getTemplateChatInbox(parent,result, UserLogin);
+					ChatInbox.getTemplateChatInbox(parent,result.linesData, UserLogin);
+					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
 				}
 			}
 		});
@@ -358,7 +361,12 @@ var ChatInbox = {
 				}
 
 				var list_template = _.template($("#chat_inbox_list" ).html());
-				var append_html = list_template({chat_inbox_list: data});
+				var appendLocalLinesHtml = list_template({chat_inbox_list: data.localPartyLines});
+				parentLocalLines = $(parent).find('#containerLocalPartyLines ul');
+				parentLocalLines.find('li').remove();
+				parentLocalLines.append(appendLocalLinesHtml);
+
+				var append_html = list_template({chat_inbox_list: data.linesData});
 				parent = $(parent).find('#chat_discussion ul');
 				parent.find('li').remove();
 				parent.append(append_html);

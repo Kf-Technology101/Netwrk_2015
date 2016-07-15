@@ -2,21 +2,40 @@
 <div id='chat_inbox' class='chat-inbox' >
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
-		<li role="presentation" class="active col-xs-6 chat-private-btn"><a href="#chat_private" aria-controls="chat_private" role="tab" data-toggle="tab"><span>Messages</span></a></li>
-		<li role="presentation" class=" col-xs-6 chat-dicussions-btn"><a href="#chat_discussion" aria-controls="chat_discussion" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+		<li role="presentation" class="active col-xs-6 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
+		<li role="presentation" class=" col-xs-6 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
 	</ul>
 	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 
 	<!-- Tab panes -->
 	<div class="tab-content chat-inbox-content">
-		<div role="tabpanel" class="tab-pane active" id="chat_private">
-			<div id="container_ul_chat_list">
+		<div role="tabpanel" class="tab-pane active" id="chat_private_tab">
+			<div id="chat_private"  class="chat-lines-wrapper">
 				<ul>
 				</ul>
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane " id="chat_discussion">
-			<div id="container_ul_chat_list">
+		<div role="tabpanel" class="tab-pane " id="chat_discussion_tab">
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default" id="panelLocalPartyLines">
+					<div class="panel-heading">
+						<a data-toggle="collapse" data-target="#collapseLocalPartyLines"
+						   href="javascript:">
+							<p class="panel-title">Popular public chat lines near you</p>
+						</a>
+					</div>
+					<div id="collapseLocalPartyLines" class="panel-collapse collapse in">
+						<div class="panel-body top-post-content party-lines-content">
+							<div id="containerLocalPartyLines" class="chat-lines-wrapper">
+								<ul>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="chat-lines-title">Your lines</div>
+			<div id="chat_discussion" class="chat-lines-wrapper">
 				<ul>
 				</ul>
 			</div>
@@ -73,7 +92,6 @@
 			<input type='hidden' value='<%= chat_inbox.city_id %>' name='city_id' />
 			<input type='hidden' value='<%= chat_inbox.city_name %>' name='city_name'/>
 		</li>
-
-		<% }); %>
-	</script>
+	<% }); %>
+</script>
 
