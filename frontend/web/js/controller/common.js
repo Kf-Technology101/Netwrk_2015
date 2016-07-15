@@ -58,6 +58,19 @@ var Common = {
         target.unbind();
         target.on('click',function(e){
             if(isMobile){
+                var btnWrapper = $(this).closest('.btn-nav-map');
+                if(btnWrapper.hasClass('glow-btn-wrapper')) {
+                    // Call ajax to set cookie
+                    var params = {'object': 'nw_glow_near_btn'};
+                    Ajax.setGlowCookie(params).then(function (data) {
+                        var json = $.parseJSON(data);
+                        if(json.success == true){
+                            // Remove glow wrapper class
+                            btnWrapper.removeClass('glow-btn-wrapper');
+                        }
+                    });
+                }
+
                 sessionStorage.show_landing = 1;
                 sessionStorage.show_blue_dot = 1;
                 sessionStorage.show_blue_dot_zoom12 = 1;

@@ -185,14 +185,39 @@ body{
         .navigation-text {
           font-size: 12px;
         }
+        &:hover {
+          cursor: pointer;
+          background: #5da5d8;
+        }
+        &:last-child {
+          border: none;
+          margin-right: 0;
+        }
       }
-      .btn:hover {
-        cursor: pointer;
-        background: #5da5d8;
-      }
-      .btn:last-child {
-        border: none;
-        margin-right: 0;
+      .btn-nav-map {
+        min-width: 40px;
+        float: left;
+        .btn-active,
+        .btn-inactive {
+          border-right: 1px solid #fff;
+          border-left: none;
+          border-top: none;
+          border-bottom: none;
+          margin-right: 1px;
+          color: #fff;
+          padding: 2px 4px;
+          line-height: 10px;
+          height: 34px;
+          min-width: 40px;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          .navigation-icon {
+            font-size: 16px;
+          }
+          .navigation-text {
+            font-size: 12px;
+          }
+        }
       }
       .profile-dropdown > .btn:first-child {
         border: none;

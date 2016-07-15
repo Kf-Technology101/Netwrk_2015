@@ -95,10 +95,22 @@ if (isset($cookies["isCoverPageVisited"])) {
     <section class="navigation-wrapper text-center">
       <div class="box-navigation">
         <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
-          <button type="button" class="btn btn-default btn-explore-location">
-            <i class="navigation-icon fa fa-globe"></i>
-            <div class="navigation-text">Near</div>
-          </button>
+          <?php
+            if (isset($cookies["nw_glow_near_btn"]))
+              $near_class = 'btn-nav-map';
+            else
+              $near_class = 'btn-nav-map glow-btn-wrapper';
+          ?>
+          <div class="<?php echo $near_class;?>">
+            <button type="button" class="btn-explore-location btn-active">
+              <i class="navigation-icon fa fa-globe"></i>
+              <div class="navigation-text">Near</div>
+            </button>
+            <button type="button" class="btn-explore-location btn-inactive">
+              <i class="navigation-icon fa fa-globe"></i>
+              <div class="navigation-text">Near</div>
+            </button>
+          </div>
           <?php if (Yii::$app->user->isGuest):?>
             <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
               <i class="navigation-icon fa fa-sign-in"></i>
