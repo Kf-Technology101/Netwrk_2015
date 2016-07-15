@@ -370,6 +370,9 @@ var PopupChat = {
             PopupChat.GetListEmoji();
             PopupChat.HandleEmoji();
             PopupChat.ShowChatBox();
+            //update chat discusstion notification count of that post user
+            ChatInbox.ChangeStatusUnreadDiscussionMsg(PopupChat.params.post);
+            Default.ShowNotificationOnChat();
         } else {
             // window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
             window.ws.send('fetch', {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type, 'current_user': UserLogin});
@@ -625,7 +628,7 @@ var PopupChat = {
         var popup_current = $('#popup-chat-'+popup_active);
         if(isMobile){
             if ($('#post_chat').length > 0) {
-                if(typeof sessionStorage.scrollToMsg == 'undefined'){
+                if(typeof sessionStorage.scrollToMsg == 'undefined' || sessionStorage.scrollToMsg == 0){
                     $('#post_chat').find(PopupChat.container).scrollTop($(PopupChat.page).find('.container_post_chat')[0].scrollHeight);
                 } else {
                     // Scroll to particular message

@@ -34,6 +34,11 @@
 				</span>
 				<div class='title-description-user'>
 					<div class='title-chat-inbox'><%= chat_inbox.title %></div>
+					<% if(parseInt(chat_inbox.discussion_notification_count) > 0){ %>
+					<span class='notify-chat-inbox'><%= parseInt(chat_inbox.discussion_notification_count) %></span>
+					<% }else{ %>
+					<span class='notify-chat-inbox disable'></span>
+					<% } %>
 					<div class='description-chat-inbox'><%= chat_inbox.topic_name %></div>
 				</div>
 				<span class='time-chat-inbox'><i class='fa fa-clock-o'></i> <%= chat_inbox.update_at %></span>
