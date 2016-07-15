@@ -2,20 +2,20 @@
 <div id='chat_inbox' class='chat-inbox' >
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
-		<li role="presentation" class=" active col-xs-6 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
-		<li role="presentation" class=" col-xs-6 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+		<li role="presentation" class=" col-xs-6 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
+		<li role="presentation" class="active col-xs-6 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
 	</ul>
 	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 	<!-- Tab panes -->
 	<div class="tab-content chat-inbox-content">
-		<div role="tabpanel" class="tab-pane active" id="chat_private_tab">
+		<div role="tabpanel" class="tab-pane " id="chat_private_tab">
 			<div id="chat_private" class="chat-lines-wrapper">
 				<ul>
 
 				</ul>
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane " id="chat_discussion_tab">
+		<div role="tabpanel" class="tab-pane active" id="chat_discussion_tab">
 			<div class="panel-group" id="accordion">
 				<div class="panel panel-default" id="panelLocalPartyLines">
 					<div class="panel-heading">
