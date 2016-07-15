@@ -1614,6 +1614,24 @@ var Ajax = {
         });
 
         return defer.promise();
+    },
+
+    setGlowCookie: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/set-glow-cookie";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 };
 
