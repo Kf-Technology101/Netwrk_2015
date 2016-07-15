@@ -245,6 +245,19 @@ var Default ={
 
         target.unbind();
         target.on('click',function(){
+            var logoWrapper = $(this).closest('.logo_netwrk');
+            if(logoWrapper.hasClass('logo-glow')) {
+                // Call ajax to set cookie
+                var params = {'object': 'nw_glow_logo'};
+                Ajax.setGlowCookie(params).then(function (data) {
+                    var json = $.parseJSON(data);
+                    if(json.success == true){
+                        // Remove glow wrapper class
+                        logoWrapper.removeClass('logo-glow');
+                    }
+                });
+            }
+
             var landingModal = $('#modal_landing_page');
 
             // Check if landing page modal open

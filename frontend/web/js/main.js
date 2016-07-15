@@ -277,11 +277,27 @@ function CustomScrollBar(){
 
 }
 
+function removeLogoGlow(ele) {
+    var logoWrapper = ele.closest('.logo_netwrk');
+    if(logoWrapper.hasClass('logo-glow')) {
+        // Call ajax to set cookie
+        var params = {'object': 'nw_glow_logo'};
+        Ajax.setGlowCookie(params).then(function (data) {
+            var json = $.parseJSON(data);
+            if(json.success == true){
+                // Remove glow wrapper class
+                logoWrapper.removeClass('logo-glow');
+            }
+        });
+    }
+}
+
 function homePage(){
     var target = $('.option_logo_netwrk a');
     var isLanding = $('.wrap-mobile').data('action');
     if (isLanding == 'landing-page') {
       target.on('click', function(e){
+          removeLogoGlow($(this));
           e.preventDefault();
           sessionStorage.show_landing = 1;
           sessionStorage.map_zoom = 7;
@@ -289,6 +305,7 @@ function homePage(){
       });
     } else {
       target.on('click', function(e){
+          removeLogoGlow($(this));
           e.preventDefault();
           sessionStorage.show_landing = 0;
           window.location.href = baseUrl + '/netwrk/default/home';

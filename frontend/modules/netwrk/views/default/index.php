@@ -1,4 +1,8 @@
-<?php use yii\helpers\Url; ?>
+<?php
+use yii\helpers\Url;
+use yii\web\Cookie;
+$cookies = Yii::$app->request->cookies;
+?>
 <ul class="indiana_marker" style="display:none;" >
 
 </ul>
@@ -6,10 +10,22 @@
 <div class="map_content noselect">
   <div class="box-navigation text-right">
     <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
-      <button id="" type="button" class="btn btn-default btn_nav_map_location">
-        <i class="navigation-icon fa fa-globe"></i>
-        <span class="navigation-text">Near</span>
-      </button>
+      <?php
+        if (isset($cookies["nw_glow_near_btn"]))
+          $near_class = 'btn-nav-map';
+        else
+          $near_class = 'btn-nav-map glow-btn-wrapper';
+      ?>
+      <div class="<?php echo $near_class;?>">
+        <button id="" type="button" class="btn_nav_map_location btn-active">
+          <i class="navigation-icon fa fa-globe"></i>
+          <span class="navigation-text">Near</span>
+        </button>
+        <button id="" type="button" class="btn_nav_map_location btn-inactive">
+          <i class="navigation-icon fa fa-globe"></i>
+          <span class="navigation-text">Near</span>
+        </button>
+      </div>
       <?php if (Yii::$app->user->isGuest):?>
         <button type="button" class="btn btn-default login-trigger">
           <i class="navigation-icon fa fa-sign-in"></i>
