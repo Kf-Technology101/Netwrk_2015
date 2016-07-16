@@ -330,8 +330,10 @@ var ChatInbox = {
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatInbox(parent,result.linesData, UserLogin);
 					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
-					// Display Chat info popover
-					Common.showHideInfoPopover('popover-chat','nw_popover_chat');
+					if(isGuest){
+						// Display Chat info popover
+						Common.showHideInfoPopover('popover-chat', 'nw_popover_chat');
+					}
 				}
 			}
 		});
@@ -350,6 +352,10 @@ var ChatInbox = {
 				if(result){
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatPrivate(parent,result, UserLogin);
+					if(!isGuest){
+						// Display Chat info popover
+						Common.showHideInfoPopover('popover-chat', 'nw_popover_chat');
+					}
 				}
 			}
 		});
