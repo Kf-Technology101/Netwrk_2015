@@ -70,9 +70,18 @@
 .info-popover {
     background: #5da5d8;
     color: #fff;
-    .arrow {
-        &:after {
-            border-bottom-color: #5da5d8 !important;
+    &.top {
+        .arrow {
+            &:after {
+                border-top-color: #5da5d8 !important;
+            }
+        }
+    }
+    &.bottom {
+        .arrow {
+            &:after {
+                border-bottom-color: #5da5d8 !important;
+            }
         }
     }
 }
