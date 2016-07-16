@@ -45,6 +45,27 @@ var Common = {
             console.log = function(){}
         }
     },
+
+    showHideInfoPopover: function(popoverWrapperClass, cookieName) {
+        var popoverWrapper = $('.'+popoverWrapperClass);
+        popoverWrapper.popover('show');
+        popoverWrapper.on('shown.bs.popover', function(){
+            setTimeout(function(){
+                // Call ajax to set cookie
+                var params = {'object': cookieName};
+                Ajax.setGlowCookie(params).then(function (data) {
+                    var json = $.parseJSON(data);
+                    if(json.success == true){
+                        // Destroy popover & remove class and content
+                        popoverWrapper.popover('destroy')
+                            .removeClass(popoverWrapperClass)
+                            .attr('data-content','');
+                    }
+                });
+            },4000);
+        });
+    },
+
     /* On clicking map btn in nav, it will redirect to default home on mobile */
     eventClickExplore: function(){
         var target = $(Common.contexts.btnExplore, Common.contexts.boxNavigation);

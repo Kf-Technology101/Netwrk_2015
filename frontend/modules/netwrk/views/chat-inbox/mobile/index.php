@@ -1,4 +1,8 @@
-<?php use yii\helpers\Url; ?>
+<?php
+	use yii\helpers\Url;
+	use yii\web\Cookie;
+	$cookies = Yii::$app->request->cookies;
+?>
 <div id='chat_inbox' class='chat-inbox' >
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
@@ -16,11 +20,24 @@
 			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane active" id="chat_discussion_tab">
+			<?php
+				if (isset($cookies["nw_popover_chat"])) {
+					$popover_class = '';
+					$party_lines_popover = '';
+					$lines_popover = '';
+				} else {
+					$popover_class = 'popover-chat';
+					$party_lines_popover = 'See your community news';
+					$lines_popover = 'Interact with your community';
+				}
+			?>
 			<div class="panel-group" id="accordion">
 				<div class="panel panel-default" id="panelLocalPartyLines">
 					<div class="panel-heading">
 						<a data-toggle="collapse" data-target="#collapseLocalPartyLines"
-						   href="javascript:">
+						   href="javascript:" class="<?php echo $popover_class;?>"
+						   data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+						   data-placement="top" data-content="<?php echo $party_lines_popover;?>">
 							<p class="panel-title">Popular public chat lines near you</p>
 						</a>
 					</div>
@@ -34,7 +51,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="chat-lines-title">Your lines</div>
+			<div class="chat-lines-title <?php echo $popover_class;?>"
+				data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+				data-placement="top" data-content="<?php echo $lines_popover;?>">Your lines</div>
 			<div id="chat_discussion" class="chat-lines-wrapper">
 				<ul>
 				</ul>

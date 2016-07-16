@@ -331,23 +331,7 @@ var ChatInbox = {
 					ChatInbox.getTemplateChatInbox(parent,result.linesData, UserLogin);
 					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
 					// Display Chat info popover
-					var popoverWrapper = $('.popover-chat');
-					popoverWrapper.popover('show');
-					popoverWrapper.on('shown.bs.popover', function(){
-						setTimeout(function(){
-							// Call ajax to set cookie
-							var params = {'object': 'nw_popover_chat'};
-							Ajax.setGlowCookie(params).then(function (data) {
-								var json = $.parseJSON(data);
-								if(json.success == true){
-									// Destroy popover & remove class and content
-									popoverWrapper.popover('destroy')
-											.removeClass('popover-chat')
-											.attr('data-content','');
-								}
-							});
-						},4000);
-					});
+					Common.showHideInfoPopover('popover-chat','nw_popover_chat');
 				}
 			}
 		});
@@ -389,6 +373,8 @@ var ChatInbox = {
 				parent.find('li').remove();
 				parent.append(append_html);
 				ChatInbox.CustomScrollBar();
+				// Display Chat info popover
+				Common.showHideInfoPopover('popover-chat','nw_popover_chat');
 			});
 		};
 	},
