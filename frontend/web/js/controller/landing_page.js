@@ -78,8 +78,10 @@ var LandingPage = {
 		Ajax.top_landing().then(function(res){
 			LandingPage.data = $.parseJSON(res);
 			LandingPage.GetTemplate();
-			if(isLogoGlow == false) {
-				LandingPage.show_landing_page();
+			if(!isMobile) {
+				if(isLogoGlow == false) {
+					LandingPage.show_landing_page();
+				}
 			}
 		});
 	},
