@@ -34,9 +34,10 @@ var Common = {
 
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
+            Common.showHideInfoPopover('popover-near','nw_popover_near');
         }
 
-        // Display info popover
+        // Display netwrk logo info popover
         $('.popover-info').popover('show');
     },
 
@@ -92,7 +93,9 @@ var Common = {
                             // Remove glow wrapper class
                             btnWrapper.removeClass('glow-btn-wrapper');
                             // Destroy popover
-                            btnWrapper.popover('destroy');
+                            btnWrapper.popover('destroy')
+                                    .removeClass('popover-near')
+                                    .attr('data-content','');
                         }
                     });
                 }
@@ -198,7 +201,9 @@ var Common = {
                         // Remove glow wrapper class
                         btnWrapper.removeClass('glow-btn-wrapper');
                         // Destroy popover
-                        btnWrapper.popover('destroy');
+                        btnWrapper.popover('destroy')
+                            .removeClass('popover-near')
+                            .attr('data-content','');
                     }
                 });
             }

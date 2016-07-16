@@ -112,13 +112,19 @@ if (isset($cookies["isCoverPageVisited"])) {
           <?php
             if (isset($cookies["nw_glow_near_btn"])) {
               $near_class = 'btn-nav-map';
+            } else {
+              $near_class = 'btn-nav-map glow-btn-wrapper';
+            }
+
+            if (isset($cookies["nw_popover_near"])) {
+              $near_popover_class = '';
               $near_popover = '';
             } else {
-              $near_class = 'btn-nav-map popover-info glow-btn-wrapper';
+              $near_popover_class = 'popover-near';
               $near_popover = 'Follow other areas and see what&rsquo;s around you';
             }
           ?>
-          <div class="<?php echo $near_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+          <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
                data-placement="top" data-content="<?php echo $near_popover; ?>">
             <button type="button" class="btn-explore-location btn-active">
               <i class="navigation-icon fa fa-globe"></i>
