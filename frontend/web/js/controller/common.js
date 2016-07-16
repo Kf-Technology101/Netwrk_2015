@@ -35,6 +35,9 @@ var Common = {
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
         }
+
+        // Display info popover
+        $('.popover-info').popover('show');
     },
 
     console: function(){
@@ -67,6 +70,8 @@ var Common = {
                         if(json.success == true){
                             // Remove glow wrapper class
                             btnWrapper.removeClass('glow-btn-wrapper');
+                            // Destroy popover
+                            btnWrapper.popover('destroy');
                         }
                     });
                 }
@@ -171,6 +176,8 @@ var Common = {
                     if(json.success == true){
                         // Remove glow wrapper class
                         btnWrapper.removeClass('glow-btn-wrapper');
+                        // Destroy popover
+                        btnWrapper.popover('destroy');
                     }
                 });
             }
