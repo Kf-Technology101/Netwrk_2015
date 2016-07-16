@@ -78,7 +78,9 @@ var LandingPage = {
 		Ajax.top_landing().then(function(res){
 			LandingPage.data = $.parseJSON(res);
 			LandingPage.GetTemplate();
-			LandingPage.show_landing_page();
+			if(isLogoGlow == false) {
+				LandingPage.show_landing_page();
+			}
 		});
 	},
 

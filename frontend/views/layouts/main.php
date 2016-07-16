@@ -60,6 +60,11 @@ if (isset($cookies["isCoverPageVisited"])) {
             var stateAbbr = '<?php echo $stateAbbr; ?>';
             var welcomePage = '<?php echo ($welcomePage) ? $welcomePage : "true"; ?>';
         <?php endif; ?>
+        <?php if (isset($cookies["nw_glow_logo"])) {?>
+            var isLogoGlow = false;
+        <?php } else { ?>
+            var isLogoGlow = true;
+        <?php } ?>
     </script>
 </head>
 <body>
