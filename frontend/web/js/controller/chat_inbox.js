@@ -137,6 +137,13 @@ var ChatInbox = {
 			ChatInbox.CountMessageUnread();
 		else
 			ChatInbox.CountUserMessageUnread(chat_list_user);
+
+		if(!isGuest){
+			setTimeout(function() {
+				// Display Chat info popover
+				Common.showHideInfoPopover('popover-chat', 'nw_popover_chat');
+			},300);
+		}
 	},
 
 	getTemplateChatPrivate: function(parent,data, user_id, chat_list_user){
@@ -484,11 +491,6 @@ var ChatInbox = {
 			} else {
 				row.html(0);
 				row.addClass('disable');
-			}
-
-			if(!isGuest){
-				// Display Chat info popover
-				Common.showHideInfoPopover('popover-chat', 'nw_popover_chat');
 			}
 		});
 	},
