@@ -330,6 +330,8 @@ var ChatInbox = {
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatInbox(parent,result.linesData, UserLogin);
 					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
+					// Display Chat info popover
+					Common.showHideInfoPopover('popover-chat','nw_popover_chat');
 				}
 			}
 		});
@@ -371,6 +373,8 @@ var ChatInbox = {
 				parent.find('li').remove();
 				parent.append(append_html);
 				ChatInbox.CustomScrollBar();
+				// Display Chat info popover
+				Common.showHideInfoPopover('popover-chat','nw_popover_chat');
 			});
 		};
 	},
