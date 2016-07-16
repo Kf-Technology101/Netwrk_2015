@@ -174,6 +174,8 @@ var Common = {
                     if(json.success == true){
                         // Remove glow wrapper class
                         btnWrapper.removeClass('glow-btn-wrapper');
+                        // Destroy popover
+                        btnWrapper.popover('destroy');
                     }
                 });
             }
