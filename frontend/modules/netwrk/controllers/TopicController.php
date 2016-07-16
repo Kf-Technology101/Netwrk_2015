@@ -573,6 +573,7 @@ class TopicController extends BaseController
         )->from('topic')
         ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
         ->where($geo_where)
+        ->andWhere(['not', ['topic.status'=> '-1']])
         ->andWhere(['not', ['topic.lat' => null]])
         ->andWhere(['not', ['topic.lng' => null]])
         ->orderBy(['topic.created_at'=> SORT_DESC]);
