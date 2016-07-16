@@ -35,6 +35,9 @@ var Common = {
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
         }
+
+        // Display info popover
+        $('.popover-info').popover('show');
     },
 
     console: function(){
