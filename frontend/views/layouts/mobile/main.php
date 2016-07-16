@@ -119,7 +119,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             }
           ?>
           <div class="<?php echo $near_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-               data-container="body" data-toggle="popover" data-placement="top" data-content="<?php echo $near_popover; ?>">
+               data-placement="top" data-content="<?php echo $near_popover; ?>">
             <button type="button" class="btn-explore-location btn-active">
               <i class="navigation-icon fa fa-globe"></i>
               <div class="navigation-text">Near</div>

@@ -20,7 +20,7 @@ $cookies = Yii::$app->request->cookies;
         }
       ?>
       <div class="<?php echo $near_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-           data-container="body" data-toggle="popover" data-placement="bottom" data-content="<?php echo $near_popover; ?>">
+           data-placement="bottom" data-content="<?php echo $near_popover; ?>">
         <button id="" type="button" class="btn_nav_map_location btn-active">
           <i class="navigation-icon fa fa-globe"></i>
           <span class="navigation-text">Near</span>
