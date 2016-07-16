@@ -4,6 +4,7 @@
 	$cookies = Yii::$app->request->cookies;
 ?>
 <div id='chat_inbox' class='chat-inbox' >
+	<div class="chat-inbox-wrapper">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
 		<li role="presentation" class=" col-xs-6 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
@@ -59,6 +60,7 @@
 				</ul>
 			</div>
 		</div>
+	</div>
 	</div>
 </div>
 
