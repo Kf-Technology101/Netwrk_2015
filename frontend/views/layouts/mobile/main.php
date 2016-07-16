@@ -110,12 +110,22 @@ if (isset($cookies["isCoverPageVisited"])) {
       <div class="box-navigation">
         <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
           <?php
-            if (isset($cookies["nw_glow_near_btn"]))
+            if (isset($cookies["nw_glow_near_btn"])) {
               $near_class = 'btn-nav-map';
-            else
+            } else {
               $near_class = 'btn-nav-map glow-btn-wrapper';
+            }
+
+            if (isset($cookies["nw_popover_near"])) {
+              $near_popover_class = '';
+              $near_popover = '';
+            } else {
+              $near_popover_class = 'popover-near';
+              $near_popover = 'Follow other areas and see what&rsquo;s around you';
+            }
           ?>
-          <div class="<?php echo $near_class;?>">
+          <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+               data-placement="top" data-content="<?php echo $near_popover; ?>">
             <button type="button" class="btn-explore-location btn-active">
               <i class="navigation-icon fa fa-globe"></i>
               <div class="navigation-text">Near</div>

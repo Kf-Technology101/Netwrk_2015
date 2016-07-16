@@ -137,6 +137,13 @@ var ChatInbox = {
 			ChatInbox.CountMessageUnread();
 		else
 			ChatInbox.CountUserMessageUnread(chat_list_user);
+
+		if(!isGuest){
+			setTimeout(function() {
+				// Display Chat info popover
+				Common.showHideInfoPopover('popover-chat', 'nw_popover_chat');
+			},300);
+		}
 	},
 
 	getTemplateChatPrivate: function(parent,data, user_id, chat_list_user){
@@ -330,6 +337,10 @@ var ChatInbox = {
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatInbox(parent,result.linesData, UserLogin);
 					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
+					if(isGuest){
+						// Display Chat info popover
+						Common.showHideInfoPopover('popover-chat', 'nw_popover_chat');
+					}
 				}
 			}
 		});
@@ -348,6 +359,7 @@ var ChatInbox = {
 				if(result){
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatPrivate(parent,result, UserLogin);
+
 				}
 			}
 		});
@@ -371,8 +383,10 @@ var ChatInbox = {
 				parent.find('li').remove();
 				parent.append(append_html);
 				ChatInbox.CustomScrollBar();
+				// Display Chat info popover
+				Common.showHideInfoPopover('popover-chat','nw_popover_chat');
 			});
-		};
+		}
 	},
 
 	getTemplateChatPrivateMobile: function(parent) {
@@ -396,7 +410,6 @@ var ChatInbox = {
 					ChatInbox.CountMessageUnread();
 				});
 			}
-			;
 		}
 	},
 

@@ -60,6 +60,11 @@ if (isset($cookies["isCoverPageVisited"])) {
             var stateAbbr = '<?php echo $stateAbbr; ?>';
             var welcomePage = '<?php echo ($welcomePage) ? $welcomePage : "true"; ?>';
         <?php endif; ?>
+        <?php if (isset($cookies["nw_glow_logo"])) {?>
+            var isLogoGlow = false;
+        <?php } else { ?>
+            var isLogoGlow = true;
+        <?php } ?>
     </script>
 </head>
 <body>
@@ -81,12 +86,17 @@ if (isset($cookies["isCoverPageVisited"])) {
             ]);
         ?>
         <?php
-            if (isset($cookies["nw_glow_logo"]))
+            if (isset($cookies["nw_glow_logo"])) {
                 $logo_class = 'logo_netwrk';
-            else
-                $logo_class = 'logo_netwrk logo-glow';
+                $logo_popover = '';
+            }
+            else {
+                $logo_class = 'logo_netwrk popover-info logo-glow';
+                $logo_popover = 'See your community news';
+            }
         ?>
-        <div class="<?php echo $logo_class;?>">
+        <div class="<?php echo $logo_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+             data-placement="bottom" data-content="<?php echo $logo_popover; ?>">
             <span class="logo-active">
                 <a href="javascript:" class="landing-trigger"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>" alt="logo"/></a>
             </span>
