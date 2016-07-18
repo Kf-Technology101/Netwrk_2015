@@ -2,6 +2,9 @@
 <script id="maker_popup" type="text/x-underscore-template" >
 	<div class="container-popup" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
 		<% if(marker.user) { %>
+			<div class="community-header text-center">
+				<h3>Local community center</h3>
+			</div>
 			<div class="top-post">
 				<div class="user">
 					<div class="avatar">
