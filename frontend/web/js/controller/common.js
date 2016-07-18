@@ -39,7 +39,7 @@ var Common = {
         // Display netwrk logo info popover
         $('.popover-info').popover('show');
         // Display near button popover
-        Common.showHideInfoPopover('popover-near','nw_popover_near');
+        Common.showHideInfoPopover('popover-near', 'nw_popover_near');
     },
 
     console: function(){
@@ -48,24 +48,33 @@ var Common = {
         }
     },
 
+    callAjaxHidePopover: function(popoverWrapperClass, cookieName) {
+        var popoverWrapper = $('.'+popoverWrapperClass);
+        setTimeout(function() {
+            // Call ajax to set cookie
+            var params = {'object': cookieName};
+            Ajax.setGlowCookie(params).then(function (data) {
+                var json = $.parseJSON(data);
+                if (json.success == true) {
+                    // Destroy popover & remove class and content
+                    popoverWrapper.popover('destroy')
+                        .removeClass(popoverWrapperClass)
+                        .attr('data-content', '');
+                }
+            });
+        },4000);
+    },
+
     showHideInfoPopover: function(popoverWrapperClass, cookieName) {
         var popoverWrapper = $('.'+popoverWrapperClass);
         popoverWrapper.popover('show');
-        popoverWrapper.on('shown.bs.popover', function(){
-            setTimeout(function(){
-                // Call ajax to set cookie
-                var params = {'object': cookieName};
-                Ajax.setGlowCookie(params).then(function (data) {
-                    var json = $.parseJSON(data);
-                    if(json.success == true){
-                        // Destroy popover & remove class and content
-                        popoverWrapper.popover('destroy')
-                            .removeClass(popoverWrapperClass)
-                            .attr('data-content','');
-                    }
-                });
-            },4000);
-        });
+        if(popoverWrapperClass == 'popover-near') {
+            Common.callAjaxHidePopover(popoverWrapperClass, cookieName)
+        } else {
+            popoverWrapper.on('shown.bs.popover', function(){
+                Common.callAjaxHidePopover(popoverWrapperClass, cookieName)
+            });
+        }
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
@@ -84,7 +93,7 @@ var Common = {
         target.unbind();
         target.on('click',function(e){
             if(isMobile){
-                var btnWrapper = $(this).closest('.btn-nav-map');
+                /*var btnWrapper = $(this).closest('.btn-nav-map');
                 if(btnWrapper.hasClass('glow-btn-wrapper')) {
                     // Call ajax to set cookie
                     var params = {'object': 'nw_glow_near_btn'};
@@ -99,7 +108,7 @@ var Common = {
                                     .attr('data-content','');
                         }
                     });
-                }
+                }*/
 
                 sessionStorage.show_landing = 1;
                 sessionStorage.show_blue_dot = 1;
@@ -193,7 +202,7 @@ var Common = {
         target.unbind();
         target.on('click', function () {
             var btnWrapper = $(this).closest('.btn-nav-map');
-            if(btnWrapper.hasClass('glow-btn-wrapper')) {
+            /*if(btnWrapper.hasClass('glow-btn-wrapper')) {
                 // Call ajax to set cookie
                 var params = {'object': 'nw_glow_near_btn'};
                 Ajax.setGlowCookie(params).then(function (data) {
@@ -207,7 +216,7 @@ var Common = {
                             .attr('data-content','');
                     }
                 });
-            }
+            }*/
 
             //hide all opened modal
             $('.modal').modal('hide');
