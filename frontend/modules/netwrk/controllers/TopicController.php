@@ -264,18 +264,25 @@ class TopicController extends BaseController
         ->limit($pages->limit)
         ->all();
 
-        $currentUserId = Yii::$app->user->id;
+        $currentUserId = (Yii::$app->user->id) ? Yii::$app->user->id : 0;
         $data = [];
         foreach ($topices as $key => $value) {
             //if group permission is private then check, does logged in user is member of group.
             //and logged in user is not owner of group then
-            if($value->group->permission == Group::PERMISSION_PRIVATE && isset($currentUserId) && $value->user_id !== $currentUserId) {
-               $query = new query();
-                $member = UserGroup::find()->where(['user_group.group_id' => $value->group->id])
-                    ->andWhere(['user_group.user_id' => $currentUserId])
-                    ->one();
-                //if currentLogged in user not member of group then skip the current record and jump to next record in loop
-                if($member == null) {
+            if($value->group->permission == Group::PERMISSION_PRIVATE && $value->user_id !== $currentUserId ) {
+                $skipRecord = false;
+                if($currentUserId == 0) {
+                    $skipRecord = true;
+                } else {
+                    $member = UserGroup::find()->where(['user_group.group_id' => $value->group->id])
+                        ->andWhere(['user_group.user_id' => $currentUserId])
+                        ->one();
+                    //if currentLogged in user not member of group then skip the current record and jump to next record in loop
+                    if($member == null) {
+                        $skipRecord = true;
+                    }
+                }
+                if($skipRecord) {
                     continue;
                 }
             }
