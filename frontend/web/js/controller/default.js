@@ -256,8 +256,6 @@ var Default ={
                         logoWrapper.removeClass('logo-glow');
                         // Destroy popover
                         logoWrapper.popover('destroy');
-                        // Display near button popover
-                        Common.showHideInfoPopover('popover-near','nw_popover_near');
                     }
                 });
             }
