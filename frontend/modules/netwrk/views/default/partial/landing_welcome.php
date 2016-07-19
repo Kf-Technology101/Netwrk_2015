@@ -8,7 +8,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<h1>Welcome to your Public Messenger</h1>
+				<h1>Welcome to your community messenger</h1>
 			</div>
 		</div>
 	</div>

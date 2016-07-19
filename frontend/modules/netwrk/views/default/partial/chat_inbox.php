@@ -22,23 +22,29 @@
 		</div>
 		<div role="tabpanel" class="tab-pane active" id="chat_discussion_tab">
 			<?php
-				if (isset($cookies["nw_popover_chat"])) {
-					$popover_class = '';
+				if (isset($cookies["nw_popover_chat_public_lines"])) {
+					$popover_class_party_lines = '';
 					$party_lines_popover = '';
-					$lines_popover = '';
 				} else {
-					$popover_class = 'popover-chat';
+					$popover_class_party_lines = 'popover-chat-public-lines';
 					$party_lines_popover = 'See your community news';
-					$lines_popover = 'Interact with your community';
+				}
+
+				if (isset($cookies["nw_popover_chat_your_lines"])) {
+					$popover_class_your_lines = '';
+					$your_lines_popover = '';
+				} else {
+					$popover_class_your_lines = 'popover-chat-your-lines';
+					$your_lines_popover = 'Interact with your community';
 				}
 			?>
 			<div class="panel-group" id="chatDiscussionPanel">
 				<div class="panel panel-default" id="panelLocalPartyLines">
 					<div class="panel-heading" id="panelLocalPartyLinesHeading">
 						<a data-toggle="collapse" data-target="#collapseLocalPartyLines"
-						   href="javascript:" class="<?php echo $popover_class;?>"
-						   data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-						   data-placement="top" data-content="<?php echo $party_lines_popover;?>">
+						   href="javascript:" class="<?php echo $popover_class_party_lines;?>"
+						   data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_public_lines" data-wrapper="popover-chat-public-lines">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+						   data-placement="bottom" data-content="<?php echo $party_lines_popover;?>">
 							<p class="panel-title">Popular public chat lines near you</p>
 						</a>
 					</div>
@@ -52,9 +58,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="chat-lines-title <?php echo $popover_class;?>"
-				 data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-				 data-placement="top" data-content="<?php echo $lines_popover;?>">Your lines</div>
+			<div class="chat-lines-title <?php echo $popover_class_your_lines;?>"
+				 data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_your_lines" data-wrapper="popover-chat-your-lines">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+				 data-placement="top" data-content="<?php echo $your_lines_popover;?>">Your lines</div>
 			<div id="chat_discussion" class="chat-lines-wrapper">
 				<ul>
 				</ul>

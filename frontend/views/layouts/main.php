@@ -88,14 +88,21 @@ if (isset($cookies["isCoverPageVisited"])) {
         <?php
             if (isset($cookies["nw_glow_logo"])) {
                 $logo_class = 'logo_netwrk';
-                $logo_popover = '';
             }
             else {
-                $logo_class = 'logo_netwrk popover-info logo-glow';
+                $logo_class = 'logo_netwrk logo-glow';
+            }
+
+            if (isset($cookies["nw_popover_logo"])) {
+                $logo_popover_class = '';
+                $logo_popover = '';
+            } else {
+                $logo_popover_class = 'popover-logo';
                 $logo_popover = 'See your community news';
             }
         ?>
-        <div class="<?php echo $logo_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+        <div class="<?php echo $logo_class;?> <?php echo $logo_popover_class;?>"
+             data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_logo" data-wrapper="popover-logo">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
              data-placement="bottom" data-content="<?php echo $logo_popover; ?>">
             <span class="logo-active">
                 <a href="javascript:" class="landing-trigger"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>" alt="logo"/></a>

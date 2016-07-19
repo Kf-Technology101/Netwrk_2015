@@ -70,6 +70,25 @@
 .info-popover {
     background: #5da5d8;
     color: #fff;
+    .popover-close {
+        height: 12px;
+        padding-right: 5px;
+        width: 100%;
+        .popover-close-trigger {
+            color: #ffffff;
+            font-size: 21px;
+            font-weight: 300;
+            opacity: 0.75;
+            float: right;
+            cursor: pointer;
+            line-height: 1;
+            text-shadow: 0 1px 0 #fff;
+            &:hover {
+                color: #ffffff;
+                opacity: 1;
+            }
+        }
+    }
     &.top {
         .arrow {
             &:after {
@@ -83,5 +102,8 @@
                 border-bottom-color: #5da5d8 !important;
             }
         }
+    }
+    &.post-filter-popover {
+        left: 0 !important;
     }
 }
