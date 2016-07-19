@@ -81,8 +81,17 @@ if (isset($cookies["isCoverPageVisited"])) {
               $logo_class = 'logo_netwrk option_logo_netwrk';
             else
               $logo_class = 'logo_netwrk option_logo_netwrk logo-glow';
+
+            if (isset($cookies["nw_popover_logo"])) {
+              $logo_popover_class = '';
+              $logo_popover = '';
+            } else {
+              $logo_popover_class = 'popover-logo';
+              $logo_popover = 'See your community news';
+            }
           ?>
-          <div class="<?php echo $logo_class;?>">
+          <div class="<?php echo $logo_class;?> <?php echo $logo_popover_class;?>"
+               data-placement="bottom" data-content="<?php echo $logo_popover; ?>">
             <span class="logo-active">
               <a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>"></a>
             </span>
@@ -124,7 +133,7 @@ if (isset($cookies["isCoverPageVisited"])) {
               $near_popover = 'Follow other areas and see what&rsquo;s around you';
             }
           ?>
-          <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>" data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+          <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
                data-placement="top" data-content="<?php echo $near_popover; ?>">
             <button type="button" class="btn-explore-location btn-active">
               <i class="navigation-icon fa fa-globe"></i>
