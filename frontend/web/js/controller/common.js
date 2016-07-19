@@ -37,7 +37,7 @@ var Common = {
         }
 
         // Display netwrk logo info popover
-        $('.popover-info').popover('show');
+        Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
         // Display near button popover
         Common.showHideInfoPopover('popover-near', 'nw_popover_near');
     },
@@ -48,33 +48,28 @@ var Common = {
         }
     },
 
-    callAjaxHidePopover: function(popoverWrapperClass, cookieName) {
+    showHideInfoPopover: function(popoverWrapperClass, cookieName) {
         var popoverWrapper = $('.'+popoverWrapperClass);
-        setTimeout(function() {
-            // Call ajax to set cookie
+        popoverWrapper.popover({
+            template: '<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="close" data-dismiss="alert">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+        });
+        popoverWrapper.popover('show');
+
+        $(document).on('click', '.popover .close' , function(){
+            $(this).parents('.popover').popover('destroy');
+        });
+
+        popoverWrapper.on('hidden.bs.popover', function(){
             var params = {'object': cookieName};
             Ajax.setGlowCookie(params).then(function (data) {
                 var json = $.parseJSON(data);
                 if (json.success == true) {
-                    // Destroy popover & remove class and content
-                    popoverWrapper.popover('destroy')
-                        .removeClass(popoverWrapperClass)
+                    // Remove class and content
+                    popoverWrapper.removeClass(popoverWrapperClass)
                         .attr('data-content', '');
                 }
             });
-        },4000);
-    },
-
-    showHideInfoPopover: function(popoverWrapperClass, cookieName) {
-        var popoverWrapper = $('.'+popoverWrapperClass);
-        popoverWrapper.popover('show');
-        if(popoverWrapperClass == 'popover-near') {
-            Common.callAjaxHidePopover(popoverWrapperClass, cookieName)
-        } else {
-            popoverWrapper.on('shown.bs.popover', function(){
-                Common.callAjaxHidePopover(popoverWrapperClass, cookieName)
-            });
-        }
+        });
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */
