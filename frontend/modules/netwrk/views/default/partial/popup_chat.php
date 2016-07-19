@@ -1,4 +1,17 @@
-<?php use yii\helpers\Url; ?>
+<?php
+    use yii\helpers\Url;
+    use yii\web\Cookie;
+    $cookies = Yii::$app->request->cookies;
+?>
+<script type="text/javascript">
+    <?php if (isset($cookies["nw_popover_chat_topic_title"])) {?>
+        var popoverChatTopicTitle = '',
+            chatTopicTitlePopover = '';
+    <?php } else { ?>
+        var popoverChatTopicTitle = 'popover-chat-topic-title',
+            chatTopicTitlePopover = "Checkout this line's highlights in its channel";
+    <?php } ?>
+</script>
 <script id="popup_chat" type="text/x-underscore-template">
     <div class='popup_chat_modal'>
         <div class="popup-box chat-popup" id="popup-chat-<%= post_id %>" data-id ='<%= post_id %>' data-chat-type='<%= chat_type %>'>
@@ -15,7 +28,13 @@
                 <% }else{ %>
                     <div class="popup-head-left">
                         <span class='popup-title-name'><%= post_name %></span>
-                        <span class='popup-title-description popup-topic-trigger' data-city-name='<%= city_name %>' data-city='<%= city %>' data-value='<%= topic_id %>'>
+                        <span class='popup-title-description popup-topic-trigger <%= popoverChatTopicTitle %>'
+                            data-city-name='<%= city_name %>'
+                            data-city='<%= city %>'
+                            data-value='<%= topic_id %>'
+                            data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+                            data-placement="top"
+                            data-content="<%= chatTopicTitlePopover %>">
                             <span class="topic-title">
                                 <%= post_description %>
                             </span>
