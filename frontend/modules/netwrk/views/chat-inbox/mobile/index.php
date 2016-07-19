@@ -42,6 +42,7 @@
 					<div class="panel-heading">
 						<a data-toggle="collapse" data-target="#collapseLocalPartyLines"
 						   href="javascript:" class="<?php echo $popover_class_party_lines;?>"
+						   data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_public_lines" data-wrapper="popover-chat-public-lines">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
 						   data-placement="bottom" data-content="<?php echo $party_lines_popover;?>">
 							<p class="panel-title">Popular public chat lines near you</p>
 						</a>
@@ -57,6 +58,7 @@
 				</div>
 			</div>
 			<div class="chat-lines-title <?php echo $popover_class_your_lines;?>"
+				 data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_your_lines" data-wrapper="popover-chat-your-lines">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
 				 data-placement="top" data-content="<?php echo $your_lines_popover;?>">Your lines</div>
 			<div id="chat_discussion" class="chat-lines-wrapper">
 				<ul>

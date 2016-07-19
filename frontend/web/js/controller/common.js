@@ -50,26 +50,27 @@ var Common = {
 
     showHideInfoPopover: function(popoverWrapperClass, cookieName) {
         var popoverWrapper = $('.'+popoverWrapperClass);
-        popoverWrapper.popover({
-            template: '<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="close" data-dismiss="alert">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-        });
-        popoverWrapper.popover('show');
+        if(typeof popoverWrapper.attr('data-content') != 'undefined'){
+            popoverWrapper.popover('show');
 
-        $(document).unbind().on('click', '.popover .close' , function(){
-            $(this).parents('.popover').popover('destroy');
-        });
-
-        popoverWrapper.on('hidden.bs.popover', function(){
-            var params = {'object': cookieName};
-            Ajax.setGlowCookie(params).then(function (data) {
-                var json = $.parseJSON(data);
-                if (json.success == true) {
-                    // Remove class and content
-                    popoverWrapper.removeClass(popoverWrapperClass)
-                        .attr('data-content', '');
-                }
+            var popoverClose = $('.popover').find('.popover-close-trigger');
+            popoverClose.unbind();
+            popoverClose.on('click', function(){
+                var cookieName = $(this).attr('data-cookie'),
+                    popoverWrapperClass = $(this).attr('data-wrapper'),
+                    popoverWrapper = $('.'+popoverWrapperClass);
+                $(this).parents('.popover').popover('destroy');
+                var params = {'object': cookieName};
+                Ajax.setGlowCookie(params).then(function (data) {
+                    var json = $.parseJSON(data);
+                    if (json.success == true) {
+                        // Remove class and content
+                        popoverWrapper.removeClass(popoverWrapperClass)
+                            .attr('data-content', '');
+                    }
+                });
             });
-        });
+        }
     },
 
     /* On clicking map btn in nav, it will redirect to default home on mobile */

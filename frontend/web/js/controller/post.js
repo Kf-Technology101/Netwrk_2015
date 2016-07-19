@@ -663,6 +663,10 @@ var Post ={
 				Post.OnclickVote();
 				Post.OnClickChat();
 				Post.onClickMeet();
+				// Display post filter popover
+				Common.showHideInfoPopover('popover-post-filter', 'nw_popover_post_filter');
+				// Display post feedback popover
+				Common.showHideInfoPopover('popover-post-feedback', 'nw_popover_post_feedback');
 				// Feedback related script calls
 				Common.feedbackAllTriggers();
 				if(isMobile){
