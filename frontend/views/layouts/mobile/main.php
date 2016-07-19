@@ -91,6 +91,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             }
           ?>
           <div class="<?php echo $logo_class;?> <?php echo $logo_popover_class;?>"
+               data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_logo" data-wrapper="popover-logo">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                data-placement="bottom" data-content="<?php echo $logo_popover; ?>">
             <span class="logo-active">
               <a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>"></a>
@@ -134,6 +135,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             }
           ?>
           <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
+               data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                data-placement="top" data-content="<?php echo $near_popover; ?>">
             <button type="button" class="btn-explore-location btn-active">
               <i class="navigation-icon fa fa-globe"></i>
