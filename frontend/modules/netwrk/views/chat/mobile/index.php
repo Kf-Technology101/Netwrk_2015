@@ -1,4 +1,16 @@
-<?php use yii\helpers\Url; ?>
+<?php
+    use yii\helpers\Url;
+    use yii\web\Cookie;
+    $cookies = Yii::$app->request->cookies;
+
+    if (isset($cookies["nw_popover_chat_topic_title"])) {
+        $popover_chat_topic_title = '';
+        $chat_topic_title_popover = '';
+    } else {
+        $popover_chat_topic_title = 'popover-chat-topic-title';
+        $chat_topic_title_popover = "Checkout this line's highlights in its channel";
+    }
+?>
 <?php if ($post->post_type == 1 ) { ?>
 <div id="post_chat" class='post-id-<?= $post->id ?> chat-box' data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
 <?php } else { ?>
@@ -12,8 +24,14 @@
             <?php if ($post->post_type == 1 ) { ?>
                 <span class="title post-title">
                     <span class="popup-title-name"><?= $post->title ?></span>
-                    <span class="popup-title-description chat-topic-trigger" title="<?= $post->topic->title ?>"
-                          data-city-name="<?= $post->topic->city->name?>" data-city="<?= $post->topic->city_id?>" data-value="<?= $post->topic->id?>">
+                    <span class="popup-title-description chat-topic-trigger <?= $popover_chat_topic_title ?>"
+                          title="<?= $post->topic->title ?>"
+                          data-city-name="<?= $post->topic->city->name?>"
+                          data-city="<?= $post->topic->city_id?>"
+                          data-value="<?= $post->topic->id?>"
+                          data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
+                          data-placement="bottom"
+                          data-content="<?= $chat_topic_title_popover ?>">
                         <?= $post->topic->title ?>
                     </span>
                 </span>

@@ -96,6 +96,11 @@ var MainWs = {
                 PopupChat.FetchEmojiOne({type: 'fetch'}, PopupChat.params.post);
 
                 if(chat_type == 1){
+                    if(!$('.chat-topic-title-popover:visible').length){
+                        // Display post feedback popover
+                        Common.showHideInfoPopover('popover-chat-topic-title', 'nw_popover_chat_topic_title');
+                    }
+                    // Feedback related script calls
                     Common.feedbackAllTriggers();
                 }
             }
