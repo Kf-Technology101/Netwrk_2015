@@ -53,7 +53,9 @@ var Common = {
         if(typeof popoverWrapper.attr('data-content') != 'undefined'){
             popoverWrapper.popover('show');
 
-            $(document).unbind().on('click', '.popover .popover-close-trigger', function(){
+            var popoverClose = $('.popover').find('.popover-close-trigger');
+            popoverClose.unbind();
+            popoverClose.on('click', function(){
                 var cookieName = $(this).attr('data-cookie'),
                     popoverWrapperClass = $(this).attr('data-wrapper');
                 $(this).parents('.popover').popover('destroy');
