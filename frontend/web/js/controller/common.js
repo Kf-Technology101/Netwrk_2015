@@ -57,7 +57,8 @@ var Common = {
             popoverClose.unbind();
             popoverClose.on('click', function(){
                 var cookieName = $(this).attr('data-cookie'),
-                    popoverWrapperClass = $(this).attr('data-wrapper');
+                    popoverWrapperClass = $(this).attr('data-wrapper'),
+                    popoverWrapper = $('.'+popoverWrapperClass);
                 $(this).parents('.popover').popover('destroy');
                 var params = {'object': cookieName};
                 Ajax.setGlowCookie(params).then(function (data) {
