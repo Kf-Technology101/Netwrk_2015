@@ -325,8 +325,12 @@ var LandingPage = {
 		// parent.show();
 		parent.modal({
 			backdrop: true,
-			keyboard: false,
+			keyboard: false
 		});
+
+		setTimeout(function(){
+			parent.modal('hide');
+		},4000);
 	},
 
 	OnHideModalWelcome: function(){
@@ -352,7 +356,7 @@ var LandingPage = {
 		// parent.show();
 		parent.modal({
 			backdrop: true,
-			keyboard: false,
+			keyboard: false
 		});
 	},
 

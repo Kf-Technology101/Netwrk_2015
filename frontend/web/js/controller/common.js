@@ -55,7 +55,7 @@ var Common = {
         });
         popoverWrapper.popover('show');
 
-        $(document).on('click', '.popover .close' , function(){
+        $(document).unbind().on('click', '.popover .close' , function(){
             $(this).parents('.popover').popover('destroy');
         });
 
