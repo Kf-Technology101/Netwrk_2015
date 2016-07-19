@@ -118,6 +118,7 @@ var CoverPage = {
 			
 			var zcode = CoverPage.zcode;
 
+			console.log(zcode.val());
 			/*if(!isNaN(zcode.val())) {
 				// var res = /^\d{5}(-\d{4})?$/.test(zcode.val());*/
 				CoverPage.checkZipCode(zcode.val());
@@ -157,9 +158,9 @@ var CoverPage = {
 	},
 
 	checkZipCode: function(zipcode){
-		var arr = [ 46037, "46037" ];
+		var arr = [46037,'46037',44115,'44115'];
 
-		if(jQuery.inArray( zipcode, arr ) == 1){
+		if(jQuery.inArray( zipcode, arr ) > -1){
 			$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
 				var params = data;
 				Ajax.set_cover_cookie(params).then(function(data){
