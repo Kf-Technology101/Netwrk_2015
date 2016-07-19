@@ -1,4 +1,8 @@
-<?php use yii\helpers\Url; ?>
+<?php
+    use yii\helpers\Url;
+    use yii\web\Cookie;
+    $cookies = Yii::$app->request->cookies;
+?>
 <div class="modal" id="list_post">
     <!-- <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div> -->
     <div class="modal-dialog">
@@ -57,11 +61,28 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    <?php if (isset($cookies["nw_popover_post_feedback"])) {?>
+        var popoverClassPostFeedback = '',
+            postFeedbackPopover = '';
+    <?php } else { ?>
+        var popoverClassPostFeedback = 'popover-post-feedback',
+            postFeedbackPopover = 'Give some feedback to use the best discussion system ever built!';
+    <?php } ?>
+
+    <?php if (isset($cookies["nw_popover_post_filter"])) {?>
+        var popoverClassPostFilter = '',
+            postFilterPopover = '';
+    <?php } else { ?>
+        var popoverClassPostFilter = 'popover-post-filter',
+            postFilterPopover = "Cycle through the line's highlights";
+    <?php } ?>
+</script>
 <script id="name_post_list" type="text/x-underscore-template" >
     <span class="title"><%= name.zipcode %> > <%= name.title %></span>
 </script>
 <script id="post_list" type="text/x-underscore-template" >
-    <% _.each(posts,function(post){ %>
+    <% _.each(posts,function(post,i){ %>
         <div class="panel panel-default panel-post">
             <div class="panel-heading" role="tab" id="heading<%= post.id %>">
                 <div class="panel-title panel-post-title">
@@ -114,8 +135,15 @@
                                 </a>
                                 <div class="post-stream-heading">
                                     <span class="stream-filters pull-left">
-                                        <div class="pull-left line-stream stream-trigger"
-                                              data-post-id="<%= post.id%>" data-type="line" data-count="<%= post.stream_count%>">
+                                        <div class="pull-left line-stream stream-trigger <% if(i == 0){%><%= popoverClassPostFilter %><%}%>"
+                                            data-post-id="<%= post.id%>"
+                                            data-type="line"
+                                            data-count="<%= post.stream_count%>"
+                                            <% if(i == 0){%>
+                                                data-template='<div class="popover info-popover post-filter-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_filter" data-wrapper="popover-post-filter">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+                                                data-placement="bottom"
+                                                data-content="<%= postFilterPopover %>"
+                                            <% } %>>
                                             <span class="count"><%= post.stream_count%></span>
                                             <span class="text-right">Highlights</span>
                                         </div>
@@ -137,13 +165,23 @@
                                     </span>
                                     <span class="stream-options text-right">
                                         <% if(isGuest){%>
-                                            <div class="pull-right respond feedback-trigger login-trigger"
-                                                 data-modal="Post">Feedback</div>
+                                            <div class="pull-right respond feedback-trigger login-trigger <% if(i == 0){%><%= popoverClassPostFeedback %><%}%>"
+                                                 data-modal="Post"
+                                                 <% if(i == 0){%>
+                                                    data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+                                                    data-placement="bottom"
+                                                    data-content="<%= postFeedbackPopover %>"
+                                                 <% } %>>Feedback</div>
                                         <% } else { %>
-                                            <div class="pull-right respond feedback-trigger"
-                                                  data-parent="#list_post"
-                                                  data-object="post"
-                                                  data-id="<%= post.id%>">Feedback</div>
+                                            <div class="pull-right respond feedback-trigger <% if(i == 0){%><%= popoverClassPostFeedback %><%}%>"
+                                                data-parent="#list_post"
+                                                data-object="post"
+                                                data-id="<%= post.id%>"
+                                                <% if(i == 0){%>
+                                                    data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+                                                    data-placement="bottom"
+                                                    data-content="<%= postFeedbackPopover %>"
+                                                <%}%>>Feedback</div>
                                         <% } %>
                                         <div class="pull-right glow-btn-wrapper jump chat-trigger">
                                             <div class="btn-active">Jump in</div>
