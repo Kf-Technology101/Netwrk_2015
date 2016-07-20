@@ -1447,12 +1447,12 @@ class DefaultController extends BaseController
             $Topic = new Topic;
             $Topic->city_id = $value->id;
             $Topic->user_id = 0;
-            $Topic->title = 'Problem Solving';
+            $Topic->title = 'Local Problem Solving';
             $Topic->save();
 
             $Post = new Post();
             $Post->title = 'solveproblemstogether';
-            $Post->content = 'Problems will be reported here. Remember, it takes a community to fix issues and make things better.';
+            $Post->content = "Welcome to the solution center's main line! This line is open for all discussion, just remember that the key to finding answers is seeing all the important angles. Please add a line for new problems that require extensive deliberation.";
             $Post->topic_id = $Topic->id;
             $Post->user_id = 0;
             $Post->post_type = 1;
@@ -1535,12 +1535,12 @@ class DefaultController extends BaseController
             $Topic = new Topic;
             $Topic->city_id = $value->id;
             $Topic->user_id = 0;
-            $Topic->title = 'Main Channel';
+            $Topic->title = 'Local community channel';
             $Topic->save();
 
             $Post = new Post();
             $Post->title = 'Welcome';
-            $Post->content = 'Our home is yours. Kick your shoes off, relax, help yourself to the fridge and remember, life is good.';
+            $Post->content = "Welcome to the community center's main chat line! Introduce yourself, explore a bit, help yourself to the fridge and remember, Life is good!";
             $Post->topic_id = $Topic->id;
             $Post->user_id = 0;
             $Post->post_type = 1;
