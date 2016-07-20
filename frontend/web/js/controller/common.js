@@ -67,6 +67,24 @@ var Common = {
                         // Remove class and content
                         popoverWrapper.removeClass(popoverWrapperClass)
                             .attr('data-content', '');
+
+                        if(!isMobile) {
+                            if(cookieName == 'nw_popover_chat_topic_title'){
+                                var popupChatHtml = $("#popup_chat").html();
+                                popupChatHtml = popupChatHtml.replace('<%= popoverChatTopicTitle %>', '');
+                                $("#popup_chat").html(popupChatHtml);
+                            }
+                            else if(cookieName == 'nw_popover_post_filter'){
+                                var popupChatHtml = $("#post_list").html();
+                                popupChatHtml = popupChatHtml.replace('<%= popoverClassPostFilter %>', '');
+                                $("#post_list").html(popupChatHtml);
+                            }
+                            else if(cookieName == 'nw_popover_post_feedback'){
+                                var popupChatHtml = $("#post_list").html();
+                                popupChatHtml = popupChatHtml.replace('<%= popoverClassPostFeedback %>', '');
+                                $("#post_list").html(popupChatHtml);
+                            }
+                        }
                     }
                 });
             });
