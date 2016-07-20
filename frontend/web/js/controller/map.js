@@ -176,19 +176,15 @@
 				if(UserLogin) {
 					var params = {'user_id': UserLogin};
 					Ajax.getUserById(params).then(function(data){
-						var json = $.parseJSON(data);
-						var newLat = json.data.lat;
-						var newLng = json.data.lng;
-						console.log(newLat);
-						console.log(newLng);
-						setTimeout(function() {
-							if(newLat && newLng){
-								Map.center = new google.maps.LatLng(newLat, newLng);
-							}else{
-								Map.center = new google.maps.LatLng(39.7662195,-86.441277);
-							}
-							google.maps.event.addDomListener(window, 'load', Map.initialize());
-						}, 200);
+						var json = $.parseJSON(data),
+						 	newLat = json.data.lat,
+						 	newLng = json.data.lng;
+						if(newLat && newLng){
+							Map.center = new google.maps.LatLng(newLat, newLng);
+						}else{
+							Map.center = new google.maps.LatLng(lat, lng);
+						}
+						google.maps.event.addDomListener(window, 'load', Map.initialize());
 					});
 				} else {
 					if(lat && lng){
