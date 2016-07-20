@@ -373,7 +373,7 @@ var PopupChat = {
                     PopupChat.GetListEmoji();
                     PopupChat.HandleEmoji();
                     PopupChat.ShowChatBox();
-                },1);
+                },300);
             }
             //update chat discusstion notification count of that post user
             ChatInbox.ChangeStatusUnreadDiscussionMsg(PopupChat.params.post);
