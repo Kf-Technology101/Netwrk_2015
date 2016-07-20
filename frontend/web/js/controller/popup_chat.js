@@ -363,15 +363,17 @@ var PopupChat = {
                     PopupChat.ShowChatBox();
                 }
             } else {
-                window.ws.send("fetch", {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
-                $(PopupChat.parent).find('textarea').focus();
-                PopupChat.OnclickLogin();
-                PopupChat.OnWsChat();
-                PopupChat.OnWsFile();
-                PopupChat.HandleWsFile();
-                PopupChat.GetListEmoji();
-                PopupChat.HandleEmoji();
-                PopupChat.ShowChatBox();
+                setTimeout(function(){
+                    window.ws.send("fetch", {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+                    $(PopupChat.parent).find('textarea').focus();
+                    PopupChat.OnclickLogin();
+                    PopupChat.OnWsChat();
+                    PopupChat.OnWsFile();
+                    PopupChat.HandleWsFile();
+                    PopupChat.GetListEmoji();
+                    PopupChat.HandleEmoji();
+                    PopupChat.ShowChatBox();
+                },1);
             }
             //update chat discusstion notification count of that post user
             ChatInbox.ChangeStatusUnreadDiscussionMsg(PopupChat.params.post);
