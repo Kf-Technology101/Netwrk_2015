@@ -1635,4 +1635,26 @@ class DefaultController extends BaseController
         $data = json_encode($data);
         return $data;
     }
+
+    public function actionGetUserById()
+    {
+        $user_id = isset(Yii::$app->user->id) ? Yii::$app->user->id : 0;
+
+        if($user_id > 0) {
+            $user = User::find()->where(['user.id' => $user_id])->with('profile')->one();
+
+
+            $item = [
+                'user_id' => $user->id,
+                'lat' => $user->profile->lat,
+                'lng' => $user->profile->lng
+            ];
+            $data = ['success'=> true, 'data' => $item];
+        } else {
+            $data = ['error'=> true, 'msg' => 'User not logged in'];
+        }
+
+        $data = json_encode($data);
+        return $data;
+    }
 }

@@ -1632,6 +1632,24 @@ var Ajax = {
         });
 
         return defer.promise();
+    },
+
+    getUserById: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/get-user-by-id";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
     }
 };
 
