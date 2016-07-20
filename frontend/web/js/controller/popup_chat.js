@@ -350,7 +350,19 @@ var PopupChat = {
             PopupChat.params.post = data_link['post'];
             PopupChat.params.chat_type = data_link['chat_type'];
             PopupChat.params.previous_flag = data_link['previous-flag'];
-            /*window.ws.onopen = function(){
+            if(isGuest) {
+                window.ws.onopen = function(){
+                    window.ws.send("fetch", {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
+                    $(PopupChat.parent).find('textarea').focus();
+                    PopupChat.OnclickLogin();
+                    PopupChat.OnWsChat();
+                    PopupChat.OnWsFile();
+                    PopupChat.HandleWsFile();
+                    PopupChat.GetListEmoji();
+                    PopupChat.HandleEmoji();
+                    PopupChat.ShowChatBox();
+                }
+            } else {
                 window.ws.send("fetch", {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
                 $(PopupChat.parent).find('textarea').focus();
                 PopupChat.OnclickLogin();
@@ -360,16 +372,7 @@ var PopupChat = {
                 PopupChat.GetListEmoji();
                 PopupChat.HandleEmoji();
                 PopupChat.ShowChatBox();
-              }*/
-            window.ws.send("fetch", {'post_id': PopupChat.params.post, 'chat_type': PopupChat.params.chat_type});
-            $(PopupChat.parent).find('textarea').focus();
-            PopupChat.OnclickLogin();
-            PopupChat.OnWsChat();
-            PopupChat.OnWsFile();
-            PopupChat.HandleWsFile();
-            PopupChat.GetListEmoji();
-            PopupChat.HandleEmoji();
-            PopupChat.ShowChatBox();
+            }
             //update chat discusstion notification count of that post user
             ChatInbox.ChangeStatusUnreadDiscussionMsg(PopupChat.params.post);
             Default.ShowNotificationOnChat();
