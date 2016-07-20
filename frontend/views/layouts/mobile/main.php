@@ -201,7 +201,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       <p class="pull-right"><?php //Yii::powered() ?></p>
       </div>
   </footer> -->
-
+  <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
   <?php $this->endBody() ?>
 </body>
 <script type="text/javascript">

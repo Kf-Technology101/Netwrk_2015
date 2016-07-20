@@ -26,7 +26,8 @@ var Create_Group={
     added_users: [],
 
     initialize: function(city, topic, name_city, group_id, byGroup, latitude, longitude) {
-
+        Common.ShowModalComeBack();
+        return;
         Create_Group.modal = $('#create_group_modal');
         if (typeof group_id != "undefined" && group_id != null) {
             this.params.id = group_id;

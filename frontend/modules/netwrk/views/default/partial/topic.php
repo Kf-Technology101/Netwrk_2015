@@ -64,7 +64,7 @@
               </div>
           </div>
           <div class="tab-header tab-header-group clearfix hidden">
-              <div class="tab-title">
+              <!--<div class="tab-title">
                   <p class="tab-title-text">Groups</p>
                   <div class="groups-dropdown dropdown input-group">
                       <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
@@ -78,7 +78,7 @@
               </div>
               <div class="tab-btn">
                   <p class="btn-create-topic" id="create_group"><i class="fa fa-plus-circle"></i>Create Group</p>
-              </div>
+              </div>-->
           </div>
       </div>
       <div class="modal-body containt">
@@ -96,9 +96,9 @@
                   <p class="no-data">This community has no topics. Be the first to create a topic.</p>
               </div>
           </div>
-          <div id="tab_groups" class="tab">
-
-              <div class="topic_group_top">
+          <div id="tab_groups" class="tab text-center">
+              <h1>Come back later</h1>
+              <!--<div class="topic_group_top">
                   <div class="topic_group_name">
                       <span>Football experts</span>
                       <button>Total People</button>
@@ -120,39 +120,39 @@
                   </div>
               </div>
 
-              <div id="item_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div id="item_group_list_post" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
 
               </div>
-              <div id="item_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div id="item_group_list_view" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
 
               </div>
-              <div id="item_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div id="item_group_list_recent" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
 
               </div>
 
-              <div id="item_topic_group_list_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div id="item_topic_group_list_post" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
-              <div id="item_topic_group_list_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div id="item_topic_group_list_view" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
-              <div id="item_topic_group_list_recent" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div id="item_topic_group_list_recent" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
 
-              <div class="filter_page" id="group_topic_post_filter_post" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div class="filter_page" id="group_topic_post_filter_post" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
-              <div class="filter_page" id="group_topic_post_filter_view" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div class="filter_page" id="group_topic_post_filter_view" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
-              <div class="filter_page" id="group_topic_post_filter_brilliant" data-img="<?= Url::to('@web/img/icon/timehdpi.png'); ?>">
+              <div class="filter_page" id="group_topic_post_filter_brilliant" data-img="<?/*= Url::to('@web/img/icon/timehdpi.png'); */?>">
                   <p class="no-data">There is no data available yet</p>
               </div>
 
               <div class="filter_page" id="item_total_users">
                   <p class="no-data">No users available yet</p>
-              </div>
+              </div>-->
               
           </div>
       </div>

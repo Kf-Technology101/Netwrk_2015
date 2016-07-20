@@ -437,4 +437,17 @@ var Common = {
         });
     },
 
+    ShowModalComeBack: function(){
+        var modal = $('#comeBackLater');
+
+        modal.modal({
+            backdrop: true,
+            keyboard: false
+        });
+
+        $('.modal-backdrop.in').click(function(e) {
+            self.reset_modal();
+            $('#comeBackLater').modal('hide');
+        });
+    }
 };
