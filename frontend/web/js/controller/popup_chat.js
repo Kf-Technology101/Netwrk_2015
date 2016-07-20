@@ -34,6 +34,8 @@ var PopupChat = {
         PopupChat.SetUrl();
         PopupChat.SetDataChat(true);
         if(isMobile){
+            MainWs.setUrl();
+            MainWs.wsConnect(UserLogin);
             PopupChat.SetHeightContainerChat();
             PopupChat.OnClickChatInboxBtnMobile();
             ChatInbox.HideMeetIconMobile();
