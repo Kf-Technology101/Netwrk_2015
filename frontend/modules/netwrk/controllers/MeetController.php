@@ -305,7 +305,7 @@ class MeetController extends BaseController
     }
 
     public function actionGetUserMeetProfile(){
-
+        $system_user_id = Yii::$app->params['systemUserId'];
         $chat_post_id = $_POST['post_id'];
         $user_meet_rand = [];
         $users = [];
@@ -315,6 +315,7 @@ class MeetController extends BaseController
             $userCurrent = 0;
             $user_meet_rand = User::find()
                                 ->addSelect(["*", "RAND() order_num"])
+                                ->where(['not',['id'=>$system_user_id]])
                                 ->orderBy(['order_num'=> SORT_DESC])
                                 ->all();
         }else{
@@ -360,6 +361,7 @@ class MeetController extends BaseController
                 $user_meet_rand = User::find()
                             ->addSelect(["*", "RAND() order_num"])
                             ->where('id in ('.$list_meet_owner. ')')
+                            ->andWhere(['not',['id'=>$system_user_id]])
                             ->with('profile')
                             ->orderBy(['order_num'=> SORT_DESC])
                             ->all();
@@ -381,6 +383,7 @@ class MeetController extends BaseController
             $users = User::find()
                             ->addSelect(["*", "RAND() order_num"])
                             ->where('id NOT IN ('.$l.')')
+                            ->andWhere(['not',['id'=>$system_user_id]])
                             ->with('profile')
                             ->orderBy(['order_num'=> SORT_DESC])
                             ->all();
@@ -521,6 +524,7 @@ class MeetController extends BaseController
     }
 
     public function actionGetUserMeetProfileDiscussion(){
+        $system_user_id = Yii::$app->params['systemUserId'];
         $user_meet_rand = [];
         $users = [];
         $current_date = date('Y-m-d H:i:s');
@@ -531,6 +535,7 @@ class MeetController extends BaseController
             $userCurrent = 0;
             $user_meet_rand = User::find()
                                 ->addSelect(["*", "RAND() order_num"])
+                                ->where(['not',['id'=>$system_user_id]])
                                 ->orderBy(['order_num'=> SORT_DESC])
                                 ->all();
         }else{
@@ -577,6 +582,7 @@ class MeetController extends BaseController
                 $user_meet_rand = User::find()
                             ->addSelect(["*", "RAND() order_num"])
                             ->where('id in ('.$list_meet_owner. ')')
+                            ->andWhere(['not',['id'=>$system_user_id]])
                             ->with('profile')
                             ->orderBy(['order_num'=> SORT_DESC])
                             ->all();
@@ -597,6 +603,7 @@ class MeetController extends BaseController
             $users = User::find()
                             ->addSelect(["*", "RAND() order_num"])
                             ->where('id NOT IN ('.$l.')')
+                            ->andWhere(['not',['id'=>$system_user_id]])
                             ->with('profile')
                             ->orderBy(['order_num'=> SORT_DESC])
                             ->all();
