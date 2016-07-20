@@ -89,7 +89,7 @@ var Common = {
         target.unbind();
         target.on('click',function(e){
             if(isMobile){
-                /*var btnWrapper = $(this).closest('.btn-nav-map');
+                var btnWrapper = $(this).closest('.btn-nav-map');
                 if(btnWrapper.hasClass('glow-btn-wrapper')) {
                     // Call ajax to set cookie
                     var params = {'object': 'nw_glow_near_btn'};
@@ -98,13 +98,9 @@ var Common = {
                         if(json.success == true){
                             // Remove glow wrapper class
                             btnWrapper.removeClass('glow-btn-wrapper');
-                            // Destroy popover
-                            btnWrapper.popover('destroy')
-                                    .removeClass('popover-near')
-                                    .attr('data-content','');
                         }
                     });
-                }*/
+                }
 
                 sessionStorage.show_landing = 1;
                 sessionStorage.show_blue_dot = 1;
@@ -198,7 +194,7 @@ var Common = {
         target.unbind();
         target.on('click', function () {
             var btnWrapper = $(this).closest('.btn-nav-map');
-            /*if(btnWrapper.hasClass('glow-btn-wrapper')) {
+            if(btnWrapper.hasClass('glow-btn-wrapper')) {
                 // Call ajax to set cookie
                 var params = {'object': 'nw_glow_near_btn'};
                 Ajax.setGlowCookie(params).then(function (data) {
@@ -206,13 +202,9 @@ var Common = {
                     if(json.success == true){
                         // Remove glow wrapper class
                         btnWrapper.removeClass('glow-btn-wrapper');
-                        // Destroy popover
-                        btnWrapper.popover('destroy')
-                            .removeClass('popover-near')
-                            .attr('data-content','');
                     }
                 });
-            }*/
+            }
 
             //hide all opened modal
             $('.modal').modal('hide');
