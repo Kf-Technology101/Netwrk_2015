@@ -95,6 +95,7 @@ var Login={
 			}, 500)
 		}
 		//reload the map, highlight users home location, favorite zipcode
+		Map.main();
 		Map.initialize();
 	},
 
