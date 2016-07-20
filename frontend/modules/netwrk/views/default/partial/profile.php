@@ -196,8 +196,9 @@
             </div>
             <% }); %>
             <% } else {%>
-            <div class="group-item">
-                <div class="alert alert-info">You haven't created any group yet. Please check out any community and create a group.</div>
+            <div class="group-item text-center">
+                <h1>Come back later</h1>
+                <!--<div class="alert alert-info">You haven't created any group yet. Please check out any community and create a group.</div>-->
             </div>
             <% } %>
         </table>
