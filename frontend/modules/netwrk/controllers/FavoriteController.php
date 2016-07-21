@@ -19,7 +19,7 @@ class FavoriteController extends BaseController
         $returnData = array();
         //Get params
         $object_type = isset($_GET['object_type']) ? $_GET['object_type'] : '';
-        $currentUser = Yii::$app->user->id;
+        $currentUser = isset($_GET['user_id']) ? $_GET['user_id'] : Yii::$app->user->id;
 
         //if object_type is city then find does currentUser already favorited city previously.
         if ($object_type == 'city') {
