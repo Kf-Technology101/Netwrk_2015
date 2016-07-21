@@ -20,8 +20,9 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="post">
+    <div class="container text-center">
+        <h1>Come back later</h1>
+        <!--<div class="post">
             <div class="post-title">
                 <p class="title">Group name</p>
                 <div class="input-group">
@@ -39,18 +40,18 @@
                     </ul>
                 </div>
             </div>
-            <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
+            <?php /*if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): */?>
                 <div class="group-category-content">
                     <section class="group-category-wrapper">
                         <p class="title">Type</p>
                         <select name="office" class="form-control dropdown-office">
-                            <?php foreach($zipcode_cities as $item): ?>
-                                <option value="<?php echo $item['id'] ?>" data-name-city="<?php echo $item['name'] ?>" data-value="<?php echo $item['id'] ?>"><?php echo $item['office'] ?></option>
-                            <?php endforeach; ?>
+                            <?php /*foreach($zipcode_cities as $item): */?>
+                                <option value="<?php /*echo $item['id'] */?>" data-name-city="<?php /*echo $item['name'] */?>" data-value="<?php /*echo $item['id'] */?>"><?php /*echo $item['office'] */?></option>
+                            <?php /*endforeach; */?>
                         </select>
                     </section>
                 </div>
-            <?php endif; ?>
+            <?php /*endif; */?>
             <div class="post-message">
                 <p class="title">Invite users by email</p>
                 <textarea class="message" id="emails-input" placeholder="Enter users or emails separated by commas ( , )" maxlength="1024"></textarea>
@@ -77,6 +78,6 @@
                 <span>Create group</span>
                 <i class="fa fa-check"></i>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
