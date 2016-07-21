@@ -9,6 +9,7 @@ use frontend\modules\netwrk\models\Role;
 use frontend\modules\netwrk\models\Profile;
 use frontend\modules\netwrk\models\Group;
 use frontend\modules\netwrk\models\City;
+use frontend\modules\netwrk\models\Favorite;
 use frontend\modules\netwrk\models\Post;
 use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\UserSettings;
@@ -203,6 +204,19 @@ class UserController extends BaseController
                 $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
+
+                $city = City::find()->select('city.*')
+                    ->where(['zip_code' => $zipcode])
+                    ->andWhere('office_type is null')
+                    ->one();
+
+                $favorite = new Favorite;
+                $favorite->user_id = $user->id;
+                $favorite->type = 'city';
+                $favorite->city_id = $city->id;
+                $favorite->status = 1;
+                $favorite->created_at = date('Y-m-d H:i:s');
+                $favorite->save();
                 $data = array('status' => 1,'data'=>Yii::$app->user->id);
             }else{
                 $data = array('status' => 0,'data'=>$form);
@@ -387,6 +401,19 @@ class UserController extends BaseController
                 $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
+
+                //auto follow 
+                $city = City::find()->select('city.*')
+                    ->where(['zip_code' => $zipcode])
+                    ->andWhere('office_type is null')
+                    ->one();
+                $favorite = new Favorite;
+                $favorite->user_id = $user->id;
+                $favorite->type = 'city';
+                $favorite->city_id = $city->id;
+                $favorite->status = 1;
+                $favorite->created_at = date('Y-m-d H:i:s');
+                $favorite->save();
 
                 // consume userKey
                 $userKey->consume();
