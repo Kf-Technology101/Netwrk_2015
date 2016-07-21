@@ -431,7 +431,7 @@ var Common = {
 
                     setTimeout(function(){
                         feedbackAlert.html('').addClass('hide');
-                    }, 1200);
+                    }, 1500);
                 }
             });
         });
