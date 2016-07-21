@@ -279,11 +279,10 @@ var Default ={
             var action = $('.wrap-mobile').attr('data-action');
             if(action == 'home') {
                 sessionStorage.show_blue_dot = 0;
-                console.log(Map.map.getZoom()+'in show blue dot and its home page'+sessionStorage.show_blue_dot);
-
                 if (sessionStorage.show_blue_dot_zoom12 == 1) {
-                    Map.getBrowserCurrentPosition(Map.map, 'near');
                     sessionStorage.show_blue_dot_zoom12 = 0;
+                    Map.getBrowserCurrentPosition(Map.map, 'near');
+                    console.log('Current zoom is '+ Map.map.getZoom() + ' & show blue dot status = '+sessionStorage.show_blue_dot);
                 } else {
                     Map.getBrowserCurrentPosition(Map.map, 'build');
                 }

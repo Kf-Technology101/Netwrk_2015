@@ -300,7 +300,6 @@ function homePage(){
           removeLogoGlow($(this));
           e.preventDefault();
           sessionStorage.show_landing = 1;
-          sessionStorage.map_zoom = 7;
           window.location.href = baseUrl + '/netwrk/default/home';
       });
     } else {
@@ -308,6 +307,7 @@ function homePage(){
           removeLogoGlow($(this));
           e.preventDefault();
           sessionStorage.show_landing = 0;
+          sessionStorage.show_blue_dot_zoom12 = 1;
           window.location.href = baseUrl + '/netwrk/default/home';
       });
     }
