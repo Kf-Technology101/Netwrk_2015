@@ -21,7 +21,7 @@ var LandingPage = {
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
-			LandingPage.OnHideModalLanding();
+			LandingPage.OnShowHideModalLanding();
 			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
@@ -309,10 +309,16 @@ var LandingPage = {
         })
 	},
 
-	OnHideModalLanding: function(){
+	OnShowHideModalLanding: function(){
+		$(LandingPage.modal).on('shown.bs.modal',function(e) {
+			// Display near button popover
+			Common.showHideInfoPopover('popover-near', 'nw_popover_near');
+		});
         $(LandingPage.modal).on('hidden.bs.modal',function(e) {
         	// LandingPage.ResetData();
         	$('.logo_netwrk > a').removeClass('landing-shown');
+			// hide near button popover
+			$('.popover-near').popover('hide');
         });
 	},
 
