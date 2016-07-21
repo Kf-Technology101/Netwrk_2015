@@ -57,7 +57,7 @@
                     ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); ?>
         </div>
         <div class="col-field-name zipcode">
-            <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode','maxlength'=>5)); ?>
+            <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => '46140','maxlength'=>5)); ?>
         </div>
         <!--<div class="col-field-name age">
             <?/*= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); */?>
@@ -65,7 +65,7 @@
 
         <?php
             $years_to = date('Y') - 17;
-            $years_from = $years_to - 100;
+            $years_from = 1985;//$years_to - 100;
 
             $day = array_combine(range(1,31),range(1,31));
             $months = array_combine(range(1,12),range(1,12));
