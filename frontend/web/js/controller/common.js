@@ -34,12 +34,12 @@ var Common = {
 
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
+            // Display near button popover
+            Common.showHideInfoPopover('popover-near', 'nw_popover_near');
         }
 
         // Display netwrk logo info popover
         Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
-        // Display near button popover
-        Common.showHideInfoPopover('popover-near', 'nw_popover_near');
     },
 
     console: function(){
