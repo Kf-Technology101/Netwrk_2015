@@ -106,7 +106,7 @@
                             <div class="image">
                                 <img src="<%= post.avatar %>">
                                 <span class="feedback-img pull-right"></span>
-                                <% if(post.meet == 0) { %>
+                                <% if(post.meet == 0 && post.post_user_id != 1) { %>
                                     <span class="meet-img meet-trigger meet-<%= post.post_user_id%>" data-user-id="<%= post.post_user_id%>"></span>
                                 <% } %>
                             </div>
