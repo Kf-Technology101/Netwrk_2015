@@ -5,6 +5,7 @@ var Signup={
 	form_id:'#register-form',
 	validate:true,
 	state: 'Indiana',
+	country: 'United States',
 	zipcode: false,
 	lat: 0,
 	lng: 0,
@@ -264,8 +265,8 @@ var Signup={
         	var address = data.results[0].address_components;
         	var geometry = data.results[0].geometry.location;
         	$.each(address,function(i,e){
-        		if(e.types[0] == 'administrative_area_level_1' && e.long_name == Signup.state){
-
+				//allow zipcode from united states only
+        		if(e.types[0] == 'country' && e.long_name == Signup.country){
         			Signup.zipcode = 1;
 	            	Signup.lat = geometry.lat;
 	            	Signup.lng = geometry.lng;

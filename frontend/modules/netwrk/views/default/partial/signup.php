@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="col-field-name zipcode field">
-                        <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zip Code','maxlength'=>5)); ?>
+                        <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => '46140','maxlength'=>5)); ?>
                     </div>
 
                     <!--<div class="col-field-name age field">
@@ -84,7 +84,7 @@
                     </div>-->
                     <?php
                         $years_to = date('Y') - 17;
-                        $years_from = $years_to - 100;
+                        $years_from = 1985;//$years_to - 100;
 
                         $day = array_combine(range(1,31),range(1,31));
                         $months = array_combine(range(1,12),range(1,12));
