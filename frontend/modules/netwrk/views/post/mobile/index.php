@@ -220,35 +220,31 @@
             <% } %>
         </div>
         <div class="top-post-content">
-          <%
-            var len_post = feed.top_post.length;
-            _.each(feed.top_post,function(e,i){
-              if(i == len_post - 1){%>
-                  <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
-              <% }else{ %>
-                  <div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
-              <% } %>
-                  <div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
+            <%
+                var len_post = feed.top_post.length;
+                _.each(feed.top_post,function(e,i){
+                    if(i == len_post - 1){%>
+                        <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+                    <% }else{ %>
+                        <div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+                    <% } %>
+                            <div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
 
-                  <div class="post">
-                    <p class="post-title"><%= e.title %></p>
-                    <div class="post-content"><%= e.content%></div>
-                  </div>
-                  <div class="action">
-                    <div class="chat"><i class="fa fa-comments"></i>Chat</div>
-
-                    <span class="brilliant">
-                    <% if (e.brilliant_count) { %>
-                        <%= e.brilliant_count%>
-                    <%}else{%>
-                        <%= 0 %>
-                    <%}%>
-                    </span>
-                  </div>
-                </div>
-          <%
-            });
-          %>
+                                <div class="post">
+                                    <p class="post-title"><%= e.title %></p>
+                                    <div class="post-content"><%= e.content%></div>
+                                </div>
+                                <div class="action">
+                                    <div class="chat"><i class="fa fa-comments"></i>Jump in</div>
+                                    <span class="chat feedback-wrapper">
+                                      <div class="feedback-line"></div>
+                                      <div class="feedback">F</div>
+                                    </span>
+                                </div>
+                            </div>
+                        <%
+                    });
+            %>
         </div>
     </div>
     <div class="top-topic">
@@ -265,25 +261,24 @@
             <% } %>
         </div>
         <div class="top-topic-content ">
-          <%
-            var len_topic = feed.top_post.length;
-            _.each(feed.top_topic,function(e,i){
-              if(i == len_topic - 1){ %>
-                  <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
-              <% }else{ %>
-                  <div class="topic-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
-              <% } %>
-                    <p class="topic-title"><%= e.name %></p>
-                    <div class="post-counter">
-                      <%= e.post_count %>
-                      <span class="arrow"><i class="fa fa-angle-right"></i></span>
-                      <i class="fa fa-file-text"></i>
-                    </div>
-                  </div>
-          <%
-            });
-          %>
-
+            <%
+                var len_topic = feed.top_post.length;
+                _.each(feed.top_topic,function(e,i){
+                    if(i == len_topic - 1){ %>
+                        <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
+                    <% }else{ %>
+                        <div class="topic-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
+                    <% } %>
+                            <p class="topic-title"><%= e.name %></p>
+                            <div class="post-counter">
+                                <%= e.post_count %>
+                                <span class="arrow"><i class="fa fa-angle-right"></i></span>
+                                <i class="fa fa-file-text"></i>
+                            </div>
+                        </div>
+                    <%
+                });
+            %>
         </div>
     </div>
     <div class="top-feed">
