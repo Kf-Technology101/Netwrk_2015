@@ -27,4 +27,5 @@
 </script>
 
 <?= $this->render('@frontend/modules/netwrk/views/marker/blue_dot_post_content') ?>
+<?= $this->render('@frontend/modules/netwrk/views/default/partial/landing_welcome');?>
 
