@@ -554,7 +554,9 @@
                                 .line-stream {
                                     border-right: 2px solid;
                                     padding: 0 5px;
-                                    width: 120px;
+                                    width: auto;
+                                    min-width: 110px;
+                                    max-width: 120px;
                                     cursor: pointer;
                                     &.active {
                                         background: #5da5d8;
@@ -677,6 +679,8 @@
                                 .image {
                                     height: 72px;
                                     width: 72px;
+                                    min-height: 72px;
+                                    min-width: 72px;
                                     text-align: center;
                                     vertical-align: middle;
                                     display: table-cell;
@@ -1071,6 +1075,7 @@
                                 width: 6px;
                                 position: absolute;
                                 right: 10px;
+                                top: 11px;
                                 cursor: pointer;
                             }
                             .meet-img {
