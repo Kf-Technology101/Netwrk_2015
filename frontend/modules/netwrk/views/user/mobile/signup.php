@@ -65,7 +65,7 @@
 
         <?php
             $years_to = date('Y') - 17;
-            $years_from = 1985;//$years_to - 100;
+            $years_from = $years_to - 100;
 
             $day = array_combine(range(1,31),range(1,31));
             $months = array_combine(range(1,12),range(1,12));
@@ -78,7 +78,14 @@
             <?= $form->field($profile, 'month')->dropDownList($months,['prompt' => 'Month']); ?>
         </div>
         <div class="dob-field-name dob year field">
-            <?= $form->field($profile, 'year')->dropDownList($years,['prompt' => 'Year']); ?>
+            <!--Make year 1985 as default selected -->
+            <?= $form->field($profile, 'year')->dropDownList($years,
+                ['options' => [
+                    1985 => [
+                        'Selected' => 'selected'
+                    ]
+                ]]
+            ); ?>
         </div>
 
         <div class="col-field-name" style="display:none;">
