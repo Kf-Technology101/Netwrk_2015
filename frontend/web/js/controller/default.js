@@ -23,14 +23,14 @@ var Default ={
         if(typeof isCoverPageVisited !== 'undefined'){
             if (isAccepted) {
                 $("body").css('background', 'f2f2f2');
-                if(!isMobile){
+                if (isMobile) {
+                    Default.ShowLandingPage();
+                } else {
                     if(isResetPassword){
                         ResetPass.initialize();
                     }else{
                         Default.ShowLandingPage();
                     }
-                } else {
-                    Default.ShowLandingPage();
                 }
             } else {
                 CoverPage.initialize();
@@ -61,15 +61,29 @@ var Default ={
     ShowLandingPage: function(){
         if(isMobile){
             if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
+                sessionStorage.map_zoom = 12;
+                if(welcomePage == 'true') {
+                    LandingPage.OnHideModalWelcome();
+                    LandingPage.OnClickBackdropWelcome();
+                    LandingPage.showLandingWelcome();
+                }
+            } else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
+                LandingPage.initialize();
+                Default.UnsetLanding();
+            }
+            /*if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
+                alert('in ShowLandingPage function .LandingPage.redirect() ='+sessionStorage.show_landing);
                 LandingPage.redirect();
             }else if(sessionStorage.show_landing == 1){
                 Default.UnsetLanding();
             }
             else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
+                alert('in ShowLandingPage before LandingPage.initialize()');
                 LandingPage.initialize();
             }else if(sessionStorage.show_landing == 2){
+                alert('in ShowLandingPage == 2 only &&  before LandingPage.redirect()');
                 LandingPage.redirect();
-            }
+            }*/
         }else{
             if (isCoverPageVisited) {
                 if(isResetPassword){
@@ -278,16 +292,17 @@ var Default ={
         if (isMobile) {
             var action = $('.wrap-mobile').attr('data-action');
             if(action == 'home') {
-                sessionStorage.show_blue_dot = 0;
-                console.log(Map.map.getZoom()+'in show blue dot and its home page'+sessionStorage.show_blue_dot);
+                if(sessionStorage.show_blue_dot == 1) {
+                    sessionStorage.show_blue_dot = 0;
+                    console.log(Map.map.getZoom()+'in show blue dot and its home page'+sessionStorage.show_blue_dot);
 
-                if (sessionStorage.show_blue_dot_zoom12 == 1) {
-                    Map.getBrowserCurrentPosition(Map.map, 'near');
-                    sessionStorage.show_blue_dot_zoom12 = 0;
-                } else {
-                    Map.getBrowserCurrentPosition(Map.map, 'build');
+                    if (sessionStorage.show_blue_dot_zoom12 == 1) {
+                        Map.getBrowserCurrentPosition(Map.map, 'near');
+                        sessionStorage.show_blue_dot_zoom12 = 0;
+                    } else {
+                        Map.getBrowserCurrentPosition(Map.map, 'build');
+                    }
                 }
-
             }
         }
     },

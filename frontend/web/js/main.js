@@ -292,7 +292,7 @@ function removeLogoGlow(ele) {
     }
 }
 
-function homePage(){
+/*function homePage(){
     var target = $('.option_logo_netwrk a');
     var isLanding = $('.wrap-mobile').data('action');
     if (isLanding == 'landing-page') {
@@ -311,6 +311,29 @@ function homePage(){
           sessionStorage.show_landing = 0;
           window.location.href = baseUrl + '/netwrk/default/home';
       });
+    }
+}*/
+
+function homePage(){
+    var target = $('.option_logo_netwrk a');
+    var isLanding = $('.wrap-mobile').data('action');
+    if (isLanding == 'landing-page') {
+        target.on('click', function(e){
+            removeLogoGlow($(this));
+            e.preventDefault();
+            sessionStorage.show_landing = 1;
+            sessionStorage.show_blue_dot = 0;
+            sessionStorage.map_zoom = 12;
+            //sessionStorage.show_blue_dot_zoom12 = 1;
+            window.location.href = baseUrl + '/netwrk/default/home';
+        });
+    } else {
+        target.on('click', function(e){
+            removeLogoGlow($(this));
+            sessionStorage.show_blue_dot = 0;
+            e.preventDefault();
+            LandingPage.redirect();
+        });
     }
 }
 
