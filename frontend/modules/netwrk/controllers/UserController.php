@@ -263,6 +263,20 @@ class UserController extends BaseController
                 $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
+
+                $city = City::find()->select('city.*')
+                    ->where(['zip_code' => $zipcode])
+                    ->andWhere('office_type is null')
+                    ->one();
+
+                $favorite = new Favorite;
+                $favorite->user_id = $user->id;
+                $favorite->type = 'city';
+                $favorite->city_id = $city->id;
+                $favorite->status = 1;
+                $favorite->created_at = date('Y-m-d H:i:s');
+                $favorite->save();
+
                 if($url_callback != ''){
                     Yii::$app->getResponse()->redirect($url_callback)->send();
                 }else{
