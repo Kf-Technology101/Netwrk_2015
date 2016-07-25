@@ -82,7 +82,7 @@ var ChatInbox = {
 	},
 
 	CustomScrollBar: function(){
-		var parent = $(ChatInbox.modal).find('#chat_discussion');
+		var parent = $(ChatInbox.modal).find('#chat_discussion_tab');
 		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
