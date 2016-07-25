@@ -48,7 +48,7 @@
 			</div>
 		<% }else{ %>
 			<div class="no-topic">
-				<p class="notice">Be the first one to create Topic</p>
+				<p class="notice">Be the first one to create Channel</p>
 				<div class="create-topic">Create Now</div>
 			</div>
 		<% } %>

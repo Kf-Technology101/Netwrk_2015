@@ -10,7 +10,7 @@
                     <div class="title_page">
                     </div>
                     <div class="create_topic" id="create_topic_loc">
-                        <span><i class="fa fa-plus-circle"></i> Create Topic</span>
+                        <span><i class="fa fa-plus-circle"></i> Create Channel</span>
                     </div>
                     <div class="create_topic" id="create_group_loc">
                         <span><i class="fa fa-plus-circle"></i>Create Group</span>
@@ -27,7 +27,7 @@
                             <button>Total Users</button>
                         </div>
                         <div class="topic_group_loc_create">
-                            <button id="btn-create-topic-loc">Create Topic</button>
+                            <button id="btn-create-topic-loc">Create Channel</button>
                             <button id="btn-create-post-loc">Create Post</button>
                         </div>
                         <div class="filter">

@@ -395,7 +395,7 @@
                 <div class="feed-row feed-topic" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name='<%= e.city_name %>'>
                 <div class="feed-content">
                   <span class='topic-title'><%= e.title %></span>
-                  <span class='topic-create-by'>Topic created by: <%= e.created_by %></span>
+                  <span class='topic-create-by'>Channel created by: <%= e.created_by %></span>
                   <span class='appear-day'>
                     <% if ((e.appear_day == 'Now')){ %>
                       Just Now
