@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="top-topic">
-				<p class="title">Top Topics</p>
+				<p class="title">Top Channels</p>
 				<% _.each(marker.topic,function(e,i){%>
 					<p class="name-topic" data-index="<%= i %>"><%= e.name %></p>
 				<% }) %>
