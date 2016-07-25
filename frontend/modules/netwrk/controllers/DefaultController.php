@@ -1507,7 +1507,7 @@ class DefaultController extends BaseController
             $Topic = new Topic;
             $Topic->city_id = $value->id;
             $Topic->user_id = $system_user_id;
-            $Topic->title = 'How should it all be?';
+            $Topic->title = 'How can we make things better?';
             $Topic->save();
 
             $Post = new Post();

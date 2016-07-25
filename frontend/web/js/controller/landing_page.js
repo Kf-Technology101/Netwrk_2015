@@ -350,6 +350,7 @@ var LandingPage = {
 					LandingPage.GetDataTopLanding();
 					// Display chat inbox
 					ChatInbox.initialize();
+					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
 				}
 			});
 

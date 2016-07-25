@@ -12,7 +12,7 @@
             <div class="title_page">
             </div>
             <!--<div class="create_topic" id="create_topic">
-              <span><i class="fa fa-plus-circle"></i> Create Topic</span>
+              <span><i class="fa fa-plus-circle"></i> Create Channel</span>
             </div>-->
              <!-- <div class="create_topic" id="create_group">
                   <span><i class="fa fa-plus-circle"></i> Create Group</span>
@@ -428,7 +428,7 @@
         <div class="feed-row feed-topic" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name='<%= e.city_name %>'>
         <div class="feed-content">
           <span class='topic-title'><%= e.title %></span>
-          <span class='topic-create-by'>Topic created by: <%= e.created_by %></span>
+          <span class='topic-create-by'>Channel created by: <%= e.created_by %></span>
           <span class='appear-day'>
             <% if ((e.appear_day == 'Now')){ %>
               Just Now
