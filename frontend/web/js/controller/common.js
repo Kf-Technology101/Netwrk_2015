@@ -38,8 +38,10 @@ var Common = {
             Common.showHideInfoPopover('popover-near', 'nw_popover_near');
         }
 
-        // Display netwrk logo info popover
-        Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
+        if(typeof welcomePage !== 'undefined' && welcomePage == 'false'){
+            // Display netwrk logo info popover
+            Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
+        }
     },
 
     console: function(){
