@@ -15,7 +15,8 @@ var MainWs = {
 
     setUrl: function(){
         if (location.protocol.indexOf('https') >= 0){
-            MainWs.url = 'wss://';
+            //MainWs.url = 'wss://';
+            MainWs.url = 'ws://';
         } else {
             MainWs.url = 'ws://';
         }
