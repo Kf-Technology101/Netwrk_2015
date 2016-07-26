@@ -126,12 +126,18 @@ if (isset($cookies["isCoverPageVisited"])) {
               $near_class = 'btn-nav-map glow-btn-wrapper';
             }
 
+            $data_controller = Yii::$app->controller->id;
+            $data_action = Yii::$app->controller->module->module->requestedAction->id;
+
             if (isset($cookies["nw_popover_near"])) {
               $near_popover_class = '';
               $near_popover = '';
-            } else {
+            } elseif($data_action == 'landing-page' && $data_controller == 'default') {
               $near_popover_class = 'popover-near';
               $near_popover = 'Follow other areas and see what&rsquo;s around you';
+            } else {
+              $near_popover_class = '';
+              $near_popover = '';
             }
           ?>
           <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
@@ -195,7 +201,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       <p class="pull-right"><?php //Yii::powered() ?></p>
       </div>
   </footer> -->
-
+  <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
   <?php $this->endBody() ?>
 </body>
 <script type="text/javascript">

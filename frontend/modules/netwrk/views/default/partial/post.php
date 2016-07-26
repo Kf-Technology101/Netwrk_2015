@@ -305,7 +305,7 @@
             <div class="feed-row feed-topic" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name='<%= e.city_name %>'>
             <div class="feed-content">
               <span class='topic-title'><%= e.title %></span>
-              <span class='topic-create-by'>Topic created by: <%= e.created_by %></span>
+              <span class='topic-create-by'>Channel created by: <%= e.created_by %></span>
               <span class='appear-day'>
                 <% if ((e.appear_day == 'Now')){ %>
                   Just Now
@@ -353,7 +353,7 @@
                     <div class="bottom-actions">
                         <span class="jump-to chat-trigger" data-id="<%= stream.id %>">Jump to</span>
                         <span class="more chat-trigger">Show more</span>
-                        <span class="respond-to chat-trigger" data-id="<%= stream.id %>">Respond</span>
+                        <span class="respond-to chat-trigger" data-id="<%= stream.id %>">Feedback</span>
                     </div>
                 </div>
             </div>

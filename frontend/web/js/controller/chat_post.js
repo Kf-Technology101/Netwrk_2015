@@ -258,7 +258,7 @@ var ChatPost = {
 
 	WsConnect: function(parent){
 
-		ChatPost.ws = $.websocket("ws://"+ChatPost.url+"/?post="+ChatPost.params.post+"&user_id="+UserLogin+"&chat_type="+ChatPost.params.chat_type, {
+		ChatPost.ws = $.websocket(ChatPost.url+"/?post="+ChatPost.params.post+"&user_id="+UserLogin+"&chat_type="+ChatPost.params.chat_type, {
 			open: function(data) {
 				$(ChatPost.parent).find('textarea').focus();
 			},

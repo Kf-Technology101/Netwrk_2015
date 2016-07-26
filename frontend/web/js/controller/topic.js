@@ -933,6 +933,8 @@ var Topic = {
         btn.unbind();
         btn.on('click',function(){
             if(isMobile){
+                Common.ShowModalComeBack();
+                return;
                 window.location.href = baseUrl + "/netwrk/group/create-group?city="+ Topic.data.city;
             }else{
                 $('#modal_topic').modal('hide');

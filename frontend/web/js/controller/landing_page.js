@@ -13,15 +13,15 @@ var LandingPage = {
 			LandingPage.SetUrl();
 			LandingPage.OnClickMeetLandingMobile();
 			$('.navbar-fixed-bottom').hide();
-			if(welcomePage == 'true') {
+			/*if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
 				LandingPage.showLandingWelcome();
-			}
+			}*/
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
-			LandingPage.OnHideModalLanding();
+			LandingPage.OnShowHideModalLanding();
 			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
@@ -58,7 +58,7 @@ var LandingPage = {
 
 	FixWidthPostLanding: function(){
 		var target = $(".top-post-content").find('.post');
-		fix_width_post(target,160);
+		fix_width_post(target,146);
 	},
 
 	SetSession: function(){
@@ -309,10 +309,16 @@ var LandingPage = {
         })
 	},
 
-	OnHideModalLanding: function(){
+	OnShowHideModalLanding: function(){
+		$(LandingPage.modal).on('shown.bs.modal',function(e) {
+			// Display near button popover
+			Common.showHideInfoPopover('popover-near', 'nw_popover_near');
+		});
         $(LandingPage.modal).on('hidden.bs.modal',function(e) {
         	// LandingPage.ResetData();
         	$('.logo_netwrk > a').removeClass('landing-shown');
+			// hide near button popover
+			$('.popover-near').popover('hide');
         });
 	},
 
@@ -344,6 +350,7 @@ var LandingPage = {
 					LandingPage.GetDataTopLanding();
 					// Display chat inbox
 					ChatInbox.initialize();
+					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
 				}
 			});
 

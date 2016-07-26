@@ -51,6 +51,8 @@ var Meet ={
     },
 
     _init: function(){
+        Common.ShowModalComeBack();
+        return;
         var post_id = Meet.getParameterByName('post_id'),
             user_view = Meet.getParameterByName('user_id'),
             from = Meet.getParameterByName('from');
@@ -192,7 +194,8 @@ var Meet ={
     },
 
     showUserMeetMobile: function(){
-        window.location.href = baseUrl + "/netwrk/meet";
+        Common.ShowModalComeBack();
+        //window.location.href = baseUrl + "/netwrk/meet";
     },
 
     GetUserMeet: function(){

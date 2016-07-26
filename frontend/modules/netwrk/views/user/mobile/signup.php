@@ -57,7 +57,7 @@
                     ])->textInput(array('placeholder' => 'Gender',"data-toggle"=>'dropdown','class'=>'form-control dropdown','readonly'=>true)); ?>
         </div>
         <div class="col-field-name zipcode">
-            <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => 'Zipcode','maxlength'=>5)); ?>
+            <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => '46140','maxlength'=>5)); ?>
         </div>
         <!--<div class="col-field-name age">
             <?/*= $form->field($profile, 'dob')->textInput(array('placeholder' => 'Age must be at least 18')); */?>
@@ -78,7 +78,14 @@
             <?= $form->field($profile, 'month')->dropDownList($months,['prompt' => 'Month']); ?>
         </div>
         <div class="dob-field-name dob year field">
-            <?= $form->field($profile, 'year')->dropDownList($years,['prompt' => 'Year']); ?>
+            <!--Make year 1985 as default selected -->
+            <?= $form->field($profile, 'year')->dropDownList($years,
+                ['options' => [
+                    1985 => [
+                        'Selected' => 'selected'
+                    ]
+                ]]
+            ); ?>
         </div>
 
         <div class="col-field-name" style="display:none;">

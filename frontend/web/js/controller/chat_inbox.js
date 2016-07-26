@@ -82,7 +82,7 @@ var ChatInbox = {
 	},
 
 	CustomScrollBar: function(){
-		var parent = $(ChatInbox.modal).find('#chat_discussion');
+		var parent = $(ChatInbox.modal).find('#chat_discussion_tab');
 		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
@@ -141,7 +141,7 @@ var ChatInbox = {
 		if(!isGuest){
 			setTimeout(function() {
 				// Display Chat info popover
-				Common.showHideInfoPopover('popover-chat-public-lines', 'nw_popover_chat_public_lines');
+				//Common.showHideInfoPopover('popover-chat-public-lines', 'nw_popover_chat_public_lines');
 				Common.showHideInfoPopover('popover-chat-your-lines','nw_popover_chat_your_lines');
 			},300);
 		}
@@ -340,7 +340,7 @@ var ChatInbox = {
 					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
 					if(isGuest){
 						// Display Chat info popover
-						Common.showHideInfoPopover('popover-chat-public-lines', 'nw_popover_chat_public_lines');
+						//Common.showHideInfoPopover('popover-chat-public-lines', 'nw_popover_chat_public_lines');
 						Common.showHideInfoPopover('popover-chat-your-lines','nw_popover_chat_your_lines');
 					}
 				}
@@ -386,7 +386,7 @@ var ChatInbox = {
 				parent.append(append_html);
 				ChatInbox.CustomScrollBar();
 				// Display Chat info popover
-				Common.showHideInfoPopover('popover-chat-public-lines','nw_popover_chat_public_lines');
+				//Common.showHideInfoPopover('popover-chat-public-lines','nw_popover_chat_public_lines');
 				Common.showHideInfoPopover('popover-chat-your-lines','nw_popover_chat_your_lines');
 			});
 		}

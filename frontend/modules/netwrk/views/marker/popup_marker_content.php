@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="top-topic">
-				<p class="title">Top Topics</p>
+				<p class="title">Top Channels</p>
 				<% _.each(marker.topic,function(e,i){%>
 					<p class="name-topic" data-index="<%= i %>"><%= e.name %></p>
 				<% }) %>
@@ -48,7 +48,7 @@
 			</div>
 		<% }else{ %>
 			<div class="no-topic">
-				<p class="notice">Be the first one to create Topic</p>
+				<p class="notice">Be the first one to create Channel</p>
 				<div class="create-topic">Create Now</div>
 			</div>
 		<% } %>

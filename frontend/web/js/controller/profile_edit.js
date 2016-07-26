@@ -40,6 +40,7 @@ var ProfileEdit = {
         total:false
     },
     state: 'Indiana',
+    country: 'United States',
     modal: '',
     profileEdit: $('.form-profile-edit'),
     initialize: function(){
@@ -250,7 +251,8 @@ var ProfileEdit = {
         // var zipcode = 46601;
         ProfileEdit.zip = true;
         $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
-            if (data.places[0].state == ProfileEdit.state){
+            //allow zipcode from united states only
+            if (data.country == ProfileEdit.country){
                 ProfileEdit.params.lat = data.places[0].latitude;
                 ProfileEdit.params.lng = data.places[0].longitude;
                 ProfileEdit.params.country = data.country;

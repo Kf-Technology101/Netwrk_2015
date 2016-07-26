@@ -164,7 +164,7 @@
    </div> 
 </div>
 <script id="name_user" type="text/x-underscore-template">
-    <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>">Meet Me</p>
+    <p class="user_meet_<%= vt %> name" data-meet="<%= user.met %>">People near you</p>
 </script>
 <script id="list_user" type="text/x-underscore-template">
   <div class="user_item user_meet_<%= vt %> active">

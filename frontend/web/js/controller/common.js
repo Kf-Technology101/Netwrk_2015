@@ -34,12 +34,14 @@ var Common = {
 
         if(isMobile){
             Map.eventClickMyLocation(Map.map);
+            // Display near button popover
+            Common.showHideInfoPopover('popover-near', 'nw_popover_near');
         }
 
-        // Display netwrk logo info popover
-        Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
-        // Display near button popover
-        Common.showHideInfoPopover('popover-near', 'nw_popover_near');
+        if(typeof welcomePage !== 'undefined' && welcomePage == 'false'){
+            // Display netwrk logo info popover
+            Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
+        }
     },
 
     console: function(){
@@ -67,6 +69,24 @@ var Common = {
                         // Remove class and content
                         popoverWrapper.removeClass(popoverWrapperClass)
                             .attr('data-content', '');
+
+                        if(!isMobile) {
+                            if(cookieName == 'nw_popover_chat_topic_title'){
+                                var popupChatHtml = $("#popup_chat").html();
+                                popupChatHtml = popupChatHtml.replace('<%= popoverChatTopicTitle %>', '');
+                                $("#popup_chat").html(popupChatHtml);
+                            }
+                            else if(cookieName == 'nw_popover_post_filter'){
+                                var popupChatHtml = $("#post_list").html();
+                                popupChatHtml = popupChatHtml.replace('<%= popoverClassPostFilter %>', '');
+                                $("#post_list").html(popupChatHtml);
+                            }
+                            else if(cookieName == 'nw_popover_post_feedback'){
+                                var popupChatHtml = $("#post_list").html();
+                                popupChatHtml = popupChatHtml.replace('<%= popoverClassPostFeedback %>', '');
+                                $("#post_list").html(popupChatHtml);
+                            }
+                        }
                     }
                 });
             });
@@ -89,7 +109,7 @@ var Common = {
         target.unbind();
         target.on('click',function(e){
             if(isMobile){
-                /*var btnWrapper = $(this).closest('.btn-nav-map');
+                var btnWrapper = $(this).closest('.btn-nav-map');
                 if(btnWrapper.hasClass('glow-btn-wrapper')) {
                     // Call ajax to set cookie
                     var params = {'object': 'nw_glow_near_btn'};
@@ -98,13 +118,9 @@ var Common = {
                         if(json.success == true){
                             // Remove glow wrapper class
                             btnWrapper.removeClass('glow-btn-wrapper');
-                            // Destroy popover
-                            btnWrapper.popover('destroy')
-                                    .removeClass('popover-near')
-                                    .attr('data-content','');
                         }
                     });
-                }*/
+                }
 
                 sessionStorage.show_landing = 1;
                 sessionStorage.show_blue_dot = 1;
@@ -198,7 +214,7 @@ var Common = {
         target.unbind();
         target.on('click', function () {
             var btnWrapper = $(this).closest('.btn-nav-map');
-            /*if(btnWrapper.hasClass('glow-btn-wrapper')) {
+            if(btnWrapper.hasClass('glow-btn-wrapper')) {
                 // Call ajax to set cookie
                 var params = {'object': 'nw_glow_near_btn'};
                 Ajax.setGlowCookie(params).then(function (data) {
@@ -206,13 +222,9 @@ var Common = {
                     if(json.success == true){
                         // Remove glow wrapper class
                         btnWrapper.removeClass('glow-btn-wrapper');
-                        // Destroy popover
-                        btnWrapper.popover('destroy')
-                            .removeClass('popover-near')
-                            .attr('data-content','');
                     }
                 });
-            }*/
+            }
 
             //hide all opened modal
             $('.modal').modal('hide');
@@ -421,9 +433,23 @@ var Common = {
 
                     setTimeout(function(){
                         feedbackAlert.html('').addClass('hide');
-                    }, 1200);
+                    }, 1500);
                 }
             });
         });
     },
+
+    ShowModalComeBack: function(){
+        var modal = $('#comeBackLater');
+
+        modal.modal({
+            backdrop: true,
+            keyboard: false
+        });
+
+        $('.modal-backdrop.in').click(function(e) {
+            self.reset_modal();
+            $('#comeBackLater').modal('hide');
+        });
+    }
 };

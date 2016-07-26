@@ -1433,6 +1433,7 @@ class DefaultController extends BaseController
      * @throws \Exception
      */
     public function actionGovtCommunitiesSetGeneralTopic(){
+        $system_user_id = Yii::$app->params['systemUserId'];
         set_time_limit(1800); // Set max execution time 30 minutes.
 
         $cities = City::find()
@@ -1446,15 +1447,15 @@ class DefaultController extends BaseController
             // Create topic and post for communities
             $Topic = new Topic;
             $Topic->city_id = $value->id;
-            $Topic->user_id = 0;
-            $Topic->title = 'Problem Solving';
+            $Topic->user_id = $system_user_id;
+            $Topic->title = 'Local Problem Solving';
             $Topic->save();
 
             $Post = new Post();
             $Post->title = 'solveproblemstogether';
-            $Post->content = 'Problems will be reported here. Remember, it takes a community to fix issues and make things better.';
+            $Post->content = "Welcome to the solution center's main line! This line is open for all discussion, just remember that the key to finding answers is seeing all the important angles. Please add a line for new problems that require extensive deliberation.";
             $Post->topic_id = $Topic->id;
-            $Post->user_id = 0;
+            $Post->user_id = $system_user_id;
             $Post->post_type = 1;
             $Post->save();
 
@@ -1477,6 +1478,7 @@ class DefaultController extends BaseController
      * @throws \Exception
      */
     public function actionUniversityCommunitiesSetGeneralTopic(){
+        $system_user_id = Yii::$app->params['systemUserId'];
         set_time_limit(1800); // Set max execution time 30 minutes.
 
         $cities = City::find()
@@ -1490,15 +1492,15 @@ class DefaultController extends BaseController
             // Create topic and post for communities
             $Topic = new Topic;
             $Topic->city_id = $value->id;
-            $Topic->user_id = 0;
-            $Topic->title = 'How should it all be?';
+            $Topic->user_id = $system_user_id;
+            $Topic->title = 'How can we make things better?';
             $Topic->save();
 
             $Post = new Post();
             $Post->title = 'ideas';
             $Post->content = 'Ideas move the world forward, share yours here.';
             $Post->topic_id = $Topic->id;
-            $Post->user_id = 0;
+            $Post->user_id = $system_user_id;
             $Post->post_type = 1;
             $Post->save();
 
@@ -1521,6 +1523,7 @@ class DefaultController extends BaseController
      * @throws \Exception
      */
     public function actionSocialCommunitiesSetGeneralTopic(){
+        $system_user_id = Yii::$app->params['systemUserId'];
         set_time_limit(3600); // Set max execution time 60 minutes.
 
         $cities = City::find()
@@ -1534,15 +1537,15 @@ class DefaultController extends BaseController
             // Create topic and post for communities
             $Topic = new Topic;
             $Topic->city_id = $value->id;
-            $Topic->user_id = 0;
-            $Topic->title = 'Main Channel';
+            $Topic->user_id = $system_user_id;
+            $Topic->title = 'Local community channel';
             $Topic->save();
 
             $Post = new Post();
             $Post->title = 'Welcome';
-            $Post->content = 'Our home is yours. Kick your shoes off, relax, help yourself to the fridge and remember, life is good.';
+            $Post->content = "Welcome to the community center's main chat line! Introduce yourself, explore a bit, help yourself to the fridge and remember, Life is good!";
             $Post->topic_id = $Topic->id;
-            $Post->user_id = 0;
+            $Post->user_id = $system_user_id;
             $Post->post_type = 1;
             $Post->save();
 

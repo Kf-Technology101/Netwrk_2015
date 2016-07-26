@@ -14,18 +14,25 @@ var MainWs = {
     },
 
     setUrl: function(){
-        if(window.location.hostname == 'www.netwrk.com'){
-            MainWs.url = 'www.netwrk.com:2311';
-        } else if(window.location.hostname == 'dev.netwrk.com'){
-            MainWs.url = 'dev.netwrk.com:2312';
-        } else if(window.location.hostname == 'beta.netwrk.com'){
-            MainWs.url = 'beta.netwrk.com:2312';
-        } else if(window.location.hostname == 'test.netwrk.com'){
-            MainWs.url = 'test.netwrk.com:2314';
-        } else if(window.location.hostname == 'local.netwrk.com'){
-            MainWs.url = 'local.netwrk.com:2311';
+        if (location.protocol.indexOf('https') >= 0){
+            //MainWs.url = 'wss://';
+            MainWs.url = 'ws://';
         } else {
-            MainWs.url = '127.0.0.1:2311';
+            MainWs.url = 'ws://';
+        }
+
+        if(window.location.hostname == 'www.netwrk.com'){
+            MainWs.url += 'www.netwrk.com:2311';
+        } else if(window.location.hostname == 'dev.netwrk.com'){
+            MainWs.url += 'dev.netwrk.com:2312';
+        } else if(window.location.hostname == 'beta.netwrk.com'){
+            MainWs.url += 'beta.netwrk.com:2312';
+        } else if(window.location.hostname == 'test.netwrk.com'){
+            MainWs.url += 'test.netwrk.com:2314';
+        } else if(window.location.hostname == 'local.netwrk.com'){
+            MainWs.url += 'local.netwrk.com:2311';
+        } else {
+            MainWs.url += '127.0.0.1:2311';
         }
     },
 
@@ -33,7 +40,7 @@ var MainWs = {
 
         var _self = this;
 
-        window.ws = new ReconnectingWebSocket("ws://"+MainWs.url+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000, timeoutInterval: 5000, reconnectDecay: 5});
+        window.ws = new ReconnectingWebSocket(MainWs.url+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000, timeoutInterval: 5000, reconnectDecay: 5});
 
         window.ws.onmessage = function(e){
           console.group("WS SEND");
