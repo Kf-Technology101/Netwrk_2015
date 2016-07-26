@@ -158,7 +158,7 @@ var CoverPage = {
 	},
 
 	checkZipCode: function(zipcode){
-		var arr = [46037,'46037',44115,'44115'];
+		var arr = [46037,'46037',44115,'44115',46040,'46040'];
 
 		if(jQuery.inArray( zipcode, arr ) > -1){
 			$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
