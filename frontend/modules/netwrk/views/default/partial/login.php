@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <?= yii\authclient\widgets\AuthChoice::widget([
-                            'baseAuthUrl' => ['site/auth']
+                            'baseAuthUrl' => ['user/auth']
                         ]) ?>
                     </div>
                 </div>

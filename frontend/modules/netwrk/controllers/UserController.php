@@ -29,6 +29,48 @@ use yii\helpers\Url;
 class UserController extends BaseController
 {
     /**
+     * @inheritdoc
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'successCallback'],
+            ],
+        ];
+    }
+
+    public function successCallback($client)
+    {
+
+        $attributes = $client->getUserAttributes();
+
+        die(print_r($attributes));
+        // user login or signup comes here
+        /*
+        Checking facebook email registered yet?
+        Maxsure your registered email when login same with facebook email
+        die(print_r($attributes));
+        */
+
+        //die(print_r($attributes));
+        $user = User::find()->where(['email'=>$attributes['email']])->one();
+        if(!empty($user)){
+            Yii::$app->user->login($user);
+        }else{
+            // Save session attribute user from FB
+            $session = Yii::$app->session;
+            $session['attributes']=$attributes;
+            // redirect to form signup, variabel global set to successUrl
+            $this->successUrl = \yii\helpers\Url::to(['signup']);
+        }
+    }
+
+    /**
      * Forgot password
      */
     public function actionForgotPassword(){
