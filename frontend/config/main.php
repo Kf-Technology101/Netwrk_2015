@@ -90,6 +90,17 @@ return [
                 'reset-password' => 'site/reset-password',
             ]
         ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
+                    'clientId' => '1088741151171559',
+                    'clientSecret' => '2db95d415289772442d0346331d3c5bf',
+                ],
+            ],
+        ]
     ],
     'params' => $params,
 ];
