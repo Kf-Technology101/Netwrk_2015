@@ -35,6 +35,14 @@
                     <p>Login</p>
                 </div>
                 <?php ActiveForm::end(); ?>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <?= yii\authclient\widgets\AuthChoice::widget([
+                            'baseAuthUrl' => ['site/auth']
+                        ]) ?>
+                    </div>
+                </div>
                 <div class="sign-up">
                     <p>Don't have an account! <b>Sign up</b> Now</p>
                 </div>
