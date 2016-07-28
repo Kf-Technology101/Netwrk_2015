@@ -42,6 +42,11 @@
 			zipcode: '',
 			timeout: ''
 		},
+		clickLocation: {
+			lat: '',
+			lon: '',
+			zipCode: ''
+		},
 		mouseIn : false,
 		remove_poi : [
 			{
@@ -74,6 +79,36 @@
 				]
 			}
 		],
+		setCreateInfoWindow: function() {
+			// Blue dot info window content is in following file
+			// @frontend/modules/netwrk/views/marker/blue_dot_post_content
+			var createInfoWindowContent = $('#createInfoWindow').html();
+
+			var infoWindow = new google.maps.InfoWindow({
+				content: createInfoWindowContent
+			});
+
+			return infoWindow;
+		},
+		clickLocationCreateGroup: function(zipcode) {
+			var lat = Map.clickLocation.lat;
+			var lng = Map.clickLocation.lng;
+
+			if(isMobile) {
+				if(zipcode){
+					//window.location.href = baseUrl + "/netwrk/topic/create-topic?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
+					window.location.href = baseUrl + "/netwrk/group/create-group?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
+				}
+			} else {
+				Create_Group.initialize(null, null, zipcode, null, true, lat, lng);
+			}
+		},
+		clickLocationCreateTopic: function(zipcode) {
+			var lat = Map.clickLocation.lat;
+			var lng = Map.clickLocation.lng;
+
+			Create_Topic.showCreateTopicModal(zipcode, lat, lng);
+		},
 	  	initialize: function() {
 
 	  		if(isMobile){
@@ -144,10 +179,86 @@
 					}*/
 				}
 			});
+
 		    // Map.insertLocalUniversity();
 		    // Map.insertLocalGovernment();
 			//Map.requestBlueDotOnMap(lat,lng,Map.map);
 			Map.requestPosition(Map.map);
+
+			// New info window for click on map to create group and topic
+			var createInfoWindow = Map.setCreateInfoWindow();
+
+			google.maps.event.addListener(Map.map, 'click', function(event){
+				$('.modal').modal('hide');
+
+				// Set current position to info window
+				createInfoWindow.setPosition(event.latLng);
+
+				// Hide excess html content when info window ready
+				google.maps.event.addListener(createInfoWindow, 'domready', function() {
+					// Reference to the DIV that wraps the bottom of info window
+					var iwOuter = $('.gm-style-iw');
+
+					// Since this div is in a position prior to .gm-div style-iw.
+					// We use jQuery and create a iwBackground variable,
+					// and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+					var iwBackground = iwOuter.prev();
+					iwOuter.children(':nth-child(1)').css({'max-width' : '50px'});
+
+					// Removes background shadow DIV
+					iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+					// Removes white background DIV
+					iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+					// Reference to the div that groups the close button elements.
+					var iwCloseBtn = iwOuter.next();
+
+					// Apply the desired effect to the close button
+					iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+				});
+
+				Map.clickLocation.lat = event.latLng.lat();
+				Map.clickLocation.lng = event.latLng.lng();
+
+				// Code to get zip code and city from latitude and longitude
+				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+Map.clickLocation.lat+','+Map.clickLocation.lng ,function(data) {
+					var len = data.results[0].address_components.length,
+						city = '';
+
+					for (var i = 0; i < len; i++) {
+						if (data.results[0].address_components[i].types[0] == 'postal_code') {
+							var zip = data.results[0].address_components[i].long_name;
+							Map.clickLocation.zipCode = zip;
+						} else if (data.results[0].address_components[i].types[0] == 'locality') {
+							city = data.results[0].address_components[i].long_name;
+							$("#clickLocation span").eq(0).html(city);
+						} else if (data.results[0].address_components[i].types[0] == 'administrative_area_level_2' && city == '') {
+							city = data.results[0].address_components[i].long_name;
+							$("#clickLocation span").eq(0).html(city);
+						}
+					}
+
+					// Code to check if there is community in current zip code
+					// If exist then only display option to create group and topic
+					var params = {'zip_code':Map.clickLocation.zipCode};
+
+					Ajax.getCommunitiesCountFromZip(params).then(function(data){
+						var jsonData = $.parseJSON(data);
+
+						if(jsonData.communities == 0){
+							$('.ciw-container').find('#communityInfoCreate').addClass('hide');
+							$('.ciw-container').find('#noCommunityCreate').removeClass('hide');
+						} else {
+							$('.ciw-container').find('#communityInfoCreate').removeClass('hide');
+							$('.ciw-container').find('#noCommunityCreate').addClass('hide');
+						}
+					});
+				});
+
+				// Open info window
+				createInfoWindow.open(Map.map);
+			});
 	  	},
 
 	  	mapBoundaries:function(map){

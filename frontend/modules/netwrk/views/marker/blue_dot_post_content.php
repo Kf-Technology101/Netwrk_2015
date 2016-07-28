@@ -72,3 +72,30 @@
 		</div>
 	</div>
 </div>
+
+<div style="display:none;">
+	<div id="createInfoWindow">
+		<div id="ciw-container" class="cgm-container ciw-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
+			<div class="iw-content">
+				<div class="iw-subTitle text-right" onclick="Map.closeAllInfoWindows();">
+					<span class="close"><span aria-hidden="true">&times;</span></span>
+				</div>
+				<div class="iw-subTitle location-details-wrapper text-left">
+					<h4 class="location-details">Welcome to <span id="clickLocation"><span>requesting...</span></span></h4>
+				</div>
+				<div id="communityInfoCreate" class="clearfix">
+					<div class="click-location-create-section-wrapper">
+						<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.clickLocationCreateGroup(Map.clickLocation.zipCode);"><span>Create a Group</span></a></div>
+						<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.clickLocationCreateTopic(Map.clickLocation.zipCode);"><span class="">Create a Channel</span></a></div>
+					</div>
+				</div>
+				<div id="noCommunityCreate" class="hide">
+					<div class="dot-info-main">
+						<div class="iw-subTitle dot-info-wrapper">Currently there are no communities for this area!</div>
+					</div>
+				</div>
+			</div>
+			<div class="iw-bottom-gradient"></div>
+		</div>
+	</div>
+</div>
