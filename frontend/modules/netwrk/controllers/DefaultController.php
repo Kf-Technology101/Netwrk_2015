@@ -1563,6 +1563,24 @@ class DefaultController extends BaseController
         die();
     }
 
+    public function actionGetCommunitiesCountFromZip()
+    {
+        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : '';
+
+        $cities = City::find()
+            ->where('zip_code = '.$zipCode)
+            ->all();
+
+        $communities = sizeof($cities);
+
+        $return = array(
+            'communities'=> $communities
+        );
+
+        $hash = json_encode($return);
+        return $hash;
+    }
+
     public function actionGetBrilliantPostsFromZip()
     {
         $data = array();
