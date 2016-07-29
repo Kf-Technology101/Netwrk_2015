@@ -32,6 +32,7 @@ use ReflectionClass;
  * @property string $ban_time
  * @property string $ban_reason
  * @property integer $timeless_count
+ * @property integer $facebook_id
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -175,6 +176,8 @@ class User extends ActiveRecord implements IdentityInterface
 
             'newPasswordProfile'     => 'Password',
             'newPasswordConfirmProfile' => 'Password Confirm',
+
+            'facebook_id' => "Facebook Id"
         ];
     }
     public function behaviors()

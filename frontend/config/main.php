@@ -112,7 +112,8 @@ return [
                         'first_name',
                         'last_name',
                         'gender',
-                        'picture'
+                        'picture',
+                        'age_range'
                     ]
                 ],
             ],

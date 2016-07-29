@@ -23,9 +23,6 @@
                                 <?php endforeach; ?>
                             </ul>
                         <?php AuthChoice::end(); ?>
-                        <?/*= yii\authclient\widgets\AuthChoice::widget([
-                            'baseAuthUrl' => ['user/auth']
-                        ]) */?>
                     </div>
                 </div>
                 <?php

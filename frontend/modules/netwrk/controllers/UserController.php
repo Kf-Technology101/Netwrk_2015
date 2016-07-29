@@ -26,6 +26,7 @@ use yii\widgets\ActiveForm;
 use yii\db\ActiveQuery;
 use yii\web\Cookie;
 use yii\helpers\Url;
+use yii\db\Query;
 
 class UserController extends BaseController
 {
@@ -47,34 +48,135 @@ class UserController extends BaseController
         ];
     }
 
+    /**
+     * Social login
+     * @param $client
+     */
     public function socialLoginCallback($client)
     {
         $client_title = $client->getTitle();
         $attributes = $client->getUserAttributes();
 
+        //var_dump($attributes);
+        //die();
         // Check if this email or facebook id is already registered with system
         if($attributes['email'] != ''){
-            $user = User::find()->where(['email'=>$attributes['email']])->orWhere()->one();
+            $user = User::find()->where(['email'=>$attributes['email']])->one();
         } elseif($attributes['id'] != '' && $client_title == 'Facebook') {
             $user = User::find()->where(['facebook_id'=>$attributes['id']])->one();
         }
 
         if(!empty($user)){
             if($client_title == 'Facebook'){
-                $user->facebook_id = $attributes['id'];
-                $user->save();
+                if(!$user->facebook_id) {
+                    $user->facebook_id = $attributes['id'];
+                    $user->save();
+                }
             }
-
             $identity = new LoginForm();
-            $identity->username = $user['email'];
-            $identity->socialLogin(1000);
-        }else{
-            // Save session attribute user from FB
-            $session = Yii::$app->session;
-            $session['attributes'] = $attributes;
-            // redirect to form signup, variabel global set to successUrl
-            $this->successUrl = \yii\helpers\Url::to(['signup']);
+            $identity->username = $attributes['email'];
+            $identity->socialLogin(10000);
+        } else {
+
+            if($client_title == 'Facebook') {
+                //do signup new user
+                if($attributes['email'] != '') {
+                    $this->facebookSignup($attributes);
+                }
+            }
         }
+    }
+
+    /**
+     * Facebook signup
+     * @param array $attributes
+     */
+    public function facebookSignup($attributes = array())
+    {
+        // Save session attribute user from FB
+        $session = Yii::$app->session;
+        $session['attributes'] = $attributes;
+
+        //insert new record in user
+        $user = new User(["scenario" => "register"]);
+        $profile = new Profile();
+
+        $cookies = Yii::$app->request->cookies;
+
+        $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
+        $lat = ($cookies->getValue('nw_lat')) ? $cookies->getValue('nw_lat') : '';
+        $lng = ($cookies->getValue('nw_lng')) ? $cookies->getValue('nw_lng') : '';
+        $username = preg_replace('/[^A-Za-z0-9\-]/', '',preg_replace('/([^@]*).*/', '$1', $attributes['email']));
+        $new_username = $this->checkUserName($username);
+        $year = date('Y') - $attributes['age_range']['min'];
+
+        //todo: use signup form modal, upload the facebook photo, facebook id save with signup
+        $postdata = [
+            'Profile' => [
+                'first_name' => $attributes['first_name'],
+                'last_name' => $attributes['last_name'],
+                'gender' => $attributes['gender'],
+                'day' => '1',
+                'month' => '1',
+                'year' => strval($year),
+                'zip_code' => $zip_code,
+                'lat' => $lat,
+                'lng' => $lng
+            ],
+            'User' => [
+                'username' => $new_username,
+                'email' => $attributes['email'],
+                'newPassword' => $attributes['first_name'].''.$attributes['last_name'],
+                'facebook_id' => $attributes['id']
+            ]
+        ];
+
+        // load post data
+        $post = $postdata;
+        $post['User']['email'] = strtolower($post['User']['email']);
+
+        if ($user->load($post) && $profile->load($post)) {
+            // ensure profile data gets loaded
+            // validate for ajax request
+            $zipcode = $post['Profile']['zip_code'];
+            $lat = $post['Profile']['lat'];
+            $lng = $post['Profile']['lng'];
+
+            $form = ActiveForm::validate($user, $profile);
+            // validate for normal request
+            if ($user->validate() && $profile->validate() && $zipcode) {
+                // perform registration
+                $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
+                $profile->zip_code = $zipcode;
+                $profile->lat = $lat;
+                $profile->lng = $lng;
+                $profile->setUser($user->id)->save(false);
+                $this->afterSignUp($user);
+
+                $city = City::find()->select('city.*')
+                    ->where(['zip_code' => $zipcode])
+                    ->andWhere('office_type is null')
+                    ->one();
+
+                $favorite = new Favorite;
+                $favorite->user_id = $user->id;
+                $favorite->type = 'city';
+                $favorite->city_id = $city->id;
+                $favorite->status = 1;
+                $favorite->created_at = date('Y-m-d H:i:s');
+                $favorite->save();
+                $data = array('status' => 1,'data'=>Yii::$app->user->id);
+            } else{
+                $data = array('status' => 0,'data'=>$form);
+            }
+        }
+
+        //do the login of newly signup user
+        $identity = new LoginForm();
+        $identity->username = $attributes['email'];
+        $identity->socialLogin(10000);
+        // redirect to form signup, variabel global set to successUrl
+        $this->successUrl = \yii\helpers\Url::to(['signup']);
     }
 
     /**
@@ -551,4 +653,38 @@ class UserController extends BaseController
             $user->save();
         }
     }
+
+    public function newUsername($existing_users, $username, $i) {
+        $updated_username = $username.$i;
+
+        if(in_array($updated_username, $existing_users)) {
+            $i++;
+            return $this->newUsername($existing_users, $username, $i);
+        } else {
+            return $updated_username;
+        }
+    }
+
+    private function checkUserName($userName = null)
+    {
+        if($userName) {
+            $updatedUserName = '';
+
+            $existing_users = array();
+            $query = new Query();
+            $users = $query->select('user.username')
+                ->from('user')
+                ->andFilterWhere(['like', 'username', $userName])
+                ->all();
+
+            foreach($users as $user){
+                array_push($existing_users, $user['username']);
+            }
+
+            $updatedUserName = $this->newUsername($existing_users, $userName, 1);
+
+            return $updatedUserName;
+        }
+    }
 }
+
