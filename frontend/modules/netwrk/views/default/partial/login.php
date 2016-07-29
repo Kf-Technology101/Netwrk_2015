@@ -11,6 +11,23 @@
                 <p>Log in</p>
             </div>
             <div class="modal-body">
+                <div class="row social-login-wrapper">
+                    <div class="col-lg-12 text-center">
+                        <?php use yii\authclient\widgets\AuthChoice; ?>
+                        <?php $authAuthChoice = AuthChoice::begin(['baseAuthUrl' => ['user/auth'], 'autoRender' => false]); ?>
+                            <ul>
+                                <?php foreach ($authAuthChoice->getClients() as $client): ?>
+                                    <li class="social-item">
+                                        <?= Html::a( Html::beginTag('i',['class' => "fa fa-$client->name"]).Html::endTag('i').$client->title, ['user/auth', 'authclient'=> $client->name, ], ['class' => "btn btn-block btn-default $client->name "]) ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php AuthChoice::end(); ?>
+                        <?/*= yii\authclient\widgets\AuthChoice::widget([
+                            'baseAuthUrl' => ['user/auth']
+                        ]) */?>
+                    </div>
+                </div>
                 <?php
                 $model = new LoginForm();
                 $form = ActiveForm::begin([
@@ -35,14 +52,6 @@
                     <p>Login</p>
                 </div>
                 <?php ActiveForm::end(); ?>
-                <hr>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <?= yii\authclient\widgets\AuthChoice::widget([
-                            'baseAuthUrl' => ['user/auth']
-                        ]) ?>
-                    </div>
-                </div>
                 <div class="sign-up">
                     <p>Don't have an account! <b>Sign up</b> Now</p>
                 </div>
