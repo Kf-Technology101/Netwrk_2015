@@ -7,7 +7,6 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
 use frontend\modules\netwrk\models\User;
-use yii\authclient\AuthAction;
 
 /**
  * Site controller
