@@ -57,21 +57,23 @@ class UserController extends BaseController
         $client_title = $client->getTitle();
         $attributes = $client->getUserAttributes();
 
-        //var_dump($attributes);
-        //die();
+        /*var_dump($attributes);
+        die();*/
         // Check if this email or facebook id is already registered with system
         if($attributes['email'] != ''){
-            $user = User::find()->where(['email'=>$attributes['email']])->one();
+            $user = User::find()->where(['email'=>$attributes['email']]);
+            if($attributes['id'] != ''){
+                $user = $user->orWhere(['facebook_id'=>$attributes['id']]);
+            }
+            $user = $user->one();
         } elseif($attributes['id'] != '' && $client_title == 'Facebook') {
             $user = User::find()->where(['facebook_id'=>$attributes['id']])->one();
         }
 
         if(!empty($user)){
-            if($client_title == 'Facebook'){
-                if(!$user->facebook_id) {
-                    $user->facebook_id = $attributes['id'];
-                    $user->save();
-                }
+            if($client_title == 'Facebook' && !$user->facebook_id){
+                $user->facebook_id = $attributes['id'];
+                $user->save();
             }
             $identity = new LoginForm();
             $identity->username = $attributes['email'];
@@ -81,6 +83,9 @@ class UserController extends BaseController
             if($client_title == 'Facebook') {
                 //do signup new user
                 if($attributes['email'] != '') {
+                    $this->facebookSignup($attributes);
+                } else {
+                    //todo: ask user to fill the email
                     $this->facebookSignup($attributes);
                 }
             }
@@ -146,6 +151,7 @@ class UserController extends BaseController
             // validate for normal request
             if ($user->validate() && $profile->validate() && $zipcode) {
                 // perform registration
+                $user->facebook_id = $attributes['id'];
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
                 $profile->zip_code = $zipcode;
                 $profile->lat = $lat;
@@ -172,11 +178,15 @@ class UserController extends BaseController
         }
 
         //do the login of newly signup user
-        $identity = new LoginForm();
-        $identity->username = $attributes['email'];
-        $identity->socialLogin(10000);
-        // redirect to form signup, variabel global set to successUrl
-        $this->successUrl = \yii\helpers\Url::to(['signup']);
+        if($data['status'] == 1) {
+            $identity = new LoginForm();
+            $identity->username = $attributes['email'];
+            $identity->socialLogin(10000);
+            // redirect to form signup, variabel global set to successUrl
+            $this->successUrl = \yii\helpers\Url::to(['signup']);
+        } else {
+           $this->redirect(\yii\helpers\Url::to(['/#email_required']));
+        }
     }
 
     /**
