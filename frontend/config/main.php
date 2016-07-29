@@ -98,6 +98,22 @@ return [
                     'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
                     'clientId' => '616468941864933',
                     'clientSecret' => '17eaafc434a7d657a68890ba74cca4af',
+                    'scope' => [
+                        'email',
+                        'public_profile',
+                        //'user_about_me',
+                        //'user_location',
+                        //'user_work_history',
+                    ],
+                    'attributeNames' => [
+                        'id',
+                        'name',
+                        'email',
+                        'first_name',
+                        'last_name',
+                        'gender',
+                        'picture'
+                    ]
                 ],
             ],
         ]

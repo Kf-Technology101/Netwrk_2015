@@ -15,6 +15,7 @@ use frontend\modules\netwrk\models\UserMeet;
 use frontend\modules\netwrk\models\UserSettings;
 use frontend\modules\netwrk\models\WsMessages;
 
+use frontend\modules\netwrk\models\forms\AutoLoginForm;
 use frontend\modules\netwrk\models\forms\LoginForm;
 use frontend\modules\netwrk\models\forms\ForgotForm;
 
@@ -28,6 +29,8 @@ use yii\helpers\Url;
 
 class UserController extends BaseController
 {
+    public $successUrl;
+
     /**
      * @inheritdoc
      */
@@ -39,32 +42,36 @@ class UserController extends BaseController
             ],
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
-                'successCallback' => [$this, 'successCallback'],
+                'successCallback' => [$this, 'socialLoginCallback'],
             ],
         ];
     }
 
-    public function successCallback($client)
+    public function socialLoginCallback($client)
     {
-
+        $client_title = $client->getTitle();
         $attributes = $client->getUserAttributes();
 
-        die(print_r($attributes));
-        // user login or signup comes here
-        /*
-        Checking facebook email registered yet?
-        Maxsure your registered email when login same with facebook email
-        die(print_r($attributes));
-        */
+        // Check if this email or facebook id is already registered with system
+        if($attributes['email'] != ''){
+            $user = User::find()->where(['email'=>$attributes['email']])->orWhere()->one();
+        } elseif($attributes['id'] != '' && $client_title == 'Facebook') {
+            $user = User::find()->where(['facebook_id'=>$attributes['id']])->one();
+        }
 
-        //die(print_r($attributes));
-        $user = User::find()->where(['email'=>$attributes['email']])->one();
         if(!empty($user)){
-            Yii::$app->user->login($user);
+            if($client_title == 'Facebook'){
+                $user->facebook_id = $attributes['id'];
+                $user->save();
+            }
+
+            $identity = new LoginForm();
+            $identity->username = $user['email'];
+            $identity->socialLogin(1000);
         }else{
             // Save session attribute user from FB
             $session = Yii::$app->session;
-            $session['attributes']=$attributes;
+            $session['attributes'] = $attributes;
             // redirect to form signup, variabel global set to successUrl
             $this->successUrl = \yii\helpers\Url::to(['signup']);
         }
