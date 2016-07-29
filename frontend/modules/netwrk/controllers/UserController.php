@@ -51,12 +51,19 @@ class UserController extends BaseController
     {
         $attributes = $client->getUserAttributes();
 
-        // Check if this email is already registered with system
-        $user = User::find()->where(['email'=>$attributes['email']])->one();
+        // Check if this email or facebook id is already registered with system
+        if($attributes['email'] != ''){
+            $user = User::find()->where(['email'=>$attributes['email']])->orWhere()->one();
+        } elseif($attributes['id'] != '') {
+            $user = User::find()->where(['facebook_id'=>$attributes['id']])->one();
+        }
 
         if(!empty($user)){
+            $user->facebook_id = $attributes['id'];
+            $user->save();
+
             $identity = new LoginForm();
-            $identity->username = $attributes['email'];
+            $identity->username = $user['email'];
             $identity->socialLogin(1000);
         }else{
             // Save session attribute user from FB
