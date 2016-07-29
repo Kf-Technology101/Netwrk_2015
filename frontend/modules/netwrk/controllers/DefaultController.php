@@ -765,7 +765,7 @@ class DefaultController extends BaseController
             $hq_city_id = $this->actionGetHQZipCityFromCookie();
 
             $hq_post = Post::GetHQPostGlobal($hq_city_id);
-            $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$city_ids);
+            $top_post = Post::GetTopPostUserJoinGlobal($limit,null,null);
             $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
             //$top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
             //$top_communities = City::TopHashTag_City($top_city,$limit);
