@@ -2,6 +2,7 @@
     use yii\helpers\Url;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
+    use yii\authclient\widgets\AuthChoice;
     use frontend\modules\netwrk\models\forms\LoginForm;
 ?>
 <div class="modal" id='login' role="dialog">
@@ -13,7 +14,6 @@
             <div class="modal-body">
                 <div class="row social-login-wrapper">
                     <div class="col-lg-12 text-center">
-                        <?php use yii\authclient\widgets\AuthChoice; ?>
                         <?php $authAuthChoice = AuthChoice::begin(['baseAuthUrl' => ['user/auth'], 'autoRender' => false]); ?>
                             <ul>
                                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
