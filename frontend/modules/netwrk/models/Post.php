@@ -277,6 +277,7 @@ class Post extends \yii\db\ActiveRecord
                     ->leftJoin('profile','ws_messages.user_id = profile.user_id')
                     ->leftJoin('post', 'post.id=ws_messages.post_id')
                     ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+                    ->innerJoin('topic', 'post.topic_id=topic.id')
                     ->where(['not',['post.topic_id'=> null]])
                     ->andWhere(['not',['topic.status'=> '-1']])
                     ->andWhere(['not',['post.status'=> '-1']])
