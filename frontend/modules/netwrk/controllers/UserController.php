@@ -49,18 +49,21 @@ class UserController extends BaseController
 
     public function socialLoginCallback($client)
     {
+        $client_title = $client->getTitle();
         $attributes = $client->getUserAttributes();
 
         // Check if this email or facebook id is already registered with system
         if($attributes['email'] != ''){
             $user = User::find()->where(['email'=>$attributes['email']])->orWhere()->one();
-        } elseif($attributes['id'] != '') {
+        } elseif($attributes['id'] != '' && $client_title == 'Facebook') {
             $user = User::find()->where(['facebook_id'=>$attributes['id']])->one();
         }
 
         if(!empty($user)){
-            $user->facebook_id = $attributes['id'];
-            $user->save();
+            if($client_title == 'Facebook'){
+                $user->facebook_id = $attributes['id'];
+                $user->save();
+            }
 
             $identity = new LoginForm();
             $identity->username = $user['email'];
