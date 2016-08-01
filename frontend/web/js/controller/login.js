@@ -135,7 +135,11 @@ var Login={
 		$(Login.modal).modal({
 			backdrop: true,
 			keyboard: false
-		})
+		});
+
+		$(Login.modal).find('.modal-body').mCustomScrollbar({
+			theme:"dark"
+		});
 	},
 
 	OnShowModalLogin: function(){
