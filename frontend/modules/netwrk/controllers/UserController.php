@@ -57,110 +57,140 @@ class UserController extends BaseController
         $client_title = $client->getTitle();
         $attributes = $client->getUserAttributes();
 
-        /*var_dump($attributes);
-        die();*/
-        // Check if this email or facebook id is already registered with system
-        if($attributes['email'] != ''){
-            $user = User::find()->where(['email'=>$attributes['email']]);
-            if($attributes['id'] != ''){
-                $user = $user->orWhere(['facebook_id'=>$attributes['id']]);
+        // Facebook social login
+        if($client_title == 'Facebook') {
+            $id = $attributes['id'];
+            $email = strtolower($attributes['email']);
+        } elseif($client_title == 'Google'){
+            $id = $attributes['id'];
+            $email = strtolower($attributes['emails'][0]['value']);
+        }
+
+        if($email != ''){
+            $user = User::find()->where(['email' => $email]);
+            if($client_title == 'Facebook' && $id != ''){
+                $user = $user->orWhere(['facebook_id' => $id]);
+            } elseif($client_title == 'Google' && $id != ''){
+                $user = $user->orWhere(['google_id' => $id]);
             }
             $user = $user->one();
-        } elseif($attributes['id'] != '' && $client_title == 'Facebook') {
-            $user = User::find()->where(['facebook_id'=>$attributes['id']])->one();
+        } elseif($client_title == 'Facebook' && $id != '') {
+            $user = User::find()->where(['facebook_id' => $id])->one();
+        } elseif($client_title == 'Google' && $id != '') {
+            $user = User::find()->where(['google_id' => $id])->one();
         }
 
         if(!empty($user)){
             if($client_title == 'Facebook' && !$user->facebook_id){
-                $user->facebook_id = $attributes['id'];
+                $user->facebook_id = $id;
+                $user->save();
+            } elseif($client_title == 'Google' && !$user->google_id){
+                $user->google_id = $id;
                 $user->save();
             }
+
+            // Login user
             $identity = new LoginForm();
-            $identity->username = $attributes['email'];
+            $identity->username = $email;
             $identity->socialLogin(10000);
         } else {
-
-            if($client_title == 'Facebook') {
-                //do signup new user
-                if($attributes['email'] != '') {
-                    $this->facebookSignup($attributes);
-                } else {
-                    //todo: ask user to fill the email
-                    $this->facebookSignup($attributes);
+            if($email != '') {
+                // Sign up new user
+                $this->SocialSignUp($attributes, $client_title);
+            } else {
+                if($client_title == 'Facebook'){
+                    // Display facebook share email settings modal
+                    $this->redirect(\yii\helpers\Url::to(['/#fb_share_email']));
                 }
             }
         }
     }
 
     /**
-     * Facebook signup
+     * Social Sign Up
      * @param array $attributes
+     * @param $client_title
      */
-    public function facebookSignup($attributes = array())
+    public function SocialSignUp($attributes = array(), $client_title)
     {
-        // Save session attribute user from FB
+        // Save user attributes in session
         $session = Yii::$app->session;
         $session['attributes'] = $attributes;
 
-        //insert new record in user
-        $user = new User(["scenario" => "register"]);
-        $profile = new Profile();
-
+        // Prepare location data from cookie
         $cookies = Yii::$app->request->cookies;
-
         $zip_code = ($cookies->getValue('nw_zipCode')) ? $cookies->getValue('nw_zipCode') : 0;
         $lat = ($cookies->getValue('nw_lat')) ? $cookies->getValue('nw_lat') : '';
         $lng = ($cookies->getValue('nw_lng')) ? $cookies->getValue('nw_lng') : '';
-        $username = preg_replace('/[^A-Za-z0-9\-]/', '',preg_replace('/([^@]*).*/', '$1', $attributes['email']));
-        $new_username = $this->checkUserName($username);
-        $year = date('Y') - $attributes['age_range']['min'];
 
-        //todo: use signup form modal, upload the facebook photo, facebook id save with signup
-        $postdata = [
+        // Prepare data from attributes
+        if($client_title == 'Facebook') {
+            $id = $attributes['id'];
+            $email = strtolower($attributes['email']);
+            $first_name = $attributes['first_name'];
+            $last_name = $attributes['last_name'];
+            $gender = $attributes['gender'];
+            $birth_day = 1;
+            $birth_month = 1;
+            $birth_year = date('Y') - $attributes['age_range']['min'];
+        } elseif($client_title == 'Google') {
+            $id = $attributes['id'];
+            $email = strtolower($attributes['emails'][0]['value']);
+            $first_name = $attributes['name']['givenName'];
+            $last_name = $attributes['name']['familyName'];
+            $gender = $attributes['gender'];
+            $birth_date = explode('-', $attributes['birthday']);
+            $birth_day = ($birth_date[2] != 00) ? $birth_date[2] : 01;
+            $birth_month = ($birth_date[1] != 00) ? $birth_date[1] : 01;
+            $birth_year = ($birth_date[0] != 0000) ? $birth_date[0] : 1995;
+        }
+
+        $user_name = preg_replace('/[^A-Za-z0-9\-]/', '',preg_replace('/([^@]*).*/', '$1', $email));
+        $new_username = $this->checkUserName($user_name);
+
+        $post = [
             'Profile' => [
-                'first_name' => $attributes['first_name'],
-                'last_name' => $attributes['last_name'],
-                'gender' => $attributes['gender'],
-                'day' => '1',
-                'month' => '1',
-                'year' => strval($year),
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'gender' => $gender,
+                'day' => strval($birth_day),
+                'month' => strval($birth_month),
+                'year' => strval($birth_year),
                 'zip_code' => $zip_code,
                 'lat' => $lat,
                 'lng' => $lng
             ],
             'User' => [
                 'username' => $new_username,
-                'email' => $attributes['email'],
-                'newPassword' => $attributes['first_name'].''.$attributes['last_name'],
-                'facebook_id' => $attributes['id']
+                'email' => $email,
+                'newPassword' => $first_name.''.$last_name
             ]
         ];
 
-        // load post data
-        $post = $postdata;
-        $post['User']['email'] = strtolower($post['User']['email']);
+        // Create instance of User and Profile for sign up
+        $user = new User(["scenario" => "register"]);
+        $profile = new Profile();
 
+        // Load user and profile data
         if ($user->load($post) && $profile->load($post)) {
-            // ensure profile data gets loaded
-            // validate for ajax request
-            $zipcode = $post['Profile']['zip_code'];
-            $lat = $post['Profile']['lat'];
-            $lng = $post['Profile']['lng'];
-
-            $form = ActiveForm::validate($user, $profile);
             // validate for normal request
-            if ($user->validate() && $profile->validate() && $zipcode) {
-                // perform registration
-                $user->facebook_id = $attributes['id'];
+            if ($user->validate() && $profile->validate() && $zip_code) {
+                if($client_title == 'Facebook'){
+                    $user->facebook_id = $id;
+                } elseif($client_title == 'Google'){
+                    $user->google_id = $id;
+                }
+
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
-                $profile->zip_code = $zipcode;
+                $profile->zip_code = $zip_code;
                 $profile->lat = $lat;
                 $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
 
+                // Auto follow user to his zip code social community
                 $city = City::find()->select('city.*')
-                    ->where(['zip_code' => $zipcode])
+                    ->where(['zip_code' => $zip_code])
                     ->andWhere('office_type is null')
                     ->one();
 
@@ -171,21 +201,12 @@ class UserController extends BaseController
                 $favorite->status = 1;
                 $favorite->created_at = date('Y-m-d H:i:s');
                 $favorite->save();
-                $data = array('status' => 1,'data'=>Yii::$app->user->id);
-            } else{
-                $data = array('status' => 0,'data'=>$form);
-            }
-        }
 
-        //do the login of newly signup user
-        if($data['status'] == 1) {
-            $identity = new LoginForm();
-            $identity->username = $attributes['email'];
-            $identity->socialLogin(10000);
-            // redirect to form signup, variabel global set to successUrl
-            $this->successUrl = \yii\helpers\Url::to(['signup']);
-        } else {
-           $this->redirect(\yii\helpers\Url::to(['/#email_required']));
+                // Login newly sign up user
+                $identity = new LoginForm();
+                $identity->username = $email;
+                $identity->socialLogin(10000);
+            }
         }
     }
 

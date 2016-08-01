@@ -15,7 +15,7 @@
         <div class="col-lg-12 text-center">
             <?php $authAuthChoice = AuthChoice::begin(['baseAuthUrl' => ['user/auth'], 'autoRender' => false]); ?>
                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
-                    <?= Html::a( Html::beginTag('i',['class' => "fa fa-$client->name"]).Html::endTag('i').$client->title, ['user/auth', 'authclient'=> $client->name, ], ['class' => "btn btn-block btn-default $client->name "]) ?>
+                    <?= Html::a( Html::beginTag('i',['class' => "fa fa-$client->name"]).Html::endTag('i').'Log in with '.$client->title, ['user/auth', 'authclient'=> $client->name, ], ['class' => "btn btn-block btn-default $client->name "]) ?>
                 <?php endforeach; ?>
             <?php AuthChoice::end(); ?>
         </div>
