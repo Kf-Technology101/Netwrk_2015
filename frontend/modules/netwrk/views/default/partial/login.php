@@ -9,7 +9,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <p>Log in</p>
+                <p class="text-center">Log In With Your Social Account</p>
             </div>
             <div class="modal-body">
                 <div class="row social-login-wrapper">
@@ -18,13 +18,16 @@
                             <ul>
                                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
                                     <li class="social-item">
-                                        <?= Html::a( Html::beginTag('i',['class' => "fa fa-$client->name"]).Html::endTag('i').'Log in with '.$client->title, ['user/auth', 'authclient'=> $client->name, ], ['class' => "btn btn-block btn-default $client->name "]) ?>
+                                        <?= Html::a( Html::beginTag('i',['class' => "fa fa-$client->name"]).Html::endTag('i').$client->title, ['user/auth', 'authclient'=> $client->name, ], ['class' => "btn btn-block btn-default $client->name "]) ?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php AuthChoice::end(); ?>
                     </div>
                 </div>
+                <hr class="or-block">
+                <span class="or-text">Or</span>
+                <hr class="or-block">
                 <?php
                 $model = new LoginForm();
                 $form = ActiveForm::begin([

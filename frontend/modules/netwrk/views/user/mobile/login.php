@@ -8,18 +8,20 @@
 
     <div class="header">
         <a href="<?= Url::base(true); ?>"><img src="<?= Url::to('@web/img/icon/netwrk-logo-blue.png'); ?>"></a>
-        <p> Log in</p>
+        <p class="text-center">Log In With Your Social Account</p>
     </div>
-
     <div class="row social-login-wrapper">
         <div class="col-lg-12 text-center">
             <?php $authAuthChoice = AuthChoice::begin(['baseAuthUrl' => ['user/auth'], 'autoRender' => false]); ?>
                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
-                    <?= Html::a( Html::beginTag('i',['class' => "fa fa-$client->name"]).Html::endTag('i').'Log in with '.$client->title, ['user/auth', 'authclient'=> $client->name, ], ['class' => "btn btn-block btn-default $client->name "]) ?>
+                    <?= Html::a( Html::beginTag('i',['class' => "fa fa-$client->name"]).Html::endTag('i').$client->title, ['user/auth', 'authclient'=> $client->name, ], ['class' => "btn btn-block btn-default $client->name "]) ?>
                 <?php endforeach; ?>
             <?php AuthChoice::end(); ?>
         </div>
     </div>
+    <hr class="or-block">
+    <span class="or-text">Or</span>
+    <hr class="or-block">
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
