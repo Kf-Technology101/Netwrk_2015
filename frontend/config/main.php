@@ -116,6 +116,11 @@ return [
                         'age_range'
                     ]
                 ],
+                'google' => [
+                    'class' => 'yii\authclient\clients\GoogleOAuth',
+                    'clientId' => '870593878429-4tl81n67f73n4anllv9htjq3hnouss18.apps.googleusercontent.com',
+                    'clientSecret' => '50NNeiCT2SmmtBSuhAG0Zh2d',
+                ],
             ],
         ]
     ],
