@@ -1,10 +1,10 @@
 var Default ={
     initialize: function() {
-        var self = this;
+        var self = this,
+            hash = location.hash.substr(1);
 
-        var hash = location.hash.substr(1);
         if(hash == 'email_required') {
-           //todo: display popup
+            // Display facebook share email settings modal
             Default.displayFacebookShareSettingModal();
         }
 
@@ -320,10 +320,16 @@ var Default ={
     getMylocation: function(map){
         Map.getBrowserCurrentPosition(map);
     },
+
     displayFacebookShareSettingModal: function() {
+        // Hide all other modal
         $('.modal').modal('hide');
+
+        // Display social email share setting modal
         var target = $('#fbEmailShareSetting');
         target.modal('show');
+
+        // On hide display login model
         target.unbind();
         target.on('hidden.bs.modal', function() {
             window.location.hash = '';
