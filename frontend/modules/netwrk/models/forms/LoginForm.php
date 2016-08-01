@@ -168,4 +168,15 @@ class LoginForm extends Model
 
         return false;
     }
+
+    /**
+     * log user in
+     *
+     * @param int $loginDuration
+     * @return bool
+     */
+    public function socialLogin($loginDuration)
+    {
+        return Yii::$app->user->login($this->getUser(), $this->rememberMe ? $loginDuration : 0);
+    }
 }

@@ -30,20 +30,57 @@
         font-family: "ProximaNovaSemibold";
         p{
             margin: 0;
-            line-height: 40px;
-            font-size: 26px;
+            line-height: 30px;
+            font-size: 21px;
             font-weight: bold;
         }
     }
     .modal-body{
         overflow-y: auto;
         overflow-x: hidden;
-        max-height: 410px;
+        max-height: 430px;
         min-height: 300px;
         width: 100%;
         padding: 15px 0 0 0;
         height: auto;
         border-radius: 4px;
+        .social-login-wrapper{
+            ul{
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                display: inline-block;
+                .social-item{
+                    font-weight: 600;
+                    display: inline-block;
+                    .btn{
+                        .fa {
+                            padding-right: 10px;
+                        }
+                        &.facebook{
+                            color: #ffffff;
+                            background:#3468AF;
+                            border-color:#3468AF;
+                        }
+                        &.google{
+                            color: #ffffff;
+                            background:#ef6666;
+                            border-color:#ef6666;
+                        }
+                    }
+                }
+            }
+        }
+        .or-block{
+            display: inline-block;
+            vertical-align: middle;
+            width: 46%;
+        }
+        .or-text{
+            font-weight: 400;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
         .form-login{
             p{
                 margin: 0 0 5px;
@@ -54,7 +91,7 @@
                 font-size: 18px;
                 height: 45px;
                 line-height: 30px;
-                border color: #bcbcbc;
+                border-color: #bcbcbc;
             }
             .password{
                 .title{

@@ -105,6 +105,7 @@ $cookies = Yii::$app->request->cookies;
 <?= $this->render('partial/landing_channel_welcome');?>
 <?= $this->render('partial/confirm');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
+<?= $this->render('@frontend/modules/netwrk/views/default/partial/fb_share_email_setting.php');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
 <script src="/js/lib/richmarker-compiled.js"></script>

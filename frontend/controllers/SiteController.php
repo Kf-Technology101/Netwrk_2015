@@ -6,12 +6,14 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
+use frontend\modules\netwrk\models\User;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+    public $successUrl = 'Success';
     /**
      * @inheritdoc
      */
@@ -41,17 +43,7 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
+
 
     public function actionIndex()
     {

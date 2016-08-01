@@ -203,7 +203,11 @@ var Signup={
 		$(Signup.parent).modal({
 			backdrop: true,
 			keyboard: false
-		})
+		});
+
+		$(Signup.modal).find('.modal-body').mCustomScrollbar({
+			theme:"dark"
+		});
 	},
 
 	OnChangeGender: function(){
