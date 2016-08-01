@@ -60,24 +60,35 @@ class UserController extends BaseController
         // Facebook social login
         if($client_title == 'Facebook') {
             $id = $attributes['id'];
-            $email = $attributes['email'];
+            $email = strtolower($attributes['email']);
+        } elseif($client_title == 'Google'){
+            $id = $attributes['id'];
+            $email = strtolower($attributes['emails'][0]['value']);
         }
 
         if($email != ''){
             $user = User::find()->where(['email' => $email]);
             if($client_title == 'Facebook' && $id != ''){
                 $user = $user->orWhere(['facebook_id' => $id]);
+            } elseif($client_title == 'Google' && $id != ''){
+                $user = $user->orWhere(['google_id' => $id]);
             }
             $user = $user->one();
         } elseif($client_title == 'Facebook' && $id != '') {
             $user = User::find()->where(['facebook_id' => $id])->one();
+        } elseif($client_title == 'Google' && $id != '') {
+            $user = User::find()->where(['google_id' => $id])->one();
         }
 
         if(!empty($user)){
             if($client_title == 'Facebook' && !$user->facebook_id){
                 $user->facebook_id = $id;
                 $user->save();
+            } elseif($client_title == 'Google' && !$user->google_id){
+                $user->google_id = $id;
+                $user->save();
             }
+
             // Login user
             $identity = new LoginForm();
             $identity->username = $email;
@@ -122,6 +133,16 @@ class UserController extends BaseController
             $birth_day = 1;
             $birth_month = 1;
             $birth_year = date('Y') - $attributes['age_range']['min'];
+        } elseif($client_title == 'Google') {
+            $id = $attributes['id'];
+            $email = strtolower($attributes['emails'][0]['value']);
+            $first_name = $attributes['name']['givenName'];
+            $last_name = $attributes['name']['familyName'];
+            $gender = $attributes['gender'];
+            $birth_date = explode('-', $attributes['birthday']);
+            $birth_day = ($birth_date[2] != 00) ? $birth_date[2] : 01;
+            $birth_month = ($birth_date[1] != 00) ? $birth_date[1] : 01;
+            $birth_year = ($birth_date[0] != 0000) ? $birth_date[0] : 1995;
         }
 
         $user_name = preg_replace('/[^A-Za-z0-9\-]/', '',preg_replace('/([^@]*).*/', '$1', $email));
@@ -156,7 +177,10 @@ class UserController extends BaseController
             if ($user->validate() && $profile->validate() && $zip_code) {
                 if($client_title == 'Facebook'){
                     $user->facebook_id = $id;
+                } elseif($client_title == 'Google'){
+                    $user->google_id = $id;
                 }
+
                 $user->setRegisterAttributes(Role::ROLE_USER, Yii::$app->request->userIP)->save(false);
                 $profile->zip_code = $zip_code;
                 $profile->lat = $lat;
@@ -180,7 +204,7 @@ class UserController extends BaseController
 
                 // Login newly sign up user
                 $identity = new LoginForm();
-                $identity->username = $attributes['email'];
+                $identity->username = $email;
                 $identity->socialLogin(10000);
             }
         }
