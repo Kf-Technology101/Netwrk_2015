@@ -19,11 +19,13 @@
             <li class="positive-option">
                 <a href="javascript:" class="<?php echo $option_class;?> text-center" data-option="like" data-point="+15">
                     <i class="ci-feedback-option-1"></i>
+                    <span class="text-with-icon">Legendary</span>
                 </a>
             </li>
             <li class="positive-option">
                 <a href="javascript:" class="<?php echo $option_class;?>" data-option="fun" data-point="+5">
                     <i class="ci-feedback-option-2"></i>
+                    <span class="text-with-icon">Fun</span>
                 </a>
             </li>
             <li class="positive-option">
