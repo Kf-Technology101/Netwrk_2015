@@ -166,7 +166,7 @@ if (isset($cookies["isCoverPageVisited"])) {
           </div>
           <?php if (Yii::$app->user->isGuest):?>
             <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
-              <i class="navigation-icon fa fa-sign-in"></i>
+              <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
               <div class="navigation-text">Login</div>
             </a>
           <?php endif; ?>
