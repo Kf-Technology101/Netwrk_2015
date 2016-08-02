@@ -73,14 +73,15 @@ class UserController extends BaseController
             } elseif($client_title == 'Google' && $id != ''){
                 $user = $user->orWhere(['google_id' => $id]);
             }
-            $user = $user->one();
+            $user = $user->with('profile')->one();
         } elseif($client_title == 'Facebook' && $id != '') {
-            $user = User::find()->where(['facebook_id' => $id])->one();
+            $user = User::find()->where(['facebook_id' => $id])->with('profile')->one();
         } elseif($client_title == 'Google' && $id != '') {
-            $user = User::find()->where(['google_id' => $id])->one();
+            $user = User::find()->where(['google_id' => $id])->with('profile')->one();
         }
 
         if(!empty($user)){
+            // Set facebook or google id if already not set
             if($client_title == 'Facebook' && !$user->facebook_id){
                 $user->facebook_id = $id;
                 $user->save();
@@ -89,9 +90,18 @@ class UserController extends BaseController
                 $user->save();
             }
 
+            // Set profile picture if already not set
+            if($client_title == 'Facebook' && $user->profile->photo == ''){
+                $profile_picture = 'http://graph.facebook.com/'.$id.'/picture?height=250&width=250';
+                $this->uploadSocialProfilePicture($user->id,$profile_picture);
+            } elseif($client_title == 'Google' && $user->profile->photo == '') {
+                $profile_picture = str_replace('sz=50','sz=250',$attributes['image']['url']);
+                $this->uploadSocialProfilePicture($user->id,$profile_picture);
+            }
+
             // Login user
             $identity = new LoginForm();
-            $identity->username = $email;
+            $identity->username = $user->email;
             $identity->socialLogin(10000);
         } else {
             if($email != '') {
@@ -104,6 +114,43 @@ class UserController extends BaseController
                 }
             }
         }
+    }
+
+    /**
+     * Upload Social Profile Picture
+     * @param int $user_id
+     * @param string $profile_picture
+     */
+    public function uploadSocialProfilePicture($user_id, $profile_picture){
+        // Read file data
+        $post_data = file_get_contents($profile_picture);
+        $extension = '.jpg';
+
+        // Generate unique name
+        $filename = $user_id . '-' . time() . $extension;
+
+        $upload_path = \Yii::getAlias('@frontend') . "/web/uploads/".$user_id."/";
+        if (!is_dir($upload_path)) {
+            mkdir( $upload_path, 0777, true);
+        }
+        // Open a file for writing
+        $fp = fopen( $upload_path . $filename, "w" );
+
+        // Write data to the file
+        fwrite($fp, $post_data);
+
+        // Close the streams
+        fclose( $fp );
+        fclose( $post_data );
+
+        // Update user profile
+        $user = User::find()->where('id ='.$user_id)->one();
+        $user->profile->photo = $filename;
+        $user->profile->update();
+
+        $image = Url::to('@web/uploads/'.$user_id.'/'.$user->profile->photo);
+        $hash = json_encode(array('data_image'=>$image));
+        return $hash;
     }
 
     /**
@@ -133,6 +180,7 @@ class UserController extends BaseController
             $birth_day = 1;
             $birth_month = 1;
             $birth_year = date('Y') - $attributes['age_range']['min'];
+            $profile_picture = 'http://graph.facebook.com/'.$id.'/picture?height=250&width=250';
         } elseif($client_title == 'Google') {
             $id = $attributes['id'];
             $email = strtolower($attributes['emails'][0]['value']);
@@ -143,6 +191,7 @@ class UserController extends BaseController
             $birth_day = ($birth_date[2] != 00) ? $birth_date[2] : 01;
             $birth_month = ($birth_date[1] != 00) ? $birth_date[1] : 01;
             $birth_year = ($birth_date[0] != 0000) ? $birth_date[0] : 1995;
+            $profile_picture = str_replace('sz=50','sz=250',$attributes['image']['url']);
         }
 
         $user_name = preg_replace('/[^A-Za-z0-9\-]/', '',preg_replace('/([^@]*).*/', '$1', $email));
@@ -187,6 +236,9 @@ class UserController extends BaseController
                 $profile->lng = $lng;
                 $profile->setUser($user->id)->save(false);
                 $this->afterSignUp($user);
+
+                // Set profile picture
+                $this->uploadSocialProfilePicture($user->id,$profile_picture);
 
                 // Auto follow user to his zip code social community
                 $city = City::find()->select('city.*')
