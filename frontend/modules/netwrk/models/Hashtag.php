@@ -93,7 +93,7 @@ class Hashtag extends \yii\db\ActiveRecord
     // top hastag in City
     public function TopHashtagInCity($city,$limit){
         $query = new Query();
-        $model = $query->select('count(hashtag.id) as count_hash, hashtag.id,hashtag.hashtag,')
+        $model = $query->select('count(hashtag.id) as count_hash, hashtag.id,hashtag.hashtag, topic.id as topic_id, topic.title as topic_title')
                     ->from('hashtag')
                     ->leftJoin('post_hashtag', 'post_hashtag.hashtag_id = hashtag.id')
                     ->leftJoin('post', 'post_hashtag.post_id = post.id')

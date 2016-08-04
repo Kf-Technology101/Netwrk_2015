@@ -174,7 +174,9 @@ class DefaultController extends BaseController
             $item = [
                 'hashtag_id'=> $hashtag['id'],
                 'hashtag_name'=> $hashtag['hashtag'],
-                'hashtag_post'=> $hashtag['count_hash']
+                'hashtag_post'=> $hashtag['count_hash'],
+                'topic_id' => $hashtag['topic_id'],
+                'topic_title' => $hashtag['topic_title']
             ];
             array_push($data, $item);
         }
