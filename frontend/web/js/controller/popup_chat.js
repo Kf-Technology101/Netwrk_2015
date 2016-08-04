@@ -77,6 +77,7 @@ var PopupChat = {
         }
         PopupChat.FetchDataChat();
         PopupChat.UpdateViewPost();
+        PopupChat.UpdateViewPostContent(PopupChat.params.post);
     },
 
     onClickBreadcrumbTopic: function(){
@@ -93,6 +94,18 @@ var PopupChat = {
     UpdateViewPost: function(){
         if(!isGuest){
             Ajax.update_view_post(PopupChat.params).then(function(){
+            });
+        }
+    },
+    UpdateViewPostContent: function(postId){
+        if(!isMobile) {
+            var params = {'post_id' : postId};
+            Ajax.update_view_post_content(params).then(function (data) {
+                var json = $.parseJSON(data),
+                    target = $('#popup-chat-' + postId);
+                target.find('.popup-topic-trigger').attr('data-city', json.city_id);
+                target.find('.popup-topic-trigger').attr('data-city-name', json.city_zipcode);
+                target.find('.popup-topic-trigger').attr('data-value', json.topic_id);
             });
         }
     },
