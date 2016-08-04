@@ -827,9 +827,6 @@
 	            PopupChat.params.chat_type = e.post.post_type;
 	            PopupChat.params.post_name = e.post.name_post;
 	            PopupChat.params.post_description = e.post.content;
-				PopupChat.params.topic_id =  $(d.currentTarget).attr('data-topic_id');
-				PopupChat.params.city_name = $(d.currentTarget).attr('data-city_zipcode');
-				PopupChat.params.city = $(d.currentTarget).attr('data-city_id');
 	            ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
 	            PopupChat.initialize();
 	  		});
