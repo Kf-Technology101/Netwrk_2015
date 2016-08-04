@@ -483,7 +483,12 @@ var Topic = {
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().parent().attr('data-value'),
                     post_name = $(e.currentTarget).parent().parent().find('.post-title').text(),
-                    post_content = $(e.currentTarget).parent().parent().find('.post-content').text();
+                    post_content = $(e.currentTarget).parent().parent().find('.post-content').text(),
+                    topic_id = $(e.currentTarget).parent().parent().attr('data-topic_id'),
+                    topic_title = $(e.currentTarget).parent().parent().attr('data-topic_title'),
+                    city_zipcode= $(e.currentTarget).parent().parent().attr('data-city_zipcode'),
+                    city_id= $(e.currentTarget).parent().parent().attr('data-city_id');
+
             if(isMobile){
                 sessionStorage.url = window.location.href;
                 sessionStorage.feed_topic = 1;
@@ -493,6 +498,9 @@ var Topic = {
                 PopupChat.params.chat_type = 1;
                 PopupChat.params.post_name = post_name;
                 PopupChat.params.post_description = post_content;
+                PopupChat.params.topic_id = topic_id;
+                PopupChat.params.city_name = city_zipcode;
+                PopupChat.params.city = city_id;
                 PopupChat.initialize();
             }
         });
