@@ -41,7 +41,12 @@
 				<p class="title">Trending</p>
 				<% _.each(marker.trending_hashtag,function(e){ %>
 					<div class="item-post">
-						<p class="name-post" data-value="<%= e.hashtag_id %>"><%= e.hashtag_name %></p>
+						<p class="name-post" data-value="<%= e.hashtag_id %>"
+						   data-topic_id="<%= e.topic_id %>"
+						   data-topic_title="<%= e.topic_title %>"
+						   data-city_id="<%= marker.id %>"
+						   data-city_zipcode="<%= marker.zip_code %>">
+							<%= e.hashtag_name %></p>
 						<p class="num-post"><%= e.hashtag_post %> Posts</p>
 					</div>
 				<% })%>
