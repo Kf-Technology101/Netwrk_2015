@@ -238,9 +238,9 @@
         var len_post = feed.top_post.length;
         _.each(feed.top_post,function(e,i){
           if(i == len_post - 1){%>
-              <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+              <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>" data-topic_id="<%= e.topic_id %>" data-topic_title="<%= e.topic_title %>" data-city_id="<%= e.city_id %>" data-city_zipcode="<%= e.zip_code %>">
           <% }else{ %>
-              <div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+              <div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>" data-topic_id="<%= e.topic_id %>" data-topic_title="<%= e.topic_title %>" data-city_id="<%= e.city_id %>" data-city_zipcode="<%= e.zip_code %>">
           <% } %>
               <div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
 
