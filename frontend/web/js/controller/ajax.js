@@ -1667,5 +1667,40 @@ var Ajax = {
 
         return defer.promise();
     },
+
+    getOnBoardDetails: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/post/get-on-board-details";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    saveOnBoardingLines: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/post/save-on-boarding-lines";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    }
 };
 

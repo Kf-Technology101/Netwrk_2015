@@ -97,6 +97,37 @@ var Login={
 		//reload the map, highlight users home location, favorite zipcode
 		Map.main();
 		Map.initialize();
+
+		// If user not have any lines then display the modal
+		setTimeout(function(){
+			Ajax.getOnBoardDetails().then(function(data){
+				var jsonData = $.parseJSON(data);
+				console.log(jsonData);
+				if(jsonData.wsCount == 0){
+					if(jsonData.topPosts.length > 0){
+						var boardingModal = $('#modalOnBoarding');
+						var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul');
+
+						var lines_template = _.template($( "#boarding_lines" ).html());
+						var append_html = lines_template({top_post: jsonData.topPosts});
+						parent.append(append_html);
+
+						Common.eventOnBoardingLineClick();
+						Common.eventOnBoardingSaveLines();
+
+						boardingModal.find('.modal-body').mCustomScrollbar({
+							theme:"dark"
+						});
+
+						// parent.show();
+						boardingModal.modal({
+							backdrop: true,
+							keyboard: false
+						});
+					}
+				}
+			});
+		}, 600);
 	},
 
 	OnShowLoginErrors: function(){

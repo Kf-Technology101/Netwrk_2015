@@ -814,4 +814,75 @@ class PostController extends BaseController
         $hash = json_encode($temp);
         return $hash;
     }
+
+    public function actionGetOnBoardDetails($user_id = null)
+    {
+        $ws_count = 0;
+        $profile_picture = false;
+        $user_id = isset($user_id) ? $user_id : Yii::$app->user->id;
+        $limit = 5;
+
+        if($user_id) {
+            $query = new Query();
+
+            $messages = $query->select('w.*')
+                ->from('ws_messages w')
+                ->where('w.user_id = ' . $user_id . ' AND w.post_type = 1')
+                ->all();
+
+            $ws_count = sizeof($messages);
+
+            if($ws_count == 0){
+                $top_post = Post::GetTopPostUserJoinGlobal($limit,null,null);
+            }
+
+            $user = User::find()->where(['id' => $user_id])->with('profile')->one();
+
+            if($user->profile->photo == '')
+                $profile_picture = false;
+            else
+                $profile_picture = true;
+        }
+
+        $return = [
+            'wsCount' => $ws_count,
+            'topPosts' => $top_post,
+            'profilePicture' => $profile_picture
+        ];
+
+        return json_encode($return);
+    }
+
+    public function actionSaveOnBoardingLines()
+    {
+        $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : Yii::$app->user->id;
+        $posts = $_POST['posts'];
+
+        $msg = '';
+        $user = User::find()->where(['id' => $user_id])->with('profile')->one();
+
+        if($user->profile->first_name)
+            $msg .=  $user->profile->first_name.' ';
+        if($user->profile->last_name)
+            $msg .=  $user->profile->last_name.' ';
+
+        $msg .= 'has joined Channel';
+
+        foreach($posts as $post){
+            // Add ws_message of user.
+            $ws_messages = new WsMessages();
+            $ws_messages->user_id = $user->id;
+            $ws_messages->msg =  $msg;
+            $ws_messages->post_id = $post;
+            $ws_messages->msg_type = 1;
+            $ws_messages->post_type = 1;
+            $ws_messages->save(false);
+        }
+
+        $return = [
+            'success' => true
+        ];
+
+        return json_encode($return);
+    }
 }
