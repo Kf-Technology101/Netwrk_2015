@@ -220,6 +220,23 @@ var Ajax = {
 
         return defer.promise();
     },
+    update_view_post_content: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/post/update-view-post-content";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     get_post_by_topic:function(params){
         var url,defer = $.Deferred();
