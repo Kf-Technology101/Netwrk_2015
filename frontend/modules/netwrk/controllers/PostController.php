@@ -866,7 +866,7 @@ class PostController extends BaseController
         if($user->profile->last_name)
             $msg .=  $user->profile->last_name.' ';
 
-        $msg .= 'has joined Channel';
+        $msg .= 'has joined the line';
 
         foreach($posts as $post){
             // Add ws_message of user.
