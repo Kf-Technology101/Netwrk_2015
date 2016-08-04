@@ -27,7 +27,7 @@
 			<li class="line-list-item" data-post-id="<%= e.id %>" data-user="<%= e.user_id %>">
 				<div class='line-row'>
 					<span class='avatar-user'>
-						<img class='img_avatar' src="<?= Url::to('@web') ?><%= e.photo %>" />
+						<img class='img_avatar' src="<%= e.photo %>" />
 					</span>
 					<div class='title-description-user'>
 						<div class='title-chat-inbox'><%= e.title %></div>
