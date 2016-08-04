@@ -451,5 +451,56 @@ var Common = {
             self.reset_modal();
             $('#comeBackLater').modal('hide');
         });
+    },
+
+    eventOnBoardingLineClick: function(){
+        var boardingModalId = '#modalOnBoarding';
+        var target = $('.line-list-item', boardingModalId);
+        target.unbind();
+        target.on('click',function(e){
+            var selectedLines = parseInt($(boardingModalId).find('.selected-lines').val());
+
+            if($(this).find('.line-check-selected').hasClass('hide')){
+                $(this).addClass('selected');
+                $(this).find('.line-check-selected').removeClass('hide');
+                $(boardingModalId).find('.selected-lines').val(selectedLines+1);
+            } else {
+                $(this).removeClass('selected');
+                $(this).find('.line-check-selected').addClass('hide');
+                $(boardingModalId).find('.selected-lines').val(selectedLines-1);
+            }
+
+            selectedLines = parseInt($(boardingModalId).find('.selected-lines').val());
+
+            if(selectedLines == 0){
+                $(boardingModalId).find('.btn-save-lines').addClass('disabled').removeClass('btn-save-active');
+            } else {
+                $(boardingModalId).find('.btn-save-lines').removeClass('disabled').addClass('btn-save-active');
+            }
+        });
+    },
+
+    eventOnBoardingSaveLines: function(){
+        var boardingModalId = '#modalOnBoarding';
+        var target = $('.btn-save-lines', boardingModalId);
+        target.unbind();
+        target.on('click',function(e){
+            var parent = $(boardingModalId).find('.modal-body').find('.lines-wrapper ul');
+            var selectedLines = [];
+
+            parent.find('li.selected').each(function(ele){
+                var postId = $(this).attr('data-post-id');
+                selectedLines.push(postId);
+            });
+
+            var params = {'posts':selectedLines};
+
+            Ajax.saveOnBoardingLines(params).then(function(data){
+                var jsonData = $.parseJSON(data);
+                if (jsonData.success == true){
+                    $(boardingModalId).modal('hide');
+                }
+            });
+        });
     }
 };

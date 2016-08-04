@@ -126,3 +126,127 @@
         }
     }
 }
+
+.on-boarding {
+    height: 390px;
+    margin: auto;
+    overflow: visible;
+    top: 20%;
+    .modal-dialog {
+        max-height: 365px;
+        width: 500px;
+        margin: auto;
+        .modal-content {
+            border: medium none;
+            border-radius: 4px;
+            max-height: 365px;
+            .modal-header {
+                .title {
+                    font-size: 24px;
+                    font-weight: 600;
+                    line-height: 30px;
+                }
+            }
+            .modal-body {
+                padding: 0;
+                height: 244px;
+                .lines-wrapper {
+                    ul {
+                        margin: 0;
+                        padding: 0;
+                        overflow: hidden;
+                        li {
+                            list-style-type: none;
+                            padding: 10px;
+                            border-bottom: 1px solid #cccccc;
+                            .line-row {
+                                position: relative;
+                                height: 40px;
+                                .disable {
+                                    display: none;
+                                }
+                                .fa {
+                                    position: absolute;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    color: #1B1B1B;
+                                }
+                                .check-circle {
+                                    color: #5888ac;
+                                    right: 35px;
+                                }
+                                .fa-angle-right {
+                                    right: 5px;
+                                }
+                                .title-description-user {
+                                    width: 225px;
+                                    display: inline-block;
+                                    margin-left: 4px;
+
+                                    .title-chat-inbox {
+                                        font-size: 15px;
+                                        font-weight: bold;
+                                        max-width: 110px; // 145px
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                        color: #1d1b1b;
+                                    }
+                                    .description-chat-inbox {
+                                        min-width: 220px;
+                                        overflow:hidden;
+                                        white-space:nowrap;
+                                        text-overflow: ellipsis;
+                                        color: #1d1b1b;
+                                    }
+                                }
+                                .avatar-user {
+                                    width: 40px;
+                                    height: 40px;
+                                    border: 1px solid #d8d8d8;
+                                    border-radius: 2px;
+                                    display: inline-block;
+                                    vertical-align: top;
+                                    line-height: 36px;
+                                    text-align: center;
+                                    .img_avatar {
+                                        max-width: 100%;
+                                        height: auto;
+                                        max-height: 100%;
+                                    }
+                                }
+                            }
+                            &:hover {
+                                cursor: pointer;
+                                background-color: #fafafa;
+                                .title-description-user {
+                                    .title-chat-inbox {
+                                        cursor: pointer;
+                                        color: #5da5d8;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .modal-footer {
+                .btn-save-lines {
+                    border: 1px solid #fff;
+                    border-radius: 4px;
+                    box-shadow: 0 0 1px 1px #e0e0e0;
+                    float: right;
+                    font-family: "ProximaNovaRegular";
+                    font-size: 16px;
+                    padding: 5px;
+                    text-align: center;
+                    width: 100px;
+                }
+                .btn-save-active {
+                    background: #5888ac;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
