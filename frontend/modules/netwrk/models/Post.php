@@ -18,6 +18,8 @@ use frontend\modules\netwrk\models\User;
  * @property integer $user_id
  * @property string $created_at
  * @property string $updated_at
+ * @property string $lat
+ * @property string $lng
  */
 class Post extends \yii\db\ActiveRecord
 {
@@ -58,6 +60,8 @@ class Post extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'post_type' => 'Post Type',
+            'lat' => 'Latitude',
+            'lng' => 'Longitude'
         ];
     }
 

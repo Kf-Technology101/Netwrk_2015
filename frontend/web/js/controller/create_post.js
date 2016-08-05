@@ -80,9 +80,17 @@ var Create_Post={
                 });
                 if (error) return;
             }
-            Create_Post.params.city = city;
-            Create_Post.params.topic = topic;
-            Create_Post.params.city_name = name_city;
+            //if topic creats from blue dot. It means name = city name, and city id = null
+            if (name_city && city == null && topic == null) {
+                Create_Post.showPostCategory(name_city);
+                Create_Post.params.lat = $('#create_post').attr('data-lat');
+                Create_Post.params.lng = $('#create_post').attr('data-lng');
+                Create_Post.params.isCreateFromBlueDot = true;
+            } else {
+                Create_Post.params.city = city;
+                Create_Post.params.topic = topic;
+                Create_Post.params.city_name = name_city;
+            }
 
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
@@ -98,6 +106,109 @@ var Create_Post={
             Create_Post.onClickBackZipcodeBreadcrumb();
             Topic.displayPositionModal();
         }
+    },
+    showCreatePostModal: function(zipcode, lat, lng) {
+        var parent = $('#create_post');
+        parent.attr('data-lat', lat);
+        parent.attr('data-lng', lng);
+
+        if(isMobile) {
+            if(zipcode){
+                //todo: mobile
+                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+                //window.location.href = baseUrl + "/netwrk/topic/create-topic?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
+            }
+        } else {
+            Create_Post.initialize(null, null, zipcode);
+        }
+    },
+    /* Display community category dropdown on Create post modal. */
+    showPostCategory: function(zipcode){
+        var parent = $('#create_post');
+        parent.find('.post-category-content').html('');
+        parent.find('.post-topic-category-content').html('');
+        var params = {'zip_code': zipcode};
+        //todo: fetch weather api data
+        Ajax.get_city_by_zipcode(params).then(function(data){
+            var json = $.parseJSON(data);
+            console.log(json);
+            Create_Post.getTemplatePostCategory(parent,json);
+        });
+    },
+    getTemplatePostCategory: function(parent,data){
+        var json = data;
+        var target = parent.find('.post-category-content');
+
+        var list_template = _.template($("#post-category-template").html());
+        var append_html = list_template({data: json});
+
+        target.append(append_html);
+        //fetch topic list by city id and fill the topic dropdown dropdown
+        Create_Post.onTemplatePostCategory();
+    },
+    onTemplatePostCategory: function() {
+        Create_Post.onChangePostCategory();
+
+        var parent = $('#create_post'),
+            communityDropdown = parent.find('.dropdown-office'),
+            city_id = communityDropdown.val();
+        console.log(city_id);
+        Create_Post.showPostTopicCategory(city_id);
+    },
+    //update Create_Topic.params.city variable on change of group category dropdown in create topic form.
+    onChangePostCategory: function() {
+        var parent = $('#create_post').find('.dropdown-office');
+        var city_id = parent.val();
+        var city_name = parent.find(':selected').attr('data-city_id');
+
+        parent.unbind();
+        parent.on('change', function(){
+            city_id = $(this).val();
+            Create_Post.params.city = city_id;
+            Create_Post.params.city_name = city_name;
+            //fetch topic dropdown by cityId as city is changed so update topic dropdown according to city
+            Create_Post.showPostTopicCategory(city_id);
+        });
+
+        //set form params cityid and name
+        Create_Post.params.city = city_id;
+        Create_Post.params.city_name = city_name;
+    },
+    showPostTopicCategory: function(city_id){
+        //get topic list by cityId and create topic list dropdown and append it to create_post modal.
+        console.log('get topic by cityId'+city_id);
+        var parent = $('#create_post');
+        parent.find('.post-topic-category-content').html('');
+        var params = {'city_id': city_id};
+        Ajax.get_topic_by_city(params).then(function(data){
+            var json = $.parseJSON(data);
+            console.log(json);
+            Create_Post.getTemplatePostTopicCategory(parent,json);
+        });
+    },
+    getTemplatePostTopicCategory: function(parent,data){
+        //get topic dropdown and set it to #create_post modal
+        var json = data;
+        var target = parent.find('.post-topic-category-content');
+
+        var list_template = _.template($("#post-topic-category-template").html());
+        var append_html = list_template({data: json});
+
+        target.append(append_html);
+        Create_Post.onChangePostTopicCategory();
+    },
+    //update Create_Topic.params.topic variable on change of post topic category dropdown in create post form.
+    onChangePostTopicCategory: function() {
+        //set form params topic id
+        var parent = $('#create_post').find('.post-topic-dropdown');
+        var topic_id = parent.val();
+
+        parent.unbind();
+        parent.on('change', function(){
+            topic_id = $(this).val();
+            Create_Post.params.topic = topic_id;
+        });
+        Create_Post.params.topic = topic_id;
     },
     showDataBreadcrumb: function(zipcode, topic){
         var target = $('#create_post').find('.scrumb .zipcode');
@@ -282,6 +393,8 @@ var Create_Post={
         parent.find('.name_post').val('');
         parent.find('.message').val('');
         parent.find('#post_id').val('');
+        parent.find('.post-category-content').html('');
+        parent.find('.post-topic-category-content').html('');
 
         Create_Post.status_change.post = false;
         Create_Post.status_change.message = false;
@@ -419,6 +532,10 @@ var Create_Post={
         Create_Post.params.message = '';
         Create_Post.params.post_id = '';
         Create_Post.params.post_title = '';
+
+        Create_Post.params.lat = '';
+        Create_Post.params.lng = '';
+        Create_Post.params.isCreateFromBlueDot = '';
     }
 
 };

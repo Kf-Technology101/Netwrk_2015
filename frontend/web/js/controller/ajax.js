@@ -185,6 +185,23 @@ var Ajax = {
 
         return defer.promise();
     },
+    get_topic_by_city: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/topic/get-topic-by-city";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'GET',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     update_view_topic: function(params){
         var url,defer = $.Deferred();

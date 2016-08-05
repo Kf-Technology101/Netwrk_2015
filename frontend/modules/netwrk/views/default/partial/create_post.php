@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal" id='create_post'>
+<div class="modal" id='create_post' data-lat="" data-lng="">
     <!-- <div id="btn_discover"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div> -->
     <div class="modal-dialog">
         <div class="modal-content">
@@ -34,6 +34,12 @@
                                 <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
                             </div>
                         </div>
+                        <div class="post-category-content">
+
+                        </div>
+                        <div class="post-topic-category-content">
+
+                        </div>
                         <div class="post-message">
                             <p class="title"> Message </p>
                             <textarea class="message" placeholder="Don't be shy! Say something!" maxlength="1024"></textarea>
@@ -53,3 +59,27 @@
         </div>
     </div>
 </div>
+<script id="post-category-template" type="text/x-underscore-template">
+    <section class="post-category-wrapper">
+        <% if(data.length > 0) { %>
+        <p class="title">Type</p>
+        <select name="office" class="form-control dropdown-office">
+            <% _.each(data, function(item,i) { %>
+            <option value="<%= item.id%>" data-value="<%= item.id%>" data-city_name="<%= item.zip_code %>"><%= item.community %></option>
+            <% }); %>
+        </select>
+        <% } %>
+    </section>
+</script>
+<script id="post-topic-category-template" type="text/x-underscore-template">
+    <section class="post-topic-category-wrapper">
+        <% if(data.length > 0) { %>
+        <p class="title">Topic</p>
+        <select name="topic" class="form-control post-topic-dropdown">
+            <% _.each(data, function(item,i) { %>
+            <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.title %></option>
+            <% }); %>
+        </select>
+        <% } %>
+    </section>
+</script>

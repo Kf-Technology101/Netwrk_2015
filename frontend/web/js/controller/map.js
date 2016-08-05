@@ -1570,6 +1570,13 @@
 
 			Create_Topic.showCreateTopicModal(zipcode, lat, lng);
 		},
+		CreateLocationPost: function(zipcode) {
+			console.log('in CreateLocationPost');
+			var lat = Map.center_marker.getPosition().lat();
+			var lng = Map.center_marker.getPosition().lng();
+
+			Create_Post.showCreatePostModal(zipcode, lat, lng);
+		},
 
 		show_marker_group_loc: function(map, groupId) {
 			var marker,json,data_marker;

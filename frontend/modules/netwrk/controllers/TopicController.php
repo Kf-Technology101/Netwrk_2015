@@ -402,6 +402,28 @@ class TopicController extends BaseController
         $topic = Topic::find()->where('id ='.$id)->andWhere('status != -1')->one();
         return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
     }
+    public function actionGetTopicByCity(){
+        $city_id = $_GET['city_id'];
+
+        $topics = Topic::find()->where(['city_id' => $city_id])
+            ->andWhere('status != -1')
+            ->all();
+
+        $data = [];
+        if($topics) {
+            foreach ($topics as $topic) {
+                $topic = array(
+                    "id" => $topic->id,
+                    "city_id" => $topic->city_id,
+                    "title" => $topic->title,
+                    "user_id" => $topic->user_id
+                );
+                array_push($data, $topic);
+            }
+        }
+        $hash = json_encode($data);
+        return $hash;
+    }
 
     public function actionGetTopicById($topic_id = null){
         $topic_id = $_GET['topic_id'];
