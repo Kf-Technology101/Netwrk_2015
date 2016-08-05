@@ -112,6 +112,8 @@ class PostController extends BaseController
         $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
         $message = $_POST['message'];
         $current_date = date('Y-m-d H:i:s');
+        $lat = isset($_POST['lat']) ? $_POST['lat'] : null;
+        $lng = isset($_POST['lng']) ? $_POST['lng'] : null;
 
         if($post_id) {
             $Post = POST::find()->where(['id' => $post_id])->one();
@@ -125,6 +127,12 @@ class PostController extends BaseController
             $Post->content = $message;
             $Post->topic_id = $topic;
             $Post->user_id = $currentUser;
+            if($lat) {
+                $Post->lat = $lat;
+            }
+            if($lng) {
+                $Post->lng = $lng;
+            }
             $Post->post_type = 1;
             $Post->save();
         }
