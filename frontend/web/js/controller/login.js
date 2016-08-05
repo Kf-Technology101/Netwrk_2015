@@ -56,6 +56,7 @@ var Login={
 		btn.on('click',function(e){
 			if(!btn.hasClass('disable')){
 				if(isMobile){
+					sessionStorage.on_boarding = 1;
 					$(Login.parent).find(Login.form_id).submit();
 				}else{
 					Login.OnUserLogin();
@@ -100,30 +101,34 @@ var Login={
 		Map.main();
 		Map.initialize();
 
-		// If user not have any lines then display the modal
+		// If user not have any lines and profile picture then display the modal
 		setTimeout(function(){
-			Ajax.getOnBoardDetails().then(function(data){
-				var jsonData = $.parseJSON(data),
-						boardingModal = $(Login.on_boarding_id);
-
-				Login.profile_picture = jsonData.profilePicture;
-
-				if(jsonData.wsCount == 0 && jsonData.topPosts.length > 0){
-					var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul'),
-							lines_template = _.template($( "#boarding_lines" ).html()),
-							append_html = lines_template({top_post: jsonData.topPosts});
-
-					parent.append(append_html);
-
-					Common.eventOnBoardingLineClick();
-					Common.eventOnBoardingSaveLines();
-				} else {
-					Login.showProfilePicture();
-				}
-
-				Login.ShowModalOnBoarding();
-			});
+			Login.showOnBoardingLines();
 		}, 600);
+	},
+
+	showOnBoardingLines: function () {
+		Ajax.getOnBoardDetails().then(function(data){
+			var jsonData = $.parseJSON(data),
+					boardingModal = $(Login.on_boarding_id);
+
+			Login.profile_picture = jsonData.profilePicture;
+
+			if(jsonData.wsCount == 0 && jsonData.topPosts.length > 0){
+				var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul'),
+						lines_template = _.template($( "#boarding_lines" ).html()),
+						append_html = lines_template({top_post: jsonData.topPosts});
+
+				parent.append(append_html);
+
+				Common.eventOnBoardingLineClick();
+				Common.eventOnBoardingSaveLines();
+			} else {
+				Login.showProfilePicture();
+			}
+
+			Login.ShowModalOnBoarding();
+		});
 	},
 
 	showProfilePicture: function () {
