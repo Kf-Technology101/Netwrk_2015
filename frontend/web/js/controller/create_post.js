@@ -115,7 +115,7 @@ var Create_Post={
         if(isMobile) {
             if(zipcode){
                 //todo: mobile
-                window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
+                //window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
                 //window.location.href = baseUrl + "/netwrk/topic/create-topic?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
             }
         } else {
