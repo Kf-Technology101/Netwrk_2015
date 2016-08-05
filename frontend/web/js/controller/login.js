@@ -7,8 +7,10 @@ var Login={
 	page:'#page-login',
 	parent: '',
 	form_id:'#login-form',
+	on_boarding_id: '#modalOnBoarding',
 	modal_callback:'',
 	data_login:'',
+	profile_picture: true,
 	initialize:function(){
 		if(isMobile){
 			$('body').addClass('no-login');
@@ -54,6 +56,7 @@ var Login={
 		btn.on('click',function(e){
 			if(!btn.hasClass('disable')){
 				if(isMobile){
+					sessionStorage.on_boarding = 1;
 					$(Login.parent).find(Login.form_id).submit();
 				}else{
 					Login.OnUserLogin();
@@ -98,36 +101,41 @@ var Login={
 		Map.main();
 		Map.initialize();
 
-		// If user not have any lines then display the modal
+		// If user not have any lines and profile picture then display the modal
 		setTimeout(function(){
-			Ajax.getOnBoardDetails().then(function(data){
-				var jsonData = $.parseJSON(data);
-				console.log(jsonData);
-				if(jsonData.wsCount == 0){
-					if(jsonData.topPosts.length > 0){
-						var boardingModal = $('#modalOnBoarding');
-						var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul');
-
-						var lines_template = _.template($( "#boarding_lines" ).html());
-						var append_html = lines_template({top_post: jsonData.topPosts});
-						parent.append(append_html);
-
-						Common.eventOnBoardingLineClick();
-						Common.eventOnBoardingSaveLines();
-
-						boardingModal.find('.modal-body').mCustomScrollbar({
-							theme:"dark"
-						});
-
-						// parent.show();
-						boardingModal.modal({
-							backdrop: true,
-							keyboard: false
-						});
-					}
-				}
-			});
+			Login.showOnBoardingLines();
 		}, 600);
+	},
+
+	showOnBoardingLines: function () {
+		Ajax.getOnBoardDetails().then(function(data){
+			var jsonData = $.parseJSON(data),
+					boardingModal = $(Login.on_boarding_id);
+
+			Login.profile_picture = jsonData.profilePicture;
+
+			if(jsonData.wsCount == 0 && jsonData.topPosts.length > 0){
+				var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul'),
+						lines_template = _.template($( "#boarding_lines" ).html()),
+						append_html = lines_template({top_post: jsonData.topPosts});
+
+				parent.append(append_html);
+
+				Common.eventOnBoardingLineClick();
+				Common.eventOnBoardingSaveLines();
+			} else {
+				Login.showProfilePicture();
+			}
+
+			Login.ShowModalOnBoarding();
+		});
+	},
+
+	showProfilePicture: function () {
+		var boardingModal = $(Login.on_boarding_id);
+		boardingModal.find('.select-lines').addClass('hidden');
+		boardingModal.find('.select-picture').removeClass('hidden');
+		Login.onBoardingProfileUpload();
 	},
 
 	OnShowLoginErrors: function(){
@@ -212,5 +220,99 @@ var Login={
     },
     RedirectLogin: function(url_callback){
     	window.location.href =  baseUrl+"/netwrk/user/login?url_callback="+url_callback;
-    }
+    },
+
+	ShowModalOnBoarding: function(){
+		$(Login.on_boarding_id).modal({
+			backdrop: true,
+			keyboard: false
+		});
+
+		$(Login.on_boarding_id).find('.modal-body').mCustomScrollbar({
+			theme:"dark"
+		});
+
+		$('.modal-backdrop.in').last().addClass('active');
+
+		/*$('.modal-backdrop.in').click(function(e) {
+			alert('Clicked on backdrop');
+		});*/
+	},
+
+	onBoardingProfileUpload: function(){
+		Login.onBrowse();
+	},
+
+	onBrowse: function(){
+		var btn = $(Login.on_boarding_id).find('.browse');
+		btn.unbind();
+		btn.on('click',function(e){
+			$('.preview_img').find('img').remove();
+			$('.preview_img_ie').find('img').remove();
+			$('.image-preview').find('p').show();
+			$('#input_image')[0].click();
+
+			$('#input_image').unbind();
+			$('#input_image').change(function(e) {
+				Login.handleFiles(this.files);
+			});
+
+		});
+	},
+
+	handleFiles: function(files){
+		// var target = $('img.preview_image');
+		var img = new Image(),
+				parent_text = $('.image-preview').find('p'),
+				btn_control_save = $('.profile-picture-btn-control').find('.save');
+
+		if(files.length > 0){
+			img.src = window.URL.createObjectURL(files[0]);
+
+			img.onload = function() {
+				window.URL.revokeObjectURL(this.src);
+				Login.onEventSaveImage();
+			};
+
+			btn_control_save.removeClass('disable');
+			parent_text.hide();
+
+			if (isonIE()){
+				$('.preview_img_ie').append(img);
+
+			}else{
+				$('.preview_img').addClass('active');
+				$('.preview_img').append(img);
+			}
+			Login.showImageOnIE();
+		}
+	},
+
+	onEventSaveImage:function(){
+		var btn_save = $('.profile-picture-btn-control').find('.save');
+
+		if (!btn_save.hasClass('disable')) {
+			btn_save.on('click',function(){
+				$('#upload_image').unbind();
+				$('#upload_image').on('submit',function( event ) {
+					event.preventDefault();
+					var formData = new FormData(this);
+
+					Ajax.uploadProfileImage(formData).then(function(data){
+						var json = $.parseJSON(data);
+						Login.profile_picture = true;
+						$(Login.on_boarding_id).modal('hide');
+					});
+
+				});
+				$('#upload_image').submit();
+			});
+		};
+	},
+
+	showImageOnIE: function(img){
+		var target = $('.preview_img_ie').find('img'),
+			w = $('.preview_img_ie').find('img').attr('width'),
+			h = $('.preview_img_ie').find('img').attr('height');
+	}
 };

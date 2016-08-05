@@ -29,4 +29,5 @@
 <?= $this->render('@frontend/modules/netwrk/views/marker/blue_dot_post_content') ?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/landing_welcome');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/fb_share_email_setting.php');?>
+<?= $this->render('@frontend/modules/netwrk/views/default/partial/on_boarding.php');?>
 
