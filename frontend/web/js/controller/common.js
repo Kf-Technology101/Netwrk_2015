@@ -481,11 +481,12 @@ var Common = {
     },
 
     eventOnBoardingSaveLines: function(){
-        var boardingModalId = '#modalOnBoarding';
-        var target = $('.btn-save-lines', boardingModalId);
+        var boardingModal = $(Login.on_boarding_id),
+            target = $('.btn-save-lines', Login.on_boarding_id);
+
         target.unbind();
         target.on('click',function(e){
-            var parent = $(boardingModalId).find('.modal-body').find('.lines-wrapper ul');
+            var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul');
             var selectedLines = [];
 
             parent.find('li.selected').each(function(ele){
@@ -498,7 +499,11 @@ var Common = {
             Ajax.saveOnBoardingLines(params).then(function(data){
                 var jsonData = $.parseJSON(data);
                 if (jsonData.success == true){
-                    $(boardingModalId).modal('hide');
+                    if(Login.profile_picture == false){
+                        Login.showProfilePicture();
+                    } else {
+                        boardingModal.modal('hide');
+                    }
                 }
             });
         });
