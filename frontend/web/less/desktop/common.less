@@ -229,6 +229,58 @@
                         }
                     }
                 }
+                .profile-picture-wrapper {
+                    padding: 20px;
+                    .image-preview {
+                        width: 200px;
+                        height: 200px;
+                        margin: auto;
+                        border: 1px dashed #888;
+                        // overflow: hidden;
+                        display: table;
+                        p {
+                            text-align: center;
+                            margin: 0;
+                            line-height: 190px;
+                        }
+
+                        .preview_img_ie {
+                            height: auto;
+                            max-width: 200px;
+                            max-height: 200px;
+                            width: auto;
+                            display: table-cell;
+                            text-align: center;
+                            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);
+                            img {
+                                width: auto;
+                                height: auto;
+                                max-width: 200px;
+                                max-height: 200px;
+                            }
+                        }
+                        .preview_img {
+                            height: auto;
+                            max-width: 200px;
+                            max-height: 200px;
+                            width: auto;
+                            text-align: center;
+                            vertical-align: middle;
+                            display: block;
+                            &.active {
+                                display: table-cell;
+                            }
+                            img {
+                                margin: auto;
+                                max-width: 200px;
+                                width: auto;
+                                height: auto;
+                                max-height: 200px;
+                            }
+
+                        }
+                    }
+                }
             }
             .modal-footer {
                 .btn-save-lines {
@@ -245,6 +297,49 @@
                 .btn-save-active {
                     background: #5888ac;
                     color: #fff;
+                }
+
+                .profile-picture-btn-control {
+                    .btn-img {
+                        width: 30%;
+                        text-align: center;
+                        background: #5888ac;
+                        border-radius: 4px;
+                        border: 1px solid #fff;
+                        color: #fff;
+                        cursor: pointer;
+                        box-shadow: 0 0 1px 1px #e0e0e0;
+                        float: left;
+                    }
+                    .cancel {
+                        float: left;
+                        p {
+                            margin: 0;
+                            text-align: center;
+                            padding: 5px;
+                        }
+                    }
+                    .save {
+                        float: right;
+                        padding: 5px;
+                        .fa {
+                            font-size: 18px;
+                        }
+                        &.disable {
+                            opacity: 0.6;
+                            cursor: default;
+                        }
+                    }
+                    .browse {
+                        margin: 0 auto;
+                        padding: 5px;
+                        p {
+                            margin: 0;
+                        }
+                        input {
+                            display: none;
+                        }
+                    }
                 }
             }
         }
