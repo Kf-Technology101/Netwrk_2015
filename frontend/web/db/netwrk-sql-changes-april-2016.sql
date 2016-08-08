@@ -1,2 +1,4 @@
 
 ALTER TABLE topic`   ADD COLUMN `lat` DOUBLE NULL AFTER `group_id`,  ADD COLUMN `lng` DOUBLE NULL AFTER `lat`;
+
+ALTER TABLE `post`     ADD COLUMN `lat` DOUBLE NULL AFTER `status`,     ADD COLUMN `lng` DOUBLE NULL AFTER `lat`;

@@ -21,6 +21,7 @@ var Create_Post={
             Create_Post.params.topic = $('#create_post').attr('data-topic');
             Create_Post.params.city = $('#create_post').attr('data-city');
             Create_Post.params.post_id = $('#create_post').attr('data-post_id');
+            Create_Post.params.isCreateFromBlueDot = $('#create_post').attr('data-isCreateFromBlueDot');
 
             //set status_change status as true So save button will be active in create post form
             // as post msg and message required field is alread updated.
@@ -29,6 +30,12 @@ var Create_Post={
                 Create_Post.status_change.post = true;
                 Create_Post.status_change.message = true;
                 Create_Post.onCheckStatus();
+            }
+            if(Create_Post.params.isCreateFromBlueDot == 'true') {
+                Create_Post.params.city_name = $('#create_post').attr('data-city_zipcode');
+                Create_Post.params.lat = $('#create_post').attr('data-lat');
+                Create_Post.params.lng = $('#create_post').attr('data-lng');
+                Create_Post.showPostCategory(Create_Post.params.city_name);
             }
             Create_Post.changeData();
             Create_Post.onclickBack();
@@ -114,9 +121,7 @@ var Create_Post={
 
         if(isMobile) {
             if(zipcode){
-                //todo: mobile
-                //window.location.href = baseUrl + "/netwrk/post/create-post?city="+ Post.params.city +"&topic="+Post.params.topic;
-                //window.location.href = baseUrl + "/netwrk/topic/create-topic?city=null&zipcode="+zipcode+"&name=null&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
+                window.location.href = baseUrl + "/netwrk/post/create-post?city=null&topic=null&zipcode="+zipcode+"&lat="+lat+"&lng="+lng+"&isCreateFromBlueDot=true";
             }
         } else {
             Create_Post.initialize(null, null, zipcode);
@@ -155,15 +160,16 @@ var Create_Post={
         console.log(city_id);
         Create_Post.showPostTopicCategory(city_id);
     },
-    //update Create_Topic.params.city variable on change of group category dropdown in create topic form.
+    //update create_post.params.city variable on change of group category dropdown in create topic form.
     onChangePostCategory: function() {
         var parent = $('#create_post').find('.dropdown-office');
         var city_id = parent.val();
-        var city_name = parent.find(':selected').attr('data-city_id');
+        var city_name = parent.find(':selected').attr('data-city_name'); //todo: check params in date-city_id here
 
         parent.unbind();
         parent.on('change', function(){
             city_id = $(this).val();
+            city_name = $(this).find(':selected').attr('data-city_name');
             Create_Post.params.city = city_id;
             Create_Post.params.city_name = city_name;
             //fetch topic dropdown by cityId as city is changed so update topic dropdown according to city
@@ -182,7 +188,6 @@ var Create_Post={
         var params = {'city_id': city_id};
         Ajax.get_topic_by_city(params).then(function(data){
             var json = $.parseJSON(data);
-            console.log(json);
             Create_Post.getTemplatePostTopicCategory(parent,json);
         });
     },

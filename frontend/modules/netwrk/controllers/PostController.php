@@ -87,6 +87,32 @@ class PostController extends BaseController
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post?topic='.$topic]);
         }
+
+        $isCreateFromBlueDot = (isset($_GET['isCreateFromBlueDot']) && $_GET['isCreateFromBlueDot'] == true) ? $_GET['isCreateFromBlueDot'] : false ;
+        $zipcode_cities = [];
+        if ($isCreateFromBlueDot == true) {
+            $zip_code = $_GET['zipcode'];
+            $cities = City::find()->where(['zip_code' => $zip_code])->all();
+            foreach ($cities as $item) {
+                $cityData = [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'lat' => $item->lat,
+                    'lng' => $item->lng,
+                    'zip_code' => $item->zip_code,
+                    'office' => isset($item->office)? $item->office : 'Community'
+                ];
+                array_push($zipcode_cities, $cityData);
+            }
+            $data['zipcode_cities'] = $zipcode_cities;
+            $data['city_zipcode'] = $zip_code;
+            $data['lat'] = $_GET['lat'];
+            $data['lng'] = $_GET['lng'];
+            //todo: get first
+            $data['isCreateFromBlueDot'] = $isCreateFromBlueDot;
+        }
+
+        //todo: find city from zipcode and fill the city dropdown
         $top = Topic::findOne($topic);
         $cty = City::findOne($city);
         if($post_id) {
