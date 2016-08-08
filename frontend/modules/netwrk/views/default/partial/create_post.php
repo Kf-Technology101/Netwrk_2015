@@ -74,12 +74,23 @@
 <script id="post-topic-category-template" type="text/x-underscore-template">
     <section class="post-topic-category-wrapper">
         <% if(data.length > 0) { %>
-        <p class="title">Topic</p>
+        <p class="title">Channel</p>
         <select name="topic" class="form-control post-topic-dropdown">
             <% _.each(data, function(item,i) { %>
             <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.title %></option>
             <% }); %>
         </select>
+        <% } else { %>
+            <div class="alert alert-danger">No channel available in this area. Please check out community on this area and create a channel.</div>
+            <select name="topic" class="form-control post-topic-dropdown" disabled="disabled">
+                <% if(data.length > 0) { %>
+                <% _.each(data, function(item,i) { %>
+                <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.title %></option>
+                <% }); %>
+                <% } else { %>
+                <option value="" data-value="">No channel available</option>
+                <% } %>
+            </select>
         <% } %>
     </section>
 </script>
