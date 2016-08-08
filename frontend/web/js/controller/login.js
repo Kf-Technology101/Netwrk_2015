@@ -123,11 +123,11 @@ var Login={
 
 				Common.eventOnBoardingLineClick();
 				Common.eventOnBoardingSaveLines();
-			} else {
+				Login.ShowModalOnBoarding();
+			} else if(Login.profile_picture == false) {
 				Login.showProfilePicture();
+				Login.ShowModalOnBoarding();
 			}
-
-			Login.ShowModalOnBoarding();
 		});
 	},
 
