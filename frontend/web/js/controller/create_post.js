@@ -12,7 +12,8 @@ var Create_Post={
     status_change:{
         post: false,
         message: false,
-        total: false
+        total: false,
+        topic: false
     },
 
     initialize: function(city,topic,name_city,name_topic,post_id){
@@ -21,7 +22,7 @@ var Create_Post={
             Create_Post.params.topic = $('#create_post').attr('data-topic');
             Create_Post.params.city = $('#create_post').attr('data-city');
             Create_Post.params.post_id = $('#create_post').attr('data-post_id');
-            Create_Post.params.isCreateFromBlueDot = $('#create_post').attr('data-isCreateFromBlueDot');
+            Create_Post.params.isCreateFromBlueDot = ($('#create_post').attr('data-isCreateFromBlueDot') == 'true') ? true : false;
 
             //set status_change status as true So save button will be active in create post form
             // as post msg and message required field is alread updated.
@@ -31,7 +32,7 @@ var Create_Post={
                 Create_Post.status_change.message = true;
                 Create_Post.onCheckStatus();
             }
-            if(Create_Post.params.isCreateFromBlueDot == 'true') {
+            if(Create_Post.params.isCreateFromBlueDot) {
                 Create_Post.params.city_name = $('#create_post').attr('data-city_zipcode');
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
@@ -89,10 +90,10 @@ var Create_Post={
             }
             //if topic creats from blue dot. It means name = city name, and city id = null
             if (name_city && city == null && topic == null) {
-                Create_Post.showPostCategory(name_city);
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
                 Create_Post.params.isCreateFromBlueDot = true;
+                Create_Post.showPostCategory(name_city);
             } else {
                 Create_Post.params.city = city;
                 Create_Post.params.topic = topic;
@@ -189,6 +190,15 @@ var Create_Post={
         Ajax.get_topic_by_city(params).then(function(data){
             var json = $.parseJSON(data);
             Create_Post.getTemplatePostTopicCategory(parent,json);
+
+            //if topic data is null then save button should be disable.
+            if(json.length > 0) {
+                Create_Post.status_change['topic'] = true;
+            } else {
+                Create_Post.status_change['topic'] = false;
+            }
+            console.log(Create_Post.status_change['topic']);
+            Create_Post.onCheckStatus();
         });
     },
     getTemplatePostTopicCategory: function(parent,data){
@@ -335,6 +345,9 @@ var Create_Post={
 
         this.onChangeData(parent.find('.name_post'),'post');
         this.onChangeData(parent.find('.message'),'message');
+        if(Create_Post.params.isCreateFromBlueDot) {
+            this.onChangeData(parent.find('.post-topic-dropdown'),'topic');
+        };
     },
 
     onChangeData: function(target,filter){
@@ -353,11 +366,21 @@ var Create_Post={
     onCheckStatus: function(){
         var status = Create_Post.status_change;
 
-        if(status.post && status.message){
-            status.total = true;
-        }else{
-            status.total = false;
+        //if line create from blue dot then topic is required
+        if(Create_Post.params.isCreateFromBlueDot) {
+            if(status.post && status.message && status.topic){
+                status.total = true;
+            }else{
+                status.total = false;
+            }
+        } else {
+            if(status.post && status.message){
+                status.total = true;
+            }else{
+                status.total = false;
+            }
         }
+        console.log('Create_Post.status_change.total => '+status.total);
         Create_Post.OnBtnTemplate();
     },
 
@@ -404,6 +427,7 @@ var Create_Post={
         Create_Post.status_change.post = false;
         Create_Post.status_change.message = false;
         Create_Post.status_change.total = false;
+        Create_Post.status_change.topic = false;
     },
 
     setDefaultBtn: function(){
