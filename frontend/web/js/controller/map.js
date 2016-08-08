@@ -1571,7 +1571,6 @@
 			Create_Topic.showCreateTopicModal(zipcode, lat, lng);
 		},
 		CreateLocationPost: function(zipcode) {
-			console.log('in CreateLocationPost');
 			var lat = Map.center_marker.getPosition().lat();
 			var lng = Map.center_marker.getPosition().lng();
 

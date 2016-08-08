@@ -1,12 +1,21 @@
 <?php use yii\helpers\Url; ?>
-<div id="create_post" data-topic="<?= $topic->id?>" data-city="<?= $city->id ?>" data-post_id="<?= $post->id?>">
+<div id="create_post" data-topic="<?= $topic->id?>" data-city="<?= $city->id ?>" data-post_id="<?= $post->id?>"
+     data-isCreateFromBlueDot="<?php echo $isCreateFromBlueDot; ?>"
+     data-city_zipcode="<?php echo $city_zipcode; ?>"
+     data-lat="<?php echo $lat; ?>"
+     data-lng="<?php echo $lng; ?>"
+>
     <div class="header">
         <div class="back_page">
             <!-- <img src="<?= Url::to('@web/img/icon/back_btn_hdpi.png'); ?>"> -->
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title"><?= $city->zip_code ?> > Add a line</span>
+            <?php if($isCreateFromBlueDot == true): ?>
+                <span class="title"><?php echo $city_zipcode ?> > Add a line</span>
+            <?php else: ?>
+                <span class="title"><?= $city->zip_code ?> > Add a line</span>
+            <?php endif; ?>
         </div>
     </div>
     <div class="container">
@@ -18,6 +27,14 @@
                     <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?= isset($post->title) ? $post->title :''?>">
                 </div>
             </div>
+            <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
+                <div class="post-category-content">
+
+                </div>
+                <div class="post-topic-category-content">
+
+                </div>
+            <?php endif; ?>
             <div class="post-message">
                 <p class="title"> Message </p>
                 <textarea class="message" placeholder="Don't be shy! Say something!" maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
@@ -34,3 +51,27 @@
         </div>
     </div>
 </div>
+<script id="post-category-template" type="text/x-underscore-template">
+    <section class="post-category-wrapper">
+        <% if(data.length > 0) { %>
+        <p class="title">Type</p>
+        <select name="office" class="form-control dropdown-office">
+            <% _.each(data, function(item,i) { %>
+            <option value="<%= item.id%>" data-value="<%= item.id%>" data-city_name="<%= item.zip_code %>"><%= item.community %></option>
+            <% }); %>
+        </select>
+        <% } %>
+    </section>
+</script>
+<script id="post-topic-category-template" type="text/x-underscore-template">
+    <section class="post-topic-category-wrapper">
+        <% if(data.length > 0) { %>
+        <p class="title">Topic</p>
+        <select name="topic" class="form-control post-topic-dropdown">
+            <% _.each(data, function(item,i) { %>
+            <option value="<%= item.id%>" data-value="<%= item.id%>"><%= item.title %></option>
+            <% }); %>
+        </select>
+        <% } %>
+    </section>
+</script>
