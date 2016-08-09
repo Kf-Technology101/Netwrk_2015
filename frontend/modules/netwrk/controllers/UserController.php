@@ -258,6 +258,10 @@ class UserController extends BaseController
                 $identity = new LoginForm();
                 $identity->username = $email;
                 $identity->socialLogin(10000);
+
+                $c = Yii::$app->response->cookies;
+                $cookie = new Cookie(['name'=>'nw_social_sign_up', 'value'=> 1]);
+                $c->add($cookie);
             }
         }
     }
