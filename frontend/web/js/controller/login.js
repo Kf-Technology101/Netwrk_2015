@@ -56,7 +56,6 @@ var Login={
 		btn.on('click',function(e){
 			if(!btn.hasClass('disable')){
 				if(isMobile){
-					sessionStorage.on_boarding = 1;
 					$(Login.parent).find(Login.form_id).submit();
 				}else{
 					Login.OnUserLogin();
@@ -100,11 +99,6 @@ var Login={
 		//reload the map, highlight users home location, favorite zipcode
 		Map.main();
 		Map.initialize();
-
-		// If user not have any lines and profile picture then display the modal
-		setTimeout(function(){
-			Login.showOnBoardingLines();
-		}, 600);
 	},
 
 	showOnBoardingLines: function () {

@@ -126,6 +126,7 @@ var Signup={
 						}else{
 							isGuest = '';
 							UserLogin = Signup.data_validate.data;
+							sessionStorage.on_boarding = 1;
 							Login.OnCallBackAfterLogin();
 							$('.menu_top').removeClass('deactive');
 							$('#btn_meet').removeClass('deactive');
@@ -159,6 +160,7 @@ var Signup={
 						}else{
 							isGuest = '';
 							UserLogin = Signup.data_validate.data;
+							sessionStorage.on_boarding = 1;
 							Login.OnCallBackAfterLogin();
 							$('.menu_top').removeClass('deactive');
 							$('#btn_meet').removeClass('deactive');

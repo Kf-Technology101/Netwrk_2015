@@ -260,9 +260,8 @@
 				createInfoWindow.open(Map.map);
 			});
 
-			if(isMobile && sessionStorage.on_boarding == 1){
-				sessionStorage.on_boarding == 0;
-
+			if(sessionStorage.on_boarding == 1){
+				sessionStorage.on_boarding = 0;
 				// If user not have any lines and profile picture then display the modal
 				setTimeout(function(){
 					Login.showOnBoardingLines();

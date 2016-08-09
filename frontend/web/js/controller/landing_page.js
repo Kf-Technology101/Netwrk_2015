@@ -79,8 +79,11 @@ var LandingPage = {
 			LandingPage.data = $.parseJSON(res);
 			LandingPage.GetTemplate();
 			if(!isMobile) {
-				if(isLogoGlow == false) {
-					LandingPage.show_landing_page();
+				//Check if on boarding modal is not open then only show landing modal
+				if(!sessionStorage.on_boarding || sessionStorage.on_boarding == 0){
+					if(isLogoGlow == false) {
+						LandingPage.show_landing_page();
+					}
 				}
 			}
 		});
