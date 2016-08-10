@@ -186,7 +186,7 @@
 			Map.requestPosition(Map.map);
 
 			// New info window for click on map to create group and topic
-			var createInfoWindow = Map.setCreateInfoWindow();
+			/*var createInfoWindow = Map.setCreateInfoWindow();
 
 			google.maps.event.addListener(Map.map, 'click', function(event){
 				$('.modal').modal('hide');
@@ -258,7 +258,7 @@
 
 				// Open info window
 				createInfoWindow.open(Map.map);
-			});
+			});*/
 
 			if(sessionStorage.on_boarding == 1){
 				sessionStorage.on_boarding = 0;
