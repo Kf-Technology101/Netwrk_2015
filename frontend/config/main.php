@@ -96,8 +96,8 @@ return [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
-                    'clientId' => '1647198465596810',
-                    'clientSecret' => 'ac5951be228e1b35394eed45550cea9c',
+                    'clientId' => '616468941864933',
+                    'clientSecret' => '17eaafc434a7d657a68890ba74cca4af',
                     'scope' => [
                         'email',
                         'public_profile',
@@ -118,8 +118,8 @@ return [
                 ],
                 'google' => [
                     'class' => 'yii\authclient\clients\GoogleOAuth',
-                    'clientId' => '490162745917-fk41vi55k0o382agblqjs41q40h6bsur.apps.googleusercontent.com',
-                    'clientSecret' => 'zeQWhao_ElLDJXNd_QaQBVTU',
+                    'clientId' => '870593878429-4tl81n67f73n4anllv9htjq3hnouss18.apps.googleusercontent.com',
+                    'clientSecret' => '50NNeiCT2SmmtBSuhAG0Zh2d',
                 ],
             ],
         ]
