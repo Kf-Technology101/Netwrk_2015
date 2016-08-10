@@ -89,39 +89,6 @@ return [
                 'request-password-reset' => 'site/request-password-reset',
                 'reset-password' => 'site/reset-password',
             ]
-        ],
-        'authClientCollection' => [
-            'class' => 'yii\authclient\Collection',
-            'clients' => [
-                'facebook' => [
-                    'class' => 'yii\authclient\clients\Facebook',
-                    'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
-                    'clientId' => '616468941864933',
-                    'clientSecret' => '17eaafc434a7d657a68890ba74cca4af',
-                    'scope' => [
-                        'email',
-                        'public_profile',
-                        //'user_about_me',
-                        //'user_location',
-                        //'user_work_history',
-                    ],
-                    'attributeNames' => [
-                        'id',
-                        'name',
-                        'email',
-                        'first_name',
-                        'last_name',
-                        'gender',
-                        'picture',
-                        'age_range'
-                    ]
-                ],
-                'google' => [
-                    'class' => 'yii\authclient\clients\GoogleOAuth',
-                    'clientId' => '870593878429-4tl81n67f73n4anllv9htjq3hnouss18.apps.googleusercontent.com',
-                    'clientSecret' => '50NNeiCT2SmmtBSuhAG0Zh2d',
-                ],
-            ],
         ]
     ],
     'params' => $params,
