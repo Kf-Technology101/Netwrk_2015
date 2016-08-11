@@ -132,10 +132,10 @@ if (isset($cookies["isCoverPageVisited"])) {
               </div>
               <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
             </div>
-            <div id="btn_my_location" class="btn_my_location">
+            <!--<div id="btn_my_location" class="btn_my_location">
               <i class="fa fa-plus"></i>
               <span>Build</span>
-            </div>
+            </div>-->
     	</div>
 	</div>
     <section class="navigation-wrapper text-center">
@@ -162,6 +162,10 @@ if (isset($cookies["isCoverPageVisited"])) {
               $near_popover = '';
             }
           ?>
+          <button id="btn_my_location" type="button" class="btn btn-default">
+            <i class="navigation-icon fa fa-plus"></i>
+            <div class="navigation-text">Build</div>
+          </button>
           <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
                data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                data-placement="top" data-content="<?php echo $near_popover; ?>">
@@ -174,12 +178,6 @@ if (isset($cookies["isCoverPageVisited"])) {
               <div class="navigation-text">Near</div>
             </button>
           </div>
-          <?php if (Yii::$app->user->isGuest):?>
-            <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
-              <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
-              <div class="navigation-text">Login</div>
-            </a>
-          <?php endif; ?>
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-meet"></i>
             <!--<div class="navigation-text">Meet</div>-->
@@ -188,6 +186,12 @@ if (isset($cookies["isCoverPageVisited"])) {
             <i class="navigation-icon ci-line"></i>
             <div class="navigation-text"><span class='notify disable'>0</span>Lines</div>
           </button>
+          <?php if (Yii::$app->user->isGuest):?>
+            <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
+              <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
+              <div class="navigation-text">Login</div>
+            </a>
+          <?php endif; ?>
         </div>
       </div>
     </section>
