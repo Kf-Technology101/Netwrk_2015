@@ -25,6 +25,10 @@ $cookies = Yii::$app->request->cookies;
           $near_popover = 'Follow other areas and see what&rsquo;s around you';
         }
       ?>
+      <button id="btn_my_location" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
+        <i class="navigation-icon fa fa-plus"></i>
+        <span class="navigation-text">Build</span>
+      </button>
       <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
            data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
            data-placement="bottom" data-content="<?php echo $near_popover; ?>">
@@ -37,12 +41,6 @@ $cookies = Yii::$app->request->cookies;
           <span class="navigation-text">Near</span>
         </button>
       </div>
-      <?php if (Yii::$app->user->isGuest):?>
-        <button type="button" class="btn btn-default login-trigger">
-          <i class="navigation-icon fa fa-sign-in"></i>
-          <div class="navigation-text">Login</div>
-        </button>
-      <?php endif; ?>
       <button id="btn_nav_meet" type="button" class="btn btn-default">
         <i class="navigation-icon ci-meet"></i>
         <!--<span class="navigation-text">Meet</span>-->
@@ -51,15 +49,21 @@ $cookies = Yii::$app->request->cookies;
         <i class="navigation-icon ci-line"></i>
         <span class="navigation-text"><span class='notify'>0</span>Lines</span>
       </button>
+      <?php if (Yii::$app->user->isGuest):?>
+        <button type="button" class="btn btn-default login-trigger">
+          <i class="navigation-icon fa fa-sign-in"></i>
+          <div class="navigation-text">Login</div>
+        </button>
+      <?php endif; ?>
     </div>
   </div>
 
   <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
 
-  <div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
+  <!--<div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
     <i class="fa fa-plus"></i>
     <span>Build</span>
-  </div>
+  </div>-->
   <div class="sidebar">
     <div class="container">
       <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
