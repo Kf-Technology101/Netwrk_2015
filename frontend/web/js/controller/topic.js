@@ -704,6 +704,12 @@ var Topic = {
                     self.list[self.data.filter].loaded = self.list[self.data.filter].paging ;
                     parent.show();
                     self.getTemplate(parent,data);
+                    if(isMobile){
+                        setTimeout(function(){
+                            var favorite = $('#show-topic').find('#tab_feed').find('.Favorite-btn-wrap');
+                            self.getFavoriteTemplate(favorite, data);
+                        },100);
+                    }
                 });
             }
             console.log("loading groups!!!");

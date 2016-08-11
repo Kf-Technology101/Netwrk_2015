@@ -4,12 +4,19 @@
     <div class="modal-content">
       <div class="modal-header">
           <div class="header">
-            <div class="back_page">
+            <!--<div class="back_page">
               <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+            </div>-->
+            <!--<div class="Favorite-btn-wrap">
+            </div>-->
+            <div class="title_page left-section">
             </div>
-            <div class="Favorite-btn-wrap">
+            <div class="middle-section">
+                <i class="fa fa-align-justify"></i>
             </div>
-            <div class="title_page">
+            <div class="right-section">
+                <div class="feedback-line"></div>
+                <span class="title">Welcome</span>
             </div>
             <!--<div class="create_topic" id="create_topic">
               <span><i class="fa fa-plus-circle"></i> Create Channel</span>
@@ -162,11 +169,14 @@
   <script id="city_name" type="text/x-underscore-template">
     <span class="title">
         <% if(office_type == 'university') { %>
-            Idea
+            <i class="fa fa-lg fa-university"></i>
+            Idea area news
         <% } else if(office_type == 'government') { %>
-            Gov - Problem solving
+            <i class="fa fa-lg fa-institution"></i>
+            Gov - Problem solving area news
         <% } else { %>
-            Area HQ
+            <i class="fa fa-lg fa-home"></i>
+            Area HQ news
         <% } %>
     </span>
   </script>
@@ -175,9 +185,9 @@
        data-object-id="<%= city_id %>">
         <span class="favorite-status">
             <% if(is_favorite == true){%>
-                Followed
+                Joined
             <% }else{ %>
-                Follow
+                Join
             <% } %>
         </span>
     </a>
@@ -302,12 +312,17 @@
   <div class="top-feed">
     <div class="top-header">
         <% if(feed.office_type == 'university') { %>
-            <p class="lp-title">Idea Center News</p>
+            <p class="lp-title">Welcome to your local Idea center</p>
+            <p class="lp-description">Idea Center News</p>
         <% } else if(feed.office_type == 'government') { %>
-            <p class="lp-title">Solution Center News</p>
+            <p class="lp-title">Welcome to your local solution center</p>
+            <p class="lp-description">Solution Center News</p>
         <% } else { %>
-            <p class="lp-title">Local News</p>
+            <p class="lp-title">Welcome to your local Community Center</p>
+            <p class="lp-description">Local News</p>
         <% } %>
+        <div class="Favorite-btn-wrap">
+        </div>
     </div>
     <div class="top-feed-content"></div>
   </div>

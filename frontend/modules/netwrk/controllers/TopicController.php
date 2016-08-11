@@ -469,8 +469,8 @@ class TopicController extends BaseController
 
             $office_type = $cty->office_type;
 
-            $top_post = Post::GetTopPostUserJoinGlobal($limit, $city);
-            $top_topic = Topic::GetTopTopicGlobal($limit, $city);
+            $top_post = array(); //Post::GetTopPostUserJoinGlobal($limit, $city);
+            $top_topic = array(); //Topic::GetTopTopicGlobal($limit, $city);
             $top_city = City::GetTopCityUserJoinGlobal($limit, $city);
             //$weather_feed[] = ApiController::actionGetZipWeatherData($zipcode);
             $weather_feed[] = (array)json_decode(ApiController::actionGetZipWeatherData($zipcode));
