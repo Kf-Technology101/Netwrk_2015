@@ -137,7 +137,7 @@
                 }
             }
             .title_page{
-                width: 435px;
+                /*width: 435px;*/
                 height: 40px;
                 float: left;
                 img{
@@ -145,7 +145,7 @@
                     margin-right: 5px;
                     margin-bottom: 5px;
                 }
-                .title{
+                /*.title{
                     color: #fff;
                     display: inherit;
                     font-size: 22px;
@@ -154,9 +154,48 @@
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     padding-left: 35%;
-                }
-                &.on-feed{
+                }*/
+                /*&.on-feed{
                     width: 435px;
+                }*/
+            }
+            .left-section{
+                border-right: 1px solid #fff;
+            }
+            .middle-section{
+                width: 55px;
+                float: left;
+                color: #fff;
+                padding: 5px 10px 0;
+                .fa {
+                    font-size: 2.4em;
+                }
+            }
+            .right-section,
+            .left-section{
+                width: 335px;
+                float: left;
+                .title{
+                    color: #fff;
+                    display: inherit;
+                    font-size: 22px;
+                    line-height: 40px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding-left: 10px;
+                }
+            }
+            .right-section{
+                border-left: 1px solid #fff;
+                .feedback-line {
+                    background: url("../../img/icon/line-icon-nav.png") no-repeat;
+                    background-size: contain;
+                    display: inline-block;
+                    height: 30px;
+                    width: 30px;
+                    float: left;
+                    margin: 3px 5px;
                 }
             }
             .create_topic{
@@ -508,6 +547,30 @@
             }
             .top-feed{
                 background-color: #fff;
+                .top-header{
+                    .Favorite-btn-wrap {
+                        width: 20%;
+                        height: 45px;
+                        min-width: 65px;
+                        border-top: 1px solid #ffffff;
+                        border-left: 1px solid #ffffff;
+                        cursor: pointer;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        background: #5888ac;
+                        a {
+                            &.btn-favorite {
+                                color: #ffffff;
+                                display: block;
+                                font-size: 14px;
+                                line-height: 45px;
+                                text-align: center;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
                 .feed-row{
                     border-bottom: 1px solid #e4e4e4;
                     position: relative;
