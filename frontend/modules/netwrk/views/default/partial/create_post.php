@@ -26,19 +26,28 @@
             <div class="modal-body">
                 <div class="page" id="create_topic">
                     <div class="post">
-                        <input type="hidden" name="post_id" id="post_id" value=""/>
-                        <div class="post-title">
-                            <p class="title"> Line </p>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon2">#</span>
-                                <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
+                        <div class="item-row clearfix">
+                            <div class="item">
+                                <div class="post-category-content">
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="post-category-content">
+                            <div class="item">
+                                <div class="post-topic-category-content">
 
-                        </div>
-                        <div class="post-topic-category-content">
-
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="post-title">
+                                    <p class="title"> Line </p>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="sizing-addon2">
+                                            <span class="ci-line-blue-icon"></span>
+                                        </span>
+                                        <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="post-message">
                             <p class="title"> Message </p>
@@ -81,7 +90,7 @@
             <% }); %>
         </select>
         <% } else { %>
-            <div class="alert alert-danger">No channel available in this area. Please check out community on this area and create a channel.</div>
+            <p class="title">Channel</p>
             <select name="topic" class="form-control post-topic-dropdown" disabled="disabled">
                 <% if(data.length > 0) { %>
                 <% _.each(data, function(item,i) { %>
@@ -91,6 +100,8 @@
                 <option value="" data-value="">No channel available</option>
                 <% } %>
             </select>
+            <br>
+            <div class="text-danger">No channel available in this area. Please check out community on this area and create a channel.</div>
         <% } %>
     </section>
 </script>

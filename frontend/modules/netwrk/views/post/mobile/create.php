@@ -23,7 +23,7 @@
             <div class="post-title">
                 <p class="title"> Line </p>
                 <div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon2">#</span>
+                    <span class="input-group-addon" id="sizing-addon2"></span>
                     <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?= isset($post->title) ? $post->title :''?>">
                 </div>
             </div>
