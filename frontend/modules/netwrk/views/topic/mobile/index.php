@@ -28,15 +28,15 @@
                         if($office_type == 'university') { ?>
                             <i class="fa fa-lg fa-university"></i>
                             Idea area news
-                        <? }
+                        <?php }
                         elseif($office_type == 'government') { ?>
                             <i class="fa fa-lg fa-institution"></i>
                             Gov - Problem solving area news
-                        <? }
+                        <?php }
                         else { ?>
                             <i class="fa fa-lg fa-home"></i>
                             Area HQ news
-                        <? }
+                        <?php }
                     }
                 ?>
             </span>
