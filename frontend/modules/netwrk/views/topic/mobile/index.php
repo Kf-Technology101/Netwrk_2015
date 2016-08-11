@@ -3,37 +3,50 @@
 ?>
 <div id="show-topic" data-city="<?= $city_id ?>" <?php if ($data->status == 0){ echo 'data-zipcode="'.$data->zipcode.'" data-lat="'.$data->lat.'" data-lng="'.$data->lng.'" data-name="'.$data->city_name.'"'; } ?>>
     <div class="header">
-        <div class="back_page <?php if($data->title) print 'back_help';?>">
+        <!--<div class="back_page <?php /*if($data->title) print 'back_help';*/?>">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
-        </div>
-        <div class="Favorite-btn-wrap">
-            <a href="javascript:" class="btn-favorite" data-object-type="<?php echo 'city'; ?>"
-               data-object-id="<?php echo $city_id; ?>">
+        </div>-->
+        <!--<div class="Favorite-btn-wrap">
+            <a href="javascript:" class="btn-favorite" data-object-type="<?php /*echo 'city'; */?>"
+               data-object-id="<?php /*echo $city_id; */?>">
                 <span class="favorite-status">
-                    <?php if($is_favorite == true): ?>
+                    <?php /*if($is_favorite == true): */?>
                         Following
-                    <?php else: ?>
+                    <?php /*else: */?>
                         Follow
-                    <?php endif; ?>
+                    <?php /*endif; */?>
                 </span>
             </a>
-        </div>
+        </div>-->
 
-        <div class="title_page">
+        <div class="title_page left-section">
             <span class="title">
                 <?php
                     if($data->title)
                         print $data->title;
                     else {
-                        if($office_type == 'university')
-                            print 'Idea';
-                        elseif($office_type == 'government')
-                            print 'Gov - Problem solving';
-                        else
-                            print 'Area HQ';
+                        if($office_type == 'university') { ?>
+                            <i class="fa fa-lg fa-university"></i>
+                            Idea area news
+                        <? }
+                        elseif($office_type == 'government') { ?>
+                            <i class="fa fa-lg fa-institution"></i>
+                            Gov - Problem solving area news
+                        <? }
+                        else { ?>
+                            <i class="fa fa-lg fa-home"></i>
+                            Area HQ news
+                        <? }
                     }
                 ?>
             </span>
+        </div>
+        <div class="middle-section">
+            <i class="fa fa-align-justify"></i>
+        </div>
+        <div class="right-section">
+            <div class="feedback-line"></div>
+            <span class="title">Welcome</span>
         </div>
         <!--<div class="create_topic">
             <span><i class="fa fa-plus-circle"></i> Channel</span>
@@ -170,6 +183,18 @@
             </div>-->
 
         </div>
+        <script id="favorite_btn_template" type="text/x-underscore-template">
+            <a href="javascript:" class="btn-favorite" data-object-type="<%= 'city' %>"
+               data-object-id="<%= city_id %>">
+                <span class="favorite-status">
+                    <% if(is_favorite == true){%>
+                        Joined
+                    <% }else{ %>
+                        Join
+                    <% } %>
+                </span>
+            </a>
+        </script>
         <script id="topic_list" type="text/x-underscore-template" >
             <% _.each(topices,function(topic){ %>
                 <div class="item clearfix" data-item="<%= topic.id %>">
@@ -281,94 +306,105 @@
             <% }); %>
         </script>
         <script id="feed_list" type="text/x-underscore-template" >
-            <div class="top-post">
-                <div class="top-header">
-                    <% if(feed.office_type == 'university') { %>
-                        <p class="lp-title">Welcome to your local Idea center</p>
-                        <p class="lp-description">Here are the top idea lines in the area</p>
-                    <% } else if(feed.office_type == 'government') { %>
-                        <p class="lp-title">Welcome to your local solution center</p>
-                        <p class="lp-description">Here are the top problem lines in the area</p>
-                    <% } else { %>
-                        <p class="lp-title">Welcome to your local Community Center</p>
-                        <p class="lp-description">Check out the most active lines in the area</p>
-                    <% } %>
-                </div>
-                <div class="top-post-content">
-                  <%
-                    var len_post = feed.top_post.length;
-                    _.each(feed.top_post,function(e,i){
-                      if(i == len_post - 1){%>
-                          <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
-                      <% }else{ %>
-                          <div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
-                      <% } %>
-                          <div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
+            <% if(feed.top_post.length > 0) { %>
+                <div class="top-post">
+                    <div class="top-header">
+                        <% if(feed.office_type == 'university') { %>
+                            <p class="lp-title">Welcome to your local Idea center</p>
+                            <p class="lp-description">Here are the top idea lines in the area</p>
+                        <% } else if(feed.office_type == 'government') { %>
+                            <p class="lp-title">Welcome to your local solution center</p>
+                            <p class="lp-description">Here are the top problem lines in the area</p>
+                        <% } else { %>
+                            <p class="lp-title">Welcome to your local Community Center</p>
+                            <p class="lp-description">Check out the most active lines in the area</p>
+                        <% } %>
+                    </div>
+                    <div class="top-post-content">
+                        <%
+                            var len_post = feed.top_post.length;
+                            _.each(feed.top_post,function(e,i){
+                            if(i == len_post - 1){%>
+                                <div class="post-row last-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+                            <% }else{ %>
+                                <div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+                            <% } %>
+                                <div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
 
-                          <div class="post">
-                            <p class="post-title"><%= e.title %></p>
-                            <div class="post-content"><%= e.content%></div>
-                          </div>
-                          <div class="action">
-                            <div class="chat"><i class="fa fa-comments"></i>Jump in</div>
+                                <div class="post">
+                                    <p class="post-title"><%= e.title %></p>
+                                    <div class="post-content"><%= e.content%></div>
+                                </div>
+                                <div class="action">
+                                    <div class="chat"><i class="fa fa-comments"></i>Jump in</div>
 
-                            <span class="chat feedback-wrapper">
-                              <div class="feedback-line"></div>
-							  <div class="feedback">F</div>
-							</span>
-                          </div>
-                        </div>
-                  <%
-                    });
-                  %>
+                                    <span class="chat feedback-wrapper">
+                                        <div class="feedback-line"></div>
+                                        <div class="feedback">F</div>
+                                    </span>
+                                </div>
+                            </div>
+                        <%
+                            });
+                        %>
+                    </div>
                 </div>
-            </div>
-            <div class="top-topic">
-              <div class="top-header">
-                  <% if(feed.office_type == 'university') { %>
-                      <p class="lp-title">Top Idea channels</p>
-                      <p class="lp-description">Here are the most active in the area</p>
-                  <% } else if(feed.office_type == 'government') { %>
-                      <p class="lp-title">Problem channels are the home of discourse on netwrk</p>
-                      <p class="lp-description">In problem channels, each line serves as a place to discuss an issue. Here are the most active in the area</p>
-                  <% } else { %>
-                      <p class="lp-title">Top Channels</p>
-                      <p class="lp-description">Here are the most active channels in the area</p>
-                  <% } %>
-              </div>
-              <div class="top-topic-content ">
-                <%
-                  var len_topic = feed.top_post.length;
-                  _.each(feed.top_topic,function(e,i){
-                    if(i == len_topic - 1){ %>
-                        <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
-                    <% }else{ %>
-                        <div class="topic-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
-                    <% } %>
-                          <p class="topic-title"><%= e.name %></p>
-                          <div class="post-counter">
-                            <%= e.post_count %>
-                            <span class="arrow"><i class="fa fa-angle-right"></i></span>
-                            <i class="fa fa-file-text"></i>
-                          </div>
+            <% } %>
+            <% if(feed.top_topic.length > 0) { %>
+                <div class="top-topic">
+                    <div class="top-header">
+                        <% if(feed.office_type == 'university') { %>
+                            <p class="lp-title">Top Idea channels</p>
+                            <p class="lp-description">Here are the most active in the area</p>
+                        <% } else if(feed.office_type == 'government') { %>
+                            <p class="lp-title">Problem channels are the home of discourse on netwrk</p>
+                            <p class="lp-description">In problem channels, each line serves as a place to discuss an issue. Here are the most active in the area</p>
+                        <% } else { %>
+                            <p class="lp-title">Top Channels</p>
+                            <p class="lp-description">Here are the most active channels in the area</p>
+                        <% } %>
+                    </div>
+                    <div class="top-topic-content ">
+                        <%
+                            var len_topic = feed.top_post.length;
+                            _.each(feed.top_topic,function(e,i){
+                                if(i == len_topic - 1){ %>
+                                    <div class="topic-row last-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
+                                <% }else{ %>
+                                    <div class="topic-row" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-city-name="<%= e.city_name %>">
+                                <% } %>
+                                <p class="topic-title"><%= e.name %></p>
+                                <div class="post-counter">
+                                    <%= e.post_count %>
+                                    <span class="arrow"><i class="fa fa-angle-right"></i></span>
+                                    <i class="fa fa-file-text"></i>
+                                </div>
+                            </div>
+                        <%
+                            });
+                        %>
+                    </div>
+                </div>
+            <% } %>
+            <% if(feed.feed.length > 0) { %>
+                <div class="top-feed">
+                    <div class="top-header">
+                        <% if(feed.office_type == 'university') { %>
+                            <p class="lp-title">Welcome to your local Idea center</p>
+                            <p class="lp-description">Idea Center News</p>
+                        <% } else if(feed.office_type == 'government') { %>
+                            <p class="lp-title">Welcome to your local solution center</p>
+                            <p class="lp-description">Solution Center News</p>
+                        <% } else { %>
+                            <p class="lp-title">Welcome to your local Community Center</p>
+                            <p class="lp-description">Local News</p>
+                        <% } %>
+                        <div class="Favorite-btn-wrap">
                         </div>
-                <%
-                  });
-                %>
-              </div>
-            </div>
-            <div class="top-feed">
-              <div class="top-header">
-                  <% if(feed.office_type == 'university') { %>
-                    <p class="lp-title">Idea Center News</p>
-                  <% } else if(feed.office_type == 'government') { %>
-                    <p class="lp-title">Solution Center News</p>
-                  <% } else { %>
-                    <p class="lp-title">Local News</p>
-                  <% } %>
-              </div>
-              <div class="top-feed-content"></div>
-            </div>
+                    </div>
+                    <div class="top-feed-content"></div>
+                </div>
+            <% } %>
         </script>
         <script id="top_feed" type="text/x-underscore-template">
           <%
