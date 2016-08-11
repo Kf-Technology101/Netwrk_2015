@@ -90,11 +90,15 @@ var Create_Post={
             }
             //if topic creats from blue dot. It means name = city name, and city id = null
             if (name_city && city == null && topic == null) {
+                //add class to new class design update purpose so type, channel, line would be in one line
+                //on create post modal
+                $('#create_post').find('.post').find('.item-row').addClass('create_post_from_blue_dot');
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
                 Create_Post.params.isCreateFromBlueDot = true;
                 Create_Post.showPostCategory(name_city);
             } else {
+                $('#create_post').find('.post').find('.item-row').removeClass('create_post_from_blue_dot');
                 Create_Post.params.city = city;
                 Create_Post.params.topic = topic;
                 Create_Post.params.city_name = name_city;

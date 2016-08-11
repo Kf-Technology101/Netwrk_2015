@@ -2,7 +2,7 @@
     height: auto;
     top: 90px;
     overflow-y: hidden;
-    width: 725px;
+   /* width: 725px;*/
     margin: auto;
     .modal-dialog{
         width: 725px;
@@ -146,7 +146,6 @@
                 background: #fff;
                 border: none;
                 .post-title{
-                    padding: 15px;
                     border-bottom: 1px solid #f3f3f3;
                     .input-group{
                         width: 100%;
@@ -159,6 +158,14 @@
                             font-weight: bold;
                             padding: 5px 5px 5px 10px;
                             color: #1d1b1b;
+                            .ci-line-blue-icon{
+                                background: url("../../img/icon/feedback-lines.png") no-repeat;
+                                background-size: contain;
+                                display: inline-block;
+                                height: 22px;
+                                vertical-align: middle;
+                                width: 10px;
+                            }
                         }
                         input:-ms-input-placeholder{
                             color: #beb8b8;
@@ -172,18 +179,29 @@
                             font-size: 14px;
                             color: #1d1b1b;
                             background-color: #fff;
-                            height: 28px;
+                            height: 32px;
                         }
                     }
                     .clsFocus{
                         border-color: #5da5d8;
                     }
                 }
-                .post-category-wrapper{
+                .item-row {
                     padding: 15px;
-                }
-                .post-topic-category-wrapper {
-                    padding: 15px;
+                    width: 100%;
+                    .item:last-child {
+                        width: 100%;
+                    }
+                    &.create_post_from_blue_dot {
+                        .item {
+                            float: left;
+                            padding-right: 10px;
+                            width: 33%;
+                            &:last-child{
+                                padding-right: 0;
+                            }
+                        }
+                    }
                 }
                 .post-message{
                     padding: 15px;
