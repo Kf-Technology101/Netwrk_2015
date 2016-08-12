@@ -132,6 +132,15 @@ if (isset($cookies["isCoverPageVisited"])) {
               </div>
               <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
             </div>
+
+            <div class="corner-login-wrapper">
+              <?php if (Yii::$app->user->isGuest):?>
+                <a href="<?php echo Url::base(true); ?>/netwrk/user/login" id="btn_my_location_old">
+                  <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
+                  <span>Login</span>
+                </a>
+              <?php endif; ?>
+            </div>
             <!--<div id="btn_my_location" class="btn_my_location">
               <i class="fa fa-plus"></i>
               <span>Build</span>
@@ -186,12 +195,12 @@ if (isset($cookies["isCoverPageVisited"])) {
             <i class="navigation-icon ci-line"></i>
             <div class="navigation-text"><span class='notify disable'>0</span>Lines</div>
           </button>
-          <?php if (Yii::$app->user->isGuest):?>
-            <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
+          <?php /*if (Yii::$app->user->isGuest):*/?><!--
+            <a href="<?php /*echo Url::base(true); */?>/netwrk/user/login" type="button" class="btn btn-default">
               <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
               <div class="navigation-text">Login</div>
             </a>
-          <?php endif; ?>
+          --><?php /*endif; */?>
         </div>
       </div>
     </section>

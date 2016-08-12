@@ -266,7 +266,7 @@ var ChatInbox = {
 
 		ChatInbox.params.IsOpenChatBox = true;
 		$('.box-navigation').css({'left': '', 'right' : '395px'});
-		//$('#btn_my_location').css({'left': '', 'right' : '335px'});
+		$('#btn_my_location_old').css({'left': '', 'right' : '335px'});
 		$('#btn_meet').css({'left': '', 'right' : '335px'});
 	},
 
@@ -290,7 +290,7 @@ var ChatInbox = {
 
 		ChatInbox.params.IsOpenChatBox = false;
 		$('.box-navigation').css({'left': '', 'right' : '75px'});
-		//$('#btn_my_location').css({'left': '', 'right' : '15px'});
+		$('#btn_my_location_old').css({'left': '', 'right' : '15px'});
 		$('#btn_meet').css({'left': '', 'right' : '15px'});
 	},
 

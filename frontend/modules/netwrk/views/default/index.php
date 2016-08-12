@@ -49,17 +49,19 @@ $cookies = Yii::$app->request->cookies;
         <i class="navigation-icon ci-line"></i>
         <span class="navigation-text"><span class='notify'>0</span>Lines</span>
       </button>
-      <?php if (Yii::$app->user->isGuest):?>
-        <button type="button" class="btn btn-default login-trigger">
-          <i class="navigation-icon fa fa-sign-in"></i>
-          <div class="navigation-text">Login</div>
-        </button>
-      <?php endif; ?>
     </div>
   </div>
 
   <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
 
+  <div class="corner-login-wrapper">
+    <?php if (Yii::$app->user->isGuest):?>
+      <div id="btn_my_location_old" class="login-trigger">
+        <i class="navigation-icon fa fa-sign-in"></i>
+        <span>Login</span>
+      </div>
+    <?php endif; ?>
+  </div>
   <!--<div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
     <i class="fa fa-plus"></i>
     <span>Build</span>
