@@ -25,7 +25,7 @@
                   <span><i class="fa fa-plus-circle"></i> Create Group</span>
               </div>-->
           </div>
-          <div class="sidebar">
+          <!--<div class="sidebar">-->
             <!--<div class="title"></div>-->
             <!--<div class="topics-dropdown dropdown input-group">
                 <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
@@ -45,14 +45,14 @@
                   <li data-value="view">Most viewed</li>
               </ul>
             </div>-->
-            <table class="filter_sidebar">
+            <!--<table class="filter_sidebar">
                 <tr>
                     <td class="feed active">Area Vision</td>
                     <td class="topic">Channels</td>
                     <td class="groups">Groups</td>
                 </tr>
             </table>
-          </div>
+          </div>-->
           <div class="tab-header tab-header-topic clearfix hidden">
               <div class="tab-title">
                   <p class="tab-title-text">Topics</p>
