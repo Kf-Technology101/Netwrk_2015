@@ -55,8 +55,9 @@
             <span><i class="fa fa-plus-circle"></i> Create Group</span>
         </div>-->
     </div>
-    <div class="sidebar">
-        <!--<span class="filter"><i class="fa fa-filter"></i></span>-->
+    <!--<div class="sidebar">
+        // Following line need to comment when this section un-commented
+        <span class="filter"><i class="fa fa-filter"></i></span>
         <table class="filter_sidebar">
             <tr>
                 <td class="feed active">Area Vision</td>
@@ -64,7 +65,7 @@
                 <td class="groups">Groups</td>
             </tr>
         </table>
-    </div>
+    </div>-->
     <div class="tab-header tab-header-topic clearfix hidden">
         <div class="tab-title">
             <p class="tab-title-text">Topics</p>
