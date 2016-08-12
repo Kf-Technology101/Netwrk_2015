@@ -356,10 +356,13 @@ var Post ={
 	},
 
 	getNameTopic: function(){
-		var name = $('#list_post').find('.header .title_page');
+		var cityName = $('#list_post').find('.header .title_page');
+		var name = $('#list_post').find('.sidebar .title_page');
+		//var name = $('#list_post').find('.header .title_page');
 		Ajax.get_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.getNameTemplate(name,json);
+			Post.getCityNameTemplate(cityName,json);
 		});
 	},
 
@@ -594,7 +597,7 @@ var Post ={
 	},
 
 	OnclickBack: function(){
-		$('#list_post').find('.back_page span').add($('.box-navigation .btn_nav_map')).click(function () {
+		$('#list_post').find('.left-section').add($('.box-navigation .btn_nav_map')).click(function () {
         	if(isMobile){
         		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city;
         	}else{
@@ -726,10 +729,19 @@ var Post ={
         // Post.OnClickAvatarPostListDesktop();
     },
 
+	getCityNameTemplate: function(parent,data){
+		var self = this;
+		var list_template = _.template($("#post_city_name" ).html());
+		parent.html("");
+		var append_html = list_template({name: data});
+
+		parent.append(append_html);
+	},
+
     getNameTemplate: function(parent,data){
         var self = this;
         var list_template = _.template($("#name_post_list" ).html());
-        $('#list_post').find('.header .title_page').html("");
+		parent.html("");
         var append_html = list_template({name: data});
 
         parent.append(append_html);

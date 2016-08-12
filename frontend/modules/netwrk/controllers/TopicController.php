@@ -400,7 +400,12 @@ class TopicController extends BaseController
         $id = $_POST['topic'];
 
         $topic = Topic::find()->where('id ='.$id)->andWhere('status != -1')->one();
-        return json_encode(['title'=>$topic->title,'zipcode'=>$topic->city->zip_code]);
+
+        return json_encode([
+            'title' => $topic->title,
+            'zipcode' => $topic->city->zip_code,
+            'office_type' => $topic->city->office_type
+        ]);
     }
     public function actionGetTopicByCity(){
         $city_id = $_GET['city_id'];
