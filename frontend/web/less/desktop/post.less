@@ -383,6 +383,47 @@
                     width: 630px;
                 }
             }
+            .left-section{
+                border-right: 1px solid #fff;
+                cursor: pointer;
+            }
+            .middle-section{
+                width: 55px;
+                float: left;
+                color: #fff;
+                padding: 5px 10px 0;
+                .fa {
+                    font-size: 2.4em;
+                }
+            }
+            .right-section,
+            .left-section{
+                width: 335px;
+                float: left;
+                .title{
+                    color: #fff;
+                    display: inherit;
+                    font-size: 22px;
+                    line-height: 40px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding-left: 10px;
+                    text-align: left;
+                }
+            }
+            .right-section{
+                border-left: 1px solid #fff;
+                .feedback-line {
+                    background: url("../../img/icon/line-icon-nav.png") no-repeat;
+                    background-size: contain;
+                    display: inline-block;
+                    height: 30px;
+                    width: 30px;
+                    float: left;
+                    margin: 3px 5px;
+                }
+            }
             .create_post{
                 float: left;
                 width: 155px;
@@ -416,6 +457,27 @@
             background: #5888ac;
             display: table;
             z-index: 20;
+            .title_page{
+                width: 100%;
+                height: 40px;
+                float: left;
+                img{
+                    width: 25px;
+                    margin-right: 5px;
+                    margin-bottom: 5px;
+                }
+                .title{
+                    width: 100%;
+                    color: #fff;
+                    display: inherit;
+                    text-align: center;
+                    font-size: 22px;
+                    line-height: 25px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
             .dropdown{
                 float: right;
                 width: 20%;
@@ -945,6 +1007,7 @@
                                 width: 6px;
                                 position: absolute;
                                 right: 17px;
+                                top: 2px;
                                 cursor: pointer;
                             }
                             .meet-img {

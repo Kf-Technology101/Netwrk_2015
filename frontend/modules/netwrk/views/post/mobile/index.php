@@ -5,24 +5,52 @@
 ?>
 <div id="list_post" data-topic="<?= $topic->id ?>" <?php if (!empty($city)) { ?>data-city="<?= $city ?>"<?php } ?> <?php if (!empty($city_id)) { ?>data-city="<?= $city_id ?>"<?php } ?>>
     <div class="header">
-        <div class="back_page">
-            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+        <div class="title_page left-section">
+            <span class="title">
+                <?php
+                    if($topic->city->office_type == 'university') { ?>
+                        <i class="fa fa-lg fa-university"></i>
+                        Idea area
+                    <?php }
+                    elseif($topic->city->office_type == 'government') { ?>
+                        <i class="fa fa-lg fa-institution"></i>
+                        Gov - Problem solving area
+                    <?php }
+                    else { ?>
+                        <i class="fa fa-lg fa-home"></i>
+                        Area HQ
+                    <?php }
+                ?>
+            </span>
         </div>
+        <div class="middle-section">
+            <i class="fa fa-align-justify"></i>
+        </div>
+        <div class="right-section">
+            <div class="feedback-line"></div>
+            <span class="title">Welcome</span>
+        </div>
+        <!--<div class="back_page">
+            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+        </div>-->
+        <!--<div class="title_page">
+            <span class="title"><?php /*if (!empty($city)) { */?><?/*= $topic->city->zip_code */?> > <?php /*} */?><?/*= $topic->title */?></span>
+        </div>-->
+        <!--<div class="create_post">
+            <span><i class="fa fa-plus-circle"></i> Line</span>
+        </div>-->
+    </div>
+    <div class="sidebar">
         <div class="title_page">
             <span class="title"><?php if (!empty($city)) { ?><?= $topic->city->zip_code ?> > <?php } ?><?= $topic->title ?></span>
         </div>
-        <div class="create_post">
-            <span><i class="fa fa-plus-circle"></i> Line</span>
-        </div>
-    </div>
-    <div class="sidebar">
-        <span class="filter"><i class="fa fa-filter"></i></span>
+        <!--<span class="filter"><i class="fa fa-filter"></i></span>
         <table class="filter_sidebar">
             <tr>
                 <td class="feed">Area Vision</td>
                 <td class="post active">Line</td>
             </tr>
-        </table>
+        </table>-->
     </div>
     <div class="filter_sort">
         <div class="dropdown input-group">

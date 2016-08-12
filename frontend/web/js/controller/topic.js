@@ -547,6 +547,7 @@ var Topic = {
 
     OnClickTopicFeed: function(){
         var target = $('#modal_topic').find('.topic-row')
+            .add($('#modal_topic').find('.feed-row.feed-topic'))
             .add($('#show-topic').find('.feed-row.feed-topic'))
             .add($('#profileRecentTopic').find('.topic-trigger'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'))
