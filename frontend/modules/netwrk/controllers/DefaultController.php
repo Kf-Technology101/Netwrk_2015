@@ -1670,7 +1670,16 @@ class DefaultController extends BaseController
             $item = [
                 'user_id' => $user->id,
                 'lat' => $user->profile->lat,
-                'lng' => $user->profile->lng
+                'lng' => $user->profile->lng,
+                'zip_code' => $user->profile->zip_code,
+                'gender'=> ucfirst($user->profile->gender),
+                'dob'=> $user->profile->dob,
+                'day'=> date('j', strtotime($user->profile->dob)),
+                'month'=> date('n', strtotime($user->profile->dob)),
+                'year'=> date('Y', strtotime($user->profile->dob)),
+                'first_name'=> $user->profile->first_name,
+                'last_name'=> $user->profile->last_name,
+                'email'=> $user->email
             ];
             $data = ['success'=> true, 'data' => $item];
         } else {
