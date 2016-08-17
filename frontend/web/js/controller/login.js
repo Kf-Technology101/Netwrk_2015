@@ -124,52 +124,6 @@ var Login={
 			}
 		});
 	},
-	showSocialSignupProfileInfoModal: function() {
-		var signupProfileInfoModal = $('#social_signup_profile_info');
-
-		signupProfileInfoModal.unbind();
-		$(signupProfileInfoModal).modal({
-			backdrop: true,
-			keyboard: false
-		});
-
-
-		var params = {'user_id': UserLogin};
-		Ajax.getUserById(params).then(function(data){
-			var json = $.parseJSON(data),
-					gender = json.data.gender,
-					fname = json.data.first_name,
-					lname = json.data.last_name,
-					email = json.data.email,
-					zipcode = json.data.zip_code,
-					day = json.data.day,
-					month = json.data.month,
-					year = json.data.year;
-
-			signupProfileInfoModal.find('#profile-zip_code').val(zipcode);
-			signupProfileInfoModal.find('#profile-first_name').val(fname);
-			signupProfileInfoModal.find('#profile-last_name').val(lname);
-			signupProfileInfoModal.find('#user-email').val(email);
-			signupProfileInfoModal.find('#profile-zip_code').val(zipcode);
-			signupProfileInfoModal.find('#profile-day').val(day);
-			signupProfileInfoModal.find('#profile-month').val(month);
-			signupProfileInfoModal.find('#profile-year').val(year);
-			signupProfileInfoModal.find('#profile-gender').val(gender.ucfirst());
-		});
-
-		Login.onHideSocialSignupProfileInfoModal();
-	},
-
-	onHideSocialSignupProfileInfoModal: function() {
-		//todo check session var
-		var signupProfileInfoModal = $('#social_signup_profile_info');
-		signupProfileInfoModal.unbind();
-		$(signupProfileInfoModal).on('hidden.bs.modal',function(e) {
-			console.log('in hide');
-			$(e.currentTarget).unbind();
-			Login.showOnBoardingLines();
-		});
-	},
 	showProfilePicture: function () {
 		var boardingModal = $(Login.on_boarding_id);
 		boardingModal.find('.select-lines').addClass('hidden');

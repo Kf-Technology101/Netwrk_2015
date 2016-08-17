@@ -48,7 +48,7 @@
                         <?= $form->field($profile, 'gender')->dropDownList($genders,['prompt' => 'Gender']); ?>
                     </div>
 
-                    <div class="col-field-name field">
+                    <div class="col-field-name zip field">
                         <?= $form->field($profile, 'zip_code')->textInput(array('placeholder' => '46140','maxlength'=>5)); ?>
                     </div>
 
@@ -60,13 +60,13 @@
                         $months = array_combine(range(1,12),range(1,12));
                         $years = array_combine(range($years_from,$years_to), range($years_from,$years_to));
                     ?>
-                    <div class="dob-field-name field">
+                    <div class="dob-field-name dob field">
                         <?= $form->field($profile, 'day')->dropDownList($day,['prompt' => 'Day']); ?>
                     </div>
-                    <div class="dob-field-name field">
+                    <div class="dob-field-name dob field">
                         <?= $form->field($profile, 'month')->dropDownList($months,['prompt' => 'Month']); ?>
                     </div>
-                    <div class="dob-field-name field">
+                    <div class="dob-field-name dob year field">
                         <!--Make year 1985 as default selected -->
                         <?= $form->field($profile, 'year')->dropDownList($years,
                             ['options' => [
@@ -76,8 +76,10 @@
                             ]]
                             ); ?>
                     </div>
+                <?=  $form->field($profile, 'lat')->hiddenInput()->label(false); ?>
+                <?=  $form->field($profile, 'lng')->hiddenInput()->label(false); ?>
                 <div class="btn-control">
-                    <p>Update</p>
+                    <p>Update & Continue</p>
                 </div>
             <?php ActiveForm::end(); ?>
             </div>

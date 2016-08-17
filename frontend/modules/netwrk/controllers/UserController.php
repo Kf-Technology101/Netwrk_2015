@@ -176,7 +176,7 @@ class UserController extends BaseController
             $email = strtolower($attributes['email']);
             $first_name = $attributes['first_name'];
             $last_name = $attributes['last_name'];
-            $gender = $attributes['gender'];
+            $gender = ucfirst($attributes['gender']);
             $birth_day = 1;
             $birth_month = 1;
             $birth_year = date('Y') - $attributes['age_range']['min'];
@@ -186,7 +186,7 @@ class UserController extends BaseController
             $email = strtolower($attributes['emails'][0]['value']);
             $first_name = $attributes['name']['givenName'];
             $last_name = $attributes['name']['familyName'];
-            $gender = $attributes['gender'];
+            $gender = ucfirst($attributes['gender']);
             $birth_date = explode('-', $attributes['birthday']);
             $birth_day = ($birth_date[2] != 00) ? $birth_date[2] : 01;
             $birth_month = ($birth_date[1] != 00) ? $birth_date[1] : 01;

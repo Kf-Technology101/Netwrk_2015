@@ -99,6 +99,22 @@ var Ajax = {
 
         return defer.promise();
     },
+    update_profile_info: function(form){
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/profile/update-social-profile-info";
+
+        $.ajax({
+            url: url,
+            data: $(form).serialize(),
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     user_join: function(form, key){
         var url,defer = $.Deferred();
