@@ -74,6 +74,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             $c->add($cookie);
         ?>
             sessionStorage.on_boarding = 1;
+            sessionStorage.show_profile_info = 1;
         <?php } ?>
     </script>
     <?php if (YII_ENV == 'prod'):?>

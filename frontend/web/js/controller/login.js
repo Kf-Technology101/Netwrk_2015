@@ -124,7 +124,6 @@ var Login={
 			}
 		});
 	},
-
 	showProfilePicture: function () {
 		var boardingModal = $(Login.on_boarding_id);
 		boardingModal.find('.select-lines').addClass('hidden');

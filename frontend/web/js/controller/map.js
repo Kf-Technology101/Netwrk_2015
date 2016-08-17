@@ -261,10 +261,15 @@
 			});*/
 
 			if(sessionStorage.on_boarding == 1){
-				sessionStorage.on_boarding = 0;
 				// If user not have any lines and profile picture then display the modal
 				setTimeout(function(){
-					Login.showOnBoardingLines();
+					if(sessionStorage.show_profile_info == 1){
+						sessionStorage.show_profile_info = 0;
+						SocialSignup.initialize();
+					} else {
+						sessionStorage.on_boarding = 0;
+						Login.showOnBoardingLines();
+					}
 				}, 500);
 			}
 	  	},

@@ -291,6 +291,52 @@ class ProfileController extends BaseController
         $hash = json_encode($data);
         return $hash;
     }
+
+    public function actionUpdateSocialProfileInfo()
+    {
+        $currentUser = Yii::$app->user->id;
+
+        $post = Yii::$app->request->post();
+
+        $first_name = $post['Profile']['first_name'];
+        $last_name = $post['Profile']['last_name'];
+        $gender = $post['Profile']['gender'];
+        $zip = $post['Profile']['zip_code'];
+        $year = $post['Profile']['year'];
+        $month = $post['Profile']['month'];
+        $day = $post['Profile']['day'];
+        $lat = $post['Profile']['lat'];
+        $lng = $post['Profile']['lng'];
+        $dob = $year .'-'. $month .'-'. $day;
+
+        $user = User::find()->where('id ='.$currentUser)->with('profile')->one();
+        $profile = $user->profile;
+
+        $user->profile->first_name = $first_name;
+        $user->profile->last_name = $last_name;
+        $user->profile->gender = $gender;
+        $user->profile->zip_code = $zip;
+        $user->profile->dob = $dob;
+        $user->profile->lat = $lat;
+        $user->profile->lng = $lng;
+
+        $user->profile->update();
+        $birthday = new \DateTime($user->profile->dob);
+        $birthday = $birthday->format('Y-m-d');
+
+        $data = array(
+            'status' => 1,
+            'first_name' => $user->profile->first_name,
+            'last_name' => $user->profile->last_name,
+            'user_name' => $user->username,
+            'email' => $user->email,
+            'gender' => $user->profile->gender,
+            'zip'=> $user->profile->zip_code,
+            'dob'=> $birthday
+        );
+        $hash = json_encode($data);
+        return $hash;
+    }
 }
 
 ?>
