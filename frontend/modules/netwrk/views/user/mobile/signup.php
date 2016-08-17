@@ -13,7 +13,6 @@
 
     <?php
         $scenario = (isset($scenario)) ? $scenario : 'register';
-    echo $scenario;
         $form = ActiveForm::begin([
         'id' => 'register-form',
         'options' => ['class' => 'form-register form-horizontal',
