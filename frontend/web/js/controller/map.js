@@ -265,7 +265,13 @@
 				setTimeout(function(){
 					if(sessionStorage.show_profile_info == 1){
 						sessionStorage.show_profile_info = 0;
-						SocialSignup.initialize();
+						if(isMobile) {
+							//redirect
+							window.location.href = baseUrl + "/netwrk/profile-edit/social-signup";
+						} else {
+							SocialSignup.initialize();
+						}
+
 					} else {
 						sessionStorage.on_boarding = 0;
 						Login.showOnBoardingLines();

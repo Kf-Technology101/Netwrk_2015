@@ -21,8 +21,9 @@ var SocialSignup ={
 			SocialSignup.OnHideModalSignUp();
 			SocialSignup.ShowModal();
 			SocialSignup.OnClickBackdrop();
-			SocialSignup.OnClickSubmitForm();
+
 		}
+		SocialSignup.OnClickSubmitForm();
 		SocialSignup.validateZipcode();
 
 	},
@@ -38,11 +39,15 @@ var SocialSignup ={
 				if(SocialSignup.data_validate.status == 0){
 					SocialSignup.ShowErrorValidate();
 				}else{
-					$(SocialSignup.modal).modal('hide');
-					sessionStorage.on_boarding = 1;
-					Login.showOnBoardingLines();
-					$('.menu_top').removeClass('deactive');
-					$('#btn_meet').removeClass('deactive');
+					if(isMobile) {
+						window.location.href = baseUrl;
+					} else {
+						$(SocialSignup.modal).modal('hide');
+						sessionStorage.on_boarding = 1;
+						Login.showOnBoardingLines();
+						$('.menu_top').removeClass('deactive');
+						$('#btn_meet').removeClass('deactive');
+					}
 				}
 			});
 		});
