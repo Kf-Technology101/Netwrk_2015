@@ -15,14 +15,12 @@ var SocialSignup ={
 			Default.hideHeaderFooter();
 			$('body').addClass('no-login');
 			SocialSignup.parent = SocialSignup.page;
-		}else{
-			SocialSignup.parent = SocialSignup.modal;
-			SocialSignup.OnShowModalSignUp();
-			SocialSignup.OnHideModalSignUp();
-			SocialSignup.ShowModal();
-			SocialSignup.OnClickBackdrop();
-
 		}
+		SocialSignup.parent = SocialSignup.modal;
+		SocialSignup.OnShowModalSignUp();
+		SocialSignup.OnHideModalSignUp();
+		SocialSignup.ShowModal();
+		SocialSignup.OnClickBackdrop();
 		SocialSignup.OnClickSubmitForm();
 		SocialSignup.validateZipcode();
 
