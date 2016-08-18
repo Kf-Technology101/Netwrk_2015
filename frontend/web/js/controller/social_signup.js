@@ -15,14 +15,13 @@ var SocialSignup ={
 			Default.hideHeaderFooter();
 			$('body').addClass('no-login');
 			SocialSignup.parent = SocialSignup.page;
-		}else{
-			SocialSignup.parent = SocialSignup.modal;
-			SocialSignup.OnShowModalSignUp();
-			SocialSignup.OnHideModalSignUp();
-			SocialSignup.ShowModal();
-			SocialSignup.OnClickBackdrop();
-			SocialSignup.OnClickSubmitForm();
 		}
+		SocialSignup.parent = SocialSignup.modal;
+		SocialSignup.OnShowModalSignUp();
+		SocialSignup.OnHideModalSignUp();
+		SocialSignup.ShowModal();
+		SocialSignup.OnClickBackdrop();
+		SocialSignup.OnClickSubmitForm();
 		SocialSignup.validateZipcode();
 
 	},
@@ -38,11 +37,15 @@ var SocialSignup ={
 				if(SocialSignup.data_validate.status == 0){
 					SocialSignup.ShowErrorValidate();
 				}else{
-					$(SocialSignup.modal).modal('hide');
-					sessionStorage.on_boarding = 1;
-					Login.showOnBoardingLines();
-					$('.menu_top').removeClass('deactive');
-					$('#btn_meet').removeClass('deactive');
+					if(isMobile) {
+						window.location.href = baseUrl;
+					} else {
+						$(SocialSignup.modal).modal('hide');
+						sessionStorage.on_boarding = 1;
+						Login.showOnBoardingLines();
+						$('.menu_top').removeClass('deactive');
+						$('#btn_meet').removeClass('deactive');
+					}
 				}
 			});
 		});

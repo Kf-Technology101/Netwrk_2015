@@ -266,6 +266,7 @@
 					if(sessionStorage.show_profile_info == 1){
 						sessionStorage.show_profile_info = 0;
 						SocialSignup.initialize();
+
 					} else {
 						sessionStorage.on_boarding = 0;
 						Login.showOnBoardingLines();
