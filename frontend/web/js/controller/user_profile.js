@@ -17,7 +17,8 @@ var User_Profile = {
         about: '',
         zipcode:0,
         lat:'',
-        lng:''
+        lng:'',
+        isOpenProfileSlider:false
     },
     list:{
         group:{
@@ -56,6 +57,8 @@ var User_Profile = {
     profileContainer: $('.profile-container'),
     profileInfo: $('.profile-info'),
     editProfileModal: $('#modal_change_profile_picture'),
+    slider: '#profile-slider',
+    slider_hidden: "-400px",
     initialize: function(){
         if(isMobile){
             Default.SetAvatarUserDropdown();
@@ -691,8 +694,12 @@ var User_Profile = {
         });
     },
     //Show group information of users
-    ShowGroups: function(){
-        var template = $('#recent_activity_container');
+    ShowGroups: function(isSlider){
+        if(isSlider == true) {
+            var template = $('#recent_activity_container_groups');
+        } else {
+            var template = $('#recent_activity_container');
+        }
         var templateData = $('#profile_group_info');
 
         var self = this;
@@ -715,9 +722,12 @@ var User_Profile = {
 
             //set my Groups count on recent activity section
             if (json.total_count) {
-                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Groups: '+json.total_count);
+                if(isSlider == true) {
+                    $('#recent-activities-groups').find('.group-count').html('').html('My Groups: ' + json.total_count);
+                } else {
+                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Groups: '+json.total_count);
+                }
             }
-
 
             template.scrollTop(0);
             //hide no data section
@@ -730,8 +740,13 @@ var User_Profile = {
     },
 
     //Show Topics information of users
-    ShowTopics: function(){
-        var template = $('#recent_activity_container');
+    ShowTopics: function(isSlider){
+        if(isSlider == true) {
+            var template = $('#recent_activity_container_topics');
+        } else {
+            var template = $('#recent_activity_container');
+        }
+
         var templateData = $('#profile_topic_info');
 
         var self = this;
@@ -752,9 +767,14 @@ var User_Profile = {
             User_Profile.templateData.topics = json.data;
 
             //set my Channels count on recent activity section
-            if (json.total_count) {
-                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Channels: '+json.total_count);
-            }
+
+                if (json.total_count) {
+                    if(isSlider == true) {
+                        $('#recent-activities-channels').find('.group-count').html('').html('My Channels: ' + json.total_count);
+                    } else {
+                        $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Channels: ' + json.total_count);
+                    }
+                }
 
             template.scrollTop(0);
             //hide no data section
@@ -768,11 +788,11 @@ var User_Profile = {
         });
     },
     //Show Topics information of users
-    ShowPosts: function(){
-        if (isMobile) {
-            var template = $('#recent_activity_container', '.Profile-view');
+    ShowPosts: function(isSlider){
+        if(isSlider == true) {
+            var template = $('#recent_activity_container_posts');
         } else {
-            var template = $('#recent_activity_container', User_Profile.contexts.modalProfile);
+            var template = $('#recent_activity_container');
         }
 
         var templateData = $('#profile_post_info');
@@ -796,7 +816,11 @@ var User_Profile = {
 
             //set my topics count on recent activity section
             if (json.total_count) {
-                $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Lines: '+json.total_count);
+                if(isSlider == true) {
+                    $('#recent-activities-lines').find('.group-count').html('').html('My Lines: ' + json.total_count);
+                } else {
+                    $('.recent_activities_wrapper', '.profile-activity-wrapper').find('.group-count').html('').html('My Lines: '+json.total_count);
+                }
             }
 
             template.scrollTop(0);
@@ -927,5 +951,108 @@ var User_Profile = {
                 window.location.href = baseUrl + "/netwrk/default/home";
             })
         }
-    }
+    },
+    getProfileData: function() {
+        //todo: if chatInbox open then close it.
+        User_Profile.resetProfile();
+        User_Profile.getProfileInfo();
+
+        //Show favorite communities of currentUser on profile modal
+        User_Profile.ShowFavoriteCommunities();
+
+        //Show Recent communities of currentUser on profile modal
+        User_Profile.ShowRecentCommunities();
+
+        User_Profile.OnClickTabBtn();
+
+        User_Profile.ShowPosts(true);
+
+        User_Profile.ShowTopics(true);
+
+        User_Profile.ShowGroups(true);
+
+        //events
+        User_Profile._eventClickPasswordSetting();
+        User_Profile._eventClickSearchSetting();
+        User_Profile._eventClickProfileInfo();
+    },
+
+    onShowProfileSlider: function(){
+        if ($(User_Profile.slider).css('right') == User_Profile.slider_hidden) {
+            $(User_Profile.slider).animate({
+                "right": "0"
+            }, 500);
+
+            var parent = $(User_Profile.slider);
+            parent.mCustomScrollbar({
+                theme:"dark",
+                callbacks:{
+                }
+            });
+
+            User_Profile.getProfileData();
+
+            User_Profile.activeResponsiveProfileSlider();
+        } else {
+            $(User_Profile.slider).animate({
+                "right": User_Profile.slider_hidden
+            }, 500);
+
+            User_Profile.deactiveResponsiveProfileSlider();
+        }
+    },
+    activeResponsiveProfileSlider: function() {
+        var width = $( window ).width();
+        $(".modal").addClass("responsive-profile-slider");
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '1050');
+        }
+
+        User_Profile.params.isOpenProfileSlider = true;
+        $('.box-navigation').css({'left': '', 'right' : '395px'});
+        $('#btn_my_location').css({'left': '', 'right' : '335px'});
+        $('#btn_meet').css({'left': '', 'right' : '335px'});
+    },
+    deactiveResponsiveProfileSlider: function() {
+        var width = $( window ).width();
+        $(".modal").removeClass("responsive-profile-slider");
+
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '10000');
+        }
+
+        User_Profile.params.isOpenProfileSlider = false;
+        $('.box-navigation').css({'left': '', 'right' : '75px'});
+        $('#btn_my_location').css({'left': '', 'right' : '15px'});
+        $('#btn_meet').css({'left': '', 'right' : '15px'});
+    },
+    onClickHideCloseProfileSlider: function() {
+        var hide_chat_inbox_btn = "#hide_chat_inbox_btn";
+        $(hide_chat_inbox_btn).unbind();
+        if (isMobile) {
+            $(hide_chat_inbox_btn).on("click", function() {
+                var previous_link = sessionStorage.url != '' ? sessionStorage.url : baseUrl ;
+                sessionStorage.url = baseUrl;
+                sessionStorage.show_landing = 1;
+                window.location.href = previous_link;
+            });
+        } else {
+            var chat_inbox = $("#chat_inbox");
+            var parent = $(chat_inbox).find('#chat_discussion ul');
+            $(hide_chat_inbox_btn).on("click", function() {
+                chat_inbox.animate({
+                    "right": ChatInbox.list_chat_post_right_hidden
+                }, 500);
+
+                $('.popup-box').each(function(index){
+                    var right_now = parseInt($(this).css('right'),10) - 315;
+                    $(this).animate({
+                        'right': right_now
+                    }, 500);
+                });
+
+                ChatInbox.DeactiveResponsiveChatInbox();
+            });
+        }
+    },
 };
