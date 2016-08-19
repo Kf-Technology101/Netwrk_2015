@@ -1010,7 +1010,7 @@ var User_Profile = {
 
         User_Profile.params.isOpenProfileSlider = true;
         $('.box-navigation').css({'left': '', 'right' : '395px'});
-        $('#btn_my_location').css({'left': '', 'right' : '335px'});
+        $('#btn_my_location_old').css({'left': '', 'right' : '335px'});
         $('#btn_meet').css({'left': '', 'right' : '335px'});
     },
     deactiveResponsiveProfileSlider: function() {
@@ -1023,7 +1023,7 @@ var User_Profile = {
 
         User_Profile.params.isOpenProfileSlider = false;
         $('.box-navigation').css({'left': '', 'right' : '75px'});
-        $('#btn_my_location').css({'left': '', 'right' : '15px'});
+        $('#btn_my_location_old').css({'left': '', 'right' : '15px'});
         $('#btn_meet').css({'left': '', 'right' : '15px'});
     },
     onClickHideCloseProfileSlider: function() {
