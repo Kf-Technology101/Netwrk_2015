@@ -511,7 +511,9 @@ var Topic = {
             .add($('#modal_topic').find('.feed-row.feed-post .feed-content'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-post .feed-content'))
             .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
-            .add($('.recentActivityPosts').find('.post'));
+            .add($('.recentActivityPosts').find('.post'))
+            .add($(LandingPage.netwrk_news).find('#mostActive .post'))
+            .add($(LandingPage.netwrk_news).find('#yourNetwrk .feed-row.feed-post .feed-content'));
         target.unbind();
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
@@ -550,7 +552,9 @@ var Topic = {
             .add($('#show-topic').find('.feed-row.feed-topic'))
             .add($('#profileRecentTopic').find('.topic-trigger'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'))
-            .add($('.popup-box').find('.popup-topic-trigger'));
+            .add($('.popup-box').find('.popup-topic-trigger'))
+            .add($(LandingPage.netwrk_news).find('#mostActive .topic-row'))
+            .add($(LandingPage.netwrk_news).find('#yourNetwrk .feed-row.feed-topic'));
         target.unbind();
         target.on('click',function(e){
             var city_id = $(e.currentTarget).attr('data-city'),

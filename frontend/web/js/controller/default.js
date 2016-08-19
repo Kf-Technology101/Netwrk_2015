@@ -289,14 +289,24 @@ var Default ={
             var landingModal = $('#modal_landing_page');
 
             // Check if landing page modal open
-            if ((landingModal.data('bs.modal') || {isShown: false}).isShown ) {
+            /*if ((landingModal.data('bs.modal') || {isShown: false}).isShown ) {
                 // Hide landing page modal
-                landingModal.modal('hide');
+                //landingModal.modal('hide');
             } else {
                 // Close other open modal
                 $('.modal').modal('hide');
                 // Show landing page modal
                 landingModal.modal('show');
+            }*/
+
+            if($(LandingPage.netwrk_news).css('left') == '0px'){
+                $(LandingPage.netwrk_news).animate({
+                    "left": "-400px"
+                }, 500);
+            } else {
+                $(LandingPage.netwrk_news).animate({
+                    "left": "0"
+                }, 500);
             }
         });
     },
