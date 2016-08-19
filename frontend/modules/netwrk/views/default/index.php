@@ -114,6 +114,7 @@ $cookies = Yii::$app->request->cookies;
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/fb_share_email_setting.php');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/on_boarding.php');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/social_signup_profile_info.php');?>
+<?= $this->render('partial/netwrk_news');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
 <script src="/js/lib/richmarker-compiled.js"></script>

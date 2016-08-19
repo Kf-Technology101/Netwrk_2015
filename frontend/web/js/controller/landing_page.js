@@ -3,6 +3,7 @@ var LandingPage = {
 	mobile:'#ld_modal_landing_page',
 	modal_welcome : '#modal_landing_welcome',
 	modal_channel_welcome : '#modal_landing_channel_welcome',
+	netwrk_news: '#netwrkNews',
 	parent:'',
 	data:'',
 	check_landing: 0,
@@ -100,6 +101,14 @@ var LandingPage = {
 
 		$(LandingPage.parent).find('#headerButtonWrapper').html(header_html);
 
+		// Netwrk news starts here
+		var list_template = _.template($( "#netwrk_news" ).html());
+		var append_html = list_template({landing: LandingPage.data});
+
+		$(LandingPage.netwrk_news).find('.content-wrapper').append(append_html);
+		$(LandingPage.netwrk_news).find('.header-wrapper').html(header_html);
+		// Netwrk news ends here
+
 		LandingPage.onTemplateLanding();
 	},
 
@@ -129,7 +138,8 @@ var LandingPage = {
 	},
 
 	OnClickAreaTalk: function(){
-		var target = $(LandingPage.parent).find('.btn-area-talk');
+		var target = $(LandingPage.parent).find('.btn-area-talk')
+				.add($(LandingPage.netwrk_news).find('.btn-area-talk'));
 		target.unbind();
 		target.on('click',function(e){
 			var post_id = $(e.currentTarget).attr('data-value'),
@@ -152,7 +162,8 @@ var LandingPage = {
 	},
 
 	OnClickChat: function(){
-		var target = $(LandingPage.parent).find('.top-post .action .chat');
+		var target = $(LandingPage.parent).find('.top-post .action .chat')
+				.add($(LandingPage.netwrk_news).find('#mostActive .action .chat'));
 		target.unbind();
 		target.on('click',function(e){
 				var post_id = $(e.currentTarget).parent().parent().attr('data-value'),
@@ -173,7 +184,8 @@ var LandingPage = {
 	},
 
 	OnClickVote: function(){
-		var target = $(LandingPage.parent).find('.top-post .action .brilliant');
+		var target = $(LandingPage.parent).find('.top-post .action .brilliant')
+				.add($(LandingPage.netwrk_news).find('#mostActive .action .brilliant'));
 		target.unbind();
 
 		target.on('click',function(e){
@@ -227,7 +239,8 @@ var LandingPage = {
 	},
 
 	OnClickPost: function(){
-		var target = $(LandingPage.parent).find('.top-post .post');
+		var target = $(LandingPage.parent).find('.top-post .post')
+				.add($(LandingPage.netwrk_news).find('#mostActive .post'));
 		target.unbind();
 		target.on('click',function(e){
 				var post_id = $(e.currentTarget).parent().attr('data-value'),
@@ -248,7 +261,8 @@ var LandingPage = {
 	},
 
 	OnClickTopic: function(){
-		var target = $(LandingPage.parent).find('.topic-row');
+		var target = $(LandingPage.parent).find('.topic-row')
+				.add($(LandingPage.netwrk_news).find('.topic-row'));
 
 		target.unbind();
 		target.on('click',function(e){
@@ -271,7 +285,8 @@ var LandingPage = {
 	},
 
 	OnClickNetwrk: function(){
-		var target = $(LandingPage.parent).find('.communities-row');
+		var target = $(LandingPage.parent).find('.communities-row')
+				.add($(LandingPage.netwrk_news).find('.communities-row'));
 
 		target.unbind();
 		target.on('click',function(e){
@@ -378,12 +393,16 @@ var LandingPage = {
 	},
 
 	show_landing_page: function(){
-		var parent = $('#modal_landing_page');
+		/*var parent = $('#modal_landing_page');
 		// parent.show();
 		parent.modal({
 			backdrop: true,
 			keyboard: false,
-		});
+		});*/
+
+		$(LandingPage.netwrk_news).animate({
+			"left": "0"
+		}, 500);
 	},
 
 	OnClickBackdrop: function(){
@@ -397,11 +416,23 @@ var LandingPage = {
         $(LandingPage.modal).find('.modal-body').mCustomScrollbar({
             theme:"dark"
         });
+
+		// Netwrk news starts here
+		var parent = $(LandingPage.netwrk_news).find('.content-wrapper').find('.tab-pane');
+		parent.css('height', $(window).height()-156);
+		if ($(parent).find("div[id^='mSCB']").length == 0) {
+			$(parent).mCustomScrollbar({
+				theme:"dark",
+			});
+		};
+		// Netwrk news ends here
     },
 
     OnClickAvatarLanding: function(){
     	var avatar = $('.top-post').find('.top-post-content .post-row .avatar')
-				.add($('#collapseFavoriteCommunities').find('.feed-post .avatar-poster'));
+				.add($('#collapseFavoriteCommunities').find('.feed-post .avatar-poster'))
+				.add($(LandingPage.netwrk_news).find('.post-row .avatar'))
+				.add($(LandingPage.netwrk_news).find('.feed-post .avatar-poster'));
 		avatar.unbind();
 		avatar.on('click', function(e){
 			var user_login = $(e.currentTarget).parent().attr('data-user');
