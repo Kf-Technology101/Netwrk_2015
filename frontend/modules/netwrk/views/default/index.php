@@ -25,9 +25,9 @@ $cookies = Yii::$app->request->cookies;
           $near_popover = 'Follow other areas and see what&rsquo;s around you';
         }
       ?>
-      <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
+      <!--<div class="<?php /*echo $near_class;*/?> <?php /*echo $near_popover_class;*/?>"
            data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-           data-placement="bottom" data-content="<?php echo $near_popover; ?>">
+           data-placement="bottom" data-content="<?php /*echo $near_popover; */?>">
         <button id="" type="button" class="btn_nav_map_location btn-active">
           <i class="navigation-icon fa fa-globe"></i>
           <span class="navigation-text">Near</span>
@@ -37,29 +37,28 @@ $cookies = Yii::$app->request->cookies;
           <span class="navigation-text">Near</span>
         </button>
       </div>
-      <?php if (Yii::$app->user->isGuest):?>
+      <?php /*if (Yii::$app->user->isGuest):*/?>
         <button type="button" class="btn btn-default login-trigger">
           <i class="navigation-icon fa fa-sign-in"></i>
           <div class="navigation-text">Login</div>
         </button>
-      <?php endif; ?>
+      <?php /*endif; */?>
       <button id="btn_nav_meet" type="button" class="btn btn-default">
         <i class="navigation-icon ci-meet"></i>
-        <!--<span class="navigation-text">Meet</span>-->
       </button>
       <button id="chat_inbox_btn" type="button" class="btn btn-default">
         <i class="navigation-icon ci-line"></i>
         <span class="navigation-text"><span class='notify'>0</span>Lines</span>
-      </button>
+      </button>-->
     </div>
   </div>
 
   <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
 
-  <div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
+  <!--<div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
     <i class="fa fa-plus"></i>
     <span>Build</span>
-  </div>
+  </div>-->
   <div class="sidebar">
     <div class="container">
       <img src="<?=Url::to('@web/img/icon/location_marker.png'); ?>"/>
@@ -108,6 +107,7 @@ $cookies = Yii::$app->request->cookies;
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/fb_share_email_setting.php');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/on_boarding.php');?>
 <?= $this->render('partial/netwrk_news');?>
+<?= $this->render('partial/netwrk_navigation');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
 <script src="/js/lib/richmarker-compiled.js"></script>

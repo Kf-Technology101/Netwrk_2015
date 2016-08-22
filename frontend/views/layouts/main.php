@@ -104,8 +104,11 @@ if (isset($cookies["isCoverPageVisited"])) {
             if (isset($cookies["isCoverPageVisited"])) :
             NavBar::begin([
                 'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top menu_top',
+                    'class' => 'navbar-inverse navbar-fixed-top menu_top'
                 ],
+                'innerContainerOptions' => [
+                    'class' => ''
+                ]
             ]);
         ?>
         <?php
