@@ -5,6 +5,7 @@ namespace frontend\modules\netwrk\controllers;
 use frontend\components\UtilitiesFunc;
 use frontend\components\BaseController;
 use frontend\modules\netwrk\models\City;
+use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Favorite;
 use yii\helpers\Url;
 use yii\db\Query;
@@ -68,6 +69,74 @@ class FavoriteController extends BaseController
         $returnData['data'] = $data;
         $hash = json_encode($returnData);
 
+        return $hash;
+    }
+
+    /**
+     * Do the favorite users own home zipcode city
+     * @return string
+     */
+    public function actionFavoriteHomeZipcode()
+    {
+        $returnData = array();
+        //Get params
+        $object_type = 'city';
+        $currentUser = isset($_GET['user_id']) ? $_GET['user_id'] : Yii::$app->user->id;
+
+        $user = User::find()->where(['id' => $currentUser])->with('profile')->one();
+        $zipcode = $user->profile->zip_code;
+
+        if(isset($zipcode)) {
+            $city = City::find()->select('city.*')
+                    ->where(['zip_code' => $zipcode])
+                    ->andWhere('office_type is null')
+                    ->one();
+            if($city) {
+                //if object_type is city then find does currentUser already favorited city previously.
+                $object_id = $city->id;
+                $favorite = Favorite::find()->where('user_id = '.$currentUser.' AND city_id = '.$object_id)->one();
+
+                //If user already favorited the object then UPDATE existing record else INSERT new record.
+                if ($favorite) {
+                    $favorite->updated_at = date('Y-m-d H:i:s');
+                    $favorite->status = 1;
+                    $favorite->save();
+                } else {
+                    $favorite = new Favorite;
+                    $favorite->user_id = $currentUser;
+                    if ($object_type == 'city') {
+                        $favorite->city_id = $object_id;
+                    }
+                    $favorite->type = $object_type;
+                    $favorite->status = 1;
+                    $favorite->created_at = date('Y-m-d H:i:s');
+                    $favorite->save();
+                }
+
+                if ($favorite) {
+                    $data = [
+                        'id' => $favorite->id,
+                        'user_id' => $favorite->user_id,
+                        'city_id' => $favorite->city_id,
+                        'type' => $favorite->type,
+                        'status' => $favorite->status,
+                        'created_at' => $favorite->created_at,
+                        'updated_at' => $favorite->updated_at
+                    ];
+                }
+
+                $returnData['success'] = 'true';
+                $returnData['data'] = $data;
+            } else {
+                $returnData['error'] = 'true';
+                $returnData['message'] = 'City not found of zipcode  '.$zipcode;
+            }
+        } else {
+            $returnData['error'] = 'true';
+            $returnData['message'] = 'Profile do not have any home zipcode. Profile zipcode field is blank.';
+        }
+
+        $hash = json_encode($returnData);
         return $hash;
     }
 

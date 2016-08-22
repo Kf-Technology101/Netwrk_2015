@@ -11,6 +11,7 @@ use frontend\modules\netwrk\models\User;
 use frontend\modules\netwrk\models\Vote;
 use frontend\modules\netwrk\models\WsMessages;
 use frontend\modules\netwrk\models\UserMeet;
+use frontend\modules\netwrk\models\Favorite;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
@@ -908,12 +909,21 @@ class PostController extends BaseController
                 $profile_picture = false;
             else
                 $profile_picture = true;
+
+            //check does user have joined any commuity
+            $favorite = Favorite::find()->where(['user_id' => $user_id])->one();
+            if($favorite) {
+                $isCommunityJoined = true;
+            } else {
+                $isCommunityJoined = false;
+            }
         }
 
         $return = [
             'wsCount' => $ws_count,
             'topPosts' => $top_post,
-            'profilePicture' => $profile_picture
+            'profilePicture' => $profile_picture,
+            'isCommunityJoined' => $isCommunityJoined
         ];
 
         return json_encode($return);
