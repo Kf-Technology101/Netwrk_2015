@@ -14,7 +14,6 @@ var SocialSignup ={
 		if(isMobile){
 			Default.hideHeaderFooter();
 			$('body').addClass('no-login');
-			SocialSignup.parent = SocialSignup.page;
 		}
 		SocialSignup.parent = SocialSignup.modal;
 		SocialSignup.OnShowModalSignUp();
@@ -37,15 +36,11 @@ var SocialSignup ={
 				if(SocialSignup.data_validate.status == 0){
 					SocialSignup.ShowErrorValidate();
 				}else{
-					if(isMobile) {
-						window.location.href = baseUrl;
-					} else {
-						$(SocialSignup.modal).modal('hide');
-						sessionStorage.on_boarding = 1;
-						Login.showOnBoardingLines();
-						$('.menu_top').removeClass('deactive');
-						$('#btn_meet').removeClass('deactive');
-					}
+					$(SocialSignup.modal).modal('hide');
+					sessionStorage.on_boarding = 1;
+					Login.showOnBoardingLines();
+					$('.menu_top').removeClass('deactive');
+					$('#btn_meet').removeClass('deactive');
 				}
 			});
 		});

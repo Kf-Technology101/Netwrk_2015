@@ -228,11 +228,7 @@ function _addListenEventPage(){
             ProfileInfo.initialize();
             break;
         case 'Profile-edit':
-            if(action == 'social-signup'){
-                SocialSignup.initialize();
-            } else {
-                ProfileEdit.initialize();
-            }
+            ProfileEdit.initialize();
             break;
         case 'Password-setting':
             Password_Setting.initialize();
