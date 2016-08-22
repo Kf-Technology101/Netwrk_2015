@@ -504,6 +504,9 @@ var Common = {
                         Login.showProfilePicture();
                     } else {
                         boardingModal.modal('hide');
+                        if(Login.isCommunityJoined == false) {
+                            Login.showJoinHomeModal();
+                        }
                     }
                 }
             });

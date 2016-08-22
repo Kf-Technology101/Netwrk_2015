@@ -8,9 +8,11 @@ var Login={
 	parent: '',
 	form_id:'#login-form',
 	on_boarding_id: '#modalOnBoarding',
+	joinHomeModal: '#modalJoinHomeConfirmation',
 	modal_callback:'',
 	data_login:'',
 	profile_picture: true,
+	isCommunityJoined: true,
 	initialize:function(){
 		if(isMobile){
 			$('body').addClass('no-login');
@@ -107,6 +109,7 @@ var Login={
 					boardingModal = $(Login.on_boarding_id);
 
 			Login.profile_picture = jsonData.profilePicture;
+			Login.isCommunityJoined = jsonData.isCommunityJoined;
 
 			if(jsonData.wsCount == 0 && jsonData.topPosts.length > 0){
 				var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul'),
@@ -130,7 +133,55 @@ var Login={
 		boardingModal.find('.select-picture').removeClass('hidden');
 		Login.onBoardingProfileUpload();
 	},
+	showJoinHomeModal: function() {
+		$(Login.joinHomeModal).modal({
+			backdrop: true,
+			keyboard: false
+		});
 
+		$(Login.joinHomeModal).find('.modal-body').mCustomScrollbar({
+			theme:"dark"
+		});
+
+		$('.modal-backdrop.in').last().addClass('active');
+		Login.onJoinHomeModal();
+	},
+	onJoinHomeModal: function() {
+		Login.onClickJoinHomeButton();
+		Login.onClickSkipButton();
+	},
+	onClickJoinHomeButton: function(){
+		var target = $('.join-home-btn', '.modal-join-home-confirmation');
+		var joinHomeModal = $(Login.joinHomeModal);
+		target.unbind();
+		target.on('click', function() {
+			var params = {'user_id' : UserLogin};
+			Ajax.favorite_home_community(params).then(function(data){
+				var json = $.parseJSON(data);
+				joinHomeModal.modal('hide');
+				if(json.success) {
+					Login.isCommunityJoined = true;
+					//display lets get started modal
+					var modalLetsGetStarted = $('#modalLetsGetStarted');
+					modalLetsGetStarted.modal('show');
+				} else {
+					var modalClose = $('#modalJoinClose');
+					modalClose.modal('show');
+				}
+			});
+		});
+	},
+	onClickSkipButton: function() {
+		var target = $('.skip-btn', '.modal-join-home-confirmation');
+		var joinHomeModal = $(Login.joinHomeModal);
+		target.unbind();
+		target.on('click', function() {
+			joinHomeModal.modal('hide');
+			//display close modal
+			var modalClose = $('#modalJoinClose');
+			modalClose.modal('show');
+		});
+	},
 	OnShowLoginErrors: function(){
 		$.each(Login.data_login.data,function(i,e){
 			var target = $(Login.parent).find('.' + i + ' .form-group');
@@ -295,6 +346,7 @@ var Login={
 						var json = $.parseJSON(data);
 						Login.profile_picture = true;
 						$(Login.on_boarding_id).modal('hide');
+						Login.showJoinHomeModal();
 					});
 
 				});
