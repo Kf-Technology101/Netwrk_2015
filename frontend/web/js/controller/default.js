@@ -25,6 +25,7 @@ var Default ={
             Default.onClickNavigationIcon();
             LandingPage.GetDataTopLanding();
             Default.onClickNetwrkNews();
+            Default.getUserFavorites();
         }
         Default.SetAvatarUserDropdown();
         // Default.ShowLandingPage();
@@ -337,14 +338,16 @@ var Default ={
 
         target.unbind();
         target.on('click',function(){
-            if($(LandingPage.netwrk_news).css('left') == '100px'){
-                $(LandingPage.netwrk_news).animate({
-                    "left": "-400px"
-                }, 500);
-            } else {
-                $(LandingPage.netwrk_news).animate({
-                    "left": "100px"
-                }, 500);
+            if(!$(this).hasClass('disabled')) {
+                if($(LandingPage.netwrk_news).css('left') == '100px'){
+                    $(LandingPage.netwrk_news).animate({
+                        "left": "-400px"
+                    }, 500);
+                } else {
+                    $(LandingPage.netwrk_news).animate({
+                        "left": "100px"
+                    }, 500);
+                }
             }
         });
     },
@@ -389,5 +392,53 @@ var Default ={
             window.location.hash = '';
             Login.initialize();
         });
-    }
+    },
+    getUserFavorites: function() {
+        Ajax.show_user_joined_communities().then(function(data){
+            var json = $.parseJSON(data);
+            var context = '#netwrkNavigation';
+
+            console.log(json.data.length);
+
+            if(!jQuery.isEmptyObject(json.data)) {
+                $('.btn-netwrk-news', context).removeClass('disabled');
+                var template = $('.favorites-netwrks-wrapper', context);
+                Default.getFavoriteTemplate(template, data)
+            } else {
+                $('.btn-netwrk-news', context).addClass('disabled');
+            }
+        });
+    },
+    getFavoriteTemplate: function(parent,data){
+        var json = $.parseJSON(data);
+        var list_template = _.template($("#favorites-netwrks").html());
+        var append_html = list_template({items: json});
+
+        parent.append(append_html);
+
+        var favoriteContainer = $(".your-netwrks", '#netwrkNavigation');
+        favoriteContainer.mCustomScrollbar({
+            theme:"dark"
+        });
+        Default.eventClickCommunityTrigger();
+    },
+    eventClickCommunityTrigger: function(){
+        var context = '#netwrkNavigation';
+        var target = $('.community-modal-trigger', context);
+
+        target.unbind();
+        target.click(function(e){
+            var city_id = $(e.currentTarget).attr('data-city-id');
+            var lat = $(e.currentTarget).attr('data-lat');
+            var lng = $(e.currentTarget).attr('data-lng');
+
+            if(isMobile){
+                var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
+                window.location.href= url;
+            } else {
+                $('.modal').modal('hide');
+                Topic.initialize(city_id);
+            }
+        });
+    },
 };

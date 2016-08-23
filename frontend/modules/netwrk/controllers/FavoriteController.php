@@ -97,4 +97,43 @@ class FavoriteController extends BaseController
         $hash = json_encode($returnData);
         return $hash;
     }
+
+    public function actionGetJoinedCommunitiesByUser()
+    {
+        $returnData = array();
+        $communities = Favorite::getFavoriteCommunitiesByUser(Yii::$app->user->id);
+
+
+        $city = [];
+        foreach($communities as $key => $value){
+            $city[$value->zip_code][] = $value;
+        }
+
+        $data = [];
+        foreach ($communities as $key => $value) {
+
+            $item = array(
+                'city_id'=> $value['city_id'],
+                'city_zipcode'=>$value['zip_code'],
+                'city_name'=>$value['name'],
+                'city_office'=>$value['office'],
+                'city_office_type'=>$value['office_type'],
+                'user_id' => $value['user_id'],
+                'status' => $value['status'],
+                'lat' => $value['lat'],
+                'lng' => $value['lng']
+            );
+            array_push($data,$item);
+
+        }
+
+        $groupArray = array();
+        foreach ($data as $item) {
+            $groupArray[$item['city_name']][] = $item;
+        }
+
+        $returnData['data'] = $groupArray;
+        $hash = json_encode($returnData);
+        return $hash;
+    }
 }
