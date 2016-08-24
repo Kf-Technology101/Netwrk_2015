@@ -397,16 +397,18 @@ var Default ={
         Ajax.show_user_joined_communities().then(function(data){
             var json = $.parseJSON(data);
             var context = '#netwrkNavigation';
+            var template = $('.favorites-netwrks-wrapper', context);
 
+            template.html('');
             console.log(json.data.length);
 
+            //if there are no joined area, then disable netwrk_news link.
             if(!jQuery.isEmptyObject(json.data)) {
                 $('.btn-netwrk-news', context).removeClass('disabled');
-                var template = $('.favorites-netwrks-wrapper', context);
-                Default.getFavoriteTemplate(template, data)
             } else {
                 $('.btn-netwrk-news', context).addClass('disabled');
             }
+            Default.getFavoriteTemplate(template, data)
         });
     },
     getFavoriteTemplate: function(parent,data){
@@ -421,6 +423,7 @@ var Default ={
             theme:"dark"
         });
         Default.eventClickCommunityTrigger();
+        Default.onClickJoinHomeAreaButton();
     },
     eventClickCommunityTrigger: function(){
         var context = '#netwrkNavigation';
@@ -441,4 +444,20 @@ var Default ={
             }
         });
     },
+    onClickJoinHomeAreaButton: function() {
+        // follow the user home area zipcode
+        var context = '#netwrkNavigation';
+        var target = $('#join-home-btn', context);
+        target.unbind();
+        target.click(function(e){
+            var params = {'user_id': UserLogin};
+            Ajax.favorite_home_community(params).then(function (data) {
+                var json = $.parseJSON(data);
+                if(json.success) {
+                    //refresh the favorite list after join home area
+                    Default.getUserFavorites();
+                }
+            });
+        });
+    }
 };

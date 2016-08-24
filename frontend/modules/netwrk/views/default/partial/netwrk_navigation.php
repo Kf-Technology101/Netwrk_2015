@@ -10,9 +10,7 @@
 		<div class="title">Your Netwrk</div>
 		<div class="your-netwrks">
 			<div class="favorites-netwrks-wrapper">
-				<!--<div class="city-name">Indiana Polis</div>
-				<div class="home-community-icon"><i class="fa fa-home"></i></div>
-				<div class="zipcode">47230</div>-->
+
 			</div>
 		</div>
 	</div>
@@ -21,7 +19,7 @@
 	<?php endif; ?>
 </div>
 <script id="favorites-netwrks" type="text/x-underscore-template">
-	<% if(!_.isEmpty(items)) {%>
+	<% if(!_.isEmpty(items.data)) {%>
 		<% _.each(items.data,function(cities, key){ %>
 			<section class="group">
 				<div class="city-name"><%= key %></div>
@@ -44,6 +42,8 @@
 				<% }); %>
 			</section>
 		<% }); %>
+	<% } else { %>
+		<p class="join-home-btn" id="join-home-btn">Join your area</p>
 	<% } %>
 </script>
 

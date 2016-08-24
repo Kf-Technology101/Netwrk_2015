@@ -1353,6 +1353,23 @@ var Ajax = {
 
         return defer.promise();
     },
+    favorite_home_community: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/favorite/favorite-home-zipcode";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     show_user_favorite_communities: function(params) {
         var url,defer = $.Deferred();
 
