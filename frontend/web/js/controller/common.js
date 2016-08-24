@@ -153,7 +153,8 @@ var Common = {
         });
     },
     eventLoginTrigger: function() {
-        var target = $(Common.contexts.loginTrigger, '.corner-login-wrapper'); //Common.contexts.boxNavigation);
+        var target = $(Common.contexts.loginTrigger, Common.contexts.boxNavigation)
+            .add($(Common.contexts.loginTrigger));
         target.unbind();
         target.on("click", function() {
             if(isGuest){

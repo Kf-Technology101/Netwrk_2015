@@ -33,12 +33,12 @@ var LandingPage = {
 				if (isGuest == '') {
 					setTimeout(function () {
 						console.log('Show feed called');
-						LandingPage.GetDataTopLanding();
+						//LandingPage.GetDataTopLanding();
 					}, 500);
 				} else {
 					setTimeout(function () {
 						console.log('Show feed called');
-						LandingPage.GetDataTopLanding();
+						//LandingPage.GetDataTopLanding();
 					}, 800);
 				}
 			}
@@ -83,7 +83,7 @@ var LandingPage = {
 				//Check if on boarding modal is not open then only show landing modal
 				if(!sessionStorage.on_boarding || sessionStorage.on_boarding == 0){
 					if(isLogoGlow == false) {
-						LandingPage.show_landing_page();
+						//LandingPage.show_landing_page();
 					}
 				}
 			}
@@ -401,7 +401,7 @@ var LandingPage = {
 		});*/
 
 		$(LandingPage.netwrk_news).animate({
-			"left": "0"
+			"left": "100px"
 		}, 500);
 	},
 

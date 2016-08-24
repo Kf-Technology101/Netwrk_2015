@@ -25,13 +25,13 @@ $cookies = Yii::$app->request->cookies;
           $near_popover = 'Follow other areas and see what&rsquo;s around you';
         }
       ?>
-      <button id="btn_my_location" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
+      <!--<button id="btn_my_location" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
         <i class="navigation-icon fa fa-plus"></i>
         <span class="navigation-text">Build</span>
       </button>
-      <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
+      <div class="<?php /*echo $near_class;*/?> <?php /*echo $near_popover_class;*/?>"
            data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-           data-placement="bottom" data-content="<?php echo $near_popover; ?>">
+           data-placement="bottom" data-content="<?php /*echo $near_popover; */?>">
         <button id="" type="button" class="btn_nav_map_location btn-active">
           <i class="navigation-icon fa fa-globe"></i>
           <span class="navigation-text">Near</span>
@@ -43,25 +43,25 @@ $cookies = Yii::$app->request->cookies;
       </div>
       <button id="btn_nav_meet" type="button" class="btn btn-default">
         <i class="navigation-icon ci-meet"></i>
-        <!--<span class="navigation-text">Meet</span>-->
       </button>
       <button id="chat_inbox_btn" type="button" class="btn btn-default">
         <i class="navigation-icon ci-line"></i>
         <span class="navigation-text"><span class='notify'>0</span>Lines</span>
-      </button>
+      </button>-->
     </div>
   </div>
 
   <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
 
-  <div class="corner-login-wrapper">
-    <?php if (Yii::$app->user->isGuest):?>
+  <!--<div class="corner-login-wrapper">
+    <?php /*if (Yii::$app->user->isGuest):*/?>
       <div id="btn_my_location_old" class="login-trigger">
         <i class="navigation-icon fa fa-sign-in"></i>
         <span>Login</span>
       </div>
-    <?php endif; ?>
-  </div>
+    <?php /*endif; */?>
+  </div>-->
+
   <!--<div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
     <i class="fa fa-plus"></i>
     <span>Build</span>
@@ -116,6 +116,7 @@ $cookies = Yii::$app->request->cookies;
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/on_boarding.php');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/social_signup_profile_info.php');?>
 <?= $this->render('partial/netwrk_news');?>
+<?= $this->render('partial/netwrk_navigation');?>
 
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/join_home_confirmation_modal.php');?>
 
