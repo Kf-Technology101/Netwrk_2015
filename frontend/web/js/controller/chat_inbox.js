@@ -41,7 +41,7 @@ var ChatInbox = {
 		$('.nav-tabs a[href="#' + tab + '"]').tab('show');
 	},
 	OnShowListChatPost: function(){
-		if ($(ChatInbox.chat_inbox).css('right') == ChatInbox.list_chat_post_right_hidden) {
+		if ($(ChatInbox.chat_inbox).css('left') == ChatInbox.list_chat_post_right_hidden) {
 			ChatInbox.GetDataListChatPost();
 
 			//when guest user, then display chat discussion tab.
@@ -52,29 +52,29 @@ var ChatInbox = {
 			}
 
 			$(ChatInbox.chat_inbox).animate({
-				"right": "0"
+				"left": "100px"
 			}, 500);
 
-            $('.popup-box').each(function(index){
+            /*$('.popup-box').each(function(index){
                 var right_now = parseInt($(this).css('right'),10) + 315;
                 $(this).animate({
                     'right': right_now
                 }, 500);
-            });
+            });*/
 
 			ChatInbox.ActiveResponsiveChatInbox();
 			ChatInbox.onClickChat = 1;
 		} else {
 			$(ChatInbox.chat_inbox).animate({
-				"right": ChatInbox.list_chat_post_right_hidden
+				"left": ChatInbox.list_chat_post_right_hidden
 			}, 500);
 
-            $('.popup-box').each(function(index){
+            /*$('.popup-box').each(function(index){
                 var right_now = parseInt($(this).css('right'),10) - 315;
                 $(this).animate({
                     'right': right_now
                 }, 500);
-            });
+            });*/
 
 			ChatInbox.DeactiveResponsiveChatInbox();
 			ChatInbox.onClickChat = 0;
@@ -250,9 +250,9 @@ var ChatInbox = {
 	ActiveResponsiveChatInbox: function() {
 		var width = $( window ).width();
 		$(".modal").addClass("responsive-chat-inbox");
-		if (width <= 1250) {
+		/*if (width <= 1250) {
 			$('#btn_meet').css('z-index', '1050');
-		}
+		}*/
 
 		//set zoom for re-init
 		/*Map.zoom = Map.map.getZoom();
@@ -265,9 +265,9 @@ var ChatInbox = {
 		ChatInbox.WindowResize(width_map);*/
 
 		ChatInbox.params.IsOpenChatBox = true;
-		$('.box-navigation').css({'left': '', 'right' : '395px'});
-		$('#btn_my_location').css({'left': '', 'right' : '335px'});
-		$('#btn_meet').css({'left': '', 'right' : '335px'});
+		//$('.box-navigation').css({'left': '', 'right' : '395px'});
+		//$('#btn_my_location').css({'left': '', 'right' : '335px'});
+		//$('#btn_meet').css({'left': '', 'right' : '335px'});
 	},
 
 	DeactiveResponsiveChatInbox: function() {
@@ -309,15 +309,15 @@ var ChatInbox = {
 			var parent = $(chat_inbox).find('#chat_discussion ul');
 			$(hide_chat_inbox_btn).on("click", function() {
 				chat_inbox.animate({
-					"right": ChatInbox.list_chat_post_right_hidden
+					"left": ChatInbox.list_chat_post_right_hidden
 				}, 500);
 
-                $('.popup-box').each(function(index){
+                /*$('.popup-box').each(function(index){
                     var right_now = parseInt($(this).css('right'),10) - 315;
                     $(this).animate({
                         'right': right_now
                     }, 500);
-                });
+                });*/
 
 				ChatInbox.DeactiveResponsiveChatInbox();
 			});
