@@ -5,7 +5,7 @@
 ?>
 <div id='netwrkNavigation' class='netwrk-navigation'>
 	<div class="netwrk-news-trigger custom-btn btn-netwrk-news">Netwrk News</div>
-	<div class="most-active-trigger custom-btn btn-most-active">Most Active</div>
+	<!--<div class="most-active-trigger custom-btn btn-most-active">Most Active</div>-->
 	<div class="your-netwrk-wrapper">
 		<div class="title">Your Netwrk</div>
 		<div class="your-netwrks">
