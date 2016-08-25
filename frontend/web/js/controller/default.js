@@ -320,6 +320,9 @@ var Default ={
                     "left": ChatInbox.list_chat_post_right_hidden
                 }, 500);
             } else {
+                $(LandingPage.netwrk_news).animate({
+                    "left": "-400px"
+                }, 500);
                 $('#netwrkNavigation').animate({
                     "left": "0"
                 }, 500);
@@ -347,16 +350,19 @@ var Default ={
         target.unbind();
         target.on('click',function(){
             if(!$(this).hasClass('disabled')) {
-                if($(LandingPage.netwrk_news).css('left') == '100px'){
+                if($(LandingPage.netwrk_news).css('left') == '0px'){
                     $(LandingPage.netwrk_news).animate({
                         "left": "-400px"
                     }, 500);
-                    $(ChatInbox.chat_inbox).animate({
+                    /*$(ChatInbox.chat_inbox).animate({
                         "left": "100px"
-                    }, 500);
+                    }, 500);*/
                 } else {
                     $(LandingPage.netwrk_news).animate({
-                        "left": "100px"
+                        "left": "0px"
+                    }, 500);
+                    $('#netwrkNavigation').animate({
+                        "left": "-200px"
                     }, 500);
                     $(ChatInbox.chat_inbox).animate({
                         "left": ChatInbox.list_chat_post_right_hidden

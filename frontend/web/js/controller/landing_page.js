@@ -418,8 +418,8 @@ var LandingPage = {
         });
 
 		// Netwrk news starts here
-		var parent = $(LandingPage.netwrk_news).find('.content-wrapper').find('.tab-pane');
-		parent.css('height', $(window).height()-156);
+		var parent = $(LandingPage.netwrk_news).find('.content-wrapper');
+		parent.css('height', $(window).height()-110);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
