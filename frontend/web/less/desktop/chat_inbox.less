@@ -39,6 +39,7 @@
 			margin: 0;
 			border: 0;
 			padding: 0;
+			text-align: center;
 			a {
 				border: 0;
 				border-radius: 0;
@@ -57,7 +58,7 @@
 					color: #5da5d8;
 				}
 			}
-			&.chat-dicussions-btn {
+			/*&.chat-dicussions-btn {
 				text-align: left;
 				a {
 					span {
@@ -73,7 +74,7 @@
 						padding-right: 6px;
 					}
 				}
-			}
+			}*/
 			&:hover {
 				background: #ffffff;
 				border: none;
@@ -272,6 +273,102 @@
 								cursor: pointer;
 								color: #5da5d8;
 							}
+						}
+					}
+				}
+			}
+		}
+		.most-active-wrapper {
+			.post-row{
+				border-bottom: 1px solid #e4e4e4;
+				padding: 5px;
+				height: 74px;
+				.avatar{
+					width: 40px;
+					height: 40px;
+					max-width: 40px;
+					max-height: 40px;
+					float: left;
+					display: table;
+					position: relative;
+					background: #fff;
+					border-radius: 2px;
+					border: 1px solid #898989;
+					.image{
+						width: 40px;
+						height: 40px;
+						text-align: center;
+						vertical-align: middle;
+						display: table-cell;
+						cursor: pointer;
+						img{
+							margin: auto;
+							width: auto;
+							height: auto;
+							max-width: 40px;
+							max-height: 40px;
+						}
+					}
+				}
+				.post{
+					height: 64px;
+					margin: 0 5px 0 10px;
+					overflow: hidden;
+					width: 58%;
+					display: block;
+					float: left;
+					cursor: pointer;
+					.post-title{
+						&::before{
+							content: '#';
+						}
+						font-family: "ProximaNovaSemibold";
+						font-size: 16px;
+						color: #5888ac;
+						margin-bottom: 0;
+						cursor: pointer;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+					.post-content{
+						font-family: "ProximaNovaRegular";
+						font-size: 13px;
+						line-height: 14px;
+						color: #1d1b1b;
+						.show_more{
+							color: #337ab7;
+							cursor: pointer;
+						}
+					}
+				}
+				.action{
+					float: right;
+					font-size: 13px;
+					text-align: center;
+					width: 20%;
+					.brilliant{
+						font-family: "Verdana";
+						font-size: 11px;
+						color: #fff;
+						width: 36px;
+						height: 30px;
+						background: url('../../img/icon/brilliant-icon-medium.png') no-repeat;
+						background-size: 36px 30px;
+						display: block;
+						padding: 10px 0;
+						margin-left: 29px;
+						cursor: pointer;
+					}
+					.chat{
+						color: #5888ac;
+						cursor: pointer;
+						text-align: right;
+						.fa{
+							margin-right: 5px;
+						}
+						&:hover{
+							color: #5da5d8;
 						}
 					}
 				}
