@@ -510,6 +510,7 @@ class PostController extends BaseController
     }
     public function actionGetChatInbox()
     {
+        $limit = Yii::$app->params['LimitObjectFeedGlobal'];
         $return = '';
         $data = [];
         $currentUser = Yii::$app->user->id;
@@ -518,6 +519,8 @@ class PostController extends BaseController
 
         $local_party_lines = json_decode($this->actionGetLocalPartyLines(), true);
 
+        $most_active = Post::GetTopPostUserJoinGlobal($limit,null,null);
+        
         if($currentUser) {
             $query = new Query();
 
@@ -582,7 +585,8 @@ class PostController extends BaseController
 
         $return = [
             'linesData' => $data,
-            'localPartyLines' => $local_party_lines
+            'localPartyLines' => $local_party_lines,
+            'mostActive' => $most_active
         ];
 
         //$data = !empty($data) ? json_encode($data) : false;

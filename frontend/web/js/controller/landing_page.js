@@ -163,7 +163,8 @@ var LandingPage = {
 
 	OnClickChat: function(){
 		var target = $(LandingPage.parent).find('.top-post .action .chat')
-				.add($(LandingPage.netwrk_news).find('#mostActive .action .chat'));
+				.add($(LandingPage.netwrk_news).find('#mostActive .action .chat'))
+				.add($(ChatInbox.chat_inbox).find('#most_active_tab').find('.post-row  .action .chat'));
 		target.unbind();
 		target.on('click',function(e){
 				var post_id = $(e.currentTarget).parent().parent().attr('data-value'),
@@ -240,7 +241,8 @@ var LandingPage = {
 
 	OnClickPost: function(){
 		var target = $(LandingPage.parent).find('.top-post .post')
-				.add($(LandingPage.netwrk_news).find('#mostActive .post'));
+				.add($(LandingPage.netwrk_news).find('#mostActive .post'))
+				.add($(ChatInbox.chat_inbox).find('#most_active_tab').find('.post-row .post'));
 		target.unbind();
 		target.on('click',function(e){
 				var post_id = $(e.currentTarget).parent().attr('data-value'),

@@ -7,8 +7,9 @@
 	<div class="chat-inbox-wrapper">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
-		<li role="presentation" class=" col-xs-6 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
-		<li role="presentation" class="active col-xs-6 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+		<li role="presentation" class="col-xs-4 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
+		<li role="presentation" class="active col-xs-3 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+		<li role="presentation" class="col-xs-4 most-active-btn"><a href="#most_active_tab" aria-controls="most_active_tab" role="tab" data-toggle="tab"><span>Most Active</span></a></li>
 	</ul>
 	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 
@@ -66,6 +67,8 @@
 				</ul>
 			</div>
 		</div>
+		<div role="tabpanel" class="tab-pane" id="most_active_tab">
+		</div>
 	</div>
 	</div>
 </div>
@@ -122,3 +125,32 @@
 	<% }); %>
 </script>
 
+<script id="most_active_list" type="text/x-underscore-template">
+	<div id="most_active"  class="most-active-wrapper">
+		<%
+			var len_post = most_active;
+			_.each(most_active,function(e,i){
+				if(i == len_post - 1){%>
+					<div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+				<% }else{ %>
+					<div class="post-row" data-value="<%= e.id %>" data-user="<%= e.user_id %>">
+				<% } %>
+					<div class="avatar"><div class="image"><img src="<%= e.photo %>"></div></div>
+
+					<div class="post">
+						<p class="post-title"><%= e.title %></p>
+						<div class="post-content"><%= e.content%></div>
+					</div>
+					<div class="action">
+						<div class="chat"><i class="fa fa-comments"></i>Jump in</div>
+						<span class="chat feedback-wrapper">
+							<div class="feedback-line"></div>
+							<div class="feedback">F</div>
+						</span>
+					</div>
+				</div>
+				<%
+			});
+		%>
+	</div>
+</script>

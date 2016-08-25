@@ -91,6 +91,17 @@ var ChatInbox = {
 		};
 	},
 
+	CustomScrollBarMostActive: function(){
+		var parent = $(ChatInbox.modal).find('#most_active_tab');
+		parent.css('height', $(window).height()-40);
+		if ($(parent).find("div[id^='mSCB']").length == 0) {
+			$(parent).mCustomScrollbar({
+				theme:"dark",
+			});
+		};
+	},
+
+
 	CustomScrollBarPrivate: function(){
 		var parent = $(ChatInbox.modal).find('#chat_private');
 		parent.css('height', $(window).height()-40);
@@ -109,6 +120,18 @@ var ChatInbox = {
 			parent.append(append_html);
 			ChatInbox.CustomScrollBar();
 			ChatInbox.OnClickChatPostDetail();
+		}
+	},
+
+	getTemplateMostActive: function(parent,data, user_id){
+		if (user_id == UserLogin) {
+			var list_template = _.template($("#most_active_list" ).html());
+			var append_html = list_template({most_active: data});
+			parent.find('#most_active').remove();
+			parent.append(append_html);
+			ChatInbox.CustomScrollBarMostActive();
+			LandingPage.OnClickChat();
+			LandingPage.OnClickPost();
 		}
 	},
 
@@ -327,6 +350,7 @@ var ChatInbox = {
 	GetDataListChatPost: function() {
 		var parent = $(ChatInbox.chat_inbox).find('#chat_discussion ul');
 		var localPartyParent = $(ChatInbox.chat_inbox).find('#containerLocalPartyLines ul');
+		var mostActiveParent = $(ChatInbox.chat_inbox).find('#most_active_tab');
 		$.ajax({
 			url: baseUrl + "/netwrk/post/get-chat-inbox",
 			type: 'POST',
@@ -338,6 +362,7 @@ var ChatInbox = {
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatInbox(parent,result.linesData, UserLogin);
 					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
+					ChatInbox.getTemplateMostActive(mostActiveParent,result.mostActive, UserLogin);
 					if(isGuest){
 						// Display Chat info popover
 						//Common.showHideInfoPopover('popover-chat-public-lines', 'nw_popover_chat_public_lines');
