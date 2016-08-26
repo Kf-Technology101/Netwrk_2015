@@ -432,7 +432,7 @@ var LandingPage = {
 		});*/
 
 		$(LandingPage.netwrk_news).animate({
-			"left": "100px"
+			"left": "0px"
 		}, 500);
 	},
 
