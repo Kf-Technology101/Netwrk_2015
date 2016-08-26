@@ -17,6 +17,7 @@ var CoverPage = {
 		CoverPage.onEnterZipcode();
 		CoverPage.hiddenError();
 		//CoverPage.OnKeyPress();
+		CoverPage.onClickShareLocation();
 		if(isMobile){
 			$("body").css('background', '#fff');
 			$("body").find('#btn_my_location').addClass('hide');
@@ -164,7 +165,8 @@ var CoverPage = {
 			$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
 				var params = data;
 				Ajax.set_cover_cookie(params).then(function(data){
-					window.location.href = baseUrl; //+ "/netwrk/default/home";
+					console.log(data);
+					//window.location.href = baseUrl; //+ "/netwrk/default/home";
 				});
 			}).fail(function(jqXHR) {
 				CoverPage.showError();
@@ -221,5 +223,109 @@ var CoverPage = {
 		}).fail(function(jqXHR) {
 			CoverPage.showError();
 		});
+	},
+	onClickShareLocation: function () {
+		var btn = $('.share-location-btn', CoverPage.parent);
+		btn.unbind();
+		btn.on('click',function(){
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					console.log(pos);
+					//CoverPage.findCurrentZip(pos.lat, pos.lng);
+					//todo: remove avon lat and lng
+					var tempLat = 39.9559,
+						tempLng = -85.9601;
+					CoverPage.findCurrentZip(tempLat, tempLng);
+				},
+				function(error) {
+					console.log(error);
+					callback = null;
+					CoverPage.handle_geolocation_error(error, callback)
+				}, {
+					enableHighAccuracy: false,
+					timeout : 50000
+				}
+			);
+		});
+	},
+	findCurrentZip: function(lat, lng) {
+		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
+			var params = data,
+				state = '',
+				stateAbbr = '',
+				country = '',
+				zip = '';
+
+			if(typeof params.results[0] != 'undefined') {
+				var len = params.results[0].address_components.length;
+
+				for (var i = 0; i < len; i++) {
+					if (params.results[0].address_components[i].types[0] == 'country') {
+						country = data.results[0].address_components[i].short_name;
+					}
+
+					if (params.results[0].address_components[i].types[0] == 'administrative_area_level_1') {
+						state = data.results[0].address_components[i].long_name;
+						stateAbbr = data.results[0].address_components[i].short_name;
+					}
+
+					if (data.results[0].address_components[i].types[0] == 'postal_code') {
+						zip = data.results[0].address_components[i].long_name;
+					}
+				}
+
+				if (country == 'US') {
+					var postParams = {
+						'post code': zip,
+						'country': 'United States',
+						'country abbreviation': country,
+						'places': [{
+							'place name': params.results[0].address_components[0].long_name,
+							'state': state,
+							'state abbreviation': stateAbbr,
+							'latitude': params.results[0].geometry.location.lat,
+							'longitude': params.results[0].geometry.location.lng
+						}]
+					};
+
+					console.log(postParams);
+					Ajax.set_cover_cookie(postParams).then(function(data){
+						window.location.href = baseUrl; //+ "/netwrk/default/home";
+					});
+				} else {
+					CoverPage.showError();
+				}
+			} else {
+				CoverPage.showError();
+			}
+		}).fail(function(jqXHR) {
+			CoverPage.showError();
+		});
+	},
+	handle_geolocation_error: function(error, callback) {
+		switch(error.code)
+		{
+			case error.PERMISSION_DENIED:
+				console.log('Geo location PERMISSION_DENIED');
+				break;
+
+			case error.POSITION_UNAVAILABLE:
+				console.log('Geo location POSITION_UNAVAILABLE');
+				break;
+
+			case error.TIMEOUT:
+				/*alert('Geo location timeout');*/
+				console.log('Geo location timeout');
+				break;
+
+			default:
+				/*alert('Geo location unknown error');*/
+				console.log('Geo location unknown error');
+				break;
+		}
 	}
 }

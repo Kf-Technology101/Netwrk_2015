@@ -352,7 +352,9 @@ var LandingPage = {
 					//LandingPage.show_landing_page();
 					LandingPage.GetDataTopLanding();
 					// Display chat inbox
-					ChatInbox.initialize();
+					//ChatInbox.initialize();
+					//todo: show area slider
+					Common.showAreaSlider();
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
 				}
 			});

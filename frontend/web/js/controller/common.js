@@ -507,5 +507,21 @@ var Common = {
                 }
             });
         });
+    },
+    showAreaSlider: function() {
+        console.log('show area slider');
+
+        var target = '#areaNews',
+            contexts = '';
+
+        if($(target).css('left') == '0px'){
+            $(target).animate({
+                "left": "-400px"
+            }, 500);
+        } else {
+            $(target).animate({
+                "left": "0px"
+            }, 500);
+        }
     }
 };
