@@ -556,6 +556,7 @@ var Common = {
             Common.getTemplateHistory(parent,data);
             Topic.OnClickPostFeed();
             Topic.OnClickTopicFeed();
+            Common.onClickHideAreaButton();
         });
     },
     getTemplateModal: function(parent,data){
@@ -585,4 +586,14 @@ var Common = {
 
         target.append(append_html);
     },
+    onClickHideAreaButton: function() {
+        var target = '#areaNews';
+        var hide_area_feeds_btn = "#hide_area_feeds_btn";
+        $(hide_area_feeds_btn, target).unbind();
+        $(hide_area_feeds_btn, target).on("click", function() {
+            $(target).animate({
+                "left": "-400px"
+            }, 500);
+        });
+    }
 };

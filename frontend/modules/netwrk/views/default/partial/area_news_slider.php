@@ -13,18 +13,15 @@ $cookies = Yii::$app->request->cookies;
         </div>
         <div class="right-section">
             <div class="feedback-line"></div>
-            <span class="title">Welcome</span>
+            <span class="title">Welcome
+                <i id="hide_area_feeds_btn" class="fa fa-times"></i>
+            </span>
         </div>
     </div>
     <div class="header-wrap">
 
     </div>
     <div class="tab-wrapper">
-        <!--<ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="col-xs-4 active"><a href="#yourNetwrk" aria-controls="yourNetwrk" role="tab" data-toggle="tab"><span>Your Netwrk</span></a></li>
-            <li role="presentation" class="col-xs-4"><a href="#mostActive" aria-controls="mostActive" role="tab" data-toggle="tab"><span>Most Active</span></a></li>
-            <li role="presentation" class="col-xs-4"><a href="#publicCenters" aria-controls="publicCenters" role="tab" data-toggle="tab"><span>Public Centers</span></a></li>
-        </ul>-->
         <div class="tab-content content-wrapper">
             <div id="area_tab_feed" class="tab">
                 <p class="no-data">There is no data available yet</p>
