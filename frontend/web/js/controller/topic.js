@@ -512,8 +512,7 @@ var Topic = {
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-post .feed-content'))
             .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
             .add($('.recentActivityPosts').find('.post'))
-            .add($(LandingPage.netwrk_news).find('#mostActive .post'))
-            .add($(LandingPage.netwrk_news).find('#yourNetwrk .feed-row.feed-post .feed-content'))
+            .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-post .feed-content'))
             .add($('#areaNews').find('.feed-row.feed-post .feed-content'));
         target.unbind();
         target.on('click',function(e){
@@ -555,8 +554,7 @@ var Topic = {
             .add($('#profileRecentTopic').find('.topic-trigger'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'))
             .add($('.popup-box').find('.popup-topic-trigger'))
-            .add($(LandingPage.netwrk_news).find('#mostActive .topic-row'))
-            .add($(LandingPage.netwrk_news).find('#yourNetwrk .feed-row.feed-topic'))
+            .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-topic'))
             .add($('#areaNews').find('.feed-row.feed-topic'));
         target.unbind();
         target.on('click',function(e){

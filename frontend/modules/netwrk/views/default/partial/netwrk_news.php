@@ -123,4 +123,11 @@
 		%>
 	</div>-->
 </script>
+<script id="netwrk_header" type="text/x-underscore-template">
+	<div class="btn-area-talk" data-topic="<%= landing.topic_id %>" data-city="<%= landing.city_id %>"
+		 data-value="<%= landing.post_id %>" data-user="<%= landing.user_id %>"
+		 data-title="<%= landing.title %>" data-content="<%= landing.post_content %>">
+		<img src="<?= Url::to('@web/img/icon/netwrk-text.png'); ?>" alt="Netwrk"/> <span>news</span>
+	</div>
+</script>
 
