@@ -352,23 +352,23 @@ var LandingPage = {
 			Ajax.set_welcome_cookie().then(function(data){
 				if(isMobile) {
 					// Display chat inbox
-					ChatInbox.OnClickChatInboxMobile();
+					// ChatInbox.OnClickChatInboxMobile();
 				} else {
 					//LandingPage.show_landing_page();
 					//LandingPage.GetDataTopLanding();
 					// Display chat inbox
 					//ChatInbox.initialize();
-
-					if(sessionStorage.cover_input == 1){
-						sessionStorage.cover_input = 0;
-						sessionStorage.netwrk_news = 1;
-						// Show netwrk news section open
-						LandingPage.GetDataTopLanding();
-					} else {
-						//todo: show area slider
-						Common.showAreaSlider();
-					}
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
+				}
+
+				if(sessionStorage.cover_input == 1){
+					sessionStorage.cover_input = 0;
+					sessionStorage.netwrk_news = 1;
+					// Show netwrk news section open
+					LandingPage.GetDataTopLanding();
+				} else {
+					//todo: show area slider
+					Common.showAreaSlider();
 				}
 			});
 
