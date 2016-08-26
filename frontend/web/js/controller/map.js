@@ -1431,7 +1431,7 @@
 			}
 		},
 		showBlueDot: function(lat, lng, map) {
-			var img = '/img/icon/pale-blue-dot.png';
+			var img = '/img/icon/pale-blue-line-icon-dot.png';
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(lat, lng),
 				icon: img,
@@ -1444,7 +1444,7 @@
 			//google.maps.event.clearListeners(marker, 'dragstart');
 			google.maps.event.addListener(marker, 'dragstart', function(e) {
 				console.log('in dragstart');
-				marker.setIcon('/img/icon/pale-blue-dot-bg.png');
+				marker.setIcon('/img/icon/pale-blue-line-icon-dot-bg.png');
 				$("#blueDotLocation span").eq(0).html('Requesting...');
 				google.maps.event.clearListeners(Map.center_marker, 'mouseout');
 			});
@@ -1452,7 +1452,7 @@
 			//google.maps.event.clearListeners(marker, 'dragend');
 			google.maps.event.addListener(marker, 'dragend', function(e) {
 				console.log('in dragend');
-				marker.setIcon('/img/icon/pale-blue-dot.png');
+				marker.setIcon('/img/icon/pale-blue-line-icon-dot.png');
 				Map.findCurrentZip(marker.getPosition().lat(),
 					marker.getPosition().lng());
 
