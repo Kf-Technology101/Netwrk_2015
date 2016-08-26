@@ -1,11 +1,12 @@
 <?php use yii\helpers\Url;?>
 <script id="account_nav_dropdown" type="text/x-underscore-template" >
-    <button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger">
+    <div id="navProfileWrapper" class="profile-trigger custom-btn btn-profile">Profile</div>
+    <!--<button id="navProfileWrapper" type="button" class="btn btn-default profile-trigger">
         <i class="navigation-icon fa fa-user"></i>
         <div class="navigation-text">
             Me
         </div>
-    </button>
+    </button>-->
     <!--<div id='account_nav_wrapper' class="btn-group profile-dropdown" role="group">
         <button type="button" class="btn btn-default profile-trigger">
             <i class="navigation-icon fa fa-user"></i>

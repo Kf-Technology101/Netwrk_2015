@@ -22,11 +22,8 @@ var Default ={
             ChatInbox.OnClickChatInbox();
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
-            Default.onClickNavigationIcon();
             if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
                 LandingPage.GetDataTopLanding();
-                Default.onClickNetwrkNews();
-                Default.getUserFavorites();
             }
         }
         if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
@@ -241,6 +238,25 @@ var Default ={
     },
 
     SetAvatarUserDropdown: function() {
+        if(isMobile){
+            var height = $(window).height();
+            var width = $(window).width();
+            var navParentHeight = Math.ceil((height/100)*70);
+            var chatTabHeight = Math.ceil((height/100)*80);
+            var chatWidth = width - 100;
+
+            var navParent = $('#netwrkNavigation').find('.your-netwrks');
+            var chatTab = $('#chat_inbox').find('.tab-pane');
+            navParent.css('max-height', navParentHeight);
+            chatTab.css('max-height', chatTabHeight);
+            $('#chat_inbox').css('width', chatWidth);
+        }
+
+        if(!isGuest){
+            Default.getUserFavorites();
+            Default.onClickNetwrkNews();
+        }
+        Default.onClickNavigationIcon();
         if (UserLogin && typeof isCoverPageVisited !== 'undefined') {
             Ajax.get_user_profile().then(function(data){
                 sessionStorage.UserInfo = data;
@@ -248,11 +264,12 @@ var Default ={
                 var list_template = _.template($("#account_nav_dropdown" ).html());
                 var append_html = list_template({user_info: data});
                 $('#netwrkNavigation #navProfileWrapper').remove();
-                if(isMobile){
+                $('#netwrkNavigation').append(append_html);
+                /*if(isMobile){
                     $('#nav_wrapper #btn_nav_meet_mobile').before(append_html);
                 } else {
                     $('#netwrkNavigation').append(append_html);
-                }
+                }*/
                 /*$('#nav_wrapper #navProfileWrapper').remove();
                 if(isMobile){
                     $('#nav_wrapper #btn_nav_meet_mobile').before(append_html);
@@ -332,7 +349,6 @@ var Default ={
                 setTimeout(function(){
                     ChatInbox.initialize();
                 },500);
-
             }
 
             /*if($(LandingPage.netwrk_news).css('left') == '0px'){
