@@ -87,6 +87,7 @@ var LandingPage = {
 				}
 
 				if(sessionStorage.cover_input == 1){
+					sessionStorage.cover_input = 0;
 					LandingPage.show_landing_page();
 				}
 			}
