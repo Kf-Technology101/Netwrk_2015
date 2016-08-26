@@ -238,21 +238,31 @@ var Default ={
     },
 
     SetAvatarUserDropdown: function() {
+        /*if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
+            LandingPage.GetDataTopLanding();
+        }*/
         if(isMobile){
             var height = $(window).height();
             var width = $(window).width();
+            var wrapperHeight = height - 60;
             var navParentHeight = Math.ceil((height/100)*70);
             var chatTabHeight = Math.ceil((height/100)*80);
             var chatWidth = width - 100;
 
             var navParent = $('#netwrkNavigation').find('.your-netwrks');
             var chatTab = $('#chat_inbox').find('.tab-pane');
+            var netwrkNewsTab = $('#netwrkNews').find('.tab-content');
             navParent.css('max-height', navParentHeight);
             chatTab.css('max-height', chatTabHeight);
-            $('#chat_inbox').css('width', chatWidth);
+            netwrkNewsTab.css('max-height', chatTabHeight);
+            $('#netwrkNavigation').css('height', wrapperHeight);
+            $('#chat_inbox').css('width', chatWidth).css('height', wrapperHeight);
+            $('#netwrkNews').css('width', width).css('height', wrapperHeight);
         }
 
-        if(!isGuest){
+        if(isGuest){
+            $('.btn-netwrk-news', '#netwrkNavigation').addClass('disabled');
+        } else {
             Default.getUserFavorites();
             Default.onClickNetwrkNews();
         }
@@ -377,15 +387,19 @@ var Default ={
                         "left": "100px"
                     }, 500);*/
                 } else {
-                    $(LandingPage.netwrk_news).animate({
-                        "left": "0px"
-                    }, 500);
-                    $('#netwrkNavigation').animate({
-                        "left": "-200px"
-                    }, 500);
-                    $(ChatInbox.chat_inbox).animate({
-                        "left": ChatInbox.list_chat_post_right_hidden
-                    }, 500);
+                    if(isMobile){
+                        LandingPage.GetDataTopLanding();
+                    } else {
+                        $(LandingPage.netwrk_news).animate({
+                            "left": "0px"
+                        }, 500);
+                        $('#netwrkNavigation').animate({
+                            "left": "-200px"
+                        }, 500);
+                        $(ChatInbox.chat_inbox).animate({
+                            "left": ChatInbox.list_chat_post_right_hidden
+                        }, 500);
+                    }
                 }
             }
         });
