@@ -157,9 +157,14 @@ var Common = {
             .add($(Common.contexts.loginTrigger));
         target.unbind();
         target.on("click", function() {
-            if(isGuest){
-                $('.modal').modal('hide');
-                Login.initialize();
+            if (isGuest) {
+                if(isMobile){
+                    var url = window.location.href;
+                    window.location.href = baseUrl + "/netwrk/user/login?url_callback="+url;
+                } else {
+                    $('.modal').modal('hide');
+                    Login.initialize();
+                }
             }
         });
     },

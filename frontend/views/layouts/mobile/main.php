@@ -117,10 +117,10 @@ if (isset($cookies["isCoverPageVisited"])) {
                data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_logo" data-wrapper="popover-logo">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                data-placement="bottom" data-content="<?php echo $logo_popover; ?>">
             <span class="logo-active">
-              <a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>"></a>
+              <a href="javascript:void(0)" class="landing-trigger"><img src="<?= Url::to('@web/img/icon/netwrk-icon-active.png'); ?>"></a>
             </span>
             <span class="logo-inactive">
-              <a href="javascript:void(0)"><img src="<?= Url::to('@web/img/icon/netwrk-icon-inactive.png'); ?>"></a>
+              <a href="javascript:void(0)" class="landing-trigger"><img src="<?= Url::to('@web/img/icon/netwrk-icon-inactive.png'); ?>"></a>
             </span>
           </div>
   			<!--<div class="logo_netwrk option_logo_netwrk">
@@ -134,14 +134,14 @@ if (isset($cookies["isCoverPageVisited"])) {
               <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
             </div>
 
-            <div class="corner-login-wrapper">
-              <?php if (Yii::$app->user->isGuest):?>
-                <a href="<?php echo Url::base(true); ?>/netwrk/user/login" id="btn_my_location_old">
+            <!--<div class="corner-login-wrapper">
+              <?php /*if (Yii::$app->user->isGuest):*/?>
+                <a href="<?php /*echo Url::base(true); */?>/netwrk/user/login" id="btn_my_location_old">
                   <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
                   <span>Login</span>
                 </a>
-              <?php endif; ?>
-            </div>
+              <?php /*endif; */?>
+            </div>-->
             <!--<div id="btn_my_location" class="btn_my_location">
               <i class="fa fa-plus"></i>
               <span>Build</span>
@@ -172,13 +172,17 @@ if (isset($cookies["isCoverPageVisited"])) {
               $near_popover = '';
             }
           ?>
+<<<<<<< HEAD
           <button id="btn_my_location" type="button" class="btn btn-default">
             <i class="navigation-icon fa fa-plus"></i>
             <div class="navigation-text">Build</div>
           </button>
           <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
+=======
+          <!--<div class="<?php /*echo $near_class;*/?> <?php /*echo $near_popover_class;*/?>"
+>>>>>>> f0ab28caa469b8777809e3a163655e0ab5b59421
                data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-               data-placement="top" data-content="<?php echo $near_popover; ?>">
+               data-placement="top" data-content="<?php /*echo $near_popover; */?>">
             <button type="button" class="btn-explore-location btn-active">
               <i class="navigation-icon fa fa-globe"></i>
               <div class="navigation-text">Near</div>
@@ -188,13 +192,22 @@ if (isset($cookies["isCoverPageVisited"])) {
               <div class="navigation-text">Near</div>
             </button>
           </div>
+<<<<<<< HEAD
+=======
+          <?php /*if (Yii::$app->user->isGuest):*/?>
+            <a href="<?php /*echo Url::base(true); */?>/netwrk/user/login" type="button" class="btn btn-default">
+              <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
+              <div class="navigation-text">Login</div>
+            </a>
+          <?php /*endif; */?>
+>>>>>>> f0ab28caa469b8777809e3a163655e0ab5b59421
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-meet"></i>
-            <!--<div class="navigation-text">Meet</div>-->
           </button>
           <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-line"></i>
             <div class="navigation-text"><span class='notify disable'>0</span>Lines</div>
+<<<<<<< HEAD
           </button>
           <?php /*if (Yii::$app->user->isGuest):*/?><!--
             <a href="<?php /*echo Url::base(true); */?>/netwrk/user/login" type="button" class="btn btn-default">
@@ -202,6 +215,9 @@ if (isset($cookies["isCoverPageVisited"])) {
               <div class="navigation-text">Login</div>
             </a>
           --><?php /*endif; */?>
+=======
+          </button>-->
+>>>>>>> f0ab28caa469b8777809e3a163655e0ab5b59421
         </div>
       </div>
     </section>
@@ -238,6 +254,8 @@ if (isset($cookies["isCoverPageVisited"])) {
       </div>
   </footer> -->
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
+  <?= $this->render('@frontend/modules/netwrk/views/default/partial/chat_inbox');?>
+  <?= $this->render('@frontend/modules/netwrk/views/default/partial/netwrk_navigation');?>
   <?php $this->endBody() ?>
 </body>
 <script type="text/javascript">

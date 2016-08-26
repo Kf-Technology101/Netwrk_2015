@@ -317,7 +317,7 @@ function removeLogoGlow(ele) {
 function homePage(){
     var target = $('.option_logo_netwrk a');
     var isLanding = $('.wrap-mobile').data('action');
-    if (isLanding == 'landing-page') {
+    /*if (isLanding == 'landing-page') {
         target.on('click', function(e){
             removeLogoGlow($(this));
             e.preventDefault();
@@ -334,7 +334,7 @@ function homePage(){
             e.preventDefault();
             LandingPage.redirect();
         });
-    }
+    }*/
 }
 
 $(document).ready(function(){

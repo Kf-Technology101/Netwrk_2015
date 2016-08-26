@@ -364,12 +364,12 @@ var LandingPage = {
 			Ajax.set_welcome_cookie().then(function(data){
 				if(isMobile) {
 					// Display chat inbox
-					ChatInbox.OnClickChatInboxMobile();
+					// ChatInbox.OnClickChatInboxMobile();
 				} else {
 					//LandingPage.show_landing_page();
 					LandingPage.GetDataTopLanding();
 					// Display chat inbox
-					ChatInbox.initialize();
+					// ChatInbox.initialize();
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
 				}
 			});

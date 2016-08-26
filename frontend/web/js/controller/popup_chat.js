@@ -759,7 +759,8 @@ var PopupChat = {
                 if(sessionStorage.landing_post == 1){
                     //Go to post by landing page
                     sessionStorage.landing_post = 0 ;
-                    window.location.href = sessionStorage.url_landing;
+                    window.location.href = baseUrl;
+                    //window.location.href = sessionStorage.url_landing;
                 }else if(sessionStorage.feed_topic == 1){
                     sessionStorage.feed_topic = 0;
                     window.location.href = sessionStorage.url;
@@ -772,7 +773,7 @@ var PopupChat = {
                     //Go to post
                     Post.RedirectPostPage($(PopupChat.parent).attr('data-topic'));
                 } else {
-                    window.location.href = baseUrl+'/netwrk/chat-inbox/'+'?chat-type=0';
+                    window.location.href = baseUrl; //+'/netwrk/chat-inbox/'+'?chat-type=0';
                 }
             }
         });

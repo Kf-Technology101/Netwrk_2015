@@ -381,3 +381,112 @@
         }
     }
 }
+
+.netwrk-navigation {
+    background: #ffffff;
+    height: 88%;
+    position: fixed;
+    left: -200px;
+    bottom: 0;
+    width: 100px;
+    z-index: 9999;
+    overflow: hidden;
+    border-right: 1px solid #000000;
+    .custom-btn {
+        background: #5888ac;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        display: block;
+        line-height: 25px;
+        max-height: 6%;
+        border-bottom: 1px solid #000;
+        &.btn-profile {
+            border-top: 1px solid #000;
+            height: 10%;
+            width: 100%;
+            max-height: 10%;
+            line-height: 45px;
+            position: absolute;
+            bottom: 0;
+        }
+        &.disabled {
+            background-color: #fff;
+            border-top: 1px solid #000;
+            color: #ccc;
+        }
+    }
+    .your-netwrk-wrapper {
+        max-height: 85%;
+        height: 85%;
+        overflow: hidden;
+        .title {
+            font-weight: 600;
+            text-align: center;
+            display: block;
+            line-height: 25px;
+            border-bottom: 1px solid #000;
+            background-color: #ccc;
+        }
+        .your-netwrks {
+            max-height: 330px;
+            overflow: auto;
+            .favorites-netwrks-wrapper {
+                text-align: center;
+                .group {
+                    border-bottom: 1px solid #ccc;
+                    padding-bottom: 10px;
+                    cursor: pointer;
+                    .city-name {
+                        border-bottom: 1px solid #ccc;
+                        font-size: 14px;
+                        font-weight: 400;
+                        padding: 5px;
+                    }
+                    .item {
+                        padding: 5px 0;
+                        .home-community-icon {
+                            background: #5888ac none repeat scroll 0 0;
+                            border-radius: 48px;
+                            color: #fff;
+                            display: block;
+                            font-size: 22px;
+                            height: 48px;
+                            line-height: 48px;
+                            margin: 0 auto;
+                            width: 48px;
+                        }
+                        .zipcode {
+                            font-size: 16px;
+                            font-weight: 600;
+                            padding-top: 5px;
+                        }
+                    }
+                }
+                .join-home-btn {
+                    background-color: #5888ac;
+                    border: 1px solid #000;
+                    color: #fff;
+                    font-size: 13px;
+                    height: 37px;
+                    line-height: 35px;
+                    margin: 5px;
+                    text-align: center;
+                    vertical-align: middle;
+                    width: 90%;
+                    &:hover {
+                        background-color: #5da5d8;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .mCSB_container {
+                margin-right: 0;
+            }
+            .mCSB_scrollTools {
+                width: 5px;
+            }
+        }
+    }
+}
