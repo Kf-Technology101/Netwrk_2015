@@ -10,13 +10,15 @@ var CoverPage = {
 	result:'.cover-result-search',
 	result_data:'',
 	initialize: function(){
+		var height = $(window).height();
+		$('#cover-page').css('height',height);
 		Common.hideLoader();
 		CoverPage.getObject();
 		CoverPage.hiddenMenuTop();
 		CoverPage.onClickKey();
 		CoverPage.onEnterZipcode();
 		CoverPage.hiddenError();
-		//CoverPage.OnKeyPress();
+		CoverPage.OnKeyPress();
 		CoverPage.onClickShareLocation();
 		if(isMobile){
 			$("body").css('background', '#fff');
@@ -78,7 +80,7 @@ var CoverPage = {
 			e.preventDefault();
 			e.stopPropagation();
 
-			$('#cv-password').val($(e.currentTarget).attr('data-value'));
+			$('#cv-location').val($(e.currentTarget).attr('data-value'));
 			$(CoverPage.result).hide();
 		});
 	},
@@ -94,7 +96,7 @@ var CoverPage = {
 	getObject: function(){
 		CoverPage.btn = $(CoverPage.parent).find(".input-group-addon");
 		CoverPage.err = $(CoverPage.parent).find(".error");
-		CoverPage.zcode = $(CoverPage.parent).find("#cv-password");
+		CoverPage.zcode = $(CoverPage.parent).find("#cv-location");
 	},
 
 	hiddenMenuTop: function(){
@@ -116,16 +118,14 @@ var CoverPage = {
 		var target = CoverPage.btn;
 		target.unbind();
 		target.on("click", function(e){
-			
 			var zcode = CoverPage.zcode;
-
 			console.log(zcode.val());
-			/*if(!isNaN(zcode.val())) {
-				// var res = /^\d{5}(-\d{4})?$/.test(zcode.val());*/
+			if(!isNaN(zcode.val())) {
+				var res = /^\d{5}(-\d{4})?$/.test(zcode.val());
 				CoverPage.checkZipCode(zcode.val());
-			/*} else {
+			} else {
 				CoverPage.checkCity(zcode.val());
-			}*/
+			}
 
 			e.preventDefault();
 		});
@@ -159,21 +159,22 @@ var CoverPage = {
 	},
 
 	checkZipCode: function(zipcode){
-		var arr = [46037,'46037',44115,'44115',46040,'46040'];
+		//var arr = [46037,'46037',44115,'44115',46040,'46040'];
 
-		if(jQuery.inArray( zipcode, arr ) > -1){
+		//if(jQuery.inArray( zipcode, arr ) > -1){
 			$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
 				var params = data;
 				Ajax.set_cover_cookie(params).then(function(data){
-					console.log(data);
-					//window.location.href = baseUrl; //+ "/netwrk/default/home";
+					//console.log(data);
+					sessionStorage.cover_input = 1;
+					window.location.href = baseUrl; //+ "/netwrk/default/home";
 				});
 			}).fail(function(jqXHR) {
 				CoverPage.showError();
 			});
-		} else {
+		/*} else {
 			CoverPage.showError();
-		}
+		}*/
 	},
 
 	checkCity: function(zipcode){
@@ -212,6 +213,7 @@ var CoverPage = {
 					};
 
 					Ajax.set_cover_cookie(postParams).then(function(data){
+						sessionStorage.cover_input = 1;
 						window.location.href = baseUrl; //+ "/netwrk/default/home";
 					});
 				} else {
