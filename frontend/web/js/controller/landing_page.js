@@ -367,12 +367,13 @@ var LandingPage = {
 					// ChatInbox.OnClickChatInboxMobile();
 				} else {
 					//LandingPage.show_landing_page();
-					LandingPage.GetDataTopLanding();
+					//LandingPage.GetDataTopLanding();
 					// Display chat inbox
 					//ChatInbox.initialize();
 					if(sessionStorage.cover_input == 1){
 						sessionStorage.cover_input = 0;
 						// Show netwrk news section open
+						LandingPage.GetDataTopLanding();
 					} else {
 						//todo: show area slider
 						Common.showAreaSlider();
