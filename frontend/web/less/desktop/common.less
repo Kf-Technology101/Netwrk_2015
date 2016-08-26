@@ -354,185 +354,377 @@
     bottom: 0;
     width: 320px;
     z-index: 999;
-    overflow: hidden;
-    .header-wrapper {
-        padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .header{
+        background: #5888ac;
+        border-top: 1px solid #fff;
         width: 100%;
-        height: 50px;
-        background: transparent;
-        border: none;
-        display: block;
-        .btn-area-talk {
-            color: #5888ac;
-            display:block;
+        .back_page{
+            width: 20%;
             height: 40px;
-            font-size: 40px;
-            text-align: center;
-            line-height: 38px;
-            display: inline-block;
-            width: 235px;
+            float: left;
             cursor: pointer;
-            margin: 0 auto;
+            border-right: 1px solid #fff;
             img{
-                width: auto;
-                height: 37px;
-                vertical-align: text-top;
+                width: 25px;
+            }
+            i{
+                font-size: 12px;
+            }
+            span{
+                font-size: 12px;
+                color: #fff;
+                display: block;
+                text-align: center;
+            }
+        }
+        .Favorite-btn-wrap {
+            width: 20%;
+            height: 40px;
+            float: left;
+            border-right: 1px solid #fff;
+            cursor: pointer;
+            border-radius: 4px 0 0 0;
+            -webkit-border-radius: 4px 0 0 0;
+
+            a.btn-favorite {
+                font-size: 14px;
+                color: #fff;
+                text-align: center;
+                display: block;
+                line-height: 40px;
+                text-decoration: none;
+            }
+
+            &:hover{
+                background: #5da5d8;
+                height: 39px;
+            }
+        }
+        .title_page{
+            /*width: 60%;*/
+            height: 40px;
+            margin: auto;
+            float: left;
+            z-index: 20;
+            img{
+                width: 20px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+            }
+            .title{
+                color: #fff;
+                display: inherit;
+                text-align: center;
+                font-size: 18px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+        .left-section{
+            border-right: 1px solid #fff;
+        }
+        .middle-section{
+            width: 14%;
+            max-width: 55px;
+            text-align: center;
+            float: left;
+            color: #fff;
+            padding: 6px 8px 0;
+            .fa {
+                font-size: 2.0em;
+            }
+        }
+        .right-section,
+        .left-section{
+            width: 43%;
+            float: left;
+            .title{
+                color: #fff;
+                display: inherit;
+                font-size: 14px;
+                line-height: 40px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding-left: 10px;
+            }
+        }
+        .right-section{
+            border-left: 1px solid #fff;
+            .feedback-line {
+                background: url("../../img/icon/line-icon-nav.png") no-repeat;
+                background-size: contain;
+                display: inline-block;
+                height: 24px;
+                width: 24px;
+                float: left;
+                margin: 7px 0 7px 5px;
+            }
+        }
+        .create_topic,
+        .create_group{
+            float: left;
+            width: 30%;
+            height: 40px;
+            cursor: pointer;
+            border-left: 1px solid #fff;
+            span{
+                color: #fff;
+                font-size: 12px;
+                display: block;
+                text-align: center;
+                i{
+                    color: #fff;
+                }
+            }
+            &.on-feed{
+                display: none;
             }
         }
     }
     .tab-wrapper {
         background: #fff;
-        ul{
-            li{
-                padding-left: 0;
-                padding-right: 0;
-                a{
-                    color: #ffffff;
-                    background: #5888ac;
-                    border-radius: 0;
-                    padding: 10px 5px;
-                    text-align: center;
-                    outline: none;
-
-                    &:hover,
-                    &:focus{
+        height: 540px;
+        max-height: 540px;
+    }
+    #area_tab_feed {
+        width: 100%;
+        display: none;
+        margin: 0 auto 10px;
+        clear: both;
+        .top-header{
+            height: auto;
+            background-color: #cacaca;
+            padding: 5px;
+            position: relative;
+            .lp-title{
+                font-family: "ProximaNovaBold";
+                font-size: 90%;
+                margin-bottom: 0;
+            }
+            .lp-description{
+                font-size: 90%;
+                color: #1d1b1b;
+                margin-bottom: 0;
+            }
+            .Favorite-btn-wrap {
+                width: 20%;
+                height: 45px;
+                min-width: 45px;
+                border-top: 1px solid #ffffff;
+                border-left: 1px solid #ffffff;
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: #5888ac;
+                a {
+                    &.btn-favorite {
                         color: #ffffff;
-                        background: #5da5d8;
-                        outline: none;
-                    }
-                }
-                &.active {
-                    a{
-                        color: #ffffff;
-                        background: #5da5d8;
-                        outline: none;
-                        &:hover,
-                        &:focus{
-                            color: #ffffff;
-                            background: #5da5d8;
-                            outline: none;
-                        }
-                    }
-                }
-                &:last-child{
-                    a{
-                        margin-right: 0;
+                        display: block;
+                        font-size: 14px;
+                        line-height: 45px;
+                        text-align: center;
+                        text-decoration: none;
                     }
                 }
             }
         }
-        .content-wrapper {
-            min-height: 90%;
+        .top-post{
+            .top-post-content{
+                background-color: #fff;
+                .post-row{
+                    border-bottom: 1px solid #e4e4e4;
+                    padding: 10px 7px;
+                    height: 74px;
+                    .avatar{
+                        width: 50px;
+                        height: 50px;
+                        max-width: 50px;
+                        max-height: 50px;
+                        float: left;
+                        display: table;
+                        position: relative;
+                        border-radius: 2px;
+                        border: 1px solid #898989;
+                        background: #fff;
+                        .image{
+                            height: 50px;
+                            width: 50px;
+                            text-align: center;
+                            vertical-align: middle;
+                            display: table-cell;
+                            img{
+                                margin: auto;
+                                max-width: 50px;
+                                width: auto;
+                                height: auto;
+                                max-height: 50px;
+                            }
+                        }
+                    }
+                    .post{
+                        width: 69%;
+                        display: block;
+                        margin: 0 0 0 15px;
+                        float: left;
+                        .post-title{
+                            font-family: "ProximaNovaSemibold";
+                            font-size: 100%;
+                            color: #5888ac;
+                            margin-bottom: 0;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                        .post-content{
+                            font-family: "ProximaNovaRegular";
+                            font-size: 75%;
+                            line-height: 13px;
+                            color: #1d1b1b;
+                            .show_more{
+                                color: #337ab7;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                    .action{
+                        float: right;
+                        width: 60px;
+                        text-align: center;
+                        .brilliant{
+                            font-family: "Verdana";
+                            font-size: 75%;
+                            color: #fff;
+                            width: 36px;
+                            height: 30px;
+                            background: url('../../img/icon/brilliant-icon-medium.png') no-repeat;
+                            background-size: 36px 30px;
+                            display: block;
+                            padding: 10px 0;
+                            margin-left: 9px;
+                            cursor: pointer;
+                        }
+                        .chat{
+                            color: #5888ac;
+                            cursor: pointer;
+                            text-align: right;
+                            font-size: 12px;
+                            .fa{
+                                margin-right: 5px;
+                            }
+                            &:hover{
+                                color: #5da5d8;
+                            }
+                        }
+                    }
+                }
+                .last-row{
+                    border: none;
+                }
+            }
+        }
+        .top-topic{
+            .top-topic-content{
+                .topic-row{
+                    border-bottom: 1px solid #e4e4e4;
+                    height: 30px;
+                    padding: 0 15px;
+                    background: #fff;
+                    width: 100%;
+                    &:hover{
+                        .topic-title{
+                            color: #5da5d8;
+                        }
+                        .arrow{
+                            color: #5da5d8;
+                        }
+                    }
+                    .topic-title{
+                        font-size: 14px;
+                        color: #1d1b1b;
+                        width: 70%;
+                        line-height: 30px;
+                        float: left;
+                        margin-bottom: 0;
+                        cursor: pointer;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+
+                    .post-counter{
+                        padding-top: 5px;
+                        width: auto;
+                        float: right;
+                        text-align: right;
+                        color: #1d1b1b;
+                        .fa{
+                            margin-left: 5px;
+                            float: right;
+                            padding-top: 2px;
+                        }
+                        .arrow{
+                            margin-left: 15px;
+                            cursor: pointer;
+                            float: right;
+                        }
+                    }
+                }
+                .last-row{
+                    border: none;
+                }
+            }
+        }
+        .top-feed{
+            background-color: #fff;
             .feed-row{
                 border-bottom: 1px solid #e4e4e4;
                 position: relative;
                 &:hover{
                     cursor: pointer;
                 }
-                &.feed-topic{
-                    padding: 5px;
-                    .feed-content {
-                        .topic-title {
-                            font-size: 16px;
-                            color:#1d1b1b;
-                            width: 308px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            display: inline-block;
-                            vertical-align: middle;
-                            &:hover {
-                                color: #5da5d8;
-                            }
-                        }
-                        .topic-create-by {
-                            font-size: 13px;
-                            color: #797979;
-                        }
-                        .appear-day {
-                            font-size : 12px;
-                            color : #797979;
-                            position: absolute;
-                            right: 5px;
-                            bottom: 5px;
+            }
+            .feed-row.feed-topic{
+                padding: 3px 15px;
+                height: 50px;
+                .feed-content {
+                    .topic-title {
+                        font-size: 16px;
+                        color:#1d1b1b;
+                        width: 300px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: inline-block;
+                        &:hover {
+                            color: #5da5d8;
                         }
                     }
-                }
-                &.feed-post{
-                    padding: 5px;
-                    height: 65px;
-                    .avatar-poster {
-                        width: 40px;
-                        height: 40px;
-                        max-width: 40px;
-                        max-height: 40px;
-                        float: left;
-                        display: table;
-                        position: relative;
-                        background: #fff;
-                        border-radius: 2px;
-                        border: 1px solid #898989;
-                        .image{
-                            height: 40px;
-                            width: 40px;
-                            text-align: center;
-                            vertical-align: middle;
-                            display: table-cell;
-                            cursor: pointer;
-                            img{
-                                margin: auto;
-                                max-width: 40px;
-                                width: auto;
-                                height: auto;
-                                max-height: 40px;
-                            }
-                        }
+                    .topic-create-by {
+                        font-size: 13px;
+                        color: #797979;
+                        position: absolute;
+                        left: 15px;
+                        bottom: 5px;
                     }
-                    .feed-content {
-                        .post {
-                            margin-left: 50px;
-                            width: 260px;
-                            .post-title {
-                                &::before{
-                                    content: '#';
-                                }
-                                font-size: 16px;
-                                color:#1d1b1b;
-                                font-family: "ProximaNovaSemibold";
-                                width: 250px;
-                                white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                            }
-                            .post-content {
-                                font-size: 13px;
-                                color: #1d1b1b;
-                                line-height: 14px;
-                                width: 250px;
-                                white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                            }
-                        }
-                        .post-create-by {
-                            font-size: 13px;
-                            color: #797979;
-                        }
-                        .appear-day {
-                            font-size : 12px;
-                            color : #797979;
-                            position: absolute;
-                            right: 5px;
-                            bottom: 5px;
-                        }
+                    .appear-day {
+                        font-size : 12px;
+                        color : #797979;
+                        position: absolute;
+                        right: 15px;
+                        bottom: 5px;
                     }
                 }
             }
-            .post-row{
-                border-bottom: 1px solid #e4e4e4;
-                padding: 5px;
-                height: 74px;
-                .avatar{
+
+            .feed-row.feed-post{
+                padding: 3px 15px;
+                height: 65px;
+                .avatar-poster {
                     width: 40px;
                     height: 40px;
                     max-width: 40px;
@@ -544,170 +736,58 @@
                     border-radius: 2px;
                     border: 1px solid #898989;
                     .image{
-                        width: 40px;
                         height: 40px;
+                        width: 40px;
                         text-align: center;
                         vertical-align: middle;
                         display: table-cell;
                         cursor: pointer;
                         img{
                             margin: auto;
+                            max-width: 40px;
                             width: auto;
                             height: auto;
-                            max-width: 40px;
                             max-height: 40px;
                         }
                     }
                 }
-                .post{
-                    height: 64px;
-                    margin: 0 5px 0 10px;
-                    overflow: hidden;
-                    width: 58%;
-                    display: block;
-                    float: left;
-                    cursor: pointer;
-                    .post-title{
-                        &::before{
-                            content: '#';
+                .feed-content {
+                    .post {
+                        margin-left: 50px;
+                        width: 100%;
+                        .post-title {
+                            font-size: 14px;
+                            color:#1d1b1b;
+                            font-family: "ProximaNovaSemibold";
+                            width: 75%;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
-                        font-family: "ProximaNovaSemibold";
-                        font-size: 16px;
-                        color: #5888ac;
-                        margin-bottom: 0;
-                        cursor: pointer;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
+                        .post-content {
+                            font-size: 13px;
+                            color: #1d1b1b;
+                            line-height: 14px;
+                            width: 80%;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
                     }
-                    .post-content{
-                        font-family: "ProximaNovaRegular";
+                    .post-create-by {
                         font-size: 13px;
-                        line-height: 14px;
-                        color: #1d1b1b;
-                        .show_more{
-                            color: #337ab7;
-                            cursor: pointer;
-                        }
+                        color: #797979;
+                        position: absolute;
+                        left: 65px;
+                        bottom: 5px;
                     }
-                }
-                .action{
-                    float: right;
-                    font-size: 13px;
-                    text-align: center;
-                    width: 20%;
-                    .brilliant{
-                        font-family: "Verdana";
-                        font-size: 11px;
-                        color: #fff;
-                        width: 36px;
-                        height: 30px;
-                        background: url('../../img/icon/brilliant-icon-medium.png') no-repeat;
-                        background-size: 36px 30px;
-                        display: block;
-                        padding: 10px 0;
-                        margin-left: 29px;
-                        cursor: pointer;
+                    .appear-day {
+                        font-size : 12px;
+                        color : #797979;
+                        position: absolute;
+                        right: 15px;
+                        bottom: 5px;
                     }
-                    .chat{
-                        color: #5888ac;
-                        cursor: pointer;
-                        text-align: right;
-                        .fa{
-                            margin-right: 5px;
-                        }
-                        &:hover{
-                            color: #5da5d8;
-                        }
-                    }
-                }
-            }
-            .topic-row{
-                border-bottom: 1px solid #e4e4e4;
-                height: 30px;
-                padding: 0 5px;
-                background: #fff;
-                &:hover{
-                    .topic-title{
-                        color: #5da5d8;
-                    }
-                    .arrow{
-                        color: #5da5d8;
-                    }
-                }
-                .topic-title{
-                    font-size: 16px;
-                    color: #1d1b1b;
-                    width: 80%;
-                    line-height: 30px;
-                    float: left;
-                    margin-bottom: 0;
-                    cursor: pointer;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-                .post-counter{
-                    padding-top: 5px;
-                    width: auto;
-                    text-align: right;
-                    float: right;
-                    color: #1d1b1b;
-                    .fa{
-                        margin-left: 5px;
-                        float: right;
-                        padding-top: 2px;
-                    }
-                    .arrow{
-                        margin-left: 25px;
-                        // right: 15px;
-                        cursor: pointer;
-                        float: right;
-                    }
-                }
-            }
-            .last-row{
-                border: none;
-            }
-            .communities-row{
-                border-bottom: 1px solid #e4e4e4;
-                height: 50px;
-                padding: 5px 15px 5px 5px;
-                .com-content{
-                    width: 90%;
-                    float: left;
-                    .zipcode{
-                        font-family: "ProximaNovabold";
-                        font-size: 16px;
-                        color: #1d1b1b;
-                        display: block;
-                        margin-bottom: 0;
-                        cursor: pointer;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        width: 280px;
-                    }
-                    .subtext{
-                        display: block;
-                        color: #1d1b1b;
-                        font-size: 14px;
-                        margin-bottom: 0;
-                        line-height: 14px;
-                        span{
-                            color: #5888ac;
-                            cursor: pointer;
-                            &:before{
-                                content: "#";
-                            }
-                        }
-                    }
-                }
-                .arrow{
-                    width: 1%;
-                    float: right;
-                    margin-left: 2px;
-                    padding-top: 10px;
                 }
             }
         }

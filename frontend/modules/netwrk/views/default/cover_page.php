@@ -7,7 +7,7 @@
     <div class="input-group form-group">
         <button class="btn btn-primary btn-lg share-location-btn">Share your location to see whats around you</button>
     </div>
-    <p>Or</p>
+    <p class="or-text">Or</p>
     <div class="input-group" id="inputGroup">
         <input type="text" class="form-control cover-input" id="cv-location" placeholder="Enter your city or zip code to see local news.">
         <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>

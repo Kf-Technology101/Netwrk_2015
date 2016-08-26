@@ -237,16 +237,16 @@ var CoverPage = {
 						lng: position.coords.longitude
 					};
 					console.log(pos);
-					//CoverPage.findCurrentZip(pos.lat, pos.lng);
-					//todo: remove avon lat and lng
-					var tempLat = 39.9559,
+					CoverPage.findCurrentZip(pos.lat, pos.lng);
+					//on local test
+					/*var tempLat = 39.9559,
 						tempLng = -85.9601;
-					CoverPage.findCurrentZip(tempLat, tempLng);
+					CoverPage.findCurrentZip(tempLat, tempLng);*/
 				},
 				function(error) {
 					console.log(error);
-					callback = null;
-					CoverPage.handle_geolocation_error(error, callback)
+					var callback = CoverPage.hideShareLocationButton;
+					CoverPage.handle_geolocation_error(error, callback);
 				}, {
 					enableHighAccuracy: false,
 					timeout : 50000
@@ -313,21 +313,39 @@ var CoverPage = {
 		{
 			case error.PERMISSION_DENIED:
 				console.log('Geo location PERMISSION_DENIED');
+				if($.isFunction(callback)){
+					callback();
+				}
 				break;
 
 			case error.POSITION_UNAVAILABLE:
 				console.log('Geo location POSITION_UNAVAILABLE');
+				if($.isFunction(callback)){
+					callback();
+				}
 				break;
 
 			case error.TIMEOUT:
 				/*alert('Geo location timeout');*/
 				console.log('Geo location timeout');
+				if($.isFunction(callback)){
+					callback();
+				}
 				break;
 
 			default:
 				/*alert('Geo location unknown error');*/
 				console.log('Geo location unknown error');
+				if($.isFunction(callback)){
+					callback();
+				}
 				break;
 		}
+	},
+	hideShareLocationButton: function() {
+		var btn = $('.share-location-btn', CoverPage.parent);
+		btn.hide();
+		$('.or-text', CoverPage.parent).hide();
+		$('#cv-location').focus();
 	}
 }
