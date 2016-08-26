@@ -369,7 +369,14 @@ var LandingPage = {
 					//LandingPage.show_landing_page();
 					LandingPage.GetDataTopLanding();
 					// Display chat inbox
-					// ChatInbox.initialize();
+					//ChatInbox.initialize();
+					if(sessionStorage.cover_input == 1){
+						sessionStorage.cover_input = 0;
+						// Show netwrk news section open
+					} else {
+						//todo: show area slider
+						Common.showAreaSlider();
+					}
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
 				}
 			});

@@ -10,13 +10,16 @@ var CoverPage = {
 	result:'.cover-result-search',
 	result_data:'',
 	initialize: function(){
+		var height = $(window).height();
+		$('#cover-page').css('height',height);
 		Common.hideLoader();
 		CoverPage.getObject();
 		CoverPage.hiddenMenuTop();
 		CoverPage.onClickKey();
 		CoverPage.onEnterZipcode();
 		CoverPage.hiddenError();
-		//CoverPage.OnKeyPress();
+		CoverPage.OnKeyPress();
+		CoverPage.onClickShareLocation();
 		if(isMobile){
 			$("body").css('background', '#fff');
 			$("body").find('#btn_my_location').addClass('hide');
@@ -77,7 +80,7 @@ var CoverPage = {
 			e.preventDefault();
 			e.stopPropagation();
 
-			$('#cv-password').val($(e.currentTarget).attr('data-value'));
+			$('#cv-location').val($(e.currentTarget).attr('data-value'));
 			$(CoverPage.result).hide();
 		});
 	},
@@ -93,7 +96,7 @@ var CoverPage = {
 	getObject: function(){
 		CoverPage.btn = $(CoverPage.parent).find(".input-group-addon");
 		CoverPage.err = $(CoverPage.parent).find(".error");
-		CoverPage.zcode = $(CoverPage.parent).find("#cv-password");
+		CoverPage.zcode = $(CoverPage.parent).find("#cv-location");
 	},
 
 	hiddenMenuTop: function(){
@@ -115,16 +118,14 @@ var CoverPage = {
 		var target = CoverPage.btn;
 		target.unbind();
 		target.on("click", function(e){
-			
 			var zcode = CoverPage.zcode;
-
 			console.log(zcode.val());
-			/*if(!isNaN(zcode.val())) {
-				// var res = /^\d{5}(-\d{4})?$/.test(zcode.val());*/
+			if(!isNaN(zcode.val())) {
+				var res = /^\d{5}(-\d{4})?$/.test(zcode.val());
 				CoverPage.checkZipCode(zcode.val());
-			/*} else {
+			} else {
 				CoverPage.checkCity(zcode.val());
-			}*/
+			}
 
 			e.preventDefault();
 		});
@@ -158,20 +159,22 @@ var CoverPage = {
 	},
 
 	checkZipCode: function(zipcode){
-		var arr = [46037,'46037',44115,'44115',46040,'46040'];
+		//var arr = [46037,'46037',44115,'44115',46040,'46040'];
 
-		if(jQuery.inArray( zipcode, arr ) > -1){
+		//if(jQuery.inArray( zipcode, arr ) > -1){
 			$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
 				var params = data;
 				Ajax.set_cover_cookie(params).then(function(data){
+					//console.log(data);
+					sessionStorage.cover_input = 1;
 					window.location.href = baseUrl; //+ "/netwrk/default/home";
 				});
 			}).fail(function(jqXHR) {
 				CoverPage.showError();
 			});
-		} else {
+		/*} else {
 			CoverPage.showError();
-		}
+		}*/
 	},
 
 	checkCity: function(zipcode){
@@ -210,6 +213,7 @@ var CoverPage = {
 					};
 
 					Ajax.set_cover_cookie(postParams).then(function(data){
+						sessionStorage.cover_input = 1;
 						window.location.href = baseUrl; //+ "/netwrk/default/home";
 					});
 				} else {
@@ -221,5 +225,127 @@ var CoverPage = {
 		}).fail(function(jqXHR) {
 			CoverPage.showError();
 		});
+	},
+	onClickShareLocation: function () {
+		var btn = $('.share-location-btn', CoverPage.parent);
+		btn.unbind();
+		btn.on('click',function(){
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					console.log(pos);
+					CoverPage.findCurrentZip(pos.lat, pos.lng);
+					//on local test
+					/*var tempLat = 39.9559,
+						tempLng = -85.9601;
+					CoverPage.findCurrentZip(tempLat, tempLng);*/
+				},
+				function(error) {
+					console.log(error);
+					var callback = CoverPage.hideShareLocationButton;
+					CoverPage.handle_geolocation_error(error, callback);
+				}, {
+					enableHighAccuracy: false,
+					timeout : 50000
+				}
+			);
+		});
+	},
+	findCurrentZip: function(lat, lng) {
+		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
+			var params = data,
+				state = '',
+				stateAbbr = '',
+				country = '',
+				zip = '';
+
+			if(typeof params.results[0] != 'undefined') {
+				var len = params.results[0].address_components.length;
+
+				for (var i = 0; i < len; i++) {
+					if (params.results[0].address_components[i].types[0] == 'country') {
+						country = data.results[0].address_components[i].short_name;
+					}
+
+					if (params.results[0].address_components[i].types[0] == 'administrative_area_level_1') {
+						state = data.results[0].address_components[i].long_name;
+						stateAbbr = data.results[0].address_components[i].short_name;
+					}
+
+					if (data.results[0].address_components[i].types[0] == 'postal_code') {
+						zip = data.results[0].address_components[i].long_name;
+					}
+				}
+
+				if (country == 'US') {
+					var postParams = {
+						'post code': zip,
+						'country': 'United States',
+						'country abbreviation': country,
+						'places': [{
+							'place name': params.results[0].address_components[0].long_name,
+							'state': state,
+							'state abbreviation': stateAbbr,
+							'latitude': params.results[0].geometry.location.lat,
+							'longitude': params.results[0].geometry.location.lng
+						}]
+					};
+
+					console.log(postParams);
+					Ajax.set_cover_cookie(postParams).then(function(data){
+						window.location.href = baseUrl; //+ "/netwrk/default/home";
+					});
+				} else {
+					CoverPage.showError();
+				}
+			} else {
+				CoverPage.showError();
+			}
+		}).fail(function(jqXHR) {
+			CoverPage.showError();
+		});
+	},
+	handle_geolocation_error: function(error, callback) {
+		switch(error.code)
+		{
+			case error.PERMISSION_DENIED:
+				console.log('Geo location PERMISSION_DENIED');
+				if($.isFunction(callback)){
+					callback();
+				}
+				break;
+
+			case error.POSITION_UNAVAILABLE:
+				console.log('Geo location POSITION_UNAVAILABLE');
+				if($.isFunction(callback)){
+					callback();
+				}
+				break;
+
+			case error.TIMEOUT:
+				/*alert('Geo location timeout');*/
+				console.log('Geo location timeout');
+				if($.isFunction(callback)){
+					callback();
+				}
+				break;
+
+			default:
+				/*alert('Geo location unknown error');*/
+				console.log('Geo location unknown error');
+				if($.isFunction(callback)){
+					callback();
+				}
+				break;
+		}
+	},
+	hideShareLocationButton: function() {
+		var btn = $('.share-location-btn', CoverPage.parent);
+		btn.hide();
+		$('.or-text', CoverPage.parent).hide();
+		$('#cv-location').focus();
 	}
 }

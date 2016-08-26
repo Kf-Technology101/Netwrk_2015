@@ -517,5 +517,82 @@ var Common = {
                 }
             });
         });
-    }
+    },
+    showAreaSlider: function() {
+        console.log('show area slider');
+
+        var target = '#areaNews',
+            contexts = '';
+
+        if($(target).css('left') == '0px'){
+            $(target).animate({
+                "left": "-400px"
+            }, 500);
+        } else {
+            $(target).animate({
+                "left": "0px"
+            }, 500);
+        }
+
+        Common.CustomScrollBar($(target));
+        Common.onShowAreaSlider();
+    },
+    onShowAreaSlider: function() {
+        var cityParams = {'zip_code':zipCode, 'office_type': 'social'};
+        console.log(cityParams);
+        Ajax.get_city_by_zipcode(cityParams).then(function(data) {
+            var json = $.parseJSON(data);
+            var cityId = json[0].id;
+            console.log(cityId);
+            if(json.length > 0) {
+                Common.getAreaFeeds(cityId);
+            }
+        });
+    },
+    getAreaFeeds: function(cityId) {
+        var parent = $('#areaNews').find('#area_tab_feed'),
+            cityname = $('#areaNews').find('.title_page');
+
+        parent.show();
+        var params = {'city': cityId,'zipcode': null, 'filter': 'recent','size': 30,'page':1};
+        Ajax.show_feed(params).then(function(data){
+            console.log('In show_feed');
+            parent.html('');
+            if(!isMobile){
+                Common.getTemplateModal(cityname,data);
+            }
+            parent.scrollTop(0);
+            Common.getTemplateFeed(parent,data);
+            Common.getTemplateHistory(parent,data);
+            Topic.OnClickPostFeed();
+            Topic.OnClickTopicFeed();
+        });
+    },
+    getTemplateModal: function(parent,data){
+        var self = this;
+        var json = $.parseJSON(data);
+        var list_template = _.template($( "#city_name" ).html());
+        var append_html = '';
+        append_html = list_template({city: json.city, office_type: json.office_type});
+        Topic.data.city_name = json.city;
+        parent.html(append_html);
+    },
+    getTemplateFeed: function(parent,data){
+        var json = $.parseJSON(data);
+        if(json.feed.length > 0){
+            parent.find('.no-data').hide();
+            var list_template = _.template($( "#area_feed_list" ).html());
+            var append_html = list_template({feed: json});
+            parent.append(append_html);
+        }
+    },
+    getTemplateHistory: function(parent,data){
+        var json = $.parseJSON(data);
+        var target = parent.find('.top-feed .top-feed-content');
+
+        var list_template = _.template($( "#area_top_feed" ).html());
+        var append_html = list_template({feed: json});
+
+        target.append(append_html);
+    },
 };

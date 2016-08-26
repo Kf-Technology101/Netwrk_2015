@@ -119,6 +119,7 @@ $cookies = Yii::$app->request->cookies;
 <?= $this->render('partial/netwrk_navigation');?>
 
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/join_home_confirmation_modal.php');?>
+<?= $this->render('partial/area_news_slider');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
 <script src="/js/lib/richmarker-compiled.js"></script>
