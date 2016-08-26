@@ -85,6 +85,10 @@ var LandingPage = {
 						LandingPage.show_landing_page();
 					}
 				}
+
+				if(sessionStorage.cover_input == 1){
+					LandingPage.show_landing_page();
+				}
 			}
 		});
 	},
@@ -354,7 +358,7 @@ var LandingPage = {
 					// Display chat inbox
 					//ChatInbox.initialize();
 					if(sessionStorage.cover_input == 1){
-						sessionStorage.cover_input = 0;
+						//sessionStorage.cover_input = 0;
 						// Show netwrk news section open
 						LandingPage.GetDataTopLanding();
 					} else {
