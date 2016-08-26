@@ -86,8 +86,8 @@ var LandingPage = {
 					}
 				}
 
-				if(sessionStorage.cover_input == 1){
-					sessionStorage.cover_input = 0;
+				if(sessionStorage.netwrk_news == 1){
+					sessionStorage.netwrk_news = 0;
 					LandingPage.show_landing_page();
 				}
 			}
@@ -358,8 +358,10 @@ var LandingPage = {
 					//LandingPage.GetDataTopLanding();
 					// Display chat inbox
 					//ChatInbox.initialize();
+
 					if(sessionStorage.cover_input == 1){
-						//sessionStorage.cover_input = 0;
+						sessionStorage.cover_input = 0;
+						sessionStorage.netwrk_news = 1;
 						// Show netwrk news section open
 						LandingPage.GetDataTopLanding();
 					} else {
