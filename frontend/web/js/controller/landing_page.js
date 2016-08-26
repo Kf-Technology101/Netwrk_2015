@@ -389,17 +389,17 @@ var LandingPage = {
 					//LandingPage.GetDataTopLanding();
 					// Display chat inbox
 					//ChatInbox.initialize();
-
-					if(sessionStorage.cover_input == 1){
-						sessionStorage.cover_input = 0;
-						sessionStorage.netwrk_news = 1;
-						// Show netwrk news section open
-						LandingPage.GetDataTopLanding();
-					} else {
-						//todo: show area slider
-						Common.showAreaSlider();
-					}
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
+				}
+
+				if(sessionStorage.cover_input == 1){
+					sessionStorage.cover_input = 0;
+					sessionStorage.netwrk_news = 1;
+					// Show netwrk news section open
+					LandingPage.GetDataTopLanding();
+				} else {
+					//todo: show area slider
+					Common.showAreaSlider();
 				}
 			});
 
