@@ -60,10 +60,10 @@ var ChatInbox = {
                 $(this).animate({
                     'right': right_now
                 }, 500);
-            });*/
+            });
 
 			ChatInbox.ActiveResponsiveChatInbox();
-			ChatInbox.onClickChat = 1;
+			ChatInbox.onClickChat = 1;*/
 		} else {
 			$(ChatInbox.chat_inbox).animate({
 				"left": ChatInbox.list_chat_post_right_hidden
@@ -74,10 +74,10 @@ var ChatInbox = {
                 $(this).animate({
                     'right': right_now
                 }, 500);
-            });*/
+            });
 
 			ChatInbox.DeactiveResponsiveChatInbox();
-			ChatInbox.onClickChat = 0;
+			ChatInbox.onClickChat = 0;*/
 		}
 	},
 

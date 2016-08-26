@@ -23,11 +23,15 @@ var Default ={
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
             Default.onClickNavigationIcon();
-            LandingPage.GetDataTopLanding();
-            Default.onClickNetwrkNews();
-            Default.getUserFavorites();
+            if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
+                LandingPage.GetDataTopLanding();
+                Default.onClickNetwrkNews();
+                Default.getUserFavorites();
+            }
         }
-        Default.SetAvatarUserDropdown();
+        if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
+            Default.SetAvatarUserDropdown();
+        }
         // Default.ShowLandingPage();
 
         if(typeof isCoverPageVisited !== 'undefined'){
