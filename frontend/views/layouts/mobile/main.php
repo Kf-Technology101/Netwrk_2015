@@ -172,15 +172,11 @@ if (isset($cookies["isCoverPageVisited"])) {
               $near_popover = '';
             }
           ?>
-<<<<<<< HEAD
-          <button id="btn_my_location" type="button" class="btn btn-default">
+          <!--<button id="btn_my_location" type="button" class="btn btn-default">
             <i class="navigation-icon fa fa-plus"></i>
             <div class="navigation-text">Build</div>
           </button>
-          <div class="<?php echo $near_class;?> <?php echo $near_popover_class;?>"
-=======
-          <!--<div class="<?php /*echo $near_class;*/?> <?php /*echo $near_popover_class;*/?>"
->>>>>>> f0ab28caa469b8777809e3a163655e0ab5b59421
+          <div class="<?php /*echo $near_class;*/?> <?php /*echo $near_popover_class;*/?>"
                data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                data-placement="top" data-content="<?php /*echo $near_popover; */?>">
             <button type="button" class="btn-explore-location btn-active">
@@ -192,32 +188,20 @@ if (isset($cookies["isCoverPageVisited"])) {
               <div class="navigation-text">Near</div>
             </button>
           </div>
-<<<<<<< HEAD
-=======
-          <?php /*if (Yii::$app->user->isGuest):*/?>
-            <a href="<?php /*echo Url::base(true); */?>/netwrk/user/login" type="button" class="btn btn-default">
-              <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
-              <div class="navigation-text">Login</div>
-            </a>
-          <?php /*endif; */?>
->>>>>>> f0ab28caa469b8777809e3a163655e0ab5b59421
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-meet"></i>
           </button>
           <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-line"></i>
             <div class="navigation-text"><span class='notify disable'>0</span>Lines</div>
-<<<<<<< HEAD
           </button>
-          <?php /*if (Yii::$app->user->isGuest):*/?><!--
+          <?php /*if (Yii::$app->user->isGuest):*/?>
             <a href="<?php /*echo Url::base(true); */?>/netwrk/user/login" type="button" class="btn btn-default">
               <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
               <div class="navigation-text">Login</div>
             </a>
-          --><?php /*endif; */?>
-=======
+          <?php /*endif; */?>
           </button>-->
->>>>>>> f0ab28caa469b8777809e3a163655e0ab5b59421
         </div>
       </div>
     </section>
