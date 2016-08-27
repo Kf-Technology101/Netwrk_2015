@@ -13,11 +13,11 @@ var LandingPage = {
 			LandingPage.SetUrl();
 			LandingPage.OnClickMeetLandingMobile();
 			$('.navbar-fixed-bottom').hide();
-			/*if(welcomePage == 'true') {
+			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
 				LandingPage.showLandingWelcome();
-			}*/
+			}
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();

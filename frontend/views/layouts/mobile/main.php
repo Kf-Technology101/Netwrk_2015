@@ -224,6 +224,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       </div>
   </footer> -->
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
+  <?= $this->render('@frontend/modules/netwrk/views/default/partial/area_news_slider');?>
   <?php $this->endBody() ?>
 </body>
 <script type="text/javascript">
