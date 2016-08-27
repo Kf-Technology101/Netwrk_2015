@@ -198,6 +198,7 @@ if (isset($cookies["isCoverPageVisited"])) {
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	    ]) ?>
 	    <?= $content ?>
+        <?= $this->render('@frontend/modules/netwrk/views/default/partial/area_news_slider');?>
     </div>
 
     <section class="btn-meet-mobile-wrapper text-center">
@@ -224,7 +225,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       </div>
   </footer> -->
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
-  <?= $this->render('@frontend/modules/netwrk/views/default/partial/area_news_slider');?>
+
   <?php $this->endBody() ?>
 </body>
 <script type="text/javascript">
