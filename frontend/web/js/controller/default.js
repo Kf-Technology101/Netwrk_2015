@@ -71,13 +71,13 @@ var Default ={
 
     ShowLandingPage: function(){
         if(isMobile){
+            if(welcomePage == 'true') {
+                LandingPage.OnHideModalWelcome();
+                LandingPage.OnClickBackdropWelcome();
+                LandingPage.showLandingWelcome();
+            }
             if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
                 sessionStorage.map_zoom = 12;
-                if(welcomePage == 'true') {
-                    LandingPage.OnHideModalWelcome();
-                    LandingPage.OnClickBackdropWelcome();
-                    LandingPage.showLandingWelcome();
-                }
             } else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
                 LandingPage.initialize();
                 Default.UnsetLanding();

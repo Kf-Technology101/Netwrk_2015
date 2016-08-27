@@ -558,10 +558,8 @@ var Common = {
         Ajax.show_feed(params).then(function(data){
             console.log('In show_feed');
             parent.html('');
-            if(!isMobile){
-                Common.getTemplateModal(cityname,data);
-            }
             parent.scrollTop(0);
+            Common.getTemplateModal(cityname,data);
             Common.getTemplateFeed(parent,data);
             Common.getTemplateHistory(parent,data);
             Topic.OnClickPostFeed();
@@ -572,10 +570,10 @@ var Common = {
     getTemplateModal: function(parent,data){
         var self = this;
         var json = $.parseJSON(data);
+
         var list_template = _.template($( "#city_name" ).html());
         var append_html = '';
         append_html = list_template({city: json.city, office_type: json.office_type});
-        Topic.data.city_name = json.city;
         parent.html(append_html);
     },
     getTemplateFeed: function(parent,data){
