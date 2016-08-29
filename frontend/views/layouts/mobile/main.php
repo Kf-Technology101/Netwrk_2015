@@ -136,6 +136,10 @@ if (isset($cookies["isCoverPageVisited"])) {
               <i class="fa fa-plus"></i>
               <span>Build</span>
             </div>-->
+          <div class="btn-explore-location">
+            <i class="fa fa-globe"></i>
+            <span>Near</span>
+          </div>
     	</div>
 	</div>
     <section class="navigation-wrapper text-center">
