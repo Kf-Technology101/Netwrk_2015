@@ -35,7 +35,7 @@
                         <?php }
                         else { ?>
                             <i class="fa fa-lg fa-home"></i>
-                            Area HQ news
+                            Local news
                         <?php }
                     }
                 ?>
