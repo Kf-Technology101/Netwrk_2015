@@ -101,6 +101,51 @@
                 }
             }
         }
+        .popup-title-name,
+        .popup-title-description{
+            font-size: 14px;
+            line-height: 39px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 5px;
+            width: 100%;
+        }
+        .left-section{
+            border-right: 1px solid #fff;
+        }
+        .middle-section{
+            color: #fff;
+            float: left;
+            max-width: 40px;
+            min-width: 40px;
+            padding: 5px 5px 0;
+            width: 11%;
+            .fa {
+                font-size: 2.1em;
+            }
+        }
+        .right-section,
+        .left-section{
+            width: 44%;
+            max-width: 44%;
+            float: left;
+            color: #fff;
+        }
+        .right-section{
+            border-left: 1px solid #fff;
+            .popup-title-name{
+                .feedback-line {
+                    background: url("../../img/icon/line-icon-nav.png") no-repeat;
+                    background-size: contain;
+                    display: inline-block;
+                    height: 20px;
+                    margin: 8px 5px 8px 0;
+                    width: 20px;
+                    float: left;
+                }
+            }
+        }
     }
     .container_post_chat {
         height: auto;
