@@ -27,18 +27,26 @@
                     </div>
                 <% }else{ %>
                     <div class="popup-head-left">
-                        <span class='popup-title-name'><%= post_name %></span>
-                        <span class='popup-title-description popup-topic-trigger <%= popoverChatTopicTitle %>'
-                            data-city-name='<%= city_name %>'
-                            data-city='<%= city %>'
-                            data-value='<%= topic_id %>'
-                            data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-                            data-placement="top"
-                            data-content="<%= chatTopicTitlePopover %>">
-                            <span class="topic-title">
-                                <%= post_description %>
-                            </span>
-                        </span>
+                        <div class="left-section">
+                            <div class='popup-title-description popup-topic-trigger <%= popoverChatTopicTitle %>'
+                                  data-city-name='<%= city_name %>'
+                                  data-city='<%= city %>'
+                                  data-value='<%= topic_id %>'
+                                  data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+                                  data-placement="top"
+                                  data-content="<%= chatTopicTitlePopover %>">
+                                <span class="topic-title">
+                                    <%= post_name %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="middle-section">
+                            <i class="fa fa-align-justify"></i>
+                        </div>
+                        <div class="right-section">
+                            <div class="feedback-line"></div>
+                            <span class='popup-title-name'><%= post_description %></span>
+                        </div>
                     </div>
                 <% } %>
                 <div class="popup-head-right">
