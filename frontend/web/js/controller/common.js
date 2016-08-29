@@ -105,11 +105,12 @@ var Common = {
         });
     },
     eventClickExploreLocation: function(){
-        var target = $(Common.contexts.btnExploreLocation, Common.contexts.boxNavigation);
+        var target = $(Common.contexts.btnExploreLocation, Common.contexts.boxNavigation)
+            .add($(Common.contexts.btnExploreLocation));
         target.unbind();
         target.on('click',function(e){
             if(isMobile){
-                var btnWrapper = $(this).closest('.btn-nav-map');
+                /*var btnWrapper = $(this).closest('.btn-nav-map');
                 if(btnWrapper.hasClass('glow-btn-wrapper')) {
                     // Call ajax to set cookie
                     var params = {'object': 'nw_glow_near_btn'};
@@ -120,7 +121,7 @@ var Common = {
                             btnWrapper.removeClass('glow-btn-wrapper');
                         }
                     });
-                }
+                }*/
 
                 sessionStorage.show_landing = 1;
                 sessionStorage.show_blue_dot = 1;
