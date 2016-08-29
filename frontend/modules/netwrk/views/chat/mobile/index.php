@@ -17,30 +17,63 @@
 <div id="post_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
 <?php } ?>
     <div class="header">
-        <div class="back_page">
-            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
-        </div>
-        <div class="title_page">
-            <?php if ($post->post_type == 1 ) { ?>
-                <span class="title post-title">
-                    <span class="popup-title-name"><?= $post->title ?></span>
-                    <span class="popup-title-description chat-topic-trigger <?= $popover_chat_topic_title ?>"
-                          title="<?= $post->topic->title ?>"
-                          data-city-name="<?= $post->topic->city->name?>"
-                          data-city="<?= $post->topic->city_id?>"
-                          data-value="<?= $post->topic->id?>"
-                          data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
-                          data-placement="bottom"
-                          data-content="<?= $chat_topic_title_popover ?>">
+        <?php if ($post->post_type == 1 ) { ?>
+            <div class="left-section">
+                <div class="popup-title-description chat-topic-trigger <?= $popover_chat_topic_title ?>"
+                     title="<?= $post->topic->title ?>"
+                     data-city-name="<?= $post->topic->city->name?>"
+                     data-city="<?= $post->topic->city_id?>"
+                     data-value="<?= $post->topic->id?>"
+                     data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
+                     data-placement="bottom"
+                     data-content="<?= $chat_topic_title_popover ?>">
                         <?= $post->topic->title ?>
-                    </span>
-                </span>
-            <?php } else { ?>
+                </div>
+            </div>
+            <div class="middle-section">
+                <i class="fa fa-align-justify"></i>
+            </div>
+            <div class="right-section">
+                <div class='popup-title-name'>
+                    <div class="feedback-line"></div>
+                    <?= $post->title ?>
+                </div>
+            </div>
+        <?php } else { ?>
+            <div class="back_page">
+                <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+            </div>
+            <div class="title_page">
                 <span class="title">
                     <span class='title-user-private'><?= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; ?></span>
                 </span>
-            <?php } ?>
+            </div>
+        <?php } ?>
+
+        <!--<div class="back_page">
+            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
+        <div class="title_page">
+            <?php /*if ($post->post_type == 1 ) { */?>
+                <span class="title post-title">
+                    <span class="popup-title-name"><?/*= $post->title */?></span>
+                    <span class="popup-title-description chat-topic-trigger <?/*= $popover_chat_topic_title */?>"
+                          title="<?/*= $post->topic->title */?>"
+                          data-city-name="<?/*= $post->topic->city->name*/?>"
+                          data-city="<?/*= $post->topic->city_id*/?>"
+                          data-value="<?/*= $post->topic->id*/?>"
+                          data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
+                          data-placement="bottom"
+                          data-content="<?/*= $chat_topic_title_popover */?>">
+                        <?/*= $post->topic->title */?>
+                    </span>
+                </span>
+            <?php /*} else { */?>
+                <span class="title">
+                    <span class='title-user-private'><?/*= $user_id->user->profile->first_name.' '.$user_id->user->profile->last_name; */?></span>
+                </span>
+            <?php /*} */?>
+        </div>-->
     </div>
 
     <?php if ($post->post_type == 1) { ?>
