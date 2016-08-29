@@ -42,7 +42,7 @@
                                     <p class="title"> Line </p>
                                     <div class="input-group">
                                         <span class="input-group-addon" id="sizing-addon2">
-                                            <span class="ci-line-blue-icon"></span>
+                                            <span class="fa fa-minus"></span>
                                         </span>
                                         <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
                                     </div>
