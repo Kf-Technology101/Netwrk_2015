@@ -35,17 +35,17 @@
                                   data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                                   data-placement="top"
                                   data-content="<%= chatTopicTitlePopover %>">
-                                <span class="topic-title">
-                                    <%= post_name %>
-                                </span>
+                                <%= post_description %>
                             </div>
                         </div>
                         <div class="middle-section">
                             <i class="fa fa-align-justify"></i>
                         </div>
                         <div class="right-section">
-                            <div class="feedback-line"></div>
-                            <span class='popup-title-name'><%= post_description %></span>
+                            <div class='popup-title-name'>
+                                <div class="feedback-line"></div>
+                                <%= post_name %>
+                            </div>
                         </div>
                     </div>
                 <% } %>
