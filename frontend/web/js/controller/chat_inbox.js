@@ -347,7 +347,15 @@ var ChatInbox = {
 	OnClickHideCloseChatInboxBtn: function() {
 		var hide_chat_inbox_btn = "#hide_chat_inbox_btn";
 		$(hide_chat_inbox_btn).unbind();
-		if (isMobile) {
+
+		$(hide_chat_inbox_btn).on("click", function() {
+			var chat_inbox = $("#chat_inbox");
+			chat_inbox.animate({
+				"left": ChatInbox.list_chat_post_right_hidden
+			}, 500);
+		});
+
+		/*if (isMobile) {
 			$(hide_chat_inbox_btn).on("click", function() {
 				var previous_link = sessionStorage.url != '' ? sessionStorage.url : baseUrl ;
 				sessionStorage.url = baseUrl;
@@ -366,16 +374,16 @@ var ChatInbox = {
 					"left": ChatInbox.list_chat_post_right_hidden
 				}, 500);
 
-                /*$('.popup-box').each(function(index){
+                $('.popup-box').each(function(index){
                     var right_now = parseInt($(this).css('right'),10) - 315;
                     $(this).animate({
                         'right': right_now
                     }, 500);
-                });*/
+                });
 
 				ChatInbox.DeactiveResponsiveChatInbox();
 			});
-		}
+		}*/
 	},
 
 	GetDataListChatPost: function() {
