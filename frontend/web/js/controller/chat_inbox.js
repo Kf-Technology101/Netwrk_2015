@@ -352,7 +352,7 @@ var ChatInbox = {
 				var previous_link = sessionStorage.url != '' ? sessionStorage.url : baseUrl ;
 				sessionStorage.url = baseUrl;
 				sessionStorage.show_landing = 1;
-				if(previous_link == 'undefined'){
+				if(previous_link == 'undefined' || previous_link == undefined){
 					window.location.href = baseUrl;
 				} else {
 					window.location.href = previous_link;
