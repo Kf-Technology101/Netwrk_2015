@@ -53,17 +53,18 @@
             padding: 0 3px;
         }*/
 
+        .popup-title-name,
+        .popup-title-description {
+            font-size: 14px;
+            line-height: 36px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
+
         .left-section{
             border-right: 1px solid #fff;
-            .popup-title-description{
-                font-size: 14px;
-                line-height: 33px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                width: 82px;
-                max-width: 82px;
-            }
         }
         .middle-section{
             color: #fff;
@@ -83,23 +84,17 @@
         }
         .right-section{
             border-left: 1px solid #fff;
-            .feedback-line {
-                background: url("../../img/icon/line-icon-nav.png") no-repeat;
-                background-size: contain;
-                display: inline-block;
-                height: 20px;
-                margin: 8px 2px 8px 3px;
-                width: 20px;
-                float: left;
-            }
             .popup-title-name{
-                font-size: 14px;
-                line-height: 33px;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
                 float: left;
-                width: 59px;
+                .feedback-line {
+                    background: url("../../img/icon/line-icon-nav.png") no-repeat;
+                    background-size: contain;
+                    display: inline-block;
+                    height: 20px;
+                    margin: 8px 4px;
+                    width: 20px;
+                    float: left;
+                }
             }
         }
 
