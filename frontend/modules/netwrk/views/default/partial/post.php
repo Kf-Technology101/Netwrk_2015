@@ -144,6 +144,7 @@
                         <div class="information">
                             <span class="post_name"><%= post.title %></span>
                             <p class="post_massage"><%= post.content %></p>
+                            <div class="hidden post_topic"><%= post.topic_name%></div>
                             <!--<span class="post_chat"><i class="fa fa-comments"></i>Chat</span>-->
                         </div>
                     </div>

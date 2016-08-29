@@ -173,7 +173,7 @@ var Post ={
 				PopupChat.params.post = item_post;
 				PopupChat.params.chat_type = $(e.currentTarget).closest('.item-post-panel-body').attr('data-chat-type');
 				PopupChat.params.post_name = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_name').html();
-				PopupChat.params.post_description = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_massage').html();
+				PopupChat.params.post_description = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_topic').html();
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
 				PopupChat.initialize();
 			}
