@@ -884,7 +884,10 @@ var Topic = {
                 if(target[0].className == 'community-action pull-right un-favorite-trigger'){
                     self.closest('.community').remove();
                 }else{
-                    target.find('.favorite-status').html(json.status);
+                    if(json.status == 'Followed')
+                        target.find('.favorite-status').html('Joined');
+                    else
+                        target.find('.favorite-status').html('Join');
                 }
 
                 var cityId = json.data.city_id;
@@ -941,6 +944,8 @@ var Topic = {
         append_html = template({city: json.city, city_id: json.city_id, is_favorite: json.is_favorite});
 
         parent.html(append_html);
+
+        Topic.OnClickFavorite();
     },
 
     OnClickCreateGroup: function() {
