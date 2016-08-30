@@ -77,7 +77,52 @@ class PostController extends BaseController
         } else {
             $topic_id = $_GET['topic'];
             $topic = Topic::find()->where('id =' . $topic_id)->andWhere('status != -1')->one();
-            return $this->render($this->getIsMobile() ? 'mobile/index' : '', ['topic' => $topic, 'city' => $topic->city->id]);
+
+            // Find city post
+            if($topic->city->office_type == 'government'){
+                $city_post = Post::find()
+                    ->joinWith('topic')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+                    ->where(['topic.city_id' => $topic->city->id])
+                    ->andWhere(['not',['topic.status'=> '-1']])
+                    ->andWhere(['topic.title'=> 'Problem Solving'])
+                    ->andWhere(['topic.user_id'=> '1'])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
+                    ->one();
+            } elseif($topic->city->office_type == 'university') {
+                $city_post = Post::find()
+                    ->joinWith('topic')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+                    ->where(['topic.city_id' => $topic->city->id])
+                    ->andWhere(['not',['topic.status'=> '-1']])
+                    ->andWhere(['topic.title'=> 'How should it all be?'])
+                    ->andWhere(['topic.user_id'=> '1'])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
+                    ->one();
+            } else {
+                $city_post = Post::find()
+                    ->joinWith('topic')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+                    ->where(['topic.city_id' => $topic->city->id])
+                    ->andWhere(['not',['topic.status'=> '-1']])
+                    ->andWhere(['topic.title'=> 'Main Channel'])
+                    ->andWhere(['topic.user_id'=> '1'])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
+                    ->one();
+            }
+
+            $return = [
+                'topic' => $topic,
+                'city' => $topic->city->id,
+                'post_id' => $city_post->id,
+                'post_title' => $city_post->title,
+                'topic_title' => $city_post->topic->title
+            ];
+
+            return $this->render($this->getIsMobile() ? 'mobile/index' : '', $return);
         }
     }
 

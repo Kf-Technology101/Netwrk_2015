@@ -46,7 +46,12 @@
         </div>
         <div class="right-section">
             <div class="feedback-line"></div>
-            <span class="title">Welcome</span>
+            <span class="title" data-value="<?= $post_id ?>">
+                <span class="post-trigger">
+                    <span class="post-title"><?= $post_title ?></span>
+                    <span class="post-content hidden"><?= $topic_title ?></span>
+                </span>
+            </span>
         </div>
         <!--<div class="create_topic">
             <span><i class="fa fa-plus-circle"></i> Channel</span>

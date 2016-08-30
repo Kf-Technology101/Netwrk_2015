@@ -103,6 +103,15 @@
         <% } %>
     </span>
 </script>
+<script id="post_general_post" type="text/x-underscore-template">
+    <div class="feedback-line"></div>
+    <span class="title" data-value="<%= post_id %>">
+          <span class="post-trigger">
+              <span class="post-title"><%= post_title %></span>
+              <span class="post-content hidden"><%= topic_title %></span>
+          </span>
+      </span>
+</script>
 <script id="name_post_list" type="text/x-underscore-template" >
     <span class="title"><%= name.zipcode %> > <%= name.title %></span>
 </script>

@@ -676,6 +676,8 @@ var Post ={
 					var infomation = $('.container_post').find('.item-post-panel-body .information');
 					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
 					fix_width_post(infomation,122);
+
+					Topic.OnClickPostFeed();
 				}
 			}
 		});
@@ -736,6 +738,16 @@ var Post ={
 		var append_html = list_template({name: data});
 
 		parent.append(append_html);
+
+		// Append city general post to header
+		var json = data;
+		var general_post = $('#list_post').find('.right-section');
+		var post_template = _.template($( "#post_general_post" ).html());
+		var post_append_html = '';
+		post_append_html = post_template({post_id: json.post_id, post_title: json.post_title, topic_title: json.topic_title});
+		general_post.html(post_append_html);
+
+		Topic.OnClickPostFeed();
 	},
 
     getNameTemplate: function(parent,data){

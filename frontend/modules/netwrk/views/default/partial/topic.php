@@ -180,6 +180,15 @@
         <% } %>
     </span>
   </script>
+  <script id="general_post" type="text/x-underscore-template">
+      <div class="feedback-line"></div>
+      <span class="title" data-value="<%= post_id %>">
+          <span class="post-trigger">
+              <span class="post-title"><%= post_title %></span>
+              <span class="post-content hidden"><%= topic_title %></span>
+          </span>
+      </span>
+  </script>
   <script id="favorite_btn_template" type="text/x-underscore-template">
     <a href="javascript:" class="btn-favorite" data-object-type="<%= 'city' %>"
        data-object-id="<%= city_id %>">
