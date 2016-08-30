@@ -512,7 +512,8 @@ var Topic = {
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-post .feed-content'))
             .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
             .add($('.recentActivityPosts').find('.post'))
-            .add($('#modal_topic').find('.right-section').find('.post-trigger'));
+            .add($('#modal_topic').find('.right-section').find('.post-trigger'))
+            .add($('#show-topic').find('.right-section').find('.post-trigger'));
         target.unbind();
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().attr('data-value'),

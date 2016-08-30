@@ -402,6 +402,42 @@ class TopicController extends BaseController
                 'status'=> 1,
                 'title' => $title
                 );
+
+            // Find city post
+            if($cty->office_type == 'government'){
+                $city_post = Post::find()
+                    ->joinWith('topic')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+                    ->where(['topic.city_id' => $cty->id])
+                    ->andWhere(['not',['topic.status'=> '-1']])
+                    ->andWhere(['topic.title'=> 'Problem Solving'])
+                    ->andWhere(['topic.user_id'=> '1'])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
+                    ->one();
+            } elseif($cty->office_type == 'university') {
+                $city_post = Post::find()
+                    ->joinWith('topic')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+                    ->where(['topic.city_id' => $cty->id])
+                    ->andWhere(['not',['topic.status'=> '-1']])
+                    ->andWhere(['topic.title'=> 'How should it all be?'])
+                    ->andWhere(['topic.user_id'=> '1'])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
+                    ->one();
+            } else {
+                $city_post = Post::find()
+                    ->joinWith('topic')
+                    ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+                    ->where(['topic.city_id' => $cty->id])
+                    ->andWhere(['not',['topic.status'=> '-1']])
+                    ->andWhere(['topic.title'=> 'Main Channel'])
+                    ->andWhere(['topic.user_id'=> '1'])
+                    ->andWhere(['not',['post.status'=> '-1']])
+                    ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
+                    ->one();
+            }
         }else{
             $name = $_GET['name'];
             $zip_code = $_GET['zipcode'];
@@ -423,6 +459,9 @@ class TopicController extends BaseController
             $temp['city'] = ($cty ? $cty->zip_code : $zip_code);
             $temp['city_id'] = ($cty ? $cty->id : '');
             $temp['office_type'] = ($cty ? $cty->office_type : '');
+            $temp['post_id'] = $city_post->id;
+            $temp['post_title'] = $city_post->title;
+            $temp['topic_title'] = $city_post->topic->title;
         }
         return $this->render('mobile/index', $temp);
     }
