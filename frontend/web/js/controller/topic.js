@@ -511,7 +511,8 @@ var Topic = {
             .add($('#modal_topic').find('.feed-row.feed-post .feed-content'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-post .feed-content'))
             .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
-            .add($('.recentActivityPosts').find('.post'));
+            .add($('.recentActivityPosts').find('.post'))
+            .add($('#modal_topic').find('.right-section').find('.post-trigger'));
         target.unbind();
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().attr('data-value'),
@@ -838,6 +839,15 @@ var Topic = {
         append_html = list_template({city: json.city, office_type: json.office_type});
         Topic.data.city_name = json.city;
         parent.html(append_html);
+
+        // Append city general post to header
+        var general_post = $('#modal_topic').find('.right-section');
+        var post_template = _.template($( "#general_post" ).html());
+        var post_append_html = '';
+        post_append_html = post_template({post_id: json.post_id, post_title: json.post_title, topic_title: json.topic_title});
+        general_post.html(post_append_html);
+
+        Topic.OnClickPostFeed();
     },
 
     eventClickMeetMobile: function(){
