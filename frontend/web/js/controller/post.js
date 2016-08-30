@@ -676,6 +676,8 @@ var Post ={
 					var infomation = $('.container_post').find('.item-post-panel-body .information');
 					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
 					fix_width_post(infomation,122);
+
+					Topic.OnClickPostFeed();
 				}
 			}
 		});
