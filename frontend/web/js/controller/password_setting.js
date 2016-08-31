@@ -1,6 +1,9 @@
 var Password_Setting = {
     data:'',
     modal:'',
+    slider:'#password_setting_slider',
+    slider_hidden: "-400px",
+    isOpenPasswordSettingSlider: false,
     form_id:'#password_setting_form',
     validate:true,
     data_validate:'',
@@ -18,7 +21,14 @@ var Password_Setting = {
         Password_Setting.OnClickUpdate();
         Password_Setting.OnClickReset();
     },
+    initializeSlider: function() {
+        Password_Setting.modal = $('#modal_password_setting');
+        Password_Setting.showPasswordSettingSlider();
+        Password_Setting.onClickCloseSliderBtn();
+        Password_Setting.OnClickReset();
+        Password_Setting.OnClickUpdate();
 
+    },
     onClickBack: function(){
         var parent = Password_Setting.modal.find('.back-page span');
 
@@ -81,7 +91,7 @@ var Password_Setting = {
 
                     setTimeout(function(){
                         success_msg.addClass('hide');
-                    },600);
+                    },3000);
                 }
             });
         });
@@ -109,6 +119,66 @@ var Password_Setting = {
         });
         $('.modal-backdrop.in').click(function(e) {
             Password_Setting.modal.modal('hide');
+        });
+    },
+    showPasswordSettingSlider: function() {
+      //display password settling slider on right side
+        Password_Setting.closeOtherSlider();
+        if ($(Password_Setting.slider).css('right') == Password_Setting.slider_hidden) {
+            $(Password_Setting.slider).animate({
+                "right": "0"
+            }, 500);
+
+            Common.CustomScrollBar($('#password_setting_slider'));
+            Password_Setting.activeResponsivePasswordSettingSlider();
+        } else {
+            $(Password_Setting.slider).animate({
+                "right": Password_Setting.slider_hidden
+            }, 500);
+
+            Password_Setting.deactiveResponsivePasswordSettingSlider();
+        }
+    },
+    activeResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").addClass("responsive-profile-slider");
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '1050');
+        }
+
+        Password_Setting.isOpenPasswordSettingSlider = true;
+        $('.box-navigation').css({'left': '', 'right' : '395px'});
+        $('#btn_my_location').css({'left': '', 'right' : '335px'});
+        $('#btn_meet').css({'left': '', 'right' : '335px'});
+    },
+    deactiveResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").removeClass("responsive-profile-slider");
+
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '10000');
+        }
+
+        Password_Setting.isOpenPasswordSettingSlider = false;
+        $('.box-navigation').css({'left': '', 'right' : '75px'});
+        $('#btn_my_location').css({'left': '', 'right' : '15px'});
+        $('#btn_meet').css({'left': '', 'right' : '15px'});
+    },
+    closeOtherSlider: function() {
+        //close profile slider if it is already open
+        if(User_Profile.params.isOpenProfileSlider) {
+            User_Profile.onShowProfileSlider();
+        }
+    },
+    onClickCloseSliderBtn: function() {
+        var context = Password_Setting.slider;
+        var target = $('.slider-close-btn', context);
+        target.unbind();
+        target.click(function() {
+            console.log('slide close clicked');
+            if(Password_Setting.isOpenPasswordSettingSlider) {
+                Password_Setting.showPasswordSettingSlider();
+            }
         });
     }
 };

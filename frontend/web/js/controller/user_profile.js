@@ -108,6 +108,8 @@ var User_Profile = {
             if(User_Profile.data.status == 1){
                 User_Profile.getTemplateProfileInfo(User_Profile.profileInfo,profile_data);
                 User_Profile.editProfilePicture();
+
+                User_Profile._eventClickPasswordSetting();
             }
         });
     },
@@ -429,7 +431,7 @@ var User_Profile = {
     },
 
     _eventClickPasswordSetting: function() {
-        var target = $('#password_setting'),
+        var target = $('#password_setting','.user-details-wrapper');
             self = this;
 
         target.unbind();
@@ -438,7 +440,8 @@ var User_Profile = {
                 window.location.href = baseUrl+ "/netwrk/password-setting";
             } else {
                 $('.modal').modal('hide');
-                Password_Setting.initialize();
+                Password_Setting.initializeSlider();
+                //Password_Setting.initialize();
             }
         });
     },
@@ -972,12 +975,14 @@ var User_Profile = {
         User_Profile.ShowGroups(true);
 
         //events
+
+        User_Profile._eventClickProfileInfo();
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
-        User_Profile._eventClickProfileInfo();
     },
 
     onShowProfileSlider: function(){
+        User_Profile.closeOtherSlider();
         if ($(User_Profile.slider).css('right') == User_Profile.slider_hidden) {
             $(User_Profile.slider).animate({
                 "right": "0"
@@ -1026,33 +1031,10 @@ var User_Profile = {
         $('#btn_my_location_old').css({'left': '', 'right' : '15px'});
         $('#btn_meet').css({'left': '', 'right' : '15px'});
     },
-    onClickHideCloseProfileSlider: function() {
-        var hide_chat_inbox_btn = "#hide_chat_inbox_btn";
-        $(hide_chat_inbox_btn).unbind();
-        if (isMobile) {
-            $(hide_chat_inbox_btn).on("click", function() {
-                var previous_link = sessionStorage.url != '' ? sessionStorage.url : baseUrl ;
-                sessionStorage.url = baseUrl;
-                sessionStorage.show_landing = 1;
-                window.location.href = previous_link;
-            });
-        } else {
-            var chat_inbox = $("#chat_inbox");
-            var parent = $(chat_inbox).find('#chat_discussion ul');
-            $(hide_chat_inbox_btn).on("click", function() {
-                chat_inbox.animate({
-                    "right": ChatInbox.list_chat_post_right_hidden
-                }, 500);
-
-                $('.popup-box').each(function(index){
-                    var right_now = parseInt($(this).css('right'),10) - 315;
-                    $(this).animate({
-                        'right': right_now
-                    }, 500);
-                });
-
-                ChatInbox.DeactiveResponsiveChatInbox();
-            });
+    closeOtherSlider: function() {
+        //close profile slider if it is already open
+        if(Password_Setting.isOpenPasswordSettingSlider) {
+            Password_Setting.showPasswordSettingSlider();
         }
-    },
+    }
 };
