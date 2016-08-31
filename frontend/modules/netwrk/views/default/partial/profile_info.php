@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal modal-profile" id='modal_profile_info'>
+<!--<div class="modal modal-profile" id='modal_profile_info'>
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -38,6 +38,45 @@
         </div>
     </div>
 </div>
+</div>-->
+<div id="profile_info_slider">
+    <div class="slider-profile" id='modal_profile_info'>
+        <div class="slider-dialog">
+            <div class="slider-content">
+                <div class="slider-header">
+                    <div class="header">
+                        <div class="title-page">
+                            <span class="title">Profile info</span>
+                            <span class="slider-close-btn"><i class="fa fa-close"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-body">
+                    <div class="profile-container">
+                        <section class="heading-wrapper clearfix">
+                            <div class="heading pull-left text-center">Basic Info </div>
+                            <div class="separator-line pull-right">
+                                <hr>
+                            </div>
+                        </section>
+                        <div class="profile-basic-info clearfix">
+
+                        </div>
+
+                        <section class="heading-wrapper bio clearfix">
+                            <div class="heading pull-left text-center">Bio </div>
+                            <div class="separator-line pull-right">
+                                <hr>
+                            </div>
+                        </section>
+
+                        <div class="profile-bio">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script id="profile_basic_info" type="text/x-underscore-template">

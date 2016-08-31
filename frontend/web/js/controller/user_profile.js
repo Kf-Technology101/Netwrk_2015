@@ -471,7 +471,8 @@ var User_Profile = {
                 window.location.href = baseUrl+ "/netwrk/profile-info";
             } else {
                 $('.modal').modal('hide');
-                ProfileInfo.initialize();
+                //ProfileInfo.initialize();
+                ProfileInfo.initializeSlider();
             }
         });
     },

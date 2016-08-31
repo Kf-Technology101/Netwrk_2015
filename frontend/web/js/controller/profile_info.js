@@ -24,8 +24,12 @@ var ProfileInfo = {
     },
     state: 'Indiana',
     modal: '',
+    slider:'#profile_info_slider',
+    slider_hidden: "-400px",
+    isOpenProfileInfoSlider: false,
     profileBasicInfo: $('.profile-basic-info'),
     profileBio : $('.profile-bio'),
+
     initialize: function(){
         if(isMobile) {
             Default.SetAvatarUserDropdown();
@@ -40,7 +44,12 @@ var ProfileInfo = {
         ProfileInfo.onClickEditProfile();
         ProfileInfo.getProfileBasicInfo();
     },
-
+    initializeSlider: function() {
+        ProfileInfo.modal = $('#profile_info_slider');
+        ProfileInfo.showProfileInfoSlider();
+        ProfileInfo.onClickCloseSliderBtn();
+        ProfileInfo.getProfileBasicInfo();
+    },
     resetProfileInfo: function(){
         ProfileInfo.profileBasicInfo.html('');
         ProfileInfo.profileBio.html('');
@@ -101,6 +110,7 @@ var ProfileInfo = {
     },
 
     getTemplateProfileBasicInfo: function(parent,target,callback){
+        parent.html('');
         var template = _.template(target.html());
         var append_html = template({data: ProfileInfo.data});
         parent.append(append_html);
@@ -126,5 +136,65 @@ var ProfileInfo = {
         $('.modal-backdrop.in').click(function(e) {
             ProfileInfo.modal.modal('hide');
         });
+    },
+    showProfileInfoSlider: function() {
+        //display password settling slider on right side
+        ProfileInfo.closeOtherSlider();
+        if ($(ProfileInfo.slider).css('right') == ProfileInfo.slider_hidden) {
+            $(ProfileInfo.slider).animate({
+                "right": "0"
+            }, 500);
+
+            Common.CustomScrollBar($('#password_setting_slider'));
+            ProfileInfo.activeResponsivePasswordSettingSlider();
+        } else {
+            $(ProfileInfo.slider).animate({
+                "right": ProfileInfo.slider_hidden
+            }, 500);
+
+            ProfileInfo.deactiveResponsivePasswordSettingSlider();
+        }
+    },
+    activeResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").addClass("responsive-profile-slider");
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '1050');
+        }
+
+        ProfileInfo.isOpenProfileInfoSlider = true;
+        $('.box-navigation').css({'left': '', 'right' : '395px'});
+        $('#btn_my_location').css({'left': '', 'right' : '335px'});
+        $('#btn_meet').css({'left': '', 'right' : '335px'});
+    },
+    deactiveResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").removeClass("responsive-profile-slider");
+
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '10000');
+        }
+
+        ProfileInfo.isOpenProfileInfoSlider = false;
+        $('.box-navigation').css({'left': '', 'right' : '75px'});
+        $('#btn_my_location').css({'left': '', 'right' : '15px'});
+        $('#btn_meet').css({'left': '', 'right' : '15px'});
+    },
+    closeOtherSlider: function() {
+        //close profile slider if it is already open
+        if(User_Profile.params.isOpenProfileSlider) {
+            User_Profile.onShowProfileSlider();
+        }
+    },
+    onClickCloseSliderBtn: function() {
+        var context = ProfileInfo.slider;
+        var target = $('.slider-close-btn', context);
+        target.unbind();
+        target.click(function() {
+            if(ProfileInfo.isOpenProfileInfoSlider) {
+                ProfileInfo.showProfileInfoSlider();
+            }
+        });
     }
+
 };
