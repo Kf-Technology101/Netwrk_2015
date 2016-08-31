@@ -1,7 +1,7 @@
 <?php
     use yii\helpers\Url;
 ?>
-<div class="modal modal-profile" id='modal_profile_edit'>
+<!--<div class="modal modal-profile" id='modal_profile_edit'>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,6 +18,30 @@
                 <form class="form-profile-edit">
 
                 </form>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div id="profile_edit_slider">
+    <div class="slider-profile" id='modal_profile_edit'>
+        <div class="slider-dialog">
+            <div class="slider-content">
+                <div class="slider-header">
+                    <div class="header">
+                        <div class="title-page">
+                            <span class="title">Edit Profile</span>
+                            <span class="slider-close-btn"><i class="fa fa-close"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-body">
+                    <div class="profile-edit-wrapper">
+                        <form class="form-profile-edit">
+
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
