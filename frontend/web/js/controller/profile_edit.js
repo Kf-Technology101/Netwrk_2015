@@ -42,6 +42,9 @@ var ProfileEdit = {
     state: 'Indiana',
     country: 'United States',
     modal: '',
+    slider:'#profile_edit_slider',
+    slider_hidden: "-400px",
+    isOpenProfileEditSlider: false,
     profileEdit: $('.form-profile-edit'),
     initialize: function(){
         if(isMobile) {
@@ -54,6 +57,21 @@ var ProfileEdit = {
 
         ProfileEdit.resetProfileEdit();
         ProfileEdit.onClickBack();
+        ProfileEdit.getProfileEdit();
+        ProfileEdit.setProfileDatePicker();
+        ProfileEdit.OnChangeMaritalStatus();
+        ProfileEdit.validateZipCode();
+        ProfileEdit.onChangeInputs();
+        ProfileEdit.onClickSave();
+        ProfileEdit.setDefaultBtn();
+    },
+    initializeSlider: function() {
+        ProfileEdit.modal = $(ProfileEdit.slider);
+        ProfileEdit.showProfileEditSlider();
+        ProfileEdit.onClickCloseSliderBtn();
+
+        //initialize script after slider open
+        ProfileEdit.resetProfileEdit();
         ProfileEdit.getProfileEdit();
         ProfileEdit.setProfileDatePicker();
         ProfileEdit.OnChangeMaritalStatus();
@@ -467,14 +485,66 @@ var ProfileEdit = {
             ProfileEdit.modal.modal('hide');
         });
     },
+    showProfileEditSlider: function() {
+        //display password settling slider on right side
+        ProfileEdit.closeOtherSlider();
+        if ($(ProfileEdit.slider).css('right') == ProfileEdit.slider_hidden) {
+            $(ProfileEdit.slider).animate({
+                "right": "0"
+            }, 500);
 
+            Common.CustomScrollBar($(ProfileEdit.slider));
+            ProfileEdit.activeResponsivePasswordSettingSlider();
+        } else {
+            $(ProfileEdit.slider).animate({
+                "right": ProfileEdit.slider_hidden
+            }, 500);
 
+            ProfileEdit.deactiveResponsivePasswordSettingSlider();
+        }
+    },
+    activeResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").addClass("responsive-profile-slider");
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '1050');
+        }
 
+        ProfileEdit.isOpenProfileEditSlider = true;
+        $('.box-navigation').css({'left': '', 'right' : '395px'});
+        $('#btn_my_location').css({'left': '', 'right' : '335px'});
+        $('#btn_meet').css({'left': '', 'right' : '335px'});
+    },
+    deactiveResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").removeClass("responsive-profile-slider");
 
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '10000');
+        }
 
-
-
-
+        ProfileEdit.isOpenProfileEditSlider = false;
+        $('.box-navigation').css({'left': '', 'right' : '75px'});
+        $('#btn_my_location').css({'left': '', 'right' : '15px'});
+        $('#btn_meet').css({'left': '', 'right' : '15px'});
+    },
+    closeOtherSlider: function() {
+        //close profile slider if it is already open
+        if(User_Profile.params.isOpenProfileSlider) {
+            User_Profile.onShowProfileSlider();
+        }
+    },
+    onClickCloseSliderBtn: function() {
+        var context = ProfileEdit.slider;
+        var target = $('.slider-close-btn', context);
+        target.unbind();
+        target.click(function() {
+            console.log('in onClickCloseSliderBtn clicked');
+            if(ProfileEdit.isOpenProfileEditSlider) {
+                ProfileEdit.showProfileEditSlider();
+            }
+        });
+    }
    /* onClickEditProfile: function(){
         var parent = ProfileInfo.modal.find('.edit-profile');
 

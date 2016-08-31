@@ -476,6 +476,21 @@ var User_Profile = {
             }
         });
     },
+    _eventClickProfileEdit: function() {
+        var target = $('#my_profile_edit','.user-details-wrapper'),
+            self = this;
+
+        target.unbind();
+        target.click(function(){
+            if(isMobile){
+                window.location.href = baseUrl+ "/netwrk/profile-edit";
+            } else {
+                $('.modal').modal('hide');
+                //ProfileEdit.initialize();
+                ProfileEdit.initializeSlider();
+            }
+        });
+    },
 
     _eventClickCommunityTrigger: function(){
         var target = $('.community-modal-trigger','#favoriteCommunities').add('.community-modal-trigger','#recentCommunities');
@@ -978,6 +993,7 @@ var User_Profile = {
         //events
 
         User_Profile._eventClickProfileInfo();
+        User_Profile._eventClickProfileEdit();
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
     },
