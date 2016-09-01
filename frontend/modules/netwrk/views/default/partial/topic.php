@@ -1,8 +1,8 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal" id='modal_topic'>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+<div class="left-slider topic_slider" id='slider_topic'>
+  <!--<div class="modal-dialog">
+    <div class="modal-content">-->
+      <div class="slider-header">
           <div class="header">
             <!--<div class="back_page">
               <span><i class="fa fa-arrow-circle-left"></i> Back </span>
@@ -88,7 +88,7 @@
               </div>-->
           </div>
       </div>
-      <div class="modal-body containt">
+      <div class="slider-body containt">
           <div id="tab_feed" class="tab">
               <p class="no-data">There is no data available yet</p>
           </div>
@@ -163,8 +163,8 @@
               
           </div>
       </div>
-    </div>
-  </div>
+    <!--</div>
+  </div>-->
 </div>
   <script id="city_name" type="text/x-underscore-template">
     <span class="title">
