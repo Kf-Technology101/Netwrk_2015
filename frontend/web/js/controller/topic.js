@@ -537,7 +537,7 @@ var Topic = {
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-post .feed-content'))
             .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
             .add($('.recentActivityPosts').find('.post'))
-            .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-post .feed-content'));
+            .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-post .feed-content'))
             .add($('#modal_topic,#slider_topic').find('.header').find('.right-section').find('.post-trigger'))
             .add($('#show-topic').find('.right-section').find('.post-trigger'))
             .add($('#list_post').find('.right-section').find('.post-trigger'));
