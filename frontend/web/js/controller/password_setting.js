@@ -25,8 +25,10 @@ var Password_Setting = {
         Password_Setting.modal = $('#modal_password_setting');
         Password_Setting.showPasswordSettingSlider();
         Password_Setting.onClickCloseSliderBtn();
-        Password_Setting.OnClickReset();
+        Password_Setting.resetPage();
+        Password_Setting.onClickBack();
         Password_Setting.OnClickUpdate();
+        Password_Setting.OnClickReset();
 
     },
     onClickBack: function(){
@@ -38,7 +40,8 @@ var Password_Setting = {
                 window.location.href = baseUrl+ "/netwrk/profile";
             } else {
                 $('.modal').modal('hide');
-                User_Profile.initialize();
+                //User_Profile.initialize();
+                User_Profile.initializeSlider();
             }
         });
     },
@@ -167,7 +170,7 @@ var Password_Setting = {
     closeOtherSlider: function() {
         //close profile slider if it is already open
         if(User_Profile.params.isOpenProfileSlider) {
-            User_Profile.onShowProfileSlider();
+            User_Profile.initializeSlider();
         }
     },
     onClickCloseSliderBtn: function() {

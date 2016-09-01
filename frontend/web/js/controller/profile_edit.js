@@ -72,6 +72,7 @@ var ProfileEdit = {
 
         //initialize script after slider open
         ProfileEdit.resetProfileEdit();
+        ProfileEdit.onClickBack();
         ProfileEdit.getProfileEdit();
         ProfileEdit.setProfileDatePicker();
         ProfileEdit.OnChangeMaritalStatus();
@@ -114,7 +115,8 @@ var ProfileEdit = {
                 window.location.href = baseUrl+ "/netwrk/profile-info";
             } else {
                 $('.modal').modal('hide');
-                ProfileInfo.initialize();
+                //ProfileInfo.initialize();
+                User_Profile.initializeSlider();
             }
         });
     },
@@ -531,7 +533,7 @@ var ProfileEdit = {
     closeOtherSlider: function() {
         //close profile slider if it is already open
         if(User_Profile.params.isOpenProfileSlider) {
-            User_Profile.onShowProfileSlider();
+            User_Profile.initializeSlider();
         }
     },
     onClickCloseSliderBtn: function() {
