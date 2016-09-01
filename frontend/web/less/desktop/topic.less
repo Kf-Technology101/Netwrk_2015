@@ -1443,3 +1443,302 @@
         border-top-color: #1e88e5 !important;
     }
 }
+
+#slider_topic {
+    .slider-header {
+        padding: 0;
+        width: 100%;
+        background: #5888ac;
+        box-shadow: 0px 3px 5px #888;
+        border: none;
+        display: block;
+        .header {
+            background: #5888ac;
+            padding: 0;
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px solid #fff;
+            .title_page {
+                height: 40px;
+                float: left;
+                img{
+                    width: 25px;
+                    margin-right: 5px;
+                    margin-bottom: 5px;
+                }
+            }
+            .left-section {
+                border-right: 1px solid #fff;
+            }
+            .middle-section {
+                width: 42px;
+                float: left;
+                color: #fff;
+                padding: 5px 5px 0;
+                .fa {
+                    font-size: 2.4em;
+                }
+            }
+            .right-section,
+            .left-section {
+                width: 43%;
+                float: left;
+                .title {
+                    color: #fff;
+                    display: inherit;
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 40px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding-left: 10px;
+                }
+            }
+            .right-section {
+                border-left: 1px solid #fff;
+                .feedback-line {
+                    background: url("../../img/icon/line-icon-nav.png") no-repeat;
+                    background-size: contain;
+                    display: inline-block;
+                    height: 30px;
+                    width: 30px;
+                    float: left;
+                    margin: 3px 5px;
+                }
+                .title {
+                    .post-trigger {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    .slider-body {
+        overflow-y: auto;
+        min-height: 90%;
+        width: 100%;
+        padding: 0;
+        .tab {
+            display: none;
+            width: 100%;
+            height: auto;
+            .no-data {
+                text-align: center;
+                font-size: 16px;
+                padding-top: 20px;
+            }
+        }
+        #tab_feed {
+            width: 100%;
+            display: none;
+            .top-header {
+                margin-top: 1px;
+                height: auto;
+                background-color: #cacaca;
+                padding: 5px;
+                .lp-title {
+                    font-family: "ProximaNovaBold";
+                    font-size: 16px;
+                    margin-bottom: 0;
+                    line-height: 16px;
+                    color: #1d1b1b;
+                    width: 80%;
+                }
+                .lp-description {
+                    font-size: 14px;
+                    color: #1d1b1b;
+                    margin-bottom: 0;
+                    width: 80%;
+                }
+            }
+            .top-feed {
+                background-color: #fff;
+                .top-header {
+                    .Favorite-btn-wrap {
+                        width: 20%;
+                        height: 45px;
+                        min-width: 65px;
+                        /*border-top: 1px solid #ffffff;*/
+                        border-left: 1px solid #ffffff;
+                        cursor: pointer;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        background: #5888ac;
+                        a {
+                            &.btn-favorite {
+                                color: #ffffff;
+                                display: block;
+                                font-size: 14px;
+                                line-height: 45px;
+                                text-align: center;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+                .feed-row {
+                    border-bottom: 1px solid #e4e4e4;
+                    position: relative;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+                .feed-row.feed-topic {
+                    padding: 5px;
+                    height: 50px;
+                    .feed-content {
+                        .topic-title {
+                            font-size: 16px;
+                            color:#1d1b1b;
+                            width: 300px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: inline-block;
+                            vertical-align: middle;
+                            &:hover {
+                                color: #5da5d8;
+                            }
+                        }
+                        .topic-create-by {
+                            font-size: 13px;
+                            color: #797979;
+                            position: absolute;
+                            left: 5px;
+                            top: 27px;
+                        }
+                        .appear-day {
+                            font-size : 12px;
+                            color : #797979;
+                            position: absolute;
+                            right: 15px;
+                            top: 27px;
+                        }
+                    }
+                }
+
+                .feed-row.feed-post {
+                    padding: 5px;
+                    height: 70px;
+                    .avatar-poster {
+                        width: 40px;
+                        height: 40px;
+                        max-width: 40px;
+                        max-height: 40px;
+                        float: left;
+                        display: table;
+                        position: relative;
+                        background: #fff;
+                        border-radius: 2px;
+                        border: 1px solid #898989;
+                        .image {
+                            height: 40px;
+                            width: 40px;
+                            text-align: center;
+                            vertical-align: middle;
+                            display: table-cell;
+                            cursor: pointer;
+                            img {
+                                margin: auto;
+                                max-width: 40px;
+                                width: auto;
+                                height: auto;
+                                max-height: 40px;
+                            }
+                        }
+                    }
+                    .feed-content {
+                        .post {
+                            margin-left: 50px;
+                            width: 83%;
+                            .post-title {
+                                &::before{
+                                    content: '#';
+                                }
+                                font-size: 16px;
+                                color:#1d1b1b;
+                                font-family: "ProximaNovaSemibold";
+                                width: 100%;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                            .post-content {
+                                font-size: 13px;
+                                color: #1d1b1b;
+                                line-height: 14px;
+                                width: 100%;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+                        .post-create-by {
+                            font-size: 13px;
+                            color: #797979;
+                            position: absolute;
+                            left: 55px;
+                            top: 45px;
+                        }
+                        .appear-day {
+                            font-size : 12px;
+                            color : #797979;
+                            position: absolute;
+                            right: 15px;
+                            top: 45px;
+                        }
+                    }
+                }
+            }
+            .weather-feed-content {
+                .weather-data {
+                    border-bottom: 1px solid #e4e4e4;
+                    padding: 5px;
+                    background-color: #fff;
+                    .group-title {
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: rgb(88, 136, 172);
+                    }
+                    .weather-key {
+                        width: 120px;
+                        display: inline-block;
+                    }
+                    .weather-value {
+                        padding-left: 5px;
+                    }
+                    .left-section,
+                    .right-section {
+                        width: 100%;
+                    }
+                }
+            }
+            .job-feed-content {
+                .job-details {
+                    border-bottom: 1px solid #e4e4e4;
+                    background-color: #fff;
+                    padding: 0;
+                    .job-feed-row {
+                        height: auto;
+                        border-bottom: 1px solid #e4e4e4;
+                        padding: 5px;
+                        .job-title {
+                            font-size: 15px;
+                            font-weight: 600;
+                        }
+                        .location {
+                            font-size: 12px;
+                            color: #666;
+                        }
+                        .snippet {
+                            font-size: 12px;
+                            color: #666;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
