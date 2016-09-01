@@ -3,7 +3,7 @@
 	use yii\web\Cookie;
 	$cookies = Yii::$app->request->cookies;
 ?>
-<div id='chat_inbox' class='chat-inbox' >
+<div id='chat_inbox' class='chat-inbox left-slider'>
 	<div class="chat-inbox-wrapper">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">

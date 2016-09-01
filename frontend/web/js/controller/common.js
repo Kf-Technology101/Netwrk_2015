@@ -604,5 +604,13 @@ var Common = {
                 "left": "-400px"
             }, 500);
         });
+    },
+
+    closeAllLeftSliders: function(){
+        $('.left-slider').each(function(){
+            $(this).animate({
+                "left": "-500px"
+            }, 200);
+        });
     }
 };

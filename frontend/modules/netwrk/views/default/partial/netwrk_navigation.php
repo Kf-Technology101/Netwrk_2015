@@ -3,7 +3,7 @@
 	use yii\web\Cookie;
 	$cookies = Yii::$app->request->cookies;
 ?>
-<div id='netwrkNavigation' class='netwrk-navigation'>
+<div id='netwrkNavigation' class='netwrk-navigation left-slider'>
 	<div class="netwrk-news-trigger custom-btn btn-netwrk-news">Netwrk News</div>
 	<!--<div class="most-active-trigger custom-btn btn-most-active">Most Active</div>-->
 	<div class="your-netwrk-wrapper">
