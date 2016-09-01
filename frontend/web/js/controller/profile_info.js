@@ -46,6 +46,8 @@ var ProfileInfo = {
     },
     initializeSlider: function() {
         ProfileInfo.modal = $('#profile_info_slider');
+        ProfileInfo.resetProfileInfo();
+        ProfileInfo.onClickBack();
         ProfileInfo.showProfileInfoSlider();
         ProfileInfo.onClickCloseSliderBtn();
         ProfileInfo.getProfileBasicInfo();
@@ -64,7 +66,8 @@ var ProfileInfo = {
                 window.location.href = baseUrl+ "/netwrk/profile";
             } else {
                 $('.modal').modal('hide');
-                User_Profile.initialize();
+                //User_Profile.initialize();
+                User_Profile.initializeSlider();
             }
         });
     },
@@ -183,7 +186,7 @@ var ProfileInfo = {
     closeOtherSlider: function() {
         //close profile slider if it is already open
         if(User_Profile.params.isOpenProfileSlider) {
-            User_Profile.onShowProfileSlider();
+            User_Profile.initializeSlider();
         }
     },
     onClickCloseSliderBtn: function() {

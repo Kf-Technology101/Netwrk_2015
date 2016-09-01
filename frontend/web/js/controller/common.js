@@ -172,7 +172,7 @@ var Common = {
                 window.location.href = baseUrl + "/netwrk/profile";
             } else {
                 $('.modal').modal('hide');
-                User_Profile.onShowProfileSlider();
+                User_Profile.initializeSlider();
                 /*User_Profile.initialize();*/
             }
         });

@@ -332,14 +332,33 @@
     border: none;
     display: block;
     border-radius: 0;
+    .back-page {
+      border-radius: 4px 0 0;
+      border-right: 1px solid #fff;
+      cursor: pointer;
+      float: left;
+      height: 40px;
+      width: 90px;
+      span {
+        color: #fff;
+        display: block;
+        font-size: 18px;
+        line-height: 40px;
+        text-align: center;
+      }
+    }
     .title-page {
+      float: left;
       text-align: center;
+      color: #fff;
+      font-size: 18px;
       height: 40px;
       line-height: 40px;
-      clear: both;
+      width: 220px;
+      display: inline-block;
       .title {
         float: left;
-        width: 90%;
+        width: 80%;
         text-align: center;
         color: #fff;
         font-size: 18px;
@@ -348,9 +367,10 @@
       .slider-close-btn {
         font-size: 18px;
         height: 100%;
-        width: 10%;
+        width: 20%;
         color: #fff;
         float: left;
+        border-left: 1px solid #fff;
       }
     }
   }

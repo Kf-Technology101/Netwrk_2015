@@ -29,6 +29,9 @@
             <div class="slider-content">
                 <div class="slider-header">
                     <div class="header">
+                        <div class="back-page">
+                            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+                        </div>
                         <div class="title-page">
                             <span class="title">Edit Profile</span>
                             <span class="slider-close-btn"><i class="fa fa-close"></i></span>
@@ -61,12 +64,12 @@
     </div>
 
     <div class="form-group-wrapper clearfix">
-        <div class="form-group">
+        <div class="form-group fullwidth">
             <label for="userName">Username</label>
             <input name="user_name" type="text" class="form-control" id="userName" placeholder="Username" value="<%= data.user_name %>" disabled="disabled">
         </div>
 
-        <div class="form-group">
+        <div class="form-group fullwidth">
             <label for="email">Email</label>
             <input name="email" type="email" class="form-control" id="email" placeholder="Email"  value="<%= data.email %>" disabled="disabled">
         </div>
