@@ -87,7 +87,9 @@ var User_Profile = {
         User_Profile._eventClickSearchSetting();
         User_Profile._eventClickProfileInfo();
     },
-
+    initializeSlider: function() {
+        User_Profile.onShowProfileSlider();
+    },
     resetProfile: function(){
         User_Profile.profileInfo.html('');
     },
@@ -1014,7 +1016,6 @@ var User_Profile = {
             });
 
             User_Profile.getProfileData();
-
             User_Profile.activeResponsiveProfileSlider();
         } else {
             $(User_Profile.slider).animate({
@@ -1053,6 +1054,15 @@ var User_Profile = {
         //close profile slider if it is already open
         if(Password_Setting.isOpenPasswordSettingSlider) {
             Password_Setting.showPasswordSettingSlider();
+        }
+        if(Search_Setting.isOpenSearchSettingSlider) {
+            Search_Setting.showSearchSettingSlider();
+        }
+        if(ProfileInfo.isOpenProfileInfoSlider) {
+            ProfileInfo.showProfileInfoSlider();
+        }
+        if(ProfileEdit.isOpenProfileEditSlider) {
+            ProfileEdit.showProfileEditSlider();
         }
     }
 };

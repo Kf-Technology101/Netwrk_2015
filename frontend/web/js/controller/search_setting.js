@@ -41,6 +41,7 @@ var Search_Setting={
 
         //initialize script after slider open
         Search_Setting.resetPage();
+        Search_Setting.onClickBack();
         Search_Setting.getSearchSetting();
     },
     onClickBack: function(){
@@ -52,7 +53,8 @@ var Search_Setting={
                 window.location.href = baseUrl+ "/netwrk/profile";
             } else {
                 $('.modal').modal('hide');
-                User_Profile.initialize();
+                //User_Profile.initialize();
+                User_Profile.initializeSlider();
             }
         });
     },
@@ -315,7 +317,7 @@ var Search_Setting={
     closeOtherSlider: function() {
         //close profile slider if it is already open
         if(User_Profile.params.isOpenProfileSlider) {
-            User_Profile.onShowProfileSlider();
+            User_Profile.initializeSlider();
         }
     },
     onClickCloseSliderBtn: function() {

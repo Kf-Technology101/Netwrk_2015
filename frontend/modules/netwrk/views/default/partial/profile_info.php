@@ -45,6 +45,9 @@
             <div class="slider-content">
                 <div class="slider-header">
                     <div class="header">
+                        <div class="back-page">
+                            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+                        </div>
                         <div class="title-page">
                             <span class="title">Profile info</span>
                             <span class="slider-close-btn"><i class="fa fa-close"></i></span>
