@@ -447,7 +447,7 @@ var User_Profile = {
     },
 
     _eventClickSearchSetting: function() {
-        var target = $('#search_setting'),
+        var target = $('#search_setting','.user-details-wrapper'),
             self = this;
 
         target.unbind();
@@ -456,7 +456,8 @@ var User_Profile = {
                 window.location.href = baseUrl+ "/netwrk/search-setting";
             } else {
                 $('.modal').modal('hide');
-                Search_Setting.initialize();
+                //Search_Setting.initialize();
+                Search_Setting.initializeSlider();
             }
         });
     },

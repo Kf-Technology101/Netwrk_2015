@@ -16,6 +16,9 @@ var Search_Setting={
         total: false
     },
     modal:'',
+    slider:'#search_setting_slider',
+    slider_hidden: "-400px",
+    isOpenSearchSettingSlider: false,
     areaSlider:$('#search_slider_area'),
     ageSlider:$('#search_slider_age'),
     initialize: function(){
@@ -31,7 +34,15 @@ var Search_Setting={
         Search_Setting.onClickBack();
         Search_Setting.getSearchSetting();
     },
+    initializeSlider: function() {
+        Search_Setting.modal = $(Search_Setting.slider);
+        Search_Setting.showSearchSettingSlider();
+        Search_Setting.onClickCloseSliderBtn();
 
+        //initialize script after slider open
+        Search_Setting.resetPage();
+        Search_Setting.getSearchSetting();
+    },
     onClickBack: function(){
         var parent = Search_Setting.modal.find('.back-page span');
 
@@ -99,6 +110,7 @@ var Search_Setting={
             btn.removeClass('disable');
             btn.on('click',function(){
                 Search_Setting.initialize();
+                //Search_Setting.initializeSlider();
                 Search_Setting.setDefaultBtn();
             });
         } else {
@@ -257,4 +269,64 @@ var Search_Setting={
             Search_Setting.modal.modal('hide');
         });
     },
+    showSearchSettingSlider: function() {
+        //display password settling slider on right side
+        Search_Setting.closeOtherSlider();
+        if ($(Search_Setting.slider).css('right') == Search_Setting.slider_hidden) {
+            $(Search_Setting.slider).animate({
+                "right": "0"
+            }, 500);
+
+            Common.CustomScrollBar($(Search_Setting.slider));
+            Search_Setting.activeResponsivePasswordSettingSlider();
+        } else {
+            $(Search_Setting.slider).animate({
+                "right": Search_Setting.slider_hidden
+            }, 500);
+
+            Search_Setting.deactiveResponsivePasswordSettingSlider();
+        }
+    },
+    activeResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").addClass("responsive-profile-slider");
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '1050');
+        }
+
+        Search_Setting.isOpenSearchSettingSlider = true;
+        $('.box-navigation').css({'left': '', 'right' : '395px'});
+        $('#btn_my_location').css({'left': '', 'right' : '335px'});
+        $('#btn_meet').css({'left': '', 'right' : '335px'});
+    },
+    deactiveResponsivePasswordSettingSlider: function() {
+        var width = $( window ).width();
+        $(".modal").removeClass("responsive-profile-slider");
+
+        if (width <= 1250) {
+            $('#btn_meet').css('z-index', '10000');
+        }
+
+        Search_Setting.isOpenSearchSettingSlider = false;
+        $('.box-navigation').css({'left': '', 'right' : '75px'});
+        $('#btn_my_location').css({'left': '', 'right' : '15px'});
+        $('#btn_meet').css({'left': '', 'right' : '15px'});
+    },
+    closeOtherSlider: function() {
+        //close profile slider if it is already open
+        if(User_Profile.params.isOpenProfileSlider) {
+            User_Profile.onShowProfileSlider();
+        }
+    },
+    onClickCloseSliderBtn: function() {
+        var context = Search_Setting.slider;
+        var target = $('.slider-close-btn', context);
+        target.unbind();
+        target.click(function() {
+            console.log('in onClickCloseSliderBtn clicked');
+            if(Search_Setting.isOpenSearchSettingSlider) {
+                Search_Setting.showSearchSettingSlider();
+            }
+        });
+    }
 };
