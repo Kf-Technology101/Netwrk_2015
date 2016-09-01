@@ -42,7 +42,14 @@ var ChatInbox = {
 		$('.nav-tabs a[href="#' + tab + '"]').tab('show');
 	},
 	OnShowNetwrkUiChatInbox: function(){
-		if ($(ChatInbox.chat_inbox).css('left') == ChatInbox.list_chat_post_right_hidden) {
+		if($(ChatInbox.chat_inbox).css('left') == '100px'){
+			$(ChatInbox.chat_inbox).animate({
+				"left": ChatInbox.list_chat_post_right_hidden
+			}, 500);
+
+			ChatInbox.DeactiveResponsiveChatInbox();
+			ChatInbox.onClickChat = 0;
+		} else {
 			ChatInbox.GetDataListChatPost();
 
 			//when guest user, then display chat discussion tab.
@@ -58,17 +65,14 @@ var ChatInbox = {
 
 			ChatInbox.ActiveResponsiveChatInbox();
 			ChatInbox.onClickChat = 1;
-		} else {
-			$(ChatInbox.chat_inbox).animate({
-				"left": ChatInbox.list_chat_post_right_hidden
-			}, 500);
-
-			ChatInbox.DeactiveResponsiveChatInbox();
-			ChatInbox.onClickChat = 0;
 		}
 	},
 	OnShowListChatPost: function(){
-		if ($(ChatInbox.chat_inbox).css('left') == ChatInbox.list_chat_post_right_hidden) {
+		if($(ChatInbox.chat_inbox).css('left') == '100px'){
+			$(ChatInbox.chat_inbox).animate({
+				"left": ChatInbox.list_chat_post_right_hidden
+			}, 500);
+		} else {
 			ChatInbox.GetDataListChatPost();
 
 			//when guest user, then display chat discussion tab.
@@ -81,8 +85,19 @@ var ChatInbox = {
 			$(ChatInbox.chat_inbox).animate({
 				"left": "100px"
 			}, 500);
+		}
 
-            /*$('.popup-box').each(function(index){
+		/*if ($(ChatInbox.chat_inbox).css('left') == ChatInbox.list_chat_post_right_hidden) {
+			ChatInbox.GetDataListChatPost();
+
+			//when guest user, then display chat discussion tab.
+			if(isGuest) {
+				ChatInbox.activateTab('chat_discussion');
+			} else {
+				ChatInbox.GetDataListChatPrivate();
+			}
+
+            $('.popup-box').each(function(index){
                 var right_now = parseInt($(this).css('right'),10) + 315;
                 $(this).animate({
                     'right': right_now
@@ -90,13 +105,9 @@ var ChatInbox = {
             });
 
 			ChatInbox.ActiveResponsiveChatInbox();
-			ChatInbox.onClickChat = 1;*/
+			ChatInbox.onClickChat = 1;
 		} else {
-			$(ChatInbox.chat_inbox).animate({
-				"left": ChatInbox.list_chat_post_right_hidden
-			}, 500);
-
-            /*$('.popup-box').each(function(index){
+            $('.popup-box').each(function(index){
                 var right_now = parseInt($(this).css('right'),10) - 315;
                 $(this).animate({
                     'right': right_now
@@ -104,8 +115,8 @@ var ChatInbox = {
             });
 
 			ChatInbox.DeactiveResponsiveChatInbox();
-			ChatInbox.onClickChat = 0;*/
-		}
+			ChatInbox.onClickChat = 0;
+		}*/
 	},
 
 	CustomScrollBar: function(){

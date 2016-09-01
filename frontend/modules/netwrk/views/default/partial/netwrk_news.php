@@ -3,7 +3,7 @@
 	use yii\web\Cookie;
 	$cookies = Yii::$app->request->cookies;
 ?>
-<div id='netwrkNews' class='netwrk-news'>
+<div id='netwrkNews' class='netwrk-news left-slider'>
 	<div class="header-wrapper text-center"></div>
 	<div class="tab-wrapper">
 		<!--<ul class="nav nav-tabs" role="tablist">

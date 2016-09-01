@@ -514,5 +514,13 @@ var Common = {
                 }
             });
         });
+    },
+
+    closeAllLeftSliders: function(){
+        $('.left-slider').each(function(){
+            $(this).animate({
+                "left": "-500px"
+            }, 200);
+        });
     }
 };

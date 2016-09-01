@@ -378,18 +378,13 @@ var Topic = {
             keyboard: false
         });*/
 
-        /*if($(Topic.slider).css('left') != '0px'){
-            $(Topic.slider).animate({
-                "left": "-400px"
-            }, 500);
-        } else {*/
-            $(Topic.slider).animate({
+        $.when(Common.closeAllLeftSliders()).done(function() {
+            $.when($(Topic.slider).animate({
                 "left": "0"
-            }, 500);
-            setTimeout(function(){
+            }, 500)).done(function(){
                 Topic.OnShowModalPost();
-            },501);
-        /*}*/
+            });
+        });
     },
 
     OnShowModalPost: function(){
