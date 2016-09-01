@@ -9,17 +9,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="header">
-                    <div class="back_page">
+                    <div class="title_page left-section">
+                    </div>
+                    <div class="middle-section">
+                        <i class="fa fa-align-justify"></i>
+                    </div>
+                    <div class="right-section">
+                        <div class="feedback-line"></div>
+                        <span class="title">Welcome</span>
+                    </div>
+                    <!--<div class="back_page">
                         <span><i class="fa fa-arrow-circle-left"></i> Back </span>
                     </div>
-                    <div class="title_page"></div>
+                    <div class="title_page">
+                    </div>
                     <div class="create_post">
                         <span><i class="fa fa-plus-circle"></i> Line</span>
-                    </div>
+                    </div>-->
 
                 </div>
                 <div class="sidebar">
-                    <div class="title"></div>
+                    <div class="title_page"></div>
+                    <!--<div class="title"></div>
                     <div class="dropdown input-group">
                         <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
                         <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-sort"></i></span>
@@ -34,7 +45,7 @@
                             <td class="feed">Area Vision</td>
                             <td class="post active">Lines</td>
                         </tr>
-                    </table>
+                    </table>-->
                 </div>
             </div>
            <div class="modal-body">
@@ -78,6 +89,29 @@
             postFilterPopover = "Cycle through the line's highlights";
     <?php } ?>
 </script>
+<script id="post_city_name" type="text/x-underscore-template">
+    <span class="title">
+        <% if(name.office_type == 'university') { %>
+            <i class="fa fa-lg fa-university"></i>
+            Idea area
+        <% } else if(name.office_type == 'government') { %>
+            <i class="fa fa-lg fa-institution"></i>
+            Gov - Problem solving area
+        <% } else { %>
+            <i class="fa fa-lg fa-home"></i>
+            Area HQ
+        <% } %>
+    </span>
+</script>
+<script id="post_general_post" type="text/x-underscore-template">
+    <div class="feedback-line"></div>
+    <span class="title" data-value="<%= post_id %>">
+          <span class="post-trigger">
+              <span class="post-title"><%= post_title %></span>
+              <span class="post-content hidden"><%= topic_title %></span>
+          </span>
+      </span>
+</script>
 <script id="name_post_list" type="text/x-underscore-template" >
     <span class="title"><%= name.zipcode %> > <%= name.title %></span>
 </script>
@@ -119,6 +153,7 @@
                         <div class="information">
                             <span class="post_name"><%= post.title %></span>
                             <p class="post_massage"><%= post.content %></p>
+                            <div class="hidden post_topic"><%= post.topic_name%></div>
                             <!--<span class="post_chat"><i class="fa fa-comments"></i>Chat</span>-->
                         </div>
                     </div>

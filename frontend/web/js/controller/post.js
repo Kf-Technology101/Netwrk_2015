@@ -173,7 +173,7 @@ var Post ={
 				PopupChat.params.post = item_post;
 				PopupChat.params.chat_type = $(e.currentTarget).closest('.item-post-panel-body').attr('data-chat-type');
 				PopupChat.params.post_name = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_name').html();
-				PopupChat.params.post_description = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_massage').html();
+				PopupChat.params.post_description = $(e.currentTarget).closest('.item-post-panel-body').find('.information .post_topic').html();
 				ChatInbox.params.target_popup = $('.popup_chat_modal #popup-chat-'+PopupChat.params.post);
 				PopupChat.initialize();
 			}
@@ -356,10 +356,13 @@ var Post ={
 	},
 
 	getNameTopic: function(){
-		var name = $('#list_post').find('.header .title_page');
+		var cityName = $('#list_post').find('.header .title_page');
+		var name = $('#list_post').find('.sidebar .title_page');
+		//var name = $('#list_post').find('.header .title_page');
 		Ajax.get_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
 			Post.getNameTemplate(name,json);
+			Post.getCityNameTemplate(cityName,json);
 		});
 	},
 
@@ -594,7 +597,7 @@ var Post ={
 	},
 
 	OnclickBack: function(){
-		$('#list_post').find('.back_page span').add($('.box-navigation .btn_nav_map')).click(function () {
+		$('#list_post').find('.left-section').add($('.box-navigation .btn_nav_map')).click(function () {
         	if(isMobile){
         		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city;
         	}else{
@@ -673,6 +676,8 @@ var Post ={
 					var infomation = $('.container_post').find('.item-post-panel-body .information');
 					var wi_avatar = $($('.container_post').find('.item-post-panel-body')[0]).find('.users_avatar').width();
 					fix_width_post(infomation,122);
+
+					Topic.OnClickPostFeed();
 				}
 			}
 		});
@@ -726,10 +731,29 @@ var Post ={
         // Post.OnClickAvatarPostListDesktop();
     },
 
+	getCityNameTemplate: function(parent,data){
+		var self = this;
+		var list_template = _.template($("#post_city_name" ).html());
+		parent.html("");
+		var append_html = list_template({name: data});
+
+		parent.append(append_html);
+
+		// Append city general post to header
+		var json = data;
+		var general_post = $('#list_post').find('.right-section');
+		var post_template = _.template($( "#post_general_post" ).html());
+		var post_append_html = '';
+		post_append_html = post_template({post_id: json.post_id, post_title: json.post_title, topic_title: json.topic_title});
+		general_post.html(post_append_html);
+
+		Topic.OnClickPostFeed();
+	},
+
     getNameTemplate: function(parent,data){
         var self = this;
         var list_template = _.template($("#name_post_list" ).html());
-        $('#list_post').find('.header .title_page').html("");
+		parent.html("");
         var append_html = list_template({name: data});
 
         parent.append(append_html);

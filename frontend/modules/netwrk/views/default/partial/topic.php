@@ -1,15 +1,22 @@
 <?php use yii\helpers\Url; ?>
-<div class="modal" id='modal_topic'>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+<div class="left-slider topic_slider" id='slider_topic'>
+  <!--<div class="modal-dialog">
+    <div class="modal-content">-->
+      <div class="slider-header">
           <div class="header">
-            <div class="back_page">
+            <!--<div class="back_page">
               <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+            </div>-->
+            <!--<div class="Favorite-btn-wrap">
+            </div>-->
+            <div class="title_page left-section">
             </div>
-            <div class="Favorite-btn-wrap">
+            <div class="middle-section">
+                <i class="fa fa-align-justify"></i>
             </div>
-            <div class="title_page">
+            <div class="right-section">
+                <div class="feedback-line"></div>
+                <span class="title">Welcome</span>
             </div>
             <!--<div class="create_topic" id="create_topic">
               <span><i class="fa fa-plus-circle"></i> Create Channel</span>
@@ -18,7 +25,7 @@
                   <span><i class="fa fa-plus-circle"></i> Create Group</span>
               </div>-->
           </div>
-          <div class="sidebar">
+          <!--<div class="sidebar">-->
             <!--<div class="title"></div>-->
             <!--<div class="topics-dropdown dropdown input-group">
                 <div class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Most recent</div>
@@ -38,14 +45,14 @@
                   <li data-value="view">Most viewed</li>
               </ul>
             </div>-->
-            <table class="filter_sidebar">
+            <!--<table class="filter_sidebar">
                 <tr>
                     <td class="feed active">Area Vision</td>
                     <td class="topic">Channels</td>
                     <td class="groups">Groups</td>
                 </tr>
             </table>
-          </div>
+          </div>-->
           <div class="tab-header tab-header-topic clearfix hidden">
               <div class="tab-title">
                   <p class="tab-title-text">Topics</p>
@@ -81,7 +88,7 @@
               </div>-->
           </div>
       </div>
-      <div class="modal-body containt">
+      <div class="slider-body containt">
           <div id="tab_feed" class="tab">
               <p class="no-data">There is no data available yet</p>
           </div>
@@ -156,28 +163,40 @@
               
           </div>
       </div>
-    </div>
-  </div>
+    <!--</div>
+  </div>-->
 </div>
   <script id="city_name" type="text/x-underscore-template">
     <span class="title">
         <% if(office_type == 'university') { %>
-            Idea
+            <i class="fa fa-lg fa-university"></i>
+            Idea area news
         <% } else if(office_type == 'government') { %>
-            Gov - Problem solving
+            <i class="fa fa-lg fa-institution"></i>
+            Gov - Problem solving area news
         <% } else { %>
-            Area HQ
+            <i class="fa fa-lg fa-home"></i>
+            Local news
         <% } %>
     </span>
+  </script>
+  <script id="general_post" type="text/x-underscore-template">
+      <div class="feedback-line"></div>
+      <span class="title" data-value="<%= post_id %>">
+          <span class="post-trigger">
+              <span class="post-title"><%= post_title %></span>
+              <span class="post-content hidden"><%= topic_title %></span>
+          </span>
+      </span>
   </script>
   <script id="favorite_btn_template" type="text/x-underscore-template">
     <a href="javascript:" class="btn-favorite" data-object-type="<%= 'city' %>"
        data-object-id="<%= city_id %>">
         <span class="favorite-status">
             <% if(is_favorite == true){%>
-                Followed
+                Joined
             <% }else{ %>
-                Follow
+                Join
             <% } %>
         </span>
     </a>
@@ -302,12 +321,17 @@
   <div class="top-feed">
     <div class="top-header">
         <% if(feed.office_type == 'university') { %>
-            <p class="lp-title">Idea Center News</p>
+            <p class="lp-title">Welcome to your local Idea center</p>
+            <p class="lp-description">Idea Center News</p>
         <% } else if(feed.office_type == 'government') { %>
-            <p class="lp-title">Solution Center News</p>
+            <p class="lp-title">Welcome to your local solution center</p>
+            <p class="lp-description">Solution Center News</p>
         <% } else { %>
-            <p class="lp-title">Local News</p>
+            <p class="lp-title">Welcome to your local Community Center</p>
+            <p class="lp-description">Local News</p>
         <% } %>
+        <div class="Favorite-btn-wrap">
+        </div>
     </div>
     <div class="top-feed-content"></div>
   </div>
