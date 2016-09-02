@@ -6,6 +6,7 @@
 		    lng:''
 	  	},
 		getMaxMarker: true,
+		displayBlueDot: true,
 	  	latLng: '',
 	  	markers:[],
 		topicMarkers: [],
@@ -184,6 +185,7 @@
 		    // Map.insertLocalGovernment();
 			//Map.requestBlueDotOnMap(lat,lng,Map.map);
 			Map.requestPosition(Map.map);
+			Map.onClickMap();
 
 			// New info window for click on map to create group and topic
 			/*var createInfoWindow = Map.setCreateInfoWindow();
@@ -268,7 +270,26 @@
 				}, 500);
 			}
 	  	},
-
+		eventMapClick: function(event) {
+			if(Map.displayBlueDot) {
+				console.log( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
+				var lat = event.latLng.lat(),
+					lng = event.latLng.lng();
+				Map.requestBlueDotOnMap(lat, lng, Map.map);
+			} else {
+				Map.displayBlueDot = true;
+			}
+		},
+		onClickMap: function() {
+			//add map listener
+			google.maps.event.addListener(Map.map, 'click', function(event) {
+				Map.eventMapClick(event);
+			});
+			//on click of blue shaded area on map (geoJson data)
+			Map.map.data.addListener('click', function(event) {
+				Map.eventMapClick(event);
+			});
+		},
 	  	mapBoundaries:function(map){
 		    var tskey = "b26fdd409c" ;
 		    var imgMapType = new google.maps.ImageMapType({
@@ -581,6 +602,7 @@
 
 			google.maps.event.addListener(marker, 'click', (function(marker){
 		        return function(){
+					Map.displayBlueDot = false;
 		        	sessionStorage.lat = marker.position.lat();
 		        	sessionStorage.lng = marker.position.lng();
 		        	if(!isMobile){
@@ -1222,8 +1244,9 @@
 			//Map.show_marker_group_loc(map);
 			if (lat != 'undefined' && lng != 'undefined') {
 				console.log('in if blue dot');
-				map.setCenter(new google.maps.LatLng(lat, lng));
-				if (Map.center_marker != null) Map.center_marker.setMap(null);
+				//map.setCenter(new google.maps.LatLng(lat, lng));
+				Map.removeBlueDot();
+				//if (Map.center_marker != null) Map.center_marker.setMap(null);
 
 				//display blue dot on map from lat and lon.
 				var blueDotInfoWindow = Map.showBlueDot(lat, lng, map);
@@ -1402,9 +1425,13 @@
 
 			return infowindow;
 		},
-
+		removeBlueDot: function() {
+			if (Map.center_marker != null) {
+				Map.center_marker.setMap(null);
+			}
+		},
 		showBlueDot: function(lat, lng, map) {
-			var img = '/img/icon/pale-blue-dot.png';
+			var img = '/img/icon/pale-blue-line-icon-dot.png';
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(lat, lng),
 				icon: img,
@@ -1417,7 +1444,7 @@
 			//google.maps.event.clearListeners(marker, 'dragstart');
 			google.maps.event.addListener(marker, 'dragstart', function(e) {
 				console.log('in dragstart');
-				marker.setIcon('/img/icon/pale-blue-dot-bg.png');
+				marker.setIcon('/img/icon/pale-blue-line-icon-dot-bg.png');
 				$("#blueDotLocation span").eq(0).html('Requesting...');
 				google.maps.event.clearListeners(Map.center_marker, 'mouseout');
 			});
@@ -1425,7 +1452,7 @@
 			//google.maps.event.clearListeners(marker, 'dragend');
 			google.maps.event.addListener(marker, 'dragend', function(e) {
 				console.log('in dragend');
-				marker.setIcon('/img/icon/pale-blue-dot.png');
+				marker.setIcon('/img/icon/pale-blue-line-icon-dot.png');
 				Map.findCurrentZip(marker.getPosition().lat(),
 					marker.getPosition().lng());
 
@@ -1489,13 +1516,13 @@
 			}
 
 			// Show hide double click line and create buttons
-			if(zoom >= Map.blueDotLocation.zoomMiddle) {
+			/*if(zoom >= Map.blueDotLocation.zoomMiddle) {
 				$('.cgm-container').find('.create-section-wrapper').removeClass('hide');
 				$('.cgm-container').find('.double-click').addClass('hide');
 			} else {
 				$('.cgm-container').find('.create-section-wrapper').addClass('hide');
 				$('.cgm-container').find('.double-click').removeClass('hide');
-			}
+			}*/
 
 			// Show hide click to zoom and build line
 			if(zoom >= Map.blueDotLocation.zoomMiddle && zoom < Map.blueDotLocation.zoomLast) {
@@ -1577,6 +1604,7 @@
 			});
 
 			google.maps.event.addListener(map, 'dragend', function(){
+				Map.removeBlueDot();
 				Map.getMaxMarker = true;
 			});
 
