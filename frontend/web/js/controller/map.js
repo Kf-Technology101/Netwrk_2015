@@ -1722,11 +1722,11 @@
 					//topic marker should be small in zoom 13 to 16. And big in zoom 16 - 18.
 					if (currentZoom >= 13 && currentZoom < 16 ) {
 						var markerContent = "<div class='marker marker-topic-sm'></div>"+
-							"<span class='marker-icon marker-social'>"+
+							"<span class='marker-icon marker-group-icon'>"+
 							"</span><div class=''></div>";
 					} else if (currentZoom >= 16 && currentZoom <= 18 ){
 						var markerContent = "<div class='marker marker-group'></div>"+
-						 "<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>"+
+						 "<span class='marker-icon marker-group-icon'><i class='fa fa-lg fa-users'></i>"+
 						 "</span><div class=''></div>";
 					} else {
 						markerContent = '';
