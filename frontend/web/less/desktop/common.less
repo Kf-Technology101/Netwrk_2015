@@ -103,8 +103,19 @@
             }
         }
     }
+    &.left {
+        .arrow {
+            &:after {
+                border-left-color: #5da5d8 !important;
+            }
+        }
+    }
     &.post-filter-popover {
         left: 0 !important;
+        position: sticky;
+    }
+    &.post-feedback-popover {
+        width: 220px;
     }
 }
 
