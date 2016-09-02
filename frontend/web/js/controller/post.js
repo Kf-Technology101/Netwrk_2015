@@ -330,17 +330,19 @@ var Post ={
             keyboard: false
         });*/
 
-		$.when(Common.closeAllLeftSliders()).done(function() {
-			$.when($(Post.slider).animate({
-				"left": "0"
-			}, 500)).done(function(){
-				Post.GetDataOnTab();
-				Post.getStreamData();
-				Ajax.update_view_topic({topic: Post.params.topic});
-				Post.OnclickBack();
-				Post.OnNetwrkLogo();
+		if ($(Post.slider).css('left') != '0px') {
+			$.when(Common.closeAllLeftSliders()).done(function () {
+				$.when($(Post.slider).animate({
+					"left": "0"
+				}, 500)).done(function () {
+					Post.GetDataOnTab();
+					Post.getStreamData();
+					Ajax.update_view_topic({topic: Post.params.topic});
+					Post.OnclickBack();
+					Post.OnNetwrkLogo();
+				});
 			});
-		});
+		}
 	},
 
 	OnShowModalPost: function(){

@@ -376,13 +376,15 @@ var Topic = {
             keyboard: false
         });*/
 
-        $.when(Common.closeAllLeftSliders()).done(function() {
-            $.when($(Topic.slider).animate({
-                "left": "0"
-            }, 500)).done(function(){
-                Topic.OnShowModalPost();
+        if ($(Topic.slider).css('left') != '0px') {
+            $.when(Common.closeAllLeftSliders()).done(function () {
+                $.when($(Topic.slider).animate({
+                    "left": "0"
+                }, 500)).done(function () {
+                    Topic.OnShowModalPost();
+                });
             });
-        });
+        }
     },
 
     OnShowModalPost: function(){
