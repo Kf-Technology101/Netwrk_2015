@@ -168,7 +168,7 @@
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
 				Map.mouseOutsideInfoWindow();
-				Map.showZipBoundaries();
+				//Map.showZipBoundaries();
 				Common.hideLoader();
 
 				if(isMobile) {
@@ -1085,7 +1085,7 @@
 						Map.blueDotLocation.zipcode = zip;
 						$('#create-location-group').attr('data-zipcode', zip);
 
-						if(zip != zipCode) {
+						/*if(zip != zipCode) {
 							// Get boundaries data from zip
 							var params = {'zip_code' : zip};
 							Ajax.getSingleZipBoundaries(params).then(function(jsonData){
@@ -1113,7 +1113,7 @@
 									}
 								}
 							});
-						}
+						}*/
 						Map.getCurrentZipDiscussions();
 					} else if (data.results[0].address_components[i].types[0] == 'locality') {
 						var city = data.results[0].address_components[i].long_name;
