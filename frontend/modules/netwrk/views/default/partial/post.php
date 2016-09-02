@@ -152,7 +152,7 @@
                         </div>
                         <div class="information">
                             <span class="post_name"><%= post.title %></span>
-                            <p class="post_massage"><%= post.content %></p>
+                            <!--<p class="post_massage"><%= post.content %></p>-->
                             <p class="post_topic hide"><%= post.topic_name %></p>
                             <!--<span class="post_chat"><i class="fa fa-comments"></i>Chat</span>-->
                         </div>
