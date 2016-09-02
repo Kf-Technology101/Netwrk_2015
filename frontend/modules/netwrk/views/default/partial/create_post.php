@@ -36,7 +36,7 @@
                         <div class="post-topic-category-content">
 
                         </div>
-                        <div class="post-message">
+                        <div class="post-message hide">
                             <p class="title"> Message </p>
                             <textarea class="message" placeholder="Don't be shy! Say something!" maxlength="1024"></textarea>
                         </div>

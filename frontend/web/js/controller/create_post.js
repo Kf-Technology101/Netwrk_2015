@@ -390,6 +390,10 @@ var Create_Post={
     onChangeData: function(target,filter){
         target.unbind();
         target.on('keyup input',function(e){
+            //Copy the content of name_post textarea into message textarea
+            if(e.currentTarget.id == 'name_post_textarea') {
+                Create_Post.copyPostNameToMessage();
+            }
             if($(e.currentTarget).val().length > 0){
                 Create_Post.params[filter] = $(e.currentTarget).val();
                 Create_Post.status_change[filter] = true;
@@ -399,19 +403,28 @@ var Create_Post={
             Create_Post.onCheckStatus();
         });
     },
+    copyPostNameToMessage: function() {
+        //copy whatever entered in chat
+        var parent = $('#create_post'),
+            name_post = parent.find('.name_post'),
+            message = parent.find('.message');
 
+        message.val(name_post.val());
+        Create_Post.params['message'] = name_post.val();
+        console.log(Create_Post.params.message);
+    },
     onCheckStatus: function(){
         var status = Create_Post.status_change;
 
         //if line create from blue dot then topic is required
         if(Create_Post.params.isCreateFromBlueDot) {
-            if(status.post && status.message && status.topic){
+            if(status.post && /*status.message &&*/ status.topic){
                 status.total = true;
             }else{
                 status.total = false;
             }
         } else {
-            if(status.post && status.message){
+            if(status.post /*&& status.message*/){
                 status.total = true;
             }else{
                 status.total = false;
