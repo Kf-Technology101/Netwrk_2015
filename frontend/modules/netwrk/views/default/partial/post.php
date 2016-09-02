@@ -3,11 +3,11 @@
     use yii\web\Cookie;
     $cookies = Yii::$app->request->cookies;
 ?>
-<div class="modal" id="list_post">
+<div class="post_slider left-slider" id="slider_list_post">
     <!-- <div id="btn_meet"><img src="<?= Url::to('@web/img/icon/meet_btn.png'); ?>"/></div> -->
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
+    <!--<div class="modal-dialog">
+        <div class="modal-content">-->
+            <div class="slider-header">
                 <div class="header">
                     <div class="title_page left-section">
                     </div>
@@ -48,7 +48,7 @@
                     </table>-->
                 </div>
             </div>
-           <div class="modal-body">
+           <div class="slider-body">
                <div class="post-feedback">
                    <?= $this->render('@frontend/modules/netwrk/views/feedback/view') ?>
                </div>
@@ -69,8 +69,8 @@
                    </div>
                </div>
             </div>
-        </div>
-    </div>
+        <!--</div>
+    </div>-->
 </div>
 <script type="text/javascript">
     <?php if (isset($cookies["nw_popover_post_feedback"])) {?>
@@ -116,7 +116,7 @@
     <span class="title"><%= name.zipcode %> > <%= name.title %></span>
 </script>
 <script id="post_list" type="text/x-underscore-template" >
-    <% _.each(posts,function(post,i){ %>
+    <% _.each(posts,function(post, i){ %>
         <div class="panel panel-default panel-post">
             <div class="panel-heading" role="tab" id="heading<%= post.id %>">
                 <div class="panel-title panel-post-title">
@@ -124,12 +124,12 @@
                        data-toggle="collapse" aria-controls="collapse<%= post.id %>"
                        class="<% if(post.feedback_points < 0) { %>collapsed<%}%>">
                         <div class="post-minimized">
-                            <span class="user-name">
-                                <span class="name"><%= post.user_name %></span>
-                                <span class="feedback-img pull-right"></span>
-                            </span>
+                                <span class="user-name">
+                                    <span class="name"><%= post.user_name %></span>
+                                    <span class="feedback-img pull-right"></span>
+                                </span>
                             <span class="time"><%= post.created_at %></span>
-                            <span class="post-name"><%= post.title %></span>
+                            <!--<span class="post-name"><%= post.title %></span>-->
                             <i class="pull-right plus-icon"></i>
                         </div>
                     </a>
@@ -143,7 +143,7 @@
                                 <img src="<%= post.avatar %>">
                                 <span class="feedback-img pull-right"></span>
                                 <% if(post.meet == 0 && post.post_user_id != 1) { %>
-                                    <span class="meet-img meet-trigger meet-<%= post.post_user_id%>" data-user-id="<%= post.post_user_id%>"></span>
+                                <span class="meet-img meet-trigger meet-<%= post.post_user_id%>" data-user-id="<%= post.post_user_id%>">Connect</span>
                                 <% } %>
                             </div>
                             <!--<div class="icon_brillant" data-item="<%= post.id %>">
@@ -153,8 +153,30 @@
                         <div class="information">
                             <span class="post_name"><%= post.title %></span>
                             <p class="post_massage"><%= post.content %></p>
-                            <div class="hidden post_topic"><%= post.topic_name%></div>
+                            <p class="post_topic hide"><%= post.topic_name %></p>
                             <!--<span class="post_chat"><i class="fa fa-comments"></i>Chat</span>-->
+                        </div>
+
+                        <div class="feedback-option">
+                            <% if(isGuest){%>
+                                <div class="feedback-trigger login-trigger <% if(i == 0){%><%= popoverClassPostFeedback %><%}%>"
+                                     data-modal="Post"
+                                <% if(i == 0){%>
+                                    data-template='<div class="popover info-popover post-feedback-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+                                    data-placement="top"
+                                    data-content="<%= postFeedbackPopover %>"
+                                <% } %>>F</div>
+                            <% } else { %>
+                                <div class="feedback-trigger <% if(i == 0){%><%= popoverClassPostFeedback %><%}%>"
+                                     data-parent="#slider_list_post"
+                                     data-object="post"
+                                     data-id="<%= post.id%>"
+                                <% if(i == 0){%>
+                                    data-template='<div class="popover info-popover post-feedback-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
+                                    data-placement="top"
+                                    data-content="<%= postFeedbackPopover %>"
+                                <% } %>>F</div>
+                            <% } %>
                         </div>
                     </div>
 
@@ -171,9 +193,9 @@
                                 <div class="post-stream-heading">
                                     <span class="stream-filters pull-left">
                                         <div class="pull-left line-stream stream-trigger <% if(i == 0){%><%= popoverClassPostFilter %><%}%>"
-                                            data-post-id="<%= post.id%>"
-                                            data-type="line"
-                                            data-count="<%= post.stream_count%>"
+                                             data-post-id="<%= post.id%>"
+                                             data-type="line"
+                                             data-count="<%= post.stream_count%>"
                                             <% if(i == 0){%>
                                                 data-template='<div class="popover info-popover post-filter-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_filter" data-wrapper="popover-post-filter">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                                                 data-placement="bottom"
@@ -183,47 +205,19 @@
                                             <span class="text-right">Highlights</span>
                                         </div>
                                         <div class="pull-left like-stream stream-trigger"
-                                              data-post-id="<%= post.id%>" data-type="like" data-count="<%= post.like_feedback_count%>">
+                                             data-post-id="<%= post.id%>" data-type="like" data-count="<%= post.like_feedback_count%>">
                                             <span class="count"><%= post.like_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-1-hover.png'); ?>" />
                                         </div>
                                         <div class="pull-left fun-stream stream-trigger"
-                                              data-post-id="<%= post.id%>" data-type="fun" data-count="<%= post.fun_feedback_count%>">
+                                             data-post-id="<%= post.id%>" data-type="fun" data-count="<%= post.fun_feedback_count%>">
                                             <span class="count"><%= post.fun_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-2-hover.png'); ?>" />
                                         </div>
                                         <div class="pull-left angle-stream stream-trigger"
-                                              data-post-id="<%= post.id%>" data-type="angle" data-count="<%= post.angle_feedback_count%>">
+                                             data-post-id="<%= post.id%>" data-type="angle" data-count="<%= post.angle_feedback_count%>">
                                             <span class="count"><%= post.angle_feedback_count%></span>
                                             <img src="<?= Url::to('@web/img/icon/feedback-option-3-hover.png'); ?>" />
-                                        </div>
-                                    </span>
-                                    <span class="stream-options text-right">
-                                        <% if(isGuest){%>
-                                            <div class="pull-right respond feedback-trigger login-trigger <% if(i == 0){%><%= popoverClassPostFeedback %><%}%>"
-                                                 data-modal="Post"
-                                                 <% if(i == 0){%>
-                                                    data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-                                                    data-placement="bottom"
-                                                    data-content="<%= postFeedbackPopover %>"
-                                                 <% } %>>Feedback</div>
-                                        <% } else { %>
-                                            <div class="pull-right respond feedback-trigger <% if(i == 0){%><%= popoverClassPostFeedback %><%}%>"
-                                                data-parent="#list_post"
-                                                data-object="post"
-                                                data-id="<%= post.id%>"
-                                                <% if(i == 0){%>
-                                                    data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-                                                    data-placement="bottom"
-                                                    data-content="<%= postFeedbackPopover %>"
-                                                <%}%>>Feedback</div>
-                                        <% } %>
-                                        <div class="pull-right glow-btn-wrapper jump chat-trigger">
-                                            <div class="btn-active">Jump in</div>
-                                            <div class="btn-inactive">Jump in</div>
-                                        </div>
-                                        <div class="pull-right line">
-                                            <img src="<?= Url::to('@web/img/icon/line-icon-nav.png'); ?>" />
                                         </div>
                                     </span>
                                 </div>
