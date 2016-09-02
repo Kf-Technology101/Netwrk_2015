@@ -163,7 +163,7 @@
                                      data-modal="Post"
                                 <% if(i == 0){%>
                                     data-template='<div class="popover info-popover post-feedback-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-                                    data-placement="top"
+                                    data-placement="left"
                                     data-content="<%= postFeedbackPopover %>"
                                 <% } %>>F</div>
                             <% } else { %>
@@ -173,7 +173,7 @@
                                      data-id="<%= post.id%>"
                                 <% if(i == 0){%>
                                     data-template='<div class="popover info-popover post-feedback-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_post_feedback" data-wrapper="popover-post-feedback">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
-                                    data-placement="top"
+                                    data-placement="left"
                                     data-content="<%= postFeedbackPopover %>"
                                 <% } %>>F</div>
                             <% } %>
