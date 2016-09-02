@@ -108,9 +108,7 @@ var Topic = {
     },
 
     CustomScrollBar: function(){
-        var parent;
-
-        parent = $("#modal_topic").find('.modal-body')
+        var parent = $("#modal_topic").find('.modal-body')
                 .add($('#slider_topic').find('.slider-body'));
 
         parent.mCustomScrollbar("scrollTo",$('#tab_feed'));
