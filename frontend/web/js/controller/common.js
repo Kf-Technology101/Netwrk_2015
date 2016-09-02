@@ -221,8 +221,7 @@ var Common = {
         var target = $('.btn_nav_map_location', Common.contexts.boxNavigation);
         target.unbind();
         target.on('click', function () {
-            Create_Post.initializeSlider();
-            /*var btnWrapper = $(this).closest('.btn-nav-map');
+            var btnWrapper = $(this).closest('.btn-nav-map');
             if(btnWrapper.hasClass('glow-btn-wrapper')) {
                 // Call ajax to set cookie
                 var params = {'object': 'nw_glow_near_btn'};
@@ -237,7 +236,7 @@ var Common = {
 
             //hide all opened modal
             $('.modal').modal('hide');
-            Map.getBrowserCurrentPosition(Map.map, 'near');*/
+            Map.getBrowserCurrentPosition(Map.map, 'near');
         });
     },
 
