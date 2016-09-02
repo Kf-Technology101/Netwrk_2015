@@ -15,6 +15,9 @@ var Create_Post={
         total: false,
         topic: false
     },
+    slider: '#create_post_slider',
+    slider_hidden: '-400px',
+    isOpenCreatePostSlider: false,
 
     initialize: function(city,topic,name_city,name_topic,post_id){
         Create_Post.resetParams();
@@ -100,6 +103,7 @@ var Create_Post={
                 Create_Post.params.city_name = name_city;
             }
 
+            Create_Post.initializeSlider();
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
@@ -114,6 +118,39 @@ var Create_Post={
             Create_Post.onClickBackZipcodeBreadcrumb();
             Topic.displayPositionModal();
         }
+    },
+    initializeSlider: function() {
+        Create_Post.showCreatePostSlider();
+
+        Common.CustomScrollBar($(Create_Post.slider).find('.slider-body'));
+    },
+    showCreatePostSlider: function() {
+        $.when(Common.closeAllLeftSliders()).done(function() {
+            $.when($('#create_post_slider').animate({
+                "left": "0"
+            }, 500)).done(function(){
+                Create_Post.onEnterPostNameTextarea();
+            });
+        });
+    },
+    closeCreatePostSlider: function() {
+        $.when($('#create_post_slider').animate({
+            "left": Create_Post.slider_hidden
+        }, 500)).done(function(){
+            Create_Post.hideModalCreatePost();
+        });
+    },
+    onEnterPostNameTextarea: function() {
+        var target = $('#name_post_textarea');
+        //target.unbind();
+        target.keydown(function(e){
+            // Enter was pressed without shift key
+            if (e.keyCode == 13)
+            {
+                e.preventDefault();
+                console.log('enter key has disable for name post textarea');
+            }
+        });
     },
     showCreatePostModal: function(zipcode, lat, lng) {
         var parent = $('#create_post');
@@ -130,7 +167,7 @@ var Create_Post={
     },
     /* Display community category dropdown on Create post modal. */
     showPostCategory: function(zipcode){
-        var parent = $('#create_post');
+        var parent = $('#create_post').add('#create_post_slider');
         parent.find('.post-category-content').html('');
         parent.find('.post-topic-category-content').html('');
         var params = {'zip_code': zipcode};
@@ -317,17 +354,17 @@ var Create_Post={
         }
         Create_Post.onCheckStatus();
 
-        parent.modal({
+        /*parent.modal({
             backdrop: true,
             keyboard: false
-        }).removeAttr("style").css("display", "block");
+        }).removeAttr("style").css("display", "block");*/
     },
     onCloseModalCreatePost: function(){
         $('#create_post').on('hidden.bs.modal',function() {
             Create_Post.hideModalCreatePost();
         });
         $('.modal-backdrop.in').click(function(e) {
-            Create_Post.hideModalCreatePost()
+            Create_Post.hideModalCreatePost();
         });
     },
 
@@ -449,7 +486,8 @@ var Create_Post={
                 Create_Post.redirect();
             }else{
                 Create_Post.hideModalCreatePost();
-                Post.initialize();
+                Create_Post.closeCreatePostSlider();
+                //Post.initialize();
             }
         });
     },
@@ -523,6 +561,7 @@ var Create_Post={
                             Create_Post.redirect();
                         }else{
                             Create_Post.hideModalCreatePost();
+                            Create_Post.closeCreatePostSlider();
                             Post.params.city = Create_Post.params.city;
                             Post.params.city_name = Create_Post.params.city_name;
                             Post.params.topic = Create_Post.params.topic;
