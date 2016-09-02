@@ -463,17 +463,17 @@
 					markerContent += "<div class='marker-home'>";
 					markerContent += "<div class='btn-active'></div>";
 					markerContent += "<div class='btn-inactive'></div></div>";
-				markerContent += "<span class='marker-icon marker-home'><i class='fa fa-lg fa-home'></i>";
+				markerContent += "<span class='marker-icon marker-home'><i class='fa fa-home'></i>";
 			}
 
 			if(e.office_type == 'university') {
-				markerContent += "<span class='marker-icon marker-university'><i class='fa fa-lg fa-graduation-cap'></i>";
+				markerContent += "<span class='marker-icon marker-university'><i class='fa fa-graduation-cap'></i>";
 			} else if(e.office_type == 'government') {
-				markerContent += "<span class='marker-icon marker-government'><i class='fa fa-lg fa-institution'></i>";
+				markerContent += "<span class='marker-icon marker-government'><i class='fa fa-institution'></i>";
 			}
 
 			if(e.office_type == 'university' || e.office_type == 'government') {
-				markerContent += "</span><div class='marker-shadow'></div>";
+				markerContent += "</span><div class=''></div>";
 			}
 
 	      	marker = new RichMarker({
@@ -1727,7 +1727,7 @@
 					} else if (currentZoom >= 16 && currentZoom <= 18 ){
 						var markerContent = "<div class='marker marker-group'></div>"+
 						 "<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>"+
-						 "</span><div class='marker-shadow'></div>";
+						 "</span><div class=''></div>";
 					} else {
 						markerContent = '';
 					}
@@ -1904,11 +1904,11 @@
 					//topic marker should be small in zoom 13 to 16. And big in zoom 16 - 18.
 					if (currentZoom >= 13 && currentZoom < 16 ) {
 						var markerContent = "<div class='marker marker-topic-sm'></div>"+
-							"<span class='marker-icon marker-social'>"+
+							"<span class='marker-icon marker-topic-icon'>"+
 							"</span><div class=''></div>";
 					} else if (currentZoom >= 16 && currentZoom <= 18 ){
 						var markerContent = "<div class='marker marker-topic'></div>"+
-							"<span class='marker-icon marker-social'>"+
+							"<span class='marker-icon marker-topic-icon'><i class='fa fa-align-justify'></i>"+
 							"</span><div class=''></div>";
 					} else {
 						markerContent = '';
