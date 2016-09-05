@@ -43,7 +43,7 @@
                         </div>
                         <div class="right-section">
                             <div class='popup-title-name'>
-                                <div class="feedback-line"></div>
+                                <div class="fa fa-lg fa-minus"></div>
                                 <%= post_name %>
                             </div>
                         </div>

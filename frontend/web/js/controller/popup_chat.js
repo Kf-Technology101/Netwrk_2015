@@ -61,7 +61,11 @@ var PopupChat = {
                 PopupChat.OnClickMinimizeBtn();
             } else {
                 var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
-                $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+                if($("#popup-chat-" + PopupChat.params.post + " .popup-head").hasClass('chat-discussion')){
+                    $("#popup-chat-" + PopupChat.params.post + " .popup-head .right-section").addClass('active');
+                } else {
+                    $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+                }
                 target_popup_chat.find('.send').css("background-color", PopupChat.active_color);
                 setTimeout(function(){
                     target_popup_chat.find('textarea').focus()
@@ -184,7 +188,11 @@ var PopupChat = {
             }
         }
         PopupChat.getTemplate();
-        $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+        if($("#popup-chat-" + PopupChat.params.post + " .popup-head").hasClass('chat-discussion')){
+            $("#popup-chat-" + PopupChat.params.post + " .popup-head .right-section").addClass('active');
+        } else {
+            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
+        }
         $("#popup-chat-" + PopupChat.params.post).find('.send').css("background-color", PopupChat.active_color);
         PopupChat.popups.push(PopupChat.params.post);
         PopupChat.CalculatePopups();
@@ -229,16 +237,33 @@ var PopupChat = {
 
         var target_popup_active = $("#popup-chat-" + id + " .popup-head");
         $("#textarea-" + id).on("focus", function() {
-            target_popup_active.css("background-color", PopupChat.active_color);
+            if(target_popup_active.hasClass('chat-discussion')){
+                target_popup_active.find(".right-section").addClass('active');
+            } else {
+                target_popup_active.css("background-color", PopupChat.active_color);
+            }
         });
         $("#textarea-" + id).on("focusout", function() {
-            target_popup_active.css("background-color", PopupChat.inactive_color);
+            if(target_popup_active.hasClass('chat-discussion')){
+                target_popup_active.find(".right-section").removeClass('active');
+            } else {
+                target_popup_active.css("background-color", PopupChat.inactive_color);
+            }
         });
 
         $("#popup-chat-" + id).on("click", function() {
-            $(PopupChat.popup_chat_class + " .popup-head").css("background-color", PopupChat.inactive_color);
+            if($(PopupChat.popup_chat_class + " .popup-head").hasClass('chat-discussion')){
+                $(PopupChat.popup_chat_class + " .popup-head .right-section").removeClass('active');
+            } else {
+                $(PopupChat.popup_chat_class + " .popup-head").css("background-color", PopupChat.inactive_color);
+            }
             $(PopupChat.popup_chat_class).find('.send').css("background-color", PopupChat.inactive_color);
-            target_popup_active.css("background-color", PopupChat.active_color);
+
+            if(target_popup_active.hasClass('chat-discussion')){
+                target_popup_active.find(".right-section").addClass('active');
+            } else {
+                target_popup_active.css("background-color", PopupChat.active_color);
+            }
             $(this).find('.send').css("background-color", PopupChat.active_color);
             $('#popup-chat-'+id).find('textarea').focus();
         });
@@ -247,7 +272,11 @@ var PopupChat = {
             var container = $("#popup-chat-" + id);
 
             if (!container.is(e.target) && container.has(e.target).length === 0) {
-                target_popup_active.css("background-color", PopupChat.inactive_color);
+                if(target_popup_active.hasClass('chat-discussion')){
+                    target_popup_active.find(".right-section").removeClass('active');
+                } else {
+                    target_popup_active.css("background-color", PopupChat.inactive_color);
+                }
                 $("#popup-chat-" + id).find('.send').css("background-color", PopupChat.inactive_color);
             }
         });
