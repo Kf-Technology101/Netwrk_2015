@@ -1,5 +1,6 @@
 var getMaxMarkerXHR,
-    getTopicMarkerXHR;
+    getTopicMarkerXHR,
+    getLineMarkerXHR;
 var Ajax = {
     cover_search: function(params){
         var url,defer = $.Deferred();
@@ -509,7 +510,28 @@ var Ajax = {
 
         return defer.promise();
     },
+    get_marker_line_loc: function(params){
+        var url,defer = $.Deferred();
 
+        url = baseUrl + "/netwrk/post/get-post-by-location";
+
+        getLineMarkerXHR = $.ajax({
+            url: url,
+            data: params,
+            async: true,
+            cache: false,
+            type: 'POST',
+            beforeSend : function() {
+                if(getLineMarkerXHR && getLineMarkerXHR != 4) {
+                    getLineMarkerXHR.abort();
+                }
+            },
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     show_groups: function(params){
         var url,defer = $.Deferred();
 
