@@ -108,9 +108,7 @@ var Topic = {
     },
 
     CustomScrollBar: function(){
-        var parent;
-
-        parent = $("#modal_topic").find('.modal-body')
+        var parent = $("#modal_topic").find('.modal-body')
                 .add($('#slider_topic').find('.slider-body'));
 
         parent.mCustomScrollbar("scrollTo",$('#tab_feed'));
@@ -378,13 +376,15 @@ var Topic = {
             keyboard: false
         });*/
 
-        $.when(Common.closeAllLeftSliders()).done(function() {
-            $.when($(Topic.slider).animate({
-                "left": "0"
-            }, 500)).done(function(){
-                Topic.OnShowModalPost();
+        if ($(Topic.slider).css('left') != '0px') {
+            $.when(Common.closeAllLeftSliders()).done(function () {
+                $.when($(Topic.slider).animate({
+                    "left": "0"
+                }, 500)).done(function () {
+                    Topic.OnShowModalPost();
+                });
             });
-        });
+        }
     },
 
     OnShowModalPost: function(){
@@ -535,7 +535,7 @@ var Topic = {
             .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-post .feed-content'))
             .add($('#modal_topic,#slider_topic').find('.header').find('.right-section').find('.post-trigger'))
             .add($('#show-topic').find('.right-section').find('.post-trigger'))
-            .add($('#list_post').find('.right-section').find('.post-trigger'));
+            .add($('#list_post,#slider_list_post').find('.right-section').find('.post-trigger'));
         target.unbind();
         target.on('click',function(e){
                 var post_id = $(e.currentTarget).parent().attr('data-value'),

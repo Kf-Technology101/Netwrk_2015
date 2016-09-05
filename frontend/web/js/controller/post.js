@@ -33,6 +33,7 @@ var Post ={
     modal: '#list_post',
     modal_create: '#create_post',
 	tab_current:'post',
+	slider: '#slider_list_post',
 	initialize: function(){
 		if(isMobile){
 			Post.GetDefaultValue();
@@ -77,7 +78,7 @@ var Post ={
 	},
 
 	getStreamData: function(){
-		var streamTrigger = $('#list_post .stream-trigger');
+		var streamTrigger = $('#list_post, #slider_list_post').find('.stream-trigger');
 
 		streamTrigger.unbind();
 		streamTrigger.on('click',function(e){
@@ -132,10 +133,11 @@ var Post ={
 	},
 
 	OnClickChat: function(){
-		var btn = $('#list_post .post_chat')
-				.add($('#list_post .post_name'))
-				.add($('#list_post .show_more'))
-				.add($('#list_post .chat-trigger'));
+		var btn = $('#list_post,#slider_list_post').find('.post_chat')
+				.add($('#list_post,#slider_list_post').find('.post_name'))
+				.add($('#list_post,#slider_list_post').find('.post_massage'))
+				.add($('#list_post,#slider_list_post').find('.show_more'))
+				.add($('#list_post,#slider_list_post').find('.chat-trigger'));
 
 		btn.unbind();
 		btn.on('click',function(e){
@@ -181,7 +183,7 @@ var Post ={
 	},
 
 	onClickMeet: function(){
-		var btn = $('#list_post .meet-trigger');
+		var btn = $('#list_post,#slider_list_post').find('.meet-trigger');
 
 		btn.unbind();
 		btn.on('click',function(e){
@@ -198,7 +200,7 @@ var Post ={
 				}
 			}
 
-			Ajax.usermeet({user_id: userId }).then(function(res){
+			/*Ajax.usermeet({user_id: userId }).then(function(res){
 				$('.meet-'+userId).each(function() {
 					$(this).addClass('hide');
 				});
@@ -207,7 +209,7 @@ var Post ={
 					ChatInbox.GetDataListChatPrivate();
 				}
 				window.ws.send("notify", {"sender": UserLogin, "receiver": userId, "room": -1, "message": ''});
-			});
+			});*/
 		});
 	},
 
@@ -225,7 +227,12 @@ var Post ={
     },
 
     CustomScrollBar: function(){
-        $("#list_post").find('.container_post').mCustomScrollbar({
+		var parent = $("#list_post, #slider_list_post").find('.container_post');
+
+		parent.mCustomScrollbar("scrollTo",$('#tab_post'));
+		parent.css('height', $(window).height()-144);
+		$('.post-feedback').find('.feedback-section').css('min-height', $(window).height()-144);
+		parent.mCustomScrollbar({
             theme:"dark",
             callbacks:{
                 onTotalScroll: function(){
@@ -316,12 +323,26 @@ var Post ={
 	},
 
 	ShowModalPost: function(){
-		var parent = $('#list_post');
+		/*var parent = $('#list_post');
 		set_heigth_modal($('#list_post'),0);
 		parent.modal({
             backdrop: true,
             keyboard: false
-        });
+        });*/
+
+		if ($(Post.slider).css('left') != '0px') {
+			$.when(Common.closeAllLeftSliders()).done(function () {
+				$.when($(Post.slider).animate({
+					"left": "0"
+				}, 500)).done(function () {
+					Post.GetDataOnTab();
+					Post.getStreamData();
+					Ajax.update_view_topic({topic: Post.params.topic});
+					Post.OnclickBack();
+					Post.OnNetwrkLogo();
+				});
+			});
+		}
 	},
 
 	OnShowModalPost: function(){
@@ -341,23 +362,23 @@ var Post ={
 	},
 
 	ResetModal: function(){
-		var name = $('#list_post').find('.header .title_page');
+		var name = $('#list_post, #slider_list_post').find('.header .title_page');
 		var btn_map = $('.map_content').find('#btn_meet');
 
 		name.find('span.title').remove();
 		btn_map.show();
-		var selecFilter = $('#list_post').find('.dropdown-menu li').first().text();
-		$('#list_post').find('.tab').hide();
-		$('#list_post').find('.dropdown-toggle').text(selecFilter);
-		$('#list_post').find('.filter_sidebar td').removeClass('active');
-		$('#list_post').find('.filter_sidebar .post').addClass('active');
+		var selecFilter = $('#list_post, #slider_list_post').find('.dropdown-menu li').first().text();
+		$('#list_post, #slider_list_post').find('.tab').hide();
+		$('#list_post, #slider_list_post').find('.dropdown-toggle').text(selecFilter);
+		$('#list_post, #slider_list_post').find('.filter_sidebar td').removeClass('active');
+		$('#list_post, #slider_list_post').find('.filter_sidebar .post').addClass('active');
 
 		Post.ResetTabFeed();
 	},
 
 	getNameTopic: function(){
-		var cityName = $('#list_post').find('.header .title_page');
-		var name = $('#list_post').find('.sidebar .title_page');
+		var cityName = $('#list_post, #slider_list_post').find('.header .title_page');
+		var name = $('#list_post, #slider_list_post').find('.sidebar .title_page');
 		//var name = $('#list_post').find('.header .title_page');
 		Ajax.get_topic(Post.params).then(function(data){
 			var json = $.parseJSON(data);
@@ -572,7 +593,8 @@ var Post ={
     },
 
 	ShowPostPage: function(){
-		var parent = $('#list_post');
+		var parent = $('#list_post')
+				.add($('#slider_list_post'));
 		if(isMobile){
 			parent.find('span.filter').removeClass('visible');
 		}else{
@@ -591,20 +613,32 @@ var Post ={
 	},
 
 	GetDefaultValue: function(){
-		var parent = $('#list_post');
+		var parent = $('#list_post')
+				.add($('#slider_list_post'));
 		Post.params.topic = parent.data('topic');
 		Post.params.city = parent.data('city');
 	},
 
 	OnclickBack: function(){
-		$('#list_post').find('.left-section').add($('.box-navigation .btn_nav_map')).click(function () {
+		var target = $('#list_post, #slider_list_post').find('.left-section')
+				.add($('.box-navigation .btn_nav_map'));
+
+		target.unbind();
+		target.on('click',function () {
         	if(isMobile){
         		window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Post.params.city;
         	}else{
-        		$('#list_post').modal('hide');
-        		Topic.initialize(Post.params.city);
+        		/*$('#list_post').modal('hide');
+				Topic.initialize(Post.params.city);*/
+				if ($(Post.slider).css('left') == '0px') {
+					$.when($(Post.slider).animate({
+						"left": "-400px"
+					}, 500)).done(function(){
+						Topic.initialize(Post.params.city);
+					});
+				}
         	}
-        })
+        });
 	},
 
 	OnclickCreate: function(){
@@ -741,7 +775,7 @@ var Post ={
 
 		// Append city general post to header
 		var json = data;
-		var general_post = $('#list_post').find('.right-section');
+		var general_post = $('#list_post, #slider_list_post').find('.header').find('.right-section');
 		var post_template = _.template($( "#post_general_post" ).html());
 		var post_append_html = '';
 		post_append_html = post_template({post_id: json.post_id, post_title: json.post_title, topic_title: json.topic_title});
@@ -773,16 +807,23 @@ var Post ={
 	},
 
 	OnClickAvatarPostListDesktop: function(){
-		var avatar = $(Post.modal).find('#tab_post .item-post-panel-body .users_avatar');
+		var avatar = $(Post.modal, Post.slider).find('#tab_post .item-post-panel-body .users_avatar');
 		avatar.unbind();
 		avatar.on('click', function(e){
 			var user_login = $(e.currentTarget).parent().attr('data-user'),
 				user_view = $(e.currentTarget).attr('data-user-post');
 			if(user_view != user_login){
 				Meet.infoOf = user_view;
-				$('.modal').modal('hide');
+				//$('.modal').modal('hide');
 				// $(Post.modal).modal('hide');
-				Meet.initialize();
+				//Meet.initialize();
+				if ($(Post.slider).css('left') == '0px') {
+					$.when($(Post.slider).animate({
+						"left": "-400px"
+					}, 500)).done(function(){
+						Meet.initialize();
+					});
+				}
 			}
 		});
 	},
