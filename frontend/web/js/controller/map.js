@@ -1691,7 +1691,7 @@
 					});
 				}*/
 
-				if(currentZoom >= 13) {
+				if(currentZoom >= map.zoom) {
 					//Map.show_marker_group_loc(map, params);
 					//Map.show_marker_topic_loc(map, params);
 					Map.show_marker_line_loc(map, params);
