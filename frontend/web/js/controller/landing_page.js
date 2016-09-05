@@ -397,6 +397,8 @@ var LandingPage = {
 					sessionStorage.netwrk_news = 1;
 					// Show netwrk news section open
 					LandingPage.GetDataTopLanding();
+					// Zoom map to 16
+					Map.smoothZoom(Map.map, 16, 12, true);
 				} else {
 					//todo: show area slider
 					Common.showAreaSlider();
