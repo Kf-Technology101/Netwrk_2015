@@ -20,32 +20,35 @@
     </div>
     <div class="container">
         <div class="post">
-            <div class="post-title">
-                <p class="title"> Line </p>
-                <div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon2">#</span>
-                    <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?= isset($post->title) ? $post->title :''?>">
-                </div>
-            </div>
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
                 <div class="post-category-content">
 
                 </div>
+            <?php endif; ?>
+            <div class="post-title">
+                <p class="title"> Line </p>
+                <!--<div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2">#</span>
+                    <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?/*= isset($post->title) ? $post->title :''*/?>">
+                </div>-->
+                <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"></textarea>
+            </div>
+            <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
                 <div class="post-topic-category-content">
 
                 </div>
             <?php endif; ?>
-            <div class="post-message">
+            <div class="post-message hide">
                 <p class="title"> Message </p>
                 <textarea class="message" placeholder="Don't be shy! Say something!" maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
             </div>
         </div>
         <div class="btn-control">
-            <div class="cancel disable">
+            <!--<div class="cancel disable">
                 <p>Reset</p>
-            </div>
+            </div>-->
             <div class="save disable">
-                <span>Save</span>
+                <span>Build</span>
                 <i class="fa fa-check"></i>
             </div>
         </div>
@@ -54,12 +57,17 @@
 <script id="post-category-template" type="text/x-underscore-template">
     <section class="post-category-wrapper">
         <% if(data.length > 0) { %>
-        <p class="title">Type</p>
-        <select name="office" class="form-control dropdown-office">
-            <% _.each(data, function(item,i) { %>
-            <option value="<%= item.id%>" data-value="<%= item.id%>" data-city_name="<%= item.zip_code %>"><%= item.community %></option>
-            <% }); %>
-        </select>
+            <p class="title">Type</p>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-lg fa-minus-circle"></i>
+                </span>
+                <select name="office" class="form-control dropdown-office">
+                    <% _.each(data, function(item,i) { %>
+                    <option value="<%= item.id%>" data-value="<%= item.id%>" data-city_name="<%= item.zip_code %>"><%= item.community %></option>
+                    <% }); %>
+                </select>
+            </div>
         <% } %>
     </section>
 </script>
