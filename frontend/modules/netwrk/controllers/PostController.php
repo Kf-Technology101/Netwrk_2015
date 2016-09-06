@@ -1044,6 +1044,7 @@ class PostController extends BaseController
 
                 $Post = POST::find()->where(['id' => $post->id])->one();
                 $Post->location = $location_array[0].','.$location_array[1];
+                $Post->formatted_address = $location;
                 $Post->update();
             }
             echo 'Updated '.sizeof($posts).' posts location';
