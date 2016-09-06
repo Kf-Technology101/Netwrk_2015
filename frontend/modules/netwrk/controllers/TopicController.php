@@ -469,9 +469,11 @@ class TopicController extends BaseController
     public function actionUpdateViewTopic(){
         $id = $_POST['topic'];
 
-        $topic = Topic::findOne($id);
-        $topic->view_count ++;
-        $topic->update();
+        if($id) {
+            $topic = Topic::findOne($id);
+            $topic->view_count ++;
+            $topic->update();
+        }
     }
 
     public function actionGetTopic(){
