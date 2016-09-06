@@ -28,6 +28,7 @@ var LandingPage = {
 				LandingPage.OnClickBackdropWelcome();
 				LandingPage.showLandingWelcome();
 			} else {
+				$('.landing-trigger').trigger('click');
 				//LandingPage.show_landing_page();
 				// Added timeout and updated landing modal show code, so map load quickly
 				if (isGuest == '') {
