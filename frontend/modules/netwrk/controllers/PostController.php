@@ -57,7 +57,8 @@ class PostController extends BaseController
                     'view_count' => $post->view_count,
                     'brilliant_count' => $post->brilliant_count,
                     'comment_count' => $post->comment_count,
-                    'post_type' => $post->post_type
+                    'post_type' => $post->post_type,
+                    'location' => $post->location
                 ];
                 $data = json_encode($data);
                 return $data;

@@ -110,6 +110,7 @@ var PopupChat = {
                 target.find('.popup-topic-trigger').attr('data-city', json.city_id);
                 target.find('.popup-topic-trigger').attr('data-city-name', json.city_zipcode);
                 target.find('.popup-topic-trigger').attr('data-value', json.topic_id);
+                target.find('.popup-title-name').find('.post-location').html(json.location);
             });
         }
     },
