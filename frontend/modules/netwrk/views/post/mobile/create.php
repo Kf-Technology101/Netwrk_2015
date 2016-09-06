@@ -24,9 +24,6 @@
                 <div class="post-location-content">
 
                 </div>
-                <div class="post-category-content">
-
-                </div>
             <?php endif; ?>
             <div class="post-title">
                 <p class="title"> Line </p>
@@ -37,6 +34,9 @@
                 <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"></textarea>
             </div>
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
+                <div class="post-category-content">
+
+                </div>
                 <div class="post-topic-category-content">
 
                 </div>
@@ -72,7 +72,7 @@
 <script id="post-category-template" type="text/x-underscore-template">
     <section class="post-category-wrapper">
         <% if(! _.isEmpty(data)){ %>
-        <p class="title">Type</p>
+        <p class="title">Channel</p>
         <select name="topic" class="form-control post-topic-dropdown">
             <% _.each(data,function(items, key){ %>
             <optgroup label="<%= key %>">

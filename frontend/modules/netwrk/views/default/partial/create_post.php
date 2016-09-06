@@ -25,9 +25,7 @@
                         <div class="post-location-content">
 
                         </div>
-                        <div class="post-category-content">
 
-                        </div>
                         <div class="post-title">
                             <p class="title"> Line </p>
                             <!--<div class="input-group">
@@ -35,6 +33,9 @@
                                 <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
                             </div>-->
                             <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"></textarea>
+                        </div>
+                        <div class="post-category-content">
+
                         </div>
                         <div class="post-topic-category-content">
 
@@ -73,7 +74,7 @@
 <script id="post-category-template" type="text/x-underscore-template">
     <section class="post-category-wrapper">
         <% if(! _.isEmpty(data)){ %>
-            <p class="title">Type</p>
+            <p class="title">Channel</p>
             <select name="topic" class="form-control post-topic-dropdown">
                 <% _.each(data,function(items, key){ %>
                     <optgroup label="<%= key %>">
