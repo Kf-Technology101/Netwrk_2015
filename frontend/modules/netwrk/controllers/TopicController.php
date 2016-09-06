@@ -547,6 +547,48 @@ class TopicController extends BaseController
         return $hash;
     }
 
+    /**
+     * Get topics by zipcode
+     * @return string
+     */
+    public function actionGetTopicsByZipcode()
+    {
+        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : '';
+        $office_type = isset($_GET['office_type']) ? strtolower($_GET['office_type']) : '';
+
+        $topics = Topic::find()
+            ->join('INNER JOIN','city','city.id = topic.city_id')
+            ->where(['city.zip_code' => $zipCode])
+            ->andWhere('status != -1')
+            ->orderBy('city.office_type ASC')
+            //->createCommand()->getRawSql();
+            ->all();
+
+        $data = [];
+        if($topics) {
+            foreach ($topics as $topic) {
+                $item = array(
+                    "topic_id" => $topic->id,
+                    "topic_title" => $topic->title,
+                    "city_id" => $topic->city_id,
+                    "user_id" => $topic->user_id,
+                    "city_name" => $topic->city->name,
+                    "zip_code" => $topic->city->zip_code,
+                    "office" => isset($topic->city->office)? $topic->city->office : 'Social',
+                    "community" => isset($topic->city->office)? $topic->city->office : 'Community'
+                );
+                array_push($data, $item);
+            }
+        }
+
+        $topicArray = array();
+        foreach ($data as $item) {
+            $topicArray[$item['community']][] = $item;
+        }
+        $hash = json_encode($topicArray);
+        return $hash;
+    }
+
     public function actionGetTopicById($topic_id = null){
         $topic_id = $_GET['topic_id'];
 
