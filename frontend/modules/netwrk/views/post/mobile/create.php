@@ -12,9 +12,9 @@
         </div>
         <div class="title_page">
             <?php if($isCreateFromBlueDot == true): ?>
-                <span class="title"><?php echo $city_zipcode ?> > Add a line</span>
+                <span class="title"><?php echo $city_zipcode ?> > Build a line</span>
             <?php else: ?>
-                <span class="title"><?= $city->zip_code ?> > Add a line</span>
+                <span class="title"><?= $city->zip_code ?> > Build a line</span>
             <?php endif; ?>
         </div>
     </div>
