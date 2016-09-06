@@ -7,7 +7,9 @@ var Create_Post={
         city:'',
         city_name: '',
         post_id: '',
-        post_title: ''
+        post_title: '',
+        location: '',
+        formatted_address: ''
     },
     status_change:{
         post: false,
@@ -39,6 +41,7 @@ var Create_Post={
                 Create_Post.params.city_name = $('#create_post').attr('data-city_zipcode');
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
+                Create_Post.getPostLocation(Create_Post.params.lat,Create_Post.params.lng);
                 Create_Post.showPostCategory(Create_Post.params.city_name);
             }
             Create_Post.changeData();
@@ -96,6 +99,7 @@ var Create_Post={
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
                 Create_Post.params.isCreateFromBlueDot = true;
+                Create_Post.getPostLocation(Create_Post.params.lat,Create_Post.params.lng);
                 Create_Post.showPostCategory(name_city);
             } else {
                 Create_Post.params.city = city;
@@ -164,6 +168,28 @@ var Create_Post={
         } else {
             Create_Post.initialize(null, null, zipcode);
         }
+    },
+    // Get post location
+    getTemplatePostLocation: function(parent,data){
+        var json = data;
+        var target = parent.find('.post-location-content');
+
+        var list_template = _.template($("#post-location-template").html());
+        var append_html = list_template({data: json});
+        target.append(append_html);
+    },
+    getPostLocation: function(lat, lng){
+        var parent = $('#create_post').add('#create_post_slider');
+        parent.find('.post-location-content').html('');
+        var params = {'lat': lat, 'lng': lng};
+        Ajax.getPostLocation(params).then(function(data){
+            var json = $.parseJSON(data);
+            if(json.success == true){
+                Create_Post.params.location = json.location;
+                Create_Post.params.formatted_address = json.formatted_address;
+                Create_Post.getTemplatePostLocation(parent,json);
+            }
+        });
     },
     /* Display community category dropdown on Create post modal. */
     showPostCategory: function(zipcode){

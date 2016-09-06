@@ -187,6 +187,8 @@ class PostController extends BaseController
         $current_date = date('Y-m-d H:i:s');
         $lat = isset($_POST['lat']) ? $_POST['lat'] : null;
         $lng = isset($_POST['lng']) ? $_POST['lng'] : null;
+        $location = isset($_POST['location']) ? $_POST['location'] : null;
+        $formatted_address = isset($_POST['formatted_address']) ? $_POST['formatted_address'] : null;
 
         if($post_id) {
             $Post = POST::find()->where(['id' => $post_id])->one();
@@ -205,6 +207,10 @@ class PostController extends BaseController
             }
             if($lng) {
                 $Post->lng = $lng;
+            }
+            if($location){
+                $Post->location = $location;
+                $Post->formatted_address = $formatted_address;
             }
             $Post->post_type = 1;
             $Post->save();
@@ -1053,6 +1059,35 @@ class PostController extends BaseController
         }
     }
 
+    public function actionGetPostLocation(){
+        $lat = isset($_GET['lat']) ? $_GET['lat'] : '';
+        $lng = isset($_GET['lng']) ? $_GET['lng'] : '';
+
+        $lat_lng = $lat.','.$lng;
+
+        if($lat_lng != ','){
+            $google = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat_lng}";
+
+            $addresses = json_decode(file_get_contents($google));
+
+            $formatted_address = $addresses->results[0]->formatted_address;
+            $location_array = explode(',',$formatted_address);
+            $location = $location_array[0].','.$location_array[1];
+
+            $return = [
+                'success' => true,
+                'formatted_address' => $formatted_address,
+                'location' => $location
+            ];
+        } else {
+            $return = [
+                'success' => false
+            ];
+        }
+
+        return json_encode($return);
+    }
+
     /** Get the post by location, Fetch those post which created from map.
      * return post data
      */
@@ -1076,10 +1111,10 @@ class PostController extends BaseController
             ->join('INNER JOIN', 'topic', 'post.topic_id = topic.id')
             ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
             ->where($geo_where)
-            ->andWhere(['not', ['post.status'=> '-1']])
+            ->andWhere(['not', ['post.status' => '-1']])
             ->andWhere(['not', ['post.lat' => null]])
             ->andWhere(['not', ['post.lng' => null]])
-            ->orderBy(['post.created_at'=> SORT_DESC]);
+            ->orderBy(['post.created_at' => SORT_DESC]);
 
         /*print $query->createCommand()->getRawSql();
         die();*/
