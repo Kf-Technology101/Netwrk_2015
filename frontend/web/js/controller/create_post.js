@@ -236,7 +236,8 @@ var Create_Post={
         var topic_id = parent.find(':selected').attr('data-topic_id');
 
         parent.unbind();
-        parent.on('change', function(){
+        parent.on('change', function(e){
+            console.log('in change');
             var city_id = $(this).find(':selected').attr('data-city_id');
             var city_name = $(this).find(':selected').attr('data-city_name');
             var topic_id = $(this).find(':selected').attr('data-topic_id');
@@ -430,7 +431,7 @@ var Create_Post={
         this.onChangeData(parent.find('.name_post'),'post');
         this.onChangeData(parent.find('.message'),'message');
         if(Create_Post.params.isCreateFromBlueDot) {
-            this.onChangeData(parent.find('.post-topic-dropdown'),'topic');
+            //this.onChangeData(parent.find('.post-topic-dropdown'),'topic');
         };
     },
 
