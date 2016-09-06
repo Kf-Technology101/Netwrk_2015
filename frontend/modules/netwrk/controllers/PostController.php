@@ -187,6 +187,8 @@ class PostController extends BaseController
         $current_date = date('Y-m-d H:i:s');
         $lat = isset($_POST['lat']) ? $_POST['lat'] : null;
         $lng = isset($_POST['lng']) ? $_POST['lng'] : null;
+        $location = isset($_POST['location']) ? $_POST['location'] : null;
+        $formatted_address = isset($_POST['formatted_address']) ? $_POST['formatted_address'] : null;
 
         if($post_id) {
             $Post = POST::find()->where(['id' => $post_id])->one();
@@ -205,6 +207,10 @@ class PostController extends BaseController
             }
             if($lng) {
                 $Post->lng = $lng;
+            }
+            if($location){
+                $Post->location = $location;
+                $Post->formatted_address = $formatted_address;
             }
             $Post->post_type = 1;
             $Post->save();
@@ -1013,7 +1019,76 @@ class PostController extends BaseController
     }
 
     /**
-     * Get the post by location, Fetch those post which created from map.
+     * This function will set location for the post which have lat & lng set
+     * @throws \Exception
+     */
+    public function actionSetLocation(){
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        $pageSize = isset($_GET['size']) ? $_GET['size'] : '';
+
+        $posts = Post::find()->where('lat is not NULL AND (location is NULL OR location = "")')->andWhere('status != -1')->orderBy(['id'=> SORT_DESC]);
+
+        $countQuery = clone $posts;
+        $totalCount = $countQuery->count();
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+
+        $posts = $posts->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        if(sizeof($posts) > 0) {
+            foreach ($posts as $key => $post) {
+                $location = '';
+                $lat_lng = $post->lat.','.$post->lng;
+
+                $google = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat_lng}";
+
+                $addresses = json_decode(file_get_contents($google));
+
+                $location = $addresses->results[0]->formatted_address;
+                $location_array = explode(',',$location);
+
+                $Post = POST::find()->where(['id' => $post->id])->one();
+                $Post->location = $location_array[0].','.$location_array[1];
+                $Post->formatted_address = $location;
+                $Post->update();
+            }
+            echo 'Updated '.sizeof($posts).' posts location';
+        } else {
+            echo 'There is no post to update location';
+        }
+    }
+
+    public function actionGetPostLocation(){
+        $lat = isset($_GET['lat']) ? $_GET['lat'] : '';
+        $lng = isset($_GET['lng']) ? $_GET['lng'] : '';
+
+        $lat_lng = $lat.','.$lng;
+
+        if($lat_lng != ','){
+            $google = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat_lng}";
+
+            $addresses = json_decode(file_get_contents($google));
+
+            $formatted_address = $addresses->results[0]->formatted_address;
+            $location_array = explode(',',$formatted_address);
+            $location = $location_array[0].','.$location_array[1];
+
+            $return = [
+                'success' => true,
+                'formatted_address' => $formatted_address,
+                'location' => $location
+            ];
+        } else {
+            $return = [
+                'success' => false
+            ];
+        }
+
+        return json_encode($return);
+    }
+
+    /** Get the post by location, Fetch those post which created from map.
      * return post data
      */
     public function actionGetPostByLocation()
@@ -1069,45 +1144,5 @@ class PostController extends BaseController
 
         $hash = json_encode($data);
         return $hash;
-    }
-
-    /** This function will set location for the post which have lat & lng set
-     * @throws \Exception
-     */
-    public function actionSetLocation(){
-        $page = isset($_GET['page']) ? $_GET['page'] : '';
-        $pageSize = isset($_GET['size']) ? $_GET['size'] : '';
-
-        $posts = Post::find()->where('lat is not NULL AND (location is NULL OR location = "")')->andWhere('status != -1')->orderBy(['id'=> SORT_DESC]);
-
-        $countQuery = clone $posts;
-        $totalCount = $countQuery->count();
-        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
-
-        $posts = $posts->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
-
-        if(sizeof($posts) > 0) {
-            foreach ($posts as $key => $post) {
-                $location = '';
-                $lat_lng = $post->lat.','.$post->lng;
-
-                $google = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat_lng}";
-
-                $addresses = json_decode(file_get_contents($google));
-
-                $location = $addresses->results[0]->formatted_address;
-                $location_array = explode(',',$location);
-
-                $Post = POST::find()->where(['id' => $post->id])->one();
-                $Post->location = $location_array[0].','.$location_array[1];
-                $Post->formatted_address = $location;
-                $Post->update();
-            }
-            echo 'Updated '.sizeof($posts).' posts location';
-        } else {
-            echo 'There is no post to update location';
-        }
     }
 }

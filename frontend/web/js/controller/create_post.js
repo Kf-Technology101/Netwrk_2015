@@ -7,7 +7,9 @@ var Create_Post={
         city:'',
         city_name: '',
         post_id: '',
-        post_title: ''
+        post_title: '',
+        location: '',
+        formatted_address: ''
     },
     status_change:{
         post: false,
@@ -39,6 +41,7 @@ var Create_Post={
                 Create_Post.params.city_name = $('#create_post').attr('data-city_zipcode');
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
+                Create_Post.getPostLocation(Create_Post.params.lat,Create_Post.params.lng);
                 Create_Post.showPostCategory(Create_Post.params.city_name);
             }
             Create_Post.changeData();
@@ -99,6 +102,7 @@ var Create_Post={
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
                 Create_Post.params.isCreateFromBlueDot = true;
+                Create_Post.getPostLocation(Create_Post.params.lat,Create_Post.params.lng);
                 Create_Post.showPostCategory(name_city);
             } else {
                 $('#create_post').find('.post').find('.item-row').removeClass('create_post_from_blue_dot');
@@ -169,6 +173,28 @@ var Create_Post={
             Create_Post.initialize(null, null, zipcode);
         }
     },
+    // Get post location
+    getTemplatePostLocation: function(parent,data){
+        var json = data;
+        var target = parent.find('.post-location-content');
+
+        var list_template = _.template($("#post-location-template").html());
+        var append_html = list_template({data: json});
+        target.append(append_html);
+    },
+    getPostLocation: function(lat, lng){
+        var parent = $('#create_post').add('#create_post_slider');
+        parent.find('.post-location-content').html('');
+        var params = {'lat': lat, 'lng': lng};
+        Ajax.getPostLocation(params).then(function(data){
+            var json = $.parseJSON(data);
+            if(json.success == true){
+                Create_Post.params.location = json.location;
+                Create_Post.params.formatted_address = json.formatted_address;
+                Create_Post.getTemplatePostLocation(parent,json);
+            }
+        });
+    },
     /* Display community category dropdown on Create post modal. */
     showPostCategory: function(zipcode){
         var parent = $('#create_post').add('#create_post_slider');
@@ -176,7 +202,7 @@ var Create_Post={
         parent.find('.post-topic-category-content').html('');
         var params = {'zip_code': zipcode};
         //todo: fetch weather api data
-        Ajax.get_city_by_zipcode(params).then(function(data){
+        Ajax.get_topics_by_zipcode(params).then(function(data){
             var json = $.parseJSON(data);
             console.log(json);
             Create_Post.getTemplatePostCategory(parent,json);
@@ -196,31 +222,48 @@ var Create_Post={
     onTemplatePostCategory: function() {
         Create_Post.onChangePostCategory();
 
-        var parent = $('#create_post'),
+        /*var parent = $('#create_post'),
             communityDropdown = parent.find('.dropdown-office'),
             city_id = communityDropdown.val();
         console.log(city_id);
-        Create_Post.showPostTopicCategory(city_id);
+        Create_Post.showPostTopicCategory(city_id);*/
     },
     //update create_post.params.city variable on change of group category dropdown in create topic form.
     onChangePostCategory: function() {
-        var parent = $('#create_post').find('.dropdown-office');
-        var city_id = parent.val();
+        var parent = $('#create_post').find('.post-topic-dropdown');
+        var city_id = parent.find(':selected').attr('data-city_id');
         var city_name = parent.find(':selected').attr('data-city_name'); //todo: check params in date-city_id here
+        var topic_id = parent.find(':selected').attr('data-topic_id');
 
         parent.unbind();
         parent.on('change', function(){
-            city_id = $(this).val();
-            city_name = $(this).find(':selected').attr('data-city_name');
+            var city_id = $(this).find(':selected').attr('data-city_id');
+            var city_name = $(this).find(':selected').attr('data-city_name');
+            var topic_id = $(this).find(':selected').attr('data-topic_id');
             Create_Post.params.city = city_id;
             Create_Post.params.city_name = city_name;
-            //fetch topic dropdown by cityId as city is changed so update topic dropdown according to city
-            Create_Post.showPostTopicCategory(city_id);
+            Create_Post.params.topic = topic_id;
+            console.log(Create_Post.params);
+            //if topic data is null then save button should be disable.
+            if(Create_Post.params.topic) {
+                Create_Post.status_change['topic'] = true;
+            } else {
+                Create_Post.status_change['topic'] = false;
+            }
+            console.log(Create_Post.status_change['topic']);
+            Create_Post.onCheckStatus();
         });
-
         //set form params cityid and name
         Create_Post.params.city = city_id;
         Create_Post.params.city_name = city_name;
+        Create_Post.params.topic = topic_id;
+
+        if(Create_Post.params.topic) {
+            Create_Post.status_change['topic'] = true;
+        } else {
+            Create_Post.status_change['topic'] = false;
+        }
+        console.log(Create_Post.params);
     },
     showPostTopicCategory: function(city_id){
         //get topic list by cityId and create topic list dropdown and append it to create_post modal.
@@ -477,6 +520,7 @@ var Create_Post={
         parent.find('#post_id').val('');
         parent.find('.post-category-content').html('');
         parent.find('.post-topic-category-content').html('');
+        parent.find('.post-location-content').html('');
 
         Create_Post.status_change.post = false;
         Create_Post.status_change.message = false;
@@ -621,6 +665,8 @@ var Create_Post={
         Create_Post.params.lat = '';
         Create_Post.params.lng = '';
         Create_Post.params.isCreateFromBlueDot = '';
+        Create_Post.params.location = '';
+        Create_Post.params.formatted_address = '';
     }
 
 };

@@ -1578,6 +1578,23 @@ var Ajax = {
 
         return defer.promise();
     },
+    get_topics_by_zipcode: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/topic/get-topics-by-zipcode";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     getZipBoundaries: function(params) {
         var url,defer = $.Deferred();
 
@@ -1802,6 +1819,24 @@ var Ajax = {
             async: false,
             cache: false,
             type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
+
+    getPostLocation: function(params) {
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/post/get-post-location";
+
+        $.ajax({
+            url: url,
+            data: params,
+            type: 'GET',
+            async: false,
+            cache: false,
             success: defer.resolve,
             error: defer.reject
         });
