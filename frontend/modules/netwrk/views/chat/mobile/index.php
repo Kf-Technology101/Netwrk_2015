@@ -37,7 +37,13 @@
                 <div class="right-section active">
                     <div class='popup-title-name'>
                         <div class="fa fa-lg fa-minus"></div>
-                        <span class="post-location"><?= $post->location ?></span>
+                        <span class="post-location">
+                            <?php if($post->location != null) : ?>
+                                <?= $post->location ?>
+                            <?php else : ?>
+                                <?= $post->title ?>
+                            <?php endif; ?>
+                        </span>
                     </div>
                 </div>
             </div>
