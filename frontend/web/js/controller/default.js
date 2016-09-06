@@ -75,12 +75,19 @@ var Default ={
                 LandingPage.OnHideModalWelcome();
                 LandingPage.OnClickBackdropWelcome();
                 LandingPage.showLandingWelcome();
+            } else {
+                sessionStorage.map_zoom = 16;
+                $('.landing-trigger', '.logo-active').trigger('click');
             }
+
             if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
-                sessionStorage.map_zoom = 12;
+                sessionStorage.map_zoom = 16;
             } else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
                 LandingPage.initialize();
                 Default.UnsetLanding();
+            } else {
+                sessionStorage.map_zoom = 16;
+                $('.landing-trigger', '.logo-active').trigger('click');
             }
             /*if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
                 alert('in ShowLandingPage function .LandingPage.redirect() ='+sessionStorage.show_landing);
