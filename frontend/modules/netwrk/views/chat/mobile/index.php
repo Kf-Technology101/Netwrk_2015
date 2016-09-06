@@ -37,7 +37,7 @@
                 <div class="right-section active">
                     <div class='popup-title-name'>
                         <div class="fa fa-lg fa-minus"></div>
-                        <?= $post->title ?>
+                        <span class="post-location"><?= $post->location ?></span>
                     </div>
                 </div>
             </div>
