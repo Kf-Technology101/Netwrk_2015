@@ -1052,4 +1052,62 @@ class PostController extends BaseController
             echo 'There is no post to update location';
         }
     }
+
+    /** Get the post by location, Fetch those post which created from map.
+     * return post data
+     */
+    public function actionGetPostByLocation()
+    {
+        $swLat = $_POST['swLat'];
+        $neLat = $_POST['neLat'];
+
+        $swLng = $_POST['swLng'];
+        $neLng = $_POST['neLng'];
+
+        $geo_where = '(post.lat >= '.$swLat.' AND post.lat <= '.$neLat.' AND post.lng >= '.$swLng.' AND post.lng <= '.$neLng.')';
+
+
+        $query = new Query();
+        $data = $query->select(
+            'post.id as post_id, post.title as post_title, post.content as post_content,post.post_type as post_type,post.lat as post_lat, post.lng as post_lng,
+             topic.id AS topic_id, topic.title AS topic_title,
+             city.id as city_id, city.zip_code, city.office, city.name as city_name, city.lat as city_lat, city.lng as city_lng'
+        )->from('post')
+            ->join('INNER JOIN', 'topic', 'post.topic_id = topic.id')
+            ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
+            ->where($geo_where)
+            ->andWhere(['not', ['post.status'=> '-1']])
+            ->andWhere(['not', ['post.lat' => null]])
+            ->andWhere(['not', ['post.lng' => null]])
+            ->orderBy(['post.created_at'=> SORT_DESC]);
+
+        /*print $query->createCommand()->getRawSql();
+        die();*/
+        $posts = $query->all();
+
+        $data = [];
+        foreach ($posts as $key => $value) {
+            $post = array(
+                "post_id" => $value['post_id'],
+                "post_title" => $value['post_title'],
+                "post_content" => $value['post_content'],
+                "post_type" => $value['post_type'],
+                "lat" => $value['post_lat'],
+                "lng" => $value['post_lng'],
+
+                "topic_id" => $value['topic_id'],
+                "topic_title" => $value['topic_title'],
+
+                "city_id" => $value['city_id'],
+                "city_name" => $value['city_name'],
+                "office" => $value['office'],
+                "zip_code" => $value['zip_code'],
+
+            );
+            array_push($data, $post);
+        }
+
+        $hash = json_encode($data);
+        return $hash;
+    }
 }

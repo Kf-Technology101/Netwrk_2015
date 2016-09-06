@@ -172,7 +172,7 @@ var Create_Post={
         parent.find('.post-topic-category-content').html('');
         var params = {'zip_code': zipcode};
         //todo: fetch weather api data
-        Ajax.get_city_by_zipcode(params).then(function(data){
+        Ajax.get_topics_by_zipcode(params).then(function(data){
             var json = $.parseJSON(data);
             console.log(json);
             Create_Post.getTemplatePostCategory(parent,json);
@@ -192,31 +192,48 @@ var Create_Post={
     onTemplatePostCategory: function() {
         Create_Post.onChangePostCategory();
 
-        var parent = $('#create_post'),
+        /*var parent = $('#create_post'),
             communityDropdown = parent.find('.dropdown-office'),
             city_id = communityDropdown.val();
         console.log(city_id);
-        Create_Post.showPostTopicCategory(city_id);
+        Create_Post.showPostTopicCategory(city_id);*/
     },
     //update create_post.params.city variable on change of group category dropdown in create topic form.
     onChangePostCategory: function() {
-        var parent = $('#create_post').find('.dropdown-office');
-        var city_id = parent.val();
+        var parent = $('#create_post').find('.post-topic-dropdown');
+        var city_id = parent.find(':selected').attr('data-city_id');
         var city_name = parent.find(':selected').attr('data-city_name'); //todo: check params in date-city_id here
+        var topic_id = parent.find(':selected').attr('data-topic_id');
 
         parent.unbind();
         parent.on('change', function(){
-            city_id = $(this).val();
-            city_name = $(this).find(':selected').attr('data-city_name');
+            var city_id = $(this).find(':selected').attr('data-city_id');
+            var city_name = $(this).find(':selected').attr('data-city_name');
+            var topic_id = $(this).find(':selected').attr('data-topic_id');
             Create_Post.params.city = city_id;
             Create_Post.params.city_name = city_name;
-            //fetch topic dropdown by cityId as city is changed so update topic dropdown according to city
-            Create_Post.showPostTopicCategory(city_id);
+            Create_Post.params.topic = topic_id;
+            console.log(Create_Post.params);
+            //if topic data is null then save button should be disable.
+            if(Create_Post.params.topic) {
+                Create_Post.status_change['topic'] = true;
+            } else {
+                Create_Post.status_change['topic'] = false;
+            }
+            console.log(Create_Post.status_change['topic']);
+            Create_Post.onCheckStatus();
         });
-
         //set form params cityid and name
         Create_Post.params.city = city_id;
         Create_Post.params.city_name = city_name;
+        Create_Post.params.topic = topic_id;
+
+        if(Create_Post.params.topic) {
+            Create_Post.status_change['topic'] = true;
+        } else {
+            Create_Post.status_change['topic'] = false;
+        }
+        console.log(Create_Post.params);
     },
     showPostTopicCategory: function(city_id){
         //get topic list by cityId and create topic list dropdown and append it to create_post modal.
