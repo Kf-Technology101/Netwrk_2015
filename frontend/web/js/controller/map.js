@@ -16,7 +16,7 @@
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
-	  	zoom: 13,
+	  	zoom: 16,
 		markerZoom:14,
 		// Blue dot info window content is in following file
 		// @frontend/modules/netwrk/views/marker/blue_dot_post_content
@@ -112,7 +112,7 @@
 	  	initialize: function() {
 
 	  		if(isMobile){
-				Map.zoom = 12;
+				Map.zoom = 16;
 				Map.markerZoom = 13;
 
 				Common.initLoader();

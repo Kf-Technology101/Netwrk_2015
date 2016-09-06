@@ -84,6 +84,7 @@ var Default ={
                 LandingPage.initialize();
                 Default.UnsetLanding();
             } else {
+                sessionStorage.map_zoom = 16;
                 $('.landing-trigger').trigger('click');
             }
             /*if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
