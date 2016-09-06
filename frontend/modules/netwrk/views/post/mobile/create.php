@@ -21,6 +21,9 @@
     <div class="container">
         <div class="post">
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
+                <div class="post-location-content">
+
+                </div>
                 <div class="post-category-content">
 
                 </div>
@@ -54,6 +57,18 @@
         </div>
     </div>
 </div>
+<script id="post-location-template" type="text/x-underscore-template">
+    <section class="post-location-wrapper">
+        <p class="title">Location</p>
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-lg fa-minus-circle"></i>
+            </span>
+            <input type="text" name="location" class="form-control location-input" value="<%= data.location %>" disabled="disabled"  />
+            <input type="hidden" name="formatted_address" value="<%= data.formatted_address %>" />
+        </div>
+    </section>
+</script>
 <script id="post-category-template" type="text/x-underscore-template">
     <section class="post-category-wrapper">
         <% if(! _.isEmpty(data)){ %>
