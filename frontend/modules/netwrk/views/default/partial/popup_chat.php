@@ -44,7 +44,7 @@
                         <div class="right-section">
                             <div class='popup-title-name'>
                                 <div class="fa fa-lg fa-minus"></div>
-                                <%= post_name %>
+                                <span class="post-location"><%= post_name %></span>
                             </div>
                         </div>
                     </div>

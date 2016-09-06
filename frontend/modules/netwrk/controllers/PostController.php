@@ -57,7 +57,8 @@ class PostController extends BaseController
                     'view_count' => $post->view_count,
                     'brilliant_count' => $post->brilliant_count,
                     'comment_count' => $post->comment_count,
-                    'post_type' => $post->post_type
+                    'post_type' => $post->post_type,
+                    'location' => $post->location
                 ];
                 $data = json_encode($data);
                 return $data;
@@ -1035,10 +1036,10 @@ class PostController extends BaseController
             ->join('INNER JOIN', 'topic', 'post.topic_id = topic.id')
             ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
             ->where($geo_where)
-            ->andWhere(['not', ['post.status'=> '-1']])
+            ->andWhere(['not', ['post.status' => '-1']])
             ->andWhere(['not', ['post.lat' => null]])
             ->andWhere(['not', ['post.lng' => null]])
-            ->orderBy(['post.created_at'=> SORT_DESC]);
+            ->orderBy(['post.created_at' => SORT_DESC]);
 
         /*print $query->createCommand()->getRawSql();
         die();*/
@@ -1068,5 +1069,45 @@ class PostController extends BaseController
 
         $hash = json_encode($data);
         return $hash;
+    }
+
+    /** This function will set location for the post which have lat & lng set
+     * @throws \Exception
+     */
+    public function actionSetLocation(){
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        $pageSize = isset($_GET['size']) ? $_GET['size'] : '';
+
+        $posts = Post::find()->where('lat is not NULL AND (location is NULL OR location = "")')->andWhere('status != -1')->orderBy(['id'=> SORT_DESC]);
+
+        $countQuery = clone $posts;
+        $totalCount = $countQuery->count();
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>$pageSize,'page'=> $page - 1]);
+
+        $posts = $posts->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        if(sizeof($posts) > 0) {
+            foreach ($posts as $key => $post) {
+                $location = '';
+                $lat_lng = $post->lat.','.$post->lng;
+
+                $google = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat_lng}";
+
+                $addresses = json_decode(file_get_contents($google));
+
+                $location = $addresses->results[0]->formatted_address;
+                $location_array = explode(',',$location);
+
+                $Post = POST::find()->where(['id' => $post->id])->one();
+                $Post->location = $location_array[0].','.$location_array[1];
+                $Post->formatted_address = $location;
+                $Post->update();
+            }
+            echo 'Updated '.sizeof($posts).' posts location';
+        } else {
+            echo 'There is no post to update location';
+        }
     }
 }
