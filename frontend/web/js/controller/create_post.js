@@ -516,6 +516,7 @@ var Create_Post={
         parent.find('#post_id').val('');
         parent.find('.post-category-content').html('');
         parent.find('.post-topic-category-content').html('');
+        parent.find('.post-location-content').html('');
 
         Create_Post.status_change.post = false;
         Create_Post.status_change.message = false;
@@ -660,6 +661,8 @@ var Create_Post={
         Create_Post.params.lat = '';
         Create_Post.params.lng = '';
         Create_Post.params.isCreateFromBlueDot = '';
+        Create_Post.params.location = '';
+        Create_Post.params.formatted_address = '';
     }
 
 };
