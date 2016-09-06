@@ -78,14 +78,14 @@ var Default ={
                     LandingPage.OnClickBackdropWelcome();
                     LandingPage.showLandingWelcome();
                 } else {
-                    $('.landing-trigger').trigger('click');
+                    $('.landing-trigger', '.logo-active').trigger('click');
                 }
             } else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
                 LandingPage.initialize();
                 Default.UnsetLanding();
             } else {
                 sessionStorage.map_zoom = 16;
-                $('.landing-trigger').trigger('click');
+                $('.landing-trigger', '.logo-active').trigger('click');
             }
             /*if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
                 alert('in ShowLandingPage function .LandingPage.redirect() ='+sessionStorage.show_landing);
