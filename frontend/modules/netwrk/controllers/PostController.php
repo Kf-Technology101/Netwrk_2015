@@ -189,6 +189,7 @@ class PostController extends BaseController
         $lng = isset($_POST['lng']) ? $_POST['lng'] : null;
         $location = isset($_POST['location']) ? $_POST['location'] : null;
         $formatted_address = isset($_POST['formatted_address']) ? $_POST['formatted_address'] : null;
+        $timeout = isset($_POST['timeout']) ? $_POST['timeout'] : null;
 
         if($post_id) {
             $Post = POST::find()->where(['id' => $post_id])->one();
@@ -202,6 +203,10 @@ class PostController extends BaseController
             $Post->content = $message;
             $Post->topic_id = $topic;
             $Post->user_id = $currentUser;
+            if($timeout) {
+                $Post->timeout = $timeout;
+                $Post->expire_at = date("Y-m-d H:i:s", strtotime($current_date . "+".$timeout."minutes"));
+            }
             if($lat) {
                 $Post->lat = $lat;
             }
@@ -1093,18 +1098,21 @@ class PostController extends BaseController
      */
     public function actionGetPostByLocation()
     {
+
         $swLat = $_POST['swLat'];
         $neLat = $_POST['neLat'];
 
         $swLng = $_POST['swLng'];
         $neLng = $_POST['neLng'];
+        $current_date = date('Y-m-d H:i:s');
 
         $geo_where = '(post.lat >= '.$swLat.' AND post.lat <= '.$neLat.' AND post.lng >= '.$swLng.' AND post.lng <= '.$neLng.')';
 
 
         $query = new Query();
         $data = $query->select(
-            'post.id as post_id, post.title as post_title, post.content as post_content,post.post_type as post_type,post.lat as post_lat, post.lng as post_lng,
+            'post.id as post_id, post.title as post_title, post.content as post_content,post.post_type as post_type,
+             post.lat as post_lat, post.lng as post_lng,post.created_at, post.expire_at, post.timeout,
              topic.id AS topic_id, topic.title AS topic_title,
              city.id as city_id, city.zip_code, city.office, city.name as city_name, city.lat as city_lat, city.lng as city_lng'
         )->from('post')
@@ -1122,6 +1130,12 @@ class PostController extends BaseController
 
         $data = [];
         foreach ($posts as $key => $value) {
+            //if post is expired then skip this post to show
+            if(isset($value['expire_at'])) {
+                if(strtotime($current_date) > strtotime($value['expire_at'])) {
+                    continue;
+                }
+            }
             $post = array(
                 "post_id" => $value['post_id'],
                 "post_title" => $value['post_title'],
@@ -1137,6 +1151,8 @@ class PostController extends BaseController
                 "city_name" => $value['city_name'],
                 "office" => $value['office'],
                 "zip_code" => $value['zip_code'],
+                "expire_at" =>  $value['expire_at'],
+                "current_date" => $current_date
 
             );
             array_push($data, $post);
