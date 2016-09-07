@@ -575,7 +575,7 @@ var Topic = {
             .add($('#show-topic').find('.feed-row.feed-topic'))
             .add($('#profileRecentTopic').find('.topic-trigger'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'))
-            .add($('.popup-box').find('.popup-topic-trigger'))
+            //.add($('.popup-box').find('.popup-topic-trigger'))
             .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-topic'));
         target.unbind();
         target.on('click',function(e){
