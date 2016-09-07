@@ -220,7 +220,7 @@ var PopupChat = {
 
         target.unbind();
         target.on('click',function(e) {
-            Topic.city.id = $(this).attr('data-city');
+            Topic.city.id = Topic.data.city = $(this).attr('data-city');
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Topic.city.id;
             }else{
