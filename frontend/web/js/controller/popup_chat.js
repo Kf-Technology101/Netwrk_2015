@@ -88,9 +88,13 @@ var PopupChat = {
         var target = $('.chat-box').find('.chat-topic-trigger');
         target.unbind();
         target.on('click',function(e){
-            var topic_id = $(e.currentTarget).attr('data-value');
+            /*var topic_id = $(e.currentTarget).attr('data-value');
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/post?topic="+topic_id;
+            }*/
+            Topic.city.id = Topic.data.city = $(this).attr('data-city');
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Topic.city.id;
             }
         });
     },
