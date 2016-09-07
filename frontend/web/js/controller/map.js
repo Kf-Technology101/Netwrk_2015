@@ -165,6 +165,9 @@
 				//Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
+				if(lat && lng) {
+					Map.showUserLocationMarker(Map.map);
+				}
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
 				Map.mouseOutsideInfoWindow();
@@ -365,6 +368,21 @@
 		    	Map.markers[i].setMap(map);
 		    }
 	  	},
+
+		showUserLocationMarker: function (map) {
+			var markerContent = "<div class='marker-user-location'></div>";
+				markerContent += "<span class='marker-icon-user-location'><i class='fa fa-2x fa-circle'></i></span>";
+
+			marker = new RichMarker({
+				position: new google.maps.LatLng(lat,lng),
+				map: map,
+				content: markerContent,
+				//city_id: parseInt(e.id)
+				// label: text_below
+			});
+
+			marker.setMap(map);
+		},
 
 	  	show_marker: function(map){
 		    var json,data_marker;
