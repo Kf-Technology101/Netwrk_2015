@@ -35,7 +35,8 @@
                                   data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                                   data-placement="top"
                                   data-content="<%= chatTopicTitlePopover %>">
-                                <%= post_description %>
+                                Local news
+                                <!--<%= post_description %>-->
                             </div>
                         </div>
                         <div class="middle-section">

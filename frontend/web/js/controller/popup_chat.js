@@ -211,7 +211,22 @@ var PopupChat = {
         }
 
         $('.map_content').append(append_html);
-        Topic.OnClickTopicFeed();
+        //Topic.OnClickTopicFeed();
+        PopupChat.onClickChatTitle();
+    },
+
+    onClickChatTitle: function() {
+        var target = $('.popup-box').find('.popup-topic-trigger');
+
+        target.unbind();
+        target.on('click',function(e) {
+            var city_id = $(e.currentTarget).attr('data-city');
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
+            }else{
+                Topic.initialize(city_id);
+            }
+        });
     },
 
     CalculatePopups: function() {
