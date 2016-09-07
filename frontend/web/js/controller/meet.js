@@ -51,8 +51,8 @@ var Meet ={
     },
 
     _init: function(){
-        Common.ShowModalComeBack();
-        return;
+        //Common.ShowModalComeBack();
+        //return;
         var post_id = Meet.getParameterByName('post_id'),
             user_view = Meet.getParameterByName('user_id'),
             from = Meet.getParameterByName('from');
