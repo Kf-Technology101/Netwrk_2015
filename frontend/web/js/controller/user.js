@@ -1,4 +1,8 @@
 var User ={
+	location:{
+		lat: '',
+		lng: ''
+	},
 	initialize: function(){
 		Login.initialize();
 		Signup.initialize();
