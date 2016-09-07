@@ -20,6 +20,8 @@ use frontend\modules\netwrk\models\User;
  * @property string $updated_at
  * @property string $lat
  * @property string $lng
+ * @property string $timeout
+ * @property string $expire_at
  */
 class Post extends \yii\db\ActiveRecord
 {
@@ -40,7 +42,7 @@ class Post extends \yii\db\ActiveRecord
             [['title', 'content', 'user_id'], 'required'],
             [['content'], 'string'],
             [['topic_id', 'user_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'expire_at'], 'safe'],
             [['title'], 'string', 'max' => 128],
             [['post_type'], 'integer']
         ];
@@ -61,7 +63,9 @@ class Post extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'post_type' => 'Post Type',
             'lat' => 'Latitude',
-            'lng' => 'Longitude'
+            'lng' => 'Longitude',
+            'timeout' => 'Timeout',
+            'expire_at' => 'Expire At'
         ];
     }
 

@@ -189,6 +189,7 @@ class PostController extends BaseController
         $lng = isset($_POST['lng']) ? $_POST['lng'] : null;
         $location = isset($_POST['location']) ? $_POST['location'] : null;
         $formatted_address = isset($_POST['formatted_address']) ? $_POST['formatted_address'] : null;
+        $timeout = isset($_POST['timeout']) ? $_POST['timeout'] : null;
 
         if($post_id) {
             $Post = POST::find()->where(['id' => $post_id])->one();
@@ -202,6 +203,10 @@ class PostController extends BaseController
             $Post->content = $message;
             $Post->topic_id = $topic;
             $Post->user_id = $currentUser;
+            if($timeout) {
+                $Post->timeout = $timeout;
+                $Post->expire_at = date("Y-m-d H:i:s", strtotime($current_date . "+".$timeout."minutes"));
+            }
             if($lat) {
                 $Post->lat = $lat;
             }

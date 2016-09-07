@@ -40,6 +40,9 @@
                 <div class="post-topic-category-content">
 
                 </div>
+                <div class="post-timeout-content">
+
+                </div>
             <?php endif; ?>
             <div class="post-message hide">
                 <p class="title"> Message </p>
@@ -102,5 +105,16 @@
                 <% } %>
             </select>
         <% } %>
+    </section>
+</script>
+<script id="post-timeout-template" type="text/x-underscore-template">
+    <section class="post-timeout-wrapper">
+        <p class="title">Timeout</p>
+        <select name="timeout" class="form-control post-timeout-dropdown">
+            <option value="0">No timer selected</option>
+            <option value="10">10 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+        </select>
     </section>
 </script>
