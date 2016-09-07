@@ -28,7 +28,8 @@
                          data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
                          data-placement="bottom"
                          data-content="<?= $chat_topic_title_popover ?>">
-                            <?= $post->topic->title ?>
+                            <?/*= $post->topic->title */?>
+                        Local news
                     </div>
                 </div>
                 <div class="middle-section">
