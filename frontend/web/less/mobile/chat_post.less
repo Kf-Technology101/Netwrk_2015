@@ -101,10 +101,10 @@
                 }
             }
         }
-        .popup-title-name,
+
         .popup-title-description{
             font-size: 14px;
-            line-height: 39px;
+            line-height: 31px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -117,12 +117,11 @@
         .middle-section{
             color: #fff;
             float: left;
-            max-width: 40px;
-            min-width: 40px;
-            padding: 5px 5px 0;
-            width: 11%;
+            max-width: 12%;
+            min-width: 12%;
+            padding: 1px 6px 0;
             .fa {
-                font-size: 2.1em;
+                font-size: 1.9em;
             }
         }
         .right-section,
@@ -135,6 +134,9 @@
         .right-section{
             border-left: 1px solid #fff;
             .popup-title-name{
+                padding: 0 5px;
+                width: 100%;
+                line-height: 31px;
                 .feedback-line {
                     background: url("../../img/icon/line-icon-nav.png") no-repeat;
                     background-size: contain;
@@ -144,6 +146,24 @@
                     width: 20px;
                     float: left;
                 }
+                .fa-minus {
+                    margin: 8px 2px;
+                }
+                .post-location {
+                    display: inline-block;
+                    font-size: 11px;
+                    line-height: 12px;
+                    max-height: 24px;
+                    overflow: hidden;
+                    vertical-align: middle;
+                    width: 80%;
+                    word-wrap: break-word;
+                }
+            }
+            &.active {
+                background: #5da5d8;
+                border-bottom-right-radius: 10px;
+                border-top-right-radius: 10px;
             }
         }
     }
@@ -470,6 +490,18 @@
                         cursor: pointer;
                     }
                 }
+            }
+        }
+    }
+    &.chat-box{
+        .header {
+            padding: 3px 5px;
+            .chat-discussion-header{
+                border: 1px solid #fff;
+                border-radius: 10px;
+                float: left;
+                height: 33px;
+                width: 100%;
             }
         }
     }

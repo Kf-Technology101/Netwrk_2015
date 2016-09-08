@@ -103,9 +103,42 @@
                 .clsFocus{
                     border-color: #5da5d8;
                 }
+                .name_post_textarea {
+                    background-color: #fff;
+                    border: 1px solid #bcbcbc;
+                    border-radius: 4px;
+                    color: #1d1b1b;
+                    font-family: "ProximaNovaRegular";
+                    font-size: 14px;
+                    height: 110px;
+                    outline: medium none;
+                    padding: 5px 5px 5px 10px;
+                    width: 100%;
+                }
+            }
+            .post-location-wrapper {
+                padding: 15px;
+                .input-group {
+                    .input-group-addon {
+                        background: #eee;
+                        color: #5888ac;
+                        padding: 6px 0 6px 10px;
+                    }
+                    .location-input {
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                        border: 1px solid #bcbcbc;
+                        border-left: none;
+                    }
+                }
             }
             .post-category-wrapper {
                 padding: 15px;
+                select {
+                    optgroup {
+                        padding: 0 5px;
+                    }
+                }
             }
             .post-topic-category-wrapper {
                 padding: 15px;
@@ -268,6 +301,7 @@
         }
         .right-section,
         .left-section{
+            height: 39px;
             width: 43%;
             float: left;
             .title{

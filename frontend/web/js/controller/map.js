@@ -6,10 +6,12 @@
 		    lng:''
 	  	},
 		getMaxMarker: true,
+		displayBlueDot: true,
 	  	latLng: '',
 	  	markers:[],
 		topicMarkers: [],
 		groupMarkers: [],
+		lineMarkers: [],
 	  	data_map:'',
 	  	infowindow:[],
 		infoWindowBlueDot:[],
@@ -155,12 +157,12 @@
 		    Map.min_max_zoom(Map.map);
 		    // Map.eventOnclick(map);
 		    google.maps.event.addListenerOnce(Map.map, 'idle', function(){
-				Ajax.get_marker_default().then(function(data){
+				/*Ajax.get_marker_default().then(function(data){
 					var data_marker = $.parseJSON(data);
 					$.each(data_marker,function(i,e){
 				      	Map.initializeMarker(e, null, 7);
 			    	});
-				});
+				});*/
 
 				//Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
@@ -168,7 +170,7 @@
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
 				Map.mouseOutsideInfoWindow();
-				Map.showZipBoundaries();
+				//Map.showZipBoundaries();
 				Common.hideLoader();
 
 				if(isMobile) {
@@ -184,6 +186,7 @@
 		    // Map.insertLocalGovernment();
 			//Map.requestBlueDotOnMap(lat,lng,Map.map);
 			Map.requestPosition(Map.map);
+			Map.onClickMap();
 
 			// New info window for click on map to create group and topic
 			/*var createInfoWindow = Map.setCreateInfoWindow();
@@ -268,7 +271,26 @@
 				}, 500);
 			}
 	  	},
-
+		eventMapClick: function(event) {
+			if(Map.displayBlueDot) {
+				console.log( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
+				var lat = event.latLng.lat(),
+					lng = event.latLng.lng();
+				Map.requestBlueDotOnMap(lat, lng, Map.map);
+			} else {
+				Map.displayBlueDot = true;
+			}
+		},
+		onClickMap: function() {
+			//add map listener
+			google.maps.event.addListener(Map.map, 'click', function(event) {
+				Map.eventMapClick(event);
+			});
+			//on click of blue shaded area on map (geoJson data)
+			Map.map.data.addListener('click', function(event) {
+				Map.eventMapClick(event);
+			});
+		},
 	  	mapBoundaries:function(map){
 		    var tskey = "b26fdd409c" ;
 		    var imgMapType = new google.maps.ImageMapType({
@@ -463,17 +485,17 @@
 					markerContent += "<div class='marker-home'>";
 					markerContent += "<div class='btn-active'></div>";
 					markerContent += "<div class='btn-inactive'></div></div>";
-				markerContent += "<span class='marker-icon marker-home'><i class='fa fa-lg fa-home'></i>";
+				markerContent += "<span class='marker-icon marker-home'><i class='fa fa-home'></i>";
 			}
 
 			if(e.office_type == 'university') {
-				markerContent += "<span class='marker-icon marker-university'><i class='fa fa-lg fa-graduation-cap'></i>";
+				markerContent += "<span class='marker-icon marker-university'><i class='fa fa-graduation-cap'></i>";
 			} else if(e.office_type == 'government') {
-				markerContent += "<span class='marker-icon marker-government'><i class='fa fa-lg fa-institution'></i>";
+				markerContent += "<span class='marker-icon marker-government'><i class='fa fa-institution'></i>";
 			}
 
 			if(e.office_type == 'university' || e.office_type == 'government') {
-				markerContent += "</span><div class='marker-shadow'></div>";
+				markerContent += "</span><div class=''></div>";
 			}
 
 	      	marker = new RichMarker({
@@ -581,6 +603,7 @@
 
 			google.maps.event.addListener(marker, 'click', (function(marker){
 		        return function(){
+					Map.displayBlueDot = false;
 		        	sessionStorage.lat = marker.position.lat();
 		        	sessionStorage.lng = marker.position.lng();
 		        	if(!isMobile){
@@ -1085,7 +1108,7 @@
 						Map.blueDotLocation.zipcode = zip;
 						$('#create-location-group').attr('data-zipcode', zip);
 
-						if(zip != zipCode) {
+						/*if(zip != zipCode) {
 							// Get boundaries data from zip
 							var params = {'zip_code' : zip};
 							Ajax.getSingleZipBoundaries(params).then(function(jsonData){
@@ -1113,7 +1136,7 @@
 									}
 								}
 							});
-						}
+						}*/
 						Map.getCurrentZipDiscussions();
 					} else if (data.results[0].address_components[i].types[0] == 'locality') {
 						var city = data.results[0].address_components[i].long_name;
@@ -1222,8 +1245,9 @@
 			//Map.show_marker_group_loc(map);
 			if (lat != 'undefined' && lng != 'undefined') {
 				console.log('in if blue dot');
-				map.setCenter(new google.maps.LatLng(lat, lng));
-				if (Map.center_marker != null) Map.center_marker.setMap(null);
+				//map.setCenter(new google.maps.LatLng(lat, lng));
+				Map.removeBlueDot();
+				//if (Map.center_marker != null) Map.center_marker.setMap(null);
 
 				//display blue dot on map from lat and lon.
 				var blueDotInfoWindow = Map.showBlueDot(lat, lng, map);
@@ -1402,9 +1426,13 @@
 
 			return infowindow;
 		},
-
+		removeBlueDot: function() {
+			if (Map.center_marker != null) {
+				Map.center_marker.setMap(null);
+			}
+		},
 		showBlueDot: function(lat, lng, map) {
-			var img = '/img/icon/pale-blue-dot.png';
+			var img = '/img/icon/pale-blue-line-icon-dot.png';
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(lat, lng),
 				icon: img,
@@ -1417,7 +1445,7 @@
 			//google.maps.event.clearListeners(marker, 'dragstart');
 			google.maps.event.addListener(marker, 'dragstart', function(e) {
 				console.log('in dragstart');
-				marker.setIcon('/img/icon/pale-blue-dot-bg.png');
+				marker.setIcon('/img/icon/pale-blue-line-icon-dot-bg.png');
 				$("#blueDotLocation span").eq(0).html('Requesting...');
 				google.maps.event.clearListeners(Map.center_marker, 'mouseout');
 			});
@@ -1425,7 +1453,7 @@
 			//google.maps.event.clearListeners(marker, 'dragend');
 			google.maps.event.addListener(marker, 'dragend', function(e) {
 				console.log('in dragend');
-				marker.setIcon('/img/icon/pale-blue-dot.png');
+				marker.setIcon('/img/icon/pale-blue-line-icon-dot.png');
 				Map.findCurrentZip(marker.getPosition().lat(),
 					marker.getPosition().lng());
 
@@ -1489,13 +1517,13 @@
 			}
 
 			// Show hide double click line and create buttons
-			if(zoom >= Map.blueDotLocation.zoomMiddle) {
+			/*if(zoom >= Map.blueDotLocation.zoomMiddle) {
 				$('.cgm-container').find('.create-section-wrapper').removeClass('hide');
 				$('.cgm-container').find('.double-click').addClass('hide');
 			} else {
 				$('.cgm-container').find('.create-section-wrapper').addClass('hide');
 				$('.cgm-container').find('.double-click').removeClass('hide');
-			}
+			}*/
 
 			// Show hide click to zoom and build line
 			if(zoom >= Map.blueDotLocation.zoomMiddle && zoom < Map.blueDotLocation.zoomLast) {
@@ -1577,6 +1605,7 @@
 			});
 
 			google.maps.event.addListener(map, 'dragend', function(){
+				Map.removeBlueDot();
 				Map.getMaxMarker = true;
 			});
 
@@ -1593,12 +1622,12 @@
 				if(currentZoom >= Map.markerZoom ) {
 					setTimeout(function () {
 						if (Map.getMaxMarker == true) {
-							Ajax.get_marker_zoom(params).then(function (data) {
+							/*Ajax.get_marker_zoom(params).then(function (data) {
 								var data_marker = $.parseJSON(data);
 								$.each(data_marker, function (i, e) {
 									Map.initializeMarker(e, null, Map.markerZoom);
 								});
-							});
+							});*/
 						}
 					}, 250);
 					
@@ -1662,9 +1691,10 @@
 					});
 				}*/
 
-				if(currentZoom >= 13) {
-					Map.show_marker_group_loc(map, params);
-					Map.show_marker_topic_loc(map, params);
+				if(currentZoom >= map.zoom) {
+					//Map.show_marker_group_loc(map, params);
+					//Map.show_marker_topic_loc(map, params);
+					Map.show_marker_line_loc(map, params);
 				} else {
 					Map.clearTopicMarkers();
 				}
@@ -1722,12 +1752,12 @@
 					//topic marker should be small in zoom 13 to 16. And big in zoom 16 - 18.
 					if (currentZoom >= 13 && currentZoom < 16 ) {
 						var markerContent = "<div class='marker marker-topic-sm'></div>"+
-							"<span class='marker-icon marker-social'>"+
+							"<span class='marker-icon marker-group-icon'>"+
 							"</span><div class=''></div>";
 					} else if (currentZoom >= 16 && currentZoom <= 18 ){
 						var markerContent = "<div class='marker marker-group'></div>"+
-						 "<span class='marker-icon marker-social'><i class='fa fa-lg fa-users'></i>"+
-						 "</span><div class='marker-shadow'></div>";
+						 "<span class='marker-icon marker-group-icon'><i class='fa fa-lg fa-users'></i>"+
+						 "</span><div class=''></div>";
 					} else {
 						markerContent = '';
 					}
@@ -1904,11 +1934,11 @@
 					//topic marker should be small in zoom 13 to 16. And big in zoom 16 - 18.
 					if (currentZoom >= 13 && currentZoom < 16 ) {
 						var markerContent = "<div class='marker marker-topic-sm'></div>"+
-							"<span class='marker-icon marker-social'>"+
+							"<span class='marker-icon marker-topic-icon'>"+
 							"</span><div class=''></div>";
 					} else if (currentZoom >= 16 && currentZoom <= 18 ){
 						var markerContent = "<div class='marker marker-topic'></div>"+
-							"<span class='marker-icon marker-social'>"+
+							"<span class='marker-icon marker-topic-icon'><i class='fa fa-align-justify'></i>"+
 							"</span><div class=''></div>";
 					} else {
 						markerContent = '';
@@ -1977,6 +2007,88 @@
 
 			});
 		},
+		clearLineMarkers: function() {
+			for (var i = 0; i < Map.lineMarkers.length; i++) {
+				var m = Map.lineMarkers[i];
+				if(typeof m.marker != 'undefined' || m.marker != null) {
+					m.marker.setMap(null);
+				}
+			}
+
+			/*for (i=0; i<Map.lineMarkers.length; i++) {
+				m = Map.lineMarkers[i];
+				if(typeof m.label != 'undefined' || m.label != null) {
+					m.label.setMap(null);
+				}
+			}*/
+			Map.lineMarkers = [];
+		},
+		show_marker_line_loc: function(map, params) {
+			var marker,json,data_marker;
+
+			//clear the topic markers and its lable
+			Map.clearLineMarkers();
+			Ajax.get_marker_line_loc(params).then(function(data){
+				console.log('get marker line loc');
+				data_marker = $.parseJSON(data);
+				var currentZoom = map.getZoom();
+
+				//console.log(data_marker);
+				$.each(data_marker,function(i,e){
+					var markerContent = "<div class='marker marker-line'></div>"+
+						"<span class='marker-icon marker-line-icon'><i class='fa fa-lg fa-minus'></i>"+
+						"</span><div class=''></div>";
+
+					//display topic markers on map
+					marker = new RichMarker({
+						position: new google.maps.LatLng(e.lat, e.lng),
+						map: map,
+						content: markerContent,
+						city_id: parseInt(e.city_id),
+
+						topic_id: parseInt(e.topic_id),
+						topic_name: e.topic_title,
+
+						post_id: parseInt(e.post_id),
+						post_name: e.post_title,
+						post_type: e.post_type,
+						post_content: e.post_content,
+						/*draggable: true*/
+					});
+
+					google.maps.event.addListener(marker, 'click', (function(marker, i) {
+						return function(){
+							Map.displayBlueDot = false;
+							var post_id = marker.post_id,
+								post_name = marker.post_name,
+								post_content = marker.post_content,
+								post_type = marker.post_type;
+							if(isMobile){
+								sessionStorage.url = window.location.href;
+								sessionStorage.feed_topic = 1;
+								PopupChat.RedirectChatPostPage(post_id, 1, 1);
+							}else{
+								PopupChat.params.post = post_id;
+								PopupChat.params.chat_type = post_type;
+								PopupChat.params.post_name = post_name;
+								PopupChat.params.post_description = post_content;
+
+								console.log(PopupChat.params);
+								PopupChat.initialize();
+							}
+						};
+					})(marker, i));
+
+					Map.lineMarkers.push({
+						marker: marker
+						/*label: label*/
+					});
+					//Map.topicMarkers.push(marker);
+				});
+
+
+			});
+		},
 
 	  	eventZoom: function(map){
 		    var mode = true;
@@ -2003,7 +2115,7 @@
 				console.log(currentZoom);
 				Map.showHideBlueDotZoomInfo(currentZoom);
 
-				// Recreate info window, so it will always display updated content
+				// Recreate info window, so it will always display updated contentajax
 				var blueDotInfoWindow = Map.setBlueDotInfoWindow();
 				Map.infoWindowBlueDot = [];
 				Map.infoWindowBlueDot.push(blueDotInfoWindow);

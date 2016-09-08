@@ -14,29 +14,37 @@
 <?php if ($post->post_type == 1 ) { ?>
 <div id="post_chat" class='post-id-<?= $post->id ?> chat-box' data-topic="<?= $post->topic->id ?>" data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='1'>
 <?php } else { ?>
-<div id="post_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
+<div id="private_chat" class='post-id-<?= $post->id ?>'  data-post="<?= $post->id ?>" data-user-login="<?= $current_user ?>" data-chat-type='0'>
 <?php } ?>
     <div class="header">
         <?php if ($post->post_type == 1 ) { ?>
-            <div class="left-section">
-                <div class="popup-title-description chat-topic-trigger <?= $popover_chat_topic_title ?>"
-                     title="<?= $post->topic->title ?>"
-                     data-city-name="<?= $post->topic->city->name?>"
-                     data-city="<?= $post->topic->city_id?>"
-                     data-value="<?= $post->topic->id?>"
-                     data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
-                     data-placement="bottom"
-                     data-content="<?= $chat_topic_title_popover ?>">
-                        <?= $post->topic->title ?>
+            <div class="chat-discussion-header">
+                <div class="left-section">
+                    <div class="popup-title-description chat-topic-trigger <?= $popover_chat_topic_title ?>"
+                         title="<?= $post->topic->title ?>"
+                         data-city-name="<?= $post->topic->city->name?>"
+                         data-city="<?= $post->topic->city_id?>"
+                         data-value="<?= $post->topic->id?>"
+                         data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
+                         data-placement="bottom"
+                         data-content="<?= $chat_topic_title_popover ?>">
+                        Local news
+                    </div>
                 </div>
-            </div>
-            <div class="middle-section">
-                <i class="fa fa-align-justify"></i>
-            </div>
-            <div class="right-section">
-                <div class='popup-title-name'>
-                    <div class="feedback-line"></div>
-                    <?= $post->title ?>
+                <div class="middle-section">
+                    <i class="fa fa-align-justify"></i>
+                </div>
+                <div class="right-section active">
+                    <div class='popup-title-name'>
+                        <div class="fa fa-lg fa-minus"></div>
+                        <span class="post-location">
+                            <?php if($post->location != null) : ?>
+                                <?= $post->location ?>
+                            <?php else : ?>
+                                <?= $post->title ?>
+                            <?php endif; ?>
+                        </span>
+                    </div>
                 </div>
             </div>
         <?php } else { ?>
