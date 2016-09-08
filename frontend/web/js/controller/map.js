@@ -167,6 +167,9 @@
 				//Map.mapBoundaries(Map.map);
 				Map.eventZoom(Map.map);
 				Map.eventClickMyLocation(Map.map);
+				if(User.location.lat && User.location.lng) {
+					Map.showUserLocationMarker(Map.map);
+				}
 				Map.show_marker(Map.map);
 				Map.showHeaderFooter();
 				Map.mouseOutsideInfoWindow();
@@ -327,12 +330,16 @@
 								sessionStorage.lat = newLat;
 								sessionStorage.lng = newLng;
 							}
+							User.location.lat = newLat;
+							User.location.lng = newLng;
 						}else{
 							Map.center = new google.maps.LatLng(lat, lng);
 							if(isMobile) {
 								sessionStorage.lat = lat;
 								sessionStorage.lng = lng;
 							}
+							User.location.lat = lat;
+							User.location.lng = lng;
 						}
 						google.maps.event.addDomListener(window, 'load', Map.initialize());
 					});
@@ -343,6 +350,8 @@
 							sessionStorage.lat = lat;
 							sessionStorage.lng = lng;
 						}
+						User.location.lat = lat;
+						User.location.lng = lng;
 					}else{
 						Map.center = new google.maps.LatLng(39.7662195,-86.441277);
 					}
@@ -387,6 +396,20 @@
 		    	Map.markers[i].setMap(map);
 		    }
 	  	},
+
+		showUserLocationMarker: function (map) {
+			var markerContent = "<div class='marker-user-location'></div>";
+				markerContent += "<span class='marker-icon-user-location'><i class='fa fa-2x fa-circle'></i></span>";
+
+			marker = new RichMarker({
+				position: new google.maps.LatLng(User.location.lat, User.location.lng),
+				map: map,
+				content: markerContent,
+				//city_id: parseInt(e.id)
+				// label: text_below
+			});
+			marker.setMap(map);
+		},
 
 	  	show_marker: function(map){
 		    var json,data_marker;
