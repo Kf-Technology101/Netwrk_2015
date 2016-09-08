@@ -302,8 +302,13 @@
 }
 
 #create_post_slider {
-    border-right: 5px solid #5888ac;
-    border-top: 1px solid #5888ac;
+    /*border-right: 5px solid #5888ac;
+    border-top: 1px solid #5888ac;*/
+    border: 2px solid #5888ac;
+    border-top: none;
+    top: 15%;
+    height: 75%;
+    max-height: 471px;
     #create_post {
         height: auto;
         top: 90px;
@@ -320,7 +325,7 @@
         .head{
             height: 40px;
             .name_user{
-                width: auto;
+                width: 90%;
                 color: #fff;
                 font-size: 22px;
                 margin: auto;
@@ -336,13 +341,12 @@
                 }
             }
             .back_page{
-                width: 95px;
+                width: 10%;
                 height: 40px;
                 float: left;
-                border-right: 1px solid #fff;
+                border-left: 1px solid #fff;
                 cursor: pointer;
-                border-radius: 4px 0 0 0;
-                -webkit-border-radius: 4px 0 0 0;
+                border-radius: 0;
                 &:hover{
                     background: #5DA5D8;
                 }
@@ -408,9 +412,9 @@
     }
     .slider-body{
         overflow-y: auto;
-        max-height: 530px;
-        min-height: 300px;
-        height: 500px;
+        max-height: 430px;
+        min-height: 430px;
+        height: 430px;
         width: 100%;
         padding: 0;
         background-color: #ffffff;
@@ -435,7 +439,8 @@
                 border: none;
                 .post-title{
                     padding: 15px;
-                    border-bottom: 1px solid #f3f3f3;
+                    padding-bottom: 0;
+                    /*border-bottom: 1px solid #f3f3f3;*/
                     .input-group{
                         width: 100%;
                         border-radius: 5px;
@@ -485,6 +490,7 @@
                 }
                 .post-location-wrapper {
                     padding: 15px;
+                    padding-bottom: 0;
                     .input-group {
                         .input-group-addon {
                             background: #eee;
@@ -501,6 +507,7 @@
                 }
                 .post-category-wrapper {
                     padding: 15px;
+                    padding-bottom: 0;
                     select {
                         optgroup {
                             padding: 0 5px;
@@ -509,12 +516,14 @@
                 }
                 .post-topic-category-wrapper {
                     padding: 15px;
+                    padding-bottom: 0;
                 }
                 .post-timeout-wrapper {
                     padding: 15px;
                 }
                 .post-message{
                     padding: 15px;
+                    padding-bottom: 0;
                     textarea:-ms-input-placeholder{
                         color: #beb8b8;
                     }
