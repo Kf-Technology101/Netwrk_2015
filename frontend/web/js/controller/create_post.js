@@ -131,7 +131,7 @@ var Create_Post={
     showCreatePostSlider: function() {
         $.when(Common.closeAllLeftSliders()).done(function() {
             $.when($('#create_post_slider').animate({
-                "left": "0"
+                "left": "50%"
             }, 500)).done(function(){
                 Create_Post.onEnterPostNameTextarea();
             });
@@ -614,19 +614,23 @@ var Create_Post={
                 Ajax.new_post(Create_Post.params).then(function(){
                     Create_Post.reset_data();
                     Create_Post.setDefaultBtn();
-                    setTimeout(function(){
-                        if(isMobile){
+
+                    if(isMobile){
+                        setTimeout(function(){
                             Create_Post.redirect();
-                        }else{
-                            Create_Post.hideModalCreatePost();
-                            Create_Post.closeCreatePostSlider();
+                        },700);
+                    } else {
+                        Create_Post.hideModalCreatePost();
+                        Create_Post.closeCreatePostSlider();
+                        return;
+                        setTimeout(function(){
                             Post.params.city = Create_Post.params.city;
                             Post.params.city_name = Create_Post.params.city_name;
                             Post.params.topic = Create_Post.params.topic;
                             Post.params.topic_name = Create_Post.params.topic_name;
                             Post.initialize();
-                        }
-                    },700);
+                        },700);
+                    }
                 });
                 ChatInbox.GetDataListChatPost();
                 Map.update_marker(Create_Post.params.city);

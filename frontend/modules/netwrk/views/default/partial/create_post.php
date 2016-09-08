@@ -4,19 +4,19 @@
         <div class="slider-content">
             <div class="slider-header">
                 <div class="head">
-                    <div class="back_page">
-                        <span><i class="fa fa-arrow-circle-left"></i> Back </span>
-                    </div>
                     <div class="name_user">
                         <p> Build a line</p>
                     </div>
+                    <div class="back_page">
+                        <span><i class="fa fa-times-circle"></i></span>
+                    </div>
                 </div>
-                <div class="scrumb">
+                <!--<div class="scrumb">
                     <p class="zipcode"> 46975 </p>
                     <p class="break"> > </p>
                     <p class="topic"> Discussion over Democratic Primary </p>
                     <div class="clearfix"></div>
-                </div>
+                </div>-->
             </div>
             <div class="slider-body">
                 <div class="page" id="create_topic">
