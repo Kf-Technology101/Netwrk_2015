@@ -588,13 +588,14 @@ var Topic = {
             if(isMobile){
                 Post.RedirectPostPage(topic_id);
             }else{
+                return;
                 $('.modal').modal('hide');
 
                 Post.params.topic = topic_id;
                 Post.params.topic_name = topic_name;
                 Post.params.city = city_id;
                 Post.params.city_name = city_name;
-                //Post.initialize();
+                Post.initialize();
             }
         });
 

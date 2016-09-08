@@ -228,6 +228,7 @@ var PopupChat = {
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Topic.city.id;
             }else{
+                return;
                 Topic.initialize(Topic.city.id);
             }
         });
