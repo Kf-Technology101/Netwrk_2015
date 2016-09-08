@@ -143,7 +143,7 @@ var PopupChat = {
     },
 
     DisplayPopups: function() {
-        var right = 110,
+        var right = 20,
             popup_rights = [];
 
 
