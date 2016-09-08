@@ -68,11 +68,11 @@ var ChatInbox = {
 		}
 	},
 	OnShowListChatPost: function(){
-		if($(ChatInbox.chat_inbox).css('left') == '100px'){
+		/*if($(ChatInbox.chat_inbox).css('left') == '100px'){
 			$(ChatInbox.chat_inbox).animate({
 				"left": ChatInbox.list_chat_post_right_hidden
 			}, 500);
-		} else {
+		} else {*/
 			ChatInbox.GetDataListChatPost();
 
 			//when guest user, then display chat discussion tab.
@@ -82,10 +82,12 @@ var ChatInbox = {
 				ChatInbox.GetDataListChatPrivate();
 			}
 
-			$(ChatInbox.chat_inbox).animate({
+
+
+			/*$(ChatInbox.chat_inbox).animate({
 				"left": "100px"
 			}, 500);
-		}
+		}*/
 
 		/*if ($(ChatInbox.chat_inbox).css('left') == ChatInbox.list_chat_post_right_hidden) {
 			ChatInbox.GetDataListChatPost();

@@ -3,13 +3,22 @@
 	use yii\web\Cookie;
 	$cookies = Yii::$app->request->cookies;
 ?>
-<div id='chat_inbox' class='chat-inbox left-slider'>
+<div id='chat_inbox' class='chat-inbox'>
+	<ul class="nav nav-tabs slider-tab" role="tablist">
+		<li role="presentation" class="active col-xs-6 lies-btn"><a href="#lines_tab" aria-controls="lines_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+		<li role="presentation" class="col-xs-6 area-news-btn"><a href="#area_news_tab" aria-controls="area_news_tab" role="tab" data-toggle="tab"><span>Area News</span></a></li>
+	</ul>
+
+	<div class="tab-content slider-content">
+		<div role="tabpanel" class="tab-pane active" id="lines_tab">
+
+
 	<div class="chat-inbox-wrapper">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
+		<li role="presentation" class="col-xs-4 most-active-btn"><a href="#most_active_tab" aria-controls="most_active_tab" role="tab" data-toggle="tab"><span>Nearby</span></a></li>
+		<li role="presentation" class="active col-xs-3 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Recent</span></a></li>
 		<li role="presentation" class="col-xs-4 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
-		<li role="presentation" class="active col-xs-3 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
-		<li role="presentation" class="col-xs-4 most-active-btn"><a href="#most_active_tab" aria-controls="most_active_tab" role="tab" data-toggle="tab"><span>Most Active</span></a></li>
 	</ul>
 	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
 
@@ -68,6 +77,13 @@
 			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="most_active_tab">
+		</div>
+	</div>
+	</div>
+	</div>
+	<div role="tabpanel" class="tab-pane area-news-tab" id="area_news_tab">
+		<div class="content-wrapper">
+
 		</div>
 	</div>
 	</div>

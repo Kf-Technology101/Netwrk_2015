@@ -533,6 +533,7 @@ var Topic = {
             .add($('#show-topic').find('.feed-row.feed-post .feed-content'))
             .add($('.recentActivityPosts').find('.post'))
             .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-post .feed-content'))
+            .add($('#area_news_tab').find('.content-wrapper .feed-row.feed-post .feed-content'))
             .add($('#modal_topic,#slider_topic').find('.header').find('.right-section').find('.post-trigger'))
             .add($('#show-topic').find('.right-section').find('.post-trigger'))
             .add($('#list_post,#slider_list_post').find('.right-section').find('.post-trigger'));
@@ -576,7 +577,8 @@ var Topic = {
             .add($('#profileRecentTopic').find('.topic-trigger'))
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'))
             //.add($('.popup-box').find('.popup-topic-trigger'))
-            .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-topic'));
+            .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-topic'))
+            .add($('#area_news_tab').find('.content-wrapper .feed-row.feed-topic'));
         target.unbind();
         target.on('click',function(e){
             var city_id = $(e.currentTarget).attr('data-city'),
@@ -592,7 +594,7 @@ var Topic = {
                 Post.params.topic_name = topic_name;
                 Post.params.city = city_id;
                 Post.params.city_name = city_name;
-                Post.initialize();
+                //Post.initialize();
             }
         });
 
