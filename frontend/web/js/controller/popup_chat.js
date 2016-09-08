@@ -305,6 +305,7 @@ var PopupChat = {
     },
 
     MoveMeetButton: function() {
+        return;
         var have_popup = false,
             max_height = 0,
             bottom_btnMeet;
