@@ -228,6 +228,7 @@ var PopupChat = {
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/topic/topic-page?city="+Topic.city.id;
             }else{
+                return;
                 Topic.initialize(Topic.city.id);
             }
         });
@@ -305,6 +306,7 @@ var PopupChat = {
     },
 
     MoveMeetButton: function() {
+        return;
         var have_popup = false,
             max_height = 0,
             bottom_btnMeet;

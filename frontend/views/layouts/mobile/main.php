@@ -243,7 +243,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       </div>
   </footer> -->
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
-  <?= $this->render('@frontend/modules/netwrk/views/default/partial/chat_inbox');?>
+  <?= $this->render('@frontend/modules/netwrk/views/chat-inbox/chat_inbox');?>
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/netwrk_navigation');?>
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/netwrk_news');?>
   <?php $this->endBody() ?>

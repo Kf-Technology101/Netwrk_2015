@@ -123,10 +123,12 @@ var LandingPage = {
 
 		$(LandingPage.netwrk_news).find('.content-wrapper').append(append_html);
 
-		var header_template = _.template($( "#netwrk_header" ).html());
-		var header_html = header_template({landing: LandingPage.data.hq_post});
+		if(isMobile){
+			var header_template = _.template($( "#netwrk_header" ).html());
+			var header_html = header_template({landing: LandingPage.data.hq_post});
 
-		$(LandingPage.netwrk_news).find('.header-wrapper').html(header_html);
+			$(LandingPage.netwrk_news).find('.header-wrapper').html(header_html);
+		}
 		// Netwrk news ends here
 
 		LandingPage.onTemplateLanding();
@@ -453,7 +455,13 @@ var LandingPage = {
 
 		// Netwrk news starts here
 		var parent = $(LandingPage.netwrk_news).find('.content-wrapper');
-		parent.css('height', $(window).height()-110);
+
+		if(isMobile){
+			parent.css('height', $(window).height()-110);
+		} else {
+			parent.css('height', $(window).height()-50);
+		}
+
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",

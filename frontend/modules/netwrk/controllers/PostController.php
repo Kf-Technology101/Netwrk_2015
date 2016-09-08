@@ -500,7 +500,7 @@ class PostController extends BaseController
         $cookies = Yii::$app->request->cookies;
         $zipCode = $cookies->getValue('nw_zipCode');
 
-        $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+        $limit = 30; //Yii::$app->params['LimitObjectFeedGlobal'];
 
         //if city is entered on cover page then zipcode is 0,
         //IF a person enters a city, the most active general chat will show (meaning the post with the most chats)

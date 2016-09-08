@@ -68,11 +68,11 @@ var ChatInbox = {
 		}
 	},
 	OnShowListChatPost: function(){
-		if($(ChatInbox.chat_inbox).css('left') == '100px'){
+		/*if($(ChatInbox.chat_inbox).css('left') == '100px'){
 			$(ChatInbox.chat_inbox).animate({
 				"left": ChatInbox.list_chat_post_right_hidden
 			}, 500);
-		} else {
+		} else {*/
 			ChatInbox.GetDataListChatPost();
 
 			//when guest user, then display chat discussion tab.
@@ -82,10 +82,12 @@ var ChatInbox = {
 				ChatInbox.GetDataListChatPrivate();
 			}
 
-			$(ChatInbox.chat_inbox).animate({
+
+
+			/*$(ChatInbox.chat_inbox).animate({
 				"left": "100px"
 			}, 500);
-		}
+		}*/
 
 		/*if ($(ChatInbox.chat_inbox).css('left') == ChatInbox.list_chat_post_right_hidden) {
 			ChatInbox.GetDataListChatPost();
@@ -120,7 +122,13 @@ var ChatInbox = {
 	},
 
 	CustomScrollBar: function(){
-		var parent = $(ChatInbox.modal).find('#chat_discussion_tab');
+		var parent;
+		if(isMobile){
+			parent = $(ChatInbox.modal).find('#chat_discussion_tab');
+		} else {
+			parent = $(ChatInbox.modal).find('#chat_discussion');
+		}
+
 		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
@@ -130,7 +138,13 @@ var ChatInbox = {
 	},
 
 	CustomScrollBarMostActive: function(){
-		var parent = $(ChatInbox.modal).find('#most_active_tab');
+		var perent;
+		if(isMobile){
+			parent = $(ChatInbox.modal).find('#most_active_tab');
+		} else {
+			parent = $(ChatInbox.modal).find('#most_active_tab').find('#containerLocalPartyLines');
+		}
+
 		parent.css('height', $(window).height()-40);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
@@ -157,6 +171,17 @@ var ChatInbox = {
 			parent.find('li').remove();
 			parent.append(append_html);
 			ChatInbox.CustomScrollBar();
+			ChatInbox.OnClickChatPostDetail();
+		}
+	},
+
+	getTemplateNearByLines: function(parent,data, user_id){
+		if (user_id == UserLogin) {
+			var list_template = _.template($("#chat_inbox_list" ).html());
+			var append_html = list_template({chat_inbox_list: data});
+			parent.find('li').remove();
+			parent.append(append_html);
+			ChatInbox.CustomScrollBarMostActive();
 			ChatInbox.OnClickChatPostDetail();
 		}
 	},
@@ -411,8 +436,10 @@ var ChatInbox = {
 				if (result) {
 					result = $.parseJSON(result);
 					ChatInbox.getTemplateChatInbox(parent,result.linesData, UserLogin);
-					ChatInbox.getTemplateChatInbox(localPartyParent,result.localPartyLines, UserLogin);
-					ChatInbox.getTemplateMostActive(mostActiveParent,result.mostActive, UserLogin);
+					ChatInbox.getTemplateNearByLines(localPartyParent,result.localPartyLines, UserLogin);
+					if(isMobile){
+						ChatInbox.getTemplateMostActive(mostActiveParent,result.mostActive, UserLogin);
+					}
 					if(isGuest){
 						// Display Chat info popover
 						//Common.showHideInfoPopover('popover-chat-public-lines', 'nw_popover_chat_public_lines');
