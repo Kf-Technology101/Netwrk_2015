@@ -1,8 +1,8 @@
 <?php use yii\helpers\Url; ?>
-<div class="left-slider" id="create_post_slider">
-    <div class="slider-dialog" id="create_post" data-lat="" data-lng="">
-        <div class="slider-content">
-            <div class="slider-header">
+<div class="modal" id="create_post" data-lat="" data-lng="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
                 <div class="head">
                     <div class="name_user">
                         <p> Build a line</p>
@@ -18,7 +18,7 @@
                     <div class="clearfix"></div>
                 </div>-->
             </div>
-            <div class="slider-body">
+            <div class="modal-body">
                 <div class="page" id="create_topic">
                     <div class="post">
                         <input type="hidden" name="post_id" id="post_id" value=""/>
