@@ -62,7 +62,8 @@ var PopupChat = {
             } else {
                 var target_popup_chat= $("#popup-chat-" + PopupChat.params.post);
                 if($("#popup-chat-" + PopupChat.params.post + " .popup-head").hasClass('chat-discussion')){
-                    $("#popup-chat-" + PopupChat.params.post + " .popup-head .right-section").addClass('active');
+                    /*$("#popup-chat-" + PopupChat.params.post + " .popup-head .right-section").addClass('active');*/
+                    $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
                 } else {
                     $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
                 }
@@ -196,7 +197,8 @@ var PopupChat = {
         }
         PopupChat.getTemplate();
         if($("#popup-chat-" + PopupChat.params.post + " .popup-head").hasClass('chat-discussion')){
-            $("#popup-chat-" + PopupChat.params.post + " .popup-head .right-section").addClass('active');
+            /*$("#popup-chat-" + PopupChat.params.post + " .popup-head .right-section").addClass('active');*/
+            $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
         } else {
             $("#popup-chat-" + PopupChat.params.post + " .popup-head").css("background-color", PopupChat.active_color);
         }
@@ -217,6 +219,14 @@ var PopupChat = {
         $('.map_content').append(append_html);
         //Topic.OnClickTopicFeed();
         PopupChat.onClickChatTitle();
+        PopupChat.onClickAreaNewsIcon();
+    },
+
+    onClickAreaNewsIcon: function () {
+        var target = $('.popup-box').find('.chat-area-news-trigger');
+        target.off('click').on('click',function(){
+            $('.slider-tab a[href="#area_news_tab"]').tab('show');
+        });
     },
 
     onClickChatTitle: function() {
@@ -261,14 +271,16 @@ var PopupChat = {
         var target_popup_active = $("#popup-chat-" + id + " .popup-head");
         $("#textarea-" + id).on("focus", function() {
             if(target_popup_active.hasClass('chat-discussion')){
-                target_popup_active.find(".right-section").addClass('active');
+                /*target_popup_active.find(".right-section").addClass('active');*/
+                target_popup_active.css("background-color", PopupChat.active_color);
             } else {
                 target_popup_active.css("background-color", PopupChat.active_color);
             }
         });
         $("#textarea-" + id).on("focusout", function() {
             if(target_popup_active.hasClass('chat-discussion')){
-                target_popup_active.find(".right-section").removeClass('active');
+                /*target_popup_active.find(".right-section").removeClass('active');*/
+                target_popup_active.css("background-color", PopupChat.inactive_color);
             } else {
                 target_popup_active.css("background-color", PopupChat.inactive_color);
             }
@@ -276,14 +288,16 @@ var PopupChat = {
 
         $("#popup-chat-" + id).on("click", function() {
             if($(PopupChat.popup_chat_class + " .popup-head").hasClass('chat-discussion')){
-                $(PopupChat.popup_chat_class + " .popup-head .right-section").removeClass('active');
+                /*$(PopupChat.popup_chat_class + " .popup-head .right-section").removeClass('active');*/
+                $(PopupChat.popup_chat_class + " .popup-head").css("background-color", PopupChat.inactive_color);
             } else {
                 $(PopupChat.popup_chat_class + " .popup-head").css("background-color", PopupChat.inactive_color);
             }
             $(PopupChat.popup_chat_class).find('.send').css("background-color", PopupChat.inactive_color);
 
             if(target_popup_active.hasClass('chat-discussion')){
-                target_popup_active.find(".right-section").addClass('active');
+                /*target_popup_active.find(".right-section").addClass('active');*/
+                target_popup_active.css("background-color", PopupChat.active_color);
             } else {
                 target_popup_active.css("background-color", PopupChat.active_color);
             }
@@ -296,7 +310,8 @@ var PopupChat = {
 
             if (!container.is(e.target) && container.has(e.target).length === 0) {
                 if(target_popup_active.hasClass('chat-discussion')){
-                    target_popup_active.find(".right-section").removeClass('active');
+                    /*target_popup_active.find(".right-section").removeClass('active');*/
+                    target_popup_active.css("background-color", PopupChat.inactive_color);
                 } else {
                     target_popup_active.css("background-color", PopupChat.inactive_color);
                 }
