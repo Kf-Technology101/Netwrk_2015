@@ -42,6 +42,8 @@ var Common = {
             // Display netwrk logo info popover
             Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
         }
+
+        Common.clickCenterLocation();
     },
 
     console: function(){
@@ -611,6 +613,18 @@ var Common = {
             $(this).animate({
                 "left": "-500px"
             }, 200);
+        });
+    },
+
+    clickCenterLocation: function(map){
+        var btn = $('#btnCenterLocation');
+        btn.unbind();
+        btn.on('click',function(){
+            if(User.location.lat && User.location.lng) {
+                if(!isMobile){
+                    Map.initialize();
+                }
+            }
         });
     }
 };

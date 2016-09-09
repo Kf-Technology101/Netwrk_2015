@@ -1633,6 +1633,10 @@
 			});
 
 			google.maps.event.addListener(map, 'dragend', function(){
+				if($('#btnCenterLocation').hasClass('hide')){
+					$('#btnCenterLocation').removeClass('hide');
+					$('#btn_meet').css({'right' : '70px'})
+				}
 				Map.removeBlueDot();
 				Map.getMaxMarker = true;
 			});
