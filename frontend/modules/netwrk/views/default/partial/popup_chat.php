@@ -27,7 +27,13 @@
                     </div>
                 <% }else{ %>
                     <div class="popup-head-left">
-                        <div class="left-section">
+                        <div class="chat-area-news-trigger">
+                            <i class="fa fa-newspaper-o"></i>
+                        </div>
+                        <div class='popup-title-name'>
+                            <%= post_name %>
+                        </div>
+                        <!--<div class="left-section">
                             <div class='popup-title-description popup-topic-trigger <%= popoverChatTopicTitle %>'
                                   data-city-name='<%= city_name %>'
                                   data-city='<%= city %>'
@@ -36,7 +42,6 @@
                                   data-placement="top"
                                   data-content="<%= chatTopicTitlePopover %>">
                                 Local news
-                                <!--<%= post_description %>-->
                             </div>
                         </div>
                         <div class="middle-section">
@@ -47,7 +52,7 @@
                                 <div class="fa fa-lg fa-minus"></div>
                                 <span class="post-location"><%= post_name %></span>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 <% } %>
                 <div class="popup-head-right">
