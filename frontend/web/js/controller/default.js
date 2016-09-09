@@ -63,6 +63,7 @@ var Default ={
             Default.HideNotificationOnChat();
             Default.ShowDefaultNotificationOnChat();
         }
+        Default.displayNetwrkIconUi();
     },
 
     UnsetLanding: function(){
@@ -274,10 +275,6 @@ var Default ={
             Default.onClickNetwrkNews();
         }
         Default.onClickNavigationIcon();
-        if(!isMobile){
-            Default.displayNetwrkIconUi();
-            LandingPage.netwrk_news = '#area_news_tab';
-        }
         if (UserLogin && typeof isCoverPageVisited !== 'undefined') {
             Ajax.get_user_profile().then(function(data){
                 sessionStorage.UserInfo = data;

@@ -5,6 +5,7 @@ var ChatInbox = {
 	chat_inbox_mobile: '#chat_inbox_btn_mobile',
 	private_chat: '#chat_private',
 	discussion_chat: '#chat_discussion',
+	chat_area_news: '#area_news_tab',
 	list_chat_post_right_hidden: "-400px",
 	params: {
 		previous: '',
