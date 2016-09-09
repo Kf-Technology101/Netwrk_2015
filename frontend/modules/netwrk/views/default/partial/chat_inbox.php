@@ -17,10 +17,10 @@
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
 		<li role="presentation" class="col-xs-4 most-active-btn"><a href="#most_active_tab" aria-controls="most_active_tab" role="tab" data-toggle="tab"><span>Nearby</span></a></li>
-		<li role="presentation" class="active col-xs-3 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Recent</span></a></li>
+		<li role="presentation" class="active col-xs-4 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Recent</span></a></li>
 		<li role="presentation" class="col-xs-4 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
 	</ul>
-	<i id='hide_chat_inbox_btn' class="fa fa-times"></i>
+	<i id='hide_chat_inbox_btn' class="fa fa-times hide"></i>
 
 	<!-- Tab panes -->
 	<div class="tab-content chat-inbox-content">
