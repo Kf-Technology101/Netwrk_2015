@@ -31,7 +31,7 @@
                     <span class="input-group-addon" id="sizing-addon2">#</span>
                     <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?/*= isset($post->title) ? $post->title :''*/?>">
                 </div>-->
-                <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"></textarea>
+                <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"><?= isset($post->title) ? $post->title :''?></textarea>
             </div>
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
                 <div class="post-category-content">

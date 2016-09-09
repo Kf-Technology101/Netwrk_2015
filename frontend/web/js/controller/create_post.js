@@ -398,10 +398,10 @@ var Create_Post={
         }
         Create_Post.onCheckStatus();
 
-        /*parent.modal({
+        parent.modal({
             backdrop: true,
             keyboard: false
-        }).removeAttr("style").css("display", "block");*/
+        }).removeAttr("style").css("display", "block");
     },
     onCloseModalCreatePost: function(){
         $('#create_post').on('hidden.bs.modal',function() {
