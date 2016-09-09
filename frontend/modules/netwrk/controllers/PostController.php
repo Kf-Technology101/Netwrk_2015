@@ -476,7 +476,8 @@ class PostController extends BaseController
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $value['chat_updated_time'] ? $value['chat_updated_time'] : $value['created_at']
+                    'real_update_at' => $value['chat_updated_time'] ? $value['chat_updated_time'] : $value['created_at'],
+                    'location' => $value['location']
                 ];
                 array_push($local_topics, $item);
             }
@@ -552,7 +553,8 @@ class PostController extends BaseController
                     'num_brilliant'=> $num_brilliant ? $num_brilliant : 0,
                     'avatar'=> $image,
                     'update_at'=> $num_date,
-                    'real_update_at' => $value['chat_updated_time'] ? $value['chat_updated_time'] : $value['created_at']
+                    'real_update_at' => $value['chat_updated_time'] ? $value['chat_updated_time'] : $value['created_at'],
+                    'location' => $value['location']
                 ];
                 array_push($local_topics, $item);
             }
@@ -622,7 +624,8 @@ class PostController extends BaseController
                             'avatar' => $image,
                             'update_at' => $num_date,
                             'real_update_at' => $message['chat_updated_time'] ? $message['chat_updated_time'] : $message['created_at'],
-                            'discussion_notification_count' => $message['notification_count']
+                            'discussion_notification_count' => $message['notification_count'],
+                            'location' =>  $message['location']
                         ];
                         array_push($data, $item);
                     }
