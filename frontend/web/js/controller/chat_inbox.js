@@ -129,7 +129,7 @@ var ChatInbox = {
 			parent = $(ChatInbox.modal).find('#chat_discussion');
 		}
 
-		parent.css('height', $(window).height()-40);
+		parent.css('height', $(window).height()-60);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
@@ -145,7 +145,7 @@ var ChatInbox = {
 			parent = $(ChatInbox.modal).find('#most_active_tab').find('#containerLocalPartyLines');
 		}
 
-		parent.css('height', $(window).height()-40);
+		parent.css('height', $(window).height()-60);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
@@ -156,7 +156,7 @@ var ChatInbox = {
 
 	CustomScrollBarPrivate: function(){
 		var parent = $(ChatInbox.modal).find('#chat_private_tab');
-		parent.css('height', $(window).height()-40);
+		parent.css('height', $(window).height()-60);
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
 			$(parent).mCustomScrollbar({
 				theme:"dark",
