@@ -116,13 +116,15 @@ var LandingPage = {
 		var list_template = _.template($( "#netwrk_news" ).html());
 		var append_html = list_template({landing: LandingPage.data});
 
-		$(LandingPage.netwrk_news).find('.content-wrapper').append(append_html);
-
 		if(isMobile){
 			var header_template = _.template($( "#netwrk_header" ).html());
 			var header_html = header_template({landing: LandingPage.data.hq_post});
 
 			$(LandingPage.netwrk_news).find('.header-wrapper').html(header_html);
+
+			$(LandingPage.netwrk_news).find('.content-wrapper').append(append_html);
+		} else {
+			$(ChatInbox.chat_area_news).find('.content-wrapper').append(append_html);
 		}
 		// Netwrk news ends here
 
@@ -156,7 +158,8 @@ var LandingPage = {
 
 	OnClickAreaTalk: function(){
 		var target = $(LandingPage.parent).find('.btn-area-talk')
-				.add($(LandingPage.netwrk_news).find('.btn-area-talk'));
+				.add($(LandingPage.netwrk_news).find('.btn-area-talk'))
+				.add($(ChatInbox.chat_area_news).find('.btn-area-talk'));
 		target.unbind();
 		target.on('click',function(e){
 			var post_id = $(e.currentTarget).attr('data-value'),
@@ -181,6 +184,7 @@ var LandingPage = {
 	OnClickChat: function(){
 		var target = $(LandingPage.parent).find('.top-post .action .chat')
 				.add($(LandingPage.netwrk_news).find('#mostActive .action .chat'))
+				.add($(ChatInbox.chat_area_news).find('#mostActive .action .chat'))
 				.add($(ChatInbox.chat_inbox).find('#most_active_tab').find('.post-row  .action .chat'));
 		target.unbind();
 		target.on('click',function(e){
@@ -203,7 +207,8 @@ var LandingPage = {
 
 	OnClickVote: function(){
 		var target = $(LandingPage.parent).find('.top-post .action .brilliant')
-				.add($(LandingPage.netwrk_news).find('#mostActive .action .brilliant'));
+				.add($(LandingPage.netwrk_news).find('#mostActive .action .brilliant'))
+				.add($(ChatInbox.chat_area_news).find('#mostActive .action .brilliant'));
 		target.unbind();
 
 		target.on('click',function(e){
@@ -259,6 +264,7 @@ var LandingPage = {
 	OnClickPost: function(){
 		var target = $(LandingPage.parent).find('.top-post .post')
 				.add($(LandingPage.netwrk_news).find('#mostActive .post'))
+				.add($(ChatInbox.chat_area_news).find('#mostActive .post'))
 				.add($(ChatInbox.chat_inbox).find('#most_active_tab').find('.post-row .post'));
 		target.unbind();
 		target.on('click',function(e){
@@ -281,7 +287,8 @@ var LandingPage = {
 
 	OnClickTopic: function(){
 		var target = $(LandingPage.parent).find('.topic-row')
-				.add($(LandingPage.netwrk_news).find('.topic-row'));
+				.add($(LandingPage.netwrk_news).find('.topic-row'))
+				.add($(ChatInbox.chat_area_news).find('.topic-row'));
 
 		target.unbind();
 		target.on('click',function(e){
@@ -305,7 +312,8 @@ var LandingPage = {
 
 	OnClickNetwrk: function(){
 		var target = $(LandingPage.parent).find('.communities-row')
-				.add($(LandingPage.netwrk_news).find('.communities-row'));
+				.add($(LandingPage.netwrk_news).find('.communities-row'))
+				.add($(ChatInbox.chat_area_news).find('.communities-row'));
 
 		target.unbind();
 		target.on('click',function(e){
@@ -437,11 +445,13 @@ var LandingPage = {
         });
 
 		// Netwrk news starts here
-		var parent = $(LandingPage.netwrk_news).find('.content-wrapper');
+		var parent;
 
 		if(isMobile){
+			parent = $(LandingPage.netwrk_news).find('.content-wrapper');
 			parent.css('height', $(window).height()-110);
 		} else {
+			parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
 			parent.css('height', $(window).height()-50);
 		}
 
@@ -457,7 +467,9 @@ var LandingPage = {
     	var avatar = $('.top-post').find('.top-post-content .post-row .avatar')
 				.add($('#collapseFavoriteCommunities').find('.feed-post .avatar-poster'))
 				.add($(LandingPage.netwrk_news).find('.post-row .avatar'))
-				.add($(LandingPage.netwrk_news).find('.feed-post .avatar-poster'));
+				.add($(LandingPage.netwrk_news).find('.feed-post .avatar-poster'))
+				.add($(ChatInbox.chat_area_news).find('.post-row .avatar'))
+				.add($(ChatInbox.chat_area_news).find('.feed-post .avatar-poster'));
 		avatar.unbind();
 		avatar.on('click', function(e){
 			var user_login = $(e.currentTarget).parent().attr('data-user');
