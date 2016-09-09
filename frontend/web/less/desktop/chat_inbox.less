@@ -226,6 +226,19 @@
 							color: #1d1b1b;
 							font-size: 12px;
 						}
+						.location-chat-inbox {
+							color: #1d1b1b;
+							font-size: 12px;
+							line-height: 12px;
+							height: 35px;
+							max-height: 35px;
+							width: 60px;
+							margin-bottom: 5px;
+							display: inline-block;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							word-wrap: break-word;
+						}
 						.notify-chat-inbox {
 							position: absolute;
 							right: 110px;
@@ -251,14 +264,14 @@
 							color: #1B1B1B;
 						}
 						.title-description-user {
-							width: 225px;
+							width: 180px;
 							display: inline-block;
 							margin-left: 4px;
 
 							.title-chat-inbox {
 								font-size: 15px;
 								font-weight: bold;
-								max-width: 110px; // 145px
+								min-width: 180px; // 145px
 								white-space: nowrap;
 								text-overflow: ellipsis;
 								overflow: hidden;
@@ -268,7 +281,7 @@
 							// 	content: "#";
 							// }
 							.description-chat-inbox {
-								min-width: 220px;
+								min-width: 180px;
 								overflow:hidden;
 								white-space:nowrap;
 								text-overflow: ellipsis;
@@ -312,6 +325,12 @@
 							}
 						}
 					}
+				}
+			}
+			&#chat_private{
+				.title-chat-inbox {
+					min-width: 145px;
+					max-width: 145px;
 				}
 			}
 		}
@@ -482,7 +501,7 @@
 				.feed-content {
 					.post {
 						margin-left: 50px;
-						width: 335px;
+						width: 260px;
 						.post-title {
 							&::before{
 								content: '#';
