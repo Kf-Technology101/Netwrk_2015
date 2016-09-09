@@ -59,7 +59,7 @@ $cookies = Yii::$app->request->cookies;
     <i class="fa fa-crosshairs"></i>
     <!--<span>Build</span>-->
   </div>
-  <!--<div id="btn_my_location" class="btn_my_location hide" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
+  <!--<div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
     <i class="fa fa-plus"></i>
     <span>Build</span>
   </div>-->
