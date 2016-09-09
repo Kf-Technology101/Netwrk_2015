@@ -114,7 +114,7 @@ var Create_Post={
                 Create_Post.params.city_name = name_city;
             }
 
-            Create_Post.initializeSlider();
+            //Create_Post.initializeSlider();
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
@@ -131,9 +131,9 @@ var Create_Post={
         }
     },
     initializeSlider: function() {
-        Create_Post.showCreatePostSlider();
+        /*Create_Post.showCreatePostSlider();
 
-        Common.CustomScrollBar($(Create_Post.slider).find('.slider-body'));
+        Common.CustomScrollBar($(Create_Post.slider).find('.slider-body'));*/
     },
     showCreatePostSlider: function() {
         $.when(Common.closeAllLeftSliders()).done(function() {
@@ -436,6 +436,8 @@ var Create_Post={
             backdrop: true,
             keyboard: false
         }).removeAttr("style").css("display", "block");
+
+        Common.CustomScrollBar(parent.find('.modal-body'));
     },
     onCloseModalCreatePost: function(){
         $('#create_post').on('hidden.bs.modal',function() {
