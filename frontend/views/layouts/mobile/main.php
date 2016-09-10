@@ -146,17 +146,37 @@ if (isset($cookies["isCoverPageVisited"])) {
               <i class="fa fa-plus"></i>
               <span>Build</span>
             </div>-->
-          <div class="btn-explore-location">
+          <!--<div class="btn-explore-location">
             <i class="fa fa-globe"></i>
             <span>Near</span>
-          </div>
+          </div>-->
     	</div>
 	</div>
     <section class="navigation-wrapper text-center">
       <div class="box-navigation">
-        <div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
-          <?php
-            if (isset($cookies["nw_glow_near_btn"])) {
+        <div id="nav_wrapper" class="btn-group btn-group-default btn-group-type navbar-fixed-bottom" role="group">
+          <button type="button" class="btn btn-default btn-nav-map btn-explore-location">
+            <i class="navigation-icon fa fa-globe"></i>
+            <div class="navigation-text">Map</div>
+          </button>
+          <button id="btn_nav_near_mobile" type="button" class="btn btn-default">
+            <i class="navigation-icon ci-line"></i>
+            <div class="navigation-text">Near</div>
+          </button>
+          <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
+            <i class="navigation-icon ci-meet"></i>
+            <div class="navigation-text">Meet</div>
+          </button>
+          <?php if (Yii::$app->user->isGuest):?>
+            <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
+              <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
+              <div class="navigation-text">Login</div>
+            </a>
+          <?php endif; ?>
+        </div>
+        <!--<div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
+          --><?php
+/*            if (isset($cookies["nw_glow_near_btn"])) {
               $near_class = 'btn-nav-map';
             } else {
               $near_class = 'btn-nav-map glow-btn-wrapper';
@@ -175,12 +195,8 @@ if (isset($cookies["isCoverPageVisited"])) {
               $near_popover_class = '';
               $near_popover = '';
             }
-          ?>
-          <!--<button id="btn_my_location" type="button" class="btn btn-default">
-            <i class="navigation-icon fa fa-plus"></i>
-            <div class="navigation-text">Build</div>
-          </button>
-          <div class="<?php /*echo $near_class;*/?> <?php /*echo $near_popover_class;*/?>"
+          */?>
+          <!--<div class="<?php /*echo $near_class;*/?> <?php /*echo $near_popover_class;*/?>"
                data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_near" data-wrapper="popover-near">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                data-placement="top" data-content="<?php /*echo $near_popover; */?>">
             <button type="button" class="btn-explore-location btn-active">
@@ -206,7 +222,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             </a>
           <?php /*endif; */?>
           </button>-->
-        </div>
+        <!--</div>-->
       </div>
     </section>
     <?php echo $this->render('@frontend/modules/netwrk/views/user/mobile/userinfo') ?>
@@ -219,7 +235,7 @@ if (isset($cookies["isCoverPageVisited"])) {
         <?= $this->render('@frontend/modules/netwrk/views/default/partial/area_news_slider');?>
     </div>
 
-    <section class="btn-meet-mobile-wrapper text-center">
+    <section class="btn-meet-mobile-wrapper text-center hide">
       <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
     </section>
 

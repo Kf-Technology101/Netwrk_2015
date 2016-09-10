@@ -37,15 +37,15 @@
     <div class="field-name">
         <p class="title"> Username </p>
         <!-- <input type="text" class="username form-control" maxlength="128" placeholder="Username"> -->
-        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username','autofocus'=>true)); ?>
+        <?= $form->field($model, 'username')->textInput(array('placeholder' => 'Username','autofocus'=>true, 'tabindex' => '1')); ?>
     </div>
     <div class="field-name password">
         <p class="title"> Password </p>
         <a href="<?= Url::base(true); ?>/netwrk/user/forgot-password" class="forgot-password">Forgot password</a>
         <!-- <input type="password" class="password form-control" maxlength="128" placeholder="Password"> -->
-        <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password')); ?>
+        <?= $form->field($model, 'password')->passwordInput(array('placeholder' => 'Password', 'tabindex' => '2')); ?>
     </div>
-    <div class="btn-control">
+    <div class="btn-control" tabindex="3">
         <p>Login</p>
     </div>
     <?php ActiveForm::end(); ?>

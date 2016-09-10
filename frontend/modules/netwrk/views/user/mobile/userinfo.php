@@ -27,3 +27,11 @@
     <!--</div>-->
 </script>
 
+<script id="account_button" type="text/x-underscore-template" >
+    <button id="buttonProfileWrapper" type="button" class="btn btn-default profile-trigger">
+        <i class="navigation-icon fa fa-user"></i>
+        <div class="navigation-text">
+            Profile
+        </div>
+    </button>
+</script>
