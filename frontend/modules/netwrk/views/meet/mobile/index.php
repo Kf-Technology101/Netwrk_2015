@@ -220,7 +220,7 @@
         <li>
             <div class='meet-user-row'>
                 <span class='user-image'>
-                    <img src='<?= Url::to("@web/") ?><%= meet_user.information.image %>' />
+                    <img src='<%= meet_user.information.image %>' />
                 </span>
                 <div class='user-details-wrapper'>
                     <div class='user-name'><%= meet_user.username %></div>
