@@ -149,7 +149,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             <i class="navigation-icon fa fa-globe"></i>
             <div class="navigation-text">Map</div>
           </button>
-          <button id="btn_nav_near_mobile" type="button" class="btn btn-default">
+          <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-line"></i>
             <div class="navigation-text">Near</div>
           </button>
@@ -247,7 +247,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       </div>
   </footer> -->
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
-  <?= $this->render('@frontend/modules/netwrk/views/chat-inbox/mobile/chat_inbox');?>
+  <?/*= $this->render('@frontend/modules/netwrk/views/chat-inbox/mobile/chat_inbox');*/?>
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/netwrk_navigation');?>
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/netwrk_news');?>
   <?php $this->endBody() ?>
