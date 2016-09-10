@@ -25,6 +25,7 @@ var ChatInbox = {
 			ChatInbox.HideMeetIconMobile();
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
+			LandingPage.GetDataTopLanding();
 			Default.SetAvatarUserDropdown();
 			//ChatInbox.OnShowNetwrkUiChatInbox();
 		} else {

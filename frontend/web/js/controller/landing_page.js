@@ -87,7 +87,7 @@ var LandingPage = {
 						//LandingPage.show_landing_page();
 					}
 				}
-			} else {
+			}/* else {
 				$(LandingPage.netwrk_news).animate({
 					"left": "0px"
 				}, 500);
@@ -97,7 +97,7 @@ var LandingPage = {
 				$(ChatInbox.chat_inbox).animate({
 					"left": ChatInbox.list_chat_post_right_hidden
 				}, 500);
-			}
+			}*/
 		});
 	},
 
@@ -121,11 +121,8 @@ var LandingPage = {
 			var header_html = header_template({landing: LandingPage.data.hq_post});
 
 			$(LandingPage.netwrk_news).find('.header-wrapper').html(header_html);
-
-			$(LandingPage.netwrk_news).find('.content-wrapper').append(append_html);
-		} else {
-			$(ChatInbox.chat_area_news).find('.content-wrapper').append(append_html);
 		}
+		$(ChatInbox.chat_area_news).find('.content-wrapper').append(append_html);
 		// Netwrk news ends here
 
 		LandingPage.onTemplateLanding();
@@ -445,13 +442,11 @@ var LandingPage = {
         });
 
 		// Netwrk news starts here
-		var parent;
+		var parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
 
 		if(isMobile){
-			parent = $(LandingPage.netwrk_news).find('.content-wrapper');
-			parent.css('height', $(window).height()-110);
+			parent.css('height', $(window).height()-141);
 		} else {
-			parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
 			parent.css('height', $(window).height()-50);
 		}
 
