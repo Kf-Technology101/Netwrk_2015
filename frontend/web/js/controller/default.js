@@ -274,7 +274,7 @@ var Default ={
             chatTab.css('max-height', chatTabHeight);
             netwrkNewsTab.css('max-height', chatTabHeight);
             $('#netwrkNavigation').css('height', wrapperHeight);
-            $('#chat_inbox').css('width', chatWidth).css('height', wrapperHeight);
+            $('#chat_inbox').css('height', wrapperHeight);
             $('#netwrkNews').css('width', width).css('height', wrapperHeight);
         }
 
