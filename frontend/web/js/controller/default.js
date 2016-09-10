@@ -81,7 +81,7 @@ var Default ={
                 LandingPage.showLandingWelcome();
             } else {
                 sessionStorage.map_zoom = 16;
-                $('.landing-trigger', '.logo-active').trigger('click');
+                //$('.landing-trigger', '.logo-active').trigger('click');
             }
 
             if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
