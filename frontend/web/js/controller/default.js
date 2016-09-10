@@ -63,7 +63,10 @@ var Default ={
             Default.HideNotificationOnChat();
             Default.ShowDefaultNotificationOnChat();
         }
-        Default.displayNetwrkIconUi();
+
+        if(!isMobile){
+            Default.displayNetwrkIconUi();
+        }
     },
 
     UnsetLanding: function(){
@@ -78,15 +81,15 @@ var Default ={
                     LandingPage.OnHideModalWelcome();
                     LandingPage.OnClickBackdropWelcome();
                     LandingPage.showLandingWelcome();
-                } else {
+                }/* else {
                     $('.landing-trigger', '.logo-active').trigger('click');
-                }
+                }*/
             } else if(sessionStorage.show_landing == 2 && location.href == baseUrl + "/netwrk/default/landing-page"){
                 LandingPage.initialize();
                 Default.UnsetLanding();
             } else {
                 sessionStorage.map_zoom = 16;
-                $('.landing-trigger', '.logo-active').trigger('click');
+                //$('.landing-trigger', '.logo-active').trigger('click');
             }
             /*if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
                 alert('in ShowLandingPage function .LandingPage.redirect() ='+sessionStorage.show_landing);
