@@ -19,15 +19,24 @@
     <div class="header">
         <?php if ($post->post_type == 1 ) { ?>
             <div class="chat-discussion-header">
-                <div class="left-section">
-                    <div class="popup-title-description chat-topic-trigger <?= $popover_chat_topic_title ?>"
-                         title="<?= $post->topic->title ?>"
-                         data-city-name="<?= $post->topic->city->name?>"
-                         data-city="<?= $post->topic->city_id?>"
-                         data-value="<?= $post->topic->id?>"
+                <div class="back-page">
+                    <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+                </div>
+                <div class="chat-area-news-trigger">
+                    <i class="fa fa-newspaper-o"></i>
+                </div>
+                <div class='popup-title-name'>
+                    <?= $post->topic->title ?>
+                </div>
+                <!--<div class="left-section">
+                    <div class="popup-title-description chat-topic-trigger <?/*= $popover_chat_topic_title */?>"
+                         title="<?/*= $post->topic->title */?>"
+                         data-city-name="<?/*= $post->topic->city->name*/?>"
+                         data-city="<?/*= $post->topic->city_id*/?>"
+                         data-value="<?/*= $post->topic->id*/?>"
                          data-template='<div class="popover info-popover chat-topic-title-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><div class="popover-close-trigger" data-cookie="nw_popover_chat_topic_title" data-wrapper="popover-chat-topic-title">&times;</div></div><div class="popover-content"></div></div>'
                          data-placement="bottom"
-                         data-content="<?= $chat_topic_title_popover ?>">
+                         data-content="<?/*= $chat_topic_title_popover */?>">
                         Local news
                     </div>
                 </div>
@@ -38,14 +47,14 @@
                     <div class='popup-title-name'>
                         <div class="fa fa-lg fa-minus"></div>
                         <span class="post-location">
-                            <?php if($post->location != null) : ?>
-                                <?= $post->location ?>
-                            <?php else : ?>
-                                <?= $post->title ?>
-                            <?php endif; ?>
+                            <?php /*if($post->location != null) : */?>
+                                <?/*= $post->location */?>
+                            <?php /*else : */?>
+                                <?/*= $post->title */?>
+                            <?php /*endif; */?>
                         </span>
                     </div>
-                </div>
+                </div>-->
             </div>
         <?php } else { ?>
             <div class="back_page">
