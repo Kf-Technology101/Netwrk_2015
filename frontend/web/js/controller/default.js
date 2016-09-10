@@ -284,6 +284,12 @@ var Default ={
                 var append_html = list_template({user_info: data});
                 $('#netwrkNavigation #navProfileWrapper').remove();
                 $('#netwrkNavigation').append(append_html);
+                if(isMobile){
+                    var list_template = _.template($("#account_button" ).html());
+                    var append_html = list_template({user_info: data});
+                    $('#nav_wrapper #buttonProfileWrapper').remove();
+                    $('#nav_wrapper').append(append_html);
+                }
                 /*if(isMobile){
                     $('#nav_wrapper #btn_nav_meet_mobile').before(append_html);
                 } else {
