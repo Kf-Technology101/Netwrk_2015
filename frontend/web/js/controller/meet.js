@@ -194,8 +194,8 @@ var Meet ={
     },
 
     showUserMeetMobile: function(){
-        Common.ShowModalComeBack();
-        //window.location.href = baseUrl + "/netwrk/meet";
+        //Common.ShowModalComeBack();
+        window.location.href = baseUrl + "/netwrk/meet";
     },
 
     GetUserMeet: function(){
