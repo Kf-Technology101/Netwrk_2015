@@ -17,23 +17,23 @@ var Meet ={
 
     },
     modal: '#modal_meet',
+    list: '#meetListing',
     height: 0,
     infoOf: 0,
     pid: 0,
     ez: 0,
     initialize: function() {
-        if(Meet.filter.active === 'setting'){
-            Meet_setting.initialize();
-        }else if(Meet.filter.active === 'profile'){
-            Profile.initialize();
-        }else if(Meet.filter.active === 'meeting'){
-            if(isMobile){
-                $('#show_meet').find('.meet-nav-control').removeClass('hide');
-            }
+        if(isMobile){
             Meet._init();
-        }
-        if (isMobile) {
             Default.SetAvatarUserDropdown();
+        } else {
+            if(Meet.filter.active === 'setting'){
+                Meet_setting.initialize();
+            }else if(Meet.filter.active === 'profile'){
+                Profile.initialize();
+            }else if(Meet.filter.active === 'meeting'){
+                Meet._init();
+            }
         }
     },
 
@@ -57,35 +57,20 @@ var Meet ={
             user_view = Meet.getParameterByName('user_id'),
             from = Meet.getParameterByName('from');
         if(isMobile){
-            Meet.setHeightContainer();
+            var meetHeight = $(window).height()-105;
+            $(Meet.list).css({'height' : meetHeight});
 
-            var currentTarget = $('#meeting_page'),
-                container = $('.container_meet');
+            Meet.onClickBack();
 
-            container.find('.page').hide();
-            $('.name_user').find('img').show();
-            $('#btn_meet_mobile').hide();
-            $('#btn_discover_mobile').hide();
-            $('.menu_bottom').hide();
-            // $('#btn_discover_mobile').show();
-            $('.log_out').hide();
-
-            currentTarget.show();
-
-            Meet.reset_page();
-            Meet._onclickBack();
-            if(post_id != "" && from != "" && from == "private"){
+            /*if(post_id != "" && from != "" && from == "private") {
                 Meet.GetUserMeetProfile(post_id);
-            } else if (user_view != "" && from != "" && from == "discussion"){
+            } else if (user_view != "" && from != "" && from == "discussion") {
                 Meet.GetUserMeetProfileDiscussion(user_view);
-            }else{
+            } else {*/
                 Meet.GetUserMeet();
-            }
-            Meet.changefilter(currentTarget);
-            Meet.eventClickdiscoverMobile();
-
+            /*}*/
         }else{
-            var parent = $('#modal_meet');
+            var parent = $('#modal_meet'),
                 currentTarget = parent.find('#meeting'),
                 container = parent.find('.container_meet');
             container.find('.page').hide();
@@ -198,19 +183,74 @@ var Meet ={
         window.location.href = baseUrl + "/netwrk/meet";
     },
 
+    onClickBack: function(){
+        if(isMobile){
+            $('#meetListing .back-page').off('click').on('click', function(){
+                window.location.href = baseUrl;
+            })
+        }
+    },
+
+    CustomScrollBarListing: function(){
+        var parent = $(Meet.list).find('#meetListWrapper');
+            parent.css('height', $(window).height()-145);
+
+        if ($(parent).find("div[id^='mSCB']").length == 0) {
+            $(parent).mCustomScrollbar({
+                theme:"dark",
+            });
+        };
+    },
+
+    onClickMeetButton: function() {
+        var btn = $(Meet.list).find('#meetListWrapper ul li').find('.btn-meet-trigger');
+        btn.unbind();
+        btn.on('click',function(){
+            var meetBtn = $(this);
+            var user_id = meetBtn.parent('.meet-button-wrapper').attr('data-user-id');
+            var currentState = meetBtn.text();
+            console.log(currentState);
+
+            if(isGuest){
+                Login.RedirectLogin(window.location.href);
+            } else {
+                Ajax.usermeet({user_id: user_id }).then(function(res){
+                    if(currentState == 'Meet') {
+                        meetBtn.text('Met');
+                        meetBtn.addClass('btn-met');
+                    } else {
+                        meetBtn.text('Meet');
+                        meetBtn.removeClass('btn-met');
+                    }
+                    window.ws.send("notify", {"sender": UserLogin, "receiver": user_id, "room": -1, "message": ''});
+                });
+            }
+        });
+    },
+
     GetUserMeet: function(){
-         Ajax.getUserMeeting().then(function(data){
+        Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
-            if(json.data.length >0){
+
+            if(json.data.length >0) {
                 $('p.no_data').hide();
                 Meet.user_list.len = json.data.length;
                 Meet.json = json.data;
-                Meet.showUserMeet();
-                $('.control-btn').show();
-            }else{
+                if(isMobile){
+                    var list_template = _.template($("#meet_list").html());
+                    var append_html = list_template({meet_list: Meet.json});
+                    parent = $(Meet.list).find('#meetListWrapper ul');
+                    parent.find('li').remove();
+                    parent.append(append_html);
+                    Meet.CustomScrollBarListing();
+                    Meet.onClickMeetButton();
+                } else {
+                    Meet.showUserMeet();
+                    $('.control-btn').show();
+                }
+            } else {
                 $('p.no_data').show();
             }
-
 
             // $('#modal_meet').on('hidden.bs.modal',function() {
             //     self.reset_modal();
@@ -627,5 +667,5 @@ var Meet ={
                 $('#modal_meet').modal('hide');
             });
         });
-    },
+    }
 };
