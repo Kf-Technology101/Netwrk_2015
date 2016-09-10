@@ -253,7 +253,7 @@ var Default ={
         if(isMobile){
             var height = $(window).height();
             var width = $(window).width();
-            var wrapperHeight = height - 60;
+            var wrapperHeight = height - 105;
             var navParentHeight = Math.ceil((height/100)*70);
             var chatTabHeight = Math.ceil((height/100)*80);
             var chatWidth = width - 100;
@@ -280,15 +280,17 @@ var Default ={
             Ajax.get_user_profile().then(function(data){
                 sessionStorage.UserInfo = data;
                 data = $.parseJSON(data);
-                var list_template = _.template($("#account_nav_dropdown" ).html());
-                var append_html = list_template({user_info: data});
-                $('#netwrkNavigation #navProfileWrapper').remove();
-                $('#netwrkNavigation').append(append_html);
+
                 if(isMobile){
                     var list_template = _.template($("#account_button" ).html());
                     var append_html = list_template({user_info: data});
                     $('#nav_wrapper #buttonProfileWrapper').remove();
                     $('#nav_wrapper').append(append_html);
+                } else {
+                    var list_template = _.template($("#account_nav_dropdown" ).html());
+                    var append_html = list_template({user_info: data});
+                    $('#netwrkNavigation #navProfileWrapper').remove();
+                    $('#netwrkNavigation').append(append_html);
                 }
                 /*if(isMobile){
                     $('#nav_wrapper #btn_nav_meet_mobile').before(append_html);
@@ -356,9 +358,9 @@ var Default ={
                         $(LandingPage.netwrk_news).animate({
                             "left": "-400px"
                         }, 500);
-                        $(ChatInbox.chat_inbox).animate({
+                        /*$(ChatInbox.chat_inbox).animate({
                             "left": ChatInbox.list_chat_post_right_hidden
-                        }, 500);
+                        }, 500);*/
                     } else {
                         $(LandingPage.netwrk_news).animate({
                             "left": "-400px"
@@ -366,9 +368,9 @@ var Default ={
 
                         $.when($('#netwrkNavigation').animate({
                             "left": "0"
-                        }, 500)).done(function(){
+                        }, 500));/*.done(function(){
                             ChatInbox.initialize();
-                        });
+                        });*/
                     }
                 });
             }
@@ -493,10 +495,14 @@ var Default ={
         parent.append(append_html);
 
         var favoriteContainer = $(".your-netwrks", '#netwrkNavigation');
-        if(!isMobile){
+        if(isMobile){
+            var favHeight = $(window).height()-135;
+            favoriteContainer.css({'height' : favHeight, 'max-height' : favHeight});
+        } else {
             var favHeight = $(window).height()-80;
             favoriteContainer.css({'height' : favHeight, 'max-height' : favHeight});
         }
+
         favoriteContainer.mCustomScrollbar({
             theme:"dark"
         });

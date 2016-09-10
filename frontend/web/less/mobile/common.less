@@ -351,14 +351,17 @@
 
 .netwrk-navigation {
     background: #ffffff;
-    height: 88%;
+    /*height: 88%;*/
     position: fixed;
     left: -200px;
     bottom: 0;
-    width: 100px;
+    width: 80px;
     z-index: 9999;
     overflow: hidden;
-    border-right: 1px solid #000000;
+    border: 1px solid #000000;
+    border-left: none;
+    top: 60px;
+    bottom: 45px;
     .custom-btn {
         background: #5888ac;
         color: #fff;
@@ -377,6 +380,7 @@
             line-height: 45px;
             position: absolute;
             bottom: 0;
+            display: none;
         }
         &.disabled {
             background-color: #fff;
@@ -385,10 +389,11 @@
         }
     }
     .your-netwrk-wrapper {
-        max-height: 85%;
-        height: 85%;
+        /*max-height: 85%;
+        height: 85%;*/
         overflow: hidden;
         .title {
+            font-size: 13px;
             font-weight: 600;
             text-align: center;
             display: block;
@@ -403,13 +408,13 @@
                 text-align: center;
                 .group {
                     border-bottom: 1px solid #ccc;
-                    padding-bottom: 10px;
+                    /*padding-bottom: 10px;*/
                     cursor: pointer;
                     .city-name {
-                        border-bottom: 1px solid #ccc;
-                        font-size: 14px;
+                        font-size: 13px;
                         font-weight: 400;
-                        padding: 5px;
+                        padding: 2px;
+                        border-bottom: 1px solid #ccc;
                     }
                     .item {
                         padding: 5px 0;
@@ -425,7 +430,7 @@
                             width: 48px;
                         }
                         .zipcode {
-                            font-size: 16px;
+                            font-size: 14px;
                             font-weight: 600;
                             padding-top: 5px;
                         }
