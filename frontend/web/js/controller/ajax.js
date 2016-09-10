@@ -643,17 +643,18 @@ var Ajax = {
     },
 
     getUserMeeting: function(params){
-        var url,defer = $.Deferred();
+        var url = baseUrl +"/netwrk/meet/get-user-meet",
+            defer = $.Deferred();
 
         if (isMobile) {
-            url = baseUrl +"/netwrk/meet/get-user-meet";
+            params = {'view' : 'mobile'};
         }else{
-            url = baseUrl + "/netwrk/meet/get-user-meet";
+            params = {'view' : 'desktop'};
         }
 
         $.ajax({
             url: url,
-            // data: params,
+            data: params,
             async: false,
             cache: false,
             type: 'GET',

@@ -119,11 +119,13 @@ class MeetController extends BaseController
 
     public function actionGetUserMeet()
     {
+        $view = isset($_GET['view']) ? $_GET['view'] : 'desktop';
+
         $system_user_id = Yii::$app->params['systemUserId'];
 
         $current_date = date('Y-m-d H:i:s');
         $filter = false;
-        if(Yii::$app->user->isGuest){
+        if(Yii::$app->user->isGuest) {
             $filter = false;
             $userCurrent = 0;
             $users_rand = User::find()
@@ -132,9 +134,9 @@ class MeetController extends BaseController
                                 ->orderBy(['order_num'=> SORT_DESC])
                                 ->all();
 
-        }else{
+        } else {
             $userLogin = User::findOne(Yii::$app->user->id);
-            if($userLogin->setting){
+            if($userLogin->setting) {
                 $filter = true;
             }
             $users_rand = $this->MixRandUser();
@@ -143,26 +145,43 @@ class MeetController extends BaseController
 
         $data = [];
         foreach ($users_rand as $key => $value) {
+            $post_data = '';
+            $brilliant = '';
 
-            $posts = Post::find()->where('user_id ='.$value->id)->andWhere(['not',['topic_id'=> NULL]])->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
-            $post_data = [];
+            if($view == 'desktop') {
+                $posts = Post::find()->where('user_id ='.$value->id)->andWhere(['not',['topic_id'=> NULL]])->orderBy(['created_at'=> SORT_DESC])->limit(4)->all();
+                $post_data = [];
 
-            foreach ($posts as $key => $post){
-                $item_post = array(
-                    'id'=> $post->id,
-                    'title'=> '#'.$post->title
-                );
-                array_push($post_data,$item_post);
+                foreach ($posts as $key => $post){
+                    $item_post = array(
+                        'id'=> $post->id,
+                        'title'=> '#'.$post->title
+                    );
+                    array_push($post_data,$item_post);
+                }
+
+                $count_like = 0;
+                $count_posts = Post::find()->where('user_id ='.$value->id)->all();
+                foreach ($count_posts as $key => $post) {
+                    $vote = Vote::find()->where('post_id = ' . $post->id . ' AND status = 1')->count();
+                    if($vote>0){
+                        $count_like += $vote;
+                    }
+                }
+                $brilliant = $count_like;
             }
+
             $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$value->id)->one();
+
             if($usermeet && $usermeet->status == 1){
                 $meet = 1;
-            }else{
+            } else {
                 $meet = 0;
             }
+
             if ($value->profile->photo == null){
                 $image = Url::to('@web/img/icon/no_avatar.jpg');
-            }else{
+            } else {
                 $image = Url::to('@web/uploads/'.$value->id.'/'.$value->profile->photo);
             }
 
@@ -171,67 +190,58 @@ class MeetController extends BaseController
             $time1 = date_create($years);
             $time2 = date_create($current_date);
             $year_old = $time1->diff($time2)->y;
+
             if(Yii::$app->user->isGuest){
                 $distance = 0;
-            }else{
+            } else {
                 $distance = $this->get_distance($userLogin->profile->lat,$userLogin->profile->lng,$value->profile->lat,$value->profile->lng);
             }
 
-            $count_like = 0;
-            $count_posts = Post::find()->where('user_id ='.$value->id)->all();
-            foreach ($count_posts as $key => $post) {
-                $vote = Vote::find()->where('post_id = ' . $post->id . ' AND status = 1')->count();
-                if($vote>0){
-                    $count_like += $vote;
-                }
-            }
-            $brilliant = $count_like;
-
             $user = array(
                 'user_id' => $value->id,
-                'username'=> $value->profile->first_name ." ". $value->profile->last_name,
+                'username' => $value->profile->first_name ." ". $value->profile->last_name,
                 'met' => $meet,
-                'distance'=> $distance,
-                'information'=> array(
-                    'username'=> $value->profile->first_name ." ". $value->profile->last_name,
-                    'image'=> $image,
-                    'year_old'=> $year_old,
-                    'work'=> $value->profile->work,
-                    'about'=> $value->profile->about,
-                    'post'=> $post_data,
-                    'brilliant'=>$brilliant,
+                'distance' => $distance,
+                'information' => array(
+                    'username' => $value->profile->first_name ." ". $value->profile->last_name,
+                    'image' => $image,
+                    'year_old' => $year_old,
+                    'work' => $value->profile->work,
+                    'about' => $value->profile->about,
+                    'post' => $post_data,
+                    'brilliant' => $brilliant,
                 ),
             );
 
-            if( $filter ){
+            if( $filter ) {
                 if($userLogin->setting->gender == 'All'){
                     $gender = true;
-                }elseif($value->profile->gender == $userLogin->setting->gender){
+                } elseif($value->profile->gender == $userLogin->setting->gender) {
                     $gender = true;
-                }else{
+                } else {
                     $gender = false;
                 }
 
-                if($userLogin->setting->age == 0){
+                if($userLogin->setting->age == 0) {
                     $age = true;
-                }elseif($year_old >= $userLogin->setting->age){
+                } elseif($year_old >= $userLogin->setting->age) {
                     $age = true;
-                }else{
+                } else {
                     $age = false;
                 }
 
-                if($userLogin->setting->distance == 0){
+                if($userLogin->setting->distance == 0) {
                     $status_distance = true;
-                }elseif($distance <=  $userLogin->setting->distance){
+                } elseif($distance <=  $userLogin->setting->distance) {
                     $status_distance = true;
-                }else{
+                } else {
                     $status_distance = false;
                 }
             }
 
-            if($filter && $gender && $age && $status_distance ){
+            if($filter && $gender && $age && $status_distance ) {
                 array_push($data,$user);
-            }elseif (!$filter){
+            } elseif (!$filter) {
                 array_push($data,$user);
             }
         }

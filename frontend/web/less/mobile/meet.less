@@ -756,4 +756,127 @@
             }
         }
     }
-}   
+}
+
+#meetListing {
+    width: 100%;
+    position: fixed;
+    top: 60px;
+    bottom: 45px;
+    .header {
+        background: #5888ac none repeat scroll 0 0;
+        border: medium none;
+        display: block;
+        height: 40px;
+        padding: 0;
+        width: 100%;
+        .back-page {
+            border-right: 1px solid #fff;
+            cursor: pointer;
+            float: left;
+            height: 40px;
+            width: 50px;
+            span {
+                color: #fff;
+                display: block;
+                font-size: 13px;
+                line-height: 18px;
+                text-align: center;
+                i {
+                    color: #fff;
+                    display: block;
+                    font-size: 14px;
+                    padding-top: 5px;
+                }
+            }
+        }
+        .title-page {
+            float: left;
+            height: 40px;
+            min-width: 250px;
+            width: 83%;
+            .title {
+                color: #fff;
+                display: inherit;
+                font-size: 18px;
+                line-height: 37px;
+                overflow: hidden;
+                text-align: center;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+    .meet-list-wrapper {
+        width: 100%;
+        height: 90%;
+        background: #fff;
+        ul {
+            padding: 0;
+            overflow: hidden;
+            li {
+                padding: 5px;
+                list-style-type: none;
+                border-bottom: 1px solid #cccccc;
+                .meet-user-row {
+                    height: 40px;
+                    position: relative;
+                    .user-image {
+                        border: 1px solid #d8d8d8;
+                        border-radius: 2px;
+                        float: left;
+                        height: 40px;
+                        line-height: 36px;
+                        text-align: center;
+                        vertical-align: top;
+                        width: 40px;
+                        img {
+                            height: auto;
+                            max-height: 100%;
+                            max-width: 100%;
+                        }
+                    }
+                    .user-details-wrapper {
+                        color: #1d1b1b;
+                        float: left;
+                        width: 195px;
+                        min-width: 195px;
+                        min-height: 1px;
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        .user-name {
+                            font-size: 14px;
+                            font-weight: bold;
+                            line-height: 20px;
+                            min-width: 180px;
+                            min-height: 1px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                        .user-info {
+                            font-size: 13px;
+                            min-width: 180px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                    }
+                    .meet-button-wrapper {
+                        width: 65px;
+                        float: left;
+                        text-align: center;
+                        padding-top: 3px;
+                        .btn-meet-trigger {
+                            color: #ffffff;
+                            background: #5888ac;
+                            &.btn-met {
+                                background: #5da5d8;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

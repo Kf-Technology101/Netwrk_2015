@@ -1,6 +1,21 @@
 <?php use yii\helpers\Url; ?>
+<div id="meetListing">
+    <article class="header">
+        <div class="back-page">
+            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+        </div>
+        <div class="title-page">
+            <span class="title">Meet</span>
+        </div>
+    </article>
+    <section id="meetListWrapper" class="meet-list-wrapper">
+        <p class="no_data alert alert-info text-center">Currently there is no data for meet</p>
+        <ul>
 
-<div id="show_meet">
+        </ul>
+    </section>
+</div>
+<div id="show_meet" class="hide">
   <div class="sidebar">
       <div class="meet-nav-control hide">
           <table class="control-btn">
@@ -198,4 +213,28 @@
 
 <script id="user_name_current" type="text/x-underscore-template">
     <span class="name"><%= data.username %></span>
+</script>
+
+<script id="meet_list" type="text/x-underscore-template" >
+    <% _.each(meet_list,function(meet_user){ %>
+        <li>
+            <div class='meet-user-row'>
+                <span class='user-image'>
+                    <img src='<?= Url::to("@web/") ?><%= meet_user.information.image %>' />
+                </span>
+                <div class='user-details-wrapper'>
+                    <div class='user-name'><%= meet_user.username %></div>
+                    <div class='user-info'><%= meet_user.information.about %></div>
+                </div>
+                <div class='meet-button-wrapper' data-user-id="<%= meet_user.user_id %>">
+                    <% if(meet_user.met == 0) { %>
+                        <div class="btn btn-default btn-meet-trigger">Meet</div>
+                    <% } else { %>
+                        <div class="btn btn-default btn-met btn-meet-trigger">Met</div>
+                    <% } %>
+
+                </div>
+            </div>
+        </li>
+    <% }); %>
 </script>
