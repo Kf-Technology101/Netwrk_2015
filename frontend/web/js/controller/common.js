@@ -186,12 +186,12 @@ var Common = {
             }
         });
     },
-    CustomScrollBar: function(taget,options){
+    CustomScrollBar: function(target,options){
         options = (options) ? options : {
             theme:"dark"
         };
 
-        taget.mCustomScrollbar(options);
+        target.mCustomScrollbar(options);
     },
     InitToolTip: function() {
         $('[data-toggle="tooltip"]').tooltip();
@@ -521,6 +521,27 @@ var Common = {
             });
         });
     },
+
+    closeAllLeftSliders: function(){
+        $('.left-slider').each(function(){
+            $(this).animate({
+                "left": "-500px"
+            }, 200);
+        });
+    },
+
+    clickCenterLocation: function(map){
+        var btn = $('#btnCenterLocation');
+        btn.unbind();
+        btn.on('click',function(){
+            if(User.location.lat && User.location.lng) {
+                if(!isMobile){
+                    Map.initialize();
+                }
+            }
+        });
+    },
+
     showAreaSlider: function() {
         console.log('show area slider');
 
@@ -528,13 +549,25 @@ var Common = {
             contexts = '';
 
         if($(target).css('left') == '0px'){
+            if(isMobile){
+                var hideLeft = '-100%';
+            } else {
+                var hideLeft = '-400px';
+            }
             $(target).animate({
-                "left": "-400px"
+                "left": hideLeft
             }, 500);
         } else {
             $(target).animate({
                 "left": "0px"
             }, 500);
+        }
+
+        if(isMobile){
+            var targetHeight = $(window).height()-55;
+            var tabHeight = targetHeight - 40;
+            $(target).css({'height' : targetHeight});
+            $(target).find('.tab-wrapper').css({'height' : tabHeight, 'max-height' : tabHeight});
         }
 
         Common.CustomScrollBar($(target));
@@ -600,10 +633,15 @@ var Common = {
     onClickHideAreaButton: function() {
         var target = '#areaNews';
         var hide_area_feeds_btn = "#hide_area_feeds_btn";
+        if(isMobile){
+            var hideLeft = '-100%';
+        } else {
+            var hideLeft = '-400px';
+        }
         $(hide_area_feeds_btn, target).unbind();
         $(hide_area_feeds_btn, target).on("click", function() {
             $(target).animate({
-                "left": "-400px"
+                "left": hideLeft
             }, 500);
         });
     },

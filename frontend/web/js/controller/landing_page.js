@@ -396,7 +396,7 @@ var LandingPage = {
 					//LandingPage.show_landing_page();
 					//LandingPage.GetDataTopLanding();
 					// Display chat inbox
-					//ChatInbox.initialize();
+					// ChatInbox.initialize();
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
 				}
 
