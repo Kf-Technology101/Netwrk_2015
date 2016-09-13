@@ -161,7 +161,15 @@ var CoverPage = {
 		var arr = [46037,'46037',44115,'44115',46040,'46040'];
 
 		if(jQuery.inArray( zipcode, arr ) > -1){
-			$.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+			var url = '';
+
+			if (location.protocol.indexOf('https') >= 0){
+				url = "https://api.zippopotam.us/us/"+zipcode;
+			} else {
+				url = "http://api.zippopotam.us/us/"+zipcode;
+			}
+
+			$.getJSON(url,function(data){
 				var params = data;
 				Ajax.set_cover_cookie(params).then(function(data){
 					window.location.href = baseUrl; //+ "/netwrk/default/home";
