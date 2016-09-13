@@ -1,6 +1,12 @@
 #cover-page{
+	background: url('../../img/background/map.png') no-repeat;
+	background-size: cover;
+	display: block;
+	height: 100%;
+	margin: auto;
+	position: relative;
+	width: 100%;
 	text-align: center;
-	margin-top: 30px;
 	padding: 0 20px;
 	.error{
 		font-size: 18px;
@@ -17,7 +23,7 @@
 	.input-group{
 		margin-left: auto;
 		margin-right: auto;
-		margin-top: 30px;
+		/*margin-top: 30px;*/
 		width: 100%;
 	}
 
@@ -29,6 +35,9 @@
 		.fa{
 			font-size: 18px;
 		}
+		&:hover {
+			background-color: #5da5d8;
+		}
 		cursor: pointer;
 	}
 
@@ -37,6 +46,69 @@
 		border-right: none;
 		height: 46px;
 		font-size: 18px;
-		padding-left: 20px;
+		padding-left: 55px;
+	}
+
+	.share-location-btn {
+		margin-top: 20px;
+		width: 100%;
+		font-size: 12px;
+		background-color: #5888ac;
+		color: #fff;
+		outline: none;
+		&:hover {
+			background-color: #5da5d8;
+			cursor: pointer;
+		}
+	}
+
+	#cv-location{
+		text-align: center;
+		border-right: none;
+		height: 46px;
+		font-size: 12px;
+	}
+
+	.cover-result-search{
+		z-index: 6;
+		display: none;
+		width: 100%;
+		min-width: 100px;
+		height: 150px;
+		max-height: 150px;
+		overflow-y: auto;
+		background: #fff;
+		border-radius: 4px;
+		box-shadow: 0 3px 8px -2px;
+		-webkit-box-shadow: 0 3px 8px -2px;
+		margin: auto;
+		.no-result{
+			margin: 0;
+			padding: 0 10px;
+			float: left;
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			font-size: 12px;
+			color: #1d1b1b;
+		}
+		.cover-location{
+			width: 100%;
+			float: left;
+			.title{
+				cursor: pointer;
+				width: 100%;
+				font-size: 14px;
+				padding: 5px 10px;
+				border-bottom: 1px solid #ddd;
+			}
+		}
+		.notice{
+			float: left;
+			padding: 10px;
+			font-size:12px;
+			color: #7f7f7f;
+			margin: 0 0 -4px 0;
+		}
 	}
 }

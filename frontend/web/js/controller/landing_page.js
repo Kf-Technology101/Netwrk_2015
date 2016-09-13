@@ -14,11 +14,11 @@ var LandingPage = {
 			LandingPage.SetUrl();
 			LandingPage.OnClickMeetLandingMobile();
 			$('.navbar-fixed-bottom').hide();
-			/*if(welcomePage == 'true') {
+			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
 				LandingPage.showLandingWelcome();
-			}*/
+			}
 		} else {
 			LandingPage.parent = LandingPage.modal;
 			LandingPage.OnShowModalLanding();
@@ -86,6 +86,11 @@ var LandingPage = {
 					if(isLogoGlow == false) {
 						//LandingPage.show_landing_page();
 					}
+				}
+
+				if(sessionStorage.netwrk_news == 1){
+					sessionStorage.netwrk_news = 0;
+					LandingPage.show_landing_page();
 				}
 			}/* else {
 				$(LandingPage.netwrk_news).animate({
@@ -389,10 +394,22 @@ var LandingPage = {
 					// ChatInbox.OnClickChatInboxMobile();
 				} else {
 					//LandingPage.show_landing_page();
-					LandingPage.GetDataTopLanding();
+					//LandingPage.GetDataTopLanding();
 					// Display chat inbox
 					// ChatInbox.initialize();
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
+				}
+
+				if(sessionStorage.cover_input == 1){
+					sessionStorage.cover_input = 0;
+					sessionStorage.netwrk_news = 1;
+					// Show netwrk news section open
+					LandingPage.GetDataTopLanding();
+					// Zoom map to 16
+					Map.smoothZoom(Map.map, 16, 12, true);
+				} else {
+					//todo: show area slider
+					Common.showAreaSlider();
 				}
 			});
 

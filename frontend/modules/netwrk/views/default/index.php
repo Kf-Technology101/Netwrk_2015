@@ -112,6 +112,7 @@ $cookies = Yii::$app->request->cookies;
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/on_boarding.php');?>
 <?= $this->render('partial/netwrk_news');?>
 <?= $this->render('partial/netwrk_navigation');?>
+<?= $this->render('partial/area_news_slider');?>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization"></script>
 <script src="/js/lib/richmarker-compiled.js"></script>

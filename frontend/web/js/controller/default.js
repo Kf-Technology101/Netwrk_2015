@@ -75,6 +75,11 @@ var Default ={
 
     ShowLandingPage: function(){
         if(isMobile){
+            if(welcomePage == 'true') {
+                LandingPage.OnHideModalWelcome();
+                LandingPage.OnClickBackdropWelcome();
+                LandingPage.showLandingWelcome();
+            }
             if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
                 sessionStorage.map_zoom = 12;
                 if(welcomePage == 'true') {

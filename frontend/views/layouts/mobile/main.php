@@ -221,6 +221,7 @@ if (isset($cookies["isCoverPageVisited"])) {
 	      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	    ]) ?>
 	    <?= $content ?>
+        <?= $this->render('@frontend/modules/netwrk/views/default/partial/area_news_slider');?>
     </div>
 
     <section class="btn-meet-mobile-wrapper text-center hide">
