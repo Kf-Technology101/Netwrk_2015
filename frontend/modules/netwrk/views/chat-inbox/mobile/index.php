@@ -13,21 +13,21 @@
 		<div role="tabpanel" class="tab-pane <?php if($current == '') { ?>active<?php } ?>" id="lines_tab">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs chat-inbox-tab" role="tablist">
-		<li role="presentation" class="col-xs-4 most-active-btn"><a href="#most_active_tab" aria-controls="most_active_tab" role="tab" data-toggle="tab"><span>Nearby</span></a></li>
-		<li role="presentation" class="col-xs-4 chat-dicussions-btn active"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Recent</span></a></li>
+		<li role="presentation" class="col-xs-4 most-active-btn active"><a href="#most_active_tab" aria-controls="most_active_tab" role="tab" data-toggle="tab"><span>Nearby</span></a></li>
+		<li role="presentation" class="col-xs-4 chat-dicussions-btn"><a href="#chat_discussion_tab" aria-controls="chat_discussion_tab" role="tab" data-toggle="tab"><span>Recent</span></a></li>
 		<li role="presentation" class="col-xs-4 chat-private-btn"><a href="#chat_private_tab" aria-controls="chat_private_tab" role="tab" data-toggle="tab"><span>Messages</span></a></li>
 	</ul>
 	<!--<i id='hide_chat_inbox_btn' class="fa fa-times"></i>-->
 	<!-- Tab panes -->
 	<div class="tab-content chat-inbox-content">
-		<div role="tabpanel" class="tab-pane " id="chat_private_tab">
+		<div role="tabpanel" class="tab-pane" id="chat_private_tab">
 			<div id="chat_private" class="chat-lines-wrapper">
 				<ul>
 
 				</ul>
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane active" id="chat_discussion_tab">
+		<div role="tabpanel" class="tab-pane" id="chat_discussion_tab">
 			<?php
 				if (isset($cookies["nw_popover_chat_your_lines"])) {
 					$popover_class_your_lines = '';
@@ -42,7 +42,7 @@
 				</ul>
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane" id="most_active_tab">
+		<div role="tabpanel" class="tab-pane active" id="most_active_tab">
 			<?php
 				if (isset($cookies["nw_popover_chat_public_lines"])) {
 					$popover_class_party_lines = '';
