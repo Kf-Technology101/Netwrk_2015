@@ -31,13 +31,16 @@
                     <span class="input-group-addon" id="sizing-addon2">#</span>
                     <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?/*= isset($post->title) ? $post->title :''*/?>">
                 </div>-->
-                <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"></textarea>
+                <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"><?= isset($post->title) ? $post->title :''?></textarea>
             </div>
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
                 <div class="post-category-content">
 
                 </div>
                 <div class="post-topic-category-content">
+
+                </div>
+                <div class="post-timeout-content">
 
                 </div>
             <?php endif; ?>
@@ -102,5 +105,16 @@
                 <% } %>
             </select>
         <% } %>
+    </section>
+</script>
+<script id="post-timeout-template" type="text/x-underscore-template">
+    <section class="post-timeout-wrapper">
+        <p class="title">Timeout</p>
+        <select name="timeout" class="form-control post-timeout-dropdown">
+            <option value="0">No timer selected</option>
+            <option value="10">10 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+        </select>
     </section>
 </script>

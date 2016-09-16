@@ -1,8 +1,8 @@
 <?php use yii\helpers\Url; ?>
-<div class="left-slider" id="create_post_slider">
-    <div class="slider-dialog" id="create_post" data-lat="" data-lng="">
-        <div class="slider-content">
-            <div class="slider-header">
+<div class="modal" id="create_post" data-lat="" data-lng="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
                 <div class="head">
                     <div class="name_user">
                         <p> Build a line</p>
@@ -18,7 +18,7 @@
                     <div class="clearfix"></div>
                 </div>-->
             </div>
-            <div class="slider-body">
+            <div class="modal-body">
                 <div class="page" id="create_topic">
                     <div class="post">
                         <input type="hidden" name="post_id" id="post_id" value=""/>
@@ -38,6 +38,9 @@
 
                         </div>
                         <div class="post-topic-category-content">
+
+                        </div>
+                        <div class="post-timeout-content">
 
                         </div>
                         <div class="post-message hide">
@@ -104,5 +107,16 @@
                 <% } %>
             </select>
         <% } %>
+    </section>
+</script>
+<script id="post-timeout-template" type="text/x-underscore-template">
+    <section class="post-timeout-wrapper">
+        <p class="title">Timeout</p>
+        <select name="timeout" class="form-control post-timeout-dropdown">
+            <option value="0">No timer selected</option>
+            <option value="10">10 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+        </select>
     </section>
 </script>

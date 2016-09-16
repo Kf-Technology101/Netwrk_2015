@@ -42,6 +42,8 @@ var Create_Post={
                 Create_Post.params.lat = $('#create_post').attr('data-lat');
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
                 Create_Post.getPostLocation(Create_Post.params.lat,Create_Post.params.lng);
+
+                Create_Post.getPostTimeout();
                 Create_Post.showPostCategory(Create_Post.params.city_name);
             }
             Create_Post.changeData();
@@ -100,6 +102,7 @@ var Create_Post={
                 Create_Post.params.lng = $('#create_post').attr('data-lng');
                 Create_Post.params.isCreateFromBlueDot = true;
                 Create_Post.getPostLocation(Create_Post.params.lat,Create_Post.params.lng);
+                Create_Post.getPostTimeout();
                 Create_Post.showPostCategory(name_city);
             } else {
                 Create_Post.params.city = city;
@@ -107,7 +110,7 @@ var Create_Post={
                 Create_Post.params.city_name = name_city;
             }
 
-            Create_Post.initializeSlider();
+            //Create_Post.initializeSlider();
             Create_Post.showModalCreatePost();
             // Create_Post.showNetWrkBtn();
             Create_Post.onCloseModalCreatePost();
@@ -124,9 +127,9 @@ var Create_Post={
         }
     },
     initializeSlider: function() {
-        Create_Post.showCreatePostSlider();
+        /*Create_Post.showCreatePostSlider();
 
-        Common.CustomScrollBar($(Create_Post.slider).find('.slider-body'));
+        Common.CustomScrollBar($(Create_Post.slider).find('.slider-body'));*/
     },
     showCreatePostSlider: function() {
         $.when(Common.closeAllLeftSliders()).done(function() {
@@ -190,6 +193,33 @@ var Create_Post={
                 Create_Post.getTemplatePostLocation(parent,json);
             }
         });
+    },
+    getPostTimeout: function() {
+        //hide the timeout dropdown for post edit.
+        if(!Create_Post.params.post_id) {
+            var parent = $('#create_post');
+            var target = parent.find('.post-timeout-content');
+            target.html('');
+
+            var json = Create_Post.params;
+
+            var list_template = _.template($("#post-timeout-template").html());
+            var append_html = list_template({data: json});
+            target.append(append_html);
+
+            Create_Post.onChangePostTimeout();
+        }
+    },
+    onChangePostTimeout: function() {
+        var parent = $('#create_post').find('.post-timeout-dropdown');
+        var timeout = parent.val();
+        parent.unbind();
+        parent.on('change', function(e){
+            var timeout = $(this).val();
+            Create_Post.params.timeout = timeout;
+            console.log(Create_Post.params.timeout);
+        });
+        Create_Post.params.timeout = timeout;
     },
     /* Display community category dropdown on Create post modal. */
     showPostCategory: function(zipcode){
@@ -398,10 +428,12 @@ var Create_Post={
         }
         Create_Post.onCheckStatus();
 
-        /*parent.modal({
+        parent.modal({
             backdrop: true,
             keyboard: false
-        }).removeAttr("style").css("display", "block");*/
+        }).removeAttr("style").css("display", "block");
+
+        Common.CustomScrollBar(parent.find('.modal-body'));
     },
     onCloseModalCreatePost: function(){
         $('#create_post').on('hidden.bs.modal',function() {
@@ -426,9 +458,6 @@ var Create_Post={
 
         this.onChangeData(parent.find('.name_post'),'post');
         this.onChangeData(parent.find('.message'),'message');
-        if(Create_Post.params.isCreateFromBlueDot) {
-            //this.onChangeData(parent.find('.post-topic-dropdown'),'topic');
-        };
     },
 
     onChangeData: function(target,filter){
