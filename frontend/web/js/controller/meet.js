@@ -193,7 +193,7 @@ var Meet ={
 
     CustomScrollBarListing: function(){
         var parent = $(Meet.list).find('#meetListWrapper');
-            parent.css('height', $(window).height()-145);
+            parent.css('height', $(window).height()-85);
 
         if ($(parent).find("div[id^='mSCB']").length == 0) {
             $(parent).mCustomScrollbar({

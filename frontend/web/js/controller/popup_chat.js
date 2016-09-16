@@ -796,7 +796,7 @@ var PopupChat = {
         var nav_message = $(PopupChat.page).find('.nav_input_message').height();
         var nav_bottom = $('.navigation-wrapper').height();
 
-        var wh = size[1] - h_navSearch - h_header - nav_message;
+        var wh = size[1] - h_header - nav_message;
 
         $(PopupChat.page).find('.container_post_chat').css('height',wh);
         $(PopupChat.page).find('.feedback-section').css('height',wh);
