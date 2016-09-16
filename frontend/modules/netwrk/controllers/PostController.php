@@ -529,7 +529,7 @@ class PostController extends BaseController
         $city_ids = implode(',',$city_array);
 
         // Active party lines near cover zip code
-        $party_lines_posts = Post::GetBrilliantPostsByCities($limit, $city_ids);
+        $party_lines_posts = Post::GetNearPostsByCities($limit, $city_ids);
 
         $local_topics = [];
         if ($party_lines_posts) {

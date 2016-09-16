@@ -355,4 +355,24 @@ class Post extends \yii\db\ActiveRecord
 
         return $posts;
     }
+
+    public function GetNearPostsByCities($limit,$city_ids){
+        $query = new Query();
+
+        $posts = $query->select('topic.id as topic_id, topic.title as topic_title, topic.city_id, city.zip_code, post.*, post.user_id as user_id, profile.photo')
+            ->from('post')
+            ->leftJoin('feedback_stat','feedback_stat.post_id = post.id')
+            ->leftJoin('profile','post.user_id = profile.user_id')
+            ->innerJoin('topic', 'post.topic_id=topic.id')
+            ->join('JOIN', 'city', 'city.id = topic.city_id')
+            ->where("topic.city_id IN (".$city_ids.")")
+            ->andWhere(['not',['topic.status'=> '-1']])
+            ->andWhere(['not',['post.status'=> '-1']])
+            ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
+            ->orderBy(['post.chat_updated_time'=> SORT_DESC])
+            ->limit($limit)
+            ->all();
+
+        return $posts;
+    }
 }
