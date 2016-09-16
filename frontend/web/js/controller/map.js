@@ -2062,9 +2062,17 @@
 
 				//console.log(data_marker);
 				$.each(data_marker,function(i,e){
-					var markerContent = "<div class='marker marker-line'></div>"+
-						"<span class='marker-icon marker-line-icon'><i class='fa fa-lg fa-minus'></i>"+
-						"</span><div class=''></div>";
+					var markerContent;
+					if(e.expire_at == null){
+						markerContent = "<div class='marker marker-line'></div>"+
+								"<span class='marker-icon marker-line-icon'><i class='fa fa-lg fa-minus'></i>"+
+								"</span><div class=''></div>";
+					} else {
+						markerContent = "<div class='marker marker-line marker-timed-line'></div>"+
+								"<span class='marker-icon marker-line-icon'><i class='fa fa-lg fa-minus'></i>"+
+								"</span><div class=''></div>";
+					}
+
 
 					//display topic markers on map
 					marker = new RichMarker({
