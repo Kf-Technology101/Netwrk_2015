@@ -469,13 +469,15 @@
     }
 }
 
-#Profile {
-    #buttonProfileWrapper {
-        background: #5da5d8;
-    }
-}
-
 #Meet[data-action="index"] {
+    #myHeader {
+        display: none;
+    }
+
+    #meetListing {
+        top: 0;
+    }
+
     #btn_nav_meet_mobile {
         background: #5da5d8;
     }
@@ -494,6 +496,10 @@
 #Profile-edit {
     #myHeader {
         display: none;
+    }
+
+    #buttonProfileWrapper {
+        background: #5da5d8;
     }
 
     .profile-page {
@@ -516,6 +522,52 @@
     }
 }
 
+#Post,
+#Topic {
+    #myHeader {
+        display: none;
+    }
+
+    .header {
+        top: 0;
+        border-top: none;
+    }
+
+    .sidebar {
+        top: 40px;
+    }
+
+    > .container {
+        top: 0;
+        bottom: 45px;
+        position: fixed;
+        overflow: auto;
+        margin: 40px auto 0;
+    }
+}
+
+#Post {
+    .container_post {
+        margin: 47px auto 0;
+        .tab {
+            margin-bottom: 0;
+        }
+    }
+    #create_post {
+        .container {
+            margin: 0 auto;
+            padding-bottom: 0;
+        }
+    }
+}
+
+#Topic {
+    #show-topic {
+        .container {
+            margin: 0 auto;
+        }
+    }
+}
 .area-news {
     background: transparent;
     height: 90%;

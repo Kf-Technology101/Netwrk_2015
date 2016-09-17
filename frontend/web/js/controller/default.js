@@ -16,6 +16,7 @@ var Default ={
             if (sessionStorage.is_topic_marker_in_map_center == 1) {
                 Map.showTopicMarker(sessionStorage.topic_lat, sessionStorage.topic_lng, sessionStorage.topic_city_id);
             }
+            set_size_search();
         }else{
             $('#btn_meet').show();
             self._eventClickMeetBtn();
@@ -258,17 +259,19 @@ var Default ={
         if(isMobile){
             var height = $(window).height();
             var width = $(window).width();
-            var wrapperHeight = height - 105;
+            var wrapperHeight = height - 85;
             var navParentHeight = Math.ceil((height/100)*70);
             var chatTabHeight = Math.ceil((height/100)*80);
             var chatWidth = width - 100;
 
             var navParent = $('#netwrkNavigation').find('.your-netwrks');
-            var chatTab = $('#chat_inbox').find('.tab-pane');
+            var chatTab = $('#chat_inbox').find('#lines_tab');
+            var newsTab = $('#chat_inbox').find('#area_news_tab');
             var netwrkNewsTab = $('#netwrkNews').find('.tab-content');
             navParent.css('max-height', navParentHeight);
             chatTab.css('max-height', chatTabHeight);
-            netwrkNewsTab.css('max-height', chatTabHeight);
+            newsTab.css('max-height', wrapperHeight - 37);
+            netwrkNewsTab.css('max-height', wrapperHeight);
             $('#netwrkNavigation').css('height', wrapperHeight);
             $('#chat_inbox').css('height', wrapperHeight);
             $('#netwrkNews').css('width', width).css('height', wrapperHeight);

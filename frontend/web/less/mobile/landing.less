@@ -54,23 +54,26 @@ body{
 .navbar-mobile{
   /*height: 40px;*/
   /*background-color: #5888ac;*/
-  background: url("../../img/background/mobile-header.png") repeat-x;
+  background: #fff;  /*url("../../img/background/mobile-header.png") repeat-x;*/
   // border-color: #426c8f;
   border-radius: 0;
-  height: 60px;
+  height: 40px;
+  border-bottom: 1px solid #87878b;
   a{
     color:#eee;
   }
   .menu_top{
   	width: 100%;
-  	height: 60px;
-    padding: 0 15px;
+  	height: 40px;
+    padding: 0 5px;
     position: absolute;
     /*background-color: rgba(88, 136, 172, 0.2);*/
 
     .logo_netwrk{
-      width: 20%;
       height: auto;
+      width: 12%;
+      min-width: 35px;
+      max-width: 35px;
       float: left;
       z-index: 1000;
       position: relative;
@@ -85,9 +88,9 @@ body{
         opacity:0;
       }
       img{
-        width: 44px;
-        height: 44px;
-        margin: 8px 0;
+        height: 30px;
+        width: 30px;
+        margin: 4px 0;
       }
       &.logo-glow{
         .logo-active{
@@ -314,14 +317,14 @@ body{
     bottom: 0;
   }
 
-  .navbar-mobile {
+  /*.navbar-mobile {
     background: transparent;
-  }
+  }*/
 }
 #Default[data-action="index"] {
-  .navbar-mobile{
+  /*.navbar-mobile{
     background: transparent;
-  }
+  }*/
 }
 #Default[data-action="login"] {
   .navigation-wrapper {

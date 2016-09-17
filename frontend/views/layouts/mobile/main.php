@@ -127,8 +127,8 @@ if (isset($cookies["isCoverPageVisited"])) {
   			</div>-->
             <div class="box-search">
               <div class="search input-group">
-                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
                 <input type="text" class="form-control input-search" placeholder="Be timeless">
+                <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
               </div>
               <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
             </div>
