@@ -260,15 +260,12 @@ var Default ={
             var height = $(window).height();
             var width = $(window).width();
             var wrapperHeight = height - 85;
-            var navParentHeight = Math.ceil((height/100)*70);
             var chatTabHeight = Math.ceil((height/100)*80);
             var chatWidth = width - 100;
 
-            var navParent = $('#netwrkNavigation').find('.your-netwrks');
             var chatTab = $('#chat_inbox').find('#lines_tab');
             var newsTab = $('#chat_inbox').find('#area_news_tab');
             var netwrkNewsTab = $('#netwrkNews').find('.tab-content');
-            navParent.css('max-height', navParentHeight);
             chatTab.css('max-height', chatTabHeight);
             newsTab.css('max-height', wrapperHeight - 37);
             netwrkNewsTab.css('max-height', wrapperHeight);
@@ -504,7 +501,7 @@ var Default ={
 
         var favoriteContainer = $(".your-netwrks", '#netwrkNavigation');
         if(isMobile){
-            var favHeight = $(window).height()-135;
+            var favHeight = $(window).height()-113;
             favoriteContainer.css({'height' : favHeight, 'max-height' : favHeight});
         } else {
             var favHeight = $(window).height()-80;
