@@ -462,7 +462,7 @@ var LandingPage = {
 		var parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
 
 		if(isMobile){
-			parent.css('height', $(window).height()-141);
+			parent.css('height', $(window).height()-122);
 		} else {
 			parent.css('height', $(window).height()-50);
 		}

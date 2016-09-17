@@ -127,7 +127,7 @@ var ChatInbox = {
 		var parent;
 		if(isMobile){
 			parent = $(ChatInbox.modal).find('#chat_discussion_tab');
-			parent.css('height', $(window).height()-165);
+			parent.css('height', $(window).height()-145);
 		} else {
 			parent = $(ChatInbox.modal).find('#chat_discussion');
 			parent.css('height', $(window).height()-60);
@@ -143,7 +143,7 @@ var ChatInbox = {
 	CustomScrollBarMostActive: function(){
 		var parent = $(ChatInbox.modal).find('#most_active_tab').find('#containerLocalPartyLines');
 		if(isMobile){
-			parent.css('height', $(window).height()-165);
+			parent.css('height', $(window).height()-145);
 		} else {
 			parent.css('height', $(window).height()-60);
 		}
@@ -155,11 +155,10 @@ var ChatInbox = {
 		};
 	},
 
-
 	CustomScrollBarPrivate: function(){
 		var parent = $(ChatInbox.modal).find('#chat_private_tab');
 		if(isMobile){
-			parent.css('height', $(window).height()-165);
+			parent.css('height', $(window).height()-145);
 		} else {
 			parent.css('height', $(window).height()-60);
 		}

@@ -9,6 +9,15 @@ function set_size_map(w,h){
   $('#googleMap').css({'height': h,'min-height': h});
 }
 
+function set_size_search() {
+    var size = get_size_window();
+    var wp = size[0] - 45;
+
+    var target = $('.navbar-mobile').find('.box-search');
+
+    target.css({'width': wp,'max-width': wp});
+}
+
 function set_position_btn_meet(w,h){
   var menu_h = $('.menu_top').height();
   var hp = h - 100 - menu_h;
@@ -60,6 +69,7 @@ function window_resize(){
   var size = get_size_window();
   set_size_map(size[0],size[1]);
   set_position_btn_meet(size[0],size[1]);
+  set_size_search();
 }
 
 function set_container_chat_modal(target,height_footer){
