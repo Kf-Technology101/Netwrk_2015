@@ -2,9 +2,9 @@
 
 <section class="Profile profile-page Profile-view">
     <article class="header">
-        <div class="back-page">
+        <!--<div class="back-page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
-        </div>
+        </div>-->
         <div class="title-page">
             <span class="title">Profile</span>
         </div>
