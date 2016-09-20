@@ -154,14 +154,13 @@
             </div>
             <div id="collapse<%= msg.msg_id %>" class="panel-collapse collapse <% if(msg.feedback_points >= 0) { %>in<%}%>" role="tabpanel" aria-labelledby="heading<%= msg.msg_id %>">
                 <div class="panel-body">
+                    <p class="chat-user-name"><%=  msg.name %></p>
                     <div class="chat-details">
                         <div class="user_thumbnail" data-user-id='<%= msg.id %>'>
                             <div class="avatar">
                                 <img src="<%= baseurl %><%=  msg.avatar %>">
                             </div>
                         </div>
-                        <div class="feedback-line"></div>
-                        <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
                         <p class="time"><%= msg.created_at %></p>
                     </div>
 
@@ -173,6 +172,10 @@
                         <% } else { %>
                             <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
                         <% } %>
+                    </div>
+                    <div class="feedback-wrapper">
+                        <div class="feedback-line"></div>
+                        <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
                     </div>
                 </div>
             </div>

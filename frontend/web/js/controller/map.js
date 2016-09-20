@@ -2322,7 +2322,7 @@
 		    var mapType = mapTypeRegistry.get(mapTypeId);
 		    //Sets limits to MapType
 		    mapType.maxZoom = 18;  //It doesn't work with SATELLITE and HYBRID maptypes.
-		    mapType.minZoom = 7;
+		    mapType.minZoom = 10;
 	  	},
 
 	  	reset_data: function(){

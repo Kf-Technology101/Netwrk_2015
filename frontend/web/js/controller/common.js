@@ -36,6 +36,8 @@ var Common = {
             Map.eventClickMyLocation(Map.map);
             // Display near button popover
             Common.showHideInfoPopover('popover-near', 'nw_popover_near');
+
+            Common.onClickSearchIcon();
         }
 
         if(typeof welcomePage !== 'undefined' && welcomePage == 'false'){
@@ -535,7 +537,7 @@ var Common = {
         btn.unbind();
         btn.on('click',function(){
             if(User.location.lat && User.location.lng) {
-                if(!isMobile){
+                if(isMobile){
                     Map.initialize();
                 }
             }
@@ -663,6 +665,22 @@ var Common = {
                     Map.initialize();
                 }
             }
+        });
+    },
+
+    onClickSearchIcon: function() {
+        var target = $('#mobileSearchBox');
+        var btn = $('.search-trigger');
+        var closeBtn = $('.close-search-trigger');
+
+        btn.unbind();
+        btn.on('click', function () {
+            target.css({'right': '5px'});
+        });
+
+        closeBtn.unbind();
+        closeBtn.on('click', function () {
+            target.css({'right': '-100%'});
         });
     }
 };

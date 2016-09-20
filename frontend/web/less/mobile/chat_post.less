@@ -244,10 +244,16 @@
                 }
             }
 
+            .chat-user-name {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
             .chat-details {
                 display: inline-block;
                 min-height: 60px;
-                width: 32%;
+                width: 20%;
+                float: left;
                 .user_thumbnail {
                     border: 1px solid #c7c7c7;
                     width: 40px;
@@ -291,7 +297,7 @@
                     cursor: pointer;
                 }
                 .time {
-                    font-size: 12px;
+                    font-size: 11px;
                     margin: 4px 0 0;
                     color: #757575;
                     display: inline-block;
@@ -299,14 +305,16 @@
                 }
             }
             .content_message {
-                width: 60%;
+                width: 61%;
                 margin-right: 5px;
+                margin-left: 5px;
                 min-height: 60px;
                 border-radius: 5px;
                 position: relative;
                 background: #fcfcfc;
                 border: 1px solid #e5e5e5;
                 padding: 8px;
+                float: left;
                 &:after,
                 &:before {
                     border: solid transparent;
@@ -344,6 +352,31 @@
                     word-wrap: break-word;
                 }
             }
+            .feedback-wrapper {
+                display: inline-block;
+                float: right;
+                margin-top: 15px;
+                width: 35px;
+                .feedback-line {
+                    background: url("../../img/icon/feedback-lines.png") no-repeat;
+                    background-size: contain;
+                    display: inline-block;
+                    height: 30px;
+                    width: 6px;
+                    float: left;
+                    margin: 3px;
+                }
+                .feedback {
+                    border: 1px solid #c7c7c7;
+                    display: inline;
+                    float: right;
+                    margin-top: 8px;
+                    text-align: center;
+                    width: 21px;
+                    height: 21px;
+                    cursor: pointer;
+                }
+            }
         }
         .message_send,
         .message_receiver {
@@ -359,7 +392,7 @@
                 }
             }
             .content_message {
-                float: right;
+                /*float: right;*/
                 &:after,
                 &:before {
                     right: 100%;
@@ -385,6 +418,9 @@
             }
             .content_message {
                 width: 69%;
+            }
+            .feedback-wrapper {
+                display: none;
             }
         }
         /*.message_send {
@@ -424,7 +460,7 @@
         &.container_private_chat {
             .message {
                 .chat-details {
-                    width: 23%;
+                    width: 21%;
                     .feedback-line,
                     .feedback {
                         display: none;
@@ -432,6 +468,10 @@
                 }
                 .content_message {
                     width: 69%;
+                }
+                .chat-user-name,
+                .feedback-wrapper {
+                    display: none;
                 }
             }
         }
