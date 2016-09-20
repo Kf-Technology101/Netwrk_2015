@@ -56,7 +56,7 @@ $cookies = Yii::$app->request->cookies;
   <?= $this->render('@frontend/modules/netwrk/views/user/userinfo') ?>
 
   <div id="btnCenterLocation" class="hide" data-toggle="tooltip" data-placement="bottom" title="Make Location Centered">
-    <i class="fa fa-crosshairs"></i>
+    <i class="fa fa-location-arrow"></i>
     <!--<span>Build</span>-->
   </div>
   <!--<div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
