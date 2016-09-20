@@ -160,8 +160,6 @@
                                 <img src="<%= baseurl %><%=  msg.avatar %>">
                             </div>
                         </div>
-                        <div class="feedback-line"></div>
-                        <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
                         <p class="time"><%= msg.created_at %></p>
                     </div>
 
@@ -173,6 +171,10 @@
                         <% } else { %>
                             <a class='file-uploaded-link' href='<?= Url::to("@web/files/uploads/") ?><%= msg.post_id %>/<%= msg.msg %>' target='_blank'><%= msg.msg %></a>
                         <% } %>
+                    </div>
+                    <div class="feedback-wrapper">
+                        <div class="feedback-line"></div>
+                        <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
                     </div>
                 </div>
             </div>
