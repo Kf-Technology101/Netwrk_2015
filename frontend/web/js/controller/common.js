@@ -652,11 +652,13 @@ var Common = {
         btn.unbind();
         btn.on('click',function(){
             target.css({'right' : '5px'});
+            $('.search-overlay').removeClass('hide');
         });
 
         closeBtn.unbind();
         closeBtn.on('click',function(){
             target.css({'right' : '-100%'});
+            $('.search-overlay').addClass('hide');
         });
     }
 };
