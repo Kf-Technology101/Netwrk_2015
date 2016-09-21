@@ -100,3 +100,28 @@
 		</div>
 	</div>
 </div>
+
+<div style="display: none">
+	<div id="userLocationInfoWindow">
+		<div id="uiw-container" class="cgm-container" style="max-width: 250px; padding: 0px 2px; margin-top: -6px;">
+			<div class="uiw-content">
+				<div class="iw-subTitle text-right" onclick="Map.closeUserLocationInfoWindow();">
+					<span class="close" style="font-size: 20px; line-height: 14px;"><span aria-hidden="true">&times;</span></span>
+				</div>
+				<div class="iw-subTitle text-center">
+					<h4 class="" style="font-size: 17px; margin-bottom: 0px;">Welcome to <span id="userLocation"><span>requesting...</span></span></h4>
+					<div class="iw-subTitle">Click anywhere on your map to build a line</div>
+					<div class="" style="color: red;margin-bottom: 2px;">or</div>
+				</div>
+				<div class="clearfix">
+					<div class="create-section-wrapper">
+						<div class="iw-subTitle col-xs-12 create-section" id="" style="padding: 0 2px">
+							<a href="javascript:" class="create-button line-button" onclick="Map.CreateUserLocationPost();"><span>Build a Line at your location</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="iw-bottom-gradient"></div>
+		</div>
+	</div>
+</div>

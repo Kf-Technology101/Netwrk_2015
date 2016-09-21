@@ -27,6 +27,7 @@ if (isset($cookies["isCoverPageVisited"])) {
   $stateAbbr = $cookies->getValue('nw_stateAbbr');
   $welcomePage = $cookies->getValue('nw_welcomePage');
   $social_sign_up = $cookies->getValue('nw_social_sign_up');
+  $userLocationInfo = $cookies["nw_userLocationInfo"];
 }/* else {
   $c = Yii::$app->response->cookies;
   $cookie = new Cookie(['name'=>'isCoverPageVisited', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
@@ -65,6 +66,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       var state = '<?php echo $state; ?>';
       var stateAbbr = '<?php echo $stateAbbr; ?>';
       var welcomePage = '<?php echo ($welcomePage) ? $welcomePage : "true"; ?>';
+      var userLocationInfo = '<?php echo ($userLocationInfo) ? $userLocationInfo : "true"; ?>';
     <?php endif; ?>
     // If sign up with social platform, then display on boarding after sign up
     <?php

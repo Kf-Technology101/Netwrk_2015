@@ -537,9 +537,7 @@ var Common = {
         btn.unbind();
         btn.on('click',function(){
             if(User.location.lat && User.location.lng) {
-                if(isMobile){
-                    Map.initialize();
-                }
+                Map.initialize();
             }
         });
     },
@@ -674,13 +672,15 @@ var Common = {
         var closeBtn = $('.close-search-trigger');
 
         btn.unbind();
-        btn.on('click', function () {
-            target.css({'right': '5px'});
+        btn.on('click',function(){
+            target.css({'right' : '5px'});
+            $('.search-overlay').removeClass('hide');
         });
 
         closeBtn.unbind();
-        closeBtn.on('click', function () {
-            target.css({'right': '-100%'});
+        closeBtn.on('click',function(){
+            target.css({'right' : '-100%'});
+            $('.search-overlay').addClass('hide');
         });
     }
 };

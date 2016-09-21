@@ -74,6 +74,16 @@ class DefaultController extends BaseController
         return true;
     }
 
+    public function actionSetUserLocationInfoCookie()
+    {
+        $c = Yii::$app->response->cookies;
+
+        $cookie = new Cookie(['name' => 'nw_userLocationInfo', 'value' => 'false', 'expire' => (time() + (365 * 86400))]);
+        $c->add($cookie);
+
+        return true;
+    }
+
     public function actionGetUserProfile()
     {
         if (Yii::$app->user->id) {

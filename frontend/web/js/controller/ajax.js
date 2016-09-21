@@ -1511,6 +1511,23 @@ var Ajax = {
 
         return defer.promise();
     },
+    setUserLocationInfoCookie: function(zip_code){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/default/set-user-location-info-cookie";
+
+        $.ajax({
+            url: url,
+            data: '',
+            type: 'GET',
+            async: false,
+            cache: false,
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     create_log: function(params) {
         var url,defer = $.Deferred();
 
