@@ -533,9 +533,7 @@ var Common = {
         btn.unbind();
         btn.on('click',function(){
             if(User.location.lat && User.location.lng) {
-                if(isMobile){
-                    Map.initialize();
-                }
+                Map.initialize();
             }
         });
     },
