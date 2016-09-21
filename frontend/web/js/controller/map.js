@@ -400,7 +400,8 @@
 
 		showUserLocationMarker: function (map) {
 			var lat = User.location.lat,
-				lng = User.location.lng;
+				lng = User.location.lng,
+				showLocationInfo = true;
 
 			var markerContent = "<div class='marker-user-location'></div>";
 				markerContent += "<span class='marker-icon-user-location'><i class='fa fa-2x fa-circle'></i></span>";
@@ -414,7 +415,19 @@
 			});
 			marker.setMap(map);
 
-			if(Map.displayUserLocationInfo) {
+			if(userLocationInfo == 'false') {
+				showLocationInfo = false;
+				Map.displayUserLocationInfo = false;
+			}
+			else
+				showLocationInfo = true;
+
+			if(Map.displayUserLocationInfo)
+				showLocationInfo = true;
+			else
+				showLocationInfo = false;
+
+			if(showLocationInfo) {
 				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
 					var len = data.results[0].address_components.length;
 					for (var i = 0; i < len; i++) {
@@ -1831,17 +1844,21 @@
 			Create_Post.showCreatePostModal(zipcode, lat, lng);
 		},
 		CreateUserLocationPost: function() {
-			Map.displayUserLocationInfo = false;
-			userLocationInfoWindow.close();
+			Map.closeUserLocationInfoWindow();
+
 			var zipCode = User.location.zipCode;
 			var lat = User.location.lat;
 			var lng = User.location.lng;
 
 			Create_Post.showCreatePostModal(zipCode, lat, lng);
 		},
-		closeUserLocationInfoWindows: function() {
+		closeUserLocationInfoWindow: function() {
 			Map.displayUserLocationInfo = false;
 			userLocationInfoWindow.close();
+			Ajax.setUserLocationInfoCookie().then(function(data){
+				//console.log(data);
+				//window.location.href = baseUrl; //+ "/netwrk/default/home";
+			});
 		},
 
 		show_marker_group_loc: function(map,params) {

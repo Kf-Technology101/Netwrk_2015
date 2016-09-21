@@ -105,7 +105,7 @@
 	<div id="userLocationInfoWindow">
 		<div id="uiw-container" class="cgm-container" style="max-width: 250px; padding: 0px 2px; margin-top: -6px;">
 			<div class="uiw-content">
-				<div class="iw-subTitle text-right" onclick="Map.closeUserLocationInfoWindows();">
+				<div class="iw-subTitle text-right" onclick="Map.closeUserLocationInfoWindow();">
 					<span class="close" style="font-size: 20px; line-height: 14px;"><span aria-hidden="true">&times;</span></span>
 				</div>
 				<div class="iw-subTitle text-center">
