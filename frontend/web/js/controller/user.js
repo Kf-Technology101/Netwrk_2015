@@ -1,5 +1,6 @@
 var User ={
 	location:{
+		zipCode: '',
 		lat: '',
 		lng: ''
 	},

@@ -7,6 +7,7 @@
 	  	},
 		getMaxMarker: true,
 		displayBlueDot: true,
+		displayUserLocationInfo: true,
 	  	latLng: '',
 	  	markers:[],
 		topicMarkers: [],
@@ -398,17 +399,93 @@
 	  	},
 
 		showUserLocationMarker: function (map) {
+			var lat = User.location.lat,
+				lng = User.location.lng;
+
 			var markerContent = "<div class='marker-user-location'></div>";
 				markerContent += "<span class='marker-icon-user-location'><i class='fa fa-2x fa-circle'></i></span>";
 
 			marker = new RichMarker({
-				position: new google.maps.LatLng(User.location.lat, User.location.lng),
+				position: new google.maps.LatLng(lat,lng),
 				map: map,
-				content: markerContent,
+				content: markerContent
 				//city_id: parseInt(e.id)
 				// label: text_below
 			});
 			marker.setMap(map);
+
+			if(Map.displayUserLocationInfo) {
+				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
+					var len = data.results[0].address_components.length;
+					for (var i = 0; i < len; i++) {
+						if (data.results[0].address_components[i].types[0] == 'postal_code') {
+							var zip = data.results[0].address_components[i].long_name;
+							User.location.zipCode = zip;
+						} else if (data.results[0].address_components[i].types[0] == 'locality') {
+							var city = data.results[0].address_components[i].long_name;
+							setTimeout(function(){
+								$("#userLocation span").eq(0).html(city);
+							},300);
+						}
+					}
+				});
+
+				userLocationInfoWindow = new google.maps.InfoWindow();
+				var windowLatLng = new google.maps.LatLng(lat, lng);
+				var content = $('#userLocationInfoWindow').html();
+
+				userLocationInfoWindow.setOptions({
+					maxWidth: 240,
+					maxHeight: 100,
+					content: content,
+					position: windowLatLng,
+				});
+
+				userLocationInfoWindow.open(map);
+
+				google.maps.event.addListener(userLocationInfoWindow, 'domready', function() {
+					// Reposition user location marker so info window display on center
+					$('.marker-user-location').parent().parent().parent().css({'left' : '-20px'});
+
+					//   // Reference to the DIV that wraps the bottom of infowindow
+					var iwOuter = $('#uiw-container').closest('.gm-style-iw');
+
+					//    // Since this div is in a position prior to .gm-div style-iw.
+					//    // * We use jQuery and create a iwBackground variable,
+					//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+
+					iwOuter.css({'max-width' : '250px', 'max-height' : '100px', 'z-index' : '999', 'box-shadow' : '2px 2px 2px'});
+
+					var iwBackground = iwOuter.prev();
+					iwOuter.children(':nth-child(1)').css({'max-width' : '240px'});
+
+					// Removes background shadow DIV
+					iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+					//   // Removes white background DIV
+					iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+					//   // Moves the shadow of the arrow 76px to the left margin.
+					iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+
+					//   // Moves the arrow 76px to the left margin.
+					iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+
+					//   // Changes the desired tail shadow color.
+					//iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+
+					//   // Reference to the div that groups the close button elements.
+					var iwCloseBtn = iwOuter.next();
+
+					//   // Apply the desired effect to the close button
+					iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+
+					//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+					iwCloseBtn.mouseout(function(){
+						$(this).css({opacity: '0'});
+					});
+				});
+			}
 		},
 
 	  	show_marker: function(map){
@@ -1752,6 +1829,19 @@
 			var lng = Map.center_marker.getPosition().lng();
 
 			Create_Post.showCreatePostModal(zipcode, lat, lng);
+		},
+		CreateUserLocationPost: function() {
+			Map.displayUserLocationInfo = false;
+			userLocationInfoWindow.close();
+			var zipCode = User.location.zipCode;
+			var lat = User.location.lat;
+			var lng = User.location.lng;
+
+			Create_Post.showCreatePostModal(zipCode, lat, lng);
+		},
+		closeUserLocationInfoWindows: function() {
+			Map.displayUserLocationInfo = false;
+			userLocationInfoWindow.close();
 		},
 
 		show_marker_group_loc: function(map,params) {
