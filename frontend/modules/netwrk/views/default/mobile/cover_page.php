@@ -5,7 +5,7 @@
 	<span class="error hidden">Sorry my friend, you shall not pass</span><br/>
 	<img src="<?= Url::to('@web/img/icon/netwrk-logo-blue_large.png'); ?>" id="coverImg">
     <div class="input-group form-group">
-        <button class="btn btn-primary btn-lg share-location-btn">Share your location to see whats around you</button>
+        <button class="btn btn-primary btn-lg share-location-btn">Share your location to join the Netwrk around you</button>
     </div>
     <p class="or-text">Or</p>
     <div class="input-group" id="inputGroup">
