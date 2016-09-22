@@ -7,7 +7,10 @@
 	<!--<div class="netwrk-news-trigger custom-btn btn-netwrk-news">Netwrk News</div>-->
 	<!--<div class="most-active-trigger custom-btn btn-most-active">Most Active</div>-->
 	<div class="your-netwrk-wrapper">
-		<div class="title">Your Netwrk</div>
+		<a class="landing-close-trigger" href="javascript:void(0)">
+			<img src="/img/icon/netwrk-icon-inactive.png">
+		</a>
+		<div class="title">Netwrk</div>
 		<div class="your-netwrks">
 			<div class="favorites-netwrks-wrapper">
 
