@@ -58,7 +58,8 @@ class ProfileController extends BaseController
                 'state' => $user->profile->state,
                 'city' => $user->profile->user_city,
                 'about'=> $user->profile->about,
-                'year_old' => $year_old
+                'year_old' => $year_old,
+                'meet_info' => $user->profile->meet_info
             );
 
         }else{
@@ -246,6 +247,7 @@ class ProfileController extends BaseController
         $about = $_POST['about'];
         $lat = $_POST['lat'];
         $lng = $_POST['lng'];
+        $meet_info = $_POST['meet_info'];
 
         $user = User::find()->where('id ='.$currentUser)->with('profile')->one();
         $profile = $user->profile;
@@ -333,6 +335,36 @@ class ProfileController extends BaseController
             'gender' => $user->profile->gender,
             'zip'=> $user->profile->zip_code,
             'dob'=> $birthday
+        );
+        $hash = json_encode($data);
+        return $hash;
+    }
+
+    public function actionUpdateProfileMeetInfo()
+    {
+        $currentUser = Yii::$app->user->id;
+        $meet_info = $_POST['meet_info'];
+        $user = User::find()->where('id ='.$currentUser)->with('profile')->one();
+        $profile = $user->profile;
+        $user->profile->meet_info = $meet_info;
+        $user->profile->update();
+        $data = array(
+            'status' => 1,
+            'first_name' => $user->profile->first_name,
+            'last_name' => $user->profile->last_name,
+            'user_name' => $user->username,
+            'email' => $user->email,
+            'gender' => $user->profile->gender,
+            'zip'=> $user->profile->zip_code,
+            'marital_status' => $user->profile->marital_status,
+            'work'=> $user->profile->work,
+            'education' => $user->profile->education,
+            'country' => $user->profile->country,
+            'state' => $user->profile->state,
+            'city' => $user->profile->user_city,
+            'hobbies' => $user->profile->hobbies,
+            'about'=> $user->profile->about,
+            'meet_info'=> $user->profile->meet_info,
         );
         $hash = json_encode($data);
         return $hash;
