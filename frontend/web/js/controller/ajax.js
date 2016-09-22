@@ -973,6 +973,23 @@ var Ajax = {
 
         return defer.promise();
     },
+    updateProfileMeetInfo: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl + "/netwrk/profile/update-profile-meet-info";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 
     new_topic: function(params){
         var url,defer = $.Deferred();
