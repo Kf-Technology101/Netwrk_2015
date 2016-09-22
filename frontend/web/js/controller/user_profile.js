@@ -17,8 +17,7 @@ var User_Profile = {
         about: '',
         zipcode:0,
         lat:'',
-        lng:'',
-        meet_info:''
+        lng:''
     },
     list:{
         group:{
@@ -51,8 +50,7 @@ var User_Profile = {
         zipcode: true,
         work: false,
         about:false,
-        total:false,
-        meet_info:false
+        total:false
     },
     state: 'Indiana',
     profileContainer: $('.profile-container'),

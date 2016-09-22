@@ -17,8 +17,7 @@ var ProfileEdit = {
         hobbies: '',
         about: '',
         lat:'',
-        lng:'',
-        meet_info:''
+        lng:''
     },
     num_len:true,
     zip: true,
