@@ -2268,7 +2268,7 @@
 				Map.infoWindowBlueDot.push(blueDotInfoWindow);
 
 				if(isMobile){
-				    sessionStorage.map_zoom = currentZoom;
+				    //sessionStorage.map_zoom = currentZoom;
 				}
 				if(currentZoom == 18){
 	    			Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: null});
