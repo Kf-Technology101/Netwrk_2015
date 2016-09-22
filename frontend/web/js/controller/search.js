@@ -70,12 +70,12 @@ var Search = {
 		target.on('click',function(e){
 			var rs = $(e.currentTarget);
             Search.HideResultSearch();
+			PopupChat.params.post = rs.attr('data-post');
             if(isMobile){
-            	PopupChat.RedirectChatPostPage(ChatPost.params.post,1,0);
+            	PopupChat.RedirectChatPostPage(PopupChat.params.post,1,0);
             }else{
             	// ChatPost.initialize();
             	$('.modal').modal('hide');
-            	PopupChat.params.post = rs.attr('data-post');
             	PopupChat.params.chat_type = 1;
             	PopupChat.params.post_name = rs.find('.title-result').html();
 				PopupChat.params.post_description = rs.find('.container-post').html();

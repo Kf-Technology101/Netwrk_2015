@@ -85,7 +85,7 @@ class SearchController extends BaseController
        	}
 
        	// Topic Local
-       	$topics = Topic::SearchTopic($_search,$type_local,$id_local);
+       	/*$topics = Topic::SearchTopic($_search,$type_local,$id_local);
         foreach ($topics as $key => $topic) {
         	$distance = UtilitiesFunc::CalculatorDistance($cur_lat,$cur_lng,$topic->city->lat,$topic->city->lng);
             if($distance <= $radius_local && count($post_local) < $limitResult){
@@ -114,7 +114,7 @@ class SearchController extends BaseController
                 array_push($netwrk_local, $netwrk);
                 $num_search_local += count($netwrk_local);
             }
-        }
+        }*/
         $type_global ='global';
         $posts_go = Post::SearchPost($_search,$type_global,$id_local);
 
@@ -146,7 +146,7 @@ class SearchController extends BaseController
 			$num_search_global += count($post_global);
 		}
 
-		$topics_go = Topic::SearchTopic($_search,$type_global,$id_local);
+		/*$topics_go = Topic::SearchTopic($_search,$type_global,$id_local);
 
 		foreach ($topics_go as $key => $topic_go) {
 			$item = [
@@ -171,7 +171,7 @@ class SearchController extends BaseController
             ];
             array_push($netwrk_global, $netwrk);
             $num_search_global += count($netwrk_global);
-		}
+		}*/
 
         $temp =[
         	'search_local'=>$num_search_local,
