@@ -273,7 +273,7 @@ var Default ={
             chatTab.css('max-height', chatTabHeight);
             newsTab.css('max-height', wrapperHeight - 37);
             netwrkNewsTab.css('max-height', wrapperHeight);
-            $('#netwrkNavigation').css('height', wrapperHeight);
+            $('#netwrkNavigation').css('height', height);
             $('#chat_inbox').css('height', wrapperHeight);
             $('#netwrkNews').css('width', width).css('height', wrapperHeight);
         }
@@ -369,6 +369,7 @@ var Default ={
                         $(LandingPage.netwrk_news).animate({
                             "left": "-400px"
                         }, 500);
+                        $('.search-overlay').addClass('hide');
                         /*$(ChatInbox.chat_inbox).animate({
                             "left": ChatInbox.list_chat_post_right_hidden
                         }, 500);*/
@@ -377,11 +378,13 @@ var Default ={
                             "left": "-400px"
                         }, 500);
 
+                        $('.search-overlay').removeClass('hide');
                         $.when($('#netwrkNavigation').animate({
                             "left": "0"
                         }, 500));/*.done(function(){
                             ChatInbox.initialize();
                         });*/
+                        Default.onClickCloseNavigation();
                     }
                 });
             }
@@ -405,6 +408,20 @@ var Default ={
                     "left": "0"
                 }, 500);
             }*/
+        });
+    },
+
+    onClickCloseNavigation: function() {
+        var target = $('.landing-close-trigger');
+
+        target.unbind();
+        target.on('click',function(){
+            if ($('#netwrkNavigation').css('left') == '0px') {
+                $('#netwrkNavigation').animate({
+                    "left": "-200px"
+                }, 500);
+                $('.search-overlay').addClass('hide');
+            }
         });
     },
 
@@ -507,7 +524,7 @@ var Default ={
 
         var favoriteContainer = $(".your-netwrks", '#netwrkNavigation');
         if(isMobile){
-            var favHeight = $(window).height()-113;
+            var favHeight = $(window).height()-40;
             favoriteContainer.css({'height' : favHeight, 'max-height' : favHeight});
         } else {
             var favHeight = $(window).height()-80;

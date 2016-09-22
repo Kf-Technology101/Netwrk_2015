@@ -28,14 +28,14 @@ var CoverPage = {
 		}
 
 		// Display cover page input
-		var coverImg = $(CoverPage.parent).find('#coverImg');
+		/*var coverImg = $(CoverPage.parent).find('#coverImg');
 		if (coverImg.prop('complete')) {
 			$('#inputGroup').removeClass('hide');
 		} else {
 			coverImg.load(function(){
 				$('#inputGroup').removeClass('hide');
 			});
-		}
+		}*/
 	},
 
 	OnKeyPress: function(){
@@ -346,6 +346,7 @@ var CoverPage = {
 		var btn = $('.share-location-btn', CoverPage.parent);
 		btn.hide();
 		$('.or-text', CoverPage.parent).hide();
+		$('#inputGroup', CoverPage.parent).removeClass('hide');
 		$('#cv-location').focus();
 	}
 }
