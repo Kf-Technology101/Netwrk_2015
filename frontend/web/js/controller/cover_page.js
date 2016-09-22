@@ -346,6 +346,7 @@ var CoverPage = {
 		var btn = $('.share-location-btn', CoverPage.parent);
 		btn.hide();
 		$('.or-text', CoverPage.parent).hide();
+		$('#inputGroup', CoverPage.parent).removeClass('hide');
 		$('#cv-location').focus();
 	}
 }
