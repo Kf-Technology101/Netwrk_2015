@@ -538,24 +538,60 @@ var Default ={
         Default.onClickJoinHomeAreaButton();
     },
     eventClickCommunityTrigger: function(){
+
         var context = '#netwrkNavigation';
         var target = $('.community-modal-trigger', context);
 
         target.unbind();
         target.click(function(e){
             var city_id = $(e.currentTarget).attr('data-city-id');
+            var zip_code = $(e.currentTarget).attr('data-zip_code');
             var lat = $(e.currentTarget).attr('data-lat');
             var lng = $(e.currentTarget).attr('data-lng');
 
-            if(isMobile){
-                var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
-                window.location.href= url;
-            } else {
-                $('.modal').modal('hide');
-                Topic.initialize(city_id);
-            }
+            console.log(zip_code);
+            var params = {'zip_code' : zip_code };
+            Ajax.setSelectedZipCodeCookie(params).then(function (data) {
+                var json = $.parseJSON(data);
+                console.log(json);
+                if(isMobile){
+                    //var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
+                    //window.location.href= url;
+                    var url = baseUrl + "/netwrk/chat-inbox";
+                    window.location.href= url;
+                } else {
+                    $('.modal').modal('hide');
+                    Topic.initialize(city_id);
+                }
+            });
         });
     },
+    getFeeds: function() {
+        //todo: get this zipcode by cookie or pass argument
+        Ajax.getFeedsBySelectedZipCode().then(function (data) {
+            var json = $.parseJSON(data);
+            var parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
+
+            console.log(json);
+            //Populate area news template with data
+            Default.getFeedsTemplate(parent, json);
+
+
+        });
+    },
+    getFeedsTemplate: function(parent, data){
+        var list_template = _.template($("#netwrk_news").html());
+        var append_html = list_template({landing: data});
+
+        //areas news populates here
+        console.log('area news populates');
+        parent.append(append_html);
+        // Netwrk news ends here
+
+        //todo: make common code. After loading feed template initialize its post, topic clicks
+        LandingPage.onTemplateLanding();
+    },
+
     onClickJoinHomeAreaButton: function() {
         // follow the user home area zipcode
         var context = '#netwrkNavigation';

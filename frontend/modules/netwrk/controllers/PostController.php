@@ -499,7 +499,8 @@ class PostController extends BaseController
     {
         $data = [];
         $cookies = Yii::$app->request->cookies;
-        $zipCode = $cookies->getValue('nw_zipCode');
+        //$zipCode = $cookies->getValue('nw_zipCode');
+        $zipCode = ($cookies->getValue('nw_selectedZip')) ? $cookies->getValue('nw_selectedZip') : $cookies->getValue('nw_zipCode');
 
         $limit = 30; //Yii::$app->params['LimitObjectFeedGlobal'];
 

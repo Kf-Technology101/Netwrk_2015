@@ -30,6 +30,7 @@
 				<section class="item community-modal-trigger"
 						 data-lat="<%= item.lat %>"
 						 data-lng="<%= item.lng %>"
+						 data-zip_code="<%= item.city_zipcode %>"
 						 data-city-id="<%= item.city_id %>">
 					<div class="home-community-icon">
 						<% if(item.city_office_type == "university") {%>
