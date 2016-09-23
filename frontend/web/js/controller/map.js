@@ -43,7 +43,8 @@
 			zoomMiddle: 16,
 			zoomLast: 18,
 			zipcode: '',
-			timeout: ''
+			timeout: '',
+			community: ''
 		},
 		clickLocation: {
 			lat: '',
@@ -1209,6 +1210,35 @@
 			});
 		},
 
+		getCurrentZipBuildDetail: function(){
+			var params = {'zip_code':Map.blueDotLocation.zipcode};
+
+			Ajax.getBuildDetailFromZip(params).then(function(data){
+				var buildData = $.parseJSON(data);
+
+				if(buildData.communities == 0){
+					$('.cgm-container').find('#communityInfo').addClass('hide');
+					$('.cgm-container').find('.discussion-title').addClass('hide');
+					$('.cgm-container').find('#noCommunity').removeClass('hide');
+					$('.cgm-container').find('.location-details-wrapper').removeClass('text-left').addClass('text-center');
+				} else {
+					$('.cgm-container').find('#communityInfo').removeClass('hide');
+					$('.cgm-container').find('.discussion-title').removeClass('hide');
+					$('.cgm-container').find('#noCommunity').addClass('hide');
+					$('.cgm-container').find('.location-details-wrapper').removeClass('text-center').addClass('text-left');
+					if(buildData.user_follow == 'false'){
+						Map.blueDotLocation.community = buildData.social_community;
+						$('.cgm-container').find('#actionBuildCommunity').addClass('hide');
+						$('.cgm-container').find('#actionJoinCommunity').removeClass('hide');
+					} else {
+						Map.blueDotLocation.community = '';
+						$('.cgm-container').find('#actionJoinCommunity').addClass('hide');
+						$('.cgm-container').find('#actionBuildCommunity').removeClass('hide');
+					}
+				}
+			});
+		},
+
 		findCurrentZip: function(lat, lng) {
 			$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
 				var len = data.results[0].address_components.length;
@@ -1250,7 +1280,7 @@
 								}
 							});
 						}*/
-						Map.getCurrentZipDiscussions();
+						Map.getCurrentZipBuildDetail();
 					} else if (data.results[0].address_components[i].types[0] == 'locality') {
 						var city = data.results[0].address_components[i].long_name;
 						console.log(city);
@@ -1842,6 +1872,19 @@
 			var lng = Map.center_marker.getPosition().lng();
 
 			Create_Post.showCreatePostModal(zipcode, lat, lng);
+		},
+		joinCommunity: function(community) {
+			params = {
+				'object_type': 'city',
+				'object_id' : community
+			};
+
+			Ajax.favorite(params).then(function(data){
+				Map.blueDotLocation.community = '';
+				$('.cgm-container').find('#actionJoinCommunity').addClass('hide');
+				$('.cgm-container').find('#actionBuildCommunity').removeClass('hide');
+				Default.getUserFavorites();
+			});
 		},
 		CreateUserLocationPost: function() {
 			Map.closeUserLocationInfoWindow();

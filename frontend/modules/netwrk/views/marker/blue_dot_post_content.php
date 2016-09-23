@@ -49,6 +49,7 @@
 					<!--<div class="iw-subTitle" id="cm-coords"></div>-->
 					<div class="create-section-wrapper">
 						<div class="iw-subTitle col-xs-12 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button line-button" onclick="Map.CreateLocationPost(Map.blueDotLocation.zipcode);"><span>Build a Line</span></a></div>
+						<div class="iw-subTitle col-xs-12 create-section hide" id="actionJoinCommunity"><a href="javascript:" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community);"><span>Join this netwrk</span></a></div>
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>-->
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>-->
 					</div>

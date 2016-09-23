@@ -1690,4 +1690,52 @@ class DefaultController extends BaseController
         $data = json_encode($data);
         return $data;
     }
+
+    public function actionGetBuildDetailFromZip()
+    {
+        $data = array();
+        $cities_array = array();
+        $favourite = '';
+        $social = '';
+
+        $zipCode = isset($_GET['zip_code']) ? $_GET['zip_code'] : '';
+        $currentUser = isset($_GET['user_id']) ? $_GET['user_id'] : Yii::$app->user->id;
+
+        $cities = City::find()
+            ->where('zip_code = '.$zipCode)
+            ->all();
+
+        $communities = sizeof($cities);
+
+        if($communities > 0) {
+            foreach ($cities as $key => $value) {
+                if(!in_array($value->id, $cities_array)){
+                    array_push($cities_array, $value->id);
+                    if(!$favourite && $currentUser) {
+                        $favourite = Favorite::find()->where('user_id = '.$currentUser.' AND city_id = '.$value->id.' AND status = 1')->one();
+                    }
+
+                    if(!$social && $value->office_type == null){
+                        $social = $value->id;
+                    }
+                }
+            }
+            $city_ids = implode(',',$cities_array);
+        }
+
+        if($favourite) {
+            $user_follow = 'true';
+        } else {
+            $user_follow = 'false';
+        }
+
+        $return = array(
+            'user_follow' => $user_follow,
+            'social_community' => $social,
+            'communities'=> $communities
+        );
+
+        $hash = json_encode($return);
+        return $hash;
+    }
 }
