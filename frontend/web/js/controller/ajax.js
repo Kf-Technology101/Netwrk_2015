@@ -34,6 +34,21 @@ var Ajax = {
 
         return defer.promise();
     },
+    getLocalNearByLines: function() {
+        var url,defer = $.Deferred();
+        url = baseUrl + "/netwrk/post/get-local-near-by-lines";
+
+        $.ajax({
+            url: url,
+            async: true,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
     getFeedsBySelectedZipCode: function() {
         var url,defer = $.Deferred();
         url = baseUrl + "/netwrk/default/get-feeds-by-selected-zip-code";

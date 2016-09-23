@@ -851,7 +851,8 @@ class DefaultController extends BaseController
             $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
 
             $item = [
-                'feeds' => $feeds
+                'feeds' => $feeds,
+                'selected_zipcode' => $zip_code
             ];
 
             $hash = json_encode($item);
