@@ -15,10 +15,10 @@
 
 <div style="display:none;">
 	<div id="blueDotInfoWindow">
-		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();">
+		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();" style="max-width: 250px; padding: 5px 5px 0;">
 			<div class="iw-content">
 				<div class="iw-subTitle text-right" onclick="Map.closeAllInfoWindows();">
-					<span class="close"><span aria-hidden="true">&times;</span></span>
+					<span class="close" style="font-size: 25px; line-height: 14px;"><span aria-hidden="true">&times;</span></span>
 				</div>
 				<div class="iw-subTitle location-details-wrapper text-left">
 					<h4 class="location-details">Welcome to <span id="blueDotLocation"><span>requesting...</span></span></h4>
@@ -48,7 +48,8 @@
 					</div>-->
 					<!--<div class="iw-subTitle" id="cm-coords"></div>-->
 					<div class="create-section-wrapper">
-						<div class="iw-subTitle col-xs-12 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button line-button" onclick="Map.CreateLocationPost(Map.blueDotLocation.zipcode);"><span>Build a Line</span></a></div>
+						<div class="iw-subTitle col-xs-12 create-section" id="actionBuildCommunity" style="padding: 5px 0 0;"><a href="javascript:" class="create-button line-button" onclick="Map.CreateLocationPost(Map.blueDotLocation.zipcode);"><span>Build a Line</span></a></div>
+						<div class="iw-subTitle col-xs-12 create-section hide" id="actionJoinCommunity" style="padding: 5px 0 0;"><a href="javascript:" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community);"><span>Join this netwrk</span></a></div>
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>-->
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>-->
 					</div>
