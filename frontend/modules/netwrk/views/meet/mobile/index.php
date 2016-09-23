@@ -1,8 +1,8 @@
 <?php use yii\helpers\Url; ?>
 <div id="meetListing">
     <article class="header">
-        <div class="back-page">
-            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+        <div class="netwrk-icon landing-trigger">
+            <img src="/img/icon/netwrk-icon-inactive.png">
         </div>
         <div class="title-page">
             <span class="title">Meet</span>
