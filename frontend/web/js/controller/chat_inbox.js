@@ -25,7 +25,9 @@ var ChatInbox = {
 			ChatInbox.HideMeetIconMobile();
 			ChatInbox.OnClickChatInboxBtnMobile();
 			ChatInbox.CheckBackFromChat();
-			LandingPage.GetDataTopLanding();
+			//LandingPage.GetDataTopLanding();
+			//get area feeds according to selected zipcode
+			Default.getFeeds();
 			Default.SetAvatarUserDropdown();
 			//ChatInbox.OnShowNetwrkUiChatInbox();
 		} else {
