@@ -1400,13 +1400,16 @@
 				google.maps.event.addListener(blueDotInfoWindow, 'domready', function() {
 					//   // Reference to the DIV that wraps the bottom of infowindow
 					var iwOuter = $('.gm-style-iw');
+					var iwOuter = $('#iw-container').closest('.gm-style-iw');
 
 					//    // Since this div is in a position prior to .gm-div style-iw.
 					//    // * We use jQuery and create a iwBackground variable,
 					//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 
+					iwOuter.css({'max-width' : '250px', 'z-index' : '999', 'box-shadow' : '2px 2px 2px'});
+
 					var iwBackground = iwOuter.prev();
-					iwOuter.children(':nth-child(1)').css({'max-width' : '50px'});
+					iwOuter.children(':nth-child(1)').css({'max-width' : '240px'});
 					//*/ Removes background shadow DIV
 					iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
@@ -1564,6 +1567,7 @@
 			var blueDotInfoWindowContent = $('#blueDotInfoWindow').html();
 
 			var infowindow = new google.maps.InfoWindow({
+				maxWidth: 240,
 				content: blueDotInfoWindowContent
 			});
 
@@ -1882,7 +1886,7 @@
 				}
 				return false;
 			}
-			
+
 			params = {
 				'object_type': 'city',
 				'object_id' : community
