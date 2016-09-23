@@ -230,9 +230,12 @@
                     <% if(meet_user.met == 0) { %>
                         <div class="btn btn-default btn-meet-trigger">Meet</div>
                     <% } else { %>
-                        <div class="btn btn-default btn-met btn-meet-trigger">Met</div>
+                        <% if(meet_user.meet == 0) { %>
+                            <div class="btn btn-default btn-met btn-meet-trigger">Met</div>
+                        <% } else { %>
+                            <div class="btn btn-default btn-met-green">Met</div>
+                        <% } %>
                     <% } %>
-
                 </div>
             </div>
         </li>
