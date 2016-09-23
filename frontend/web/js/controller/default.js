@@ -548,6 +548,8 @@ var Default ={
                     //Topic.initialize(city_id);
                     Default.getNearByLines();
                     Default.getFeeds();
+
+                    Map.SetMapCenter(lat, lng, Map.map.getZoom());
                 }
             });
         });

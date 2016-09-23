@@ -2149,12 +2149,12 @@
 				}
 			}
 
-			/*for (i=0; i<Map.lineMarkers.length; i++) {
+			for (i=0; i<Map.lineMarkers.length; i++) {
 				m = Map.lineMarkers[i];
 				if(typeof m.label != 'undefined' || m.label != null) {
 					m.label.setMap(null);
 				}
-			}*/
+			}
 			Map.lineMarkers = [];
 		},
 		show_marker_line_loc: function(map, params) {
@@ -2172,11 +2172,11 @@
 					var markerContent;
 					if(e.expire_at == null){
 						markerContent = "<div class='marker marker-line'></div>"+
-								"<span class='marker-icon marker-line-icon'><i class='fa fa-lg fa-minus'></i>"+
+								"<span class='marker-icon marker-line-icon'><i class='fa fa-comment'></i>"+
 								"</span><div class=''></div>";
 					} else {
 						markerContent = "<div class='marker marker-line marker-timed-line'></div>"+
-								"<span class='marker-icon marker-line-icon'><i class='fa fa-lg fa-minus'></i>"+
+								"<span class='marker-icon marker-line-icon'><i class='fa fa-comment'></i>"+
 								"</span><div class=''></div>";
 					}
 
@@ -2221,13 +2221,23 @@
 						};
 					})(marker, i));
 
-					Map.lineMarkers.push({
-						marker: marker
-						/*label: label*/
-					});
-					//Map.topicMarkers.push(marker);
-				});
+					var text_below;
 
+					text_below = "<span class='line-title'>" + e.post_title + "</span>";
+
+					var label = new Label({
+						map: map,
+						text: text_below,
+						linelable: ''
+					});
+
+					label.bindTo('position', marker, 'position');
+
+					Map.lineMarkers.push({
+						marker: marker,
+						label: label
+					});
+				});
 
 			});
 		},
