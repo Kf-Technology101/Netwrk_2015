@@ -24,7 +24,8 @@ var Default ={
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
             if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
-                LandingPage.GetDataTopLanding();
+                //LandingPage.GetDataTopLanding();
+                Default.getFeeds();
             }
         }
         if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
@@ -534,13 +535,28 @@ var Default ={
                 if(isMobile){
                     //var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
                     //window.location.href= url;
-                    var url = baseUrl + "/netwrk/chat-inbox";
-                    window.location.href= url;
+                    var meetUrl = baseUrl + "/netwrk/meet";
+                    if(window.location == meetUrl) {
+                        window.location.href = meetUrl;
+                    } else {
+                        var url = baseUrl + "/netwrk/chat-inbox";
+                        window.location.href= url;
+                    }
+
                 } else {
                     $('.modal').modal('hide');
-                    Topic.initialize(city_id);
+                    //Topic.initialize(city_id);
+                    Default.getNearByLines();
+                    Default.getFeeds();
                 }
             });
+        });
+    },
+    getNearByLines: function() {
+        Ajax.getLocalNearByLines().then(function (data) {
+            var result = $.parseJSON(data);
+            var localPartyParent = $(ChatInbox.chat_inbox).find('#containerLocalPartyLines ul');
+            ChatInbox.getTemplateNearByLines(localPartyParent,result.localPartyLines, UserLogin);
         });
     },
     getFeeds: function() {
@@ -548,23 +564,15 @@ var Default ={
         Ajax.getFeedsBySelectedZipCode().then(function (data) {
             var json = $.parseJSON(data);
             var parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
-
-            console.log(json);
             //Populate area news template with data
             Default.getFeedsTemplate(parent, json);
-
-
         });
     },
     getFeedsTemplate: function(parent, data){
+        parent.html('');
         var list_template = _.template($("#netwrk_news").html());
         var append_html = list_template({landing: data});
-
-        //areas news populates here
-        console.log('area news populates');
         parent.append(append_html);
-        // Netwrk news ends here
-
         //todo: make common code. After loading feed template initialize its post, topic clicks
         LandingPage.onTemplateLanding();
     },

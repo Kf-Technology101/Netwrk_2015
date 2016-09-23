@@ -491,6 +491,7 @@ class PostController extends BaseController
         $data = $local_topics;
         return json_encode($data);
     }
+
     /**
      * Get the local party lines in users selected zip code area.
      * @return string
@@ -651,6 +652,18 @@ class PostController extends BaseController
         ];
 
         //$data = !empty($data) ? json_encode($data) : false;
+        return json_encode($return);
+    }
+
+    public function actionGetLocalNearByLines()
+    {
+        $return = '';
+
+        $local_party_lines = json_decode($this->actionGetLocalPartyLines(), true);
+        $return = [
+            'localPartyLines' => $local_party_lines
+        ];
+
         return json_encode($return);
     }
 
