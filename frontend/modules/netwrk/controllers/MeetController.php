@@ -11,6 +11,7 @@ use frontend\modules\netwrk\models\ChatPrivate;
 use frontend\modules\netwrk\models\WsMessages;
 use yii\helpers\Url;
 use Yii;
+use yii\web\Cookie;
 
 class MeetController extends BaseController
 {
@@ -119,27 +120,42 @@ class MeetController extends BaseController
 
     public function actionGetUserMeet()
     {
+        $cookies = Yii::$app->request->cookies;
+        $zip_code = ($cookies->getValue('nw_selectedZipCode')) ? $cookies->getValue('nw_selectedZipCode') : 0;
         $view = isset($_GET['view']) ? $_GET['view'] : 'desktop';
 
         $system_user_id = Yii::$app->params['systemUserId'];
-
+        $userCurrent = 0;
         $current_date = date('Y-m-d H:i:s');
         $filter = false;
-        if(Yii::$app->user->isGuest) {
-            $filter = false;
-            $userCurrent = 0;
-            $users_rand = User::find()
-                                ->addSelect(["*", "RAND() order_num"])
-                                ->where(['not',['id'=>$system_user_id]])
-                                ->orderBy(['order_num'=> SORT_DESC])
-                                ->all();
 
+        if($zip_code != 0){
+            $users_rand = User::find()->addSelect(["user.*", "RAND() order_num"])
+                ->innerJoin('profile', 'user.id=profile.user_id')
+                ->where(['not',['user.id' => $system_user_id]])
+                ->andWhere(['profile.zip_code' => $zip_code])
+                ->orderBy(['order_num'=> SORT_DESC])
+                ->all();
         } else {
-            $userLogin = User::findOne(Yii::$app->user->id);
-            if($userLogin->setting) {
-                $filter = true;
+            if (Yii::$app->user->isGuest) {
+                $filter = false;
+                $userCurrent = 0;
+                $users_rand = User::find()
+                    ->addSelect(["*", "RAND() order_num"])
+                    ->where(['not', ['id' => $system_user_id]])
+                    ->orderBy(['order_num' => SORT_DESC])
+                    ->all();
+            } else {
+                $userLogin = User::findOne(Yii::$app->user->id);
+                if ($userLogin->setting) {
+                    $filter = true;
+                }
+
+                $users_rand = $this->MixRandUser($zip_code);
             }
-            $users_rand = $this->MixRandUser();
+        }
+
+        if(!Yii::$app->user->isGuest) {
             $userCurrent = Yii::$app->user->id;
         }
 
@@ -171,9 +187,24 @@ class MeetController extends BaseController
                 $brilliant = $count_like;
             }
 
-            $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$value->id)->one();
-
+            // Check if current user meet this user
+            $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2 ='.$value->id)->one();
             if($usermeet && $usermeet->status == 1){
+                $met_1 = 1;
+            } else {
+                $met_1 = 0;
+            }
+
+            // Check if this user meet current user
+            $usermeet = UserMeet::find()->where('user_id_1 ='.$value->id.' AND user_id_2 ='.$userCurrent)->one();
+            if($usermeet && $usermeet->status == 1){
+                $met_2 = 1;
+            } else {
+                $met_2 = 0;
+            }
+
+            // Check if both users meet each others
+            if($met_1 && $met_2) {
                 $meet = 1;
             } else {
                 $meet = 0;
@@ -200,7 +231,8 @@ class MeetController extends BaseController
             $user = array(
                 'user_id' => $value->id,
                 'username' => $value->profile->first_name ." ". $value->profile->last_name,
-                'met' => $meet,
+                'met' => $met_1,
+                'meet' => $meet,
                 'distance' => $distance,
                 'information' => array(
                     'username' => $value->profile->first_name ." ". $value->profile->last_name,

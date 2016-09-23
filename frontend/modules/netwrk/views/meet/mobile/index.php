@@ -1,8 +1,8 @@
 <?php use yii\helpers\Url; ?>
 <div id="meetListing">
     <article class="header">
-        <div class="back-page">
-            <span><i class="fa fa-arrow-circle-left"></i> Back </span>
+        <div class="netwrk-icon landing-trigger">
+            <img src="/img/icon/netwrk-icon-inactive.png">
         </div>
         <div class="title-page">
             <span class="title">Meet</span>
@@ -231,9 +231,12 @@
                     <% if(meet_user.met == 0) { %>
                         <div class="btn btn-default btn-meet-trigger">Meet</div>
                     <% } else { %>
-                        <div class="btn btn-default btn-met btn-meet-trigger">Met</div>
+                        <% if(meet_user.meet == 0) { %>
+                            <div class="btn btn-default btn-met btn-meet-trigger">Met</div>
+                        <% } else { %>
+                            <div class="btn btn-default btn-met-green">Met</div>
+                        <% } %>
                     <% } %>
-
                 </div>
             </div>
         </li>
