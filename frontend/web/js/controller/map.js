@@ -1874,6 +1874,15 @@
 			Create_Post.showCreatePostModal(zipcode, lat, lng);
 		},
 		joinCommunity: function(community) {
+			if(isGuest){
+				if(isMobile){
+					window.location.href = baseUrl + "/netwrk/user/login?url_callback="+baseUrl;
+				} else {
+					Login.initialize();
+				}
+				return false;
+			}
+			
 			params = {
 				'object_type': 'city',
 				'object_id' : community
