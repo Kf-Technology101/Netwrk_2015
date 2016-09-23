@@ -125,38 +125,43 @@ class MeetController extends BaseController
         $view = isset($_GET['view']) ? $_GET['view'] : 'desktop';
 
         $system_user_id = Yii::$app->params['systemUserId'];
-        $userCurrent = 0;
         $current_date = date('Y-m-d H:i:s');
         $filter = false;
 
-        if($zip_code != 0){
-            $users_rand = User::find()->addSelect(["user.*", "RAND() order_num"])
-                ->innerJoin('profile', 'user.id=profile.user_id')
-                ->where(['not',['user.id' => $system_user_id]])
-                ->andWhere(['profile.zip_code' => $zip_code])
-                ->orderBy(['order_num'=> SORT_DESC])
-                ->all();
-        } else {
-            if (Yii::$app->user->isGuest) {
-                $filter = false;
-                $userCurrent = 0;
+        if (Yii::$app->user->isGuest) {
+            $filter = false;
+            $userCurrent = 0;
+            if($zip_code != 0){
+                $users_rand = User::find()->addSelect(["user.*", "RAND() order_num"])
+                    ->innerJoin('profile', 'user.id=profile.user_id')
+                    ->where(['not',['user.id' => $system_user_id]])
+                    ->andWhere(['profile.zip_code' => $zip_code])
+                    ->orderBy(['order_num'=> SORT_DESC])
+                    ->all();
+            } else {
                 $users_rand = User::find()
                     ->addSelect(["*", "RAND() order_num"])
                     ->where(['not', ['id' => $system_user_id]])
                     ->orderBy(['order_num' => SORT_DESC])
                     ->all();
+            }
+        } else {
+            $userLogin = User::findOne(Yii::$app->user->id);
+            if ($userLogin->setting) {
+                $filter = true;
+            }
+            $userCurrent = Yii::$app->user->id;
+            if($zip_code != 0){
+                $users_rand = User::find()->addSelect(["user.*", "RAND() order_num"])
+                    ->innerJoin('profile', 'user.id=profile.user_id')
+                    ->where(['not',['user.id' => $system_user_id]])
+                    ->andWhere(['not',['user.id' => $userCurrent]])
+                    ->andWhere(['profile.zip_code' => $zip_code])
+                    ->orderBy(['order_num'=> SORT_DESC])
+                    ->all();
             } else {
-                $userLogin = User::findOne(Yii::$app->user->id);
-                if ($userLogin->setting) {
-                    $filter = true;
-                }
-
                 $users_rand = $this->MixRandUser($zip_code);
             }
-        }
-
-        if(!Yii::$app->user->isGuest) {
-            $userCurrent = Yii::$app->user->id;
         }
 
         $data = [];
