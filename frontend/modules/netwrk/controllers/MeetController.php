@@ -121,7 +121,7 @@ class MeetController extends BaseController
     public function actionGetUserMeet()
     {
         $cookies = Yii::$app->request->cookies;
-        $zip_code = ($cookies->getValue('nw_selectedZipCode')) ? $cookies->getValue('nw_selectedZipCode') : 0;
+        $zip_code = ($cookies->getValue('nw_selectedZip')) ? $cookies->getValue('nw_selectedZip') : 0;
         $view = isset($_GET['view']) ? $_GET['view'] : 'desktop';
 
         $system_user_id = Yii::$app->params['systemUserId'];
