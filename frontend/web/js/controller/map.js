@@ -429,12 +429,17 @@
 				showLocationInfo = false;
 
 			if(showLocationInfo) {
+				if (!typeof(userLocationInfoWindow) === "undefined"){
+					userLocationInfoWindow.setMap(null);
+				}
+
 				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
 					var len = data.results[0].address_components.length;
 					for (var i = 0; i < len; i++) {
 						if (data.results[0].address_components[i].types[0] == 'postal_code') {
 							var zip = data.results[0].address_components[i].long_name;
 							User.location.zipCode = zip;
+							Map.blueDotLocation.zipcode = zip;
 						} else if (data.results[0].address_components[i].types[0] == 'locality') {
 							var city = data.results[0].address_components[i].long_name;
 							setTimeout(function(){
@@ -442,61 +447,86 @@
 							},300);
 						}
 					}
-				});
 
-				userLocationInfoWindow = new google.maps.InfoWindow();
-				var windowLatLng = new google.maps.LatLng(lat, lng);
-				var content = $('#userLocationInfoWindow').html();
+					if(isGuest) {
+						$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
+						$('#userLocationInfoWindow').find('.build-content').addClass('hide');
+					} else {
+						/*$('#userLocationInfoWindow').find('.join-content').addClass('hide');
+						$('#userLocationInfoWindow').find('.build-content').removeClass('hide');*/
 
-				userLocationInfoWindow.setOptions({
-					maxWidth: 240,
-					maxHeight: 100,
-					content: content,
-					position: windowLatLng,
-				});
+						var params = {'zip_code':Map.blueDotLocation.zipcode};
 
-				userLocationInfoWindow.open(map);
+						Ajax.getBuildDetailFromZip(params).then(function(data){
+							var buildData = $.parseJSON(data);
 
-				google.maps.event.addListener(userLocationInfoWindow, 'domready', function() {
-					// Reposition user location marker so info window display on center
-					$('.marker-user-location').parent().parent().parent().css({'left' : '-20px'});
+							if(buildData.user_follow == 'false'){
+								Map.blueDotLocation.community = buildData.social_community;
+								$('#userLocationInfoWindow').find('.build-content').addClass('hide');
+								$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
+							} else {
+								Map.blueDotLocation.community = '';
+								$('#userLocationInfoWindow').find('.join-content').addClass('hide');
+								$('#userLocationInfoWindow').find('.build-content').removeClass('hide');
+							}
+						});
+					}
 
-					//   // Reference to the DIV that wraps the bottom of infowindow
-					var iwOuter = $('#uiw-container').closest('.gm-style-iw');
+					userLocationInfoWindow = new google.maps.InfoWindow();
+					var windowLatLng = new google.maps.LatLng(lat, lng);
+					var content = $('#userLocationInfoWindow').html();
 
-					//    // Since this div is in a position prior to .gm-div style-iw.
-					//    // * We use jQuery and create a iwBackground variable,
-					//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+					userLocationInfoWindow.setOptions({
+						maxWidth: 260,
+						maxHeight: 100,
+						content: content,
+						position: windowLatLng,
+					});
 
-					iwOuter.css({'max-width' : '250px', 'max-height' : '100px', 'z-index' : '999', 'box-shadow' : '2px 2px 2px'});
+					userLocationInfoWindow.open(map);
 
-					var iwBackground = iwOuter.prev();
-					iwOuter.children(':nth-child(1)').css({'max-width' : '240px'});
+					google.maps.event.addListener(userLocationInfoWindow, 'domready', function() {
+						// Reposition user location marker so info window display on center
+						$('.marker-user-location').parent().parent().parent().css({'left' : '-20px'});
 
-					// Removes background shadow DIV
-					iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+						//   // Reference to the DIV that wraps the bottom of infowindow
+						var iwOuter = $('#uiw-container').closest('.gm-style-iw');
 
-					//   // Removes white background DIV
-					iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+						$('#uiw-container').css({'max-width' : '260px'});
+						//    // Since this div is in a position prior to .gm-div style-iw.
+						//    // * We use jQuery and create a iwBackground variable,
+						//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 
-					//   // Moves the shadow of the arrow 76px to the left margin.
-					iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+						iwOuter.css({'max-width' : '260px', 'max-height' : '100px', 'z-index' : '999', 'box-shadow' : '2px 2px 2px'});
 
-					//   // Moves the arrow 76px to the left margin.
-					iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+						var iwBackground = iwOuter.prev();
+						iwOuter.children(':nth-child(1)').css({'max-width' : '260px'});
 
-					//   // Changes the desired tail shadow color.
-					//iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+						// Removes background shadow DIV
+						iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
-					//   // Reference to the div that groups the close button elements.
-					var iwCloseBtn = iwOuter.next();
+						//   // Removes white background DIV
+						iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
-					//   // Apply the desired effect to the close button
-					iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+						//   // Moves the shadow of the arrow 76px to the left margin.
+						iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
 
-					//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-					iwCloseBtn.mouseout(function(){
-						$(this).css({opacity: '0'});
+						//   // Moves the arrow 76px to the left margin.
+						iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+
+						//   // Changes the desired tail shadow color.
+						//iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+
+						//   // Reference to the div that groups the close button elements.
+						var iwCloseBtn = iwOuter.next();
+
+						//   // Apply the desired effect to the close button
+						iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+
+						//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+						iwCloseBtn.mouseout(function(){
+							$(this).css({opacity: '0'});
+						});
 					});
 				});
 			}
@@ -1877,7 +1907,7 @@
 
 			Create_Post.showCreatePostModal(zipcode, lat, lng);
 		},
-		joinCommunity: function(community) {
+		joinCommunity: function(community, from) {
 			if(isGuest){
 				if(isMobile){
 					window.location.href = baseUrl + "/netwrk/user/login?url_callback="+baseUrl;
@@ -1894,8 +1924,12 @@
 
 			Ajax.favorite(params).then(function(data){
 				Map.blueDotLocation.community = '';
-				$('.cgm-container').find('#actionJoinCommunity').addClass('hide');
-				$('.cgm-container').find('#actionBuildCommunity').removeClass('hide');
+				if(from == 'user-location'){
+					Map.initialize();
+				} else {
+					$('.cgm-container').find('#actionJoinCommunity').addClass('hide');
+					$('.cgm-container').find('#actionBuildCommunity').removeClass('hide');
+				}
 				Default.getUserFavorites();
 			});
 		},
