@@ -171,7 +171,9 @@ var Default ={
         var target = $('#btn_meet_mobile, #btn_nav_meet_mobile');
 
         target.on('click',function(){
-            Meet.showUserMeetMobile();
+            $.when(Common.mobileNavUnSelect()).done(function(){
+                Meet.showUserMeetMobile();
+            });
         });
     },
 
@@ -179,8 +181,10 @@ var Default ={
         var target = $('#chat_inbox_btn_mobile, #chat_inbox_nav_btn_mobile');
         target.unbind();
         target.on('click',function(){
-            sessionStorage.url = window.location.href;
-            ChatInbox.OnClickChatInboxMobile();
+            $.when(Common.mobileNavUnSelect()).done(function(){
+                sessionStorage.url = window.location.href;
+                ChatInbox.OnClickChatInboxMobile();
+            });
             // Ajax.set_previous_page(window.location.href).then(function(data){
             // });
         });

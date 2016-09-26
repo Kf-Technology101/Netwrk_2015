@@ -126,11 +126,12 @@ var Common = {
                         }
                     });
                 }*/
-
-                sessionStorage.show_landing = 1;
-                sessionStorage.show_blue_dot = 1;
-                sessionStorage.show_blue_dot_zoom12 = 1;
-                window.location.href = baseUrl + "/netwrk/default/home";
+                $.when(Common.mobileNavUnSelect()).done(function(){
+                    sessionStorage.show_landing = 1;
+                    sessionStorage.show_blue_dot = 1;
+                    sessionStorage.show_blue_dot_zoom12 = 1;
+                    window.location.href = baseUrl + "/netwrk/default/home";
+                });
             }
         });
     },
@@ -180,7 +181,9 @@ var Common = {
         target.unbind();
         target.on('click',function(){
             if (isMobile) {
-                window.location.href = baseUrl + "/netwrk/profile";
+                $.when(Common.mobileNavUnSelect()).done(function(){
+                    window.location.href = baseUrl + "/netwrk/profile";
+                });
             } else {
                 $('.modal').modal('hide');
                 User_Profile.initializeSlider();
@@ -669,6 +672,12 @@ var Common = {
         closeBtn.on('click',function(){
             target.css({'right' : '-100%'});
             $('.search-overlay').addClass('hide');
+        });
+    },
+
+    mobileNavUnSelect: function(){
+        $('#nav_wrapper').find('.btn').each(function(){
+            $(this).css({'background': '#5888ac'});
         });
     }
 };
