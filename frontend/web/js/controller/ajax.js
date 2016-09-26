@@ -19,12 +19,13 @@ var Ajax = {
         return defer.promise();
     },
 
-    top_landing: function(){
+    top_landing: function(params){
         var url,defer = $.Deferred();
         url = baseUrl + "/netwrk/default/feed-global";
 
         $.ajax({
             url: url,
+            data: params,
             async: true,
             cache: false,
             type: 'POST',

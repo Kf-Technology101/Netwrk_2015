@@ -77,7 +77,8 @@ var LandingPage = {
 	},
 
 	GetDataTopLanding: function(){
-		Ajax.top_landing().then(function(res){
+		var params = {'result-data' : 'feed-and-hq-post'};
+		Ajax.top_landing(params).then(function(res){
 			LandingPage.data = $.parseJSON(res);
 			LandingPage.GetTemplate();
 			if(!isMobile) {
