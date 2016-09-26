@@ -765,41 +765,63 @@ class DefaultController extends BaseController
     }
 
     public function actionFeedGlobal(){
+        $result_data = $_POST['result-data'];
         $request = Yii::$app->request->isAjax;
-
         $cookies = Yii::$app->request->cookies;
+        $item = array();
 
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-            $party_lines = array();
+            if($result_data == 'all') {
+                $party_lines = array();
 
-            $city_ids = $this->actionGetCitiesFromCookie('id');
-            $hq_city_id = $this->actionGetHQZipCityFromCookie();
+                $city_ids = $this->actionGetCitiesFromCookie('id');
+                $hq_city_id = $this->actionGetHQZipCityFromCookie();
 
-            $hq_post = Post::GetHQPostGlobal($hq_city_id);
-            $top_post = Post::GetTopPostUserJoinGlobal($limit,null,null);
-            $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
-            //$top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
-            //$top_communities = City::TopHashTag_City($top_city,$limit);
-            $front_cities = City::GetCities($limit,$city_ids);
-            $top_communities = City::TopHashTag_City($front_cities,$limit);
+                $hq_post = Post::GetHQPostGlobal($hq_city_id);
+                $top_post = Post::GetTopPostUserJoinGlobal($limit,null,null);
+                $top_topic = Topic::GetTopTopicGlobal($limit, null,$city_ids);
+                //$top_city = City::GetTopCityUserJoinGlobal($limit,$city_ids);
+                //$top_communities = City::TopHashTag_City($top_city,$limit);
+                $front_cities = City::GetCities($limit,$city_ids);
+                $top_communities = City::TopHashTag_City($front_cities,$limit);
 
-            // If user is logged in then get his followed communities feeds
-            if(Yii::$app->user->id) {
-                $feeds = json_decode($this->actionGetFeedByUser(), true);
+                // If user is logged in then get his followed communities feeds
+                if(Yii::$app->user->id) {
+                    $feeds = json_decode($this->actionGetFeedByUser(), true);
+                }
+                // else get the feeds for the communities from zip or city entered on cover page
+                else {
+                    $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+                }
+
+                $item = [
+                    'hq_post' => $hq_post,
+                    'top_post' => $top_post,
+                    'top_topic' => $top_topic,
+                    'top_communities' => $top_communities,
+                    'feeds' => $feeds
+                ];
+            } elseif($result_data == 'feed-and-hq-post') {
+                $city_ids = $this->actionGetCitiesFromCookie('id');
+                $hq_city_id = $this->actionGetHQZipCityFromCookie();
+
+                $hq_post = Post::GetHQPostGlobal($hq_city_id);
+
+                // If user is logged in then get his followed communities feeds
+                if(Yii::$app->user->id) {
+                    $feeds = json_decode($this->actionGetFeedByUser(), true);
+                }
+                // else get the feeds for the communities from zip or city entered on cover page
+                else {
+                    $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+                }
+
+                $item = [
+                    'hq_post' => $hq_post,
+                    'feeds' => $feeds
+                ];
             }
-            // else get the feeds for the communities from zip or city entered on cover page
-            else {
-                $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
-            }
-
-            $item = [
-                'hq_post' => $hq_post,
-                'top_post' => $top_post,
-                'top_topic' => $top_topic,
-                'top_communities' => $top_communities,
-                'feeds' => $feeds
-            ];
 
             $hash = json_encode($item);
             return $hash;
