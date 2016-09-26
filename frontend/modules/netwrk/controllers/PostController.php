@@ -501,7 +501,7 @@ class PostController extends BaseController
         $cookies = Yii::$app->request->cookies;
         $zipCode = $cookies->getValue('nw_zipCode');
 
-        $limit = 30; //Yii::$app->params['LimitObjectFeedGlobal'];
+        $limit = 15; //Yii::$app->params['LimitObjectFeedGlobal'];
 
         //if city is entered on cover page then zipcode is 0,
         //IF a person enters a city, the most active general chat will show (meaning the post with the most chats)
@@ -578,7 +578,7 @@ class PostController extends BaseController
 
         $local_party_lines = json_decode($this->actionGetLocalPartyLines(), true);
 
-        $most_active = Post::GetTopPostUserJoinGlobal($limit,null,null);
+        //$most_active = Post::GetTopPostUserJoinGlobal($limit,null,null);
         
         if($currentUser) {
             $query = new Query();
@@ -645,8 +645,8 @@ class PostController extends BaseController
 
         $return = [
             'linesData' => $data,
-            'localPartyLines' => $local_party_lines,
-            'mostActive' => $most_active
+            'localPartyLines' => $local_party_lines
+            //'mostActive' => $most_active
         ];
 
         //$data = !empty($data) ? json_encode($data) : false;
