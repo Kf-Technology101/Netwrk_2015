@@ -166,6 +166,13 @@ if (isset($cookies["isCoverPageVisited"])) {
               <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
               <div class="navigation-text">Login</div>
             </a>
+          <?php else : ?>
+            <button class="btn btn-default profile-trigger" type="button" id="buttonProfileWrapper">
+              <i class="navigation-icon fa fa-user"></i>
+              <div class="navigation-text">
+                Profile
+              </div>
+            </button>
           <?php endif; ?>
         </div>
         <!--<div id="nav_wrapper" class="navigation-btn-group btn-group btn-group-default btn-group-type" role="group" aria-label="...">
