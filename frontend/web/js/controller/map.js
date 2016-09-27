@@ -1350,7 +1350,7 @@
 
 					if (Map.center_marker != null) Map.center_marker.setMap(null);
 
-					Map.requestBlueDotOnMap(position.coords.latitude, position.coords.longitude, map);
+					Map.requestBlueDotOnMap(position.coords.latitude, position.coords.longitude, map, 'location');
 
 					//display blue dot on map from lat and lon.
 					/*var infowindow = Map.showBlueDot(position.coords.latitude, position.coords.longitude, map);
@@ -1418,7 +1418,7 @@
 			console.log('in req postion');
 		},
 
-		requestBlueDotOnMap: function(lat, lng, map) {
+		requestBlueDotOnMap: function(lat, lng, map, from) {
 			// Close modal
 			$('.modal').modal('hide');
 			/*if (map.getZoom() != Map.blueDotLocation.zoomInitial) {
@@ -1435,7 +1435,7 @@
 				//if (Map.center_marker != null) Map.center_marker.setMap(null);
 
 				//display blue dot on map from lat and lon.
-				var blueDotInfoWindow = Map.showBlueDot(lat, lng, map);
+				var blueDotInfoWindow = Map.showBlueDot(lat, lng, map, from);
 
 				Map.infoWindowBlueDot.push(blueDotInfoWindow);
 
@@ -1620,8 +1620,15 @@
 				Map.center_marker.setMap(null);
 			}
 		},
-		showBlueDot: function(lat, lng, map) {
-			var img = '/img/icon/pale-blue-line-icon-dot.png';
+		showBlueDot: function(lat, lng, map, from) {
+			var img = '/img/icon/pale-blue-line-icon-dot.png',
+				dragImg = '/img/icon/pale-blue-line-icon-dot-bg.png';
+
+			if(from == 'location'){
+				var img = '/img/icon/pale-blue-location-icon-dot.png',
+					dragImg = '/img/icon/pale-blue-location-icon-dot-bg.png';
+			}
+
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(lat, lng),
 				icon: img,
@@ -1634,7 +1641,7 @@
 			//google.maps.event.clearListeners(marker, 'dragstart');
 			google.maps.event.addListener(marker, 'dragstart', function(e) {
 				console.log('in dragstart');
-				marker.setIcon('/img/icon/pale-blue-line-icon-dot-bg.png');
+				marker.setIcon(dragImg);
 				$("#blueDotLocation span").eq(0).html('Requesting...');
 				google.maps.event.clearListeners(Map.center_marker, 'mouseout');
 			});
@@ -1642,7 +1649,7 @@
 			//google.maps.event.clearListeners(marker, 'dragend');
 			google.maps.event.addListener(marker, 'dragend', function(e) {
 				console.log('in dragend');
-				marker.setIcon('/img/icon/pale-blue-line-icon-dot.png');
+				marker.setIcon(img);
 				Map.findCurrentZip(marker.getPosition().lat(),
 					marker.getPosition().lng());
 
