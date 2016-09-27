@@ -236,7 +236,7 @@
             ws.onopen = function(event) {
                 clearTimeout(timeout);
                 if (self.dialog) {
-                    Common.hideLoader();
+                    Common.hideTextLoader();
                     /*self.dialog.modal('hide');*/
                     self.dialog = false;
                 }
@@ -268,7 +268,7 @@
                           closeButton: false,
                           className: 'loader'
                         });*/
-                        Common.initLoader();
+                        Common.initTextLoader();
                         self.dialog = true;
                     }
 

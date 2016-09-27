@@ -15,6 +15,7 @@ var ChatInbox = {
 	onClickChat: 0,
 	initialize: function(){
 		if(isMobile){
+			Common.initTextLoader();
 			if(isGuest) {
 				ChatInbox.activateTab('chat_discussion');
 			}
@@ -30,6 +31,7 @@ var ChatInbox = {
 			Default.getFeeds();
 			Default.SetAvatarUserDropdown();
 			//ChatInbox.OnShowNetwrkUiChatInbox();
+			Common.hideTextLoader();
 		} else {
 			// if(ChatInbox.onClickChat == 1){
 			// 	Ajax.change_chat_show_message().then(function(data){});

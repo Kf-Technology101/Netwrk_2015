@@ -60,6 +60,7 @@ var User_Profile = {
     slider: '#profile-slider',
     slider_hidden: "-400px",
     initialize: function(){
+        Common.initTextLoader();
         if(isMobile){
             Default.SetAvatarUserDropdown();
             User_Profile.OnClickBack();
@@ -86,6 +87,7 @@ var User_Profile = {
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
         User_Profile._eventClickProfileInfo();
+        Common.hideTextLoader();
     },
     initializeSlider: function() {
         User_Profile.onShowProfileSlider();

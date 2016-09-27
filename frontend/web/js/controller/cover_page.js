@@ -12,7 +12,7 @@ var CoverPage = {
 	initialize: function(){
 		var height = $(window).height();
 		$('#cover-page').css('height',height);
-		Common.hideLoader();
+		Common.hideTextLoader();
 		CoverPage.getObject();
 		CoverPage.hiddenMenuTop();
 		CoverPage.onClickKey();

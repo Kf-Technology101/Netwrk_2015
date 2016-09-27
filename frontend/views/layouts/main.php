@@ -101,6 +101,11 @@ if (isset($cookies["isCoverPageVisited"])) {
             <img src="<?= Url::to('@web/img/icon/loader.gif'); ?>" alt="loading..."/>
         </div>
     </div>
+    <div class="loader-text-wrap hide">
+        <div class="netwrk-text-loader">
+            <img src="<?= Url::to('@web/img/icon/loader-text.gif'); ?>" alt="loading..."/>
+        </div>
+    </div>
     <!-- /Loader -->
     <div class="wrap" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
         <?php
