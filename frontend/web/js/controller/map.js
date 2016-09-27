@@ -119,7 +119,7 @@
 				Map.zoom = 16;
 				Map.markerZoom = 13;
 
-				Common.initLoader();
+				Common.initTextLoader();
 		  		if(sessionStorage.map_zoom){
 		  			Map.zoom = parseInt(sessionStorage.map_zoom);
 		  		} else {
@@ -176,7 +176,7 @@
 				Map.showHeaderFooter();
 				Map.mouseOutsideInfoWindow();
 				//Map.showZipBoundaries();
-				Common.hideLoader();
+				//Common.hideLoader();
 
 				if(isMobile) {
 					/*if (sessionStorage.show_blue_dot == 1) {
@@ -275,6 +275,9 @@
 					Login.showOnBoardingLines();
 				}, 500);
 			}
+			setTimeout(function() {
+				Common.hideTextLoader();
+			}, 500)
 	  	},
 		eventMapClick: function(event) {
 			if(Map.displayBlueDot) {

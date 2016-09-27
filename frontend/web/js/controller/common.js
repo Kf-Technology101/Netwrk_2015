@@ -212,6 +212,15 @@ var Common = {
         $('.loader-wrap').addClass('hide');
         console.log('in hideLoader');
     },
+    initTextLoader: function() {
+        console.log('in initTextLoader');
+        $('.loader-text-wrap').removeClass('hide');
+    },
+    hideTextLoader: function() {
+        //clear the loader setIntervalId to stop loader animation.
+        $('.loader-text-wrap').addClass('hide');
+        console.log('in hideTextLoader');
+    },
     onWindowUnload: function() {
         $(window).on('beforeunload', function(){
             $('.bootbox').css('opacity',' 0.1');
