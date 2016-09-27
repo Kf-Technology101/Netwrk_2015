@@ -283,6 +283,7 @@ if (isset($cookies["isCoverPageVisited"])) {
       <p class="pull-right"><?php //Yii::powered() ?></p>
       </div>
   </footer> -->
+  <div class="search-overlay hide">
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/come_back_later');?>
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/netwrk_navigation');?>
   <?= $this->render('@frontend/modules/netwrk/views/default/partial/netwrk_news');?>
