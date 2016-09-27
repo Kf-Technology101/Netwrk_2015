@@ -88,7 +88,7 @@ var Profile = {
         // var zipcode = Profile.params.zipcode;
         // var zipcode = 46601;
         Profile.zipcode = true;
-        $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+        $.getJSON("https://api.zippopotam.us/us/"+zipcode ,function(data){
             if (data.places[0].state == Profile.state){
                 Profile.params.lat = data.places[0].latitude;
                 Profile.params.lng = data.places[0].longitude;
