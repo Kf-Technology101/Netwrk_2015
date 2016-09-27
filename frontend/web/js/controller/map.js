@@ -1272,6 +1272,10 @@
 		findCurrentZip: function(lat, lng) {
 			$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
 				var len = data.results[0].address_components.length;
+				var city = '',
+					locality = '',
+					sublocality = '';
+
 				for (var i = 0; i < len; i++) {
 					if (data.results[0].address_components[i].types[0] == 'postal_code') {
 						// console.log(data);
@@ -1310,15 +1314,23 @@
 								}
 							});
 						}*/
-						Map.getCurrentZipBuildDetail();
 					} else if (data.results[0].address_components[i].types[0] == 'locality') {
-						var city = data.results[0].address_components[i].long_name;
-						console.log(city);
-						setTimeout(function(){
-							$("#blueDotLocation span").eq(0).html(city);
-						},300);
+						locality = data.results[0].address_components[i].long_name;
+
+					} else if (data.results[0].address_components[i].types[1] == 'sublocality') {
+						sublocality = data.results[0].address_components[i].long_name;
 					}
 				}
+				if(locality != ''){
+					city = locality;
+				} else if(sublocality != '') {
+					city = sublocality;
+				}
+
+				setTimeout(function(){
+					$("#blueDotLocation span").eq(0).html(city);
+				},300);
+				Map.getCurrentZipBuildDetail();
 			});
 		},
 
