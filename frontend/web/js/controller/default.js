@@ -28,9 +28,6 @@ var Default ={
                 Default.getFeeds();
             }
         }
-        if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
-            Default.SetAvatarUserDropdown();
-        }
         // Default.ShowLandingPage();
 
         if(typeof isCoverPageVisited !== 'undefined'){
@@ -66,8 +63,11 @@ var Default ={
             Default.ShowDefaultNotificationOnChat();
         }
 
-        if(!isMobile){
-            Default.displayNetwrkIconUi();
+        if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
+            Default.SetAvatarUserDropdown();
+            if(!isMobile){
+                Default.displayNetwrkIconUi();
+            }
         }
     },
 
@@ -363,7 +363,8 @@ var Default ={
                 });
             }
 
-            var landingModal = $('#modal_landing_page');
+            var landingModal = $('#modal_landing_page'),
+                overLay = $('.search-overlay');
 
             if(isMobile){
                 $.when(Common.closeAllLeftSliders()).done(function() {
@@ -374,7 +375,7 @@ var Default ={
                         $(LandingPage.netwrk_news).animate({
                             "left": "-400px"
                         }, 500);
-                        $('.search-overlay').addClass('hide');
+                        overLay.addClass('hide');
                         /*$(ChatInbox.chat_inbox).animate({
                             "left": ChatInbox.list_chat_post_right_hidden
                         }, 500);*/
@@ -383,7 +384,7 @@ var Default ={
                             "left": "-400px"
                         }, 500);
 
-                        $('.search-overlay').removeClass('hide');
+                        overLay.removeClass('hide');
                         $.when($('#netwrkNavigation').animate({
                             "left": "0"
                         }, 500));/*.done(function(){
@@ -391,6 +392,11 @@ var Default ={
                         });*/
                         Default.onClickCloseNavigation();
                     }
+                });
+
+                overLay.unbind();
+                overLay.on('click', function(){
+                    $('.landing-close-trigger').trigger('click');
                 });
             }
             // Check if landing page modal open

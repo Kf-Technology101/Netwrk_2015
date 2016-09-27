@@ -657,21 +657,22 @@ var Common = {
         });
     },
 
-    onClickSearchIcon: function() {
-        var target = $('#mobileSearchBox');
-        var btn = $('.search-trigger');
-        var closeBtn = $('.close-search-trigger');
+    onClickSearchIcon: function(){
+        var target = $('#mobileSearchBox'),
+            btn = $('.search-trigger'),
+            overLay = $('.search-overlay'),
+            closeBtn = $('.close-search-trigger');
 
         btn.unbind();
         btn.on('click',function(){
             target.css({'right' : '5px'});
-            $('.search-overlay').removeClass('hide');
+            overLay.removeClass('hide');
         });
 
         closeBtn.unbind();
         closeBtn.on('click',function(){
             target.css({'right' : '-100%'});
-            $('.search-overlay').addClass('hide');
+            overLay.addClass('hide');
         });
     },
 

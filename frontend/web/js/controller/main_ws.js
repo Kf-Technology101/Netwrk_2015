@@ -22,7 +22,12 @@ var MainWs = {
         }
 
         if(window.location.hostname == 'www.netwrk.com'){
-            MainWs.url += 'www.netwrk.com:2311';
+	     if (location.protocol.indexOf('https') >= 0){
+                 //stunnel port is 2316 and it will redirect to 2311 after stunnel proxy on server.
+                 MainWs.url += 'www.netwrk.com:2316';
+             } else {
+                 MainWs.url += 'www.netwrk.com:2311';
+             }
         } else if(window.location.hostname == 'dev.netwrk.com'){
             MainWs.url += 'dev.netwrk.com:2312';
         } else if(window.location.hostname == 'beta.netwrk.com'){
@@ -41,7 +46,7 @@ var MainWs = {
         var _self = this;
 
         window.ws = new ReconnectingWebSocket(MainWs.url+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000, timeoutInterval: 5000, reconnectDecay: 5});
-
+        //window.ws = new ReconnectingWebSocket("wss://www.netwrk.com:2316"+"?user_id=" + user_id, null, {debug: false, reconnectInterval: 3000, timeoutInterval: 5000, reconnectDecay: 5});
         window.ws.onmessage = function(e){
           console.group("WS SEND");
           console.log("Sending: %o", $.parseJSON(e.data));

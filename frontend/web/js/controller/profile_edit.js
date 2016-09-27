@@ -270,7 +270,7 @@ var ProfileEdit = {
         // var zipcode = ProfileEdit.params.zip;
         // var zipcode = 46601;
         ProfileEdit.zip = true;
-        $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+        $.getJSON("https://api.zippopotam.us/us/"+zipcode ,function(data){
             //allow zipcode from united states only
             if (data.country == ProfileEdit.country){
                 ProfileEdit.params.lat = data.places[0].latitude;
