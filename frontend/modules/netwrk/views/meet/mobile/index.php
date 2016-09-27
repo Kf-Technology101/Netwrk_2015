@@ -217,14 +217,15 @@
 
 <script id="meet_list" type="text/x-underscore-template" >
     <% _.each(meet_list,function(meet_user){ %>
-        <li>
+        <li class="clearfix">
             <div class='meet-user-row'>
                 <span class='user-image'>
                     <img src='<%= meet_user.information.image %>' />
                 </span>
                 <div class='user-details-wrapper'>
                     <div class='user-name'><%= meet_user.username %></div>
-                    <div class='user-info'><%= meet_user.information.about %></div>
+                    <!--<div class='user-info'><%= meet_user.information.about %></div>-->
+                    <div class="user-meet-info"><%= meet_user.information.meet_info %></div>
                 </div>
                 <div class='meet-button-wrapper' data-user-id="<%= meet_user.user_id %>">
                     <% if(meet_user.met == 0) { %>

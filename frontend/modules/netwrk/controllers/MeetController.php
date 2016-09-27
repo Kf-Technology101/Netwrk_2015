@@ -247,6 +247,7 @@ class MeetController extends BaseController
                     'about' => $value->profile->about,
                     'post' => $post_data,
                     'brilliant' => $brilliant,
+                    'meet_info' => $value->profile->meet_info,
                 ),
             );
 

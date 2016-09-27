@@ -24,7 +24,8 @@ var Default ={
             ResetPass.CheckSessionResetPassword();
             Default.onCLickModal();
             if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
-                LandingPage.GetDataTopLanding();
+                //LandingPage.GetDataTopLanding();
+                Default.getFeeds();
             }
         }
         if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
@@ -536,24 +537,69 @@ var Default ={
         Default.onClickJoinHomeAreaButton();
     },
     eventClickCommunityTrigger: function(){
+
         var context = '#netwrkNavigation';
         var target = $('.community-modal-trigger', context);
 
         target.unbind();
         target.click(function(e){
             var city_id = $(e.currentTarget).attr('data-city-id');
+            var zip_code = $(e.currentTarget).attr('data-zip_code');
             var lat = $(e.currentTarget).attr('data-lat');
             var lng = $(e.currentTarget).attr('data-lng');
 
-            if(isMobile){
-                var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
-                window.location.href= url;
-            } else {
-                $('.modal').modal('hide');
-                Topic.initialize(city_id);
-            }
+            console.log(zip_code);
+            var params = {'zip_code' : zip_code };
+            Ajax.setSelectedZipCodeCookie(params).then(function (data) {
+                var json = $.parseJSON(data);
+                console.log(json);
+                if(isMobile){
+                    //var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
+                    //window.location.href= url;
+                    var meetUrl = baseUrl + "/netwrk/meet";
+                    if(window.location == meetUrl) {
+                        window.location.href = meetUrl;
+                    } else {
+                        var url = baseUrl + "/netwrk/chat-inbox";
+                        window.location.href= url;
+                    }
+
+                } else {
+                    $('.modal').modal('hide');
+                    //Topic.initialize(city_id);
+                    Default.getNearByLines();
+                    Default.getFeeds();
+
+                    Map.SetMapCenter(lat, lng, Map.map.getZoom());
+                }
+            });
         });
     },
+    getNearByLines: function() {
+        Ajax.getLocalNearByLines().then(function (data) {
+            var result = $.parseJSON(data);
+            var localPartyParent = $(ChatInbox.chat_inbox).find('#containerLocalPartyLines ul');
+            ChatInbox.getTemplateNearByLines(localPartyParent,result.localPartyLines, UserLogin);
+        });
+    },
+    getFeeds: function() {
+        //todo: get this zipcode by cookie or pass argument
+        Ajax.getFeedsBySelectedZipCode().then(function (data) {
+            var json = $.parseJSON(data);
+            var parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
+            //Populate area news template with data
+            Default.getFeedsTemplate(parent, json);
+        });
+    },
+    getFeedsTemplate: function(parent, data){
+        parent.html('');
+        var list_template = _.template($("#netwrk_news").html());
+        var append_html = list_template({landing: data});
+        parent.append(append_html);
+        //todo: make common code. After loading feed template initialize its post, topic clicks
+        LandingPage.onTemplateLanding();
+    },
+
     onClickJoinHomeAreaButton: function() {
         // follow the user home area zipcode
         var context = '#netwrkNavigation';

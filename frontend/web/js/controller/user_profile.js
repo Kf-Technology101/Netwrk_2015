@@ -105,6 +105,7 @@ var User_Profile = {
             if(User_Profile.data.status == 1){
                 User_Profile.getTemplateProfileInfo(User_Profile.profileInfo,profile_data);
                 User_Profile.editProfilePicture();
+                User_Profile.editMeetInfo();
             }
         });
     },
@@ -127,6 +128,26 @@ var User_Profile = {
                 keyboard: false
             });
             User_Profile.onchangeModalUpload();
+        });
+    },
+    editMeetInfo: function(){
+        var btn = $('.save', '.profile-info');
+        btn.unbind();
+        btn.on('click',function(){
+            console.log('save clicked');
+            var meet_info = $('#meet-info-textarea', '.profile-info').val();
+            console.log(meet_info);
+            var params = {'meet_info': meet_info};
+
+            Ajax.updateProfileMeetInfo(params).then(function(data){
+                var json = $.parseJSON(data);
+                console.log(json);
+                //todo: enable disable the button
+                $('.meet-message').removeClass('hide');
+                setTimeout(function() {
+                    $('.meet-message').addClass('hide');
+                }, 2000);
+            });
         });
     },
 

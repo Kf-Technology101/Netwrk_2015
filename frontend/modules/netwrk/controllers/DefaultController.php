@@ -828,6 +828,60 @@ class DefaultController extends BaseController
         }
     }
 
+    /**
+     * set selected zipcode cookie
+     * @return bool
+     */
+    public function actionSetSelectedZipCodeCookie()
+    {
+        $c = Yii::$app->response->cookies;
+
+        $zip_code = $_GET['zip_code'];
+        $cookie = new Cookie(['name' => 'nw_selectedZip', 'value' => $zip_code, 'expire' => (time() + (365 * 86400))]);
+        $c->add($cookie);
+
+        return true;
+    }
+
+    /**
+     * get feeds by zipcode, fetch feeds of zipcode area
+     * @return string
+     *
+     */
+    public function actionGetFeedsBySelectedZipCode(){
+        $request = Yii::$app->request->isAjax;
+
+        $cookies = Yii::$app->request->cookies;
+        //if selectedZip not set then use cover page zip to fetch feeds
+        $zip_code = ($cookies->getValue('nw_selectedZip')) ? $cookies->getValue('nw_selectedZip') : $cookies->getValue('nw_zipCode');
+
+        if($request && $zip_code){
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+            $party_lines = array();
+
+            $city = new City();
+            $cities = $city->find()->select('city.*')
+                ->where(['zip_code' => $zip_code])
+                ->all();
+
+            $city_ids = [];
+            foreach ($cities as $city) {
+                array_push($city_ids, $city->id);
+            }
+
+            //Get the feeds from zipcode cities
+            $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+
+            $item = [
+                'feeds' => $feeds,
+                'selected_zipcode' => $zip_code
+            ];
+
+            $hash = json_encode($item);
+            return $hash;
+        }
+    }
+
     public function actionLandingPage()
     {
         return $this->render($this->getIsMobile() ? 'mobile/landing_page' : '');
@@ -1307,7 +1361,7 @@ class DefaultController extends BaseController
             $htf = new HistoryFeed();
             $history_feed = $htf->find()->select('history_feed.*, city.zip_code')
                 ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
-                ->where('city_id IN ('.$cities.')')
+                ->where(['in','city_id',$cities])
                 ->orderBy(['created_at'=> SORT_DESC]);
 
             //todo: pagination on history feed

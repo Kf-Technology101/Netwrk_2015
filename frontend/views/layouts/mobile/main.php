@@ -154,7 +154,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             <div class="navigation-text">Map</div>
           </button>
           <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
-            <i class="navigation-icon ci-line"></i>
+            <i class="navigation-icon fa fa-comment"></i>
             <div class="navigation-text">Near</div>
           </button>
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
