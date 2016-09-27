@@ -128,7 +128,21 @@ if (isset($cookies["isCoverPageVisited"])) {
   			<!--<div class="logo_netwrk option_logo_netwrk">
   				<a href="javascript:void(0)"><img src="<?/*= Url::to('@web/img/icon/netwrk-logo-blue.png'); */?>"></a>
   			</div>-->
-            <div class="netwrk-title text-center"><img src="<?= Url::to('@web/img/icon/netwrk-text-mobile.png'); ?>" alt="Netwrk"/></div>
+            <div class="netwrk-title text-center">
+              <?php
+                if(Yii::$app->controller->id == 'chat-inbox' && isset($cookies["nw_selectedLocation"])) {
+                  $span_class = '';
+                  $img_class = 'hide';
+                } else {
+                  $span_class = 'hide';
+                  $img_class = '';
+                }
+              ?>
+              <?php if (isset($cookies["nw_selectedLocation"])) : ?>
+                  <span class="<?php echo $span_class;?>"><?php echo $cookies["nw_selectedLocation"]; ?></span>
+              <?php endif; ?>
+              <img  class="<?php echo $img_class;?>" src="<?= Url::to('@web/img/icon/netwrk-text-mobile.png'); ?>" alt="Netwrk"/>
+            </div>
             <div class="search-trigger"><i class="fa fa-search"></i></div>
             <div class="box-search" id="mobileSearchBox">
               <div class="search input-group">
