@@ -83,7 +83,6 @@
 	</div>
 </div>
 
-
 <script id="chat_inbox_list" type="text/x-underscore-template" >
 	<% _.each(chat_inbox_list,function(chat_inbox){ %>
 		<li>
@@ -113,8 +112,8 @@
 			<input type='hidden' value='<%= chat_inbox.city_name %>' name='city_name'/>
 		</li>
 
-		<% }); %>
-	</script>
+	<% }); %>
+</script>
 
 <script id="chat_private_list" type="text/x-underscore-template" >
 	<% _.each(chat_private_list,function(chat_inbox){ %>
@@ -136,6 +135,5 @@
 			<input type='hidden' value='<%= chat_inbox.city_id %>' name='city_id' />
 			<input type='hidden' value='<%= chat_inbox.city_name %>' name='city_name'/>
 		</li>
-
-		<% }); %>
-	</script>
+	<% }); %>
+</script>

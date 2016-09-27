@@ -8,7 +8,6 @@
 <div id="btnCenterLocation" class="hide" data-toggle="tooltip" data-placement="bottom" title="Make Location Centered">
   <i class="fa fa-location-arrow"></i>
 </div>
-<div class="search-overlay hide">
 </div>
 <!-- Loader -->
 <div class="loader-wrap hide">
