@@ -4,7 +4,7 @@
 <div id="cover-page">
 	<span class="error hidden">Sorry my friend, you shall not pass</span><br/>
 	<img src="<?= Url::to('@web/img/icon/netwrk-logo-blue_large.png'); ?>" id="coverImg">
-    <div class="netwrk-peview">netwrk Preview</div>
+    <div class="netwrk-peview">netwrk preview</div>
     <div class="note">Interact with people around you using chat lines.</div>
     <div class="note">Since it's a preview version, there will be bugs.</div>
     <div class="input-group form-group">
