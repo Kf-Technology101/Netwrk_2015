@@ -57,6 +57,7 @@ var User_Profile = {
     profileInfo: $('.profile-info'),
     editProfileModal: $('#modal_change_profile_picture'),
     initialize: function(){
+        Common.initTextLoader();
         if(isMobile){
             Default.SetAvatarUserDropdown();
             User_Profile.OnClickBack();
@@ -83,6 +84,7 @@ var User_Profile = {
         User_Profile._eventClickPasswordSetting();
         User_Profile._eventClickSearchSetting();
         User_Profile._eventClickProfileInfo();
+        Common.hideTextLoader();
     },
 
     resetProfile: function(){

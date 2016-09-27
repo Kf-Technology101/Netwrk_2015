@@ -24,8 +24,10 @@ var Meet ={
     ez: 0,
     initialize: function() {
         if(isMobile){
+            Common.initTextLoader();
             Meet._init();
             Default.SetAvatarUserDropdown();
+            Common.hideTextLoader();
         } else {
             if(Meet.filter.active === 'setting'){
                 Meet_setting.initialize();
