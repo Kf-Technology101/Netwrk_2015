@@ -263,6 +263,11 @@ if (isset($cookies["isCoverPageVisited"])) {
     <section class="btn-meet-mobile-wrapper text-center hide">
       <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
     </section>
+    <div class="loader-text-wrap hide" id="loader-text-wrap">
+      <div class="netwrk-text-loader">
+        <img src="<?= Url::to('@web/img/icon/loader-text.gif'); ?>" alt="loading..."/>
+      </div>
+    </div>
 
     <!--<div id="myFooter" class="navbar-mobile navbar-fixed-bottom hide">
       <div class="menu_bottom">

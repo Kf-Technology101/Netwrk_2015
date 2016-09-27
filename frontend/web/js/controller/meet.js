@@ -24,8 +24,10 @@ var Meet ={
     ez: 0,
     initialize: function() {
         if(isMobile){
+            //Common.initTextLoader();
             Meet._init();
             Default.SetAvatarUserDropdown();
+            //Common.hideTextLoader();
         } else {
             if(Meet.filter.active === 'setting'){
                 Meet_setting.initialize();
@@ -180,7 +182,9 @@ var Meet ={
 
     showUserMeetMobile: function(){
         //Common.ShowModalComeBack();
+        Common.initTextLoader();
         window.location.href = baseUrl + "/netwrk/meet";
+        Common.hideTextLoader();
     },
 
     onClickBack: function(){
@@ -229,6 +233,7 @@ var Meet ={
     },
 
     GetUserMeet: function(){
+        Common.initTextLoader();
         Ajax.getUserMeeting().then(function(data){
             var json = $.parseJSON(data);
 
@@ -258,6 +263,10 @@ var Meet ={
             // $('.modal-backdrop.in').click(function(e) {
             //     self.reset_modal();
             // });
+           setTimeout(function() {
+               Common.hideTextLoader();
+           }, 1000);
+
         });
     },
 

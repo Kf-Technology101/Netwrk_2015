@@ -39,12 +39,12 @@ $.extend({
 		}
 
 		ws.onopen = function(event) {
-			Common.hideLoader();
+			Common.hideTextLoader();
 			clearInterval(timeout);
 		}
 
 		ws.onclose = function(event) {
-			Common.initLoader();
+			Common.initTextLoader();
 			/*bootbox.dialog({
 			  message: '<i class="fa fa-refresh fa-spin"></i> You were disconnected from Chat Server. Waiting to reconnect...',
 			  closeButton: false
