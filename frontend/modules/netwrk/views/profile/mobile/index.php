@@ -151,7 +151,7 @@
     </div>
     <div class="meet-info-wrapper clearfix">
         <div class="meet-message alert alert-success hide">Information updated successfully</div>
-        <p class="meet-title">Tell us about the kind of person you wish to mee on here</p>
+        <p class="meet-title">Tell us about the kind of person you wish to meet on here</p>
         <textarea name="meet_info" id="meet-info-textarea" class="meet-info-textarea" placeholder="100 characters only" maxlength="100"><%= data.meet_info %></textarea>
         <div class="save">
             <span>Update</span>
