@@ -28,9 +28,6 @@ var Default ={
                 Default.getFeeds();
             }
         }
-        if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
-            Default.SetAvatarUserDropdown();
-        }
         // Default.ShowLandingPage();
 
         if(typeof isCoverPageVisited !== 'undefined'){
@@ -66,8 +63,11 @@ var Default ={
             Default.ShowDefaultNotificationOnChat();
         }
 
-        if(!isMobile){
-            Default.displayNetwrkIconUi();
+        if(typeof isCoverPageVisited !== 'undefined' && isAccepted) {
+            Default.SetAvatarUserDropdown();
+            if(!isMobile){
+                Default.displayNetwrkIconUi();
+            }
         }
     },
 
