@@ -8,6 +8,9 @@
 <div id="btnCenterLocation" class="hide" data-toggle="tooltip" data-placement="bottom" title="Make Location Centered">
   <i class="fa fa-location-arrow"></i>
 </div>
+<div id="btnShareLocation" class="" data-toggle="tooltip" data-placement="bottom" title="Share Your Location">
+  <i class="fa fa fa-crosshairs"></i>
+</div>
 </div>
 <!-- Loader -->
 <div class="loader-wrap hide">
