@@ -26,7 +26,6 @@
                     <i class="fa fa-newspaper-o"></i>
                 </div>
                 <div class='popup-title-name'>
-                    <?/*= $post->topic->title */?>
                     <?= $post->title ?>
                 </div>
                 <!--<div class="left-section">
