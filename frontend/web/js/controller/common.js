@@ -16,6 +16,7 @@ var Common = {
     initialize: function() {
         Common.console();
         Common.onWindowUnload();
+        Common.onWindowload();
         Common.eventClickExploreLocation();
         //init the nav chat inbox for mobile
         Common.eventClickChatInboxBtnMobile();
@@ -221,6 +222,13 @@ var Common = {
         //clear the loader setIntervalId to stop loader animation.
         $('.loader-text-wrap').addClass('hide');
         console.log('in hideTextLoader');
+    },
+    onWindowload: function() {
+        $(window).on('load', function(){
+            setTimeout(function() {
+                Common.hideTextLoader();
+            }, 4000);
+        });
     },
     onWindowUnload: function() {
         $(window).on('beforeunload', function(){
