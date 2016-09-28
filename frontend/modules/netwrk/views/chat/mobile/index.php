@@ -26,7 +26,8 @@
                     <i class="fa fa-newspaper-o"></i>
                 </div>
                 <div class='popup-title-name'>
-                    <?= $post->topic->title ?>
+                    <?/*= $post->topic->title */?>
+                    <?= $post->title ?>
                 </div>
                 <!--<div class="left-section">
                     <div class="popup-title-description chat-topic-trigger <?/*= $popover_chat_topic_title */?>"

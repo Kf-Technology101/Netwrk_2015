@@ -468,9 +468,9 @@ var Create_Post={
         target.unbind();
         target.on('keyup input',function(e){
             //Copy the content of name_post textarea into message textarea
-            if(e.currentTarget.id == 'name_post_textarea') {
+            /*if(e.currentTarget.id == 'name_post_textarea') {
                 Create_Post.copyPostNameToMessage();
-            }
+            }*/
             if($(e.currentTarget).val().length > 0){
                 Create_Post.params[filter] = $(e.currentTarget).val();
                 Create_Post.status_change[filter] = true;
@@ -495,13 +495,13 @@ var Create_Post={
 
         //if line create from blue dot then topic is required
         if(Create_Post.params.isCreateFromBlueDot) {
-            if(status.post && /*status.message &&*/ status.topic){
+            if(status.post && status.message && status.topic){
                 status.total = true;
             }else{
                 status.total = false;
             }
         } else {
-            if(status.post /*&& status.message*/){
+            if(status.post && status.message){
                 status.total = true;
             }else{
                 status.total = false;
@@ -644,14 +644,16 @@ var Create_Post={
         btn.on('click',function(){
             if(!btn.hasClass('disable')){
                 console.log(Create_Post.params);
-                Ajax.new_post(Create_Post.params).then(function(){
+                Ajax.new_post(Create_Post.params).then(function(data){
                     Create_Post.reset_data();
                     Create_Post.setDefaultBtn();
 
                     if(isMobile){
-                        setTimeout(function(){
-                            Create_Post.redirect();
-                        },700);
+                        //Create_Post.redirect();
+                        var json = $.parseJSON(data);
+                        var post_id = json.id;
+                        /* redirect to newly created line*/
+                        PopupChat.RedirectChatPostPage(post_id, 1, 1);
                     } else {
                         Create_Post.hideModalCreatePost();
                         Create_Post.closeCreatePostSlider();
