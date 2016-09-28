@@ -46,6 +46,7 @@ var Common = {
         }
 
         Common.clickCenterLocation();
+        Common.clickShareLocation(Map.map);
     },
 
     console: function(){
@@ -549,8 +550,17 @@ var Common = {
         btn.unbind();
         btn.on('click',function(){
             if(User.location.lat && User.location.lng) {
+                $('#btnCenterLocation').addClass('hide');
                 Map.initialize();
             }
+        });
+    },
+
+    clickShareLocation: function(map){
+        var btn = $('#btnShareLocation');
+        btn.unbind();
+        btn.on('click',function(){
+            Map.requestPositionFunction(map);
         });
     },
 
