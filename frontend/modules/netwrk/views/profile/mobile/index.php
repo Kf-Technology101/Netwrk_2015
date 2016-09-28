@@ -57,7 +57,7 @@
 
                 <article class="row">
                     <div class="col-xs-12 text-center">
-                        <div role="group" class="btn-group btn-group-default navigation-btn-group">
+                        <!--<div role="group" class="btn-group btn-group-default navigation-btn-group">
                             <button class="btn btn-default group" type="button" id="">
                                 <span>Groups</span>
                             </button>
@@ -67,7 +67,7 @@
                             <button class="btn btn-default post" type="button" id="">
                                 <span>Lines</span>
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="col-xs-12">
                         <div class="group-count">
