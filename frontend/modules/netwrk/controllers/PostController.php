@@ -220,6 +220,25 @@ class PostController extends BaseController
             $Post->post_type = 1;
             $Post->save();
         }
+        $data = [
+            'id' => $Post->id,
+            'title' => $Post->title,
+            'content' => $Post->content,
+            'topic_id' => $Post->topic_id,
+            'topic_name' => $Post->topic->title,
+            'city_id' => $Post->topic->city_id,
+            'city_name' => $Post->topic->city->name,
+            'city_zipcode' => $Post->topic->city->zip_code,
+            'user_id' => $Post->user_id,
+            'created_at' => $Post->created_at,
+            'updated_at' => $Post->updated_at,
+            'view_count' => $Post->view_count,
+            'brilliant_count' => $Post->brilliant_count,
+            'comment_count' => $Post->comment_count,
+            'post_type' => $Post->post_type
+        ];
+        $data = json_encode($data);
+        return $data;
     }
 
     public function actionGetAllPost(){
