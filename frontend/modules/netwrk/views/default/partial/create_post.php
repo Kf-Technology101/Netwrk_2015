@@ -27,12 +27,16 @@
                         </div>
 
                         <div class="post-title">
-                            <p class="title"> Line </p>
+                            <p class="title"> Subject </p>
                             <!--<div class="input-group">
                                 <span class="input-group-addon" id="sizing-addon2">#</span>
                                 <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
                             </div>-->
-                            <textarea class="name_post name_post_textarea" placeholder="Whats the line about?" maxlength="128" id="name_post_textarea"></textarea>
+                            <textarea class="name_post name_post_textarea" placeholder="Whats the line subject?" maxlength="128" id="name_post_textarea"></textarea>
+                        </div>
+                        <div class="post-message">
+                            <p class="title"> Line </p>
+                            <textarea class="message" placeholder="Whats the line about?" maxlength="1024"></textarea>
                         </div>
                         <div class="post-category-content">
 
@@ -43,10 +47,7 @@
                         <div class="post-timeout-content">
 
                         </div>
-                        <div class="post-message hide">
-                            <p class="title"> Message </p>
-                            <textarea class="message" placeholder="Don't be shy! Say something!" maxlength="1024"></textarea>
-                        </div>
+
                     </div>
                     <div class="btn-control">
                         <!--<div class="cancel disable">
