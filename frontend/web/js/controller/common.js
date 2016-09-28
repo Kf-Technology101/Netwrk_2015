@@ -674,14 +674,19 @@ var Common = {
 
         btn.unbind();
         btn.on('click',function(){
-            target.css({'right' : '5px'});
+            target.css({'display' : 'inline-block','right' : '5px'});
             overLay.removeClass('hide');
         });
 
         closeBtn.unbind();
         closeBtn.on('click',function(){
-            target.css({'right' : '-100%'});
+            target.css({'display' : 'none','right' : '-100%'});
             overLay.addClass('hide');
+        });
+
+        overLay.unbind();
+        overLay.on('click', function(){
+            closeBtn.trigger('click');
         });
     },
 
