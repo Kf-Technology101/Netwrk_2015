@@ -683,6 +683,11 @@ var Common = {
             target.css({'display' : 'none','right' : '-100%'});
             overLay.addClass('hide');
         });
+
+        overLay.unbind();
+        overLay.on('click', function(){
+            closeBtn.trigger('click');
+        });
     },
 
     mobileNavUnSelect: function(){
