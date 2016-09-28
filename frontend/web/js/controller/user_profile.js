@@ -40,7 +40,7 @@ var User_Profile = {
             size: 20
         }
     },
-    tab_current: 'group',
+    tab_current: 'post',
     img:{
         image:''
     },
@@ -1012,9 +1012,9 @@ var User_Profile = {
 
         User_Profile.ShowPosts(true);
 
-        User_Profile.ShowTopics(true);
+        //User_Profile.ShowTopics(true);
 
-        User_Profile.ShowGroups(true);
+        //User_Profile.ShowGroups(true);
 
         //events
 

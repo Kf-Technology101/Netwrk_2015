@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-default">
+				<!--<div class="panel panel-default">
 					<div class="panel-heading top-header">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" data-parent="#profile-accordion" href="#recent-activities-groups">
@@ -74,7 +74,7 @@
 							</article>
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<div class="panel panel-default">
 					<div class="panel-heading top-header">
 						<h4 class="panel-title">
