@@ -401,17 +401,17 @@ var LandingPage = {
 					Common.showHideInfoPopover('popover-logo', 'nw_popover_logo');
 				}
 
-				if(sessionStorage.cover_input == 1){
+				/*if(sessionStorage.cover_input == 1){
 					sessionStorage.cover_input = 0;
-					sessionStorage.netwrk_news = 1;
+					//sessionStorage.netwrk_news = 1;
 					// Show netwrk news section open
-					LandingPage.GetDataTopLanding();
+					//LandingPage.GetDataTopLanding();
 					// Zoom map to 16
-					Map.smoothZoom(Map.map, 16, 12, true);
+					//Map.smoothZoom(Map.map, 16, 12, true);
 				} else {
-					//todo: show area slider
-					Common.showAreaSlider();
-				}
+					//show area slider
+					//Common.showAreaSlider();
+				}*/
 			});
 
 		});
