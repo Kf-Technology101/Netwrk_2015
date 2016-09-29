@@ -186,7 +186,7 @@ var CoverPage = {
 	},
 
 	checkCity: function(zipcode){
-		$.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address="+zipcode ,function(data){
+		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+zipcode ,function(data){
 			var params = data,
 				state = '',
 				stateAbbr = '',
