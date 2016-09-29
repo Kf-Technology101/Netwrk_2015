@@ -122,7 +122,7 @@ if (isset($cookies["isCoverPageVisited"])) {
               $logo_popover = 'See your community news';
             }
           ?>
-          <div class="<?php echo $logo_class;?> <?php echo $logo_popover_class;?>"
+          <div class="<?php echo $logo_class;?>"
                data-template='<div class="popover info-popover" role="tooltip"><div class="arrow"></div><div class="popover-close"><span class="popover-close-trigger" data-cookie="nw_popover_logo" data-wrapper="popover-logo">&times;</span></div><div class="popover-title"></div><div class="popover-content"></div></div>'
                data-placement="bottom" data-content="<?php echo $logo_popover; ?>">
             <span class="logo-active">
@@ -145,10 +145,11 @@ if (isset($cookies["isCoverPageVisited"])) {
                   $img_class = '';
                 }
               ?>
-              <?php if (isset($cookies["nw_selectedLocation"])) : ?>
-                  <span class="<?php echo $span_class;?>"><?php echo $cookies["nw_selectedLocation"]; ?></span>
-              <?php endif; ?>
+
               <img  class="<?php echo $img_class;?>" src="<?= Url::to('@web/img/icon/netwrk-text-mobile.png'); ?>" alt="Netwrk"/>
+              <?php if (isset($cookies["nw_selectedLocation"])) : ?>
+                <div class="netwrk-city"><?php echo $cookies["nw_selectedLocation"]; ?></div>
+              <?php endif; ?>
             </div>
             <div class="search-trigger"><i class="fa fa-search"></i></div>
             <div class="box-search" id="mobileSearchBox">
@@ -337,7 +338,6 @@ if (isset($cookies["isCoverPageVisited"])) {
 
       //Hide the group tab header from topic modal.
       Topic.HideTabGroupHeader();
-
     };
   </script>
 <?php } } ?>

@@ -60,6 +60,12 @@ class DefaultController extends BaseController
         $c->add($cookie);
         $cookie = new Cookie(['name'=>'isAccepted', 'value'=> 1, 'expire'=> (time()+(365*86400))]);
         $c->add($cookie);
+        $cookie = new Cookie(['name'=>'nw_selectedZip', 'value'=> $zip_code, 'expire'=> (time()+(365*86400))]);
+        $c->add($cookie);
+
+        $cookie = new Cookie(['name'=>'nw_selectedZip', 'value'=> $zip_code, 'expire'=> (time()+(365*86400))]);
+        $cookie = new Cookie(['name' => 'nw_selectedLocation', 'value' => $city, 'expire' => (time() + (365 * 86400))]);
+        $c->add($cookie);
 
         return true;
     }

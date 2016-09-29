@@ -126,7 +126,6 @@ var CoverPage = {
 			} else {
 				CoverPage.checkCity(zcode.val());
 			}
-
 			e.preventDefault();
 		});
 	},
@@ -164,6 +163,8 @@ var CoverPage = {
 		//if(jQuery.inArray( zipcode, arr ) > -1){
 			var url = '';
 
+			Common.initTextLoader();
+
 			if (location.protocol.indexOf('https') >= 0){
 				url = "https://api.zippopotam.us/us/"+zipcode;
 			} else {
@@ -180,6 +181,7 @@ var CoverPage = {
 			}).fail(function(jqXHR) {
 				CoverPage.showError();
 			});
+			Common.initTextLoader();
 		/*} else {
 			CoverPage.showError();
 		}*/
@@ -220,10 +222,13 @@ var CoverPage = {
 						}]
 					};
 
-					Ajax.set_cover_cookie(postParams).then(function(data){
+					var lat = params.results[0].geometry.location.lat,
+						lng = params.results[0].geometry.location.lng;
+					CoverPage.findCurrentZip(lat, lng);
+					/*Ajax.set_cover_cookie(postParams).then(function(data){
 						sessionStorage.cover_input = 1;
 						window.location.href = baseUrl; //+ "/netwrk/default/home";
-					});
+					});*/
 				} else {
 					CoverPage.showError();
 				}
@@ -268,7 +273,8 @@ var CoverPage = {
 				state = '',
 				stateAbbr = '',
 				country = '',
-				zip = '';
+				zip = '',
+				city = '';
 
 			if(typeof params.results[0] != 'undefined') {
 				var len = params.results[0].address_components.length;
@@ -286,6 +292,10 @@ var CoverPage = {
 					if (data.results[0].address_components[i].types[0] == 'postal_code') {
 						zip = data.results[0].address_components[i].long_name;
 					}
+
+					if (data.results[0].address_components[i].types[0] == 'locality') {
+						city = data.results[0].address_components[i].long_name;
+					}
 				}
 
 				if (country == 'US') {
@@ -294,7 +304,7 @@ var CoverPage = {
 						'country': 'United States',
 						'country abbreviation': country,
 						'places': [{
-							'place name': params.results[0].address_components[0].long_name,
+							'place name': city,
 							'state': state,
 							'state abbreviation': stateAbbr,
 							'latitude': params.results[0].geometry.location.lat,

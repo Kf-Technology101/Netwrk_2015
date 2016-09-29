@@ -111,9 +111,9 @@
 				</div>
 				<div class="iw-subTitle text-center">
 					<h4 class="" style="font-size: 17px; margin-bottom: 0px;">Welcome to <span id="userLocation"><span>requesting...</span></span></h4>
-					<div class="build-content hide">
-						<div class="iw-subTitle">Click anywhere on your map to build a line</div>
-						<div class="" style="color: red;margin-bottom: 2px;">or</div>
+					<div class="">
+						<div class="iw-subTitle">Click anywhere to build or access a chat line</div>
+						<!--<div class="" style="color: red;margin-bottom: 2px;">or</div>-->
 					</div>
 				</div>
 				<div class="clearfix">
@@ -122,9 +122,9 @@
 							<div class="join-content hide">
 								<a href="javascript:" style="margin-top: 5px;" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community, 'user-location');"><span>Join this netwrk</span></a>
 							</div>
-							<div class="build-content hide">
+							<!--<div class="build-content hide">
 								<a href="javascript:" class="create-button line-button" onclick="Map.CreateUserLocationPost();"><span>Build a Line at your location</span></a>
-							</div>
+							</div>-->
 						</div>
 					</div>
 				</div>

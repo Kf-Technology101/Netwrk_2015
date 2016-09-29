@@ -450,9 +450,11 @@
 							Map.blueDotLocation.zipcode = zip;
 						} else if (data.results[0].address_components[i].types[0] == 'locality') {
 							var city = data.results[0].address_components[i].long_name;
-							setTimeout(function(){
+							console.log(city);
+							$("#userLocation span").eq(0).html(city);
+							/*setTimeout(function(){
 								$("#userLocation span").eq(0).html(city);
-							},300);
+							},100);*/
 						}
 					}
 
@@ -491,7 +493,10 @@
 						position: windowLatLng,
 					});
 
-					userLocationInfoWindow.open(map);
+					setTimeout(function() {
+						userLocationInfoWindow.open(map);
+					}, 100);
+
 
 					google.maps.event.addListener(userLocationInfoWindow, 'domready', function() {
 						// Reposition user location marker so info window display on center
