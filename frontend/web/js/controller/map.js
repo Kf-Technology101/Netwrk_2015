@@ -13,9 +13,11 @@
 		topicMarkers: [],
 		groupMarkers: [],
 		lineMarkers: [],
+		userLocationMarker: '',
 	  	data_map:'',
 	  	infowindow:[],
 		infoWindowBlueDot:[],
+		userLocationInfoWindow: '',
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
@@ -415,14 +417,15 @@
 			var markerContent = "<div class='marker-user-location'></div>";
 				markerContent += "<span class='marker-icon-user-location'><i class='fa fa-2x fa-circle'></i></span>";
 
-			marker = new RichMarker({
+			Map.userLocationMarker = new RichMarker({
 				position: new google.maps.LatLng(lat,lng),
 				map: map,
 				content: markerContent
 				//city_id: parseInt(e.id)
 				// label: text_below
 			});
-			marker.setMap(map);
+
+			Map.userLocationMarker.setMap(map);
 
 			if(userLocationInfo == 'false') {
 				showLocationInfo = false;
@@ -437,8 +440,8 @@
 				showLocationInfo = false;
 
 			if(showLocationInfo) {
-				if (!typeof(userLocationInfoWindow) === "undefined"){
-					userLocationInfoWindow.setMap(null);
+				if (!typeof(Map.userLocationInfoWindow) === "undefined"){
+					Map.userLocationInfoWindow.setMap(null);
 				}
 
 				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
@@ -450,11 +453,7 @@
 							Map.blueDotLocation.zipcode = zip;
 						} else if (data.results[0].address_components[i].types[0] == 'locality') {
 							var city = data.results[0].address_components[i].long_name;
-							console.log(city);
 							$("#userLocation span").eq(0).html(city);
-							/*setTimeout(function(){
-								$("#userLocation span").eq(0).html(city);
-							},100);*/
 						}
 					}
 
@@ -470,23 +469,29 @@
 						Ajax.getBuildDetailFromZip(params).then(function(data){
 							var buildData = $.parseJSON(data);
 
-							if(buildData.user_follow == 'false'){
-								Map.blueDotLocation.community = buildData.social_community;
-								$('#userLocationInfoWindow').find('.build-content').addClass('hide');
-								$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
-							} else {
-								Map.blueDotLocation.community = '';
+							if(buildData.communities == 0){
+								$('#userLocationInfoWindow').find('.sub-title').addClass('hide');
 								$('#userLocationInfoWindow').find('.join-content').addClass('hide');
-								$('#userLocationInfoWindow').find('.build-content').removeClass('hide');
+								$('#userLocationInfoWindow').find('#noCommunityUserLocation').removeClass('hide');
+							} else {
+								if (buildData.user_follow == 'false') {
+									Map.blueDotLocation.community = buildData.social_community;
+									$('#userLocationInfoWindow').find('.build-content').addClass('hide');
+									$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
+								} else {
+									Map.blueDotLocation.community = '';
+									$('#userLocationInfoWindow').find('.join-content').addClass('hide');
+									$('#userLocationInfoWindow').find('.build-content').removeClass('hide');
+								}
 							}
 						});
 					}
 
-					userLocationInfoWindow = new google.maps.InfoWindow();
+					Map.userLocationInfoWindow = new google.maps.InfoWindow();
 					var windowLatLng = new google.maps.LatLng(lat, lng);
 					var content = $('#userLocationInfoWindow').html();
 
-					userLocationInfoWindow.setOptions({
+					Map.userLocationInfoWindow.setOptions({
 						maxWidth: 260,
 						maxHeight: 100,
 						content: content,
@@ -494,11 +499,10 @@
 					});
 
 					setTimeout(function() {
-						userLocationInfoWindow.open(map);
+						Map.userLocationInfoWindow.open(map);
 					}, 100);
 
-
-					google.maps.event.addListener(userLocationInfoWindow, 'domready', function() {
+					google.maps.event.addListener(Map.userLocationInfoWindow, 'domready', function() {
 						// Reposition user location marker so info window display on center
 						$('.marker-user-location').parent().parent().parent().css({'left' : '-20px'});
 
@@ -903,7 +907,7 @@
 			} else {
 				img = './img/icon/map_icon_university_v_2.png';
 			}
-		    
+
 		    var marker = new google.maps.Marker({
 				map: map,
 				position: place.geometry.location,
@@ -1358,6 +1362,8 @@
 			//Map.show_marker_group_loc(map);
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
+					Map.userLocationMarker.setMap(null);
+					Map.userLocationInfoWindow.setMap(null);
 
 					map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 
