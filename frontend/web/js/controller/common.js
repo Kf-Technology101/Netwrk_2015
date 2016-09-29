@@ -560,6 +560,7 @@ var Common = {
             if(User.location.lat && User.location.lng) {
                 $('#btnCenterLocation').addClass('hide');
                 Map.initialize();
+                Common.clickShareLocation(Map.map);
             }
         });
     },

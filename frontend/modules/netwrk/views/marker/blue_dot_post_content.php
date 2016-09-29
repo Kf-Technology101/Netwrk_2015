@@ -111,9 +111,14 @@
 				</div>
 				<div class="iw-subTitle text-center">
 					<h4 class="" style="font-size: 17px; margin-bottom: 0px;">Welcome to <span id="userLocation"><span>requesting...</span></span></h4>
-					<div class="">
+					<div class="sub-title">
 						<div class="iw-subTitle">Click anywhere to build or access a chat line</div>
 						<!--<div class="" style="color: red;margin-bottom: 2px;">or</div>-->
+					</div>
+				</div>
+				<div id="noCommunityUserLocation" class="hide">
+					<div class="dot-info-main">
+						<div class="iw-subTitle dot-info-wrapper">Currently there are no communities for this area!</div>
 					</div>
 				</div>
 				<div class="clearfix">
