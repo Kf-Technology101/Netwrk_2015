@@ -1932,7 +1932,14 @@
 			var lat = Map.center_marker.getPosition().lat();
 			var lng = Map.center_marker.getPosition().lng();
 
-			Create_Post.showCreatePostModal(zipcode, lat, lng);
+			var params = {'zip_code' : zipcode };
+			//set selected zip code cookie.
+			Ajax.setSelectedZipCodeCookie(params).then(function (data) {
+				var json = $.parseJSON(data);
+				console.log(json);
+				console.log(zipcode);
+				Create_Post.showCreatePostModal(zipcode, lat, lng);
+			});
 		},
 		joinCommunity: function(community, from) {
 			if(isGuest){

@@ -97,7 +97,14 @@ if (isset($cookies["isCoverPageVisited"])) {
 
 
   <div class="wrap-mobile" id="<?= ucfirst(Yii::$app->controller->id) ?>" data-action="<?= Yii::$app->controller->module->module->requestedAction->id ?>">
-
+    <div class="loader-text-wrap hide" id="loader-text-wrap">
+      <div class="netwrk-text-loader">
+        <img src="<?= Url::to('@web/img/icon/loader-text.gif'); ?>" alt="loading..."/>
+      </div>
+    </div>
+    <script>
+      document.getElementById('loader-text-wrap').classList.remove("hide");
+    </script>
   <?php if (isset($cookies["isCoverPageVisited"])) : ?>
     <div id="myHeader" class="navbar-mobile navbar-fixed-top">
     	<div class="menu_top">
@@ -263,11 +270,7 @@ if (isset($cookies["isCoverPageVisited"])) {
     <section class="btn-meet-mobile-wrapper text-center hide">
       <div id="btn_meet_mobile"><img src="<?= Url::to('@web/img/icon/meet-icon-desktop.png'); ?>"></div>
     </section>
-    <div class="loader-text-wrap hide" id="loader-text-wrap">
-      <div class="netwrk-text-loader">
-        <img src="<?= Url::to('@web/img/icon/loader-text.gif'); ?>" alt="loading..."/>
-      </div>
-    </div>
+
 
     <!--<div id="myFooter" class="navbar-mobile navbar-fixed-bottom hide">
       <div class="menu_bottom">
@@ -302,6 +305,7 @@ if (isset($cookies["isCoverPageVisited"])) {
   //     document.getElementById('myHeader').classList.add("hidden");
   //     document.getElementById('myFooter').classList.add("hidden");
   // }
+  document.getElementById('loader-text-wrap').classList.add("hide");
 </script>
 <!-- Code to open group topic page -->
 <?php
@@ -333,6 +337,7 @@ if (isset($cookies["isCoverPageVisited"])) {
 
       //Hide the group tab header from topic modal.
       Topic.HideTabGroupHeader();
+
     };
   </script>
 <?php } } ?>
