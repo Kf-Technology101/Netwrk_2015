@@ -175,7 +175,7 @@ var CoverPage = {
 				var params = data;
 				Ajax.set_cover_cookie(params).then(function(data){
 					//console.log(data);
-					sessionStorage.cover_input = 1;
+					//sessionStorage.cover_input = 1;
 					window.location.href = baseUrl; //+ "/netwrk/default/home";
 				});
 			}).fail(function(jqXHR) {
