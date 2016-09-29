@@ -1989,7 +1989,8 @@
 		},
 		closeUserLocationInfoWindow: function() {
 			Map.displayUserLocationInfo = false;
-			userLocationInfoWindow.close();
+			Map.userLocationInfoWindow.setMap(null);
+			Map.userLocationInfoWindow.close();
 			Ajax.setUserLocationInfoCookie().then(function(data){
 				//console.log(data);
 				//window.location.href = baseUrl; //+ "/netwrk/default/home";
