@@ -267,7 +267,7 @@ var Signup={
 
     apiZipcode: function(zipcode){
     	var message;
-        $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address="+zipcode ,function(data){
+        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+zipcode ,function(data){
         	var address = data.results[0].address_components;
         	var geometry = data.results[0].geometry.location;
         	$.each(address,function(i,e){

@@ -2623,7 +2623,7 @@
 	  	},
 
 	  	checkzipcode: function(zipcode){
-	        $.getJSON("http://api.zippopotam.us/us/"+zipcode ,function(data){
+	        $.getJSON("https://api.zippopotam.us/us/"+zipcode ,function(data){
 	            if (data.places[0].state == "Indiana"){
 	              Map.params.name = data.places[0]['place name'],
 	              Map.params.zipcode = zipcode;
