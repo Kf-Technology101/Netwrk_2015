@@ -228,6 +228,8 @@ var Login={
 		$(Login.modal).find('.modal-body').mCustomScrollbar({
 			theme:"dark"
 		});
+
+		Common.centerPositionModal();
 	},
 
 	OnShowModalLogin: function(){
@@ -286,6 +288,9 @@ var Login={
 		/*$('.modal-backdrop.in').click(function(e) {
 			alert('Clicked on backdrop');
 		});*/
+
+		// Code to center position modal
+		Common.centerPositionModal();
 	},
 
 	onBoardingProfileUpload: function(){

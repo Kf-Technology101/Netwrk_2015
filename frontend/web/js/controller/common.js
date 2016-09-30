@@ -713,5 +713,20 @@ var Common = {
         $('#nav_wrapper').find('.btn').each(function(){
             $(this).css({'background': '#5888ac'});
         });
+    },
+
+    centerPositionModal: function(){
+        if(!isMobile){
+            var target = $('.modal.in');
+            var width = $(window).width();
+            var modalWidth = target.width();
+            var chatInboxWidth = $('#chat_inbox').width();
+            var netwrkSliderWidth = $('#netwrkNavigation').width();
+
+            var remainingWidth = (width - (modalWidth + chatInboxWidth + netwrkSliderWidth)) / 2;
+            var marginLeft = chatInboxWidth + netwrkSliderWidth + remainingWidth;
+
+            target.css({'margin-left': marginLeft+'px'});
+        }
     }
 };
