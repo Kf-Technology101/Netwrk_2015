@@ -219,9 +219,9 @@
     <% _.each(meet_list,function(meet_user){ %>
         <li class="clearfix">
             <div class='meet-user-row'>
-                <span class='user-image'>
+                <div class='user-image'>
                     <img src='<%= meet_user.information.image %>' />
-                </span>
+                </div>
                 <div class='user-details-wrapper'>
                     <div class='user-name'><%= meet_user.username %></div>
                     <!--<div class='user-info'><%= meet_user.information.about %></div>-->
