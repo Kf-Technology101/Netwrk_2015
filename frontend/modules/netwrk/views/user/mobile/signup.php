@@ -70,6 +70,9 @@
             $months = array_combine(range(1,12),range(1,12));
             $years = array_combine(range($years_from,$years_to), range($years_from,$years_to));
         ?>
+        <div class="col-field-name">
+            <label class="control-lable">Birthday</label>
+        </div>
         <div class="dob-field-name dob field">
             <?= $form->field($profile, 'day')->dropDownList($day,['prompt' => 'Day']); ?>
         </div>

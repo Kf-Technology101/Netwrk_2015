@@ -381,10 +381,9 @@ var LandingPage = {
 			backdrop: true,
 			keyboard: false
 		});
-
 		setTimeout(function(){
 			parent.modal('hide');
-		},4000);
+		},2000);
 	},
 
 	OnHideModalWelcome: function(){
