@@ -409,9 +409,9 @@
 		    }
 	  	},
 
-		showUserLocationMarker: function (map) {
-			var lat = User.location.lat,
-				lng = User.location.lng,
+		showUserLocationMarker: function (map, lat, lng) {
+			var lat = (lat) ? lat : User.location.lat,
+				lng = (lng) ? lng : User.location.lng,
 				showLocationInfo = true;
 
 			var markerContent = "<div class='marker-user-location'></div>";
@@ -1365,11 +1365,15 @@
 					Map.userLocationMarker.setMap(null);
 					Map.userLocationInfoWindow.setMap(null);
 
+					// set map center to current location
 					map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 
-					if (Map.center_marker != null) Map.center_marker.setMap(null);
+					// Display location dot and popup to current location
+					Map.showUserLocationMarker(map, position.coords.latitude, position.coords.longitude);
 
-					Map.requestBlueDotOnMap(position.coords.latitude, position.coords.longitude, map, 'location');
+					/*if (Map.center_marker != null) Map.center_marker.setMap(null);
+
+					Map.requestBlueDotOnMap(position.coords.latitude, position.coords.longitude, map, 'location');*/
 
 					//display blue dot on map from lat and lon.
 					/*var infowindow = Map.showBlueDot(position.coords.latitude, position.coords.longitude, map);
