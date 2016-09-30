@@ -2316,7 +2316,7 @@
 								"</span><div class=''></div>";
 					} else {
 						markerContent = "<div class='marker marker-line marker-timed-line'></div>"+
-								"<span class='marker-icon marker-line-icon'><i class='fa fa-comment'></i>"+
+								"<span class='marker-icon marker-line-icon marker-timed-line-icon'>"+ e.rem_minutes+
 								"</span><div class=''></div>";
 					}
 
