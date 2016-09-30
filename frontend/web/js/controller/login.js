@@ -145,6 +145,7 @@ var Login={
 
 		$('.modal-backdrop.in').last().addClass('active');
 		Login.onJoinHomeModal();
+		Common.centerPositionModal();
 	},
 	onJoinHomeModal: function() {
 		Login.onClickJoinHomeButton();
@@ -163,12 +164,11 @@ var Login={
 					Login.isCommunityJoined = true;
 					//refresh the favorite list after join home area
 					Default.getUserFavorites();
-					// Hide join this community and display build a line button
-					$('.cgm-container').find('#actionJoinCommunity').addClass('hide');
-					$('.cgm-container').find('#actionBuildCommunity').removeClass('hide');
+					Map.initialize();
 					//display lets get started modal
 					var modalLetsGetStarted = $('#modalLetsGetStarted');
 					modalLetsGetStarted.modal('show');
+					Common.centerPositionModal();
 				} else {
 					var modalClose = $('#modalJoinClose');
 					modalClose.modal('show');
