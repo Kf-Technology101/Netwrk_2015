@@ -43,4 +43,5 @@
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/fb_share_email_setting.php');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/on_boarding.php');?>
 <?= $this->render('@frontend/modules/netwrk/views/default/partial/social_signup_profile_info.php');?>
+<?= $this->render('@frontend/modules/netwrk/views/default/partial/join_home_confirmation_modal.php');?>
 
