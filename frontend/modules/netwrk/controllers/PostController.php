@@ -1179,7 +1179,13 @@ class PostController extends BaseController
                 if(strtotime($current_date) > strtotime($value['expire_at'])) {
                     continue;
                 }
+
+                $datetime1 = strtotime($value['expire_at']);
+                $datetime2 = strtotime($current_date);
+                $interval = abs($datetime2 - $datetime1);
+                $minutes = round($interval / 60);
             }
+
             $post = array(
                 "post_id" => $value['post_id'],
                 "post_title" => $value['post_title'],
@@ -1196,8 +1202,8 @@ class PostController extends BaseController
                 "office" => $value['office'],
                 "zip_code" => $value['zip_code'],
                 "expire_at" =>  $value['expire_at'],
+                "rem_minutes" => ($minutes) ? $minutes : '',
                 "current_date" => $current_date
-
             );
             array_push($data, $post);
         }
