@@ -17,7 +17,7 @@ var LandingPage = {
 			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
-				LandingPage.showLandingWelcome();
+				//LandingPage.showLandingWelcome();
 			}
 		} else {
 			LandingPage.parent = LandingPage.modal;
@@ -26,7 +26,7 @@ var LandingPage = {
 			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
-				LandingPage.showLandingWelcome();
+				//LandingPage.showLandingWelcome();
 			} else {
 				$('.landing-trigger', '.logo-active').trigger('click');
 				//LandingPage.show_landing_page();
