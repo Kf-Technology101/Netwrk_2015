@@ -1352,12 +1352,12 @@
 		},
 
 		requestPositionFunction: function(map) {
-			if (map.getZoom() != Map.zoom) {
+			/*if (map.getZoom() != Map.zoom) {
 				if (typeof Map.center_marker != "undefined" && Map.center_marker != null) {
 					Map.center_marker.setMap(null);
 				}
 				return;
-			}
+			}*/
 			//Todo: currently the following functionality temporary commented. It asks to user for his location.
 			//Map.show_marker_group_loc(map);
 			if (navigator.geolocation) {

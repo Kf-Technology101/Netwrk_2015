@@ -559,6 +559,7 @@ var Common = {
         btn.on('click',function(){
             if(User.location.lat && User.location.lng) {
                 $('#btnCenterLocation').addClass('hide');
+                $('#btn_meet').css({'right' : '10px'});
                 Map.initialize();
                 Common.clickShareLocation(Map.map);
             }
