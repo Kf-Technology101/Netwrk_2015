@@ -145,6 +145,7 @@ var Login={
 
 		$('.modal-backdrop.in').last().addClass('active');
 		Login.onJoinHomeModal();
+		Common.centerPositionModal();
 	},
 	onJoinHomeModal: function() {
 		Login.onClickJoinHomeButton();
@@ -161,9 +162,13 @@ var Login={
 				joinHomeModal.modal('hide');
 				if(json.success) {
 					Login.isCommunityJoined = true;
+					//refresh the favorite list after join home area
+					Default.getUserFavorites();
+					Map.initialize();
 					//display lets get started modal
 					var modalLetsGetStarted = $('#modalLetsGetStarted');
 					modalLetsGetStarted.modal('show');
+					Common.centerPositionModal();
 				} else {
 					var modalClose = $('#modalJoinClose');
 					modalClose.modal('show');
@@ -223,6 +228,8 @@ var Login={
 		$(Login.modal).find('.modal-body').mCustomScrollbar({
 			theme:"dark"
 		});
+
+		Common.centerPositionModal();
 	},
 
 	OnShowModalLogin: function(){
@@ -281,6 +288,9 @@ var Login={
 		/*$('.modal-backdrop.in').click(function(e) {
 			alert('Clicked on backdrop');
 		});*/
+
+		// Code to center position modal
+		Common.centerPositionModal();
 	},
 
 	onBoardingProfileUpload: function(){

@@ -93,6 +93,7 @@ var Meet ={
             // $('#btn_meet').hide();
             $('.modal-footer').show();
             Topic.displayPositionModal();
+            Common.centerPositionModal();
         }
         Meet.CheckUserLogin();
     },

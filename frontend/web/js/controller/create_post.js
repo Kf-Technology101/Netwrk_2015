@@ -438,6 +438,7 @@ var Create_Post={
         }).removeAttr("style").css("display", "block");
 
         Common.CustomScrollBar(parent.find('.modal-body'));
+        Common.centerPositionModal();
     },
     onCloseModalCreatePost: function(){
         $('#create_post').on('hidden.bs.modal',function() {

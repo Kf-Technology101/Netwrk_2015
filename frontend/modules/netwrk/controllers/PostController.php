@@ -984,7 +984,7 @@ class PostController extends BaseController
         $ws_count = 0;
         $profile_picture = false;
         $user_id = isset($user_id) ? $user_id : Yii::$app->user->id;
-        $limit = 5;
+        $limit = 3;
 
         if($user_id) {
             $query = new Query();
@@ -997,7 +997,15 @@ class PostController extends BaseController
             $ws_count = sizeof($messages);
 
             if($ws_count == 0){
-                $top_post = Post::GetTopPostUserJoinGlobal($limit,null,null);
+                // Get cities from cookie
+                $cities = Yii::$app->runAction('netwrk/default/get-cities-from-cookie');
+
+                // Get top posts from cities
+                $top_post = Post::GetTopPostUserJoinGlobal($limit,null,$cities);
+
+                if(sizeof($top_post) == 0) {
+                    $top_post = Post::GetTopPostUserJoinGlobal($limit,null,null);
+                }
             }
 
             $user = User::find()->where(['id' => $user_id])->with('profile')->one();
