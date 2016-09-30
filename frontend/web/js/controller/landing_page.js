@@ -17,7 +17,7 @@ var LandingPage = {
 			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
-				LandingPage.showLandingWelcome();
+				//LandingPage.showLandingWelcome();
 			}
 		} else {
 			LandingPage.parent = LandingPage.modal;
@@ -26,7 +26,7 @@ var LandingPage = {
 			if(welcomePage == 'true') {
 				LandingPage.OnHideModalWelcome();
 				LandingPage.OnClickBackdropWelcome();
-				LandingPage.showLandingWelcome();
+				//LandingPage.showLandingWelcome();
 			} else {
 				$('.landing-trigger', '.logo-active').trigger('click');
 				//LandingPage.show_landing_page();
@@ -381,10 +381,9 @@ var LandingPage = {
 			backdrop: true,
 			keyboard: false
 		});
-
 		setTimeout(function(){
 			parent.modal('hide');
-		},4000);
+		},2000);
 	},
 
 	OnHideModalWelcome: function(){

@@ -80,7 +80,7 @@ var Default ={
             if(welcomePage == 'true') {
                 LandingPage.OnHideModalWelcome();
                 LandingPage.OnClickBackdropWelcome();
-                LandingPage.showLandingWelcome();
+                //LandingPage.showLandingWelcome();
             } else {
                 sessionStorage.map_zoom = 16;
                 //$('.landing-trigger', '.logo-active').trigger('click');
@@ -91,7 +91,7 @@ var Default ={
                 if(welcomePage == 'true') {
                     LandingPage.OnHideModalWelcome();
                     LandingPage.OnClickBackdropWelcome();
-                    LandingPage.showLandingWelcome();
+                    //LandingPage.showLandingWelcome();
                 }/* else {
                     $('.landing-trigger', '.logo-active').trigger('click');
                 }*/
