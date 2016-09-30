@@ -330,7 +330,7 @@
 
 	  	main: function(){
 	      	if (typeof google !== "undefined") {
-				if(UserLogin) {
+				/*if(UserLogin) {
 					var params = {'user_id': UserLogin};
 					Ajax.getUserById(params).then(function(data){
 						var json = $.parseJSON(data),
@@ -355,7 +355,7 @@
 						}
 						google.maps.event.addDomListener(window, 'load', Map.initialize());
 					});
-				} else {
+				} else {*/
 					if(lat && lng){
 						Map.center = new google.maps.LatLng(lat, lng);
 						if(isMobile) {
@@ -368,7 +368,7 @@
 						Map.center = new google.maps.LatLng(39.7662195,-86.441277);
 					}
 					google.maps.event.addDomListener(window, 'load', Map.initialize());
-				}
+				/*}*/
 	      	}
 	  	},
 

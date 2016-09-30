@@ -161,6 +161,11 @@ var Login={
 				joinHomeModal.modal('hide');
 				if(json.success) {
 					Login.isCommunityJoined = true;
+					//refresh the favorite list after join home area
+					Default.getUserFavorites();
+					// Hide join this community and display build a line button
+					$('.cgm-container').find('#actionJoinCommunity').addClass('hide');
+					$('.cgm-container').find('#actionBuildCommunity').removeClass('hide');
 					//display lets get started modal
 					var modalLetsGetStarted = $('#modalLetsGetStarted');
 					modalLetsGetStarted.modal('show');
@@ -223,6 +228,8 @@ var Login={
 		$(Login.modal).find('.modal-body').mCustomScrollbar({
 			theme:"dark"
 		});
+
+		Common.centerPositionModal();
 	},
 
 	OnShowModalLogin: function(){
@@ -281,6 +288,9 @@ var Login={
 		/*$('.modal-backdrop.in').click(function(e) {
 			alert('Clicked on backdrop');
 		});*/
+
+		// Code to center position modal
+		Common.centerPositionModal();
 	},
 
 	onBoardingProfileUpload: function(){

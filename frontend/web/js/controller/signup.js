@@ -210,6 +210,8 @@ var Signup={
 		$(Signup.modal).find('.modal-body').mCustomScrollbar({
 			theme:"dark"
 		});
+
+		Common.centerPositionModal();
 	},
 
 	OnChangeGender: function(){
