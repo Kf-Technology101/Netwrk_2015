@@ -537,11 +537,29 @@ var Common = {
                     } else {
                         boardingModal.modal('hide');
                         if(Login.isCommunityJoined == false) {
-                            Login.showJoinHomeModal();
+                            //Login.showJoinHomeModal();
                         }
                     }
                 }
             });
+        });
+    },
+    eventOnBoardingSkipLines: function() {
+        var boardingModal = $(Login.on_boarding_id),
+            target = $('.skip-btn', Login.on_boarding_id);
+
+        console.log(Login.profile_picture);
+        target.unbind();
+        target.on('click',function(e){
+            sessionStorage.on_boarding = 0;
+            if(Login.profile_picture == false){
+              Login.showProfilePicture();
+            } else {
+                boardingModal.modal('hide');
+                if(isMobile) {
+                    //window.location.href = baseUrl + "/netwrk/default/home";
+                }
+            }
         });
     },
 
