@@ -857,7 +857,12 @@ class DefaultController extends BaseController
             $c->add($cookie);
         }
 
-        return true;
+        $item = [
+            'city' => $city
+        ];
+
+        $hash = json_encode($item);
+        return $hash;
     }
 
     /**

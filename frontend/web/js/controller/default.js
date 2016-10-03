@@ -578,13 +578,15 @@ var Default ={
                     //var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
                     //window.location.href= url;
                     var meetUrl = baseUrl + "/netwrk/meet";
+                    var chatUrl = baseUrl + "/netwrk/chat-inbox";
                     if(window.location == meetUrl) {
                         window.location.href = meetUrl;
+                    } else if(window.location == chatUrl) {
+                        window.location.href= chatUrl;
                     } else {
-                        var url = baseUrl + "/netwrk/chat-inbox";
-                        window.location.href= url;
+                        $('.navbar-mobile').find('.netwrk-title').find('.netwrk-city').html(json.city);
+                        Map.SetMapCenter(lat, lng, Map.map.getZoom());
                     }
-
                 } else {
                     $('.modal').modal('hide');
                     //Topic.initialize(city_id);
