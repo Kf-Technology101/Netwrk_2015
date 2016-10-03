@@ -398,7 +398,13 @@ var Default ={
 
                 overLay.unbind();
                 overLay.on('click', function(){
-                    $('.landing-close-trigger').trigger('click');
+                    if ($('#netwrkNavigation').css('left') == '0px') {
+                        $('#netwrkNavigation').animate({
+                            "left": "-200px"
+                        }, 500);
+                        $('.search-overlay').addClass('hide');
+                        $('.navbar-mobile').find('.netwrk-title').removeClass('hide');
+                    }
                 });
             }
             // Check if landing page modal open
