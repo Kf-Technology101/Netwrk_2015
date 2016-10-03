@@ -558,10 +558,21 @@ var Common = {
         var btn = $('#btnCenterLocation');
         btn.unbind();
         btn.on('click',function(){
-            if(User.location.lat && User.location.lng) {
+            if(sessionStorage.userLat && sessionStorage.userLng) {
                 $('#btnCenterLocation').addClass('hide');
                 $('#btn_meet').css({'right' : '10px'});
-                Map.initialize();
+                if(isMobile){
+                    if(typeof sessionStorage.sidebarLocation != 'undefined' && sessionStorage.sidebarLocation != '') {
+                        sessionStorage.sidebarLocation = '';
+                        Common.initTextLoader();
+                        Map.setCenterAndLatLng(sessionStorage.userLat, sessionStorage.userLng);
+                        google.maps.event.addDomListener(window, 'load', Map.initialize());
+                    } else {
+                        Map.initialize();
+                    }
+                } else {
+                    Map.initialize();
+                }
                 Common.clickShareLocation(Map.map);
             }
         });

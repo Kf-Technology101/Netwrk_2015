@@ -571,6 +571,11 @@ var Default ={
 
             console.log(zip_code);
             var params = {'zip_code' : zip_code };
+            if(isMobile){
+                sessionStorage.sidebarLocation = zip_code;
+                sessionStorage.lat = lat;
+                sessionStorage.lng = lng;
+            }
             Ajax.setSelectedZipCodeCookie(params).then(function (data) {
                 var json = $.parseJSON(data);
                 console.log(json);
