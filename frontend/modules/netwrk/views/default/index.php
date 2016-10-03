@@ -65,9 +65,9 @@ $cookies = Yii::$app->request->cookies;
     <i class="fa fa-location-arrow"></i>
     <!--<span>Build</span>-->
   </div>
-  <div id="btnShareLocation" class="" data-toggle="tooltip" data-placement="bottom" title="Share Your Location">
+  <!--<div id="btnShareLocation" class="" data-toggle="tooltip" data-placement="bottom" title="Share Your Location">
     <i class="fa fa fa-crosshairs"></i>
-  </div>
+  </div>-->
   <!--<div id="btn_my_location" class="btn_my_location" data-toggle="tooltip" data-placement="bottom" title="Show My Local Netwrk">
     <i class="fa fa-plus"></i>
     <span>Build</span>
