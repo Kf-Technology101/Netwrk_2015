@@ -11,7 +11,7 @@ var Default ={
         if(isMobile){
             self._eventClickMeetBtnMobile();
             self._eventClickChatInboxBtnMobile();
-            Default.show_blue_dot();
+            //Default.show_blue_dot();
 
             if (sessionStorage.is_topic_marker_in_map_center == 1) {
                 Map.showTopicMarker(sessionStorage.topic_lat, sessionStorage.topic_lng, sessionStorage.topic_city_id);
