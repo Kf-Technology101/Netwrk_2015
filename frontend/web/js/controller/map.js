@@ -288,6 +288,10 @@
 	  	},
 		eventMapClick: function(event) {
 			if(Map.displayBlueDot) {
+				if(typeof Map.userLocationInfoWindow != 'undefined'){
+					Map.userLocationInfoWindow.setMap(null);
+				}
+
 				console.log( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
 				var lat = event.latLng.lat(),
 					lng = event.latLng.lng();
@@ -575,10 +579,10 @@
 						iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
 						//   // Moves the shadow of the arrow 76px to the left margin.
-						iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+						//iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
 
 						//   // Moves the arrow 76px to the left margin.
-						iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+						//iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
 
 						//   // Changes the desired tail shadow color.
 						//iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
