@@ -188,10 +188,7 @@ function get_action(){
 function _main(){
 	window_resize();
 	_event_window_resize();
-    if(!isMobile) {
-        Common.initTextLoader();
-    }
-
+    Common.initTextLoader();
 	Map.main();
 }
 
