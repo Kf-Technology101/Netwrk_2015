@@ -52,6 +52,7 @@ var SocialSignup ={
 			keyboard: false
 		});
 
+		Common.centerPositionModal();
 		/*$(SocialSignup.modal).find('.modal-body').mCustomScrollbar({
 			theme:"dark"
 		});*/
