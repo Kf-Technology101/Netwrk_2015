@@ -120,6 +120,7 @@ var Login={
 
 				Common.eventOnBoardingLineClick();
 				Common.eventOnBoardingSaveLines();
+				Common.eventOnBoardingSkipLines();
 				Login.ShowModalOnBoarding();
 			} else if(Login.profile_picture == false) {
 				Login.showProfilePicture();
@@ -130,6 +131,7 @@ var Login={
 	showProfilePicture: function () {
 		var boardingModal = $(Login.on_boarding_id);
 		boardingModal.find('.select-lines').addClass('hidden');
+		boardingModal.find('.skip-btn').addClass('hidden');
 		boardingModal.find('.select-picture').removeClass('hidden');
 		Login.onBoardingProfileUpload();
 	},
@@ -356,7 +358,7 @@ var Login={
 						var json = $.parseJSON(data);
 						Login.profile_picture = true;
 						$(Login.on_boarding_id).modal('hide');
-						Login.showJoinHomeModal();
+						//Login.showJoinHomeModal();
 					});
 
 				});
