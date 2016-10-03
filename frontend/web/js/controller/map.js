@@ -288,6 +288,10 @@
 	  	},
 		eventMapClick: function(event) {
 			if(Map.displayBlueDot) {
+				if(typeof Map.userLocationInfoWindow != 'undefined'){
+					Map.userLocationInfoWindow.setMap(null);
+				}
+
 				console.log( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
 				var lat = event.latLng.lat(),
 					lng = event.latLng.lng();
