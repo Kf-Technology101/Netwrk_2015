@@ -241,7 +241,7 @@ class UserController extends BaseController
                 $this->uploadSocialProfilePicture($user->id,$profile_picture);
 
                 // Auto follow user to his zip code social community
-                /*$city = City::find()->select('city.*')
+                $city = City::find()->select('city.*')
                     ->where(['zip_code' => $zip_code])
                     ->andWhere('office_type is null')
                     ->one();
@@ -252,7 +252,7 @@ class UserController extends BaseController
                 $favorite->city_id = $city->id;
                 $favorite->status = 1;
                 $favorite->created_at = date('Y-m-d H:i:s');
-                $favorite->save();*/
+                $favorite->save();
 
                 // Login newly sign up user
                 $identity = new LoginForm();

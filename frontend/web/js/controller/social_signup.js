@@ -12,8 +12,8 @@ var SocialSignup ={
 	data_validate:'',
 	initialize:function(){
 		if(isMobile){
-			Default.hideHeaderFooter();
-			$('body').addClass('no-login');
+			//Default.hideHeaderFooter();
+			//$('body').addClass('no-login');
 		}
 		SocialSignup.parent = SocialSignup.modal;
 		SocialSignup.OnShowModalSignUp();
