@@ -485,7 +485,7 @@
 					Ajax.setSelectedZipCodeCookie(params).then(function (data) {
 						var json = $.parseJSON(data);
 						if(isMobile){
-							$('.netwrk-city').html(city);
+							$('.navbar-mobile').find('.netwrk-title').find('.netwrk-city').html(city);
 						}
 					});
 
