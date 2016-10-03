@@ -465,17 +465,29 @@
 				}
 
 				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
-					var len = data.results[0].address_components.length;
+					var len = data.results[0].address_components.length,
+						zip = '',
+						city = '';
+
 					for (var i = 0; i < len; i++) {
 						if (data.results[0].address_components[i].types[0] == 'postal_code') {
-							var zip = data.results[0].address_components[i].long_name;
+							zip = data.results[0].address_components[i].long_name;
 							User.location.zipCode = zip;
 							Map.blueDotLocation.zipcode = zip;
 						} else if (data.results[0].address_components[i].types[0] == 'locality') {
-							var city = data.results[0].address_components[i].long_name;
+							city = data.results[0].address_components[i].long_name;
 							$("#userLocation span").eq(0).html(city);
 						}
 					}
+
+					var params = {'zip_code' : zip };
+					//set selected zip code cookie.
+					Ajax.setSelectedZipCodeCookie(params).then(function (data) {
+						var json = $.parseJSON(data);
+						if(isMobile){
+							$('.netwrk-city').html(city);
+						}
+					});
 
 					if(isGuest) {
 						$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
