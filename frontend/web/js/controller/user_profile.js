@@ -519,6 +519,7 @@ var User_Profile = {
     },
 
     _eventClickCommunityTrigger: function(){
+        return;
         var target = $('.community-modal-trigger','#favoriteCommunities').add('.community-modal-trigger','#recentCommunities');
 
         target.unbind();

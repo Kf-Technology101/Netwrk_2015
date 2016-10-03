@@ -843,21 +843,32 @@ class DefaultController extends BaseController
         $c = Yii::$app->response->cookies;
 
         $zip_code = $_GET['zip_code'];
+        $city = $_GET['city'];
+
+
         $cookie = new Cookie(['name' => 'nw_selectedZip', 'value' => $zip_code, 'expire' => (time() + (365 * 86400))]);
         $c->add($cookie);
 
-        $city = City::find()
-            ->where('zip_code = '.$zip_code)
-            ->andWhere('office_type is null')
-            ->one();
+        if(!$city) {
+            $city = City::find()
+                ->where('zip_code = '.$zip_code)
+                ->andWhere('office_type is null')
+                ->one();
+
+            $city = $city->name;
+        }
 
         if($city) {
-            $city = $city->name;
             $cookie = new Cookie(['name' => 'nw_selectedLocation', 'value' => $city, 'expire' => (time() + (365 * 86400))]);
             $c->add($cookie);
         }
 
-        return true;
+        $item = [
+            'city' => $city
+        ];
+
+        $hash = json_encode($item);
+        return $hash;
     }
 
     /**

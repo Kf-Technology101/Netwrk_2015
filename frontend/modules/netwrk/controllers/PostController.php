@@ -454,6 +454,9 @@ class PostController extends BaseController
             }
         }
 
+        if(sizeof($city_array) == 0){
+            return json_encode($data);
+        }
         //get genral topic and post from city ids (city ids of cover page zipcodes)
         $query = new Query();
         $results = $query->select('topic.id as topic_id, topic.title as topic_title, topic.city_id, city.zip_code, post.*')
@@ -545,6 +548,10 @@ class PostController extends BaseController
             foreach($cities as $city) {
                 $city_array[] = $city->id;
             }
+        }
+
+        if(sizeof($city_array) == 0){
+            return json_encode($data);
         }
 
         $city_ids = implode(',',$city_array);

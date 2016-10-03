@@ -11,7 +11,7 @@ var Default ={
         if(isMobile){
             self._eventClickMeetBtnMobile();
             self._eventClickChatInboxBtnMobile();
-            Default.show_blue_dot();
+            //Default.show_blue_dot();
 
             if (sessionStorage.is_topic_marker_in_map_center == 1) {
                 Map.showTopicMarker(sessionStorage.topic_lat, sessionStorage.topic_lng, sessionStorage.topic_city_id);
@@ -376,8 +376,7 @@ var Default ={
                             "left": "-400px"
                         }, 500);
                         overLay.addClass('hide');
-                        $('.navbar-mobile').find('.netwrk-title').find('span').removeClass('hide');
-                        $('.navbar-mobile').find('.netwrk-title').find('img').removeClass('hide');
+                        $('.navbar-mobile').find('.netwrk-title').removeClass('hide');
                         /*$(ChatInbox.chat_inbox).animate({
                             "left": ChatInbox.list_chat_post_right_hidden
                         }, 500);*/
@@ -387,8 +386,7 @@ var Default ={
                         }, 500);
 
                         overLay.removeClass('hide');
-                        $('.navbar-mobile').find('.netwrk-title').find('span').addClass('hide');
-                        $('.navbar-mobile').find('.netwrk-title').find('img').addClass('hide');
+                        $('.navbar-mobile').find('.netwrk-title').addClass('hide');
                         $.when($('#netwrkNavigation').animate({
                             "left": "0"
                         }, 500));/*.done(function(){
@@ -400,7 +398,13 @@ var Default ={
 
                 overLay.unbind();
                 overLay.on('click', function(){
-                    $('.landing-close-trigger').trigger('click');
+                    if ($('#netwrkNavigation').css('left') == '0px') {
+                        $('#netwrkNavigation').animate({
+                            "left": "-200px"
+                        }, 500);
+                        $('.search-overlay').addClass('hide');
+                        $('.navbar-mobile').find('.netwrk-title').removeClass('hide');
+                    }
                 });
             }
             // Check if landing page modal open
@@ -436,8 +440,7 @@ var Default ={
                     "left": "-200px"
                 }, 500);
                 $('.search-overlay').addClass('hide');
-                $('.navbar-mobile').find('.netwrk-title').find('span').removeClass('hide');
-                $('.navbar-mobile').find('.netwrk-title').find('img').removeClass('hide');
+                $('.navbar-mobile').find('.netwrk-title').removeClass('hide');
             }
         });
     },
@@ -568,6 +571,11 @@ var Default ={
 
             console.log(zip_code);
             var params = {'zip_code' : zip_code };
+            if(isMobile){
+                sessionStorage.sidebarLocation = zip_code;
+                sessionStorage.lat = lat;
+                sessionStorage.lng = lng;
+            }
             Ajax.setSelectedZipCodeCookie(params).then(function (data) {
                 var json = $.parseJSON(data);
                 console.log(json);
@@ -575,13 +583,15 @@ var Default ={
                     //var url = baseUrl + "/netwrk/topic/topic-page?city="+city_id;
                     //window.location.href= url;
                     var meetUrl = baseUrl + "/netwrk/meet";
+                    var chatUrl = baseUrl + "/netwrk/chat-inbox";
                     if(window.location == meetUrl) {
                         window.location.href = meetUrl;
+                    } else if(window.location == chatUrl) {
+                        window.location.href= chatUrl;
                     } else {
-                        var url = baseUrl + "/netwrk/chat-inbox";
-                        window.location.href= url;
+                        $('.navbar-mobile').find('.netwrk-title').find('.netwrk-city').html(json.city);
+                        Map.SetMapCenter(lat, lng, Map.map.getZoom());
                     }
-
                 } else {
                     $('.modal').modal('hide');
                     //Topic.initialize(city_id);

@@ -328,48 +328,85 @@
 		    map.overlayMapTypes.push(imgMapType);
 	  	},
 
+		setCenterAndLatLng: function(lat, lng){
+			Map.center = new google.maps.LatLng(lat, lng);
+			if (isMobile) {
+				sessionStorage.lat = lat;
+				sessionStorage.lng = lng;
+			}
+			sessionStorage.userLat = lat;
+			sessionStorage.userLng = lng;
+			User.location.lat = lat;
+			User.location.lng = lng;
+		},
+
 	  	main: function(){
-	      	if (typeof google !== "undefined") {
-				/*if(UserLogin) {
-					var params = {'user_id': UserLogin};
-					Ajax.getUserById(params).then(function(data){
-						var json = $.parseJSON(data),
-						 	newLat = json.data.lat,
-						 	newLng = json.data.lng;
-						if(newLat && newLng){
-							Map.center = new google.maps.LatLng(newLat, newLng);
-							if(isMobile) {
-								sessionStorage.lat = newLat;
-								sessionStorage.lng = newLng;
+			if(typeof google !== "undefined") {
+				// Check if sidebar netwrk is selected
+				if(typeof sessionStorage.sidebarLocation != 'undefined' && sessionStorage.sidebarLocation != ''){
+					if (isMobile) {
+						var id = $('.wrap-mobile').attr('id');
+						var action = $('.wrap-mobile').attr('data-action');
+						if (id == 'Default' && (action == 'index' || action == 'home')) {
+							Map.initialize();
+						} else {
+							return;
+						}
+					} else {
+						return;
+					}
+				} else {
+					Common.params.loaderTimeOut = 10000;
+					if (navigator.geolocation) {
+						var geoOptions = {
+							maximumAge: 5 * 60 * 1000,
+							timeout: 10 * 1000,
+							enableHighAccuracy: true
+						};
+
+						var geoSuccess = function (position) {
+							Map.setCenterAndLatLng(position.coords.latitude, position.coords.longitude);
+							google.maps.event.addDomListener(window, 'load', Map.initialize());
+						};
+
+						var geoError = function (error) {
+							if (UserLogin) {
+								var params = {'user_id': UserLogin};
+								Ajax.getUserById(params).then(function (data) {
+									var json = $.parseJSON(data),
+											newLat = json.data.lat,
+											newLng = json.data.lng;
+									if (newLat && newLng) {
+										Map.setCenterAndLatLng(newLat, newLng);
+									} else {
+										if (lat && lng) {
+											Map.setCenterAndLatLng(lat, lng);
+										} else {
+											Map.setCenterAndLatLng(39.7662195, -86.441277);
+										}
+									}
+								});
+							} else {
+								if (lat && lng) {
+									Map.setCenterAndLatLng(lat, lng);
+								} else {
+									Map.setCenterAndLatLng(39.7662195, -86.441277);
+								}
 							}
-							User.location.lat = newLat;
-							User.location.lng = newLng;
-						}else{
-							Map.center = new google.maps.LatLng(lat, lng);
-							if(isMobile) {
-								sessionStorage.lat = lat;
-								sessionStorage.lng = lng;
-							}
-							User.location.lat = lat;
-							User.location.lng = lng;
+							google.maps.event.addDomListener(window, 'load', Map.initialize());
+						};
+
+						navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+					} else {
+						if (lat && lng) {
+							Map.setCenterAndLatLng(lat, lng);
+						} else {
+							Map.setCenterAndLatLng(39.7662195, -86.441277);
 						}
 						google.maps.event.addDomListener(window, 'load', Map.initialize());
-					});
-				} else {*/
-					if(lat && lng){
-						Map.center = new google.maps.LatLng(lat, lng);
-						if(isMobile) {
-							sessionStorage.lat = lat;
-							sessionStorage.lng = lng;
-						}
-						User.location.lat = lat;
-						User.location.lng = lng;
-					}else{
-						Map.center = new google.maps.LatLng(39.7662195,-86.441277);
 					}
-					google.maps.event.addDomListener(window, 'load', Map.initialize());
-				/*}*/
-	      	}
+				}
+			}
 	  	},
 
 	  	get_data_marker: function(){
@@ -445,17 +482,29 @@
 				}
 
 				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
-					var len = data.results[0].address_components.length;
+					var len = data.results[0].address_components.length,
+						zip = '',
+						city = '';
+
 					for (var i = 0; i < len; i++) {
 						if (data.results[0].address_components[i].types[0] == 'postal_code') {
-							var zip = data.results[0].address_components[i].long_name;
+							zip = data.results[0].address_components[i].long_name;
 							User.location.zipCode = zip;
 							Map.blueDotLocation.zipcode = zip;
 						} else if (data.results[0].address_components[i].types[0] == 'locality') {
-							var city = data.results[0].address_components[i].long_name;
+							city = data.results[0].address_components[i].long_name;
 							$("#userLocation span").eq(0).html(city);
 						}
 					}
+
+					var params = {'zip_code' : zip, 'city' : city };
+					//set selected zip code cookie.
+					Ajax.setSelectedZipCodeCookie(params).then(function (data) {
+						var json = $.parseJSON(data);
+						if(isMobile){
+							$('.navbar-mobile').find('.netwrk-title').find('.netwrk-city').html(city);
+						}
+					});
 
 					if(isGuest) {
 						$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
