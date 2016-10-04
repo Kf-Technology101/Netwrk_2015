@@ -322,11 +322,19 @@ class ProfileController extends BaseController
         $user->profile->lat = $lat;
         $user->profile->lng = $lng;
 
-        $user->profile->update();
-        $birthday = new \DateTime($user->profile->dob);
-        $birthday = $birthday->format('Y-m-d');
+        $form = ActiveForm::validate($user->profile);
 
-        $data = array(
+        if ($user->validate() && $user->profile->update()) {
+            $data = ['status'=> 1,'data'=> 'Password updated successfully'];
+        } else {
+            $data = ['status'=> 0,'data'=> $form];
+        }
+
+
+        //$birthday = new \DateTime($user->profile->dob);
+        //$birthday = $birthday->format('Y-m-d');
+
+        /*$data = array(
             'status' => 1,
             'first_name' => $user->profile->first_name,
             'last_name' => $user->profile->last_name,
@@ -335,7 +343,7 @@ class ProfileController extends BaseController
             'gender' => $user->profile->gender,
             'zip'=> $user->profile->zip_code,
             'dob'=> $birthday
-        );
+        );*/
         $hash = json_encode($data);
         return $hash;
     }

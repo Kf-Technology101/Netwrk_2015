@@ -292,6 +292,7 @@ var Default ={
         Default.onClickNavigationIcon();
         if (UserLogin && typeof isCoverPageVisited !== 'undefined') {
             Ajax.get_user_profile().then(function(data){
+                SocialSignup.initialize();
                 sessionStorage.UserInfo = data;
                 data = $.parseJSON(data);
 
