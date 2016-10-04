@@ -218,13 +218,13 @@
 					border-bottom: 1px solid #cccccc;
 					.chat-post-id {
 						position: relative;
-						height: 40px;
+						height: 50px;
 						.time-chat-inbox {
-							position: absolute;
-							top: 3px;
-							right: 40px;
-							color: #1d1b1b;
 							font-size: 12px;
+							color: #1d1b1b;
+							position: absolute;
+							top: 30px;
+							right: 18px;
 						}
 						.location-chat-inbox {
 							color: #1d1b1b;
@@ -240,18 +240,18 @@
 							word-wrap: break-word;
 						}
 						.notify-chat-inbox {
-							position: absolute;
-							right: 110px;
-							background: #f95e65;
-							width: 18px;
-							border-radius: 20px;
-							text-align: center;
-							height: 18px;
 							font-family: "ProximaNovaSemibold";
-							color: #fff;
 							font-size: 10px;
+							color: #fff;
+							text-align: center;
+							background: #f95e65;
+							position: absolute;
+							width: 18px;
+							height: 18px;
+							border-radius: 20px;
 							padding-top: 2px;
-							top: 2px;
+							top: 10px;
+							right: 40px;
 						}
 						.disable {
 							display: none;
@@ -264,7 +264,7 @@
 							color: #1B1B1B;
 						}
 						.title-description-user {
-							width: 180px;
+							width: 230px;
 							display: inline-block;
 							margin-left: 4px;
 
@@ -300,8 +300,8 @@
 							}
 						}
 						.avatar-user {
-							width: 40px;
-							height: 40px;
+							width: 50px;
+							height: 50px;
 							border: 1px solid #d8d8d8;
 							border-radius: 2px;
 							display: inline-block;
@@ -470,12 +470,12 @@
 			}
 			&.feed-post{
 				padding: 5px;
-				height: 65px;
+				height: 60px;
 				.avatar-poster {
-					width: 40px;
-					height: 40px;
-					max-width: 40px;
-					max-height: 40px;
+					width: 50px;
+					height: 50px;
+					max-width: 50px;
+					max-height: 50px;
 					float: left;
 					display: table;
 					position: relative;
@@ -483,32 +483,30 @@
 					border-radius: 2px;
 					border: 1px solid #898989;
 					.image{
-						height: 40px;
-						width: 40px;
+						height: 50px;
+						width: 50px;
 						text-align: center;
 						vertical-align: middle;
 						display: table-cell;
 						cursor: pointer;
 						img{
 							margin: auto;
-							max-width: 40px;
+							max-width: 50px;
 							width: auto;
 							height: auto;
-							max-height: 40px;
+							max-height: 50px;
 						}
 					}
 				}
 				.feed-content {
 					.post {
-						margin-left: 50px;
+						margin-left: 60px;
 						width: 260px;
 						.post-title {
-							&::before{
-								content: '#';
-							}
-							font-size: 16px;
-							color:#1d1b1b;
 							font-family: "ProximaNovaSemibold";
+							font-size: 15px;
+							color:#1d1b1b;
+							line-height: 18px;
 							width: 100%;
 							white-space: nowrap;
 							overflow: hidden;
@@ -517,7 +515,7 @@
 						.post-content {
 							font-size: 13px;
 							color: #1d1b1b;
-							line-height: 14px;
+							line-height: 12px;
 							width: 100%;
 							white-space: nowrap;
 							overflow: hidden;
@@ -525,7 +523,7 @@
 						}
 					}
 					.post-create-by {
-						font-size: 13px;
+						font-size: 12px;
 						color: #797979;
 					}
 					.appear-day {
