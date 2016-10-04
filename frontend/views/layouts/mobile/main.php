@@ -147,6 +147,7 @@ if (isset($cookies["isCoverPageVisited"])) {
               ?>
 
               <img  class="<?php echo $img_class;?>" src="<?= Url::to('@web/img/icon/netwrk-text-mobile.png'); ?>" alt="Netwrk"/>
+              <div class="section-title near-title <?php echo $span_class;?>">Near</div>
               <?php if (isset($cookies["nw_selectedLocation"])) : ?>
                 <div class="netwrk-city"><?php echo $cookies["nw_selectedLocation"]; ?></div>
               <?php endif; ?>
