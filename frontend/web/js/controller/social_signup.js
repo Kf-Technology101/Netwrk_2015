@@ -31,7 +31,6 @@ var SocialSignup ={
 		btn.unbind();
 		btn.on('click',function(){
 			Ajax.update_profile_info($(SocialSignup.form_id)).then(function(data){
-				console.log($.parseJSON(data));
 				SocialSignup.data_validate = $.parseJSON(data);
 				if(SocialSignup.data_validate.status == 0){
 					SocialSignup.ShowErrorValidate();
@@ -44,6 +43,22 @@ var SocialSignup ={
 				}
 			});
 		});
+	},
+	ShowErrorValidate: function(validate){
+		$.each(Signup.data_validate.data,function(i,e){
+			if(validate){
+				var target = $('.field-'+ validate);
+				if(validate == i){
+					target.removeClass('has-success').addClass('has-error');
+					target.find('.help-block').text(e);
+					return false;
+				}
+			}else{
+				var target = $('.field-'+ i);
+				target.removeClass('has-success').addClass('has-error');
+				target.find('.help-block').text(e);
+			}
+		})
 	},
 
 	ShowModal: function(){
@@ -185,9 +200,9 @@ var SocialSignup ={
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
-            $(SocialSignup.parent).modal('hide');
-			$('.menu_top').removeClass('deactive');
-			$('#btn_meet').removeClass('deactive');
+            //$(SocialSignup.parent).modal('hide');
+			//$('.menu_top').removeClass('deactive');
+			//$('#btn_meet').removeClass('deactive');
         });
     }
 };
