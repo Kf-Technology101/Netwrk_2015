@@ -182,11 +182,11 @@ if (isset($cookies["isCoverPageVisited"])) {
       <div class="box-navigation">
         <div id="nav_wrapper" class="btn-group btn-group-default btn-group-type navbar-fixed-bottom" role="group">
           <button type="button" class="btn btn-default btn-nav-map btn-explore-location">
-            <i class="navigation-icon fa fa-globe"></i>
+            <i class="navigation-icon ci-map"></i>
             <div class="navigation-text">Map</div>
           </button>
           <button id="chat_inbox_nav_btn_mobile" type="button" class="btn btn-default">
-            <i class="navigation-icon fa fa-comment"></i>
+            <i class="navigation-icon ci-line"></i>
             <div class="navigation-text">Near</div>
           </button>
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
@@ -195,15 +195,13 @@ if (isset($cookies["isCoverPageVisited"])) {
           </button>
           <?php if (Yii::$app->user->isGuest):?>
             <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">
-              <i class="navigation-icon fa fa-sign-in ci-sign-in"></i>
+              <i class="navigation-icon ci-sign-in"></i>
               <div class="navigation-text">Login</div>
             </a>
           <?php else : ?>
             <button class="btn btn-default profile-trigger" type="button" id="buttonProfileWrapper">
-              <i class="navigation-icon fa fa-user"></i>
-              <div class="navigation-text">
-                Profile
-              </div>
+              <i class="navigation-icon ci-profile"></i>
+              <div class="navigation-text">Profile</div>
             </button>
           <?php endif; ?>
         </div>
