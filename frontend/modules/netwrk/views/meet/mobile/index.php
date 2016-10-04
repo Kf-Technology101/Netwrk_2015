@@ -1,6 +1,6 @@
 <?php use yii\helpers\Url; ?>
 <div id="meetListing">
-    <article class="header">
+    <article class="header hide">
         <div class="netwrk-icon landing-trigger">
             <img src="/img/icon/netwrk-icon-inactive.png">
         </div>
