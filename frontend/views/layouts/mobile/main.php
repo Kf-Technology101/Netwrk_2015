@@ -137,9 +137,14 @@ if (isset($cookies["isCoverPageVisited"])) {
   			</div>-->
             <div class="netwrk-title text-center">
               <?php
-                if(Yii::$app->controller->id == 'chat-inbox' && isset($cookies["nw_selectedLocation"])) {
+                if((Yii::$app->controller->id == 'chat-inbox' || Yii::$app->controller->id == 'meet') && isset($cookies["nw_selectedLocation"])) {
                   $span_class = '';
                   $img_class = 'hide';
+                  if(Yii::$app->controller->id == 'chat-inbox'){
+                    $section_title = 'Near';
+                  } elseif(Yii::$app->controller->id == 'meet'){
+                    $section_title = 'Meet';
+                  }
                 } else {
                   $span_class = 'hide';
                   $img_class = '';
@@ -147,7 +152,7 @@ if (isset($cookies["isCoverPageVisited"])) {
               ?>
 
               <img  class="<?php echo $img_class;?>" src="<?= Url::to('@web/img/icon/netwrk-text-mobile.png'); ?>" alt="Netwrk"/>
-              <div class="section-title near-title <?php echo $span_class;?>">Near</div>
+              <div class="section-title near-title <?php echo $span_class;?>"><?php echo $section_title;?></div>
               <?php if (isset($cookies["nw_selectedLocation"])) : ?>
                 <div class="netwrk-city"><?php echo $cookies["nw_selectedLocation"]; ?></div>
               <?php endif; ?>
