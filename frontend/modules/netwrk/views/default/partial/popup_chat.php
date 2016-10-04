@@ -125,7 +125,7 @@
                                 <img src="<%= baseurl %><%=  msg.avatar %>">
                             </div>
                         </div>
-                        <div class="feedback-line"></div>
+                        <!--<div class="feedback-line"></div>-->
                         <div class="feedback feedback-trigger" data-parent="#popup-chat-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
                         <p class="time"><%= msg.created_at %></p>
                     </div>

@@ -174,7 +174,7 @@
                         <% } %>
                     </div>
                     <div class="feedback-wrapper">
-                        <div class="feedback-line"></div>
+                        <!--<div class="feedback-line"></div>-->
                         <div class="feedback feedback-trigger" data-parent=".post-id-<%= msg.post_id %>" data-object="ws_message" data-id="<%= msg.msg_id %>">F</div>
                     </div>
                 </div>
