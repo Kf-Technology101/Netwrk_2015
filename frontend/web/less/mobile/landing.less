@@ -513,52 +513,77 @@ body{
   .btn {
     width:25%;
     height: 45px;
-    border-right: 1px solid #fff;
-    border-left: none;
-    border-top: none;
-    border-bottom: none;
-    margin-right: 1px;
+    border: none;
     background-color: #5888ac;
     color: #fff;
-    padding: 2px 4px;
+    padding: 4px;
     line-height: 15px;
     position: relative;
     outline: none;
-    .ci-meet {
-      background: url("../../img/icon/meet_icon.png") no-repeat;
-      background-size: contain;
-      display: block;
-      height: 18px;
+    margin-left: 0 !important;
+    .navigation-icon {
+      height: 24px;
       width: 24px;
-      margin: 5px auto 0;
+      margin: 0 auto;
+      display: block;
+    }
+    .ci-map {
+      background: url("../../img/icon/nav-map.png") no-repeat;
+      background-size: contain;
     }
     .ci-line {
-      background:url("../../img/icon/line-icon-nav.png") no-repeat;
+      background:url("../../img/icon/nav-line.png") no-repeat;
       background-size: contain;
-      display:block;
-      height:18px;
-      width:18px;
-      margin: 3px auto;
     }
-    .navigation-icon {
-      font-size: 24px;
+    .ci-meet {
+      background: url("../../img/icon/nav-meet.png") no-repeat;
+      background-size: contain;
     }
     .ci-sign-in {
-      margin-top: 2px;
+      background: url("../../img/icon/nav-login.png") no-repeat;
+      background-size: contain;
+    }
+    .ci-profile {
+      background: url("../../img/icon/nav-profile.png") no-repeat;
+      background-size: contain;
     }
     .navigation-text {
       font-size: 12px;
+      color: #51585e;
     }
     &:hover {
       cursor: pointer;
-      background: #5da5d8;
+      outline: none;
+      .navigation-icon {
+        &.ci-map {
+          background: url("../../img/icon/nav-map-active.png") no-repeat;
+          background-size: contain;
+        }
+        &.ci-line {
+          background:url("../../img/icon/nav-line-active.png") no-repeat;
+          background-size: contain;
+        }
+        &.ci-meet {
+          background: url("../../img/icon/nav-meet-active.png") no-repeat;
+          background-size: contain;
+        }
+        &.ci-sign-in {
+          background: url("../../img/icon/nav-login-active.png") no-repeat;
+          background-size: contain;
+        }
+        &.ci-profile {
+          background: url("../../img/icon/nav-profile-active.png") no-repeat;
+          background-size: contain;
+        }
+      }
+      .navigation-text {
+        color: #ffffff;
+      }
     }
     &:first-child {
       border-radius: 0;
     }
     &:last-child {
-      border: none;
-      margin-right: 0;
       border-radius: 0;
     }
   }
