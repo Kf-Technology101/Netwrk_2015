@@ -103,12 +103,11 @@
 					<% }else{ %>
 						<span class='notify-chat-inbox disable'></span>
 					<% } %>
-					<div class='description-chat-inbox'><%= chat_inbox.topic_name %></div>
-				</div>
-				<div class='location-chat-inbox'>
-					<% if(chat_inbox.location != null) { %>
-						<i class='fa fa-map-marker '></i> <%= chat_inbox.location %>
-					<% } %>
+					<div class='description-chat-inbox'>
+						<% if(chat_inbox.location != null) { %>
+							<i class='fa fa-map-marker '></i> <%= chat_inbox.location %>
+						<% } %>
+					</div>
 				</div>
 				<i class='fa fa-2x fa-angle-right'></i>
 			</div>

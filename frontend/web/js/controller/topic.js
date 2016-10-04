@@ -580,8 +580,8 @@ var Topic = {
             .add($('#collapseFavoriteCommunities').find('.feed-row.feed-topic'))
             //.add($('.popup-box').find('.popup-topic-trigger'))
             .add($(LandingPage.netwrk_news).find('.tab-content .feed-row.feed-topic'))
-            .add($('#areaNews').find('.feed-row.feed-topic'))
-            .add($('#area_news_tab').find('.content-wrapper .feed-row.feed-topic'));
+            .add($('#areaNews').find('.feed-row.feed-topic'));
+            //.add($('#area_news_tab').find('.content-wrapper .feed-row.feed-topic'));
 
         target.unbind();
         target.on('click',function(e){
