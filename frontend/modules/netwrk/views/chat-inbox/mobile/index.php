@@ -4,10 +4,12 @@
 	$cookies = Yii::$app->request->cookies;
 ?>
 <div id='chat_inbox' class='chat-inbox'>
-	<ul class="nav nav-tabs slider-tab" role="tablist">
-		<li role="presentation" class="<?php if($current == '') { ?>active<?php } ?> col-xs-6 lies-btn"><a href="#lines_tab" aria-controls="lines_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
-		<li role="presentation" class="<?php if($current == 'area_news') { ?>active<?php } ?> col-xs-6 area-news-btn"><a href="#area_news_tab" aria-controls="area_news_tab" role="tab" data-toggle="tab"><span>Area News</span></a></li>
-	</ul>
+	<div class="slider-tabs-wrapper">
+		<ul class="nav nav-tabs slider-tab" role="tablist">
+			<li role="presentation" class="<?php if($current == '') { ?>active<?php } ?> col-xs-6 lies-btn"><a href="#lines_tab" aria-controls="lines_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+			<li role="presentation" class="<?php if($current == 'area_news') { ?>active<?php } ?> col-xs-6 area-news-btn"><a href="#area_news_tab" aria-controls="area_news_tab" role="tab" data-toggle="tab"><span>Area News</span></a></li>
+		</ul>
+	</div>
 
 	<div class="tab-content slider-content">
 		<div role="tabpanel" class="tab-pane <?php if($current == '') { ?>active<?php } ?>" id="lines_tab">
@@ -97,12 +99,11 @@
 					<% }else{ %>
 					<span class='notify-chat-inbox disable'></span>
 					<% } %>
-					<div class='description-chat-inbox'><%= chat_inbox.topic_name %></div>
-				</div>
-				<div class='location-chat-inbox'>
-					<% if(chat_inbox.location != null) { %>
-					<i class='fa fa-map-marker '></i> <%= chat_inbox.location %>
-					<% } %>
+					<div class='description-chat-inbox'>
+						<% if(chat_inbox.location != null) { %>
+							<i class='fa fa-map-marker '></i> <%= chat_inbox.location %>
+						<% } %>
+					</div>
 				</div>
 				<i class='fa fa-2x fa-angle-right'></i>
 			</div>
