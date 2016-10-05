@@ -17,6 +17,7 @@
 	</div>
 </div>
 <script id="netwrk_news" type="text/x-underscore-template">
+
 	<% if(!_.isEmpty(landing.feeds)) {%>
 		<% _.each(landing.feeds, function(city_feed, key){ %>
 			<% _.each(city_feed, function(e, key){ %>
@@ -54,6 +55,26 @@
 					</div>
 				<% } %>
 			<% }); %>
+		<% }); %>
+	<% } %>
+	<% if(!_.isEmpty(landing.twitterFeeds)) {%>
+		<% if(!_.isEmpty(landing.twitterFeeds.statuses)) {%>
+			<div class="twitter-section"> Twitter Feeds </div>
+		<% } %>
+		<% _.each(landing.twitterFeeds.statuses, function(tweet, key){ %>
+		<div class="tweet-feed-row  tweet-feed-post">
+			<div class="avatar-poster"><div class="image"><img src="<%= tweet.user.profile_image_url_https %>"></div></div>
+			<div class="feed-content">
+				<div class='post'>
+					<div class='post-title'><%= tweet.text %></div>
+					<!--<div class='post-content'><%= tweet.text %></div>-->
+					<span class='post-create-by'>Posted by: <%= tweet.user.name %></span>
+							<span class='appear-day'>
+								<!--<%= tweet.created_at %>-->
+							</span>
+				</div>
+			</div>
+		</div>
 		<% }); %>
 	<% } %>
 </script>

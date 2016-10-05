@@ -106,5 +106,38 @@ class ApiController extends BaseController
         return $result;
     }
 
+    /**
+     * Get twitter feeds location wise
+     * @return string
+     * @throws \Exception
+     */
+    public function actionGetTweets($geocode)
+    {
+        //require_once(__DIR__ . '/../../vendor/j7mbo/twitter-api-php/TwitterAPIExchange.php');
+        /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
+        $settings = array(
+            'oauth_access_token' => "783537327423512577-MJYQV8StssV17Ow9AEGiFsNVmshwnOJ",
+            'oauth_access_token_secret' => "jXRL1lt2To1WlJBDg00lRaAbw1gtAq3VCV01TPVwZDOvD",
+            'consumer_key' => "FB1YDFCA2yWZg6HDhaPHAL5B9",
+            'consumer_secret' => "7NJ50LzhXw8Y7PIaxOmuxUKYTFM4zftZfbsFRlMJqK1tTQsGod"
+        );
+
+        $params['query'] = isset($_GET['query']) ? $_GET['query'] : 'news';
+        $params['geocode'] = isset($geocode) ? $geocode : '';
+        $params['result_type'] = isset($_GET['result_type']) ? $_GET['result_type'] : 'mixed';
+        $params['count'] = isset($_GET['count']) ? $_GET['count'] : 5;
+
+        $url = 'https://api.twitter.com/1.1/search/tweets.json';
+        $getfield = "?q=".$params['query']."&result_type=".$params['result_type']."&count=".$params['count']."&geocode=".$params['geocode'];
+        $requestMethod = 'GET';
+
+        $twitter = new \TwitterAPIExchange($settings);
+        $result = $twitter->setGetfield($getfield)
+            ->buildOauth($url, $requestMethod)
+            ->performRequest();
+
+        return $result;
+    }
+
 
 }
