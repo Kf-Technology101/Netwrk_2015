@@ -893,15 +893,19 @@ class DefaultController extends BaseController
                 ->all();
 
             $city_ids = [];
+
             foreach ($cities as $city) {
                 array_push($city_ids, $city->id);
             }
 
+
             //Get the feeds from zipcode cities
             $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+            $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => '39.9585,-85.9489,10mi']));
 
             $item = [
                 'feeds' => $feeds,
+                'twitterFeeds' => $twitterFeeds,
                 'selected_zipcode' => $zip_code
             ];
 
