@@ -247,6 +247,8 @@ class MeetController extends BaseController
                     'about' => $value->profile->about,
                     'post' => $post_data,
                     'brilliant' => $brilliant,
+                    'met' => $met_1,
+                    'meet' => $meet,
                     'meet_info' => $value->profile->meet_info,
                 ),
             );
@@ -306,7 +308,7 @@ class MeetController extends BaseController
         $userCurrent = Yii::$app->user->id;
         $Auth = $_GET['user_id'];
 
-        $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth. ' AND status = 1')->one();
+        $usermeet = UserMeet::find()->where('user_id_1 ='.$userCurrent.' AND user_id_2='.$Auth)->one();
 
         if($usermeet == null){
             $meet = new UserMeet;
@@ -336,7 +338,6 @@ class MeetController extends BaseController
                     return false;
                 }
             }
-
         }else{
             $usermeet->status = 1;
             $usermeet->update();

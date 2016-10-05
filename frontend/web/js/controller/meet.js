@@ -197,7 +197,7 @@ var Meet ={
     },
 
     CustomScrollBarListing: function(){
-        var parent = $(Meet.list).find('#meetListWrapper');
+        var parent = $('#show_meet'); //$(Meet.list).find('#meetListWrapper');
             parent.css('height', $(window).height()-85);
 
         if ($(parent).find("div[id^='mSCB']").length == 0) {
@@ -243,13 +243,15 @@ var Meet ={
                 Meet.user_list.len = json.data.length;
                 Meet.json = json.data;
                 if(isMobile){
-                    var list_template = _.template($("#meet_list").html());
+                    Meet.showUserMeet();
+                    Meet.CustomScrollBarListing();
+                    /*var list_template = _.template($("#meet_list").html());
                     var append_html = list_template({meet_list: Meet.json});
                     parent = $(Meet.list).find('#meetListWrapper ul');
                     parent.find('li').remove();
                     parent.append(append_html);
                     Meet.CustomScrollBarListing();
-                    Meet.onClickMeetButton();
+                    Meet.onClickMeetButton();*/
                 } else {
                     Meet.showUserMeet();
                     $('.control-btn').show();
