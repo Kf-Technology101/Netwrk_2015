@@ -240,6 +240,7 @@ var Meet ={
 
             if(json.data.length >0) {
                 $('p.no_data').hide();
+                $('.meet-navigation-control').show();
                 Meet.user_list.len = json.data.length;
                 Meet.json = json.data;
                 if(isMobile){
@@ -258,6 +259,7 @@ var Meet ={
                 }
             } else {
                 $('p.no_data').show();
+                $('.meet-navigation-control').hide();
             }
 
             // $('#modal_meet').on('hidden.bs.modal',function() {
@@ -309,12 +311,14 @@ var Meet ={
                 $('p.no_data').hide();
                 $('.control-btn').show();
                 $('p.default').hide();
+                $('.meet-navigation-control').show();
                 self.json = json.data;
                 self.showUserMeet();
             }else{
                 $('.control-btn').hide();
                 $('p.default').show();
                 $('p.no_data').show();
+                $('.meet-navigation-control').hide();
             }
 
             if(!isMobile){
@@ -580,8 +584,10 @@ var Meet ={
                 Meet.json = json.data;
                 Meet.showUserMeet();
                 $('.control-btn').show();
+                $('.meet-navigation-control').show();
             }else{
                 $('p.no_data').show();
+                $('.meet-navigation-control').hide();
             }
         });
     },
@@ -598,12 +604,14 @@ var Meet ={
                 $('p.no_data').hide();
                 $('.control-btn').show();
                 $('p.default').hide();
+                $('.meet-navigation-control').show();
                 self.json = json.data;
                 self.showUserMeet();
             }else{
                 $('.control-btn').hide();
                 $('p.default').show();
                 $('p.no_data').show();
+                $('.meet-navigation-control').hide();
             }
 
             if(!isMobile){
@@ -635,8 +643,10 @@ var Meet ={
                 Meet.json = json.data;
                 Meet.showUserMeet();
                 $('.control-btn').show();
+                $('.meet-navigation-control').show();
             }else{
                 $('p.no_data').show();
+                $('.meet-navigation-control').hide();
             }
         });
     },
@@ -653,12 +663,14 @@ var Meet ={
                 $('p.no_data').hide();
                 $('.control-btn').show();
                 $('p.default').hide();
+                $('.meet-navigation-control').show();
                 self.json = json.data;
                 self.showUserMeet();
             }else{
                 $('.control-btn').hide();
                 $('p.default').show();
                 $('p.no_data').show();
+                $('.meet-navigation-control').hide();
             }
 
             if(!isMobile){
