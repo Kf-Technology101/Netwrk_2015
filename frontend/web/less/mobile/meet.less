@@ -23,6 +23,7 @@
             .meet-navigation-control {
                 position: absolute;
                 width: 100%;
+                z-index: 5;
                 .nav-control {
                     position: absolute;
                     top: 75px;
@@ -35,6 +36,9 @@
                     }
                     &.next {
                         right: 10px;
+                    }
+                    &.disable {
+                        display: none;
                     }
                 }
             }

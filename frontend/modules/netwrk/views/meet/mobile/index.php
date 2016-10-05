@@ -18,7 +18,16 @@
 <div id="show_meet" class="">
   <div class="container_meet">
     <div class='page' id="meeting_page">
-      <div class="user_list"></div>
+      <div class="user_list">
+          <div class="meet-navigation-control control-btn">
+              <div class="nav-control back disable">
+                  <i class="fa fa-caret-left"></i>
+              </div>
+              <div class="nav-control next">
+                  <i class="fa fa-caret-right"></i>
+              </div>
+          </div>
+      </div>
       <p class="alert alert-info no_data">There is no relevant user. Check in another netwrk. Try with broadening your Meet Settings.</p>
     </div>
   </div>
@@ -30,14 +39,6 @@
 
 <script id="list_user" type="text/x-underscore-template">
   <div class="user_item user_meet_<%= vt %>">
-      <div class="meet-navigation-control control-btn">
-          <div class="nav-control back disable">
-              <i class="fa fa-caret-left"></i>
-          </div>
-          <div class="nav-control next">
-              <i class="fa fa-caret-right"></i>
-          </div>
-      </div>
       <div class="avatar-image"><img src="<%= user.image %>"/></div>
       <div class="user-info text-center">
           <h4 class="user-name"><%= user.username %></h4>
