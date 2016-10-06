@@ -9,7 +9,8 @@ var Create_Post={
         post_id: '',
         post_title: '',
         location: '',
-        formatted_address: ''
+        formatted_address: '',
+        category: ''
     },
     status_change:{
         post: false,
@@ -645,6 +646,7 @@ var Create_Post={
         btn.unbind();
         btn.on('click',function(){
             if(!btn.hasClass('disable')){
+                Create_Post.params.category = $('.post-category-dropdown option:selected').val();
                 console.log(Create_Post.params);
                 Ajax.new_post(Create_Post.params).then(function(data){
                     Create_Post.reset_data();
@@ -705,6 +707,7 @@ var Create_Post={
         Create_Post.params.isCreateFromBlueDot = '';
         Create_Post.params.location = '';
         Create_Post.params.formatted_address = '';
+        Create_Post.params.category = '';
     }
 
 };
