@@ -905,17 +905,18 @@ class DefaultController extends BaseController
             }
 
             //default radius for tweets
-            $radius = '1000km';
+            $radius = '621mi';
             //do not space between geocode
-            $geoCode = "$city_lat,$city_lng,$radius";
+            $geoCode = floatval($city_lat).','. floatval($city_lng). ',' . $radius;
             //Get the feeds from zipcode cities
             $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
-            $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode]));
+            $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode, 'lat' => $city_lat, 'lng' => $city_lng]));
 
             $item = [
-                'feeds' => $feeds,
+                'selected_zipcode' => $zip_code,
+                'geocode' => $geoCode,
                 'twitterFeeds' => $twitterFeeds,
-                'selected_zipcode' => $zip_code
+                'feeds' => $feeds
             ];
 
             $hash = json_encode($item);
