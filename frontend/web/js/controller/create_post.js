@@ -87,6 +87,7 @@ var Create_Post={
                         Create_Post.params.message = json.content;
                         Create_Post.params.post_id = json.id;
                         Create_Post.params.post_title = json.title;
+                        Create_Post.params.category = json.category;
 
                         //set status_change status as true So save button will be active in create post form
                         // as post msg and message required field is alread updated.
