@@ -34,6 +34,21 @@
                 <textarea class="message" placeholder="Whats the line about?" maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
             </div>
 
+            <div class="post-category-content">
+                <section class="post-category-wrapper">
+                    <p class="title">Category</p>
+                    <select name="category" class="form-control post-category-dropdown">
+                        <option value="1" <?php if($post->category == 1) { ?> selected="selected"<?php }?>>Friends</option>
+                        <option value="2" <?php if($post->category == 2) { ?> selected="selected"<?php }?>>Breakfast</option>
+                        <option value="3" <?php if($post->category == 3) { ?> selected="selected"<?php }?>>Lunch</option>
+                        <option value="4" <?php if($post->category == 4) { ?> selected="selected"<?php }?>>Dinner</option>
+                        <option value="5" <?php if($post->category == 5) { ?> selected="selected"<?php }?>>Drinks</option>
+                        <option value="6" <?php if($post->category == 6) { ?> selected="selected"<?php }?>>Sports</option>
+                        <option value="7" <?php if($post->category == 7) { ?> selected="selected"<?php }?>>Outdoor activity</option>
+                    </select>
+                </section>
+            </div>
+
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
                 <div class="post-channel-content">
 
