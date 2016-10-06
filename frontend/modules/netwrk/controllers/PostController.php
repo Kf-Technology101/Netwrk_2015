@@ -190,12 +190,14 @@ class PostController extends BaseController
         $location = isset($_POST['location']) ? $_POST['location'] : null;
         $formatted_address = isset($_POST['formatted_address']) ? $_POST['formatted_address'] : null;
         $timeout = isset($_POST['timeout']) ? $_POST['timeout'] : null;
+        $category = isset($_POST['category']) ? $_POST['category'] : 0;
 
         if($post_id) {
             $Post = POST::find()->where(['id' => $post_id])->one();
             $Post->title = $post;
             $Post->content = $message;
             $Post->topic_id = $topic;
+            $Post->category = $category;
             $Post->update();
         } else {
             $Post = new Post;
@@ -217,6 +219,7 @@ class PostController extends BaseController
                 $Post->location = $location;
                 $Post->formatted_address = $formatted_address;
             }
+            $Post->category = $category;
             $Post->post_type = 1;
             $Post->save();
         }
@@ -771,7 +774,8 @@ class PostController extends BaseController
                     'view_count' => $post->view_count,
                     'brilliant_count' => $post->brilliant_count,
                     'comment_count' => $post->comment_count,
-                    'post_type' => $post->post_type
+                    'post_type' => $post->post_type,
+                    'category' => $post->category
                 ];
                 $data = json_encode($data);
                 return $data;

@@ -38,6 +38,22 @@
                             <p class="title"> Line </p>
                             <textarea class="message" placeholder="Whats the line about?" maxlength="1024"></textarea>
                         </div>
+
+                        <div class="post-category-content">
+                            <section class="post-category-wrapper">
+                                <p class="title">Category</p>
+                                <select name="category" id="postCategoryDropdown" class="form-control post-category-dropdown">
+                                    <option value="1">Friends</option>
+                                    <option value="2">Breakfast</option>
+                                    <option value="3">Lunch</option>
+                                    <option value="4">Dinner</option>
+                                    <option value="5">Drinks</option>
+                                    <option value="6">Sports</option>
+                                    <option value="7">Outdoor activity</option>
+                                </select>
+                            </section>
+                        </div>
+
                         <div class="post-channel-content">
 
                         </div>
@@ -68,7 +84,7 @@
         <p class="title">Location</p>
         <div class="input-group">
             <span class="input-group-addon">
-                <i class="fa fa-lg fa-minus-circle"></i>
+                <i class="fa fa-lg fa-map-marker"></i>
             </span>
             <input type="text" name="location" class="form-control location-input" value="<%= data.location %>" disabled="disabled"  />
             <input type="hidden" name="formatted_address" value="<%= data.formatted_address %>" />
