@@ -38,7 +38,7 @@
                             <p class="title"> Line </p>
                             <textarea class="message" placeholder="Whats the line about?" maxlength="1024"></textarea>
                         </div>
-                        <div class="post-category-content">
+                        <div class="post-channel-content">
 
                         </div>
                         <div class="post-topic-category-content">
@@ -75,8 +75,8 @@
         </div>
     </section>
 </script>
-<script id="post-category-template" type="text/x-underscore-template">
-    <section class="post-category-wrapper">
+<script id="post-channel-template" type="text/x-underscore-template">
+    <section class="post-channel-wrapper">
         <% if(! _.isEmpty(data)){ %>
             <p class="title">Channel</p>
             <select name="topic" class="form-control post-topic-dropdown">

@@ -1129,11 +1129,13 @@ class PostController extends BaseController
             $formatted_address = $addresses->results[0]->formatted_address;
             $location_array = explode(',',$formatted_address);
             $location = $location_array[0].','.$location_array[1];
+            $area = $location_array[1];
 
             $return = [
                 'success' => true,
                 'formatted_address' => $formatted_address,
-                'location' => $location
+                'location' => $location,
+                'area' => $area
             ];
         } else {
             $return = [

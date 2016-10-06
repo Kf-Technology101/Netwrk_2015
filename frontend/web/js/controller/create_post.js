@@ -195,6 +195,7 @@ var Create_Post={
                 Create_Post.params.location = json.location;
                 Create_Post.params.formatted_address = json.formatted_address;
                 Create_Post.getTemplatePostLocation(parent,json);
+                parent.find('.header').find('.title_page').find('.line-area').html(json.area);
             }
         });
     },
@@ -228,7 +229,7 @@ var Create_Post={
     /* Display community category dropdown on Create post modal. */
     showPostCategory: function(zipcode){
         var parent = $('#create_post').add('#create_post_slider');
-        parent.find('.post-category-content').html('');
+        parent.find('.post-channel-content').html('');
         parent.find('.post-topic-category-content').html('');
         var params = {'zip_code': zipcode};
         //todo: fetch weather api data
@@ -240,9 +241,9 @@ var Create_Post={
     },
     getTemplatePostCategory: function(parent,data){
         var json = data;
-        var target = parent.find('.post-category-content');
+        var target = parent.find('.post-channel-content');
 
-        var list_template = _.template($("#post-category-template").html());
+        var list_template = _.template($("#post-channel-template").html());
         var append_html = list_template({data: json});
 
         target.append(append_html);
@@ -549,7 +550,7 @@ var Create_Post={
         parent.find('.name_post').val('');
         parent.find('.message').val('');
         parent.find('#post_id').val('');
-        parent.find('.post-category-content').html('');
+        parent.find('.post-channel-content').html('');
         parent.find('.post-topic-category-content').html('');
         parent.find('.post-location-content').html('');
 
