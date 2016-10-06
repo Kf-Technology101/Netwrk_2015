@@ -111,7 +111,7 @@ class ApiController extends BaseController
      * @return string
      * @throws \Exception
      */
-    public function actionGetTweets($geocode = null)
+    public function actionGetTweets($geocode = null, $city_lat = null, $city_lng = null)
     {
         //require_once(__DIR__ . '/../../vendor/j7mbo/twitter-api-php/TwitterAPIExchange.php');
         /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
@@ -126,12 +126,18 @@ class ApiController extends BaseController
         $defaultQuery = "";
         $q = isset($_GET['query']) ? $_GET['query'] : $defaultQuery;
         $geoWithRadius =  isset($geocode) ? $geocode : '';
-        $resultType = isset($_GET['result_type']) ? $_GET['result_type'] : 'mixed';
+        $resultType = isset($_GET['result_type']) ? $_GET['result_type'] : 'recent';
         $count = isset($_GET['count']) ? $_GET['count'] : 10;
 
+        $lat = floatval($city_lat);
+        $lng = floatval($city_lng);
+        $radius = '621mi';
+
         $url = 'https://api.twitter.com/1.1/search/tweets.json';
-        //$getfield = "?q=in&result_type=$resultType&count=$count&geocode=$geoWithRadius";
-        $getfield = "?q=in&result_type=$resultType&count=$count&geocode=";
+        //$getfield = '?q=in&result_type='.$resultType.'&count='.$count.'&geocode=39.7651,-86.4168,621mi';
+        $getfield = '?q=in&result_type='.$resultType.'&count='.$count.'&geocode='.$lat.','.$lng.','.$radius;
+
+       //var_dump($getfield);
         $requestMethod = 'GET';
 
         $twitter = new \TwitterAPIExchange($settings);
