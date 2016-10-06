@@ -198,6 +198,38 @@
 .cgm-container{
 	padding: 15px;
 	text-align: center;
+	.location-details-wrapper {
+		height: 50px;
+	}
+	.community-info {
+		bottom: 0;
+		height: auto;
+		position: absolute;
+		width: 100%;
+	}
+	.formatted-address {
+		width: 80%;
+		text-align: center;
+		background: #eeeeee;
+		border-radius: 15px;
+		margin: auto auto 15px;
+		padding: 5px 15px;
+		.fa {
+			font-size: 20px;
+			color: #5888ac;
+		}
+		.location {
+			font-family: "ProximaNovaRegular";
+			font-size: 12px;
+			line-height: 14px;
+			width: 92%;
+			display: inline-block;
+			padding: 0 5px;
+			overflow: hidden;
+			overflow-wrap: break-word;
+			white-space: nowrap;
+		}
+	}
 	.create-section {
 		padding: 15px 0;
 		font-size: 14px;
@@ -310,18 +342,18 @@
 
 	.create-button,
 	.show-area-topic{
-		width: 100%;
-		float: right;
-		border: 1px solid #fff;
-		background: #5888ac;
-		color: #fff;
-		text-align: center;
-		border-radius: 4px;
-		padding: 5px;
-		cursor: pointer;
-		box-shadow: 0 0 1px 1px #e0e0e0;
 		font-family: "ProximaNovaRegular";
 		font-size: 16px;
+		color: #fff;
+		text-align: center;
+		cursor: pointer;
+		background: #5888ac;
+		width: 100%;
+		float: right;
+		padding: 5px;
+		/*border: 1px solid #fff;*/
+		/*border-radius: 4px;*/
+		/*box-shadow: 0 0 1px 1px #e0e0e0;*/
 		&:hover{
 			color: #fff;
 			background-color: #5da5d8;

@@ -288,7 +288,7 @@
 	  	},
 		eventMapClick: function(event) {
 			if(Map.displayBlueDot) {
-				if(typeof Map.userLocationInfoWindow != 'undefined'){
+				if(Map.userLocationInfoWindow != '') {
 					Map.userLocationInfoWindow.setMap(null);
 				}
 
@@ -1344,7 +1344,10 @@
 				var len = data.results[0].address_components.length;
 				var city = '',
 					locality = '',
-					sublocality = '';
+					sublocality = '',
+					formattedAddress = data.results[0].formatted_address,
+					formattedAddressArray = formattedAddress.split(','),
+					location = formattedAddressArray[0]+','+formattedAddressArray[1];
 
 				for (var i = 0; i < len; i++) {
 					if (data.results[0].address_components[i].types[0] == 'postal_code') {
@@ -1399,6 +1402,7 @@
 
 				setTimeout(function(){
 					$("#blueDotLocation span").eq(0).html(city);
+					$('#formattedLocation').html(location);
 				},300);
 				Map.getCurrentZipBuildDetail();
 			});
@@ -1524,10 +1528,10 @@
 					//    // * We use jQuery and create a iwBackground variable,
 					//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 
-					iwOuter.css({'max-width' : '250px', 'z-index' : '999', 'box-shadow' : '2px 2px 2px'});
+					iwOuter.css({'max-width' : '260px', 'z-index' : '999', 'box-shadow' : '5px 5px 5px', 'border-radius' : '4px 4px 0 0', 'border-top' : '1px solid #acacac', 'border-left' : '1px solid #acacac'});
 
 					var iwBackground = iwOuter.prev();
-					iwOuter.children(':nth-child(1)').css({'max-width' : '240px'});
+					iwOuter.children(':nth-child(1)').css({'max-width' : '250px', 'display' : 'block'});
 					//*/ Removes background shadow DIV
 					iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
@@ -1685,7 +1689,7 @@
 			var blueDotInfoWindowContent = $('#blueDotInfoWindow').html();
 
 			var infowindow = new google.maps.InfoWindow({
-				maxWidth: 240,
+				maxWidth: 250,
 				content: blueDotInfoWindowContent
 			});
 

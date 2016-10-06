@@ -15,13 +15,14 @@
 
 <div style="display:none;">
 	<div id="blueDotInfoWindow">
-		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();" style="max-width: 250px; padding: 5px 5px 0;">
+		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();" style="max-width: 260px; padding: 20px 0 0;">
 			<div class="iw-content">
-				<div class="iw-subTitle text-right" onclick="Map.closeAllInfoWindows();">
+				<!--<div class="iw-subTitle text-right" onclick="Map.closeAllInfoWindows();">
 					<span class="close" style="font-size: 25px; line-height: 14px;"><span aria-hidden="true">&times;</span></span>
-				</div>
+				</div>-->
 				<div class="iw-subTitle location-details-wrapper text-left">
-					<h4 class="location-details">Welcome to <span id="blueDotLocation"><span>requesting...</span></span></h4>
+					<div id="formattedAddress" class="formatted-address"><i class="fa fa-map-marker"></i><span class="location" id="formattedLocation"></span> </div>
+					<h4 class="location-details hide">Welcome to <span id="blueDotLocation"><span>requesting...</span></span></h4>
 					<!--<h5 class="discussion-title">Active Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
 					<div id="discussionWrapper" class="discussion-wrapper"></div>-->
 				</div>
