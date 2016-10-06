@@ -11,11 +11,7 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <?php if($isCreateFromBlueDot == true): ?>
-                <span class="title"><?php echo $city_zipcode ?> > Build a line</span>
-            <?php else: ?>
-                <span class="title"><?= $city->zip_code ?> > Build a line</span>
-            <?php endif; ?>
+            <span class="title">Create Line > <span class="line-area"></span> </span>
         </div>
     </div>
     <div class="container">
@@ -37,8 +33,9 @@
                 <p class="title"> Line </p>
                 <textarea class="message" placeholder="Whats the line about?" maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
             </div>
+
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
-                <div class="post-category-content">
+                <div class="post-channel-content">
 
                 </div>
                 <div class="post-topic-category-content">
@@ -62,18 +59,17 @@
 </div>
 <script id="post-location-template" type="text/x-underscore-template">
     <section class="post-location-wrapper">
-        <p class="title">Location</p>
         <div class="input-group">
             <span class="input-group-addon">
-                <i class="fa fa-lg fa-minus-circle"></i>
+                <i class="fa fa-lg fa-map-marker"></i>
             </span>
             <input type="text" name="location" class="form-control location-input" value="<%= data.location %>" disabled="disabled"  />
             <input type="hidden" name="formatted_address" value="<%= data.formatted_address %>" />
         </div>
     </section>
 </script>
-<script id="post-category-template" type="text/x-underscore-template">
-    <section class="post-category-wrapper">
+<script id="post-channel-template" type="text/x-underscore-template">
+    <section class="post-channel-wrapper">
         <% if(! _.isEmpty(data)){ %>
         <p class="title">Channel</p>
         <select name="topic" class="form-control post-topic-dropdown">
