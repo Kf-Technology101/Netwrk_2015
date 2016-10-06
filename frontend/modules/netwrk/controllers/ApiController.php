@@ -111,7 +111,7 @@ class ApiController extends BaseController
      * @return string
      * @throws \Exception
      */
-    public function actionGetTweets($geocode)
+    public function actionGetTweets($geocode = null)
     {
         //require_once(__DIR__ . '/../../vendor/j7mbo/twitter-api-php/TwitterAPIExchange.php');
         /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
@@ -122,13 +122,16 @@ class ApiController extends BaseController
             'consumer_secret' => "7NJ50LzhXw8Y7PIaxOmuxUKYTFM4zftZfbsFRlMJqK1tTQsGod"
         );
 
-        $params['query'] = isset($_GET['query']) ? $_GET['query'] : 'news';
-        $params['geocode'] = isset($geocode) ? $geocode : '';
-        $params['result_type'] = isset($_GET['result_type']) ? $_GET['result_type'] : 'mixed';
-        $params['count'] = isset($_GET['count']) ? $_GET['count'] : 5;
+        //TODO: what will be the defualt query string if user not passed any query string as query is required params.
+        $defaultQuery = "";
+        $q = isset($_GET['query']) ? $_GET['query'] : $defaultQuery;
+        $geoWithRadius =  isset($geocode) ? $geocode : '';
+        $resultType = isset($_GET['result_type']) ? $_GET['result_type'] : 'mixed';
+        $count = isset($_GET['count']) ? $_GET['count'] : 10;
 
         $url = 'https://api.twitter.com/1.1/search/tweets.json';
-        $getfield = "?q=".$params['query']."&result_type=".$params['result_type']."&count=".$params['count']."&geocode=".$params['geocode'];
+        //$getfield = "?q=in&result_type=$resultType&count=$count&geocode=$geoWithRadius";
+        $getfield = "?q=in&result_type=$resultType&count=$count&geocode=";
         $requestMethod = 'GET';
 
         $twitter = new \TwitterAPIExchange($settings);
