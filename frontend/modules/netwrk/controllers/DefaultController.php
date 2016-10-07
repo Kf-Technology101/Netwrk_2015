@@ -893,16 +893,32 @@ class DefaultController extends BaseController
                 ->all();
 
             $city_ids = [];
+            $city_lat = '';
+            $city_lng = '';
+            $city_name = '';
+
             foreach ($cities as $city) {
+                if($city->office_type == '') {
+                    $city_lat = $city->lat;
+                    $city_lng = $city->lng;
+                    $city_name = $city->name;
+                }
                 array_push($city_ids, $city->id);
             }
 
+            //default radius for tweets
+            $radius = '621mi';
+            //do not space between geocode
+            $geoCode = floatval($city_lat).','. floatval($city_lng). ',' . $radius;
             //Get the feeds from zipcode cities
             $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+            $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode, 'city_lat' => $city_lat, 'city_lng' => $city_lng, 'city_name' => $city_name]));
 
             $item = [
-                'feeds' => $feeds,
-                'selected_zipcode' => $zip_code
+                'selected_zipcode' => $zip_code,
+                'geocode' => $geoCode,
+                'twitterFeeds' => $twitterFeeds,
+                'feeds' => $feeds
             ];
 
             $hash = json_encode($item);

@@ -433,6 +433,87 @@
 	}
 
 	.area-news-tab {
+		.twitter-section {
+			background: #ccc none repeat scroll 0 0;
+			font-family: ProximaNovaBold;
+			padding: 5px;
+		}
+		.tweet-feed-row {
+			border-bottom: 1px solid #e4e4e4;
+			position: relative;
+			&:hover{
+				cursor: pointer;
+			}
+			&.tweet-feed-post{
+				padding: 5px;
+				height: 65px;
+				.avatar-poster {
+					width: 40px;
+					height: 40px;
+					max-width: 40px;
+					max-height: 40px;
+					float: left;
+					display: table;
+					position: relative;
+					background: #fff;
+					border-radius: 2px;
+					border: 1px solid #898989;
+					.image{
+						height: 40px;
+						width: 40px;
+						text-align: center;
+						vertical-align: middle;
+						display: table-cell;
+						cursor: pointer;
+						img{
+							margin: auto;
+							max-width: 40px;
+							width: auto;
+							height: auto;
+							max-height: 40px;
+						}
+					}
+				}
+				.feed-content {
+					.post {
+						margin-left: 50px;
+						width: 260px;
+						.post-title {
+							&::before{
+								content: '#';
+							}
+							font-size: 16px;
+							color:#1d1b1b;
+							font-family: "ProximaNovaSemibold";
+							width: 100%;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+						}
+						.post-content {
+							font-size: 13px;
+							color: #1d1b1b;
+							line-height: 14px;
+							width: 100%;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+						}
+					}
+					.post-create-by {
+						font-size: 13px;
+						color: #797979;
+					}
+					.appear-day {
+						font-size : 12px;
+						color : #797979;
+						position: absolute;
+						right: 5px;
+						bottom: 5px;
+					}
+				}
+			}
+		}
 		.feed-row{
 			border-bottom: 1px solid #e4e4e4;
 			position: relative;

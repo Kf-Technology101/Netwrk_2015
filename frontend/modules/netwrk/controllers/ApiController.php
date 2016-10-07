@@ -106,5 +106,49 @@ class ApiController extends BaseController
         return $result;
     }
 
+    /**
+     * Get twitter feeds location wise
+     * @return string
+     * @throws \Exception
+     */
+    public function actionGetTweets($geocode = null, $city_lat = null, $city_lng = null, $city_name = null)
+    {
+        //require_once(__DIR__ . '/../../vendor/j7mbo/twitter-api-php/TwitterAPIExchange.php');
+        /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
+        $settings = array(
+            'oauth_access_token' => "783537327423512577-MJYQV8StssV17Ow9AEGiFsNVmshwnOJ",
+            'oauth_access_token_secret' => "jXRL1lt2To1WlJBDg00lRaAbw1gtAq3VCV01TPVwZDOvD",
+            'consumer_key' => "FB1YDFCA2yWZg6HDhaPHAL5B9",
+            'consumer_secret' => "7NJ50LzhXw8Y7PIaxOmuxUKYTFM4zftZfbsFRlMJqK1tTQsGod"
+        );
+
+        //TODO: what will be the defualt query string if user not passed any query string as query is required params.
+        $defaultQuery = "";
+        $q = isset($_GET['query']) ? $_GET['query'] : $defaultQuery;
+        $geoWithRadius =  isset($geocode) ? $geocode : '';
+        $resultType = isset($_GET['result_type']) ? $_GET['result_type'] : 'recent';
+        $count = isset($_GET['count']) ? $_GET['count'] : 10;
+
+        $lat = floatval($city_lat);
+        $lng = floatval($city_lng);
+        $radius = '621mi';
+        //search by #cityName
+        $q = '#'.$city_name;
+
+        $url = 'https://api.twitter.com/1.1/search/tweets.json';
+        //$getfield = '?q=in&result_type='.$resultType.'&count='.$count.'&geocode=39.7651,-86.4168,621mi';
+        $getfield = '?q='.$q.'&result_type='.$resultType.'&count='.$count.'&geocode='.$lat.','.$lng.','.$radius;
+
+       //var_dump($getfield);
+        $requestMethod = 'GET';
+
+        $twitter = new \TwitterAPIExchange($settings);
+        $result = $twitter->setGetfield($getfield)
+            ->buildOauth($url, $requestMethod)
+            ->performRequest();
+
+        return $result;
+    }
+
 
 }
