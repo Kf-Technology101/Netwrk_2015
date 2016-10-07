@@ -82,6 +82,9 @@
 	</div>
 	<div role="tabpanel" class="tab-pane area-news-tab" id="area_news_tab">
 		<div class="content-wrapper">
+			<div class="main-content">
+
+			</div>
 
 		</div>
 	</div>
