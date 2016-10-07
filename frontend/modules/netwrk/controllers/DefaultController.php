@@ -912,7 +912,7 @@ class DefaultController extends BaseController
             $geoCode = floatval($city_lat).','. floatval($city_lng). ',' . $radius;
             //Get the feeds from zipcode cities
             $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
-            $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode, 'lat' => $city_lat, 'lng' => $city_lng, 'city_name' => $city_name]));
+            $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode, 'city_lat' => $city_lat, 'city_lng' => $city_lng, 'city_name' => $city_name]));
 
             $item = [
                 'selected_zipcode' => $zip_code,
