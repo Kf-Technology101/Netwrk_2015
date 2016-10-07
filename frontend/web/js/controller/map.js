@@ -501,6 +501,17 @@
 						}
 					}
 
+					// Flicker api to get location image
+					$.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9aaad54f12061e267c3befbd9d2aaf52&tags='+city+'&lat='+lat+'&lon='+lng+'&per_page=1&format=json&nojsoncallback=1',function(data) {
+						var result = data;
+						if(result.stat == 'ok'){
+							var photo = result.photos.photo[0];
+							var imgSrc = 'https://farm'+photo.farm+'.staticflickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'.jpg';
+							$('#userLocationImage').find('img').attr({'src' : imgSrc});
+							$('#userLocationImage').removeClass('hide');
+						}
+					});
+
 					var params = {'zip_code' : zip, 'city' : city };
 					//set selected zip code cookie.
 					Ajax.setSelectedZipCodeCookie(params).then(function (data) {
@@ -567,10 +578,10 @@
 						//    // * We use jQuery and create a iwBackground variable,
 						//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 
-						iwOuter.css({'max-width' : '260px', 'max-height' : '100px', 'z-index' : '999', 'box-shadow' : '2px 2px 2px'});
+						iwOuter.css({'max-width' : '260px', 'max-height' : 'auto', 'z-index' : '999', 'box-shadow' : '5px 5px 5px', 'border-radius' : '4px 4px 0 0', 'border-top' : '1px solid #acacac', 'border-left' : '1px solid #acacac'});
 
 						var iwBackground = iwOuter.prev();
-						iwOuter.children(':nth-child(1)').css({'max-width' : '260px'});
+						iwOuter.children(':nth-child(1)').css({'max-width' : '260px', 'display' : 'block'});
 
 						// Removes background shadow DIV
 						iwBackground.children(':nth-child(2)').css({'display' : 'none'});
