@@ -620,10 +620,18 @@ var Default ={
         });
     },
     getFeedsTemplate: function(parent, data){
-        parent.html('');
+        if(!isMobile) {
+            parent.find('.main-content').html('');
+        } else {
+            parent.html('');
+        }
         var list_template = _.template($("#netwrk_news").html());
         var append_html = list_template({landing: data});
-        parent.append(append_html);
+        if(!isMobile) {
+            parent.find('.main-content').append(append_html);
+        } else {
+            parent.append(append_html);
+        }
         //todo: make common code. After loading feed template initialize its post, topic clicks
         LandingPage.onTemplateLanding();
     },
