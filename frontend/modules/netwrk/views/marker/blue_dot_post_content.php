@@ -105,15 +105,18 @@
 
 <div style="display: none">
 	<div id="userLocationInfoWindow">
-		<div id="uiw-container" class="cgm-container" style="max-width: 250px; padding: 0px 2px; margin-top: -6px;">
+		<div id="uiw-container" class="cgm-container" style="max-width: 260px; padding: 0px;">
 			<div class="uiw-content">
-				<div class="iw-subTitle text-right" onclick="Map.closeUserLocationInfoWindow();">
-					<span class="close" style="font-size: 20px; line-height: 14px;"><span aria-hidden="true">&times;</span></span>
+				<div class="iw-subTitle text-right" onclick="Map.closeUserLocationInfoWindow();" style="position: absolute;right: 3px;top: 2px;">
+					<span class="close" style="font-size: 20px;color: #fff;line-height: 14px;"><span aria-hidden="true">&times;</span></span>
+				</div>
+				<div class="location-image-wrapper hide" id="userLocationImage" style="height:auto;max-height: 120px;overflow: hidden;">
+					<img src="" alt="" style="height: auto;max-width: 100%;width: 100%;"/>
 				</div>
 				<div class="iw-subTitle text-center">
-					<h4 class="" style="font-size: 17px; margin-bottom: 0px;">Welcome to <span id="userLocation"><span>requesting...</span></span></h4>
-					<div class="sub-title">
-						<div class="iw-subTitle">Click anywhere to build or access a chat line</div>
+					<h4 class="" style="font-size: 20px; margin-bottom: 10px;">Welcome to <span id="userLocation"><span>requesting...</span></span></h4>
+					<div class="sub-title build-content">
+						<div class="iw-subTitle" style="margin-bottom: 10px">Click anywhere to build or access a chat line</div>
 						<!--<div class="" style="color: red;margin-bottom: 2px;">or</div>-->
 					</div>
 				</div>
@@ -124,9 +127,9 @@
 				</div>
 				<div class="clearfix">
 					<div class="create-section-wrapper">
-						<div class="iw-subTitle col-xs-12 create-section" id="" style="padding: 0 2px">
+						<div class="iw-subTitle col-xs-12 create-section" style="padding: 0">
 							<div class="join-content hide">
-								<a href="javascript:" style="margin-top: 5px;" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community, 'user-location');"><span>Join this netwrk</span></a>
+								<a href="javascript:" style="padding: 0; line-height: 40px;" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community, 'user-location');"><span>Join this netwrk</span></a>
 							</div>
 							<!--<div class="build-content hide">
 								<a href="javascript:" class="create-button line-button" onclick="Map.CreateUserLocationPost();"><span>Build a Line at your location</span></a>
