@@ -183,7 +183,7 @@ class PostController extends BaseController
         $topic = $_POST['topic'];
         $post = $_POST['post'];
         $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
-        $message = $_POST['message'];
+        $message = isset($_POST['message']) ? $_POST['message'] : '';
         $current_date = date('Y-m-d H:i:s');
         $lat = isset($_POST['lat']) ? $_POST['lat'] : null;
         $lng = isset($_POST['lng']) ? $_POST['lng'] : null;
