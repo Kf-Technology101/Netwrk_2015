@@ -141,7 +141,11 @@
 		      disableDefaultUI: true,
 		      streetViewControl: false,
 		      scrollwheel: true,
-		      mapTypeId:google.maps.MapTypeId.ROADMAP
+			  mapTypeControl: true,
+			  mapTypeControlOptions: {
+				mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, ''],
+				position: google.maps.ControlPosition.BOTTOM_LEFT
+			  }
 		    };
 		    var remove_poi = Map.remove_poi;
 
