@@ -505,10 +505,12 @@
 					$.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e869d5a3976ab821030b723039180940&tags='+city+'&lat='+lat+'&lon='+lng+'&per_page=1&format=json&nojsoncallback=1',function(data) {
 						var result = data;
 						if(result.stat == 'ok'){
-							var photo = result.photos.photo[0];
-							var imgSrc = 'https://farm'+photo.farm+'.staticflickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'.jpg';
-							$('#userLocationImage').find('img').attr({'src' : imgSrc});
-							$('#userLocationImage').removeClass('hide');
+							if(result.photos.total > 0){
+								var photo = result.photos.photo[0];
+								var imgSrc = 'https://farm'+photo.farm+'.staticflickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'.jpg';
+								$('#userLocationImage').find('img').attr({'src' : imgSrc});
+								$('#userLocationImage').removeClass('hide');
+							}
 						}
 
 						var params = {'zip_code' : zip, 'city' : city };
