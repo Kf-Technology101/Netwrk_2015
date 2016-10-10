@@ -59,7 +59,7 @@
 	<% } %>
 	<% if(!_.isEmpty(landing.twitterFeeds)) {%>
 		<% if(!_.isEmpty(landing.twitterFeeds.statuses)) {%>
-			<div class="twitter-section"> Twitter Feeds </div>
+			<div class="twitter-section"> Tweets near you </div>
 		<% } %>
 		<% _.each(landing.twitterFeeds.statuses, function(tweet, key){ %>
 		<div class="tweet-feed-row  tweet-feed-post">
