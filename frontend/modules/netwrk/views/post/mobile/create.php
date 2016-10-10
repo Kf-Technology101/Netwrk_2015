@@ -45,6 +45,7 @@
                         <option value="5" <?php if($post->category == 5) { ?> selected="selected"<?php }?>>Drinks</option>
                         <option value="6" <?php if($post->category == 6) { ?> selected="selected"<?php }?>>Sports</option>
                         <option value="7" <?php if($post->category == 7) { ?> selected="selected"<?php }?>>Outdoor activity</option>
+                        <option value="8" <?php if($post->category == 8) { ?> selected="selected"<?php }?>>Groceries</option>
                     </select>
                 </section>
             </div>

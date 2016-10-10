@@ -50,6 +50,7 @@
                                     <option value="5">Drinks</option>
                                     <option value="6">Sports</option>
                                     <option value="7">Outdoor activity</option>
+                                    <option value="8">Groceries</option>
                                 </select>
                             </section>
                         </div>
