@@ -885,7 +885,6 @@ class DefaultController extends BaseController
 
         if($request && $zip_code){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-            $party_lines = array();
 
             $city = new City();
             $cities = $city->find()->select('city.*')
@@ -914,9 +913,13 @@ class DefaultController extends BaseController
             $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
             $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode, 'city_lat' => $city_lat, 'city_lng' => $city_lng, 'city_name' => $city_name]));
 
+            //area job data
+            $jobFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-zip-job-data', ['zipcode' => $zip_code]));
+
             $item = [
                 'selected_zipcode' => $zip_code,
                 'geocode' => $geoCode,
+                'jobFeeds' => $jobFeeds,
                 'twitterFeeds' => $twitterFeeds,
                 'feeds' => $feeds
             ];

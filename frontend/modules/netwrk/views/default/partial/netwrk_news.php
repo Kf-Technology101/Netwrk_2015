@@ -70,12 +70,33 @@
 					<!--<div class='post-content'><%= tweet.text %></div>-->
 					<span class='post-create-by'>Posted by: <%= tweet.user.name %></span>
 							<span class='appear-day'>
-								<!--<%= tweet.created_at %>-->
+								<i class="fa fa-twitter"></i>
 							</span>
 				</div>
 			</div>
 		</div>
 		<% }); %>
+	<% } %>
+
+	<% if(!_.isEmpty(landing.jobFeeds)) {%>
+		<div class="jobs-section"> Jobs near you </div>
+			<% if(!_.isEmpty(landing.jobFeeds.results)) {%>
+				<% _.each(landing.jobFeeds.results, function(item, key){ %>
+					<div class="job-feed-row  job-feed-post">
+						<!--<div class="avatar-poster"><div class="image"><img src=""></div></div>-->
+						<div class="feed-content">
+							<div class='post'>
+								<div class='post-title'>
+									<span class="job-title"><%= item.jobtitle %></span>
+
+								</div>
+								<div class="company-info"><span class="company"><%= item.company %></span> - <span class="location"><%= item.formattedLocation %></span></div>
+								<div><span class="snippet post-content"><%= item.snippet %></span><span><a class="job-url view-more" href="<%= item.url %>" target="_blank"> View more</a></span></div>
+							</div>
+						</div>
+					</div>
+				<% }); %>
+			<% } %>
 	<% } %>
 </script>
 <script id="netwrk_header" type="text/x-underscore-template">
