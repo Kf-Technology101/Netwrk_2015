@@ -522,7 +522,7 @@
 					}
 
 					// Flicker api to get location image
-					$.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e869d5a3976ab821030b723039180940&tags='+city+'&lat='+lat+'&lon='+lng+'&per_page=1&format=json&nojsoncallback=1',function(data) {
+					$.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e869d5a3976ab821030b723039180940&lat='+lat+'&lon='+lng+'&per_page=1&format=json&nojsoncallback=1',function(data) {
 						var result = data;
 						if(result.stat == 'ok'){
 							if(result.photos.total > 0){
