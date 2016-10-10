@@ -55,7 +55,7 @@
                             </section>
                         </div>
 
-                        <div class="post-channel-content">
+                        <div class="post-channel-content hidden">
 
                         </div>
                         <div class="post-topic-category-content">
