@@ -465,7 +465,7 @@ var Create_Post={
         var parent = $('#create_post');
 
         this.onChangeData(parent.find('.name_post'),'post');
-        this.onChangeData(parent.find('.message'),'message');
+        //this.onChangeData(parent.find('.message'),'message');
     },
 
     onChangeData: function(target,filter){
@@ -499,13 +499,13 @@ var Create_Post={
 
         //if line create from blue dot then topic is required
         if(Create_Post.params.isCreateFromBlueDot) {
-            if(status.post && status.message && status.topic){
+            if(status.post && status.topic){
                 status.total = true;
             }else{
                 status.total = false;
             }
         } else {
-            if(status.post && status.message){
+            if(status.post){
                 status.total = true;
             }else{
                 status.total = false;
