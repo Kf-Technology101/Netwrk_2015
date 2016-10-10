@@ -82,12 +82,12 @@ var Default ={
                 LandingPage.OnClickBackdropWelcome();
                 //LandingPage.showLandingWelcome();
             } else {
-                sessionStorage.map_zoom = 16;
+                sessionStorage.map_zoom = 18;
                 //$('.landing-trigger', '.logo-active').trigger('click');
             }
 
             if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
-                sessionStorage.map_zoom = 16;
+                sessionStorage.map_zoom = 18;
                 if(welcomePage == 'true') {
                     LandingPage.OnHideModalWelcome();
                     LandingPage.OnClickBackdropWelcome();
@@ -99,7 +99,7 @@ var Default ={
                 LandingPage.initialize();
                 Default.UnsetLanding();
             } else {
-                sessionStorage.map_zoom = 16;
+                sessionStorage.map_zoom = 18;
                 //$('.landing-trigger', '.logo-active').trigger('click');
             }
             /*if(!sessionStorage.show_landing || sessionStorage.show_landing == 0){
