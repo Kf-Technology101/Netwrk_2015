@@ -530,103 +530,103 @@
 							$('#userLocationImage').find('img').attr({'src' : imgSrc});
 							$('#userLocationImage').removeClass('hide');
 						}
-					});
 
-					var params = {'zip_code' : zip, 'city' : city };
-					//set selected zip code cookie.
-					Ajax.setSelectedZipCodeCookie(params).then(function (data) {
-						var json = $.parseJSON(data);
-						if(isMobile){
-							$('.navbar-mobile').find('.netwrk-title').find('.netwrk-city').html(city);
-						}
-					});
-
-					if(isGuest) {
-						$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
-						$('#userLocationInfoWindow').find('.build-content').addClass('hide');
-					} else {
-						/*$('#userLocationInfoWindow').find('.join-content').addClass('hide');
-						$('#userLocationInfoWindow').find('.build-content').removeClass('hide');*/
-
-						var params = {'zip_code':Map.blueDotLocation.zipcode};
-
-						Ajax.getBuildDetailFromZip(params).then(function(data){
-							var buildData = $.parseJSON(data);
-
-							if(buildData.communities == 0){
-								$('#userLocationInfoWindow').find('.sub-title').addClass('hide');
-								$('#userLocationInfoWindow').find('.join-content').addClass('hide');
-								$('#userLocationInfoWindow').find('#noCommunityUserLocation').removeClass('hide');
-							} else {
-								if (buildData.user_follow == 'false') {
-									Map.blueDotLocation.community = buildData.social_community;
-									$('#userLocationInfoWindow').find('.build-content').addClass('hide');
-									$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
-								} else {
-									Map.blueDotLocation.community = '';
-									$('#userLocationInfoWindow').find('.join-content').addClass('hide');
-									$('#userLocationInfoWindow').find('.build-content').removeClass('hide');
-								}
+						var params = {'zip_code' : zip, 'city' : city };
+						//set selected zip code cookie.
+						Ajax.setSelectedZipCodeCookie(params).then(function (data) {
+							var json = $.parseJSON(data);
+							if(isMobile){
+								$('.navbar-mobile').find('.netwrk-title').find('.netwrk-city').html(city);
 							}
 						});
-					}
 
-					Map.userLocationInfoWindow = new google.maps.InfoWindow();
-					var windowLatLng = new google.maps.LatLng(lat, lng);
-					var content = $('#userLocationInfoWindow').html();
+						if(isGuest) {
+							$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
+							$('#userLocationInfoWindow').find('.build-content').addClass('hide');
+						} else {
+							/*$('#userLocationInfoWindow').find('.join-content').addClass('hide');
+							 $('#userLocationInfoWindow').find('.build-content').removeClass('hide');*/
 
-					Map.userLocationInfoWindow.setOptions({
-						maxWidth: 260,
-						maxHeight: 100,
-						content: content,
-						position: windowLatLng,
-					});
+							var params = {'zip_code':Map.blueDotLocation.zipcode};
 
-					setTimeout(function() {
-						Map.userLocationInfoWindow.open(map);
-					}, 100);
+							Ajax.getBuildDetailFromZip(params).then(function(data){
+								var buildData = $.parseJSON(data);
 
-					google.maps.event.addListener(Map.userLocationInfoWindow, 'domready', function() {
-						// Reposition user location marker so info window display on center
-						$('.marker-user-location').parent().parent().parent().css({'left' : '-20px'});
+								if(buildData.communities == 0){
+									$('#userLocationInfoWindow').find('.sub-title').addClass('hide');
+									$('#userLocationInfoWindow').find('.join-content').addClass('hide');
+									$('#userLocationInfoWindow').find('#noCommunityUserLocation').removeClass('hide');
+								} else {
+									if (buildData.user_follow == 'false') {
+										Map.blueDotLocation.community = buildData.social_community;
+										$('#userLocationInfoWindow').find('.build-content').addClass('hide');
+										$('#userLocationInfoWindow').find('.join-content').removeClass('hide');
+									} else {
+										Map.blueDotLocation.community = '';
+										$('#userLocationInfoWindow').find('.join-content').addClass('hide');
+										$('#userLocationInfoWindow').find('.build-content').removeClass('hide');
+									}
+								}
+							});
+						}
 
-						//   // Reference to the DIV that wraps the bottom of infowindow
-						var iwOuter = $('#uiw-container').closest('.gm-style-iw');
+						Map.userLocationInfoWindow = new google.maps.InfoWindow();
+						var windowLatLng = new google.maps.LatLng(lat, lng);
+						var content = $('#userLocationInfoWindow').html();
 
-						$('#uiw-container').css({'max-width' : '260px'});
-						//    // Since this div is in a position prior to .gm-div style-iw.
-						//    // * We use jQuery and create a iwBackground variable,
-						//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+						Map.userLocationInfoWindow.setOptions({
+							maxWidth: 260,
+							maxHeight: 100,
+							content: content,
+							position: windowLatLng,
+						});
 
-						iwOuter.css({'max-width' : '260px', 'max-height' : 'auto', 'z-index' : '999', 'box-shadow' : '5px 5px 5px', 'border-radius' : '4px 4px 0 0', 'border-top' : '1px solid #acacac', 'border-left' : '1px solid #acacac'});
+						setTimeout(function() {
+							Map.userLocationInfoWindow.open(map);
+						}, 100);
 
-						var iwBackground = iwOuter.prev();
-						iwOuter.children(':nth-child(1)').css({'max-width' : '260px', 'display' : 'block'});
+						google.maps.event.addListener(Map.userLocationInfoWindow, 'domready', function() {
+							// Reposition user location marker so info window display on center
+							$('.marker-user-location').parent().parent().parent().css({'left' : '-20px'});
 
-						// Removes background shadow DIV
-						iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+							//   // Reference to the DIV that wraps the bottom of infowindow
+							var iwOuter = $('#uiw-container').closest('.gm-style-iw');
 
-						//   // Removes white background DIV
-						iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+							$('#uiw-container').css({'max-width' : '260px'});
+							//    // Since this div is in a position prior to .gm-div style-iw.
+							//    // * We use jQuery and create a iwBackground variable,
+							//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 
-						//   // Moves the shadow of the arrow 76px to the left margin.
-						//iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+							iwOuter.css({'max-width' : '260px', 'max-height' : 'auto', 'z-index' : '999', 'box-shadow' : '5px 5px 5px', 'border-radius' : '4px 4px 0 0', 'border-top' : '1px solid #acacac', 'border-left' : '1px solid #acacac'});
 
-						//   // Moves the arrow 76px to the left margin.
-						//iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+							var iwBackground = iwOuter.prev();
+							iwOuter.children(':nth-child(1)').css({'max-width' : '260px', 'display' : 'block'});
 
-						//   // Changes the desired tail shadow color.
-						//iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+							// Removes background shadow DIV
+							iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
-						//   // Reference to the div that groups the close button elements.
-						var iwCloseBtn = iwOuter.next();
+							//   // Removes white background DIV
+							iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
-						//   // Apply the desired effect to the close button
-						iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+							//   // Moves the shadow of the arrow 76px to the left margin.
+							//iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
 
-						//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-						iwCloseBtn.mouseout(function(){
-							$(this).css({opacity: '0'});
+							//   // Moves the arrow 76px to the left margin.
+							//iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'top: 174px !important;left: 192px !important;'});
+
+							//   // Changes the desired tail shadow color.
+							//iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#477499 0px 1px 0px 2px', 'z-index' : '1'});
+
+							//   // Reference to the div that groups the close button elements.
+							var iwCloseBtn = iwOuter.next();
+
+							//   // Apply the desired effect to the close button
+							iwCloseBtn.css({opacity: '0', right: '135px', top: '15px', border: '0px solid #477499', 'border-radius': '13px', 'box-shadow': '0 0 0px 2px #477499','display':'none'});
+
+							//   // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+							iwCloseBtn.mouseout(function(){
+								$(this).css({opacity: '0'});
+							});
 						});
 					});
 				});
