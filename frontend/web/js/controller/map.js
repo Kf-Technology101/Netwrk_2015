@@ -21,7 +21,7 @@
 	  	zoomIn: false,
 	  	incre: 1,
 	  	map:'',
-	  	zoom: 16,
+	  	zoom: 18,
 		markerZoom:14,
 		// Blue dot info window content is in following file
 		// @frontend/modules/netwrk/views/marker/blue_dot_post_content
@@ -56,32 +56,52 @@
 		mouseIn : false,
 		remove_poi : [
 			{
-				stylers: [
-					{ hue: "#0078ff" },
-					{ saturation: -20 }
+				"featureType":"landscape",
+				"stylers":[
+					{"hue":"#FFBB00"},
+					{"saturation":43.400000000000006},
+					{"lightness":37.599999999999994},
+					{"gamma":1}
 				]
 			},{
-				featureType: "road",
-				elementType: "labels",
-				stylers: [
-					{ visibility: "off" }
+				"featureType":"road.highway",
+				"stylers":[
+					{"hue":"#FFC200"},
+					{"saturation":-61.8},
+					{"lightness":45.599999999999994},
+					{"gamma":1}
 				]
 			},{
-				featureType: "road",
-				elementType: "geometry",
-				stylers: [
-					{ lightness: 100 }
+				"featureType":"road.arterial",
+				"stylers":[
+					{"hue":"#FF0300"},
+					{"saturation":-100},
+					{"lightness":51.19999999999999},
+					{"gamma":1}
 				]
 			},{
-				featureType: "poi",
-				stylers: [
-					{ visibility: "off" }
+				"featureType":"road.local",
+				"stylers":[
+					{"hue":"#FF0300"},
+					{"saturation":-100},
+					{"lightness":52},
+					{"gamma":1}
 				]
 			},{
-				featureType: "administrative",
-				elementType: "geometry.stroke",
-				stylers: [
-					{ color: "#5888ac" }
+				"featureType":"water",
+				"stylers":[
+					{"hue":"#0078FF"},
+					{"saturation":-13.200000000000003},
+					{"lightness":2.4000000000000057},
+					{"gamma":1}
+				]
+			},{
+				"featureType":"poi",
+				"stylers":[
+					{"hue":"#00FF6A"},
+					{"saturation":-1.0989010989011234},
+					{"lightness":11.200000000000017},
+					{"gamma":1}
 				]
 			}
 		],
@@ -118,7 +138,7 @@
 	  	initialize: function() {
 
 	  		if(isMobile){
-				Map.zoom = 16;
+				Map.zoom = 18;
 				Map.markerZoom = 13;
 
 				Common.initTextLoader();
