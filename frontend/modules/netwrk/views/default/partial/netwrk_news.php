@@ -66,12 +66,14 @@
 			<div class="avatar-poster"><div class="image"><img src="<%= tweet.user.profile_image_url_https %>"></div></div>
 			<div class="feed-content">
 				<div class='post'>
+					<div class="user-info">
+						<span class='post-create-by'><%= tweet.user.name %></span>
+						<span class="user-mention">@<%= tweet.user.screen_name %></span>
+					</div>
 					<div class='post-title'><%= tweet.text %></div>
-					<!--<div class='post-content'><%= tweet.text %></div>-->
-					<span class='post-create-by'>Posted by: <%= tweet.user.name %></span>
-							<span class='appear-day'>
-								<i class="fa fa-twitter"></i>
-							</span>
+					<div class="api-logo">
+						<i class="fa fa-twitter"></i>
+					</div>
 				</div>
 			</div>
 		</div>
