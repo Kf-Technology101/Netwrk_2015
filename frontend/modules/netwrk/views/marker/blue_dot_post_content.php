@@ -110,8 +110,9 @@
 				<div class="iw-subTitle text-right" onclick="Map.closeUserLocationInfoWindow();" style="position: absolute;right: 3px;top: 2px;">
 					<span class="close" style="font-size: 20px;color: #fff;line-height: 14px;"><span aria-hidden="true">&times;</span></span>
 				</div>
-				<div class="location-image-wrapper hide" id="userLocationImage" style="height:auto;max-height: 120px;overflow: hidden;">
+				<div class="location-image-wrapper hide" id="userLocationImage" style="height:auto;max-height: 120px;overflow: hidden;position:relative;">
 					<img src="" alt="" style="height: auto;max-width: 100%;width: 100%;"/>
+					<div class="location-title" style="bottom: 5px;color: #fff;font-weight: bold;position: absolute;right: 5px;"></div>
 				</div>
 				<div class="iw-subTitle text-center">
 					<h4 class="" style="font-size: 20px; margin-bottom: 10px;">Welcome to <span id="userLocation"><span>requesting...</span></span></h4>
