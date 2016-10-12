@@ -90,10 +90,10 @@
 							<div class='post'>
 								<div class='post-title'>
 									<span class="job-title"><%= item.jobtitle %></span>
-
 								</div>
 								<div class="company-info"><span class="company"><%= item.company %></span> - <span class="location"><%= item.formattedLocation %></span></div>
-								<div><span class="snippet post-content"><%= item.snippet %></span><span><a class="job-url view-more" href="<%= item.url %>" target="_blank"> View more</a></span></div>
+								<div><span class="snippet post-content"><%= item.snippet %></span></div>
+								<div class="text-center"><a class="job-url view-more" href="<%= item.url %>" target="_blank">View more <i class="fa fa-external-link "></i></a></div>
 							</div>
 						</div>
 					</div>
