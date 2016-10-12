@@ -11,32 +11,14 @@
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
         </div>
         <div class="title_page">
-            <span class="title">Create Line > <span class="line-area"></span> </span>
+            <span class="title">Build line > <span class="line-area"></span> </span>
         </div>
     </div>
     <div class="container">
         <div class="post">
-            <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
-                <div class="post-location-content">
-
-                </div>
-            <?php endif; ?>
-            <div class="post-title">
-                <p class="title"> Subject </p>
-                <!--<div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon2">#</span>
-                    <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?/*= isset($post->title) ? $post->title :''*/?>">
-                </div>-->
-                <textarea class="name_post name_post_textarea" placeholder="Whats the line subject?" maxlength="128" id="name_post_textarea"><?= isset($post->title) ? $post->title :''?></textarea>
-            </div>
-            <div class="post-message">
-                <p class="title"> Line </p>
-                <textarea class="message" placeholder="Whats the line about?" maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
-            </div>
-
             <div class="post-category-content">
                 <section class="post-category-wrapper">
-                    <p class="title">Category</p>
+                    <p class="title">What do you want to do</p>
                     <select name="category" class="form-control post-category-dropdown">
                         <option value="1" <?php if($post->category == 1) { ?> selected="selected"<?php }?>>Friends</option>
                         <option value="2" <?php if($post->category == 2) { ?> selected="selected"<?php }?>>Breakfast</option>
@@ -48,6 +30,26 @@
                         <option value="8" <?php if($post->category == 8) { ?> selected="selected"<?php }?>>Groceries</option>
                     </select>
                 </section>
+            </div>
+
+            <div class="post-title">
+                <p class="title"> Give your line a headline </p>
+                <!--<div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2">#</span>
+                    <input type="text" class="name_post" maxlength="128" placeholder="Head-line" value="<?/*= isset($post->title) ? $post->title :''*/?>">
+                </div>-->
+                <textarea class="name_post name_post_textarea" placeholder="Whats the line subject?" maxlength="128" id="name_post_textarea"><?= isset($post->title) ? $post->title :''?></textarea>
+            </div>
+
+            <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
+                <div class="post-location-content">
+
+                </div>
+            <?php endif; ?>
+
+            <div class="post-message hidden">
+                <p class="title"> Line </p>
+                <textarea class="message" placeholder="Whats the line about?" maxlength="1024"><?= isset($post->content) ? $post->content :''?></textarea>
             </div>
 
             <?php if(isset($isCreateFromBlueDot) && $isCreateFromBlueDot == true): ?>
@@ -75,12 +77,11 @@
 </div>
 <script id="post-location-template" type="text/x-underscore-template">
     <section class="post-location-wrapper">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="fa fa-lg fa-map-marker"></i>
-            </span>
-            <input type="text" name="location" class="form-control location-input" value="<%= data.location %>" disabled="disabled"  />
-            <input type="hidden" name="formatted_address" value="<%= data.formatted_address %>" />
+        <p class="title"> Line location </p>
+        <input type="text" name="location" class="form-control location-input" value="<%= data.location %>" disabled="disabled"  />
+        <input type="hidden" name="formatted_address" value="<%= data.formatted_address %>" />
+        <div id="lineLocationImage" class="line-location-image-wrapper hide">
+            <img src="" class="line-location-image" alt="" />
         </div>
     </section>
 </script>
