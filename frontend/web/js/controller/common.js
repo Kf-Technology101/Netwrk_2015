@@ -14,7 +14,13 @@ var Common = {
         'loaderIntervalId': '',
         'loaderTimeOut' : 4000,
     },
+    google : {
+        'apiKey' : 'AIzaSyCmxCcJr7XoU3C5KlKNeM_KVsNbLwSjcyw'
+    },
     initialize: function() {
+        if(ENV == 'prod') {
+            Common.google.apiKey = 'AIzaSyB206p1T5RRaLvpMzSXWbKpk_8bUuQQLZ4';
+        }
         Common.console();
         Common.onWindowUnload();
         Common.onWindowLoad();

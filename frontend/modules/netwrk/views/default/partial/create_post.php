@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <div class="head">
                     <div class="name_user">
-                        <p> Build a line</p>
+                        <p> Build line > <span class="line-area"></span></p>
                     </div>
                     <div class="back_page">
                         <span><i class="fa fa-times-circle"></i></span>
@@ -22,26 +22,9 @@
                 <div class="page" id="create_topic">
                     <div class="post">
                         <input type="hidden" name="post_id" id="post_id" value=""/>
-                        <div class="post-location-content">
-
-                        </div>
-
-                        <div class="post-title">
-                            <p class="title"> Subject </p>
-                            <!--<div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon2">#</span>
-                                <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
-                            </div>-->
-                            <textarea class="name_post name_post_textarea" placeholder="Whats the line subject?" maxlength="128" id="name_post_textarea"></textarea>
-                        </div>
-                        <div class="post-message">
-                            <p class="title"> Line </p>
-                            <textarea class="message" placeholder="Whats the line about?" maxlength="1024"></textarea>
-                        </div>
-
                         <div class="post-category-content">
                             <section class="post-category-wrapper">
-                                <p class="title">Category</p>
+                                <p class="title">What do you want to do</p>
                                 <select name="category" id="postCategoryDropdown" class="form-control post-category-dropdown">
                                     <option value="1">Friends</option>
                                     <option value="2">Breakfast</option>
@@ -53,6 +36,24 @@
                                     <option value="8">Groceries</option>
                                 </select>
                             </section>
+                        </div>
+
+                        <div class="post-title">
+                            <p class="title"> Give your line a headline </p>
+                            <!--<div class="input-group">
+                                <span class="input-group-addon" id="sizing-addon2">#</span>
+                                <input type="text" class="name_post" maxlength="128" placeholder="Head-line">
+                            </div>-->
+                            <textarea class="name_post name_post_textarea" placeholder="Whats the line subject?" maxlength="128" id="name_post_textarea"></textarea>
+                        </div>
+
+                        <div class="post-location-content">
+
+                        </div>
+
+                        <div class="post-message hidden">
+                            <p class="title"> Line </p>
+                            <textarea class="message" placeholder="Whats the line about?" maxlength="1024"></textarea>
                         </div>
 
                         <div class="post-channel-content hidden">
@@ -83,12 +84,10 @@
 <script id="post-location-template" type="text/x-underscore-template">
     <section class="post-location-wrapper">
         <p class="title">Location</p>
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="fa fa-lg fa-map-marker"></i>
-            </span>
-            <input type="text" name="location" class="form-control location-input" value="<%= data.location %>" disabled="disabled"  />
-            <input type="hidden" name="formatted_address" value="<%= data.formatted_address %>" />
+        <input type="text" name="location" class="form-control location-input" value="<%= data.location %>" disabled="disabled"  />
+        <input type="hidden" name="formatted_address" value="<%= data.formatted_address %>" />
+        <div id="lineLocationImage" class="line-location-image-wrapper hide">
+            <img src="" class="line-location-image" alt="" />
         </div>
     </section>
 </script>
