@@ -68,7 +68,7 @@
 						<a id="show-area-topic" data-zipcode="" class="show-area-topic" href="javascript:" onclick="Map.showTopicFromZipcode(Map.blueDotLocation.zipcode);"><span>Go to the local community center</span></a>
 					</div>-->
 				</div>
-				<div id="noCommunity">
+				<div id="noCommunity" class="hide">
 					<div class="dot-info-main">
 						<div class="iw-subTitle dot-info-wrapper">Currently there are no communities for this area!</div>
 					</div>
