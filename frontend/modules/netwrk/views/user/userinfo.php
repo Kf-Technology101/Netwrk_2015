@@ -1,6 +1,6 @@
 <?php use yii\helpers\Url;?>
 <script id="account_nav_dropdown" type="text/x-underscore-template" >
-    <div id="navProfileWrapper" class="profile-trigger custom-btn btn-profile">Profile</div>
+    <div id="navProfileWrapper" class="profile-trigger custom-btn btn-profile test-profile">Profile</div>
     <!--<div id="btn_my_location_old" class="profile-trigger">
         <i class="navigation-icon fa fa-user"></i>
         <span>Me</span>

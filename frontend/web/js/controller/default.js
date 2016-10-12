@@ -157,7 +157,7 @@ var Default ={
     },
 
     _eventClickMeetBtn: function() {
-        var target = $('#btn_meet, #btn_nav_meet'),
+        var target = $('#btn_meet, #btn_nav_meet').add('#btn_meet-trigger'),
             self = this;
 
         target.on('click',function(){

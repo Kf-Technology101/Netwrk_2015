@@ -146,12 +146,22 @@ if (isset($cookies["isCoverPageVisited"])) {
             </span>
 
         </div>
+        <div class="netwrk-title">
+            <img  class="<?php echo $img_class;?>" src="<?= Url::to('@web/img/icon/netwrk-text-mobile.png'); ?>" alt="Netwrk"/>
+        </div>
         <div class="box-search">
             <div class="search input-group">
                 <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-search"></i></span>
                 <input type="text" class="form-control input-search" placeholder="Be timeless">
             </div>
             <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
+        </div>
+        <div class="nav-buttion-section">
+            <span class="meet-btn" id="btn_meet-trigger">
+                <i class="navigation-icon ci-meet"></i>
+                Meet
+            </span>
+            <span class="profile-btn profile-trigger">Profile</span>
         </div>
 
         <?php

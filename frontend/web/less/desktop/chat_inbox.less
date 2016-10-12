@@ -11,15 +11,15 @@
 }
 
 #chat_inbox {
-	z-index: 9999;
+	z-index: 5;
 	position: fixed;
-	top: 0;
+	top: 60px;
 	left: 80px;
 	width: 320px;
 	height: 100%;
 	background: rgba(255, 255, 255, 0.9);
 	border-right: 1px solid #5888ac;
-	border-top: 1px solid #5888ac;
+	/*border-top: 1px solid #5888ac;*/
 	.slider-tab {
 		li {
 			margin: 0;
@@ -484,9 +484,6 @@
 						margin-left: 50px;
 						/*width: 260px;*/
 						.post-title {
-							&::before{
-								content: '#';
-							}
 							font-size: 13px;
 							color:#1d1b1b;
 							font-family: "ProximaNovaRegular";
