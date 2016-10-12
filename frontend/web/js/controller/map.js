@@ -512,7 +512,11 @@
 				$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+','+lng ,function(data) {
 					var len = data.results[0].address_components.length,
 						zip = '',
-						city = '';
+						city = '',
+						formattedAddress = data.results[0].formatted_address;
+
+					locationArray = formattedAddress.split(',');
+					var location = locationArray[0]+','+locationArray[1];
 
 					for (var i = 0; i < len; i++) {
 						if (data.results[0].address_components[i].types[0] == 'postal_code') {
@@ -525,7 +529,14 @@
 						}
 					}
 
-					// Flicker api to get location image
+					// Google street view api to get location image
+					var imgSrc = 'http://maps.googleapis.com/maps/api/streetview?size=600x240&sensor=false&location='+encodeURI(formattedAddress)+'&key='+Common.google.apiKey;
+					$('#userLocationImage').find('img').attr({'src' : imgSrc});
+					$('#userLocationImage').find('.location-title').html(location);
+					$('#userLocationImage').removeClass('hide');
+
+
+					/*// Flicker api to get location image
 					$.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e869d5a3976ab821030b723039180940&lat='+lat+'&lon='+lng+'&per_page=1&format=json&nojsoncallback=1',function(data) {
 						var result = data;
 						if(result.stat == 'ok'){
@@ -535,7 +546,7 @@
 								$('#userLocationImage').find('img').attr({'src' : imgSrc});
 								$('#userLocationImage').removeClass('hide');
 							}
-						}
+						}*/
 
 						var params = {'zip_code' : zip, 'city' : city };
 						//set selected zip code cookie.
@@ -603,7 +614,7 @@
 							//    // * We use jQuery and create a iwBackground variable,
 							//    // * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
 
-							iwOuter.css({'max-width' : '260px', 'max-height' : 'auto', 'z-index' : '999', 'box-shadow' : '5px 5px 5px', 'border-radius' : '4px 4px 0 0', 'border-top' : '1px solid #acacac', 'border-left' : '1px solid #acacac'});
+							iwOuter.css({'max-width' : '260px', 'max-height' : 'auto', 'z-index' : '1040', 'box-shadow' : '5px 5px 5px', 'border-radius' : '4px 4px 0 0', 'border-top' : '1px solid #acacac', 'border-left' : '1px solid #acacac'});
 
 							var iwBackground = iwOuter.prev();
 							iwOuter.children(':nth-child(1)').css({'max-width' : '260px', 'display' : 'block'});
@@ -634,7 +645,7 @@
 								$(this).css({opacity: '0'});
 							});
 						});
-					});
+					/*});*/
 				});
 			}
 		},
@@ -1440,6 +1451,10 @@
 				setTimeout(function(){
 					$("#blueDotLocation span").eq(0).html(city);
 					$('#formattedLocation').html(location);
+					// Google street view api to get location image
+					var imgSrc = 'http://maps.googleapis.com/maps/api/streetview?size=600x240&sensor=false&location=' + encodeURI(formattedAddress) + '&key=' + Common.google.apiKey;
+					$('#blueDotLocationImage').find('img').attr({'src': imgSrc});
+					$('#blueDotLocationImage').removeClass('hide');
 				},300);
 				Map.getCurrentZipBuildDetail();
 			});

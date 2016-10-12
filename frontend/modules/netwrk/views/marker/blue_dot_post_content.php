@@ -15,12 +15,15 @@
 
 <div style="display:none;">
 	<div id="blueDotInfoWindow">
-		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();" style="max-width: 260px; padding: 20px 0 0;">
+		<div id="iw-container" class="cgm-container" onmouseleave="Map.mouseOutsideInfoWindow();" onmouseenter="Map.mouseInsideInfoWindow();" style="max-width: 260px; padding: 0 0;">
 			<div class="iw-content">
 				<!--<div class="iw-subTitle text-right" onclick="Map.closeAllInfoWindows();">
 					<span class="close" style="font-size: 25px; line-height: 14px;"><span aria-hidden="true">&times;</span></span>
 				</div>-->
-				<div class="iw-subTitle location-details-wrapper text-left">
+				<div class="location-image-wrapper hide" id="blueDotLocationImage" style="height:auto;max-height: 120px;overflow: hidden;position:relative;">
+					<img src="" alt="" style="height: auto;max-width: 100%;width: 100%;"/>
+				</div>
+				<div class="iw-subTitle location-details-wrapper text-left" style="margin-top:15px;">
 					<div id="formattedAddress" class="formatted-address"><i class="fa fa-map-marker"></i><span class="location" id="formattedLocation"></span> </div>
 					<h4 class="location-details hide">Welcome to <span id="blueDotLocation"><span>requesting...</span></span></h4>
 					<!--<h5 class="discussion-title">Active Lines near <img src="/img/icon/pale-blue-dot.png" height="20" width="20"/> </h5>
@@ -49,7 +52,7 @@
 					</div>-->
 					<!--<div class="iw-subTitle" id="cm-coords"></div>-->
 					<div class="create-section-wrapper">
-						<div class="iw-subTitle col-xs-12 create-section" id="actionBuildCommunity" style="padding: 5px 0 0;"><a href="javascript:" class="create-button line-button" onclick="Map.CreateLocationPost(Map.blueDotLocation.zipcode);"><span>Build a Line</span></a></div>
+						<div class="iw-subTitle col-xs-12 create-section" id="actionBuildCommunity" style="padding: 0 0;"><a href="javascript:" class="create-button line-button" onclick="Map.CreateLocationPost(Map.blueDotLocation.zipcode);"><span>Build a Line</span></a></div>
 						<div class="iw-subTitle col-xs-12 create-section hide" id="actionJoinCommunity" style="padding: 5px 0 0;"><a href="javascript:" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community);"><span>Join this netwrk</span></a></div>
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>-->
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>-->
@@ -65,7 +68,7 @@
 						<a id="show-area-topic" data-zipcode="" class="show-area-topic" href="javascript:" onclick="Map.showTopicFromZipcode(Map.blueDotLocation.zipcode);"><span>Go to the local community center</span></a>
 					</div>-->
 				</div>
-				<div id="noCommunity">
+				<div id="noCommunity" class="hide">
 					<div class="dot-info-main">
 						<div class="iw-subTitle dot-info-wrapper">Currently there are no communities for this area!</div>
 					</div>
@@ -110,8 +113,9 @@
 				<div class="iw-subTitle text-right" onclick="Map.closeUserLocationInfoWindow();" style="position: absolute;right: 3px;top: 2px;">
 					<span class="close" style="font-size: 20px;color: #fff;line-height: 14px;"><span aria-hidden="true">&times;</span></span>
 				</div>
-				<div class="location-image-wrapper hide" id="userLocationImage" style="height:auto;max-height: 120px;overflow: hidden;">
+				<div class="location-image-wrapper hide" id="userLocationImage" style="height:auto;max-height: 120px;overflow: hidden;position:relative;">
 					<img src="" alt="" style="height: auto;max-width: 100%;width: 100%;"/>
+					<div class="location-title" style="bottom: 5px;color: #fff;font-weight: bold;position: absolute;right: 5px;"></div>
 				</div>
 				<div class="iw-subTitle text-center">
 					<h4 class="" style="font-size: 20px; margin-bottom: 10px;">Welcome to <span id="userLocation"><span>requesting...</span></span></h4>

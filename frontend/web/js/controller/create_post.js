@@ -197,7 +197,15 @@ var Create_Post={
                 Create_Post.params.location = json.location;
                 Create_Post.params.formatted_address = json.formatted_address;
                 Create_Post.getTemplatePostLocation(parent,json);
-                parent.find('.header').find('.title_page').find('.line-area').html(json.area);
+                if(isMobile){
+                    parent.find('.header').find('.title_page').find('.line-area').html(json.area);
+                } else {
+                    parent.find('.head').find('.name_user').find('.line-area').html(json.area);
+                }
+
+                // Google street view api to get location image
+                parent.find('#lineLocationImage').find('img').attr({'src' : 'http://maps.googleapis.com/maps/api/streetview?size=600x240&sensor=false&location='+encodeURI(Create_Post.params.formatted_address)+'&key='+Common.google.apiKey});
+                parent.find('#lineLocationImage').removeClass('hide');
             }
         });
     },

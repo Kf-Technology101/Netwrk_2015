@@ -1434,7 +1434,7 @@ class DefaultController extends BaseController
                             'user_id' => $value->item->user_id,
                             'is_post' => 1
                         ];
-                    } else {
+                    }/* else {
                         $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
                         $item = [
                             'id' => $value->item->id,
@@ -1446,7 +1446,7 @@ class DefaultController extends BaseController
                             'created_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
                             'is_post' => 0
                         ];
-                    }
+                    }*/
                     $feeds[$value->city_id][] = $item;
                 }
             }
