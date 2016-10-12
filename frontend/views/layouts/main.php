@@ -156,13 +156,19 @@ if (isset($cookies["isCoverPageVisited"])) {
             </div>
             <?= $this->render('@frontend/modules/netwrk/views/search/result') ?>
         </div>
-        <div class="nav-buttion-section">
-            <span class="meet-btn" id="btn_meet-trigger">
-                <i class="navigation-icon ci-meet"></i>
-                Meet
-            </span>
-            <span class="profile-btn profile-trigger">Profile</span>
-        </div>
+        <?php if (Yii::$app->user->isGuest):?>
+            <div class="nav-buttion-section">
+                <div class="login-trigger profile-btn">Login</div>
+            </div>
+        <?php else: ?>
+            <div class="nav-buttion-section">
+                <span class="meet-btn" id="btn_meet-trigger">
+                    <i class="navigation-icon ci-meet"></i>
+                    Meet
+                </span>
+                <span class="profile-btn profile-trigger">Profile</span>
+            </div>
+        <?php endif; ?>
 
         <?php
             // $menuItems = [
