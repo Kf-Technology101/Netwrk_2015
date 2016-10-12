@@ -530,7 +530,6 @@
 					}
 
 					// Google street view api to get location image
-					Common.google.apiKey = 'AIzaSyCQgQqunrs8kyQh_AOB9nciplkDPXvdQMY';
 					var imgSrc = 'http://maps.googleapis.com/maps/api/streetview?size=600x240&sensor=false&location='+encodeURI(formattedAddress)+'&key='+Common.google.apiKey;
 					$('#userLocationImage').find('img').attr({'src' : imgSrc});
 					$('#userLocationImage').find('.location-title').html(location);
