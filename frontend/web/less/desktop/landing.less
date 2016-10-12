@@ -61,7 +61,7 @@
       }
   }
   .navbar-inverse{
-    background: transparent;
+    background: #f2f2f2;
     /*background-color: rgba(88, 136, 172, 0.2);*/
     .box-search {
       .search {
@@ -73,11 +73,12 @@
   .menu_top {
     border:none;
     z-index: 9999;
-    padding-left: 400px;
+    /*padding-left: 400px;*/
     &.deactive{
       z-index: 0;
     }
   }
+
   .collapse{
     .logo_netwrk{
       width: 60px;
@@ -140,6 +141,55 @@
             opacity: 0;
           }
         }
+      }
+    }
+    .netwrk-title {
+      float: left;
+      margin: 7px 30px 0 0;
+      position: relative;
+      width: 137px;
+    }
+    .nav-buttion-section {
+      float: right;
+     /* width: 137px;*/
+      position: relative;
+      margin: 10px 10px 0 0;
+      .meet-btn {
+        border: 1px solid #5888ac;
+        border-radius: 4px;
+        box-shadow: 0 0 1px 1px #e0e0e0;
+        float: left;
+        font-family: "ProximaNovaRegular";
+        font-size: 16px;
+        padding: 5px;
+        text-align: center;
+        width: 100px;
+        margin-right: 20px;
+        color: #fff;
+        background-color: #5888ac;
+        cursor: pointer;
+        .ci-meet {
+          background: rgba(0, 0, 0, 0) url("../../img/icon/meet-icon-nav.png") no-repeat scroll 0 0 / contain ;
+          display: inline-block;
+          height: 18px;
+          margin: 0 auto;
+          vertical-align: middle;
+          width: 24px;
+        }
+      }
+      .profile-btn {
+        border: 1px solid #5888ac;
+        border-radius: 4px;
+        box-shadow: 0 0 1px 1px #e0e0e0;
+        float: left;
+        font-family: "ProximaNovaRegular";
+        font-size: 16px;
+        padding: 5px;
+        text-align: center;
+        width: 100px;
+        color: #fff;
+        background-color: #5888ac;
+        cursor: pointer;
       }
     }
     .chatting{
