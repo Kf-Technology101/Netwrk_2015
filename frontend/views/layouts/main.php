@@ -158,7 +158,13 @@ if (isset($cookies["isCoverPageVisited"])) {
         </div>
         <?php if (Yii::$app->user->isGuest):?>
             <div class="nav-buttion-section">
-                <div class="login-trigger profile-btn">Login</div>
+                <span class="meet-btn" id="btn_meet-trigger">
+                    <i class="navigation-icon ci-meet"></i>
+                    Meet
+                </span>
+                <span class="profile-button-wrap">
+                    <span class="login-trigger btn-profile">Login</span>
+                </span>
             </div>
         <?php else: ?>
             <div class="nav-buttion-section">
@@ -166,7 +172,9 @@ if (isset($cookies["isCoverPageVisited"])) {
                     <i class="navigation-icon ci-meet"></i>
                     Meet
                 </span>
-                <span class="profile-btn profile-trigger">Profile</span>
+                <span class="profile-button-wrap">
+
+                </span>
             </div>
         <?php endif; ?>
 
