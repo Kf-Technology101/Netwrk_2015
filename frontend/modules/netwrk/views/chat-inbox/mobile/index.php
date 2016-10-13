@@ -88,7 +88,7 @@
 <script id="chat_inbox_list" type="text/x-underscore-template" >
 	<% _.each(chat_inbox_list,function(chat_inbox){ %>
 		<li>
-			<div class='chat-post-id' data-post='<%= chat_inbox.id %>'>
+			<div class='chat-post-id <% if(chat_inbox.location_post == 1) { %> line-post <% }%>' data-post='<%= chat_inbox.id %>'>
 				<span class='avatar-user'>
 					<img class='img_avatar' src='<?= Url::to("@web/") ?><%= chat_inbox.avatar %>' />
 				</span>
