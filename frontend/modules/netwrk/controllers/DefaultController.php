@@ -1406,14 +1406,27 @@ class DefaultController extends BaseController
 
             //fetch history feed of users favorite cities
             $htf = new HistoryFeed();
-            $history_feed = $htf->find()->select('history_feed.*, city.zip_code')
+            $history_feed = $htf->find()->select('
+                    history_feed.*,
+                    ws_messages.id, ws_messages.msg'
+                )
                 ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
-                ->where(['in','city_id',$cities])
+                ->join('INNER JOIN', 'ws_messages', 'ws_messages.post_id = history_feed.id_item AND history_feed.type_item = "post"')
+                ->where([
+                    'ws_messages.id' => (new Query())->select('max(id)')
+                    ->from('ws_messages')
+                    ->where('ws_messages.post_id = history_feed.id_item AND history_feed.type_item = "post"')
+                ])
+                ->andWhere(['in','city_id',$cities])
+                ->limit('20')
                 ->orderBy(['created_at'=> SORT_DESC]);
 
             //todo: pagination on history feed
+            //$data_feed = $history_feed->asArray()->all();
             $data_feed = $history_feed->all();
 
+            /*var_dump($data_feed[0]->msg);
+            die();*/
             $feeds =[];
             foreach ($data_feed as $key => $value) {
                 if($value->item->status != -1) {
@@ -1432,7 +1445,8 @@ class DefaultController extends BaseController
                             'appear_day' => $num_date,
                             'posted_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
                             'user_id' => $value->item->user_id,
-                            'is_post' => 1
+                            'is_post' => 1,
+                            'msg' => $value->msg
                         ];
                     }/* else {
                         $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
