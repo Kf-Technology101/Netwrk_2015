@@ -19,6 +19,35 @@
 <script id="netwrk_news" type="text/x-underscore-template">
 
 	<% if(!_.isEmpty(landing.feeds)) {%>
+		<section class="chat-section-wrapper">
+			<div class="chat-section"> Chats near you </div>
+			<% if(!_.isEmpty(landing.feeds)) {%>
+				<% _.each(landing.feeds, function(city_feed, key){ %>
+					<% _.each(city_feed, function(e, key){ %>
+						<% if ((e.is_post == 1)){ %>
+							<div class="chat-feed-row chat-feed-post" data-user="<%= e.user_id %>" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
+								<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
+								<div class="chat-feed-content">
+
+									<div class='post'>
+										<div class="user-info">
+											<span class='post-create-by'><%= e.title %></span>
+											<span class="user-mention">By: <%= e.posted_by %></span>
+										</div>
+										<div class='post-title'><%= e.msg %></div>
+									</div>
+								</div>
+							</div>
+						<% } %>
+					<% }); %>
+				<% }); %>
+			<% } %>
+		</section>
+	<% } %>
+
+	<% if(!_.isEmpty(landing.feeds)) {%>
+	<section class="feed-section-wrapper">
+		<div class="feed-section"> Feeds near you </div>
 		<% _.each(landing.feeds, function(city_feed, key){ %>
 			<% _.each(city_feed, function(e, key){ %>
 				<% if ((e.is_post == 1)){ %>
@@ -56,6 +85,7 @@
 				<% } %>
 			<% }); %>
 		<% }); %>
+	</section>
 	<% } %>
 	<% if(!_.isEmpty(landing.twitterFeeds)) {%>
 		<% if(!_.isEmpty(landing.twitterFeeds.statuses)) {%>

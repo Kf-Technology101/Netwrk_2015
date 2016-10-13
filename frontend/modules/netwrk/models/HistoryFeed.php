@@ -14,6 +14,8 @@ use Yii;
  */
 class HistoryFeed extends \yii\db\ActiveRecord
 {
+    public $msg;
+    public $content;
     /**
      * @inheritdoc
      */
