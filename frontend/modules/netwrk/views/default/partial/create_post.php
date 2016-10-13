@@ -62,7 +62,7 @@
                         <div class="post-topic-category-content">
 
                         </div>
-                        <div class="post-timeout-content">
+                        <div class="post-timeout-content hidden">
 
                         </div>
 
