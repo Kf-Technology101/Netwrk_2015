@@ -1870,4 +1870,48 @@ class DefaultController extends BaseController
         $hash = json_encode($return);
         return $hash;
     }
+
+    /**
+     * Add location post under Social community general topic
+     * @throws \Exception
+     */
+    public function actionSocialCommunitiesSetLocationPost($page){
+        $system_user_id = Yii::$app->params['systemUserId'];
+        set_time_limit(3600); // Set max execution time 60 minutes.
+        $pageSize = 10000;
+        $page = isset($page) ? $page : 0;
+        $offset = (($page - 1) * $pageSize);
+
+        $cities = City::find()
+            ->where('gen_topic_added = 1')
+            ->where('office_type IS NULL')
+            ->offset($offset)
+            ->limit($pageSize)
+            ->all();
+
+        echo date('Y-m-d H:i:s').'<br/>';
+        foreach ($cities as $key => $value) {
+            // Get general topic and create location based post
+            $topic = Topic::find()
+                ->where('title = "Local community channel"')
+                ->andWhere('city_id = '.$value->id)
+                ->one();
+
+            $Post = new Post();
+            $Post->title = $value->name.' chat';
+            $Post->content = "Welcome to the ".$value->name." chat line!";
+            $Post->topic_id = $topic->id;
+            $Post->user_id = $system_user_id;
+            $Post->post_type = 1;
+            $Post->location_post = 1;
+            $Post->save();
+
+            $topic->post_count = isset($topic->post_count) ? $topic->post_count + 1 : 1;
+            $topic->update();
+
+            echo '<br/> Added location post for '.$value->id;
+        }
+        echo '<br/>'.date('Y-m-d H:i:s').'<br/>';
+        die();
+    }
 }

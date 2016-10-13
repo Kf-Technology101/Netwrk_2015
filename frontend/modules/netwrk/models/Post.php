@@ -369,7 +369,9 @@ class Post extends \yii\db\ActiveRecord
             ->andWhere(['not',['topic.status'=> '-1']])
             ->andWhere(['not',['post.status'=> '-1']])
             ->andWhere('(feedback_stat.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR feedback_stat.points IS NULL)')
-            ->orderBy(['post.chat_updated_time'=> SORT_DESC])
+            ->orderBy('post.location_post DESC, post.chat_updated_time DESC')
+            //->orderBy(['post.location_post'=> SORT_DESC])
+            //->orderBy(['post.chat_updated_time'=> SORT_DESC])
             ->limit($limit)
             ->all();
 

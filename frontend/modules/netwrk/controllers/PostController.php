@@ -590,7 +590,8 @@ class PostController extends BaseController
                     'avatar'=> $image,
                     'update_at'=> $num_date,
                     'real_update_at' => $value['chat_updated_time'] ? $value['chat_updated_time'] : $value['created_at'],
-                    'location' => $value['location']
+                    'location' => $value['location'],
+                    'location_post' => $value['location_post'],
                 ];
                 array_push($local_topics, $item);
             }
