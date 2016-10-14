@@ -1455,7 +1455,7 @@
 					var imgSrc = 'http://maps.googleapis.com/maps/api/streetview?size=600x240&sensor=false&location=' + encodeURI(formattedAddress) + '&key=' + Common.google.apiKey;
 					$('#blueDotLocationImage').find('img').attr({'src': imgSrc});
 					$('#blueDotLocationImage').removeClass('hide');
-				},300);
+				},10);
 				Map.getCurrentZipBuildDetail();
 			});
 		},
