@@ -877,7 +877,7 @@ class DefaultController extends BaseController
      *
      */
     public function actionGetFeedsBySelectedZipCode(){
-        $request = Yii::$app->request->isAjax;
+        $request = 1;//Yii::$app->request->isAjax;
 
         $cookies = Yii::$app->request->cookies;
         //if selectedZip not set then use cover page zip to fetch feeds
@@ -910,6 +910,7 @@ class DefaultController extends BaseController
             //do not space between geocode
             $geoCode = floatval($city_lat).','. floatval($city_lng). ',' . $radius;
             //Get the feeds from zipcode cities
+            $chatFeeds = json_decode($this->actionGetChatFeedByCities($city_ids), true);
             $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
             $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode, 'city_lat' => $city_lat, 'city_lng' => $city_lng, 'city_name' => $city_name]));
 
@@ -919,6 +920,7 @@ class DefaultController extends BaseController
             $item = [
                 'selected_zipcode' => $zip_code,
                 'geocode' => $geoCode,
+                'chatFeeds' => $chatFeeds,
                 'jobFeeds' => $jobFeeds,
                 'twitterFeeds' => $twitterFeeds,
                 'feeds' => $feeds
@@ -1418,8 +1420,8 @@ class DefaultController extends BaseController
                     ->where('ws_messages.post_id = history_feed.id_item AND history_feed.type_item = "post"')
                 ])
                 ->andWhere(['in','city_id',$cities])
-                ->limit('20')
-                ->orderBy(['ws_message_id'=> SORT_DESC]);
+                ->orderBy(['ws_message_id'=> SORT_DESC])
+                ->limit('20');
 
              //print $history_feed->createCommand()->getRawSql();
              //die();
@@ -1468,6 +1470,64 @@ class DefaultController extends BaseController
                 }
             }
 
+            $hash = json_encode($feeds);
+            return $hash;
+        }
+    }
+
+    public function actionGetChatFeedByCities($cities = array()) {
+        $request = Yii::$app->request->isAjax;
+
+        if($request){
+            $limit = Yii::$app->params['LimitObjectFeedGlobal'];
+            //fetch history feed of users favorite cities
+            $query = new query();
+            $chat_feeds = $query->select('ws_messages.msg,ws_messages.created_at AS created_at, p.id as post_id, p.title AS post_title, p.content AS post_content, p.topic_id AS topic_id, p.status as post_status, c.id AS city_id, c.name AS city_name, c.zip_code,u.id AS user_id, pr.first_name, pr.last_name, pr.photo')
+                ->from('ws_messages')
+                ->join('INNER JOIN', 'post p', 'p.id = ws_messages.post_id AND p.post_type = 1')
+                ->join('INNER JOIN', 'topic t', 'p.topic_id = t.id')
+                ->join('INNER JOIN', 'city c', 't.city_id = c.id')
+                ->join('INNER JOIN', 'user u', 'ws_messages.user_id = u.id')
+                ->join('INNER JOIN', 'profile pr', 'u.id = pr.user_id')
+                ->where([
+                    'ws_messages.id' => (new Query())->select('max(id)')
+                        ->from('ws_messages')
+                        ->where('ws_messages.post_type = 1')
+                        ->groupBy('ws_messages.post_id')
+                ])
+                ->andWhere(['in','t.city_id',$cities])
+                ->orderBy(['ws_messages.id'=> SORT_DESC])
+                ->limit('20');
+
+           /* print $chat_feeds->createCommand()->getRawSql();
+            die();*/
+
+            $data_feed = $chat_feeds->all();
+            $feeds =[];
+            foreach ($data_feed as $key => $value) {
+                if($value['post_status'] != -1) {
+                    $num_date = UtilitiesFunc::FormatDateTime($value['created_at']);
+                    $url_avatar = User::GetUrlAvatar($value['user_id'], $value['photo']);
+                    $item = [
+                        'id' => $value['post_id'],
+                        'title' => $value['post_title'],
+                        'content' => $value['post_content'],
+                        'topic_id' => $value['topic_id'],
+                        'photo' => $url_avatar,
+                        'city_id' => $value['city_id'],
+                        'city_name' => $value['city_name'],
+                        'created_at' => $value['created_at'],
+                        'appear_day' => $num_date,
+                        'posted_by' => $value['first_name'] . " " . $value['last_name'],
+                        'user_id' => $value['user_id'],
+                        'is_post' => 1,
+                        'msg' => $value['msg']
+                    ];
+                    $feeds[] = $item;
+                }
+            }
+            /*var_dump($feeds);
+            die();*/
             $hash = json_encode($feeds);
             return $hash;
         }
