@@ -176,7 +176,7 @@ var CoverPage = {
 				Ajax.set_cover_cookie(params).then(function(data){
 					//console.log(data);
 					//sessionStorage.cover_input = 1;
-					window.location.href = baseUrl; //+ "/netwrk/default/home";
+					window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
 				});
 			}).fail(function(jqXHR) {
 				CoverPage.showError();
@@ -314,7 +314,7 @@ var CoverPage = {
 
 					console.log(postParams);
 					Ajax.set_cover_cookie(postParams).then(function(data){
-						window.location.href = baseUrl; //+ "/netwrk/default/home";
+						window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
 					});
 				} else {
 					CoverPage.showError();
