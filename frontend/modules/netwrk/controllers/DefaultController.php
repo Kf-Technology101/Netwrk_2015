@@ -1408,7 +1408,7 @@ class DefaultController extends BaseController
             $htf = new HistoryFeed();
             $history_feed = $htf->find()->select('
                     history_feed.*,
-                    ws_messages.id, ws_messages.msg'
+                    ws_messages.id as ws_message_id, ws_messages.msg'
                 )
                 ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
                 ->join('INNER JOIN', 'ws_messages', 'ws_messages.post_id = history_feed.id_item AND history_feed.type_item = "post"')
@@ -1419,7 +1419,10 @@ class DefaultController extends BaseController
                 ])
                 ->andWhere(['in','city_id',$cities])
                 ->limit('20')
-                ->orderBy(['created_at'=> SORT_DESC]);
+                ->orderBy(['ws_message_id'=> SORT_DESC]);
+
+             //print $history_feed->createCommand()->getRawSql();
+             //die();
 
             //todo: pagination on history feed
             //$data_feed = $history_feed->asArray()->all();
