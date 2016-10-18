@@ -55,6 +55,8 @@ var Common = {
 
         Common.clickCenterLocation();
         Common.clickShareLocation(Map.map);
+
+        Common.onClickMessageYourArea();
     },
 
     console: function(){
@@ -765,5 +767,17 @@ var Common = {
 
             target.css({'margin-left': marginLeft+'px'});
         }
+    },
+
+    onClickMessageYourArea: function(map){
+        var btn = $('.btn-message-your-area');
+        btn.unbind();
+        btn.on('click',function(){
+            if(isMobile){
+                window.location.href = baseUrl + "/netwrk/post/message";
+            } else {
+                Post_Message.initialize();
+            }
+        });
     }
 };

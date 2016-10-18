@@ -100,6 +100,7 @@ class AppAsset extends AssetBundle
         'js/controller/cover_page.js',
         'js/controller/log.js',
         'js/controller/social_signup.js',
+        'js/controller/post_message.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
