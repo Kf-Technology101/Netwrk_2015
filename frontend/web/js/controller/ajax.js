@@ -1941,6 +1941,26 @@ var Ajax = {
         });
 
         return defer.promise();
-    }
+    },
+
+    postMessage: function(params){
+        var url,defer = $.Deferred();
+
+        url = baseUrl +"/netwrk/post/new-message";
+
+        $.ajax({
+            url: url,
+            data: params,
+            async: false,
+            cache: false,
+            // contentType: false,
+            // processData: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    },
 };
 

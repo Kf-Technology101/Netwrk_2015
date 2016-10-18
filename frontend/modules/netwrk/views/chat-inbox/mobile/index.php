@@ -79,6 +79,9 @@
 	</div>
 	</div>
 	<div role="tabpanel" class="tab-pane area-news-tab <?php if($current == 'area_news') { ?>active<?php } ?>" id="area_news_tab">
+		<div class="message-your-area-wrapper">
+			<a class="btn-message-your-area">Message your area</a>
+		</div>
 		<div class="content-wrapper">
 
 		</div>
