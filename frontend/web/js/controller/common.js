@@ -776,6 +776,7 @@ var Common = {
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/post/message";
             } else {
+                Post_Message.initialize();
             }
         });
     }

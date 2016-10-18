@@ -8,13 +8,51 @@ var Post_Message = {
         message: false
     },
     initialize: function(){
-        var postId = Post_Message.parent.attr('data-post_id'),
-            lat = Post_Message.parent.attr('data-lat'),
-            lng = Post_Message.parent.attr('data-lng');
-        Post_Message.params.post_id = postId;
+        if(isMobile){
+            var postId = Post_Message.parent.attr('data-post_id'),
+                lat = Post_Message.parent.attr('data-lat'),
+                lng = Post_Message.parent.attr('data-lng');
+            Post_Message.params.post_id = postId;
+
+            Post_Message.getPostLocation(lat,lng);
+        } else {
+            if(isGuest){
+                Login.modal_callback = Post_Message;
+                Login.initialize();
+                return false;
+            }
+
+            Ajax.getMessagePostDetails().then(function(data) {
+                var json = $.parseJSON(data);
+                Post_Message.params.post_id = json.post_id;
+                Post_Message.parent.find('.line-input').val(json.post_title);
+                var lat = json.city_lat,
+                    lng = json.city_lng;
+                Post_Message.showModalPostMessage();
+
+                Post_Message.getPostLocation(lat,lng);
+            });
+        }
+
         Post_Message.onClickBack();
-        Post_Message.getPostLocation(lat,lng);
         Post_Message.changeData();
+    },
+
+    hideModalPostMessage:function(){
+        var parent = Post_Message.parent;
+        parent.modal('hide');
+    },
+
+    showModalPostMessage: function(){
+        var parent = Post_Message.parent;
+
+        parent.modal({
+            backdrop: true,
+            keyboard: false
+        }).removeAttr("style").css("display", "block");
+
+        Common.CustomScrollBar(parent.find('.modal-body'));
+        Common.centerPositionModal();
     },
 
     onClickBack: function(){
@@ -25,6 +63,9 @@ var Post_Message = {
             if(isMobile){
                 window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
             }else{
+                Post_Message.reset_data();
+                Post_Message.disableButton();
+                Post_Message.hideModalPostMessage();
             }
         });
     },
@@ -119,7 +160,7 @@ var Post_Message = {
                 if(isMobile){
                     window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
                 } else {
-
+                    Post_Message.hideModalPostMessage();
                 }
             });
         });

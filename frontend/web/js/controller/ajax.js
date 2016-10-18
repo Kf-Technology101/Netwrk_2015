@@ -1962,5 +1962,22 @@ var Ajax = {
 
         return defer.promise();
     },
+
+    getMessagePostDetails: function(){
+        var url,defer = $.Deferred();
+        url = baseUrl +"/netwrk/post/message-post-details";
+
+        $.ajax({
+            url: url,
+            data: null,
+            async: false,
+            cache: false,
+            type: 'POST',
+            success: defer.resolve,
+            error: defer.reject
+        });
+
+        return defer.promise();
+    }
 };
 
