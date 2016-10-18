@@ -1225,4 +1225,65 @@ class PostController extends BaseController
         $hash = json_encode($data);
         return $hash;
     }
+
+    public function actionMessagePostDetails()
+    {
+        // Get selected location default line location details for the selected zip code.
+        $cookies = Yii::$app->request->cookies;
+        $zipCode = $cookies->getValue('nw_selectedZip');
+
+        $query = new Query();
+        $query->select(
+            'post.id as post_id, post.title as post_title, post.content as post_content,post.post_type as post_type,
+             topic.id AS topic_id, topic.title AS topic_title,
+             city.id as city_id, city.zip_code, city.name as city_name, city.lat as city_lat, city.lng as city_lng'
+        )->from('post')
+            ->join('INNER JOIN', 'topic', 'post.topic_id = topic.id')
+            ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
+            ->where('city.zip_code = '.$zipCode)
+            ->andWhere('city.office_type IS NULL')
+            ->andWhere('post.location_post = 1')
+            ->andWhere(['not', ['post.status' => '-1']]);
+
+        $post = $query->one();
+
+        $data = json_encode($post);
+        return $data;
+    }
+
+    public function actionMessage()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post/message']);
+        }
+
+        $post = $this->actionMessagePostDetails();
+
+        $data['post'] = json_decode($post);
+
+        return $this->render('mobile/message', $data);
+    }
+
+    public function actionNewMessage()
+    {
+        $currentUser = Yii::$app->user->id;
+        $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
+        $message = isset($_POST['message']) ? $_POST['message'] : '';
+
+        $ws_messages = new WsMessages();
+        $ws_messages->user_id = $currentUser;
+        $ws_messages->msg = $message;
+        $ws_messages->post_id = $post_id;
+        $ws_messages->msg_type = 1;
+        $ws_messages->post_type = 1;
+        $ws_messages->save(false);
+
+        $data = [
+            'success' => true,
+            'message' => 'Message added to line'
+        ];
+
+        $data = json_encode($data);
+        return $data;
+    }
 }

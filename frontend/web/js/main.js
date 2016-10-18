@@ -217,7 +217,11 @@ function _addListenEventPage(){
             Profile.initialize();
             break;
         case 'Post':
-            Post.initialize();
+            if(action == 'message'){
+                Post_Message.initialize();
+            } else {
+                Post.initialize();
+            }
             break;
         case 'User':
             User.initialize();
