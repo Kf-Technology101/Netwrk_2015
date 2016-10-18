@@ -1,7 +1,7 @@
 <?php use yii\helpers\Url; ?>
-<div id="post_message" data-post_id="<?= $post['post_id']?>"
-     data-lat="<?php echo $post['city_lat']; ?>"
-     data-lng="<?php echo $post['city_lng']; ?>">
+<div id="post_message" data-post_id="<?= $post->post_id?>"
+     data-lat="<?php echo $post->city_lat; ?>"
+     data-lng="<?php echo $post->city_lng; ?>">
     <div class="header">
         <div class="back_page">
             <span><i class="fa fa-arrow-circle-left"></i> Back </span>
@@ -14,7 +14,7 @@
         <div class="post">
             <div class="post-message-line">
                 <p class="title"> Line </p>
-                <input type="text" name="line" class="form-control line-input" value="<?php echo $post['post_title'];?>" disabled="disabled" />
+                <input type="text" name="line" class="form-control line-input" value="<?php echo $post->post_title;?>" disabled="disabled" />
             </div>
 
             <div class="post-location-content">

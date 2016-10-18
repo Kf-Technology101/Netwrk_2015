@@ -1226,12 +1226,8 @@ class PostController extends BaseController
         return $hash;
     }
 
-    public function actionMessage()
+    public function actionMessagePostDetails()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post/message']);
-        }
-
         // Get selected location default line location details for the selected zip code.
         $cookies = Yii::$app->request->cookies;
         $zipCode = $cookies->getValue('nw_selectedZip');
@@ -1251,7 +1247,19 @@ class PostController extends BaseController
 
         $post = $query->one();
 
-        $data['post'] = $post;
+        $data = json_encode($post);
+        return $data;
+    }
+
+    public function actionMessage()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/netwrk/user/login','url_callback'=> Url::base(true).'/netwrk/post/message']);
+        }
+
+        $post = $this->actionMessagePostDetails();
+
+        $data['post'] = json_decode($post);
 
         return $this->render('mobile/message', $data);
     }
