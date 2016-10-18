@@ -20,21 +20,33 @@
 
 	<% if(!_.isEmpty(landing.chatFeeds)) {%>
 		<section class="chat-section-wrapper">
-			<div class="chat-section"> Chats near you </div>
+			<!--<div class="chat-section"> Chats near you </div>-->
 			<% if(!_.isEmpty(landing.chatFeeds)) {%>
 				<% _.each(landing.chatFeeds, function(e, key){ %>
 
 					<% if ((e.is_post == 1)){ %>
 						<div class="chat-feed-row chat-feed-post" data-user="<%= e.user_id %>" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
-							<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
+							<!--<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>-->
 							<div class="chat-feed-content">
-
 								<div class='post'>
 									<div class="user-info">
-										<span class='post-create-by'><%= e.title %></span>
-										<span class="user-mention">By: <%= e.posted_by %></span>
+										<span class="post-create-by"><%= e.posted_by %></span>
+										<% if(!_.isEmpty(e.location)) {%>
+											<span class='post-location'><i class="fa fa-map-marker"></i><%= e.location %></span>
+										<% } %>
+										<span class='appear-day'>
+											<% if ((e.appear_day == 'Now')){ %>
+											  Just Now
+											<% }else{ %>
+											  <%= e.appear_day %>
+											<% } %>
+										</span>
 									</div>
-									<div class='post-title'><%= e.msg %></div>
+									<% if(!_.isEmpty(e.msg_type) && e.msg_type == 2) {%>
+										<div class="post-image-wrapper"><img src='<?= Url::to("@web/img/uploads/") ?><%= e.id %>/thumbnails/thumbnail_<%= e.msg %>'/></div>
+									<% }else{ %>
+										<div class='post-title'><%= e.msg %></div>
+									<% } %>
 								</div>
 							</div>
 						</div>
@@ -47,24 +59,33 @@
 
 	<% if(!_.isEmpty(landing.feeds)) {%>
 	<section class="feed-section-wrapper">
-		<div class="feed-section"> Feeds near you </div>
+		<!--<div class="feed-section"> Feeds near you </div>-->
 		<% _.each(landing.feeds, function(city_feed, key){ %>
 			<% _.each(city_feed, function(e, key){ %>
 				<% if ((e.is_post == 1)){ %>
 					<div class="feed-row feed-post" data-user="<%= e.user_id %>" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
-						<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
+						<!--<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>-->
 						<div class="feed-content">
 							<div class='post'>
-								<div class='post-title'><%= e.title %></div>
-								<div class='post-content'><%= e.content %></div>
-								<span class='post-create-by'>Posted by: <%= e.posted_by %></span>
-								<span class='appear-day'>
-									<% if ((e.appear_day == 'Now')){ %>
-									  Just Now
-									<% }else{ %>
-									  <%= e.appear_day %> ago
+								<div class="user-info">
+									<span class='post-create-by'><%= e.posted_by %></span>
+									<% if(!_.isEmpty(e.location)) {%>
+										<span class='post-location'><i class="fa fa-map-marker"></i><%= e.location %></span>
 									<% } %>
-								</span>
+									<span class='appear-day'>
+										<% if ((e.appear_day == 'Now')){ %>
+										  Just Now
+										<% }else{ %>
+										  <%= e.appear_day %>
+										<% } %>
+									</span>
+								</div>
+								<!--<div class='post-title'><%= e.title %></div>-->
+								<% if(!_.isEmpty(e.msg_type) && e.msg_type == 2) {%>
+									<div class="post-image-wrapper"><img src='<?= Url::to("@web/img/uploads/") ?><%= e.id %>/thumbnails/thumbnail_<%= e.msg %>'/></div>
+								<% }else{ %>
+									<div class='post-title'><%= e.msg %></div>
+								<% } %>
 							</div>
 						</div>
 					</div>
@@ -89,7 +110,7 @@
 	<% } %>
 	<% if(!_.isEmpty(landing.twitterFeeds)) {%>
 		<% if(!_.isEmpty(landing.twitterFeeds.statuses)) {%>
-			<div class="twitter-section"> Tweets near you </div>
+			<!--<div class="twitter-section"> Tweets near you </div>-->
 		<% } %>
 		<% _.each(landing.twitterFeeds.statuses, function(tweet, key){ %>
 		<div class="tweet-feed-row  tweet-feed-post">
@@ -111,7 +132,7 @@
 	<% } %>
 
 	<% if(!_.isEmpty(landing.jobFeeds)) {%>
-		<div class="jobs-section"> Jobs near you </div>
+		<!--<div class="jobs-section"> Jobs near you </div>-->
 			<% if(!_.isEmpty(landing.jobFeeds.results)) {%>
 				<% _.each(landing.jobFeeds.results, function(item, key){ %>
 					<div class="job-feed-row  job-feed-post">
