@@ -353,6 +353,112 @@
 		}
 	}
 	.area-news-tab {
+		.chat-section {
+			background: #ccc none repeat scroll 0 0;
+			font-family: ProximaNovaBold;
+			padding: 5px;
+		}
+		.chat-feed-row {
+			border-bottom: 1px solid #e4e4e4;
+			clear: both;
+			display: block;
+			min-height: 55px;
+			position: relative;
+			&:hover{
+				cursor: pointer;
+			}
+			&.chat-feed-post{
+				padding: 5px;
+				/*height: 65px;*/
+				.avatar-poster {
+					width: 40px;
+					height: 40px;
+					max-width: 40px;
+					max-height: 40px;
+					float: left;
+					display: table;
+					position: relative;
+					background: #fff;
+					border-radius: 2px;
+					border: 1px solid #898989;
+					.image{
+						height: 40px;
+						width: 40px;
+						text-align: center;
+						vertical-align: middle;
+						display: table-cell;
+						cursor: pointer;
+						img{
+							margin: auto;
+							max-width: 40px;
+							width: auto;
+							height: auto;
+							max-height: 40px;
+						}
+					}
+				}
+				.chat-feed-content {
+					.post {
+						/*margin-left: 50px;*/
+						/*width: 260px;*/
+						.post-location {
+							background: #f2f2f2 none repeat scroll 0 0;
+							border-radius: 9px;
+							color: #1d1b1b;
+							font-size: 10px;
+							padding: 5px 10px;
+							.fa {
+								color: #5888ac;
+								padding-right: 10px;
+							}
+						}
+						.appear-day {
+							font-size: 10px;
+							color: #797979;
+						}
+						.post-title {
+							font-size: 12px;
+							color:#1d1b1b;
+							font-family: "ProximaNovaRegular";
+							width: 100%;
+							/*white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;*/
+						}
+						.post-content {
+							font-size: 12px;
+							color:#1d1b1b;
+							font-family: "ProximaNovaRegular";
+							width: 100%;
+						}
+						.user-info {
+							padding-bottom: 7px;
+							.post-create-by {
+								font-size: 12px;
+								color: #1d1b1b;
+								font-family: "ProximaNovaSemibold";
+								padding-right: 5px;
+							}
+							.user-mention {
+								/*&::before{
+                                  content: '@';
+                                }*/
+								font-size: 10px;
+								color: #797979;
+							}
+						}
+						.post-image-wrapper {
+							img {
+								width: auto;
+								height: 80px;
+								vertical-align: baseline;
+							}
+						}
+					}
+
+				}
+			}
+		}
 		.twitter-section {
 			background: #ccc none repeat scroll 0 0;
 			font-family: ProximaNovaBold;
@@ -535,6 +641,11 @@
 		  }
 		}
 	  }
+		.feed-section {
+			background: #ccc none repeat scroll 0 0;
+			font-family: ProximaNovaBold;
+			padding: 5px;
+		}
 		.feed-row{
 			border-bottom: 1px solid #e4e4e4;
 			position: relative;
@@ -572,7 +683,7 @@
 			}
 			&.feed-post{
 				padding: 5px;
-				height: 60px;
+				/*height: 60px;*/
 				.avatar-poster {
 					width: 50px;
 					height: 50px;
@@ -602,11 +713,26 @@
 				}
 				.feed-content {
 					.post {
-						margin-left: 60px;
-						width: 260px;
+						/*margin-left: 60px;*/
+						/*width: 260px;*/
+						.post-location {
+							background: #f2f2f2 none repeat scroll 0 0;
+							border-radius: 9px;
+							color: #1d1b1b;
+							font-size: 10px;
+							padding: 5px 10px;
+							.fa {
+								color: #5888ac;
+								padding-right: 10px;
+							}
+						}
+						.appear-day {
+							font-size: 10px;
+							color: #797979;
+						}
 						.post-title {
 							font-family: "ProximaNovaSemibold";
-							font-size: 15px;
+							font-size: 12px;
 							color:#1d1b1b;
 							line-height: 18px;
 							width: 100%;
@@ -615,25 +741,37 @@
 							text-overflow: ellipsis;
 						}
 						.post-content {
-							font-size: 13px;
+							font-size: 12px;
 							color: #1d1b1b;
 							line-height: 12px;
 							width: 100%;
-							white-space: nowrap;
+							/*white-space: nowrap;
 							overflow: hidden;
-							text-overflow: ellipsis;
+							text-overflow: ellipsis;*/
 						}
-					}
-					.post-create-by {
-						font-size: 12px;
-						color: #797979;
-					}
-					.appear-day {
-						font-size : 12px;
-						color : #797979;
-						position: absolute;
-						right: 5px;
-						bottom: 5px;
+						.user-info {
+							padding-bottom: 7px;
+							.post-create-by {
+								font-size: 12px;
+								color: #1d1b1b;
+								font-family: "ProximaNovaSemibold";
+								padding-right: 5px;
+							}
+							.user-mention {
+								/*&::before{
+                                  content: '@';
+                                }*/
+								font-size: 10px;
+								color: #797979;
+							}
+						}
+						.post-image-wrapper {
+							img {
+								width: auto;
+								height: 80px;
+								vertical-align: baseline;
+							}
+						}
 					}
 				}
 			}

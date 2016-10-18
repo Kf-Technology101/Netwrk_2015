@@ -152,4 +152,69 @@ class UtilitiesFunc
 
 		return $count_time;
 	}
+
+	public static function FormatTwitterStyleDateTime($date){
+		$diff = self::GetDateTime($date);
+
+		$ddays = $diff['total_days'];
+		$mweek = $diff['total_days'] % 7;
+		$dweek = intval($diff['total_days'] / 7);
+
+		$mmonth = $diff['total_days'] % 30;
+		$dmonth = intval($diff['total_days'] / 30);
+
+		$myear = $diff['total_days'] % 365;
+		$dyear = intval($diff['total_days'] / 365);
+
+		if($ddays == 0){
+			if ($diff['hours'] == 0){
+				if($diff['minutes'] == 0){
+					if($diff['second'] == 0 || $diff['second'] < 60 )
+						$count_time = "Now";
+				}else{
+					$count_time = "{$diff['minutes']}min";
+				}
+			}elseif ($diff['hours'] == 1){
+				$count_time = "{$diff['hours']}h";
+			}else{
+				$count_time = "{$diff['hours']}h";
+			}
+		}elseif($ddays <= 99){
+			$marray = array($mweek,$mmonth);
+			$darray = array($dweek,$dmonth);
+			if($ddays == 1){
+				$count_time = "{$ddays}d";
+			}elseif($mweek < $mmonth && $mweek == 0 && $dweek == 1 ){
+				$count_time = "{$dweek}wk";
+			}elseif($mweek < $mmonth && $mweek == 0 && $dweek != 1){
+				$count_time = "{$dweek}wks";
+			}elseif($mweek > $mmonth && $mmonth == 0 && $dmonth == 1){
+				$count_time = "{$dmonth}m";
+			}elseif($mweek > $mmonth && $mmonth == 0 && $dmonth != 1){
+				$count_time = "{$dmonth}m";
+			}else{
+				$count_time = "{$ddays}d";
+			}
+		}elseif($ddays == 365){
+			$count_time = "{$dyear}yr";
+		}elseif($ddays > 100 && $ddays < 730){
+			if($mweek < $mmonth && $mweek < $myear ){
+				$count_time = "{$dweek}wks";
+			}elseif($mweek > $mmonth && $mmonth < $myear){
+				$count_time = "{$dmonth}mos";
+			}elseif($mweek > $myear && $mmonth > $myear){
+				$count_time = "{$dyear}yrs";
+			}
+		}elseif ($ddays >= 730 && $ddays < 2000) {
+			if($myear > $mmonth){
+				$count_time = "{$dmonth}mos";
+			}else{
+				$count_time = "{$dyear}yrs";
+			}
+		}else{
+			$count_time = "{$dyear}yrs";
+		}
+
+		return $count_time;
+	}
 }
