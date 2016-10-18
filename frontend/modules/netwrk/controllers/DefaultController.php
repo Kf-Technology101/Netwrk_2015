@@ -1410,7 +1410,7 @@ class DefaultController extends BaseController
             $htf = new HistoryFeed();
             $history_feed = $htf->find()->select('
                     history_feed.*,
-                    ws_messages.id as ws_message_id, ws_messages.msg'
+                    ws_messages.id as ws_message_id, ws_messages.msg, ws_messages.msg_type'
                 )
                 ->join('INNER JOIN', 'city', 'city.id = history_feed.city_id')
                 ->join('INNER JOIN', 'ws_messages', 'ws_messages.post_id = history_feed.id_item AND history_feed.type_item = "post"')
@@ -1436,22 +1436,24 @@ class DefaultController extends BaseController
             foreach ($data_feed as $key => $value) {
                 if($value->item->status != -1) {
                     if ($value->type_item == 'post') {
-                        $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
+                        $num_date = UtilitiesFunc::FormatTwitterStyleDateTime($value->created_at);
                         $url_avatar = User::GetUrlAvatar($value->item->user->id, $value->item->user->profile->photo);
                         $item = [
                             'id' => $value->item->id,
                             'title' => $value->item->title,
                             'content' => $value->item->content,
+                            'location' => $value->item->location,
                             'topic_id' => $value->item->topic_id,
                             'photo' => $url_avatar,
                             'city_id' => $value->item->topic->city_id,
                             'city_name' => $value->item->topic->city->name,
                             'created_at' => $value->created_at,
                             'appear_day' => $num_date,
-                            'posted_by' => $value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name'],
+                            'posted_by' => ucwords($value->item->user['profile']['first_name'] . " " . $value->item->user['profile']['last_name']),
                             'user_id' => $value->item->user_id,
                             'is_post' => 1,
-                            'msg' => $value->msg
+                            'msg' => $value->msg,
+                            'msg_type' => $value->msg_type,
                         ];
                     }/* else {
                         $num_date = UtilitiesFunc::FormatDateTime($value->created_at);
@@ -1480,15 +1482,17 @@ class DefaultController extends BaseController
 
         if($request){
             $limit = Yii::$app->params['LimitObjectFeedGlobal'];
-            //fetch history feed of users favorite cities
+            //get ws messages with post, its user and city information
+            // each post should be fetched with its latest chat message and have no croass negative points limits.
             $query = new query();
-            $chat_feeds = $query->select('ws_messages.msg,ws_messages.created_at AS created_at, p.id as post_id, p.title AS post_title, p.content AS post_content, p.topic_id AS topic_id, p.status as post_status, c.id AS city_id, c.name AS city_name, c.zip_code,u.id AS user_id, pr.first_name, pr.last_name, pr.photo')
+            $chat_feeds = $query->select('ws_messages.msg,ws_messages.created_at AS created_at, ws_messages.msg_type AS msg_type, p.id as post_id, p.title AS post_title, p.content AS post_content, p.location as post_location, p.topic_id AS topic_id, p.status as post_status, c.id AS city_id, c.name AS city_name, c.zip_code,u.id AS user_id, pr.first_name, pr.last_name, pr.photo')
                 ->from('ws_messages')
                 ->join('INNER JOIN', 'post p', 'p.id = ws_messages.post_id AND p.post_type = 1')
                 ->join('INNER JOIN', 'topic t', 'p.topic_id = t.id')
                 ->join('INNER JOIN', 'city c', 't.city_id = c.id')
                 ->join('INNER JOIN', 'user u', 'ws_messages.user_id = u.id')
                 ->join('INNER JOIN', 'profile pr', 'u.id = pr.user_id')
+                ->leftJoin('feedback_stat pfs','pfs.ws_message_id = ws_messages.id')
                 ->where([
                     'ws_messages.id' => (new Query())->select('max(id)')
                         ->from('ws_messages')
@@ -1496,32 +1500,35 @@ class DefaultController extends BaseController
                         ->groupBy('ws_messages.post_id')
                 ])
                 ->andWhere(['in','t.city_id',$cities])
+                ->andWhere('(pfs.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR pfs.points IS NULL)')
                 ->orderBy(['ws_messages.id'=> SORT_DESC])
                 ->limit('20');
 
-           /* print $chat_feeds->createCommand()->getRawSql();
+            /*print $chat_feeds->createCommand()->getRawSql();
             die();*/
 
             $data_feed = $chat_feeds->all();
             $feeds =[];
             foreach ($data_feed as $key => $value) {
                 if($value['post_status'] != -1) {
-                    $num_date = UtilitiesFunc::FormatDateTime($value['created_at']);
+                    $num_date = UtilitiesFunc::FormatTwitterStyleDateTime($value['created_at']);
                     $url_avatar = User::GetUrlAvatar($value['user_id'], $value['photo']);
                     $item = [
                         'id' => $value['post_id'],
                         'title' => $value['post_title'],
                         'content' => $value['post_content'],
+                        'location' => $value['post_location'],
                         'topic_id' => $value['topic_id'],
                         'photo' => $url_avatar,
                         'city_id' => $value['city_id'],
                         'city_name' => $value['city_name'],
                         'created_at' => $value['created_at'],
                         'appear_day' => $num_date,
-                        'posted_by' => $value['first_name'] . " " . $value['last_name'],
+                        'posted_by' => ucwords($value['first_name'] . " " . $value['last_name']),
                         'user_id' => $value['user_id'],
                         'is_post' => 1,
-                        'msg' => $value['msg']
+                        'msg' => $value['msg'],
+                        'msg_type' => $value['msg_type']
                     ];
                     $feeds[] = $item;
                 }

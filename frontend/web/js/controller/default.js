@@ -612,11 +612,13 @@ var Default ={
     },
     getFeeds: function() {
         //todo: get this zipcode by cookie or pass argument
+        Common.initTextLoader();
         Ajax.getFeedsBySelectedZipCode().then(function (data) {
             var json = $.parseJSON(data);
             var parent = $(ChatInbox.chat_area_news).find('.content-wrapper');
             //Populate area news template with data
             Default.getFeedsTemplate(parent, json);
+            Common.hideTextLoader();
         });
     },
     getFeedsTemplate: function(parent, data){

@@ -473,16 +473,16 @@ var Create_Post={
         var parent = $('#create_post');
 
         this.onChangeData(parent.find('.name_post'),'post');
-        //this.onChangeData(parent.find('.message'),'message');
+        this.onChangeData(parent.find('.message'),'message');
     },
 
     onChangeData: function(target,filter){
         target.unbind();
         target.on('keyup input',function(e){
             //Copy the content of name_post textarea into message textarea
-            /*if(e.currentTarget.id == 'name_post_textarea') {
+            if(e.currentTarget.id == 'name_post_textarea') {
                 Create_Post.copyPostNameToMessage();
-            }*/
+            }
             if($(e.currentTarget).val().length > 0){
                 Create_Post.params[filter] = $(e.currentTarget).val();
                 Create_Post.status_change[filter] = true;
@@ -499,6 +499,7 @@ var Create_Post={
             message = parent.find('.message');
 
         message.val(name_post.val());
+
         Create_Post.params['message'] = name_post.val();
         console.log(Create_Post.params.message);
     },
@@ -507,13 +508,13 @@ var Create_Post={
 
         //if line create from blue dot then topic is required
         if(Create_Post.params.isCreateFromBlueDot) {
-            if(status.post && status.topic){
+            if(status.post /*&& status.message*/ && status.topic){
                 status.total = true;
             }else{
                 status.total = false;
             }
         } else {
-            if(status.post){
+            if(status.post /*&& status.message*/){
                 status.total = true;
             }else{
                 status.total = false;
