@@ -4,10 +4,12 @@
 	$cookies = Yii::$app->request->cookies;
 ?>
 <div id='chat_inbox' class='chat-inbox'>
-	<ul class="nav nav-tabs slider-tab" role="tablist">
-		<li role="presentation" class="active col-xs-6 lies-btn"><a href="#lines_tab" aria-controls="lines_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
-		<li role="presentation" class="col-xs-6 area-news-btn"><a href="#area_news_tab" aria-controls="area_news_tab" role="tab" data-toggle="tab"><span>Area News</span></a></li>
-	</ul>
+	<div class="slider-tabs-wrapper">
+		<ul class="nav nav-tabs slider-tab" role="tablist">
+			<li role="presentation" class="active col-xs-6 lies-btn"><a href="#lines_tab" aria-controls="lines_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+			<li role="presentation" class="col-xs-6 area-news-btn"><a href="#area_news_tab" aria-controls="area_news_tab" role="tab" data-toggle="tab"><span>Area News</span></a></li>
+		</ul>
+	</div>
 
 	<div class="tab-content slider-content">
 		<div role="tabpanel" class="tab-pane active" id="lines_tab">

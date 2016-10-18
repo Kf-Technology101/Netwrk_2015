@@ -10,16 +10,14 @@
 		<a class="landing-close-trigger" href="javascript:void(0)">
 			<img src="/img/icon/netwrk-icon-inactive.png">
 		</a>
-		<div class="title">Netwrk</div>
+		<!--<div class="title">Netwrk</div>-->
 		<div class="your-netwrks">
 			<div class="favorites-netwrks-wrapper">
 
 			</div>
 		</div>
 	</div>
-	<?php if (Yii::$app->user->isGuest):?>
-		<div id="navProfileWrapper" class="login-trigger custom-btn btn-profile">Login</div>
-	<?php endif; ?>
+
 </div>
 <script id="favorites-netwrks" type="text/x-underscore-template">
 	<% if(!_.isEmpty(items.data)) {%>

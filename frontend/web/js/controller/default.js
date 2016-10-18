@@ -157,7 +157,7 @@ var Default ={
     },
 
     _eventClickMeetBtn: function() {
-        var target = $('#btn_meet, #btn_nav_meet'),
+        var target = $('#btn_meet, #btn_nav_meet').add('#btn_meet-trigger'),
             self = this;
 
         target.on('click',function(){
@@ -303,8 +303,11 @@ var Default ={
                 } else {
                     var list_template = _.template($("#account_nav_dropdown" ).html());
                     var append_html = list_template({user_info: data});
-                    $('#netwrkNavigation #navProfileWrapper').remove();
-                    $('#netwrkNavigation').append(append_html);
+
+                    $('.nav-buttion-section').find('.profile-button-wrap').find('.btn-profile').remove();
+                    $('.nav-buttion-section').find('.profile-button-wrap').append(append_html);
+                    //$('#netwrkNavigation #navProfileWrapper').remove();
+                    //$('#netwrkNavigation').append(append_html);
                 }
                 /*if(isMobile){
                     $('#nav_wrapper #btn_nav_meet_mobile').before(append_html);
