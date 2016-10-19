@@ -639,6 +639,21 @@ var Default ={
         }
         //todo: make common code. After loading feed template initialize its post, topic clicks
         LandingPage.onTemplateLanding();
+        Default.FetchEmojiOne();
+    },
+    FetchEmojiOne: function(data){
+
+        if(isMobile) {
+            var messages = $(ChatInbox.chat_area_news).find('.content-wrapper').find('.post .post-title');
+        } else {
+            var messages = $(ChatInbox.chat_area_news).find('.content-wrapper').find('.main-content').find('.post .post-title');
+        }
+
+        console.log(messages.attr('class'));
+        $.each(messages,function(i,e){
+            console.log('does it come here');
+            Emoji.Convert($(e));
+        });
     },
 
     onClickJoinHomeAreaButton: function() {
