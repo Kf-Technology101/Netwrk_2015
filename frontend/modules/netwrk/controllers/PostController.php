@@ -1269,12 +1269,13 @@ class PostController extends BaseController
         $currentUser = Yii::$app->user->id;
         $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
         $message = isset($_POST['message']) ? $_POST['message'] : '';
+        $msg_type = isset($_POST['msg_type']) ? $_POST['msg_type'] : 1;
 
         $ws_messages = new WsMessages();
         $ws_messages->user_id = $currentUser;
         $ws_messages->msg = $message;
         $ws_messages->post_id = $post_id;
-        $ws_messages->msg_type = 1;
+        $ws_messages->msg_type = $msg_type;
         $ws_messages->post_type = 1;
         $ws_messages->save(false);
 
