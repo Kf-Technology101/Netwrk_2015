@@ -111,7 +111,7 @@ var Login={
 			Login.profile_picture = jsonData.profilePicture;
 			Login.isCommunityJoined = jsonData.isCommunityJoined;
 
-			if(jsonData.wsCount == 0 && jsonData.topPosts.length > 0){
+			/*if(jsonData.wsCount == 0 && jsonData.topPosts.length > 0){
 				var parent = boardingModal.find('.modal-body').find('.lines-wrapper ul'),
 						lines_template = _.template($( "#boarding_lines" ).html()),
 						append_html = lines_template({top_post: jsonData.topPosts});
@@ -122,7 +122,8 @@ var Login={
 				Common.eventOnBoardingSaveLines();
 				Common.eventOnBoardingSkipLines();
 				Login.ShowModalOnBoarding();
-			} else if(Login.profile_picture == false) {
+			} else*/
+			if(Login.profile_picture == false) {
 				Login.showProfilePicture();
 				Login.ShowModalOnBoarding();
 			}

@@ -24,8 +24,8 @@
 				<div class="skip-btn">Skip</div>
 				<div class="btn btn-default btn-save-lines disabled select-lines">Save</div>
 				<div class="profile-picture-btn-control select-picture hidden">
-					<div class="btn-img cancel hide">
-						<p>Cancel</p>
+					<div class="btn-img cancel" data-dismiss="modal">
+						<p>Skip</p>
 					</div>
 					<div class="btn-img browse">
 						<?php
