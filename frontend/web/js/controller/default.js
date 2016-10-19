@@ -648,10 +648,8 @@ var Default ={
         } else {
             var messages = $(ChatInbox.chat_area_news).find('.content-wrapper').find('.main-content').find('.post .post-title');
         }
-
-        console.log(messages.attr('class'));
+        
         $.each(messages,function(i,e){
-            console.log('does it come here');
             Emoji.Convert($(e));
         });
     },
