@@ -26,15 +26,17 @@
 
                         </div>
 
-                        <div class="post-title">
-                            <p class="title"> Message </p>
-                            <textarea class="post_message name_post_textarea" placeholder="Message" maxlength="128" id="postMessage"></textarea>
-                        </div>
-                    </div>
-                    <div class="btn-control">
-                        <div class="save disable">
-                            <span>Build</span>
-                            <i class="fa fa-check"></i>
+                        <div class="nav_input_message">
+                            <div class="send_message input-group">
+                                <textarea type="text" class="form-control post_message name_post_textarea" placeholder="Type message here..." maxlength="1024" id="postMessage"></textarea>
+                                <div id='msgFileBtn' class="input-group-addon paper"><i class="fa fa-paperclip"></i></div>
+                                <input type='file' id='msgFileUpload' name='file_upload' style="display:none" />
+                                <div class="input-group-addon emoji dropup">
+                                    <i class="fa fa-smile-o dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" ></i>
+                                    <ul class="dropdown-menu"></ul>
+                                </div>
+                                <div class="input-group-addon send">Send</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,4 +53,9 @@
             <img src="" class="line-location-image" alt="" />
         </div>
     </section>
+</script>
+<script id="message_list_emoji" type="text/x-underscore-template">
+    <% _.each(emoji,function(i,e){ %>
+    <li data-value="<%= i %>" data-toggle="tooltip" title="<%= i %>"><%= i %></li>
+    <% })%>
 </script>
