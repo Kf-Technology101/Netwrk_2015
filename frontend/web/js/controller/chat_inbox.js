@@ -19,8 +19,8 @@ var ChatInbox = {
 			if(isGuest) {
 				ChatInbox.activateTab('chat_discussion');
 			}
-			ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
-			ChatInbox.getTemplateChatPrivateMobile(ChatInbox.modal);
+			/*ChatInbox.getTemplateChatInboxMobile(ChatInbox.modal);
+			ChatInbox.getTemplateChatPrivateMobile(ChatInbox.modal);*/
 			ChatInbox.OnClickChatPostDetail();
 			ChatInbox.OnClickMeetIconMobile();
 			ChatInbox.HideMeetIconMobile();
@@ -31,7 +31,7 @@ var ChatInbox = {
 			Default.getFeeds();
 			Default.SetAvatarUserDropdown();
 			//ChatInbox.OnShowNetwrkUiChatInbox();
-			Common.hideTextLoader();
+			//Common.hideTextLoader();
 		} else {
 			// if(ChatInbox.onClickChat == 1){
 			// 	Ajax.change_chat_show_message().then(function(data){});
