@@ -10,6 +10,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close close-btn" data-dismiss="modal">&times;</button>
                 <p>Profile details</p>
             </div>
             <div class="modal-body">
