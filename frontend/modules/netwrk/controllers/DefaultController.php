@@ -911,7 +911,7 @@ class DefaultController extends BaseController
             $geoCode = floatval($city_lat).','. floatval($city_lng). ',' . $radius;
             //Get the feeds from zipcode cities
             $chatFeeds = json_decode($this->actionGetChatFeedByCities($city_ids), true);
-            $feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
+            //$feeds = json_decode($this->actionGetFeedByCities($city_ids), true);
             $twitterFeeds = json_decode(Yii::$app->runAction('/netwrk/api/get-tweets', ['geocode' => $geoCode, 'city_lat' => $city_lat, 'city_lng' => $city_lng, 'city_name' => $city_name]));
 
             //area job data
@@ -922,8 +922,8 @@ class DefaultController extends BaseController
                 'geocode' => $geoCode,
                 'chatFeeds' => $chatFeeds,
                 'jobFeeds' => $jobFeeds,
-                'twitterFeeds' => $twitterFeeds,
-                'feeds' => $feeds
+                'twitterFeeds' => $twitterFeeds
+                //'feeds' => $feeds
             ];
 
             $hash = json_encode($item);
@@ -1493,18 +1493,19 @@ class DefaultController extends BaseController
                 ->join('INNER JOIN', 'user u', 'ws_messages.user_id = u.id')
                 ->join('INNER JOIN', 'profile pr', 'u.id = pr.user_id')
                 ->leftJoin('feedback_stat pfs','pfs.ws_message_id = ws_messages.id')
-                ->where([
+                /*->where([
                     'ws_messages.id' => (new Query())->select('max(id)')
                         ->from('ws_messages')
                         ->where('ws_messages.post_type = 1')
                         ->groupBy('ws_messages.post_id')
-                ])
+                ])*/
                 ->andWhere(['in','t.city_id',$cities])
                 ->andWhere('(pfs.points > '.Yii::$app->params['FeedbackHideObjectLimit'].' OR pfs.points IS NULL)')
                 ->orderBy(['ws_messages.id'=> SORT_DESC])
-                ->limit('20');
+                ->limit('30');
 
-            /*print $chat_feeds->createCommand()->getRawSql();
+
+           /* print $chat_feeds->createCommand()->getRawSql();
             die();*/
 
             $data_feed = $chat_feeds->all();
