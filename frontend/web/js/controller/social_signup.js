@@ -22,6 +22,7 @@ var SocialSignup ={
 		SocialSignup.OnClickBackdrop();
 		SocialSignup.OnClickSubmitForm();
 		SocialSignup.validateZipcode();
+		SocialSignup.onClickClose();
 
 	},
 
@@ -200,9 +201,21 @@ var SocialSignup ={
     OnClickBackdrop: function(){
         $('.modal-backdrop.in').unbind();
         $('.modal-backdrop.in').on('click',function(e) {
-            //$(SocialSignup.parent).modal('hide');
+            $(SocialSignup.parent).modal('hide');
 			//$('.menu_top').removeClass('deactive');
 			//$('#btn_meet').removeClass('deactive');
         });
-    }
+    },
+	onClickClose: function() {
+		var target = $(SocialSignup.modal).find('.close-btn');
+
+		target.unbind();
+		target.on('click', function() {
+			$(SocialSignup.parent).modal('hide');
+			if(isMobile) {
+				//redirect to area news
+				window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
+			}
+		});
+	}
 };

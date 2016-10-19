@@ -126,6 +126,11 @@ var Login={
 			if(Login.profile_picture == false) {
 				Login.showProfilePicture();
 				Login.ShowModalOnBoarding();
+			} else {
+				if(isMobile) {
+					//go to area news
+					window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
+				}
 			}
 		});
 	},
@@ -359,6 +364,10 @@ var Login={
 						var json = $.parseJSON(data);
 						Login.profile_picture = true;
 						$(Login.on_boarding_id).modal('hide');
+
+						if(isMobile) {
+							window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
+						}
 						//Login.showJoinHomeModal();
 					});
 
