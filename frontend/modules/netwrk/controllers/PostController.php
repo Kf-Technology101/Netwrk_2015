@@ -17,6 +17,7 @@ use yii\db\Query;
 use yii\data\Pagination;
 use Yii;
 use yii\web\Cookie;
+use yii\db\Expression;
 
 class PostController extends BaseController
 {
@@ -1228,16 +1229,49 @@ class PostController extends BaseController
 
     public function actionMessagePostDetails()
     {
-        // Get selected location default line location details for the selected zip code.
+        // Get selected location
         $cookies = Yii::$app->request->cookies;
         $zipCode = $cookies->getValue('nw_selectedZip');
+        $coverZipCode = $cookies->getValue('nw_zipCode');
 
+        // If selected zip and cover zip are same then find nearest line
+        if($zipCode == $coverZipCode){
+            $lat = $cookies->getValue('nw_lat');
+            $lng = $cookies->getValue('nw_lng');
+            $query = new Query();
+
+            $expression = new Expression("SQRT(POW(69.1 * (post.lat-$lat),2) + POW(69.1 * ($lng- post.lng) * COS(post.lng / 57.3),2)) as distance");
+
+            $query->select('post.id as post_id, post.title as post_title, post.content as post_content,post.post_type as post_type,
+                    topic.id AS topic_id, topic.title AS topic_title, post.lat as city_lat, post.lng as city_lng,
+                    city.id as city_id, city.zip_code, city.name as city_name')
+                ->addSelect($expression)
+                ->from('post')
+                ->join('INNER JOIN', 'topic', 'post.topic_id = topic.id')
+                ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
+                ->where('city.zip_code = '.$zipCode)
+                ->andWhere('city.office_type IS NULL')
+                ->andWhere('post.lat IS NOT NULL')
+                ->andWhere('post.lng IS NOT NULL')
+                ->andWhere('post.timeout IS NULL')
+                ->andWhere(['not', ['post.status' => '-1']])
+                ->orderBy(['distance' => SORT_DESC])
+                ->limit(1);
+
+            $post = $query->one();
+
+            if($post != false) {
+                $data = json_encode($post);
+                return $data;
+            }
+        }
+
+        // Select default location line
         $query = new Query();
-        $query->select(
-            'post.id as post_id, post.title as post_title, post.content as post_content,post.post_type as post_type,
-             topic.id AS topic_id, topic.title AS topic_title,
-             city.id as city_id, city.zip_code, city.name as city_name, city.lat as city_lat, city.lng as city_lng'
-        )->from('post')
+        $query->select('post.id as post_id, post.title as post_title, post.content as post_content,post.post_type as post_type,
+                topic.id AS topic_id, topic.title AS topic_title,
+                city.id as city_id, city.zip_code, city.name as city_name, city.lat as city_lat, city.lng as city_lng')
+            ->from('post')
             ->join('INNER JOIN', 'topic', 'post.topic_id = topic.id')
             ->join('INNER JOIN', 'city', 'city.id = topic.city_id')
             ->where('city.zip_code = '.$zipCode)
@@ -1269,12 +1303,13 @@ class PostController extends BaseController
         $currentUser = Yii::$app->user->id;
         $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : '';
         $message = isset($_POST['message']) ? $_POST['message'] : '';
+        $msg_type = isset($_POST['msg_type']) ? $_POST['msg_type'] : 1;
 
         $ws_messages = new WsMessages();
         $ws_messages->user_id = $currentUser;
         $ws_messages->msg = $message;
         $ws_messages->post_id = $post_id;
-        $ws_messages->msg_type = 1;
+        $ws_messages->msg_type = $msg_type;
         $ws_messages->post_type = 1;
         $ws_messages->save(false);
 
