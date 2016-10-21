@@ -6,13 +6,13 @@
 <div id='chat_inbox' class='chat-inbox'>
 	<div class="slider-tabs-wrapper">
 		<ul class="nav nav-tabs slider-tab" role="tablist">
-			<li role="presentation" class="active col-xs-6 lies-btn"><a href="#lines_tab" aria-controls="lines_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
-			<li role="presentation" class="col-xs-6 area-news-btn"><a href="#area_news_tab" aria-controls="area_news_tab" role="tab" data-toggle="tab"><span>Area News</span></a></li>
+			<li role="presentation" class="col-xs-6 lies-btn"><a href="#lines_tab" aria-controls="lines_tab" role="tab" data-toggle="tab"><span>Lines</span></a></li>
+			<li role="presentation" class="active col-xs-6 area-news-btn"><a href="#area_news_tab" aria-controls="area_news_tab" role="tab" data-toggle="tab"><span>Area News</span></a></li>
 		</ul>
 	</div>
 
 	<div class="tab-content slider-content">
-		<div role="tabpanel" class="tab-pane active" id="lines_tab">
+		<div role="tabpanel" class="tab-pane" id="lines_tab">
 
 
 	<div class="chat-inbox-wrapper">
@@ -82,7 +82,7 @@
 	</div>
 	</div>
 	</div>
-	<div role="tabpanel" class="tab-pane area-news-tab" id="area_news_tab">
+	<div role="tabpanel" class="tab-pane active area-news-tab" id="area_news_tab">
 		<div class="message-your-area-wrapper">
 			<a class="btn-message-your-area">Message your area</a>
 		</div>
@@ -90,7 +90,6 @@
 			<div class="main-content">
 
 			</div>
-
 		</div>
 	</div>
 	</div>
@@ -124,9 +123,8 @@
 			<input type='hidden' value='<%= chat_inbox.city_id %>' name='city_id' />
 			<input type='hidden' value='<%= chat_inbox.city_name %>' name='city_name'/>
 		</li>
-
-		<% }); %>
-	</script>
+	<% }); %>
+</script>
 
 <script id="chat_private_list" type="text/x-underscore-template" >
 	<% _.each(chat_private_list,function(chat_inbox){ %>
