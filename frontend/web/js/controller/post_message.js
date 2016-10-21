@@ -42,6 +42,7 @@ var Post_Message = {
         Post_Message.HandleEmoji();
         Post_Message.OnWsFile();
         Post_Message.HandleWsFile();
+        Post_Message.parent.find('textarea').focus();
     },
 
     // Append list emoji to icon emoji in message interface
@@ -213,7 +214,6 @@ var Post_Message = {
                 window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
             }else{
                 Post_Message.reset_data();
-                Post_Message.disableButton();
                 Post_Message.hideModalPostMessage();
             }
         });
