@@ -464,7 +464,7 @@ var LandingPage = {
 		if(isMobile){
 			parent.css('height', $(window).height()-122);
 		} else {
-			parent.css('height', $(window).height()-50);
+			parent.css('height', $(window).height()-132);
 		}
 
 		if ($(parent).find("div[id^='mSCB']").length == 0) {
