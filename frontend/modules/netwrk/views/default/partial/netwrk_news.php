@@ -42,10 +42,11 @@
 											<% } %>
 										</span>
 									</div>
+									<div class="hide post-title"><%= e.title %></div>
 									<% if(!_.isEmpty(e.msg_type) && e.msg_type == 2) {%>
 										<div class="post-image-wrapper"><img src='<?= Url::to("@web/img/uploads/") ?><%= e.id %>/thumbnails/thumbnail_<%= e.msg %>'/></div>
 									<% }else{ %>
-										<div class='post-title'><%= e.msg %></div>
+										<div class='post-msg'><%= e.msg %></div>
 									<% } %>
 								</div>
 							</div>
