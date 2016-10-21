@@ -177,6 +177,7 @@ var Post_Message = {
                                     if(isMobile){
                                         window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
                                     } else {
+                                        Default.getFeeds();
                                         Post_Message.hideModalPostMessage();
                                     }
                                 });
@@ -285,6 +286,7 @@ var Post_Message = {
                 if(isMobile){
                     window.location.href = baseUrl + "/netwrk/chat-inbox?current=area_news";
                 } else {
+                    Default.getFeeds();
                     Post_Message.hideModalPostMessage();
                 }
             });
