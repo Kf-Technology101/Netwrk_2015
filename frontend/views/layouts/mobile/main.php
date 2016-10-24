@@ -197,7 +197,7 @@ if (isset($cookies["isCoverPageVisited"])) {
           </button>
           <button id="btn_nav_meet_mobile" type="button" class="btn btn-default">
             <i class="navigation-icon ci-meet"></i>
-            <div class="navigation-text">Meet</div>
+            <div class="navigation-text">Connect</div>
           </button>
           <?php if (Yii::$app->user->isGuest):?>
             <a href="<?php echo Url::base(true); ?>/netwrk/user/login" type="button" class="btn btn-default">

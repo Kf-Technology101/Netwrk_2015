@@ -160,7 +160,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             <div class="nav-buttion-section">
                 <span class="meet-btn" id="btn_meet-trigger">
                     <i class="navigation-icon ci-meet"></i>
-                    Meet
+                    Connect
                 </span>
                 <span class="profile-button-wrap">
                     <span class="login-trigger btn-profile">Login</span>
@@ -170,7 +170,7 @@ if (isset($cookies["isCoverPageVisited"])) {
             <div class="nav-buttion-section">
                 <span class="meet-btn" id="btn_meet-trigger">
                     <i class="navigation-icon ci-meet"></i>
-                    Meet
+                    Connect
                 </span>
                 <span class="profile-button-wrap">
 
