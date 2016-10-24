@@ -53,7 +53,7 @@
 					<!--<div class="iw-subTitle" id="cm-coords"></div>-->
 					<div class="create-section-wrapper">
 						<div class="iw-subTitle col-xs-12 create-section" id="actionBuildCommunity" style="padding: 0 0;"><a href="javascript:" class="create-button line-button" onclick="Map.CreateLocationPost(Map.blueDotLocation.zipcode);"><span>Build a Line</span></a></div>
-						<div class="iw-subTitle col-xs-12 create-section hide" id="actionJoinCommunity" style="padding: 5px 0 0;"><a href="javascript:" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community);"><span>Join this netwrk</span></a></div>
+						<div class="iw-subTitle col-xs-12 create-section hide" id="actionJoinCommunity" style="padding: 5px 0 0;"><a href="javascript:" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community);"><span>Join this community</span></a></div>
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionBuildCommunity"><a href="javascript:" class="create-button group-button" onclick="Map.CreateLocationGroup(Map.blueDotLocation.zipcode);"><span>Create a Group</span></a></div>-->
 						<!--<div class="iw-subTitle col-xs-6 create-section" id="actionHaveParty"><a href="javascript:" class="create-button channel-button" onclick="Map.CreateLocationTopic(Map.blueDotLocation.zipcode);"><span class="">Create a Channel</span></a></div>-->
 					</div>
@@ -133,7 +133,7 @@
 					<div class="create-section-wrapper">
 						<div class="iw-subTitle col-xs-12 create-section" style="padding: 0">
 							<div class="join-content hide">
-								<a href="javascript:" style="padding: 0; line-height: 40px;" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community, 'user-location');"><span>Join this netwrk</span></a>
+								<a href="javascript:" style="padding: 0; line-height: 40px;" class="create-button join-button" onclick="Map.joinCommunity(Map.blueDotLocation.community, 'user-location');"><span>Join this community</span></a>
 							</div>
 							<!--<div class="build-content hide">
 								<a href="javascript:" class="create-button line-button" onclick="Map.CreateUserLocationPost();"><span>Build a Line at your location</span></a>
