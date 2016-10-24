@@ -37,6 +37,12 @@ class UserController extends BaseController
      */
     public function actions()
     {
+        if($this->getIsMobile()){
+            $cancelUrl = Url::to(Yii::$app->getUser()->loginUrl);
+        } else {
+            $cancelUrl = '/';
+        }
+
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -44,6 +50,7 @@ class UserController extends BaseController
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'socialLoginCallback'],
+                'cancelUrl' => $cancelUrl,
             ],
         ];
     }
