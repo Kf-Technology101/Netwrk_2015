@@ -10,6 +10,7 @@ use frontend\modules\netwrk\models\Favorite;
 use yii\helpers\Url;
 use yii\db\Query;
 use yii\data\Pagination;
+use yii\web\Cookie;
 use Yii;
 
 class FavoriteController extends BaseController
@@ -169,6 +170,10 @@ class FavoriteController extends BaseController
 
     public function actionGetJoinedCommunitiesByUser()
     {
+        $cookies = Yii::$app->request->cookies;
+        //if selectedZip not set then use cover page zip to fetch feeds
+        $zip_code = ($cookies->getValue('nw_selectedZip')) ? $cookies->getValue('nw_selectedZip') : $cookies->getValue('nw_zipCode');
+
         $returnData = array();
         $communities = Favorite::getFavoriteCommunitiesByUser(Yii::$app->user->id);
 
@@ -190,7 +195,8 @@ class FavoriteController extends BaseController
                 'user_id' => $value['user_id'],
                 'status' => $value['status'],
                 'lat' => $value['lat'],
-                'lng' => $value['lng']
+                'lng' => $value['lng'],
+                'selected_zipcode' => $zip_code
             );
             array_push($data,$item);
 

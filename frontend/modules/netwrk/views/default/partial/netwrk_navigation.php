@@ -24,20 +24,14 @@
 		<% _.each(items.data,function(cities, key){ %>
 			<section class="group">
 				<div class="city-name"><%= key %></div>
-				<% _.each(cities, function(item, key){ %>
-				<section class="item community-modal-trigger"
+				<% _.each(cities, function(item, i){ %>
+				<section class="item community-modal-trigger <% if(item.city_zipcode == item.selected_zipcode) {%> active <% } %>"
 						 data-lat="<%= item.lat %>"
 						 data-lng="<%= item.lng %>"
 						 data-zip_code="<%= item.city_zipcode %>"
 						 data-city-id="<%= item.city_id %>">
 					<div class="home-community-icon">
-						<% if(item.city_office_type == "university") {%>
-							<i class="fa fa-graduation-cap"></i>
-						<% } else if(item.city_office_type == "government") { %>
-							<i class="fa fa-institution"></i>
-						<% } else { %>
-							<i class="fa fa-home"></i>
-						<% } %>
+						<%= key.substr(0,1) %>
 					</div>
 					<div class="zipcode"><%= item.city_zipcode %></div>
 				</section>

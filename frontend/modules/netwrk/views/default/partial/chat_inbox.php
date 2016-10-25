@@ -84,6 +84,9 @@
 	</div>
 	<div role="tabpanel" class="tab-pane active area-news-tab" id="area_news_tab">
 		<div class="message-your-area-wrapper">
+			<?php if (isset($cookies["nw_selectedLocation"])): ?>
+				<div class="selected-location">Welcome to <?php echo $cookies["nw_selectedLocation"]; ?></div>
+			<?php endif; ?>
 			<a class="btn-message-your-area">Message your area</a>
 		</div>
 		<div class="content-wrapper">
