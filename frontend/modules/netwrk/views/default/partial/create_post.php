@@ -26,7 +26,7 @@
                             <section class="post-category-wrapper">
                                 <p class="title">What do you want to do</p>
                                 <select name="category" id="postCategoryDropdown" class="form-control post-category-dropdown">
-                                    <option value="1">Friends</option>
+                                    <option value="1">Community</option>
                                     <option value="2">Breakfast</option>
                                     <option value="3">Lunch</option>
                                     <option value="4">Dinner</option>

@@ -20,7 +20,7 @@
                 <section class="post-category-wrapper">
                     <p class="title">What do you want to do</p>
                     <select name="category" class="form-control post-category-dropdown">
-                        <option value="1" <?php if($post->category == 1) { ?> selected="selected"<?php }?>>Friends</option>
+                        <option value="1" <?php if($post->category == 1) { ?> selected="selected"<?php }?>>Community</option>
                         <option value="2" <?php if($post->category == 2) { ?> selected="selected"<?php }?>>Breakfast</option>
                         <option value="3" <?php if($post->category == 3) { ?> selected="selected"<?php }?>>Lunch</option>
                         <option value="4" <?php if($post->category == 4) { ?> selected="selected"<?php }?>>Dinner</option>
