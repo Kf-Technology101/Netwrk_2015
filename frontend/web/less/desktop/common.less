@@ -550,6 +550,23 @@
             .favorites-netwrks-wrapper {
                 text-align: center;
                 .group {
+                    &.active {
+                        background-color: #b2d5ef;
+                        .city-name {
+                            color: #006699;
+                            border-bottom: 1px solid #006699;
+                        }
+                        .item {
+                            .zipcode {
+                                color: #006699;
+                            }
+                            .home-community-icon {
+                                background: #5888ac none repeat scroll 0 0;
+                                color: #fff;
+                            }
+                        }
+
+                    }
                     border-bottom: 1px solid #ccc;
                     /*padding-bottom: 10px;*/
                     cursor: pointer;
@@ -560,11 +577,26 @@
                         padding: 5px 2px;
                     }
                     .item {
-                        padding: 5px 0 0;
+                        &.active {
+                            background-color: #b2d5ef;
+                            .city-name {
+                                color: #006699;
+                                border-bottom: 1px solid #006699;
+                            }
+                            .zipcode {
+                                color: #006699;
+                            }
+                            .home-community-icon {
+                                background: #5888ac none repeat scroll 0 0;
+                                color: #fff;
+                            }
+                        }
+                        padding: 10px;
                         .home-community-icon {
-                            background: #5888ac none repeat scroll 0 0;
+                            background: #e4e4e4 none repeat scroll 0 0;
                             border-radius: 48px;
-                            color: #fff;
+                            box-shadow: 2px 2px 4px #797979;
+                            color: #999;
                             display: block;
                             font-size: 22px;
                             height: 48px;
@@ -576,6 +608,7 @@
                             font-size: 16px;
                             font-weight: 600;
                             padding-top: 5px;
+                            color: #999;
                         }
                     }
                 }

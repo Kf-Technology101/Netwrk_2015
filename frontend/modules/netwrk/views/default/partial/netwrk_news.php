@@ -23,24 +23,27 @@
 			<!--<div class="chat-section"> Chats near you </div>-->
 			<% if(!_.isEmpty(landing.chatFeeds)) {%>
 				<% _.each(landing.chatFeeds, function(e, key){ %>
-
 					<% if ((e.is_post == 1)){ %>
 						<div class="chat-feed-row chat-feed-post" data-user="<%= e.user_id %>" data-value="<%= e.id %>" data-city="<%= e.city_id %>" data-topic='<%= e.topic_id %>'>
-							<!--<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>-->
+							<div class="avatar-poster"><div class="image"><img src="<%= e.photo %>"></div></div>
 							<div class="chat-feed-content">
 								<div class='post'>
 									<div class="user-info">
-										<span class="post-create-by"><%= e.posted_by %></span>
-										<% if(!_.isEmpty(e.location)) {%>
-											<span class='post-location'><i class="fa fa-map-marker"></i><%= e.location %></span>
-										<% } %>
-										<span class='appear-day'>
-											<% if ((e.appear_day == 'Now')){ %>
-											  Just Now
-											<% }else{ %>
-											  <%= e.appear_day %>
+										<div>
+											<span class="post-create-by"><%= e.posted_by %></span>
+											<span class='appear-day'>
+												<% if ((e.appear_day == 'Now')){ %>
+												  Just Now
+												<% }else{ %>
+												  <%= e.appear_day %>
+												<% } %>
+											</span>
+										</div>
+										<div>
+											<% if(!_.isEmpty(e.location)) {%>
+												<span class='post-location'><%= e.location %></span>
 											<% } %>
-										</span>
+										</div>
 									</div>
 									<div class="hide post-title"><%= e.title %></div>
 									<% if(!_.isEmpty(e.msg_type) && e.msg_type == 2) {%>

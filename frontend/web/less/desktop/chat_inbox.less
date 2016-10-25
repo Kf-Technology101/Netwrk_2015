@@ -465,10 +465,17 @@
 	.area-news-tab {
 		.message-your-area-wrapper {
 			width: 100%;
-			margin: 7px auto 0;
+			height: 75px;
+			margin: 0 auto;
 			padding-bottom: 8px;
 			text-align: center;
 			border-bottom: 1px solid #ddd;
+			background: #b2d5ef none repeat scroll 0 0;
+			.selected-location {
+				color: #006699;
+				font-size: 20px;
+				padding: 5px 0;
+			}
 			.btn-message-your-area {
 				color: #ffffff;
 				cursor: pointer;
@@ -527,21 +534,20 @@
 				}
 				.chat-feed-content {
 					.post {
-						/*margin-left: 50px;*/
+						margin-left: 50px;
+						padding-bottom: 5px;
 						/*width: 260px;*/
 						.post-location {
-							background: #f2f2f2 none repeat scroll 0 0;
-							border-radius: 9px;
-							color: #1d1b1b;
-							font-size: 10px;
-							padding: 5px 10px;
+							color: #A1A1A1;
+							font-size: 14px;
+							padding: 5px 0;
 							.fa {
 								color: #5888ac;
 								padding-right: 10px;
 							}
 						}
 						.appear-day {
-							font-size: 10px;
+							font-size: 12px;
 							color: #797979;
 						}
 						.post-msg
@@ -563,7 +569,7 @@
 						.user-info {
 							padding-bottom: 7px;
 							.post-create-by {
-								font-size: 14px;
+								font-size: 16px;
 								color: #1d1b1b;
 								font-family: "ProximaNovaSemibold";
 								padding-right: 5px;
@@ -631,6 +637,7 @@
 				.feed-content {
 					.post {
 						margin-left: 50px;
+						padding-bottom: 5px;
 						/*width: 260px;*/
 						.post-title {
 							/*&::before{
@@ -657,7 +664,7 @@
 				  .user-info {
 					padding-bottom: 7px;
 					.post-create-by {
-					  font-size: 14px;
+					  font-size: 16px;
 					  color: #1d1b1b;
 					  font-family: "ProximaNovaSemibold";
 					  padding-right: 5px;
