@@ -5,8 +5,9 @@
 	<span class="error hidden">Sorry my friend, you shall not pass</span><br/>
 	<img src="<?= Url::to('@web/img/icon/netwrk-logo-blue_large.png'); ?>" id="coverImg">
     <div class="netwrk-peview"><img class="netwrk-preview-image" src="<?= Url::to('@web/img/icon/netwrk-text.png'); ?>"> preview</div>
-    <div class="input-group form-group">
-        <button class="btn btn-primary btn-lg share-location-btn">Share location to connect with your area</button>
+    <div class="input-group form-group glow-btn-wrapper">
+        <button class="btn-active btn btn-primary btn-lg share-location-btn">Share location to connect with your area</button>
+        <button class="btn-inactive btn btn-primary btn-lg share-location-btn">Share location to connect with your area</button>
     </div>
     <p class="or-text hide">Or</p>
     <div class="input-group hide" id="inputGroup">

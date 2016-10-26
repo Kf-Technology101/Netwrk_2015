@@ -355,16 +355,24 @@
 	.area-news-tab {
 		.message-your-area-wrapper {
 			width: 100%;
-			margin: 7px auto 0;
+			height: 75px;
+			margin: 0 auto;
 			padding-bottom: 8px;
 			text-align: center;
 			border-bottom: 1px solid #ddd;
+			background: #b2d5ef none repeat scroll 0 0;
+			.selected-location {
+				color: #006699;
+				font-size: 20px;
+				padding: 5px 0;
+			}
 			.btn-message-your-area {
 				color: #ffffff;
-				background: #5888ac;
-				border-radius: 15px;
+				cursor: pointer;
+				/*background: #5888ac;*/
+				border-radius: 10px;
 				line-height: 20px;
-				padding: 5px 35px;
+				padding: 5px 15px;
 				&:hover {
 					text-decoration: none;
 				}
@@ -416,25 +424,25 @@
 				}
 				.chat-feed-content {
 					.post {
-						/*margin-left: 50px;*/
+						margin-left: 50px;
+						padding-bottom: 5px;
 						/*width: 260px;*/
 						.post-location {
-							background: #f2f2f2 none repeat scroll 0 0;
-							border-radius: 9px;
-							color: #1d1b1b;
-							font-size: 10px;
-							padding: 5px 10px;
+							color: #A1A1A1;
+							font-size: 14px;
+							padding: 5px 0;
 							.fa {
 								color: #5888ac;
 								padding-right: 10px;
 							}
 						}
 						.appear-day {
-							font-size: 10px;
+							font-size: 12px;
 							color: #797979;
 						}
+						.post-msg
 						.post-title {
-							font-size: 12px;
+							font-size: 14px;
 							color:#1d1b1b;
 							font-family: "ProximaNovaRegular";
 							width: 100%;
@@ -443,7 +451,7 @@
 							text-overflow: ellipsis;*/
 						}
 						.post-content {
-							font-size: 12px;
+							font-size: 13px;
 							color:#1d1b1b;
 							font-family: "ProximaNovaRegular";
 							width: 100%;
@@ -451,7 +459,7 @@
 						.user-info {
 							padding-bottom: 7px;
 							.post-create-by {
-								font-size: 12px;
+								font-size: 16px;
 								color: #1d1b1b;
 								font-family: "ProximaNovaSemibold";
 								padding-right: 5px;
@@ -520,9 +528,13 @@
 				.feed-content {
 					.post {
 						margin-left: 50px;
+						padding-bottom: 5px;
 						/*width: 260px;*/
 						.post-title {
-							font-size: 12px;
+							/*&::before{
+								content: '#';
+							}*/
+							font-size: 13px;
 							color:#1d1b1b;
 							font-family: "ProximaNovaRegular";
 							width: 100%;
@@ -541,26 +553,26 @@
 						}
 					}
 					.user-info {
-					  padding-bottom: 7px;
-					  .post-create-by {
-						font-size: 12px;
-						color: #1d1b1b;
-						font-family: "ProximaNovaSemibold";
-						padding-right: 5px;
-					  }
-					  .user-mention {
-						/*&::before{
-						  content: '@';
-						}*/
-						font-size: 10px;
-						color: #797979;
-					  }
+						padding-bottom: 7px;
+						.post-create-by {
+							font-size: 16px;
+							color: #1d1b1b;
+							font-family: "ProximaNovaSemibold";
+							padding-right: 5px;
+						}
+						.user-mention {
+							/*&::before{
+                              content: '@';
+                            }*/
+							font-size: 10px;
+							color: #797979;
+						}
 					}
 					.api-logo {
 						font-size : 12px;
 						color : #797979;
-					  	text-align: right;
-					  	padding-right: 5px;
+						text-align: right;
+						padding-right: 5px;
 					}
 				}
 			}
@@ -571,93 +583,96 @@
 		padding: 5px;
 	  }
 		.job-feed-row {
-		border-bottom: 1px solid #e4e4e4;
-		position: relative;
-		&:hover{
-		  cursor: pointer;
-		}
-		&.job-feed-post{
-		  padding: 5px;
-		  /*height: 65px;*/
-		  .avatar-poster {
-			width: 40px;
-			height: 40px;
-			max-width: 40px;
-			max-height: 40px;
-			float: left;
-			display: table;
+			border-bottom: 1px solid #e4e4e4;
 			position: relative;
-			background: #fff;
-			border-radius: 2px;
-			border: 1px solid #898989;
-			.image{
-			  height: 40px;
-			  width: 40px;
-			  text-align: center;
-			  vertical-align: middle;
-			  display: table-cell;
-			  cursor: pointer;
-			  img{
-				margin: auto;
-				max-width: 40px;
-				width: auto;
-				height: auto;
-				max-height: 40px;
-			  }
-			}
-		  }
-		  .feed-content {
-			.post {
-			  padding: 5px;
-			  .post-title {
-				font-size: 12px;
-				color:#1d1b1b;
-				font-family: "ProximaNovaSemibold";
-				width: 100%;
-				padding-bottom: 5px;
-				/*white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;*/
-			  }
-			  .company-info {
-				font-size: 10px;
-				color: #797979;
-				padding-bottom: 5px;
-			  }
-			  .post-content {
-				font-size: 12px;
-				color: #1d1b1b;
-				line-height: 14px;
-				width: 100%;
-				/*white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;*/
-			  }
-			  .view-more {
-				font-size: 12px;
-				text-decoration: none;
-				text-align: center;
+			&:hover{
 				cursor: pointer;
-				.fa.fa-external-link {
-				  font-size: 13px;
-				  padding-left: 5px;
+			}
+			&.job-feed-post{
+				padding: 5px;
+				/*height: 65px;*/
+				.avatar-poster {
+					width: 40px;
+					height: 40px;
+					max-width: 40px;
+					max-height: 40px;
+					float: left;
+					display: table;
+					position: relative;
+					background: #fff;
+					border-radius: 2px;
+					border: 1px solid #898989;
+					.image{
+						height: 40px;
+						width: 40px;
+						text-align: center;
+						vertical-align: middle;
+						display: table-cell;
+						cursor: pointer;
+						img{
+							margin: auto;
+							max-width: 40px;
+							width: auto;
+							height: auto;
+							max-height: 40px;
+						}
+					}
 				}
-			  }
+				.feed-content {
+					.post {
+						padding: 5px;
+						.post-title {
+							/*&::before{
+                              content: '#';
+                            }*/
+							font-size: 14px;
+							color:#1d1b1b;
+							font-family: "ProximaNovaSemibold";
+							width: 100%;
+							padding-bottom: 5px;
+							/*white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;*/
+						}
+						.company-info {
+							font-size: 13px;
+							color: #797979;
+							padding-bottom: 5px;
+						}
+						.post-content {
+							font-size: 13px;
+							color: #1d1b1b;
+							line-height: 14px;
+							width: 100%;
+							/*white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;*/
+						}
+						.view-more {
+							font-size: 13px;
+							text-decoration: none;
+							text-align: center;
+							cursor: pointer;
+							.fa.fa-external-link {
+								font-size: 14px;
+								padding-left: 5px;
+							}
+						}
+					}
+					.post-create-by {
+						font-size: 13px;
+						color: #797979;
+					}
+					.appear-day {
+						font-size : 12px;
+						color : #797979;
+						position: absolute;
+						right: 5px;
+						bottom: 5px;
+					}
+				}
 			}
-			.post-create-by {
-			  font-size: 13px;
-			  color: #797979;
-			}
-			.appear-day {
-			  font-size : 12px;
-			  color : #797979;
-			  position: absolute;
-			  right: 5px;
-			  bottom: 5px;
-			}
-		  }
 		}
-	  }
 		.feed-section {
 			background: #ccc none repeat scroll 0 0;
 			font-family: ProximaNovaBold;

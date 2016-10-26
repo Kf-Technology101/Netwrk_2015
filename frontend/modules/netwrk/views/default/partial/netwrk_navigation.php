@@ -29,7 +29,8 @@
 						 data-lat="<%= item.lat %>"
 						 data-lng="<%= item.lng %>"
 						 data-zip_code="<%= item.city_zipcode %>"
-						 data-city-id="<%= item.city_id %>">
+						 data-city-id="<%= item.city_id %>"
+						 data-city_name="<%= item.city_name %>">
 					<div class="home-community-icon">
 						<%= key.substr(0,1) %>
 					</div>

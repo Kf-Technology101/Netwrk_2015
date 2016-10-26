@@ -571,6 +571,7 @@ var Default ={
             var zip_code = $(e.currentTarget).attr('data-zip_code');
             var lat = $(e.currentTarget).attr('data-lat');
             var lng = $(e.currentTarget).attr('data-lng');
+            var cityName = $(e.currentTarget).attr('data-city_name');
 
             console.log(zip_code);
             var params = {'zip_code' : zip_code };
@@ -578,6 +579,11 @@ var Default ={
                 sessionStorage.sidebarLocation = zip_code;
                 sessionStorage.lat = lat;
                 sessionStorage.lng = lng;
+            } else {
+                //remove active class from other group
+                $('.community-modal-trigger', context).removeClass('active');
+                $(this).addClass('active');
+                $('#area_news_tab').find('.selected-location').find('.city-name').html('').html(cityName);
             }
             Ajax.setSelectedZipCodeCookie(params).then(function (data) {
                 var json = $.parseJSON(data);
