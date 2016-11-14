@@ -161,7 +161,7 @@
 		      disableDefaultUI: true,
 		      streetViewControl: false,
 		      scrollwheel: true,
-			  mapTypeId: 'satellite',
+			  mapTypeId: google.maps.MapTypeId.SATELLITE,
 			  mapTypeControl: true,
 			  mapTypeControlOptions: {
 				mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, ''],
@@ -181,7 +181,7 @@
 		    }else{
 		    	Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 		    }
-			map.setMapTypeId('satellite');
+
 
 		    Map.data_map = Map.map;
 		    Map.min_max_zoom(Map.map);
@@ -310,7 +310,8 @@
 			}
 			setTimeout(function() {
 				Common.hideTextLoader();
-			}, 500)
+			}, 500);
+
 	  	},
 		eventMapClick: function(event) {
 			if(Map.displayBlueDot) {
@@ -2673,7 +2674,8 @@
 		        Map.setZoomLimit(map, google.maps.MapTypeId.HYBRID);
 		        Map.setZoomLimit(map, google.maps.MapTypeId.SATELLITE);
 		        Map.setZoomLimit(map, google.maps.MapTypeId.TERRAIN);
-		        map.setMapTypeId(google.maps.MapTypeId.ROADMAP);  //Sets the MapTypeId to original.
+		        //dmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);  //Sets the MapTypeId to original.
+		        map.setMapTypeId(google.maps.MapTypeId.SATELLITE);  //Sets the MapTypeId to original.
 		    });
 	  	},
 
