@@ -161,6 +161,7 @@
 		      disableDefaultUI: true,
 		      streetViewControl: false,
 		      scrollwheel: true,
+			  mapTypeId: 'satellite',
 			  mapTypeControl: true,
 			  mapTypeControlOptions: {
 				mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, ''],
@@ -180,6 +181,7 @@
 		    }else{
 		    	Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 		    }
+			map.setMapTypeId('satellite');
 
 		    Map.data_map = Map.map;
 		    Map.min_max_zoom(Map.map);
