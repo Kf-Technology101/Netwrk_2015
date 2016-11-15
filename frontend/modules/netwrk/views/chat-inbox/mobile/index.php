@@ -79,7 +79,7 @@
 	</div>
 	</div>
 	<div role="tabpanel" class="tab-pane area-news-tab active" id="area_news_tab">
-		<div class="message-your-area-wrapper glow-btn-wrapper">
+		<div class="message-your-area-wrapper">
 			<div class="message-your-area-wrapper glow-btn-wrapper">
 				<?php if (isset($cookies["nw_selectedLocation"])): ?>
 					<div class="selected-location">Welcome to <span class="city-name"><?php echo $cookies["nw_selectedLocation"]; ?></span></div>
