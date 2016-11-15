@@ -181,7 +181,6 @@
 		    }else{
 		    	Map.map.setOptions({zoomControl: false, scrollwheel: true, styles: remove_poi});
 		    }
-			map.setMapTypeId('satellite');
 
 		    Map.data_map = Map.map;
 		    Map.min_max_zoom(Map.map);
@@ -2674,6 +2673,7 @@
 		        Map.setZoomLimit(map, google.maps.MapTypeId.SATELLITE);
 		        Map.setZoomLimit(map, google.maps.MapTypeId.TERRAIN);
 		        map.setMapTypeId(google.maps.MapTypeId.ROADMAP);  //Sets the MapTypeId to original.
+				map.setMapTypeId(google.maps.MapTypeId.SATELLITE); //Sets the MapTypeId to Satellite.
 		    });
 	  	},
 
