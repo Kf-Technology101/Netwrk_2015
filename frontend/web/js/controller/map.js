@@ -2674,8 +2674,8 @@
 		        Map.setZoomLimit(map, google.maps.MapTypeId.HYBRID);
 		        Map.setZoomLimit(map, google.maps.MapTypeId.SATELLITE);
 		        Map.setZoomLimit(map, google.maps.MapTypeId.TERRAIN);
-		        //dmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);  //Sets the MapTypeId to original.
-		        map.setMapTypeId(google.maps.MapTypeId.SATELLITE);  //Sets the MapTypeId to original.
+		        map.setMapTypeId(google.maps.MapTypeId.ROADMAP);  //Sets the MapTypeId to original.
+				map.setMapTypeId(google.maps.MapTypeId.SATELLITE); //Sets the MapTypeId to Satellite.
 		    });
 	  	},
 
